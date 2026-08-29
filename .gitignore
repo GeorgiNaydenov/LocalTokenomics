@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+dist/
+*.egg-info/
+node_modules/
+web/dist/
+!src/ai_usage_cost/web/dist/
+.DS_Store

@@ -1,0 +1,219 @@
+"""Codex CLI rollout parsing.
+
+The committed ``codex/basic`` rollout is arithmetically consistent: the per-turn
+``last_token_usage`` deltas add up to the final ``total_token_usage``. ``codex/drift``
+is the same shape with a session total that does not add up.
+"""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+import pytest
+
+from ai_usage_cost.models import UsageEvent
+from ai_usage_cost.sources.base import ScanResult
+from ai_usage_cost.sources.codex import CodexSource
+from conftest import CODEX_BASIC, CODEX_DRIFT
+
+ROLLOUT = "rollout-2026-08-21T09-00-00-11111111-2222-3333-4444-555555555555.jsonl"
+
+
+def scan(root: Path) -> ScanResult:
+    return CodexSource().scan([root])
+
+
+def usage(inp: int, cached: int, out: int, reasoning: int = 0) -> dict:
+    return {
+        "input_tokens": inp,
+        "cached_input_tokens": cached,
+        "cache_write_input_tokens": 0,
+        "output_tokens": out,
+        "reasoning_output_tokens": reasoning,
+        "total_tokens": inp + out,
+    }
+
+
+def token_count(last: dict, total: dict, ts: str = "2026-08-21T09:01:00Z") -> dict:
+    return {
+        "timestamp": ts,
+        "type": "event_msg",
+        "payload": {
+            "type": "token_count",
+            "info": {"last_token_usage": last, "total_token_usage": total},
+        },
+    }
+
+
+def write_rollout(root: Path, records: list[dict], name: str = ROLLOUT) -> Path:
+    root.mkdir(parents=True, exist_ok=True)
+    path = root / name
+    path.write_text("\n".join(json.dumps(r) for r in records) + "\n", encoding="utf-8")
+    return path
+
+
+@pytest.fixture
+def basic() -> list[UsageEvent]:
+    return scan(CODEX_BASIC).events
+
+
+# -------------------------------------------------------------------- token buckets
+
+
+def test_cached_input_is_a_subset_of_input_tokens(basic: list[UsageEvent]) -> None:
+    """Turn 2 reports input 20000, of which 15000 were cached."""
+    tokens = basic[1].tokens
+    assert tokens.cache_read == 15_000
+    assert tokens.uncached_input == 20_000 - 15_000
+    assert tokens.input_total == 20_000
+
+
+def test_uncached_input_is_the_whole_input_when_nothing_was_cached(
+    basic: list[UsageEvent],
+) -> None:
+    tokens = basic[0].tokens
+    assert tokens.cache_read == 0
+    assert tokens.uncached_input == 10_000
+    assert tokens.input_total == 10_000
+
+
+def test_reasoning_output_is_a_subset_of_output_and_not_double_counted(
+    basic: list[UsageEvent],
+) -> None:
+    tokens = basic[1].tokens
+    assert tokens.reasoning_output == 300
+    assert tokens.output == 800
+    assert tokens.total == 20_000 + 800
+
+
+def test_cached_input_greater_than_input_is_clamped(tmp_path: Path) -> None:
+    write_rollout(tmp_path, [token_count(usage(1_000, 5_000, 100), usage(1_000, 5_000, 100))])
+    tokens = scan(tmp_path).events[0].tokens
+    assert tokens.cache_read == 1_000
+    assert tokens.uncached_input == 0
+
+
+# --------------------------------------------------------------------------- models
+
+
+def test_model_comes_from_session_meta(basic: list[UsageEvent]) -> None:
+    assert [event.model for event in basic[:2]] == ["gpt-5-codex", "gpt-5-codex"]
+
+
+def test_mid_session_model_change_applies_only_to_later_events(
+    basic: list[UsageEvent],
+) -> None:
+    """The fixture switches to gpt-5.6-terra in a turn_context before turn 3."""
+    assert [event.model for event in basic] == [
+        "gpt-5-codex",
+        "gpt-5-codex",
+        "gpt-5.6-terra",
+        "gpt-5.6-terra",
+    ]
+
+
+def test_session_id_and_project_come_from_session_meta(basic: list[UsageEvent]) -> None:
+    assert {event.session_id for event in basic} == {"11111111-2222-3333-4444-555555555555"}
+    assert {event.project for event in basic} == {"beta"}
+    assert {event.tool for event in basic} == {"codex"}
+
+
+def test_model_is_unknown_when_the_rollout_never_names_one(tmp_path: Path) -> None:
+    write_rollout(tmp_path, [token_count(usage(100, 0, 10), usage(100, 0, 10))])
+    assert scan(tmp_path).events[0].model == "unknown"
+
+
+# ------------------------------------------------------------------ skipped records
+
+
+def test_all_zero_last_token_usage_events_are_skipped(basic: list[UsageEvent]) -> None:
+    """The fixture emits one idle turn whose deltas are all zero."""
+    assert len(basic) == 4
+    assert all(event.tokens.total > 0 for event in basic)
+
+
+def test_records_without_last_token_usage_are_skipped(tmp_path: Path) -> None:
+    write_rollout(
+        tmp_path,
+        [
+            {"timestamp": "2026-08-21T09:01:00Z", "type": "event_msg",
+             "payload": {"type": "token_count", "info": {"total_token_usage": usage(0, 0, 0)}}},
+            token_count(usage(100, 0, 10), usage(100, 0, 10)),
+        ],
+    )
+    assert len(scan(tmp_path).events) == 1
+
+
+# ------------------------------------------------------------------ defensive shape
+
+
+def test_token_count_at_the_top_level_is_still_parsed(basic: list[UsageEvent]) -> None:
+    """The last fixture record is the older envelope with no ``payload`` wrapper."""
+    tokens = basic[3].tokens
+    assert tokens.uncached_input == 1_000
+    assert tokens.output == 50
+    assert basic[3].timestamp.isoformat() == "2026-08-21T09:06:00+00:00"
+
+
+def test_top_level_envelope_alone_parses(tmp_path: Path) -> None:
+    write_rollout(
+        tmp_path,
+        [
+            {"timestamp": "2026-08-21T09:00:00Z", "type": "session_meta",
+             "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "cwd": "/home/user/legacy",
+             "model": "gpt-5-codex"},
+            {"timestamp": "2026-08-21T09:01:00Z", "type": "token_count",
+             "info": {"last_token_usage": usage(2_000, 500, 60),
+                      "total_token_usage": usage(2_000, 500, 60)}},
+        ],
+    )
+    events = scan(tmp_path).events
+    assert len(events) == 1
+    assert events[0].model == "gpt-5-codex"
+    assert events[0].project == "legacy"
+    assert events[0].tokens.uncached_input == 1_500
+    assert events[0].tokens.cache_read == 500
+
+
+# -------------------------------------------------------------------- reconciliation
+
+
+def test_matching_session_total_produces_no_warning() -> None:
+    """10500 + 20800 + 5100 + 1050 = 37450, the fixture's final total_tokens."""
+    result = scan(CODEX_BASIC)
+    assert result.warnings == []
+    assert sum(event.tokens.total for event in result.events) == 37_450
+
+
+def test_disagreeing_session_total_warns_and_names_the_file() -> None:
+    """The drift fixture sums 10500 turn tokens against a reported 50000."""
+    result = scan(CODEX_DRIFT)
+    assert len(result.warnings) == 1
+    warning = result.warnings[0]
+    assert "rollout-2026-08-22T09-00-00-99999999-8888-7777-6666-555555555555.jsonl" in warning
+    assert "10,500" in warning
+    assert "50,000" in warning
+    # The events themselves are still reported; only a warning is added.
+    assert len(result.events) == 1
+
+
+def test_drift_within_tolerance_is_not_warned_about(tmp_path: Path) -> None:
+    """100000 summed vs 100900 reported: 900 tokens is under both thresholds."""
+    write_rollout(
+        tmp_path,
+        [
+            token_count(usage(90_000, 0, 10_000), usage(90_000, 0, 10_900)),
+        ],
+    )
+    result = scan(tmp_path)
+    assert result.events[0].tokens.total == 100_000
+    assert result.warnings == []
+
+
+def test_large_absolute_drift_under_one_percent_is_not_warned_about(tmp_path: Path) -> None:
+    """5000 tokens of drift on 10,000,000 is 0.05% -- both thresholds must trip."""
+    reported = dict(usage(9_000_000, 0, 1_005_000))
+    reported["total_tokens"] = 10_005_000
+    write_rollout(tmp_path, [token_count(usage(9_000_000, 0, 1_000_000), reported)])
+    assert scan(tmp_path).warnings == []

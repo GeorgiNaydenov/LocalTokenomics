@@ -1,0 +1,62 @@
+{
+  "as_of": "2026-08-29",
+  "currency": "USD",
+  "units": "price per 1,000,000 tokens",
+  "notes": [
+    "Edit this file to correct or extend the price table -- nothing here is fetched at runtime.",
+    "Multipliers apply to the model's base input price.",
+    "Anthropic current-model prices are from the Claude API pricing table cached 2026-06-24.",
+    "OpenAI prices reflect the July 2026 price cut; verify against platform.openai.com/pricing.",
+    "Pre-2025 model rates are best-effort historical values -- check them before trusting old totals."
+  ],
+  "providers": {
+    "anthropic": {
+      "cache_read": 0.1,
+      "cache_write_5m": 1.25,
+      "cache_write_1h": 2.0,
+      "batch": 0.5
+    },
+    "openai": {
+      "cache_read": 0.1,
+      "cache_write_5m": 1.25,
+      "cache_write_1h": 1.25,
+      "batch": 0.5
+    }
+  },
+  "models": [
+    {"match": "claude-fable-5",   "provider": "anthropic", "display": "Claude Fable 5",   "input": 10.0, "output": 50.0},
+    {"match": "claude-mythos-5",  "provider": "anthropic", "display": "Claude Mythos 5",  "input": 10.0, "output": 50.0},
+    {"match": "claude-opus-5",    "provider": "anthropic", "display": "Claude Opus 5",    "input": 5.0,  "output": 25.0,
+     "variants": {"fast": {"input": 10.0, "output": 50.0}}},
+    {"match": "claude-opus-4-8",  "provider": "anthropic", "display": "Claude Opus 4.8",  "input": 5.0,  "output": 25.0,
+     "variants": {"fast": {"input": 10.0, "output": 50.0}}},
+    {"match": "claude-opus-4-7",  "provider": "anthropic", "display": "Claude Opus 4.7",  "input": 5.0,  "output": 25.0},
+    {"match": "claude-opus-4-6",  "provider": "anthropic", "display": "Claude Opus 4.6",  "input": 5.0,  "output": 25.0},
+    {"match": "claude-opus-4-5",  "provider": "anthropic", "display": "Claude Opus 4.5",  "input": 5.0,  "output": 25.0},
+    {"match": "claude-opus-4-1",  "provider": "anthropic", "display": "Claude Opus 4.1",  "input": 15.0, "output": 75.0},
+    {"match": "claude-opus-4",    "provider": "anthropic", "display": "Claude Opus 4",    "input": 15.0, "output": 75.0},
+    {"match": "claude-3-opus",    "provider": "anthropic", "display": "Claude 3 Opus",    "input": 15.0, "output": 75.0},
+    {"match": "claude-sonnet-5",   "provider": "anthropic", "display": "Claude Sonnet 5",   "input": 2.0, "output": 10.0},
+    {"match": "claude-sonnet-4-6", "provider": "anthropic", "display": "Claude Sonnet 4.6", "input": 3.0, "output": 15.0},
+    {"match": "claude-sonnet-4-5", "provider": "anthropic", "display": "Claude Sonnet 4.5", "input": 3.0, "output": 15.0},
+    {"match": "claude-sonnet-4",   "provider": "anthropic", "display": "Claude Sonnet 4",   "input": 3.0, "output": 15.0},
+    {"match": "claude-3-7-sonnet", "provider": "anthropic", "display": "Claude 3.7 Sonnet", "input": 3.0, "output": 15.0},
+    {"match": "claude-3-5-sonnet", "provider": "anthropic", "display": "Claude 3.5 Sonnet", "input": 3.0, "output": 15.0},
+    {"match": "claude-haiku-4-5",  "provider": "anthropic", "display": "Claude Haiku 4.5",  "input": 1.0,  "output": 5.0},
+    {"match": "claude-3-5-haiku",  "provider": "anthropic", "display": "Claude 3.5 Haiku",  "input": 0.8,  "output": 4.0},
+    {"match": "claude-3-haiku",    "provider": "anthropic", "display": "Claude 3 Haiku",    "input": 0.25, "output": 1.25},
+
+    {"match": "gpt-5.6-sol",    "provider": "openai", "display": "GPT-5.6 Sol",   "input": 5.0,  "output": 30.0},
+    {"match": "gpt-5.6-terra",  "provider": "openai", "display": "GPT-5.6 Terra", "input": 2.0,  "output": 12.0},
+    {"match": "gpt-5.6-luna",   "provider": "openai", "display": "GPT-5.6 Luna",  "input": 0.2,  "output": 1.2},
+    {"match": "gpt-5.6",        "provider": "openai", "display": "GPT-5.6",       "input": 2.0,  "output": 12.0},
+    {"match": "gpt-5-codex",    "provider": "openai", "display": "GPT-5 Codex",   "input": 1.25, "output": 10.0},
+    {"match": "gpt-5-mini",     "provider": "openai", "display": "GPT-5 mini",    "input": 0.25, "output": 2.0},
+    {"match": "gpt-5-nano",     "provider": "openai", "display": "GPT-5 nano",    "input": 0.05, "output": 0.4},
+    {"match": "gpt-5",          "provider": "openai", "display": "GPT-5",         "input": 1.25, "output": 10.0},
+    {"match": "o4-mini",        "provider": "openai", "display": "o4-mini",       "input": 1.1,  "output": 4.4},
+    {"match": "o3",             "provider": "openai", "display": "o3",            "input": 2.0,  "output": 8.0},
+    {"match": "gpt-4.1",        "provider": "openai", "display": "GPT-4.1",       "input": 2.0,  "output": 8.0},
+    {"match": "gpt-4o",         "provider": "openai", "display": "GPT-4o",        "input": 2.5,  "output": 10.0}
+  ]
+}
