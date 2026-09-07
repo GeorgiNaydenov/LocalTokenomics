@@ -1,5 +1,3 @@
-/** Types mirror the FastAPI response models in src/ai_usage_cost/. */
-
 export interface TokenUsage {
   uncached_input: number
   cache_read: number
@@ -7,7 +5,6 @@ export interface TokenUsage {
   cache_write_1h: number
   output: number
   reasoning_output: number
-  thinking_output: number
   cache_write: number
   input_total: number
   total: number
@@ -43,22 +40,37 @@ export interface Totals {
 
 export interface SeriesPoint {
   day: string
-  tool: string
+  client: string
+  provider: string
   model: string
   cost: number
   tokens: number
 }
 
+export type CostState = 'priced' | 'free' | 'unpriced' | 'unavailable'
+
 export interface SessionRow {
   session_id: string
-  tool: string
-  project: string | null
+  source: string
+  client: string
+  provider: string
   models: string[]
-  started: string
-  ended: string
-  events: number
-  tokens: number
-  cost: number
+  start_time: string
+  end_time: string
+  request_count: number
+  input_tokens: number | null
+  output_tokens: number | null
+  cached_tokens: number | null
+  reasoning_tokens: number | null
+  cost: number | null
+  cost_state: CostState
+  currency: string
+  project: string | null
+  working_directory: string | null
+  repository: string | null
+  branch: string | null
+  machine: string
+  raw_source: string[]
 }
 
 export interface UnknownModel {
@@ -70,9 +82,11 @@ export interface UnknownModel {
 export interface Report {
   generated_at: string
   rates_as_of: string
+  currency: string
   files_scanned: number
   totals: Totals
-  by_tool: Bucket[]
+  by_client: Bucket[]
+  by_provider: Bucket[]
   by_model: Bucket[]
   by_project: Bucket[]
   by_day: Bucket[]
@@ -82,18 +96,20 @@ export interface Report {
   warnings: string[]
 }
 
-export interface ToolInfo {
+export interface ClientInfo {
   id: string
   label: string
 }
 
 export interface Meta {
-  tools: ToolInfo[]
+  clients: ClientInfo[]
+  providers: string[]
   models: string[]
   projects: string[]
   first_day: string | null
   last_day: string | null
   rates_as_of: string
+  currency: string
   files_scanned: number
   events: number
   warnings: string[]
@@ -102,7 +118,8 @@ export interface Meta {
 export interface ReportQuery {
   since: string | null
   until: string | null
-  tools: string[]
+  clients: string[]
+  providers: string[]
   models: string[]
   projects: string[]
   includeSidechains: boolean
@@ -138,7 +155,6 @@ export function refresh(): Promise<Meta> {
   return getJson<Meta>('api/refresh', { method: 'POST' })
 }
 
-/** Repeatable params are only sent when they actually narrow the result. */
 export function reportUrl(query: ReportQuery, meta: Meta | null): string {
   const params = new URLSearchParams()
   if (query.since) params.set('since', query.since)
@@ -147,7 +163,8 @@ export function reportUrl(query: ReportQuery, meta: Meta | null): string {
     if (chosen.length === 0 || chosen.length === all.length) return
     for (const value of chosen) params.append(name, value)
   }
-  append('tools', query.tools, meta?.tools.map((tool) => tool.id) ?? [])
+  append('clients', query.clients, meta?.clients.map((client) => client.id) ?? [])
+  append('providers', query.providers, meta?.providers ?? [])
   append('models', query.models, meta?.models ?? [])
   append('projects', query.projects, meta?.projects ?? [])
   if (!query.includeSidechains) params.set('include_sidechains', 'false')

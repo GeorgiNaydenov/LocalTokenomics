@@ -21,7 +21,8 @@ import { useTheme } from './theme'
 const EMPTY_QUERY: ReportQuery = {
   since: null,
   until: null,
-  tools: [],
+  clients: [],
+  providers: [],
   models: [],
   projects: [],
   includeSidechains: true,
@@ -31,14 +32,14 @@ function fullQuery(meta: Meta): ReportQuery {
   return {
     since: meta.first_day,
     until: meta.last_day,
-    tools: meta.tools.map((tool) => tool.id),
+    clients: meta.clients.map((client) => client.id),
+    providers: [...meta.providers],
     models: [...meta.models],
     projects: [...meta.projects],
     includeSidechains: true,
   }
 }
 
-/** Pull a hand-picked range back inside the days the new scan actually covers. */
 function clampRange(
   since: string | null,
   until: string | null,
@@ -59,7 +60,8 @@ function sameQuery(a: ReportQuery, b: ReportQuery): boolean {
     a.since === b.since &&
     a.until === b.until &&
     a.includeSidechains === b.includeSidechains &&
-    a.tools.join() === b.tools.join() &&
+    a.clients.join() === b.clients.join() &&
+    a.providers.join() === b.providers.join() &&
     a.models.join() === b.models.join() &&
     a.projects.join() === b.projects.join()
   )
@@ -83,7 +85,6 @@ export default function App() {
 
   const ready = useRef(false)
 
-  // 1. meta first: it defines the full range and the option lists.
   useEffect(() => {
     const controller = new AbortController()
     setLoading(true)
@@ -102,7 +103,6 @@ export default function App() {
     return () => controller.abort()
   }, [reload])
 
-  // 2. then the report, re-fetched whenever the filters move.
   useEffect(() => {
     if (!meta || !ready.current) return
     const controller = new AbortController()
@@ -129,20 +129,23 @@ export default function App() {
     refreshApi()
       .then((next) => {
         setQuery((current) => {
-          /* Keep whatever the user narrowed to, but re-anchor anything the fresh
-             scan no longer contains -- otherwise a refresh can leave the page
-             filtered down to nothing. */
           const untouchedRange =
             !meta || (current.since === meta.first_day && current.until === meta.last_day)
           const range = untouchedRange
             ? { since: next.first_day, until: next.last_day }
             : clampRange(current.since, current.until, next)
-          const tools = current.tools.filter((tool) => next.tools.some((item) => item.id === tool))
+          const clients = current.clients.filter((client) =>
+            next.clients.some((item) => item.id === client),
+          )
+          const providers = current.providers.filter((provider) =>
+            next.providers.includes(provider),
+          )
           const models = current.models.filter((model) => next.models.includes(model))
           const projects = current.projects.filter((project) => next.projects.includes(project))
           return {
             ...range,
-            tools: tools.length ? tools : next.tools.map((tool) => tool.id),
+            clients: clients.length ? clients : next.clients.map((client) => client.id),
+            providers: providers.length ? providers : [...next.providers],
             models: models.length ? models : [...next.models],
             projects: projects.length ? projects : [...next.projects],
             includeSidechains: current.includeSidechains,
@@ -161,36 +164,45 @@ export default function App() {
     if (meta) setQuery(fullQuery(meta))
   }, [meta])
 
-  /* Colour identity is fixed by position in the *unfiltered* lists from
-     /api/meta, so filtering never repaints a surviving series. */
   const modelIndex = useCallback(
     (model: string) => (meta ? meta.models.indexOf(model) : -1),
     [meta],
   )
-  const toolIndex = useCallback(
-    (tool: string) => (meta ? meta.tools.findIndex((item) => item.id === tool) : -1),
+  const clientIndex = useCallback(
+    (client: string) => (meta ? meta.clients.findIndex((item) => item.id === client) : -1),
     [meta],
   )
-  const toolLabel = useCallback(
-    (tool: string) => meta?.tools.find((item) => item.id === tool)?.label ?? tool,
+  const clientLabel = useCallback(
+    (client: string) => meta?.clients.find((item) => item.id === client)?.label ?? client,
     [meta],
   )
+  const providerIndex = useCallback(
+    (provider: string) => (meta ? meta.providers.indexOf(provider) : -1),
+    [meta],
+  )
+  const providerLabel = useCallback((provider: string) => provider, [])
   const identityIndex = useCallback(
     (dimension: StackBy, key: string) =>
-      dimension === 'tool' ? toolIndex(key) : modelIndex(key),
-    [toolIndex, modelIndex],
+      dimension === 'client'
+        ? clientIndex(key)
+        : dimension === 'provider'
+          ? providerIndex(key)
+          : modelIndex(key),
+    [clientIndex, providerIndex, modelIndex],
   )
-  /* Display names only ever arrive inside a report's buckets, so remember every
-     one we have seen -- otherwise deselecting a model reverts its filter row to
-     the raw id. */
   const modelLabels = useRef(new Map<string, string>())
   for (const bucket of report?.by_model ?? []) modelLabels.current.set(bucket.key, bucket.label)
   const modelLabel = useCallback((model: string) => modelLabels.current.get(model) ?? model, [])
   const labelFor = useCallback(
-    (dimension: StackBy, key: string) => (dimension === 'tool' ? toolLabel(key) : modelLabel(key)),
-    [toolLabel, modelLabel],
+    (dimension: StackBy, key: string) =>
+      dimension === 'client'
+        ? clientLabel(key)
+        : dimension === 'provider'
+          ? providerLabel(key)
+          : modelLabel(key),
+    [clientLabel, providerLabel, modelLabel],
   )
-  const toolOrder = useMemo(() => meta?.tools.map((tool) => tool.id) ?? [], [meta])
+  const clientOrder = useMemo(() => meta?.clients.map((client) => client.id) ?? [], [meta])
 
   const dirty = useMemo(
     () => (meta ? !sameQuery(query, fullQuery(meta)) : false),
@@ -247,14 +259,14 @@ export default function App() {
               <EmptyState onReset={onReset} />
             ) : (
               <>
-                <KpiRow report={report} toolOrder={toolOrder} mode={mode} />
+                <KpiRow report={report} clientOrder={clientOrder} mode={mode} />
 
                 <CacheSavings totals={report.totals} />
 
                 <Card>
                   <CardHeader
                     title={metric === 'cost' ? 'Cost over time' : 'Tokens over time'}
-                    hint={`Daily totals, stacked by ${stackBy === 'tool' ? 'tool' : 'model'}. Days with no activity read as zero.`}
+                    hint={`Daily totals, stacked by ${stackBy}. Days with no activity read as zero.`}
                     actions={
                       <>
                         <Segmented
@@ -262,8 +274,9 @@ export default function App() {
                           value={stackBy}
                           onChange={setStackBy}
                           options={[
+                            { value: 'client', label: 'Client' },
+                            { value: 'provider', label: 'Provider' },
                             { value: 'model', label: 'Model' },
-                            { value: 'tool', label: 'Tool' },
                           ]}
                         />
                         <Segmented
@@ -325,10 +338,12 @@ export default function App() {
                   />
                   <SessionsTable
                     report={report}
-                    toolLabel={toolLabel}
+                    clientLabel={clientLabel}
+                    clientIndex={clientIndex}
+                    providerLabel={providerLabel}
+                    providerIndex={providerIndex}
                     modelLabel={modelLabel}
                     modelIndex={modelIndex}
-                    toolIndex={toolIndex}
                     mode={mode}
                   />
                 </Card>

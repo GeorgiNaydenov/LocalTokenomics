@@ -1,8 +1,3 @@
-"""Static PNG export via matplotlib -- for pasting a summary somewhere.
-
-Optional dependency: install with ``pip install "ai-usage-cost[png]"``.
-"""
-
 from __future__ import annotations
 
 from collections import defaultdict
@@ -39,18 +34,18 @@ def write_png(report: Report, out: Path, dpi: int = 140) -> None:
 
 
 def _cost_over_time(ax: plt.Axes, report: Report) -> None:
-    per_tool: dict[str, dict[date, float]] = defaultdict(lambda: defaultdict(float))
+    per_client: dict[str, dict[date, float]] = defaultdict(lambda: defaultdict(float))
     for point in report.series:
-        per_tool[point.tool][point.day] += point.cost
+        per_client[point.client][point.day] += point.cost
     days = sorted({point.day for point in report.series})
     bottom = [0.0] * len(days)
-    for index, (tool, values) in enumerate(sorted(per_tool.items())):
+    for index, (client, values) in enumerate(sorted(per_client.items())):
         heights = [values.get(day, 0.0) for day in days]
         ax.bar(
             days,  # type: ignore[arg-type]  # stubs omit the date x-value overload
             heights,
             bottom=bottom,
-            label=tool,
+            label=client,
             color=PALETTE[index % len(PALETTE)],
         )
         bottom = [b + h for b, h in zip(bottom, heights, strict=True)]

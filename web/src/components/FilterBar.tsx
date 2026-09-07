@@ -12,7 +12,6 @@ interface FilterBarProps {
   modelLabel: (model: string) => string
 }
 
-/** One filter row above everything it scopes -- never per-card filters. */
 export function FilterBar({
   meta,
   query,
@@ -94,10 +93,16 @@ export function FilterBar({
         <div aria-hidden className="hidden h-8 w-px self-end bg-border xl:block" />
 
         <MultiSelect
-          label="Tools"
-          options={(meta?.tools ?? []).map((tool) => ({ value: tool.id, label: tool.label }))}
-          selected={query.tools}
-          onChange={(tools) => onChange({ ...query, tools })}
+          label="Clients"
+          options={(meta?.clients ?? []).map((client) => ({ value: client.id, label: client.label }))}
+          selected={query.clients}
+          onChange={(clients) => onChange({ ...query, clients })}
+        />
+        <MultiSelect
+          label="Providers"
+          options={(meta?.providers ?? []).map((provider) => ({ value: provider, label: provider }))}
+          selected={query.providers}
+          onChange={(providers) => onChange({ ...query, providers })}
         />
         <MultiSelect
           label="Models"

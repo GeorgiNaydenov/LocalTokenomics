@@ -1,10 +1,3 @@
-"""The local JSON API.
-
-These tests double as the frontend contract: the dashboard reads the pydantic computed
-fields (``cost.total``, ``cost.cache_savings``, ``tokens.total``) straight out of the
-serialized JSON, so their presence is asserted explicitly.
-"""
-
 from __future__ import annotations
 
 from collections.abc import Iterator
@@ -22,17 +15,14 @@ def client(analysis: Analysis) -> Iterator[TestClient]:
         yield test_client
 
 
-# ----------------------------------------------------------------------- /api/meta
-
-
 def test_meta_describes_the_scan(client: TestClient) -> None:
     response = client.get("/api/meta")
     assert response.status_code == 200
     meta = response.json()
 
-    assert meta["tools"] == [
+    assert meta["clients"] == [
         {"id": "claude-code", "label": "Claude Code"},
-        {"id": "codex", "label": "Codex CLI"},
+        {"id": "codex-cli", "label": "Codex CLI"},
     ]
     assert meta["models"] == [
         "claude-haiku-4-5",
@@ -47,10 +37,10 @@ def test_meta_describes_the_scan(client: TestClient) -> None:
     assert meta["events"] == 8
     assert meta["files_scanned"] == 2
     assert meta["rates_as_of"]
+    assert meta["currency"] == "USD"
     assert meta["warnings"] == []
-
-
-# --------------------------------------------------------------------- /api/report
+    assert "anthropic" in meta["providers"]
+    assert "openai" in meta["providers"]
 
 
 def test_report_returns_the_expected_shape(client: TestClient) -> None:
@@ -61,9 +51,11 @@ def test_report_returns_the_expected_shape(client: TestClient) -> None:
     for key in (
         "generated_at",
         "rates_as_of",
+        "currency",
         "files_scanned",
         "totals",
-        "by_tool",
+        "by_client",
+        "by_provider",
         "by_model",
         "by_project",
         "by_day",
@@ -77,14 +69,21 @@ def test_report_returns_the_expected_shape(client: TestClient) -> None:
     assert report["totals"]["events"] == 8
     assert report["totals"]["sessions"] == 2
     assert len(report["series"]) == 5
-    assert {bucket["key"] for bucket in report["by_tool"]} == {"claude-code", "codex"}
+    assert {bucket["key"] for bucket in report["by_client"]} == {"claude-code", "codex-cli"}
 
     bucket = report["by_model"][0]
     assert set(bucket) >= {"key", "label", "tokens", "cost", "events", "sessions"}
 
+    session = report["sessions"][0]
+    assert set(session) >= {
+        "session_id", "source", "client", "provider", "models", "start_time", "end_time",
+        "request_count", "input_tokens", "output_tokens", "cached_tokens", "reasoning_tokens",
+        "cost", "cost_state", "currency", "project", "working_directory", "repository",
+        "branch", "machine", "raw_source",
+    }
+
 
 def test_computed_fields_are_serialized(client: TestClient) -> None:
-    """The dashboard depends on these being in the JSON, not recomputed client-side."""
     report = client.get("/api/report").json()
 
     cost = report["totals"]["cost"]
@@ -109,20 +108,24 @@ def test_computed_fields_are_serialized(client: TestClient) -> None:
     )
     assert tokens["total"] == tokens["input_total"] + tokens["output"]
 
-    # ...and on every bucket the dashboard iterates, not just the grand total.
-    for bucket in report["by_model"] + report["by_tool"] + report["by_project"]:
+    for bucket in report["by_model"] + report["by_client"] + report["by_project"]:
         assert "total" in bucket["cost"]
         assert "cache_savings" in bucket["cost"]
         assert "total" in bucket["tokens"]
 
 
-def test_tool_filter_narrows_the_report(client: TestClient) -> None:
+def test_client_filter_narrows_the_report(client: TestClient) -> None:
     everything = client.get("/api/report").json()
-    codex_only = client.get("/api/report", params={"tools": "codex"}).json()
+    codex_only = client.get("/api/report", params={"clients": "codex-cli"}).json()
 
     assert codex_only["totals"]["events"] == 4
-    assert {bucket["key"] for bucket in codex_only["by_tool"]} == {"codex"}
+    assert {bucket["key"] for bucket in codex_only["by_client"]} == {"codex-cli"}
     assert codex_only["totals"]["cost"]["total"] < everything["totals"]["cost"]["total"]
+
+
+def test_provider_filter_narrows_the_report(client: TestClient) -> None:
+    report = client.get("/api/report", params={"providers": "openai"}).json()
+    assert {bucket["key"] for bucket in report["by_provider"]} == {"openai"}
 
 
 def test_date_filter_narrows_the_report(client: TestClient) -> None:
@@ -154,9 +157,6 @@ def test_a_filter_that_matches_nothing_returns_an_empty_report(client: TestClien
     assert report["by_model"] == []
 
 
-# ---------------------------------------------------------------------- /api/rates
-
-
 def test_rates_returns_the_loaded_table(client: TestClient) -> None:
     response = client.get("/api/rates")
     assert response.status_code == 200
@@ -164,12 +164,11 @@ def test_rates_returns_the_loaded_table(client: TestClient) -> None:
 
     assert rates["currency"] == "USD"
     assert rates["as_of"]
-    assert rates["providers"]["anthropic"] == {
-        "cache_read": 0.1,
-        "cache_write_5m": 1.25,
-        "cache_write_1h": 2.0,
-        "batch": 0.5,
-    }
+    assert rates["providers"]["anthropic"]["cache_read"] == 0.1
+    assert rates["providers"]["anthropic"]["cache_write_5m"] == 1.25
+    assert rates["providers"]["anthropic"]["cache_write_1h"] == 2.0
+    assert rates["providers"]["anthropic"]["batch"] == 0.5
+    assert rates["providers"]["local"]["free"] is True
     opus = next(model for model in rates["models"] if model["match"] == "claude-opus-5")
     assert opus["provider"] == "anthropic"
     assert opus["display"] == "Claude Opus 5"

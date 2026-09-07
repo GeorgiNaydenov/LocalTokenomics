@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-08-29",
+  "as_of": "2026-09-07",
   "currency": "USD",
   "units": "price per 1,000,000 tokens",
   "notes": [
@@ -7,21 +7,27 @@
     "Multipliers apply to the model's base input price.",
     "Anthropic current-model prices are from the Claude API pricing table cached 2026-06-24.",
     "OpenAI prices reflect the July 2026 price cut; verify against platform.openai.com/pricing.",
-    "Pre-2025 model rates are best-effort historical values -- check them before trusting old totals."
+    "Pre-2025 model rates are best-effort historical values -- check them before trusting old totals.",
+    "claude-fable-5 and claude-mythos-5 copy claude-opus-5's fast-tier price as a placeholder -- unverified, check before trusting totals for these two.",
+    "google, xai, deepseek, alibaba, moonshot, zhipu and mistral prices confirmed 2026-09-07 against each vendor's own pricing page.",
+    "amazon (Nova) and minimax (international USD) prices are cross-corroborated from secondary sources, not read directly off the official page -- verify before trusting totals.",
+    "nvidia and meta have no published per-token API price (licensing/enterprise or open-weights-only) -- not modeled here; route those through a third-party host's own rate if you need them priced.",
+    "openrouter is a pass-through with no per-token markup; bedrock and vertex are at parity with the direct API for the same model; azure is its own rate card, not assumed at parity."
+  ],
+  "prefixes": [
+    {"prefix": "us.anthropic.", "provider": "bedrock"},
+    {"prefix": "eu.anthropic.", "provider": "bedrock"},
+    {"prefix": "openrouter/", "provider": "openrouter"},
+    {"prefix": "anthropic/", "provider": null},
+    {"prefix": "openai/", "provider": null}
   ],
   "providers": {
-    "anthropic": {
-      "cache_read": 0.1,
-      "cache_write_5m": 1.25,
-      "cache_write_1h": 2.0,
-      "batch": 0.5
-    },
-    "openai": {
-      "cache_read": 0.1,
-      "cache_write_5m": 1.25,
-      "cache_write_1h": 1.25,
-      "batch": 0.5
-    }
+    "anthropic": {"cache_read": 0.1, "cache_write_5m": 1.25, "cache_write_1h": 2.0, "batch": 0.5},
+    "openai": {"cache_read": 0.1, "cache_write_5m": 1.25, "cache_write_1h": 1.25, "batch": 0.5},
+    "google": {"cache_read": 0.25, "batch": 0.5},
+    "deepseek": {"batch": 0.5},
+    "moonshot": {"batch": 0.6},
+    "local": {"free": true}
   },
   "models": [
     {"match": "claude-fable-5",   "provider": "anthropic", "display": "Claude Fable 5",   "input": 10.0, "output": 50.0},
@@ -57,6 +63,72 @@
     {"match": "o4-mini",        "provider": "openai", "display": "o4-mini",       "input": 1.1,  "output": 4.4},
     {"match": "o3",             "provider": "openai", "display": "o3",            "input": 2.0,  "output": 8.0},
     {"match": "gpt-4.1",        "provider": "openai", "display": "GPT-4.1",       "input": 2.0,  "output": 8.0},
-    {"match": "gpt-4o",         "provider": "openai", "display": "GPT-4o",        "input": 2.5,  "output": 10.0}
+    {"match": "gpt-4o",         "provider": "openai", "display": "GPT-4o",        "input": 2.5,  "output": 10.0},
+
+    {"match": "gemini-3.1-pro",        "provider": "google", "display": "Gemini 3.1 Pro",        "input": 2.00, "output": 12.00,
+     "variants": {"long_context_200k": {"input": 4.00, "output": 18.00}}},
+    {"match": "gemini-3.8-flash",      "provider": "google", "display": "Gemini 3.8 Flash",      "input": 0.75, "output": 3.75},
+    {"match": "gemini-3.7-flash",      "provider": "google", "display": "Gemini 3.7 Flash",      "input": 0.75, "output": 3.75},
+    {"match": "gemini-3.6-flash",      "provider": "google", "display": "Gemini 3.6 Flash",      "input": 0.75, "output": 3.75},
+    {"match": "gemini-3.5-flash-lite", "provider": "google", "display": "Gemini 3.5 Flash-Lite", "input": 0.30, "output": 2.50},
+    {"match": "gemini-3.5-flash",      "provider": "google", "display": "Gemini 3.5 Flash",      "input": 1.50, "output": 9.00},
+    {"match": "gemini-3.1-flash-lite", "provider": "google", "display": "Gemini 3.1 Flash-Lite", "input": 0.25, "output": 1.50},
+    {"match": "gemini-2.5-pro",        "provider": "google", "display": "Gemini 2.5 Pro",        "input": 1.25, "output": 10.00,
+     "variants": {"long_context_200k": {"input": 2.50, "output": 15.00}}},
+    {"match": "gemini-2.5-flash-lite", "provider": "google", "display": "Gemini 2.5 Flash-Lite", "input": 0.10, "output": 0.40},
+    {"match": "gemini-2.5-flash",      "provider": "google", "display": "Gemini 2.5 Flash",      "input": 0.30, "output": 2.50},
+
+    {"match": "grok-4.6",    "provider": "xai", "display": "Grok 4.6",    "input": 2.00, "output": 6.00,
+     "variants": {"long_context_200k": {"input": 4.00, "output": 12.00}}},
+    {"match": "grok-4.5",    "provider": "xai", "display": "Grok 4.5",    "input": 2.00, "output": 6.00,
+     "variants": {"long_context_200k": {"input": 4.00, "output": 12.00}}},
+    {"match": "grok-4.3",    "provider": "xai", "display": "Grok 4.3",    "input": 1.25, "output": 2.50,
+     "variants": {"long_context_200k": {"input": 2.50, "output": 5.00}}},
+    {"match": "grok-4.20",   "provider": "xai", "display": "Grok 4.20",   "input": 1.25, "output": 2.50,
+     "variants": {"long_context_200k": {"input": 2.50, "output": 5.00}}},
+    {"match": "grok-build",  "provider": "xai", "display": "Grok Build 0.1", "input": 1.00, "output": 2.00,
+     "variants": {"long_context_200k": {"input": 2.00, "output": 4.00}}},
+
+    {"match": "deepseek-v4-pro",   "provider": "deepseek", "display": "DeepSeek V4 Pro",   "input": 0.66, "output": 1.98,
+     "variants": {"cache_hit": {"input": 0.022, "output": 1.98}}},
+    {"match": "deepseek-v4-flash", "provider": "deepseek", "display": "DeepSeek V4 Flash", "input": 0.22, "output": 0.66,
+     "variants": {"cache_hit": {"input": 0.007, "output": 0.66}}},
+
+    {"match": "qwen-max",   "provider": "alibaba", "display": "Qwen Max",   "input": 2.00, "output": 6.00},
+    {"match": "qwen-plus",  "provider": "alibaba", "display": "Qwen Plus",  "input": 0.40, "output": 1.60},
+    {"match": "qwen-flash", "provider": "alibaba", "display": "Qwen Flash", "input": 0.03, "output": 0.13},
+
+    {"match": "kimi-k3",         "provider": "moonshot", "display": "Kimi K3",         "input": 3.00, "output": 15.00,
+     "variants": {"cache_hit": {"input": 0.30, "output": 15.00}}},
+    {"match": "kimi-k2.7-code",  "provider": "moonshot", "display": "Kimi K2.7 Code",  "input": 0.95, "output": 4.00,
+     "variants": {"cache_hit": {"input": 0.19, "output": 4.00}}},
+    {"match": "kimi-k2.6",       "provider": "moonshot", "display": "Kimi K2.6",       "input": 0.95, "output": 4.00,
+     "variants": {"cache_hit": {"input": 0.16, "output": 4.00}}},
+
+    {"match": "glm-5.3-flash",   "provider": "zhipu", "display": "GLM-5.3-Flash",  "input": 0.075, "output": 0.25},
+    {"match": "glm-5.3",         "provider": "zhipu", "display": "GLM-5.3",       "input": 1.40,  "output": 4.40},
+    {"match": "glm-5.2",         "provider": "zhipu", "display": "GLM-5.2",       "input": 1.40,  "output": 4.40},
+    {"match": "glm-4.7-flashx",  "provider": "zhipu", "display": "GLM-4.7-FlashX", "input": 0.07, "output": 0.40},
+    {"match": "glm-4.7",         "provider": "zhipu", "display": "GLM-4.7",       "input": 0.60,  "output": 2.20},
+    {"match": "glm-4.5-air",     "provider": "zhipu", "display": "GLM-4.5-Air",   "input": 0.20,  "output": 1.10},
+    {"match": "glm-4.5",         "provider": "zhipu", "display": "GLM-4.5",       "input": 0.60,  "output": 2.20},
+
+    {"match": "mistral-medium-3.5", "provider": "mistral", "display": "Mistral Medium 3.5", "input": 1.50, "output": 7.50},
+    {"match": "mistral-large-3",    "provider": "mistral", "display": "Mistral Large 3",    "input": 0.50, "output": 1.50},
+    {"match": "mistral-small-4",    "provider": "mistral", "display": "Mistral Small 4",    "input": 0.15, "output": 0.60},
+    {"match": "codestral",          "provider": "mistral", "display": "Codestral",          "input": 0.30, "output": 0.90},
+    {"match": "ministral-14b",      "provider": "mistral", "display": "Ministral 3 (14B)",  "input": 0.20, "output": 0.20},
+    {"match": "ministral-8b",       "provider": "mistral", "display": "Ministral 3 (8B)",   "input": 0.15, "output": 0.15},
+    {"match": "ministral-3b",       "provider": "mistral", "display": "Ministral 3 (3B)",   "input": 0.10, "output": 0.10},
+
+    {"match": "minimax-m3",   "provider": "minimax", "display": "MiniMax M3",   "input": 0.30, "output": 1.20},
+    {"match": "minimax-m2.7", "provider": "minimax", "display": "MiniMax M2.7", "input": 0.28, "output": 1.10},
+    {"match": "minimax-m2",   "provider": "minimax", "display": "MiniMax M2",   "input": 0.26, "output": 1.00},
+
+    {"match": "amazon-nova-2-lite",   "provider": "amazon", "display": "Amazon Nova 2 Lite",   "input": 0.30, "output": 2.50},
+    {"match": "amazon-nova-premier",  "provider": "amazon", "display": "Amazon Nova Premier",  "input": 2.50, "output": 12.50},
+    {"match": "amazon-nova-pro",      "provider": "amazon", "display": "Amazon Nova Pro",      "input": 0.80, "output": 3.20},
+    {"match": "amazon-nova-lite",     "provider": "amazon", "display": "Amazon Nova Lite",     "input": 0.06, "output": 0.24},
+    {"match": "amazon-nova-micro",    "provider": "amazon", "display": "Amazon Nova Micro",    "input": 0.035, "output": 0.14}
   ]
 }

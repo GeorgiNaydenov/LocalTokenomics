@@ -1,69 +1,42 @@
-"""Source registry -- the extension point.
-
-To support another CLI, add a module here that subclasses :class:`JsonlSource`,
-implements ``default_roots`` and ``iter_file``, and calls :func:`register`. Pricing,
-aggregation, the API and the dashboard all work on :class:`UsageEvent` and pick the new
-source up with no further changes.
-"""
-
 from __future__ import annotations
 
 import json
-from collections.abc import Iterator, Sequence
-from dataclasses import dataclass, field
+import sqlite3
+from collections.abc import Callable, Iterator, Sequence
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 
 from ..models import UsageEvent
 
 
-@dataclass
-class ScanResult:
-    events: list[UsageEvent] = field(default_factory=list)
-    files: int = 0
-    warnings: list[str] = field(default_factory=list)
-
-    def extend(self, other: ScanResult) -> None:
-        self.events.extend(other.events)
-        self.files += other.files
-        self.warnings.extend(other.warnings)
+@dataclass(frozen=True)
+class Source:
+    id: str
+    label: str
+    clients: dict[str, str]
+    default_roots: Callable[[], list[Path]]
+    files: Callable[[Path], list[Path]]
+    parse: Callable[[Path, list[str]], Iterator[UsageEvent]]
 
 
-class JsonlSource:
-    """Base class for CLIs that log one JSON object per line."""
-
-    id: str = ""
-    label: str = ""
-
-    def default_roots(self) -> list[Path]:
-        raise NotImplementedError
-
-    def iter_file(self, path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
-        raise NotImplementedError
-
-    def files(self, root: Path) -> list[Path]:
-        return sorted(p for p in root.rglob("*.jsonl") if p.is_file())
-
-    def scan(self, roots: Sequence[Path] | None = None) -> ScanResult:
-        result = ScanResult()
-        for root in roots if roots is not None else self.default_roots():
-            if not root.exists():
+def scan(
+    source: Source, roots: Sequence[Path] | None
+) -> Iterator[tuple[Path, list[UsageEvent], list[str]]]:
+    for root in roots if roots is not None else source.default_roots():
+        if not root.exists():
+            continue
+        for path in source.files(root):
+            warnings: list[str] = []
+            try:
+                events = list(source.parse(path, warnings))
+            except OSError as exc:
+                yield path, [], [f"{source.id}: cannot read {path}: {exc}"]
                 continue
-            for path in self.files(root):
-                result.files += 1
-                try:
-                    result.events.extend(self.iter_file(path, result.warnings))
-                except OSError as exc:
-                    result.warnings.append(f"{self.id}: cannot read {path}: {exc}")
-        return result
+            yield path, events, warnings
 
 
 def read_json_lines(path: Path, warnings: list[str]) -> Iterator[dict]:
-    """Yield parsed objects, skipping blank and malformed lines.
-
-    Logs are appended to while a session is live, so a truncated final line is normal
-    and is not worth a warning; anything else malformed is counted once per file.
-    """
     bad = 0
     with path.open("r", encoding="utf-8", errors="replace") as handle:
         for line in handle:
@@ -81,10 +54,39 @@ def read_json_lines(path: Path, warnings: list[str]) -> Iterator[dict]:
         warnings.append(f"{path.name}: skipped {bad} unparsable lines")
 
 
+def read_sqlite(
+    path: Path, sql: str, params: Sequence[object] = (), *, warnings: list[str] | None = None
+) -> list[tuple]:
+    if not path.is_file():
+        return []
+    try:
+        uri = f"file:{path.as_posix()}?mode=ro"
+        with sqlite3.connect(uri, uri=True) as conn:
+            return conn.execute(sql, params).fetchall()
+    except sqlite3.Error as exc:
+        if warnings is not None:
+            warnings.append(f"{path}: cannot read database: {exc}")
+        return []
+
+
+def jsonl_files(root: Path) -> list[Path]:
+    return sorted(p for p in root.rglob("*.jsonl") if p.is_file())
+
+
+def single_file(root: Path) -> list[Path]:
+    return [root] if root.is_file() else []
+
+
 def parse_timestamp(value: object, fallback: Path | None = None) -> datetime:
+    if isinstance(value, int | float) and not isinstance(value, bool):
+        seconds = value / 1000 if value > 10_000_000_000 else value
+        try:
+            return datetime.fromtimestamp(seconds, tz=UTC)
+        except (OverflowError, OSError, ValueError):
+            pass
     if isinstance(value, str) and value:
         try:
-            parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+            parsed = datetime.fromisoformat(value)
         except ValueError:
             parsed = None
         if parsed is not None:
@@ -94,28 +96,11 @@ def parse_timestamp(value: object, fallback: Path | None = None) -> datetime:
     return datetime.now(tz=UTC)
 
 
-_REGISTRY: dict[str, JsonlSource] = {}
+def project_of(cwd: object) -> str | None:
+    if isinstance(cwd, str) and cwd:
+        return Path(cwd.replace("\\", "/")).name or cwd
+    return None
 
 
-def register(source: JsonlSource) -> JsonlSource:
-    _REGISTRY[source.id] = source
-    return source
-
-
-def registry() -> dict[str, JsonlSource]:
-    from . import claude_code, codex  # noqa: F401  -- import for side-effect registration
-
-    return dict(_REGISTRY)
-
-
-def scan_all(
-    only: Sequence[str] | None = None,
-    roots: dict[str, list[Path]] | None = None,
-) -> ScanResult:
-    combined = ScanResult()
-    for source_id, source in registry().items():
-        if only and source_id not in only:
-            continue
-        combined.extend(source.scan((roots or {}).get(source_id)))
-    combined.events.sort(key=lambda e: e.timestamp)
-    return combined
+def as_int(value: object) -> int:
+    return value if isinstance(value, int) and not isinstance(value, bool) else 0

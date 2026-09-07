@@ -1,5 +1,3 @@
-"""Rich terminal rendering of a :class:`Report`."""
-
 from __future__ import annotations
 
 from rich.console import Console
@@ -23,7 +21,8 @@ def render(
 
     tables = {
         "model": ("By model", report.by_model),
-        "tool": ("By tool", report.by_tool),
+        "client": ("By client", report.by_client),
+        "provider": ("By provider", report.by_provider),
         "project": ("By project", report.by_project),
         "day": ("By day", report.by_day),
     }

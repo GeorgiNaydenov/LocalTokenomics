@@ -5,14 +5,16 @@ import type { ThemeMode } from '../theme'
 import { seriesColor } from '../theme'
 import { Button, Swatch } from './Controls'
 
-type SortKey = 'cost' | 'tokens' | 'started' | 'events'
+type SortKey = 'cost' | 'tokens' | 'started' | 'requests'
 
 interface SessionsTableProps {
   report: Report
-  toolLabel: (id: string) => string
+  clientLabel: (id: string) => string
+  clientIndex: (id: string) => number
+  providerLabel: (id: string) => string
+  providerIndex: (id: string) => number
   modelLabel: (model: string) => string
   modelIndex: (model: string) => number
-  toolIndex: (tool: string) => number
   mode: ThemeMode
 }
 
@@ -20,20 +22,52 @@ const VISIBLE = 50
 
 const COLUMNS: { key: SortKey | null; label: string; align: 'left' | 'right' }[] = [
   { key: null, label: 'Project', align: 'left' },
-  { key: null, label: 'Tool', align: 'left' },
+  { key: null, label: 'Client', align: 'left' },
+  { key: null, label: 'Provider', align: 'left' },
   { key: null, label: 'Models', align: 'left' },
   { key: 'started', label: 'Started', align: 'left' },
-  { key: 'events', label: 'Requests', align: 'right' },
+  { key: 'requests', label: 'Requests', align: 'right' },
   { key: 'tokens', label: 'Tokens', align: 'right' },
   { key: 'cost', label: 'Cost', align: 'right' },
 ]
 
+function totalTokens(row: SessionRow): number | null {
+  if (row.input_tokens === null && row.output_tokens === null) return null
+  return (row.input_tokens ?? 0) + (row.output_tokens ?? 0)
+}
+
+function compare(a: SessionRow, b: SessionRow, key: SortKey): number {
+  if (key === 'started') return a.start_time < b.start_time ? -1 : a.start_time > b.start_time ? 1 : 0
+  if (key === 'requests') return a.request_count - b.request_count
+  if (key === 'cost') return (a.cost ?? -1) - (b.cost ?? -1)
+  return (totalTokens(a) ?? -1) - (totalTokens(b) ?? -1)
+}
+
+function CostCell({ row }: { row: SessionRow }) {
+  if (row.cost_state === 'priced' && row.cost !== null) {
+    return <span className="font-semibold text-ink">{formatMoney(row.cost)}</span>
+  }
+  if (row.cost_state === 'free') {
+    return <span className="text-ink-2">Free (local)</span>
+  }
+  if (row.cost_state === 'unpriced') {
+    return (
+      <span className="text-ink-2" title="No rate entry for this model">
+        unpriced
+      </span>
+    )
+  }
+  return <span className="text-muted">no usage data</span>
+}
+
 export function SessionsTable({
   report,
-  toolLabel,
+  clientLabel,
+  clientIndex,
+  providerLabel,
+  providerIndex,
   modelLabel,
   modelIndex,
-  toolIndex,
   mode,
 }: SessionsTableProps) {
   const [sort, setSort] = useState<SortKey>('cost')
@@ -67,7 +101,7 @@ export function SessionsTable({
   return (
     <>
       <div className="thin-scroll max-h-[520px] overflow-auto rounded-lg border border-border">
-        <table className="w-full min-w-[820px] border-collapse text-[13px]">
+        <table className="w-full min-w-[900px] border-collapse text-[13px]">
           <thead className="sticky top-0 z-10 bg-surface-2">
             <tr className="text-[11px] tracking-wide text-muted uppercase">
               {COLUMNS.map((column) => (
@@ -103,7 +137,7 @@ export function SessionsTable({
           </thead>
           <tbody>
             {visible.map((session) => (
-              <tr key={session.session_id} className="border-b border-border last:border-0">
+              <tr key={`${session.source}:${session.session_id}`} className="border-b border-border last:border-0">
                 <td
                   className="max-w-[180px] truncate px-3 py-2.5 font-medium text-ink"
                   title={session.project ?? 'unattributed'}
@@ -112,8 +146,14 @@ export function SessionsTable({
                 </td>
                 <td className="px-3 py-2.5 whitespace-nowrap text-ink-2">
                   <span className="inline-flex items-center gap-1.5">
-                    <Swatch color={seriesColor(toolIndex(session.tool), mode)} />
-                    {toolLabel(session.tool)}
+                    <Swatch color={seriesColor(clientIndex(session.client), mode)} />
+                    {clientLabel(session.client)}
+                  </span>
+                </td>
+                <td className="px-3 py-2.5 whitespace-nowrap text-ink-2">
+                  <span className="inline-flex items-center gap-1.5">
+                    <Swatch color={seriesColor(providerIndex(session.provider), mode)} />
+                    {providerLabel(session.provider)}
                   </span>
                 </td>
                 <td className="px-3 py-2.5">
@@ -130,19 +170,23 @@ export function SessionsTable({
                   </span>
                 </td>
                 <td className="tnum px-3 py-2.5 whitespace-nowrap text-ink-2">
-                  {formatTimestamp(session.started)}
+                  {formatTimestamp(session.start_time)}
                 </td>
                 <td className="tnum px-3 py-2.5 text-right text-ink-2">
-                  {formatCount(session.events)}
+                  {formatCount(session.request_count)}
                 </td>
                 <td
                   className="tnum px-3 py-2.5 text-right text-ink-2"
-                  title={formatExact(session.tokens)}
+                  title={totalTokens(session) !== null ? formatExact(totalTokens(session) as number) : undefined}
                 >
-                  {formatTokens(session.tokens)}
+                  {totalTokens(session) !== null ? (
+                    formatTokens(totalTokens(session) as number)
+                  ) : (
+                    <span className="text-muted">—</span>
+                  )}
                 </td>
-                <td className="tnum px-3 py-2.5 text-right font-semibold text-ink">
-                  {formatMoney(session.cost)}
+                <td className="tnum px-3 py-2.5 text-right">
+                  <CostCell row={session} />
                 </td>
               </tr>
             ))}
@@ -161,9 +205,4 @@ export function SessionsTable({
       ) : null}
     </>
   )
-}
-
-function compare(a: SessionRow, b: SessionRow, key: SortKey): number {
-  if (key === 'started') return a.started < b.started ? -1 : a.started > b.started ? 1 : 0
-  return a[key] - b[key]
 }

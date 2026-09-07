@@ -1,33 +1,20 @@
-"""Core data model.
-
-Everything downstream of parsing works on :class:`UsageEvent`, so no source module
-needs to know that any other source exists.
-"""
-
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Literal
 
 from pydantic import BaseModel, Field, computed_field
 
+CostState = Literal["priced", "free", "unpriced", "unavailable"]
+
 
 class TokenUsage(BaseModel):
-    """Billable token counts for one request, normalised across providers.
-
-    The four billable buckets are disjoint: a token is counted in exactly one of
-    ``uncached_input``, ``cache_read``, ``cache_write_5m`` / ``cache_write_1h``, or
-    ``output``. ``reasoning_output`` and ``thinking_output`` are *subsets* of
-    ``output`` kept for display only -- never add them to a total.
-    """
-
     uncached_input: int = 0
     cache_read: int = 0
     cache_write_5m: int = 0
     cache_write_1h: int = 0
     output: int = 0
-
     reasoning_output: int = 0
-    thinking_output: int = 0
 
     @computed_field  # type: ignore[prop-decorator]
     @property
@@ -52,42 +39,38 @@ class TokenUsage(BaseModel):
             cache_write_1h=self.cache_write_1h + other.cache_write_1h,
             output=self.output + other.output,
             reasoning_output=self.reasoning_output + other.reasoning_output,
-            thinking_output=self.thinking_output + other.thinking_output,
         )
 
 
+RawScalar = str | int | float | bool | None
+
+
 class UsageEvent(BaseModel):
-    """One billable request, parsed out of a local CLI log."""
-
-    tool: str
-    """Source id, e.g. ``claude-code`` or ``codex``."""
-
+    source: str
+    client: str
+    provider: str | None = None
+    model: str | None = None
     timestamp: datetime
-    model: str
     session_id: str
-    project: str | None = None
-    tokens: TokenUsage = Field(default_factory=TokenUsage)
-
+    request_id: str | None = None
+    tokens: TokenUsage | None = None
     is_sidechain: bool = False
-    """True for subagent / sidechain requests, so their spend can be split out."""
-
     tier: str = "standard"
-    """``standard``, ``batch`` or ``fast`` -- selects the rate variant."""
-
+    project: str | None = None
+    working_directory: str | None = None
+    repository: str | None = None
+    branch: str | None = None
+    machine: str = ""
     source_file: str = ""
+    raw: dict[str, RawScalar] = Field(default_factory=dict)
 
 
 class CostBreakdown(BaseModel):
-    """Cost in USD, split by what was billed."""
-
     uncached_input: float = 0.0
     cache_read: float = 0.0
     cache_write: float = 0.0
     output: float = 0.0
-
     no_cache_equivalent: float = 0.0
-    """What these same tokens would have cost with every cache read billed as
-    full-price input and no write premium paid -- the baseline for cache savings."""
 
     @computed_field  # type: ignore[prop-decorator]
     @property
@@ -111,12 +94,11 @@ class CostBreakdown(BaseModel):
 
 class PricedEvent(BaseModel):
     event: UsageEvent
-    cost: CostBreakdown
+    cost: CostBreakdown | None
+    state: CostState
 
 
 class Bucket(BaseModel):
-    """One row of an aggregation (a day, a model, a project, a tool...)."""
-
     key: str
     label: str = ""
     tokens: TokenUsage = Field(default_factory=TokenUsage)

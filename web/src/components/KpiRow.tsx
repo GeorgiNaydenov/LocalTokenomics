@@ -7,14 +7,14 @@ import { Swatch } from './Controls'
 
 interface KpiRowProps {
   report: Report
-  toolOrder: string[]
+  clientOrder: string[]
   mode: ThemeMode
 }
 
-export function KpiRow({ report, toolOrder, mode }: KpiRowProps) {
+export function KpiRow({ report, clientOrder, mode }: KpiRowProps) {
   const { totals } = report
-  const tools = report.by_tool
-  const toolTotal = tools.reduce((sum, bucket) => sum + bucket.cost.total, 0)
+  const clients = report.by_client
+  const clientTotal = clients.reduce((sum, bucket) => sum + bucket.cost.total, 0)
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
@@ -33,40 +33,40 @@ export function KpiRow({ report, toolOrder, mode }: KpiRowProps) {
         <div className="mt-5">
           <div className="mb-2 flex items-baseline justify-between">
             <span className="text-[11px] font-medium tracking-wide text-muted uppercase">
-              By tool
+              By client
             </span>
           </div>
-          {tools.length === 0 ? (
+          {clients.length === 0 ? (
             <p className="text-[13px] text-muted">No priced requests in this slice.</p>
           ) : (
             <>
               <div
                 className="flex h-2.5 w-full gap-0.5 overflow-hidden rounded-full bg-surface-2"
                 role="img"
-                aria-label="Share of cost by tool"
+                aria-label="Share of cost by client"
               >
-                {tools.map((bucket) => (
+                {clients.map((bucket) => (
                   <span
                     key={bucket.key}
                     className="h-full"
                     style={{
-                      width: `${toolTotal > 0 ? (bucket.cost.total / toolTotal) * 100 : 0}%`,
-                      background: seriesColor(toolOrder.indexOf(bucket.key), mode),
+                      width: `${clientTotal > 0 ? (bucket.cost.total / clientTotal) * 100 : 0}%`,
+                      background: seriesColor(clientOrder.indexOf(bucket.key), mode),
                     }}
                   />
                 ))}
               </div>
               <dl className="mt-3 flex flex-wrap gap-x-7 gap-y-2">
-                {tools.map((bucket) => (
+                {clients.map((bucket) => (
                   <div key={bucket.key} className="min-w-0">
                     <dt className="flex items-center gap-1.5 text-[12px] text-ink-2">
-                      <Swatch color={seriesColor(toolOrder.indexOf(bucket.key), mode)} />
+                      <Swatch color={seriesColor(clientOrder.indexOf(bucket.key), mode)} />
                       <span className="truncate">{bucket.label}</span>
                     </dt>
                     <dd className="tnum mt-0.5 text-[17px] font-semibold text-ink">
                       {formatMoney(bucket.cost.total)}
                       <span className="ml-1.5 text-[12px] font-normal text-muted">
-                        {toolTotal > 0 ? formatPercent(bucket.cost.total / toolTotal) : '0%'}
+                        {clientTotal > 0 ? formatPercent(bucket.cost.total / clientTotal) : '0%'}
                       </span>
                     </dd>
                   </div>

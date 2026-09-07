@@ -11,14 +11,60 @@ from __future__ import annotations
 
 import json
 import random
+import sqlite3
 import sys
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 CLAUDE_MODELS = [("claude-opus-5", 0.55), ("claude-sonnet-5", 0.35), ("claude-haiku-4-5", 0.10)]
 CODEX_MODELS = [("gpt-5-codex", 0.6), ("gpt-5.6-terra", 0.3), ("gpt-5.6-luna", 0.1)]
+JAN_MODELS = [
+    ("llama3.1-8b-instruct", 0.5),
+    ("qwen2.5-7b-instruct", 0.3),
+    ("mistral-7b-instruct", 0.2),
+]
+JAN_ENGINES = [("llama.cpp", 0.6), ("nitro", 0.4)]
 PROJECTS = ["indotalent", "ai-usage-cost", "portfolio-site", "scratch"]
+
+DYAD_APPS_SCHEMA = """
+CREATE TABLE apps (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    path TEXT,
+    created_at INTEGER,
+    updated_at INTEGER,
+    github_org TEXT,
+    github_repo TEXT,
+    chat_context TEXT,
+    github_branch TEXT,
+    vercel_project_id TEXT,
+    vercel_project_name TEXT,
+    vercel_team_id TEXT,
+    vercel_deployment_url TEXT,
+    neon_project_id TEXT,
+    neon_development_branch_id TEXT,
+    neon_preview_branch_id TEXT
+);
+
+CREATE TABLE chats (
+    id INTEGER PRIMARY KEY,
+    app_id INTEGER,
+    title TEXT,
+    created_at INTEGER,
+    initial_commit_hash TEXT
+);
+
+CREATE TABLE messages (
+    id INTEGER PRIMARY KEY,
+    chat_id INTEGER,
+    role TEXT,
+    content TEXT,
+    created_at INTEGER,
+    approval_state TEXT,
+    commit_hash TEXT
+);
+"""
 
 
 def pick(weighted: list[tuple[str, float]], rng: random.Random) -> str:
@@ -65,7 +111,11 @@ def write_claude(root: Path, day: datetime, rng: random.Random) -> None:
                     "requestId": f"req_{uuid.uuid4().hex[:16]}",
                     "cwd": f"/home/user/{project}",
                     "isSidechain": rng.random() < 0.12,
-                    "message": {"id": f"msg_{uuid.uuid4().hex[:20]}", "model": model, "usage": usage},
+                    "message": {
+                        "id": f"msg_{uuid.uuid4().hex[:20]}",
+                        "model": model,
+                        "usage": usage,
+                    },
                 }
             )
         )
@@ -129,11 +179,129 @@ def write_codex(root: Path, day: datetime, rng: random.Random) -> None:
     (folder / name).write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def write_jan(root: Path, rng: random.Random, days: int) -> None:
+    root.mkdir(parents=True, exist_ok=True)
+    end = datetime.now(tz=UTC).replace(hour=9, minute=0, second=0, microsecond=0)
+    for offset in range(days):
+        day = end - timedelta(days=offset)
+        if day.weekday() >= 5 and rng.random() < 0.7:
+            continue
+        if rng.random() < 0.75:
+            continue
+        project = pick([(p, 1 / len(PROJECTS)) for p in PROJECTS], rng)
+        engine = pick(JAN_ENGINES, rng)
+        model = pick(JAN_MODELS, rng)
+        thread_id = f"thread-{uuid.uuid4().hex[:12]}"
+        thread_dir = root / thread_id
+        thread_dir.mkdir(parents=True, exist_ok=True)
+        start = day + timedelta(hours=rng.randint(0, 9))
+        thread = {
+            "id": thread_id,
+            "created": int(start.timestamp() * 1000),
+            "updated": int(start.timestamp() * 1000),
+            "title": f"{project} chat",
+            "assistants": [
+                {
+                    "assistant_id": "jan-assistant",
+                    "assistant_name": "Jan",
+                    "model": {"id": model, "engine": engine, "parameters": {}, "settings": {}},
+                }
+            ],
+            "object": "thread",
+        }
+        lines = []
+        stamp = start
+        for turn in range(rng.randint(2, 10)):
+            stamp = stamp + timedelta(minutes=rng.randint(1, 6))
+            role = "user" if turn % 2 == 0 else "assistant"
+            lines.append(
+                json.dumps(
+                    {
+                        "id": f"msg-{uuid.uuid4().hex[:12]}",
+                        "object": "thread.message",
+                        "role": role,
+                        "status": "ready",
+                        "thread_id": thread_id,
+                        "created": int(stamp.timestamp() * 1000),
+                        "updated": int(stamp.timestamp() * 1000),
+                    }
+                )
+            )
+        thread["updated"] = int(stamp.timestamp() * 1000)
+        (thread_dir / "thread.json").write_text(json.dumps(thread), encoding="utf-8")
+        (thread_dir / "messages.jsonl").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def write_dyad(root: Path, rng: random.Random, days: int) -> None:
+    root.mkdir(parents=True, exist_ok=True)
+    db_path = root / "sqlite.db"
+    end = datetime.now(tz=UTC).replace(hour=9, minute=0, second=0, microsecond=0)
+    with sqlite3.connect(db_path) as conn:
+        conn.executescript(DYAD_APPS_SCHEMA)
+        message_id = 1
+        for app_id, project in enumerate(PROJECTS, start=1):
+            has_github = app_id % 2 == 1
+            org, repo, branch = (
+                ("acme", f"{project}-app", "main") if has_github else (None, None, None)
+            )
+            created_at = int((end - timedelta(days=days)).timestamp())
+            conn.execute(
+                "INSERT INTO apps VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                (
+                    app_id,
+                    project,
+                    f"/home/user/{project}",
+                    created_at,
+                    created_at,
+                    org,
+                    repo,
+                    None,
+                    branch,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                ),
+            )
+            chat_id = app_id
+            conn.execute(
+                "INSERT INTO chats VALUES (?,?,?,?,?)",
+                (chat_id, app_id, f"{project} chat", created_at, None),
+            )
+            for offset in range(days):
+                day = end - timedelta(days=offset)
+                if day.weekday() >= 5 and rng.random() < 0.7:
+                    continue
+                if rng.random() < 0.7:
+                    continue
+                for _ in range(rng.randint(1, 3)):
+                    stamp = day + timedelta(hours=rng.randint(0, 9), minutes=rng.randint(0, 59))
+                    conn.execute(
+                        "INSERT INTO messages VALUES (?,?,?,?,?,?,?)",
+                        (
+                            message_id,
+                            chat_id,
+                            "assistant",
+                            "done",
+                            int(stamp.timestamp()),
+                            None,
+                            None,
+                        ),
+                    )
+                    message_id += 1
+        conn.commit()
+
+
 def main(target: Path, days: int = 45, seed: int = 7) -> None:
     rng = random.Random(seed)
     claude_root = target / "claude"
     codex_root = target / "codex"
-    end = datetime.now(tz=timezone.utc).replace(hour=9, minute=0, second=0, microsecond=0)
+    jan_root = target / "jan"
+    dyad_root = target / "dyad"
+    end = datetime.now(tz=UTC).replace(hour=9, minute=0, second=0, microsecond=0)
     for offset in range(days):
         day = end - timedelta(days=offset)
         if day.weekday() >= 5 and rng.random() < 0.7:
@@ -142,6 +310,8 @@ def main(target: Path, days: int = 45, seed: int = 7) -> None:
             write_claude(claude_root, day + timedelta(hours=rng.randint(0, 9)), rng)
         if rng.random() < 0.6:
             write_codex(codex_root, day + timedelta(hours=rng.randint(0, 9)), rng)
+    write_jan(jan_root, rng, days)
+    write_dyad(dyad_root, rng, days)
     print(f"demo logs written to {target}")
 
 

@@ -1,5 +1,3 @@
-"""Command line entry point: ``scan``, ``serve``, ``export``."""
-
 from __future__ import annotations
 
 import json
@@ -11,53 +9,67 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
-from .pipeline import analyze, report_of
+from .pipeline import DEFAULT_DB_PATH, analyze, report_of
 from .render.terminal import render
 
 app = typer.Typer(
     add_completion=False,
-    help="Token usage and API-equivalent cost for your local Claude Code and Codex logs.",
+    help="Local token usage and API-equivalent cost across every AI coding tool on your machine.",
 )
 console = Console()
 
 Day = Annotated[str | None, typer.Option(help="ISO date, e.g. 2026-08-01.")]
-ClaudeDir = Annotated[Path | None, typer.Option(help="Override ~/.claude/projects.")]
-CodexDir = Annotated[Path | None, typer.Option(help="Override ~/.codex/sessions.")]
+Root = Annotated[
+    list[str] | None,
+    typer.Option("--root", help="Override a source's scan root: SOURCE=PATH. Repeatable."),
+]
+Db = Annotated[
+    Path | None, typer.Option(help="SQLite store path. Default ~/.ai-usage-cost/usage.db.")
+]
 Rates = Annotated[Path | None, typer.Option(help="Alternate rates.json.")]
+Rebuild = Annotated[
+    bool, typer.Option(help="Discard the store and reparse every log from scratch.")
+]
 
 
 def _day(value: str | None) -> date | None:
     return date.fromisoformat(value) if value else None
 
 
-def _roots(claude_dir: Path | None, codex_dir: Path | None) -> dict[str, list[Path]] | None:
+def _roots(entries: list[str] | None) -> dict[str, list[Path]] | None:
+    if not entries:
+        return None
     roots: dict[str, list[Path]] = {}
-    if claude_dir:
-        roots["claude-code"] = [claude_dir]
-    if codex_dir:
-        roots["codex"] = [codex_dir]
-    return roots or None
+    for entry in entries:
+        source, _, path = entry.partition("=")
+        if not path:
+            raise typer.BadParameter(f"expected SOURCE=PATH, got {entry!r}")
+        roots.setdefault(source, []).append(Path(path))
+    return roots
 
 
 @app.command()
 def scan(
     since: Day = None,
     until: Day = None,
-    tool: Annotated[list[str] | None, typer.Option(help="Limit to a source id.")] = None,
-    by: Annotated[str, typer.Option(help="Break down by model|tool|project|day.")] = "model",
+    source: Annotated[list[str] | None, typer.Option(help="Limit to a source id.")] = None,
+    by: Annotated[
+        str, typer.Option(help="Break down by model|client|provider|project|day.")
+    ] = "model",
     no_sidechains: Annotated[bool, typer.Option(help="Exclude subagent requests.")] = False,
     verbose: Annotated[bool, typer.Option("--verbose", "-v", help="Show all warnings.")] = False,
     as_json: Annotated[bool, typer.Option("--json", help="Emit the report as JSON.")] = False,
-    claude_dir: ClaudeDir = None,
-    codex_dir: CodexDir = None,
+    root: Root = None,
+    db: Db = None,
     rates: Rates = None,
+    rebuild: Rebuild = False,
 ) -> None:
-    """Summarise local usage in the terminal."""
-    analysis = analyze(tools=tool or None, roots=_roots(claude_dir, codex_dir), rates_path=rates)
+    analysis = analyze(db_path=db, roots=_roots(root), rates_path=rates, rebuild=rebuild)
     report = report_of(
         analysis,
         since=_day(since),
         until=_day(until),
+        clients=source or None,
         include_sidechains=not no_sidechains,
     )
     if as_json:
@@ -65,7 +77,7 @@ def scan(
         return
     if not report.totals.events:
         console.print("[yellow]No usage found.[/yellow] Checked "
-                      f"{report.files_scanned} log file(s). Pass --claude-dir/--codex-dir "
+                      f"{report.files_scanned} log file(s). Pass --root SOURCE=PATH "
                       "if your logs live elsewhere.")
         raise typer.Exit(code=1)
     render(report, console, group_by=by, verbose=verbose)
@@ -76,26 +88,27 @@ def serve(
     host: str = "127.0.0.1",
     port: int = 8420,
     open_browser: Annotated[bool, typer.Option("--open/--no-open")] = True,
-    claude_dir: ClaudeDir = None,
-    codex_dir: CodexDir = None,
+    root: Root = None,
+    db: Db = None,
     rates: Rates = None,
+    rebuild: Rebuild = False,
 ) -> None:
-    """Run the local dashboard."""
     import uvicorn
 
     from .api import create_app
 
     console.print("[dim]Scanning logs...[/dim]")
-    roots = _roots(claude_dir, codex_dir)
-    analysis = analyze(roots=roots, rates_path=rates)
+    roots = _roots(root)
+    db_path = db or DEFAULT_DB_PATH
+    analysis = analyze(db_path=db_path, roots=roots, rates_path=rates, rebuild=rebuild)
     console.print(
-        f"[green]{len(analysis.priced):,}[/green] priced requests from "
+        f"[green]{len(analysis.events):,}[/green] requests from "
         f"{analysis.files:,} log files -> http://{host}:{port}"
     )
     if open_browser:
         webbrowser.open(f"http://{host}:{port}")
     uvicorn.run(
-        create_app(analysis, rates_path=rates, roots=roots),
+        create_app(analysis, db_path=db_path, rates_path=rates, roots=roots),
         host=host,
         port=port,
         log_level="warning",
@@ -107,12 +120,11 @@ def export(
     out: Annotated[Path, typer.Argument(help="Output file: .json or .png.")],
     since: Day = None,
     until: Day = None,
-    claude_dir: ClaudeDir = None,
-    codex_dir: CodexDir = None,
+    root: Root = None,
+    db: Db = None,
     rates: Rates = None,
 ) -> None:
-    """Write the report to a file (format chosen by extension)."""
-    analysis = analyze(roots=_roots(claude_dir, codex_dir), rates_path=rates)
+    analysis = analyze(db_path=db, roots=_roots(root), rates_path=rates)
     report = report_of(analysis, since=_day(since), until=_day(until))
     suffix = out.suffix.lower()
     if suffix == ".json":

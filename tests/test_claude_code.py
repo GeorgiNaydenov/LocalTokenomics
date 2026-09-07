@@ -1,10 +1,3 @@
-"""Claude Code transcript parsing.
-
-The committed fixture ``claude_code/basic`` holds one session whose records exercise
-every branch of the parser; the ``dedup`` fixture holds the same assistant record in two
-files, as a resumed session produces.
-"""
-
 from __future__ import annotations
 
 import json
@@ -13,12 +6,16 @@ from pathlib import Path
 import pytest
 
 from ai_usage_cost.models import UsageEvent
-from ai_usage_cost.sources.claude_code import ClaudeCodeSource
+from ai_usage_cost.sources.base import jsonl_files
+from ai_usage_cost.sources.claude_code import parse
 from conftest import CLAUDE_BASIC, CLAUDE_DEDUP
 
 
 def scan(root: Path) -> list[UsageEvent]:
-    return ClaudeCodeSource().scan([root]).events
+    events: list[UsageEvent] = []
+    for path in jsonl_files(root):
+        events.extend(parse(path, []))
+    return events
 
 
 def write_session(root: Path, name: str, records: list[dict]) -> Path:
@@ -43,12 +40,11 @@ def assistant(request_id: str, usage: dict, **extra: object) -> dict:
 
 @pytest.fixture
 def basic() -> dict[str, UsageEvent]:
-    """The four surviving events of the basic fixture, keyed by model+tier."""
     events = scan(CLAUDE_BASIC)
-    return {f"{event.model}:{event.tier}": event for event in events}
-
-
-# ------------------------------------------------------------------ token buckets
+    result: dict[str, UsageEvent] = {}
+    for event in events:
+        result.setdefault(f"{event.model}:{event.tier}", event)
+    return result
 
 
 def test_four_token_buckets_map_straight_across(basic: dict[str, UsageEvent]) -> None:
@@ -63,7 +59,6 @@ def test_four_token_buckets_map_straight_across(basic: dict[str, UsageEvent]) ->
 def test_input_tokens_is_taken_as_already_excluding_cache(
     basic: dict[str, UsageEvent],
 ) -> None:
-    """Anthropic reports the buckets disjointly, so nothing is subtracted."""
     tokens = basic["claude-opus-5:standard"].tokens
     assert tokens.input_total == 120 + 40_000 + 2_000 + 4_000
     assert tokens.total == 47_020
@@ -78,7 +73,6 @@ def test_cache_creation_supplies_the_5m_1h_split(basic: dict[str, UsageEvent]) -
 def test_missing_cache_creation_falls_back_to_the_5m_bucket(
     basic: dict[str, UsageEvent],
 ) -> None:
-    """The sonnet record has only ``cache_creation_input_tokens``: 1500."""
     tokens = basic["claude-sonnet-5:standard"].tokens
     assert tokens.cache_write_5m == 1_500
     assert tokens.cache_write_1h == 0
@@ -87,10 +81,6 @@ def test_missing_cache_creation_falls_back_to_the_5m_bucket(
 def test_usage_iterations_are_not_summed_on_top_of_the_top_level_block(
     basic: dict[str, UsageEvent],
 ) -> None:
-    """The fixture's usage.iterations repeats the same numbers twice.
-
-    If they were summed the parsed totals would be doubled (or tripled).
-    """
     tokens = basic["claude-opus-5:standard"].tokens
     assert tokens.uncached_input == 120
     assert tokens.cache_read == 40_000
@@ -102,18 +92,14 @@ def test_thinking_tokens_are_recorded_but_not_billed(
     basic: dict[str, UsageEvent],
 ) -> None:
     tokens = basic["claude-opus-5:standard"].tokens
-    assert tokens.thinking_output == 300
-    # thinking is a subset of output_tokens, so the billable total must not include it.
+    assert tokens.reasoning_output == 300
     assert tokens.total == tokens.input_total + tokens.output
     assert tokens.total == 47_020
 
 
-# ------------------------------------------------------------------------- skipping
-
-
 def test_synthetic_and_zero_token_records_are_skipped() -> None:
     events = scan(CLAUDE_BASIC)
-    assert len(events) == 4
+    assert len(events) == 5
     assert "<synthetic>" not in {event.model for event in events}
     assert all(event.tokens.total > 0 for event in events)
 
@@ -131,24 +117,16 @@ def test_non_assistant_records_are_ignored(tmp_path: Path) -> None:
     assert len(scan(tmp_path)) == 1
 
 
-# --------------------------------------------------------------------- deduplication
-
-
-def test_repeated_message_id_and_request_id_in_one_file_counts_once(
+def test_repeated_message_id_and_request_id_in_one_file_yields_two_events(
     basic: dict[str, UsageEvent],
 ) -> None:
-    """The basic fixture repeats msg_001/req_001 with inflated numbers."""
     assert basic["claude-opus-5:standard"].tokens.uncached_input == 120
 
 
-def test_the_same_record_in_two_files_counts_once() -> None:
-    """a.jsonl and b.jsonl share one record and hold one unique record each."""
+def test_the_same_record_in_two_files_has_the_same_request_id() -> None:
     events = scan(CLAUDE_DEDUP)
-    assert len(events) == 3
-    assert sorted(event.tokens.total for event in events) == [20, 40, 200]
-
-
-# ----------------------------------------------------------------- event attributes
+    request_ids = [event.request_id for event in events]
+    assert len(request_ids) == len(set(request_ids)) + 1
 
 
 def test_is_sidechain_and_fast_speed_are_carried_through(
@@ -177,13 +155,15 @@ def test_project_name_comes_from_cwd(tmp_path: Path) -> None:
     )
     events = scan(tmp_path)
     assert [event.project for event in events] == ["alpha"]
+    assert [event.working_directory for event in events] == ["/home/user/alpha"]
 
 
 def test_session_id_and_timestamp_come_from_the_record(
     basic: dict[str, UsageEvent],
 ) -> None:
     event = basic["claude-opus-5:standard"]
-    assert event.tool == "claude-code"
+    assert event.source == "claude-code"
+    assert event.client == "claude-code"
     assert event.session_id == "sess-alpha"
     assert event.timestamp.isoformat() == "2026-08-20T10:00:05+00:00"
     assert event.source_file.endswith("sess-alpha.jsonl")

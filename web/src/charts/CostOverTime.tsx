@@ -25,7 +25,7 @@ import type { ThemeMode } from '../theme'
 import { chartInk, seriesColor } from '../theme'
 import { ChartEmpty, ChartLegend, TooltipShell } from './ChartKit'
 
-export type StackBy = 'tool' | 'model'
+export type StackBy = 'client' | 'provider' | 'model'
 export type Metric = 'cost' | 'tokens'
 
 interface CostOverTimeProps {
@@ -60,7 +60,6 @@ export function CostOverTime({
       const value = metric === 'cost' ? point.cost : point.tokens
       totals.set(point[stackBy], (totals.get(point[stackBy]) ?? 0) + value)
     }
-    // Present-but-idle days must read as zero, not as an interpolated slope.
     const byDay = new Map<string, Record<string, number>>()
     for (const day of daySpan(first, last)) byDay.set(day, { day: 0 })
     for (const point of series) {
@@ -88,8 +87,6 @@ export function CostOverTime({
     return <ChartEmpty height={height} message="No usage in this range." />
   }
 
-  /* An area needs a span to slope across; one or two days would render as
-     stray dots, so a short range falls back to stacked columns. */
   const asColumns = rows.length <= 2
 
   const grid = <CartesianGrid stroke={ink.grid} strokeWidth={1} vertical={false} />

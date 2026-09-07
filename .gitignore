@@ -10,3 +10,7 @@ node_modules/
 web/dist/
 !src/ai_usage_cost/web/dist/
 .DS_Store
+tests/fixtures/.tmp/
+.audit/*.log
+.audit/baseline*.json
+.audit/*.stderr.txt

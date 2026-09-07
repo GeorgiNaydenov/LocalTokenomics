@@ -1,98 +1,115 @@
-"""Codex CLI rollouts: ``~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl``.
-
-Field names follow ``TokenUsage`` / ``TokenUsageInfo`` / ``TokenCountEvent`` in
-``codex-rs/protocol/src/protocol.rs``; ``EventMsg`` is tagged
-``#[serde(tag = "type", rename_all = "snake_case")]``, hence ``"type": "token_count"``.
-
-Two normalisations matter:
-
-* ``cached_input_tokens`` is a **subset** of ``input_tokens``, so the uncached input we
-  bill is ``input_tokens - cached_input_tokens``. Anthropic reports these disjointly,
-  OpenAI does not.
-* ``reasoning_output_tokens`` is a subset of ``output_tokens`` -- display only.
-
-The envelope has changed across Codex versions, so every lookup here is defensive: a
-record is inspected both at the top level and inside ``payload``.
-"""
-
 from __future__ import annotations
 
+import re
 from collections.abc import Iterator
 from pathlib import Path
 
 from ..models import TokenUsage, UsageEvent
-from .base import JsonlSource, parse_timestamp, read_json_lines, register
+from .base import Source, jsonl_files, parse_timestamp, project_of, read_json_lines
 
 RECONCILE_TOLERANCE = 0.01
 RECONCILE_MIN_TOKENS = 1000
 
+_ORIGINATOR_CLIENTS = {
+    "Codex Desktop": "codex-desktop",
+    "codex_work_desktop": "codex-desktop",
+    "codex_cli_rs": "codex-cli",
+}
 
-class CodexSource(JsonlSource):
-    id = "codex"
-    label = "Codex CLI"
 
-    def default_roots(self) -> list[Path]:
-        return [Path.home() / ".codex" / "sessions"]
+def default_roots() -> list[Path]:
+    return [Path.home() / ".codex" / "sessions"]
 
-    def iter_file(self, path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
-        model = "unknown"
-        session_id = _session_id_from_name(path)
-        project: str | None = None
-        summed = TokenUsage()
-        final_total: dict | None = None
 
-        for record in read_json_lines(path, warnings):
-            payload = record.get("payload")
-            payload = payload if isinstance(payload, dict) else record
-            kind = payload.get("type") or record.get("type")
+def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
+    model = ""
+    session_id = _session_id_from_name(path)
+    project: str | None = None
+    cwd: str | None = None
+    client = "codex-cli"
+    provider: str | None = None
+    repository: str | None = None
+    branch: str | None = None
+    is_sidechain = False
+    summed = TokenUsage()
+    final_total: dict | None = None
 
-            found_model = _find_model(payload)
-            if found_model:
-                model = found_model
-            found_session = _find_session_id(payload)
-            if found_session:
-                session_id = found_session
-            found_cwd = _find_cwd_name(payload)
-            if found_cwd:
-                project = found_cwd
+    for record in read_json_lines(path, warnings):
+        payload = record.get("payload")
+        payload = payload if isinstance(payload, dict) else record
+        kind = payload.get("type") or record.get("type")
 
-            if kind != "token_count":
-                continue
+        if kind == "session_meta" or record.get("type") == "session_meta":
+            client = _client_of(payload.get("originator"))
+            if isinstance(payload.get("model_provider"), str):
+                provider = payload["model_provider"]
+            git = payload.get("git")
+            if isinstance(git, dict):
+                repository = git.get("repository_url") or repository
+                branch = git.get("branch") or branch
+            if isinstance(payload.get("source"), dict) and "subagent" in payload["source"]:
+                is_sidechain = True
 
-            info = payload.get("info")
-            info = info if isinstance(info, dict) else payload
-            last = info.get("last_token_usage")
-            total = info.get("total_token_usage")
+        found_model = _find_model(payload)
+        if found_model:
+            model = found_model
+        found_session = _find_session_id(payload)
+        if found_session:
+            session_id = found_session
+        found_cwd = _find_raw_cwd(payload)
+        if found_cwd:
+            cwd = found_cwd
+            project = project_of(found_cwd)
 
-            if isinstance(total, dict):
-                final_total = total
-            if not isinstance(last, dict):
-                continue
+        if kind != "token_count":
+            continue
 
-            tokens = _tokens_from_usage(last)
-            if tokens.total == 0:
-                continue
-            summed = summed + tokens
+        info = payload.get("info")
+        info = info if isinstance(info, dict) else payload
+        last = info.get("last_token_usage")
+        total = info.get("total_token_usage")
 
-            yield UsageEvent(
-                tool=self.id,
-                timestamp=parse_timestamp(
-                    record.get("timestamp") or payload.get("timestamp"), path
-                ),
-                model=model,
-                session_id=session_id,
-                project=project,
-                tokens=tokens,
-                source_file=str(path),
-            )
+        if isinstance(total, dict):
+            final_total = total
+        if not isinstance(last, dict):
+            continue
 
-        _reconcile(path, summed, final_total, warnings)
+        tokens = _tokens_from_usage(last)
+        if tokens.total == 0:
+            continue
+        summed = summed + tokens
+
+        yield UsageEvent(
+            source="codex",
+            client=client,
+            provider=provider,
+            model=model or None,
+            timestamp=parse_timestamp(record.get("timestamp") or payload.get("timestamp"), path),
+            session_id=session_id,
+            tokens=tokens,
+            is_sidechain=is_sidechain,
+            project=project,
+            working_directory=cwd,
+            repository=repository,
+            branch=branch,
+            source_file=str(path),
+        )
+
+    _reconcile(path, summed, final_total, warnings)
+
+
+def _client_of(originator: object) -> str:
+    if isinstance(originator, str) and originator:
+        mapped = _ORIGINATOR_CLIENTS.get(originator)
+        if mapped:
+            return mapped
+        return re.sub(r"[^a-z0-9]+", "-", originator.lower()).strip("-") or "codex-cli"
+    return "codex-cli"
 
 
 def _reconcile(
     path: Path, summed: TokenUsage, final_total: dict | None, warnings: list[str]
 ) -> None:
-    """The per-turn deltas should add up to the session's own running total."""
     if final_total is None:
         return
     reported = _int(final_total.get("total_tokens"))
@@ -139,10 +156,10 @@ def _find_session_id(payload: dict) -> str:
     return ""
 
 
-def _find_cwd_name(payload: dict) -> str | None:
+def _find_raw_cwd(payload: dict) -> str | None:
     for candidate in (payload.get("cwd"), _nested(payload, "turn_context", "cwd")):
         if isinstance(candidate, str) and candidate:
-            return Path(candidate.replace("\\", "/")).name or candidate
+            return candidate
     return None
 
 
@@ -156,7 +173,6 @@ def _nested(payload: dict, *keys: str) -> object:
 
 
 def _session_id_from_name(path: Path) -> str:
-    # rollout-2026-08-29T10-11-12-<uuid>.jsonl
     stem = path.stem
     parts = stem.split("-")
     return "-".join(parts[-5:]) if len(parts) >= 5 else stem
@@ -166,4 +182,11 @@ def _int(value: object) -> int:
     return value if isinstance(value, int) and not isinstance(value, bool) else 0
 
 
-register(CodexSource())
+SOURCE = Source(
+    id="codex",
+    label="Codex",
+    clients={"codex-cli": "Codex CLI", "codex-desktop": "Codex Desktop"},
+    default_roots=default_roots,
+    files=jsonl_files,
+    parse=parse,
+)

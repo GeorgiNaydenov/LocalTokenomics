@@ -1,0 +1,19 @@
+{
+  "id": "thread-1",
+  "created": 1755680000000,
+  "updated": 1755680050000,
+  "title": "Local model chat",
+  "assistants": [
+    {
+      "assistant_id": "jan-assistant",
+      "assistant_name": "Jan",
+      "model": {
+        "id": "llama3.1-8b-instruct",
+        "engine": "llama.cpp",
+        "parameters": {},
+        "settings": {}
+      }
+    }
+  ],
+  "object": "thread"
+}
