@@ -1,17 +1,25 @@
 from __future__ import annotations
 
+import json
 from datetime import UTC, date, datetime
+from pathlib import Path
 
 import pytest
 
+from ai_usage_cost import privacy
 from ai_usage_cost.aggregate import Report, build_report
 from ai_usage_cost.models import PricedEvent, TokenUsage, UsageEvent
 from ai_usage_cost.pipeline import Analysis, filter_events, report_of
 from ai_usage_cost.pricing import RateTable, price_event
-from conftest import CLAUDE_BASIC, CODEX_BASIC, analyze_roots
+from conftest import CLAUDE_BASIC, CLAUDE_TRACE, CODEX_BASIC, CODEX_TRACE, analyze_roots
 
 TABLE = RateTable.load()
 _DEFAULT_TOKENS = object()
+
+FLAGS = {
+    ("claude-code", "good"): (True, 0, "successful"),
+    ("claude-code", "bad"): (True, 4, "failed"),
+}
 
 
 def priced(
@@ -114,6 +122,34 @@ def test_include_sidechains_false_drops_subagent_events() -> None:
     assert kept[0].event.is_sidechain is False
 
 
+def test_states_narrow_the_list() -> None:
+    events = [
+        priced(day="2026-08-20T10:00:00", model="claude-opus-5"),
+        priced(day="2026-08-20T10:01:00", model="totally-unknown-model"),
+    ]
+    assert [item.state for item in events] == ["priced", "unpriced"]
+    assert len(filter_events(events, states=["priced"])) == 1
+    assert len(filter_events(events, states=["unpriced"])) == 1
+    assert len(filter_events(events, states=["priced", "unpriced"])) == 2
+
+
+def test_search_matches_case_insensitively_across_several_fields() -> None:
+    events = [
+        priced(
+            day="2026-08-20T10:00:00", client="claude-code", model="claude-opus-5",
+            project="Alpha", session_id="abc-123",
+        ),
+        priced(
+            day="2026-08-20T10:01:00", client="codex-cli", model="gpt-5-codex",
+            project="beta", session_id="xyz-789",
+        ),
+    ]
+    assert len(filter_events(events, search="ALPHA")) == 1
+    assert len(filter_events(events, search="gpt-5-codex")) == 1
+    assert len(filter_events(events, search="xyz-789")) == 1
+    assert filter_events(events, search="no-such-term") == []
+
+
 @pytest.fixture
 def report(analysis: Analysis) -> Report:
     return report_of(analysis)
@@ -190,7 +226,7 @@ def test_sessions_rows_summarise_each_conversation(report: Report) -> None:
     assert claude.start_time.isoformat() == "2026-08-20T10:00:05+00:00"
     assert claude.end_time.isoformat() == "2026-08-20T10:05:00+00:00"
     assert claude.cost_state == "priced"
-    assert sum(row.cost or 0.0 for row in report.sessions) == pytest.approx(
+    assert sum(row.cost.total if row.cost else 0.0 for row in report.sessions) == pytest.approx(
         report.totals.cost.total
     )
 
@@ -223,6 +259,100 @@ def test_analyze_sorts_events_by_timestamp() -> None:
 def test_analysis_client_labels_cover_the_registry(analysis: Analysis) -> None:
     assert analysis.client_labels["claude-code"] == "Claude Code"
     assert analysis.client_labels["codex-cli"] == "Codex CLI"
+
+
+def test_facets_are_computed_from_the_base_slice_not_the_filtered_one() -> None:
+    events = [
+        priced(day="2026-08-20T10:00:00", client="claude-code", model="claude-opus-5",
+               session_id="s1"),
+        priced(day="2026-08-20T10:00:00", client="claude-code", model="claude-sonnet-5",
+               session_id="s2"),
+        priced(day="2026-08-20T10:00:00", client="codex-cli", model="gpt-5-codex",
+               session_id="s3"),
+    ]
+    analysis = Analysis(events=events, table=TABLE)
+    full = report_of(analysis)
+    narrowed = report_of(analysis, models=["claude-opus-5"])
+
+    assert full.facets.clients["claude-code"] == 2
+    assert narrowed.totals.sessions == 1
+    assert narrowed.facets.clients["claude-code"] == 2
+
+
+def test_token_usage_total_excludes_reasoning_output() -> None:
+    tokens = TokenUsage(uncached_input=100, cache_read=10, output=50, reasoning_output=30)
+    assert tokens.total == 160
+    assert tokens.output == 50
+
+
+def session_events() -> list[PricedEvent]:
+    return [
+        priced(day="2026-08-20T10:00:00", session_id="good"),
+        priced(day="2026-08-20T10:01:00", session_id="good", model="claude-sonnet-5"),
+        priced(day="2026-08-20T10:02:00", session_id="bad"),
+        priced(day="2026-08-20T10:03:00", session_id="quiet"),
+    ]
+
+
+def test_outcome_traced_and_error_filters_keep_or_drop_a_whole_session() -> None:
+    events = session_events()
+
+    def kept(**filters: object) -> set[str]:
+        return {
+            item.event.session_id
+            for item in filter_events(events, session_flags=FLAGS, **filters)  # type: ignore[arg-type]
+        }
+
+    assert kept(outcomes=["successful"]) == {"good"}
+    assert kept(outcomes=["successful", "failed"]) == {"good", "bad"}
+    assert kept(outcomes=["unrated"]) == {"quiet"}
+    assert kept(traced=True) == {"good", "bad"}
+    assert kept(traced=False) == {"quiet"}
+    assert kept(has_errors=True) == {"bad"}
+    assert kept(has_errors=False) == {"good", "quiet"}
+    assert kept(outcomes=["failed"], has_errors=False) == set()
+    assert len(filter_events(events, session_flags=FLAGS)) == len(events)
+
+
+def test_session_rows_and_facets_carry_the_stored_outcome() -> None:
+    analysis = Analysis(events=session_events(), table=TABLE, session_flags=dict(FLAGS))
+    report = report_of(analysis)
+    rows = {row.session_id: row for row in report.sessions}
+
+    assert (rows["good"].outcome, rows["good"].traced, rows["good"].error_count) == (
+        "successful", True, 0
+    )
+    assert (rows["bad"].outcome, rows["bad"].traced, rows["bad"].error_count) == ("failed", True, 4)
+    assert (rows["quiet"].outcome, rows["quiet"].traced, rows["quiet"].error_count) == (
+        "unrated", False, 0
+    )
+    assert report.facets.outcomes == {"successful": 1, "failed": 1, "unrated": 1}
+
+
+def test_analyze_records_its_store_and_the_session_flags_it_read(tmp_path: Path) -> None:
+    found = analyze_roots(tmp_path, **{"claude-code": CLAUDE_TRACE, "codex": CODEX_TRACE})
+
+    assert found.db_path == tmp_path / "test.db"
+    traced, errors, outcome = found.session_flags[("claude-code", "sess-trace")]
+    assert (traced, errors, outcome) == (True, 1, "unrated")
+    assert found.session_flags[("codex", "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee")][1] == 0
+
+
+def test_analyze_forwards_the_privacy_config_to_ingest(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    config = tmp_path / "config.json"
+    config.write_text(
+        json.dumps({"exclude_projects": ["gamma"], "content_retention_days": 7}), "utf-8"
+    )
+    monkeypatch.setattr(privacy, "DEFAULT_CONFIG_PATH", config)
+
+    found = analyze_roots(tmp_path, **{"claude-code": CLAUDE_TRACE})
+
+    assert found.session_flags == {}
+    assert [item.event.session_id for item in found.events] == ["sess-trace"] * len(found.events)
+    assert found.events
+    assert any("content_retention_days" in warning for warning in found.warnings)
 
 
 def test_unavailable_and_unpriced_events_count_but_dont_cost() -> None:

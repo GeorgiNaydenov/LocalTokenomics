@@ -15,6 +15,11 @@ CLAUDE_UNKNOWN = FIXTURES / "claude_code" / "unknown"
 CODEX_BASIC = FIXTURES / "codex" / "basic"
 CODEX_DRIFT = FIXTURES / "codex" / "drift"
 
+CLAUDE_TRACE = FIXTURES / "claude_code" / "trace"
+CODEX_TRACE = FIXTURES / "codex" / "trace"
+CODEX_TRACE_LEGACY = FIXTURES / "codex" / "trace-legacy"
+ANTIGRAVITY_TRACE = FIXTURES / "antigravity" / "trace"
+
 NO_ROOT = FIXTURES / "does-not-exist"
 
 
@@ -29,3 +34,15 @@ def analyze_roots(tmp_path: Path | None = None, **roots: Path) -> Analysis:
 @pytest.fixture
 def analysis(tmp_path: Path) -> Analysis:
     return analyze_roots(tmp_path, **{"claude-code": CLAUDE_BASIC, "codex": CODEX_BASIC})
+
+
+@pytest.fixture
+def trace_analysis(tmp_path: Path) -> Analysis:
+    return analyze_roots(
+        tmp_path,
+        **{
+            "claude-code": CLAUDE_TRACE,
+            "codex": CODEX_TRACE,
+            "antigravity": ANTIGRAVITY_TRACE,
+        },
+    )

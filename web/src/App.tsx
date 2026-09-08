@@ -1,69 +1,187 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import type { Meta, Report, ReportQuery } from './api'
-import { ApiError, fetchMeta, fetchReport, refresh as refreshApi } from './api'
-import { CostByModel } from './charts/CostByModel'
-import type { Metric, StackBy } from './charts/CostOverTime'
-import { CostOverTime } from './charts/CostOverTime'
-import { TokenMix } from './charts/TokenMix'
-import { Card, CardHeader } from './components/Card'
-import { Segmented } from './components/Controls'
-import { FilterBar } from './components/FilterBar'
-import { Header } from './components/Header'
-import { KpiRow } from './components/KpiRow'
-import { CacheSavings } from './components/CacheSavings'
-import { Notices } from './components/Notices'
-import { ProjectBreakdown } from './components/ProjectBreakdown'
-import { SessionsTable } from './components/SessionsTable'
-import { DashboardSkeleton, EmptyState, ErrorState } from './components/States'
-import { formatCount, formatTimestamp } from './format'
+import { useCallback, useEffect, useState } from 'react'
+import type { CostState, FacetGroup, Meta, Query, RateTable, Report, View } from './api'
+import { ApiError, fetchMeta, fetchRates, fetchReport, refresh } from './api'
+import FilterRail from './FilterRail'
+import Header from './Header'
+import Overview from './Overview'
+import Sessions from './Sessions'
+import SessionWorkspace from './SessionWorkspace'
+import type { WorkspaceTab } from './SessionWorkspace'
+import Sources from './Sources'
+import Pricing from './Pricing'
 import { useTheme } from './theme'
 
-const EMPTY_QUERY: ReportQuery = {
+const TODAY = new Date().toISOString().slice(0, 10)
+const FIVE_MINUTES = 5 * 60 * 1000
+
+const BLANK_QUERY: Query = {
   since: null,
   until: null,
+  search: '',
+  states: [],
   clients: [],
-  providers: [],
   models: [],
   projects: [],
   includeSidechains: true,
+  outcomes: [],
+  traced: null,
+  hasErrors: null,
 }
 
-function fullQuery(meta: Meta): ReportQuery {
-  return {
-    since: meta.first_day,
-    until: meta.last_day,
-    clients: meta.clients.map((client) => client.id),
-    providers: [...meta.providers],
-    models: [...meta.models],
-    projects: [...meta.projects],
-    includeSidechains: true,
+interface WorkspaceKey {
+  source: string
+  id: string
+  tab: WorkspaceTab
+}
+
+function toggleValue<T extends string>(list: T[], value: T): T[] {
+  return list.includes(value) ? list.filter((v) => v !== value) : [...list, value]
+}
+
+interface ActiveChip {
+  key: string
+  group: string
+  label: string
+  onRemove: () => void
+}
+
+function buildActiveChips(
+  query: Query,
+  meta: Meta | null,
+  report: Report | null,
+  toggleFacet: (group: FacetGroup, value: string) => void,
+  patchQuery: (patch: Partial<Query>) => void,
+): ActiveChip[] {
+  const clientLabel = (id: string) => meta?.clients.find((c) => c.id === id)?.label ?? id
+  const modelLabel = (id: string) => report?.by_model.find((b) => b.key === id)?.label ?? id
+  const chips: ActiveChip[] = []
+  for (const value of query.states) {
+    chips.push({ key: `states:${value}`, group: 'state', label: value, onRemove: () => toggleFacet('states', value) })
   }
-}
-
-function clampRange(
-  since: string | null,
-  until: string | null,
-  meta: Meta,
-): { since: string | null; until: string | null } {
-  const first = meta.first_day
-  const last = meta.last_day
-  if (!first || !last || !since || !until) return { since: first, until: last }
-  const next = {
-    since: since < first ? first : since > last ? last : since,
-    until: until > last ? last : until < first ? first : until,
+  for (const value of query.clients) {
+    chips.push({
+      key: `clients:${value}`,
+      group: 'client',
+      label: clientLabel(value),
+      onRemove: () => toggleFacet('clients', value),
+    })
   }
-  return next.since <= next.until ? next : { since: first, until: last }
+  for (const value of query.models) {
+    chips.push({
+      key: `models:${value}`,
+      group: 'model',
+      label: modelLabel(value),
+      onRemove: () => toggleFacet('models', value),
+    })
+  }
+  for (const value of query.projects) {
+    chips.push({
+      key: `projects:${value}`,
+      group: 'project',
+      label: value,
+      onRemove: () => toggleFacet('projects', value),
+    })
+  }
+  for (const value of query.outcomes) {
+    chips.push({
+      key: `outcomes:${value}`,
+      group: 'outcome',
+      label: value,
+      onRemove: () => patchQuery({ outcomes: query.outcomes.filter((v) => v !== value) }),
+    })
+  }
+  if (query.traced !== null) {
+    chips.push({
+      key: 'traced',
+      group: 'trace',
+      label: query.traced ? 'traced only' : 'untraced only',
+      onRemove: () => patchQuery({ traced: null }),
+    })
+  }
+  if (query.hasErrors !== null) {
+    chips.push({
+      key: 'hasErrors',
+      group: 'errors',
+      label: query.hasErrors ? 'with errors' : 'without errors',
+      onRemove: () => patchQuery({ hasErrors: null }),
+    })
+  }
+  if (query.search.trim()) {
+    chips.push({ key: 'search', group: 'search', label: query.search.trim(), onRemove: () => patchQuery({ search: '' }) })
+  }
+  if (!query.includeSidechains) {
+    chips.push({
+      key: 'threads',
+      group: 'threads',
+      label: 'main thread only',
+      onRemove: () => patchQuery({ includeSidechains: true }),
+    })
+  }
+  return chips
 }
 
-function sameQuery(a: ReportQuery, b: ReportQuery): boolean {
+function OfflineCard({ onRetry }: { onRetry: () => void }) {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = () => {
+    navigator.clipboard
+      .writeText('ai-usage-cost serve')
+      .then(() => {
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+      })
+      .catch(() => {})
+  }
+
   return (
-    a.since === b.since &&
-    a.until === b.until &&
-    a.includeSidechains === b.includeSidechains &&
-    a.clients.join() === b.clients.join() &&
-    a.providers.join() === b.providers.join() &&
-    a.models.join() === b.models.join() &&
-    a.projects.join() === b.projects.join()
+    <div className="app" style={{ display: 'grid', placeItems: 'center', padding: 40 }}>
+      <div className="offline-card">
+        <p className="lbl" style={{ color: 'var(--rose)' }}>
+          No server on {location.host}
+        </p>
+        <h1
+          style={{
+            margin: '8px 0 10px',
+            fontFamily: 'var(--font-display)',
+            fontWeight: 700,
+            fontSize: 26,
+            lineHeight: 1.1,
+            color: 'var(--fg-strong)',
+          }}
+        >
+          The dashboard lost the local reader.
+        </h1>
+        <p style={{ margin: '0 0 18px', lineHeight: 1.6, color: 'var(--fg-muted)' }}>
+          Nothing was uploaded and nothing was lost. The last scan is still in your local SQLite store (
+          <span className="num" style={{ color: 'var(--fg-strong)' }}>
+            ~/.ai-usage-cost/usage.db
+          </span>{' '}
+          unless you passed --db). Start the reader again and this view reconnects.
+        </p>
+        <pre
+          className="num"
+          style={{
+            margin: '0 0 18px',
+            padding: '12px 14px',
+            background: 'var(--bg-muted)',
+            border: '1px solid var(--border)',
+            fontSize: 11.5,
+            color: 'var(--fg-strong)',
+            overflow: 'auto',
+          }}
+        >
+          ai-usage-cost serve
+        </pre>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button type="button" className="btn-primary" style={{ height: 40, minHeight: 40 }} onClick={onRetry}>
+            Retry connection
+          </button>
+          <button type="button" className="btn-ghost" style={{ height: 40, minHeight: 40 }} onClick={handleCopy}>
+            {copied ? 'Copied' : 'Copy command'}
+          </button>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -71,29 +189,46 @@ export default function App() {
   const [mode, toggleTheme] = useTheme()
 
   const [meta, setMeta] = useState<Meta | null>(null)
-  const [query, setQuery] = useState<ReportQuery>(EMPTY_QUERY)
+  const [rates, setRates] = useState<RateTable | null>(null)
   const [report, setReport] = useState<Report | null>(null)
+  const [query, setQuery] = useState<Query>(BLANK_QUERY)
+  const [view, setView] = useState<View>('overview')
+  const [workspace, setWorkspace] = useState<WorkspaceKey | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [refetching, setRefetching] = useState(false)
-  const [refreshing, setRefreshing] = useState(false)
+  const [rescanning, setRescanning] = useState(false)
   const [reload, setReload] = useState(0)
-  const [dismissed, setDismissed] = useState(false)
+  const [lastScanAt, setLastScanAt] = useState<number | null>(null)
+  const [railOpen, setRailOpen] = useState(false)
 
-  const [stackBy, setStackBy] = useState<StackBy>('model')
-  const [metric, setMetric] = useState<Metric>('cost')
+  const patchQuery = useCallback((patch: Partial<Query>) => {
+    setQuery((q) => ({ ...q, ...patch }))
+  }, [])
 
-  const ready = useRef(false)
+  const toggleFacet = useCallback((group: FacetGroup, value: string) => {
+    setQuery((q) => {
+      switch (group) {
+        case 'states':
+          return { ...q, states: toggleValue(q.states, value as CostState) }
+        case 'clients':
+          return { ...q, clients: toggleValue(q.clients, value) }
+        case 'models':
+          return { ...q, models: toggleValue(q.models, value) }
+        case 'projects':
+          return { ...q, projects: toggleValue(q.projects, value) }
+      }
+    })
+  }, [])
 
   useEffect(() => {
     const controller = new AbortController()
-    setLoading(true)
     setError(null)
-    fetchMeta(controller.signal)
-      .then((next) => {
-        setMeta(next)
-        setQuery(fullQuery(next))
-        ready.current = true
+    Promise.all([fetchMeta(controller.signal), fetchRates(controller.signal)])
+      .then(([nextMeta, nextRates]) => {
+        setMeta(nextMeta)
+        setRates(nextRates)
+        setQuery((q) => (q.since === null && q.until === null ? { ...q, since: nextMeta.first_day, until: TODAY } : q))
       })
       .catch((cause: unknown) => {
         if (controller.signal.aborted) return
@@ -104,10 +239,10 @@ export default function App() {
   }, [reload])
 
   useEffect(() => {
-    if (!meta || !ready.current) return
+    if (!meta) return
     const controller = new AbortController()
     setRefetching(true)
-    fetchReport(query, meta, controller.signal)
+    fetchReport(query, controller.signal)
       .then((next) => {
         setReport(next)
         setError(null)
@@ -124,239 +259,155 @@ export default function App() {
     return () => controller.abort()
   }, [meta, query])
 
-  const onRefresh = useCallback(() => {
-    setRefreshing(true)
-    refreshApi()
-      .then((next) => {
-        setQuery((current) => {
-          const untouchedRange =
-            !meta || (current.since === meta.first_day && current.until === meta.last_day)
-          const range = untouchedRange
-            ? { since: next.first_day, until: next.last_day }
-            : clampRange(current.since, current.until, next)
-          const clients = current.clients.filter((client) =>
-            next.clients.some((item) => item.id === client),
-          )
-          const providers = current.providers.filter((provider) =>
-            next.providers.includes(provider),
-          )
-          const models = current.models.filter((model) => next.models.includes(model))
-          const projects = current.projects.filter((project) => next.projects.includes(project))
-          return {
-            ...range,
-            clients: clients.length ? clients : next.clients.map((client) => client.id),
-            providers: providers.length ? providers : [...next.providers],
-            models: models.length ? models : [...next.models],
-            projects: projects.length ? projects : [...next.projects],
-            includeSidechains: current.includeSidechains,
-          }
-        })
-        setMeta(next)
-        setError(null)
+  const closeWorkspace = useCallback(() => setWorkspace(null), [])
+
+  const selectWorkspaceTab = useCallback((tab: WorkspaceTab) => {
+    setWorkspace((open) => (open ? { ...open, tab } : open))
+  }, [])
+
+  const doRefresh = useCallback(() => {
+    setRescanning(true)
+    refresh()
+      .then(() => {
+        setLastScanAt(Date.now())
+        setReload((n) => n + 1)
       })
       .catch((cause: unknown) => {
         setError(cause instanceof ApiError ? cause.message : String(cause))
       })
-      .finally(() => setRefreshing(false))
-  }, [meta])
+      .finally(() => setRescanning(false))
+  }, [])
 
-  const onReset = useCallback(() => {
-    if (meta) setQuery(fullQuery(meta))
-  }, [meta])
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval> | null = null
+    const start = () => {
+      if (interval === null) interval = setInterval(doRefresh, FIVE_MINUTES)
+    }
+    const stop = () => {
+      if (interval !== null) {
+        clearInterval(interval)
+        interval = null
+      }
+    }
+    const onVisibility = () => {
+      if (document.visibilityState !== 'visible') {
+        stop()
+        return
+      }
+      if (lastScanAt !== null && Date.now() - lastScanAt > FIVE_MINUTES) doRefresh()
+      start()
+    }
+    if (document.visibilityState === 'visible') start()
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => {
+      stop()
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
+  }, [doRefresh, lastScanAt])
 
-  const modelIndex = useCallback(
-    (model: string) => (meta ? meta.models.indexOf(model) : -1),
-    [meta],
-  )
-  const clientIndex = useCallback(
-    (client: string) => (meta ? meta.clients.findIndex((item) => item.id === client) : -1),
-    [meta],
-  )
-  const clientLabel = useCallback(
-    (client: string) => meta?.clients.find((item) => item.id === client)?.label ?? client,
-    [meta],
-  )
-  const providerIndex = useCallback(
-    (provider: string) => (meta ? meta.providers.indexOf(provider) : -1),
-    [meta],
-  )
-  const providerLabel = useCallback((provider: string) => provider, [])
-  const identityIndex = useCallback(
-    (dimension: StackBy, key: string) =>
-      dimension === 'client'
-        ? clientIndex(key)
-        : dimension === 'provider'
-          ? providerIndex(key)
-          : modelIndex(key),
-    [clientIndex, providerIndex, modelIndex],
-  )
-  const modelLabels = useRef(new Map<string, string>())
-  for (const bucket of report?.by_model ?? []) modelLabels.current.set(bucket.key, bucket.label)
-  const modelLabel = useCallback((model: string) => modelLabels.current.get(model) ?? model, [])
-  const labelFor = useCallback(
-    (dimension: StackBy, key: string) =>
-      dimension === 'client'
-        ? clientLabel(key)
-        : dimension === 'provider'
-          ? providerLabel(key)
-          : modelLabel(key),
-    [clientLabel, providerLabel, modelLabel],
-  )
-  const clientOrder = useMemo(() => meta?.clients.map((client) => client.id) ?? [], [meta])
+  const isOffline = error !== null && error.includes('Could not reach the ai-usage-cost server')
 
-  const dirty = useMemo(
-    () => (meta ? !sameQuery(query, fullQuery(meta)) : false),
-    [meta, query],
-  )
+  if (isOffline) {
+    return <OfflineCard onRetry={() => setReload((n) => n + 1)} />
+  }
 
-  const hasData = report !== null && report.totals.events > 0
-  const noticeVisible =
-    !dismissed &&
-    report !== null &&
-    (report.unknown_models.length > 0 || report.warnings.length > 0)
+  if (loading) {
+    return (
+      <div className="app" style={{ display: 'grid', placeItems: 'center', minHeight: '100vh' }}>
+        <p className="lbl">Loading ai-usage-cost…</p>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="app" style={{ display: 'grid', placeItems: 'center', minHeight: '100vh', padding: 24 }}>
+        <p style={{ color: 'var(--rose)', maxWidth: '48ch', textAlign: 'center' }}>{error}</p>
+      </div>
+    )
+  }
+
+  const activeChips = buildActiveChips(query, meta, report, toggleFacet, patchQuery)
+  const workspaceSession = workspace
+    ? (report?.sessions.find((s) => s.session_id === workspace.id && s.source === workspace.source) ?? null)
+    : null
+
+  const openSession = (sessionId: string) => {
+    const row = report?.sessions.find((s) => s.session_id === sessionId)
+    if (!row) return
+    setWorkspace({ source: row.source, id: row.session_id, tab: 'summary' })
+  }
 
   return (
-    <div className="min-h-screen bg-page">
+    <div className="app">
       <Header
+        view={view}
+        onSelectView={setView}
         meta={meta}
-        ratesAsOf={report?.rates_as_of ?? meta?.rates_as_of ?? ''}
+        ratesAsOf={rates?.as_of ?? meta?.rates_as_of ?? ''}
+        filesScanned={meta?.files_scanned ?? 0}
+        onRescan={doRefresh}
+        rescanning={rescanning}
+        lastScanAt={lastScanAt}
         mode={mode}
         onToggleTheme={toggleTheme}
-        onRefresh={onRefresh}
-        refreshing={refreshing}
+        onOpenRail={() => setRailOpen(true)}
       />
 
-      <main className="mx-auto max-w-[1440px] px-5 py-5 lg:px-8">
-        {error && !report ? (
-          <ErrorState message={error} onRetry={() => setReload((value) => value + 1)} />
-        ) : loading || !report ? (
-          <DashboardSkeleton />
-        ) : (
-          <div
-            className="space-y-4 transition-opacity duration-150"
-            style={{ opacity: refetching ? 0.55 : 1 }}
-          >
-            <FilterBar
-              meta={meta}
-              query={query}
-              onChange={setQuery}
-              onReset={onReset}
-              dirty={dirty}
-              modelLabel={modelLabel}
-            />
+      <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+        <FilterRail
+          meta={meta}
+          report={report}
+          query={query}
+          onChange={patchQuery}
+          onToggleFacet={toggleFacet}
+          onReset={() => patchQuery({ ...BLANK_QUERY, since: meta?.first_day ?? TODAY, until: TODAY })}
+          today={TODAY}
+          open={railOpen}
+          onClose={() => setRailOpen(false)}
+        />
 
-            {error ? (
-              <p className="rounded-xl border border-border bg-warn-soft px-4 py-3 text-[13px] text-ink">
-                {error}
-              </p>
-            ) : null}
-
-            {noticeVisible ? (
-              <Notices report={report} onDismiss={() => setDismissed(true)} />
-            ) : null}
-
-            {!hasData ? (
-              <EmptyState onReset={onReset} />
-            ) : (
-              <>
-                <KpiRow report={report} clientOrder={clientOrder} mode={mode} />
-
-                <CacheSavings totals={report.totals} />
-
-                <Card>
-                  <CardHeader
-                    title={metric === 'cost' ? 'Cost over time' : 'Tokens over time'}
-                    hint={`Daily totals, stacked by ${stackBy}. Days with no activity read as zero.`}
-                    actions={
-                      <>
-                        <Segmented
-                          label="Stack"
-                          value={stackBy}
-                          onChange={setStackBy}
-                          options={[
-                            { value: 'client', label: 'Client' },
-                            { value: 'provider', label: 'Provider' },
-                            { value: 'model', label: 'Model' },
-                          ]}
-                        />
-                        <Segmented
-                          label="Show"
-                          value={metric}
-                          onChange={setMetric}
-                          options={[
-                            { value: 'cost', label: 'Cost' },
-                            { value: 'tokens', label: 'Tokens' },
-                          ]}
-                        />
-                      </>
-                    }
-                  />
-                  <CostOverTime
-                    series={report.series}
-                    stackBy={stackBy}
-                    metric={metric}
-                    identityIndex={identityIndex}
-                    labelFor={labelFor}
-                    mode={mode}
-                  />
-                </Card>
-
-                <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-                  <Card>
-                    <CardHeader
-                      title="Cost by model"
-                      hint="API-equivalent spend for each model in this slice."
-                    />
-                    <CostByModel
-                      buckets={report.by_model}
-                      identityIndex={modelIndex}
-                      mode={mode}
-                    />
-                  </Card>
-
-                  <Card>
-                    <CardHeader
-                      title="Token mix"
-                      hint="Where each model’s tokens went. Cache reads dominate — they bill at a tenth of the input price."
-                    />
-                    <TokenMix buckets={report.by_model} mode={mode} />
-                  </Card>
-                </div>
-
-                <Card>
-                  <CardHeader
-                    title="By project"
-                    hint="Attributed from each session's working directory. Sessions without one land in (no project)."
-                  />
-                  <ProjectBreakdown buckets={report.by_project} />
-                </Card>
-
-                <Card>
-                  <CardHeader
-                    title="Sessions"
-                    hint={`${formatCount(report.sessions.length)} sessions in this slice — click a column header to re-sort.`}
-                  />
-                  <SessionsTable
-                    report={report}
-                    clientLabel={clientLabel}
-                    clientIndex={clientIndex}
-                    providerLabel={providerLabel}
-                    providerIndex={providerIndex}
-                    modelLabel={modelLabel}
-                    modelIndex={modelIndex}
-                    mode={mode}
-                  />
-                </Card>
-              </>
-            )}
-
-            <p className="pt-1 pb-2 text-center text-[12px] text-muted">
-              Report generated {formatTimestamp(report.generated_at)} · list prices as of{' '}
-              {report.rates_as_of} · nothing left this machine.
-            </p>
+        <main className="app-main">
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>
+            <span className="num" style={{ fontSize: 11, color: 'var(--fg-muted)', opacity: refetching ? 0.5 : 1 }}>
+              {report ? `${report.totals.sessions} sessions · ${report.totals.events} requests` : 'loading slice…'}
+            </span>
+            {activeChips.map((chip) => (
+              <button
+                key={chip.key}
+                type="button"
+                className="chip is-active"
+                onClick={chip.onRemove}
+                style={{ height: 24, fontSize: 11, padding: '0 9px' }}
+              >
+                <span className="chip__group" style={{ fontSize: 9 }}>
+                  {chip.group}
+                </span>
+                {chip.label}
+                <span style={{ marginLeft: 6, opacity: 0.7 }}>×</span>
+              </button>
+            ))}
           </div>
-        )}
-      </main>
+
+          {view === 'overview' && report && meta && (
+            <Overview report={report} meta={meta} onSelectView={setView} />
+          )}
+          {view === 'sessions' && report && <Sessions report={report} onOpenSession={openSession} />}
+          {view === 'sources' && report && meta && <Sources report={report} meta={meta} />}
+          {view === 'pricing' && report && rates && <Pricing report={report} rates={rates} />}
+        </main>
+      </div>
+
+      {report && workspace && workspaceSession && (
+        <SessionWorkspace
+          key={`${workspace.source}/${workspace.id}`}
+          session={workspaceSession}
+          report={report}
+          tab={workspace.tab}
+          onSelectTab={selectWorkspaceTab}
+          onClose={closeWorkspace}
+        />
+      )}
     </div>
   )
 }

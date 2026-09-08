@@ -1,0 +1,96 @@
+/* ══════════════════════════════════════════════════════
+   COLOR TOKENS — Agentic AI Library
+   Cool slate/navy neutrals anchor the system; a single burnt-orange accent
+   carries emphasis, and a calm blue is reserved for links & category labels.
+   Light mode is the primary surface; dark mode is a full first-class theme.
+
+   Accent note: light mode uses a DEEP orange (#A04E00 ≈ 6:1 on white) so it
+   passes WCAG AA as body text on every page background. Dark mode restores the
+   brighter brand orange (#FF8200). This WCAG-AA rebalance is intentional, not
+   an inconsistency — the brand orange lives on dark, the accessible orange on
+   light.
+══════════════════════════════════════════════════════ */
+:root {
+  /* Surfaces */
+  --bg: #F8FAFC;          /* page background — cool off-white */
+  --bg-muted: #EBF0F5;    /* recessed panels, filter rail, cards */
+  --bg-panel: #FFFFFF;    /* raised card / input surface */
+  --bg-inverse: #141E28;  /* dark inverse block (deep navy-slate) */
+
+  /* Ink / text ramp */
+  --fg: #4B555F;          /* default body text */
+  --fg-strong: #141E28;   /* headings, high-emphasis */
+  --fg-muted: #52606C;    /* secondary text (~5.7:1 on white) */
+  --fg-faint: #535D69;    /* captions, labels, meta */
+  --fg-inverse: #F8FAFC;  /* text on dark surfaces */
+
+  /* Lines */
+  --border: #E1E6EB;      /* hairline dividers, card borders */
+  --border-strong: #C8D0D8;
+  --rule: #E1E6EB;
+
+  /* Accent — burnt orange */
+  --accent: #A04E00;      /* deep orange, AA on light backgrounds */
+  --accent-deep: #783A00; /* pressed / hover-darken */
+  --accent-soft: #FFE9D1; /* accent tint fill (active chips, badges) */
+
+  /* Semantic */
+  --link: #006BA1;        /* links + category labels (calm blue) */
+  --success: #1F6E40;     /* free / positive */
+  --rose: #C0392B;        /* destructive / negative */
+
+  /* Data-viz palette — 10 hueless-leaning tones for the domain cluster map.
+     Light-mode shades are darkened so white text stays ≥4.5:1 on each. */
+  --bubble-c-0: #a64f1f;
+  --bubble-c-1: #5d6a7b;
+  --bubble-c-2: #4c6175;
+  --bubble-c-3: #6E5F38;
+  --bubble-c-4: #5b6951;
+  --bubble-c-5: #74594b;
+  --bubble-c-6: #465872;
+  --bubble-c-7: #8a5530;
+  --bubble-c-8: #506560;
+  --bubble-c-9: #7a6280;
+}
+
+[data-theme="dark"] {
+  /* Surfaces */
+  --bg: #0D1520;
+  --bg-muted: #111C2B;
+  --bg-panel: #162030;
+  --bg-inverse: #F0F4F8;
+
+  /* Ink / text ramp */
+  --fg: #C8D4DF;
+  --fg-strong: #E8EEF4;
+  --fg-muted: #8899AA;
+  --fg-faint: #5A6A78;
+  --fg-inverse: #0D1520;
+
+  /* Lines */
+  --border: #1E2D3E;
+  --border-strong: #2A3D52;
+  --rule: #1E2D3E;
+
+  /* Accent — brighter brand orange on dark */
+  --accent: #FF8200;
+  --accent-deep: #CC6800;
+  --accent-soft: rgba(255,130,0,0.12);
+
+  /* Semantic */
+  --link: #38B0F0;
+  --success: #3CB371;
+  --rose: #E05C4F;
+
+  /* Data-viz palette — brighter on dark surfaces */
+  --bubble-c-0: #d8732f;
+  --bubble-c-1: #8796a7;
+  --bubble-c-2: #6f8899;
+  --bubble-c-3: #b9a46c;
+  --bubble-c-4: #7d8f74;
+  --bubble-c-5: #9a7f70;
+  --bubble-c-6: #61758f;
+  --bubble-c-7: #b7774d;
+  --bubble-c-8: #6f8d88;
+  --bubble-c-9: #a28aa5;
+}

@@ -7,6 +7,7 @@ from collections.abc import Iterator
 from pathlib import Path
 
 from ..models import UsageEvent
+from ..trace import Capabilities
 from .base import Source, parse_timestamp, read_json_lines
 
 _LOCAL_ENGINES = {"nitro", "llama.cpp", "cortex", "llamacpp"}
@@ -87,4 +88,7 @@ SOURCE = Source(
     default_roots=default_roots,
     files=jan_files,
     parse=parse,
+    token_data="session",
+    display_path="~/jan/threads, <app-data>/Jan/data/threads",
+    capabilities=Capabilities(),
 )

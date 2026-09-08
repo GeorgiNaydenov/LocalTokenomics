@@ -4,6 +4,7 @@ from collections.abc import Iterator
 from pathlib import Path
 
 from ..models import TokenUsage, UsageEvent
+from ..trace import Capabilities
 from .base import Source, as_int, jsonl_files, parse_timestamp, read_json_lines
 
 
@@ -83,4 +84,13 @@ SOURCE = Source(
     default_roots=default_roots,
     files=jsonl_files,
     parse=parse,
+    token_data="full",
+    display_path="none by default -- pass --root openai-compat=PATH",
+    capabilities=Capabilities(
+        trace="unavailable",
+        tokens="measured",
+        cost="derived",
+        context="unavailable",
+        latency="unavailable",
+    ),
 )

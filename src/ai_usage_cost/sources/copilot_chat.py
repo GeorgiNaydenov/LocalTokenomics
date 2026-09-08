@@ -7,6 +7,7 @@ from collections.abc import Iterator
 from pathlib import Path
 
 from ..models import UsageEvent
+from ..trace import Capabilities
 from .base import Source, parse_timestamp, project_of, read_sqlite, single_file
 
 _VARIANTS = ["Code", "Code - Insiders", "VSCodium", "VSCodium - Insiders"]
@@ -61,4 +62,7 @@ SOURCE = Source(
     default_roots=default_roots,
     files=single_file,
     parse=parse,
+    token_data="session",
+    display_path="<vscode-data>/User/globalStorage/github.copilot-chat/session-store.db",
+    capabilities=Capabilities(),
 )

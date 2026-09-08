@@ -188,6 +188,145 @@ def test_tokens_none_is_the_unavailable_state() -> None:
     assert state == "unavailable"
 
 
+def test_google_cache_read_is_ten_percent_not_the_old_25_percent() -> None:
+    cost = price(model="gemini-2.5-pro", uncached_input=M, cache_read=M, output=M)
+    assert cost.uncached_input == pytest.approx(1.25)
+    assert cost.cache_read == pytest.approx(0.125)
+    assert cost.output == pytest.approx(10.00)
+
+
+def test_google_cache_write_is_billed_like_ordinary_input() -> None:
+    cost = price(model="gemini-2.5-flash", uncached_input=M, cache_write_5m=M, cache_write_1h=M)
+    assert cost.cache_write == pytest.approx(2 * 0.30)
+
+
+def test_deepseek_cache_read_reflects_the_real_cache_hit_discount() -> None:
+    cost = price(model="deepseek-v4-pro", uncached_input=M, cache_read=M)
+    assert cost.uncached_input == pytest.approx(0.66)
+    assert cost.cache_read == pytest.approx(0.66 * 0.033)
+
+
+def test_deepseek_has_no_batch_discount() -> None:
+    cost = price(model="deepseek-v4-pro", tier="batch", uncached_input=M)
+    assert cost.uncached_input == pytest.approx(0.66)
+
+
+def test_moonshot_batch_and_cache_read_multipliers() -> None:
+    cost = price(model="kimi-k2.7-code", uncached_input=M, cache_read=M)
+    assert cost.cache_read == pytest.approx(0.95 * 0.2)
+    batch_cost = price(model="kimi-k2.7-code", tier="batch", uncached_input=M)
+    assert batch_cost.uncached_input == pytest.approx(0.95 * 0.6)
+
+
+def test_xai_has_no_batch_discount_by_default() -> None:
+    cost = price(model="grok-4.6", tier="batch", uncached_input=M, cache_read=M)
+    assert cost.uncached_input == pytest.approx(2.00)
+    assert cost.cache_read == pytest.approx(2.00 * 0.25)
+
+
+def test_alibaba_implicit_cache_read_discount() -> None:
+    cost = price(model="qwen-max", uncached_input=M, cache_read=M)
+    assert cost.cache_read == pytest.approx(2.00 * 0.2)
+
+
+def test_zhipu_has_no_batch_discount() -> None:
+    cost = price(model="glm-4.5", tier="batch", uncached_input=M, cache_read=M)
+    assert cost.uncached_input == pytest.approx(0.60)
+    assert cost.cache_read == pytest.approx(0.60 * 0.2)
+
+
+def test_mistral_has_a_real_cache_discount_and_batch_halves_the_price() -> None:
+    cost = price(model="mistral-large-3", uncached_input=M, cache_read=M)
+    assert cost.cache_read == pytest.approx(0.50 * 0.1)
+    batch_cost = price(model="mistral-large-3", tier="batch", uncached_input=M, output=M)
+    assert batch_cost.uncached_input == pytest.approx(0.25)
+    assert batch_cost.output == pytest.approx(0.75)
+
+
+def test_minimax_cache_write_premium() -> None:
+    cost = price(model="minimax-m3", uncached_input=M, cache_write_5m=M)
+    assert cost.cache_write == pytest.approx(0.30 * 1.25)
+
+
+def test_amazon_nova_cache_read_and_batch() -> None:
+    cost = price(model="amazon-nova-pro", uncached_input=M, cache_read=M)
+    assert cost.cache_read == pytest.approx(0.80 * 0.25)
+    batch_cost = price(model="amazon-nova-pro", tier="batch", uncached_input=M, output=M)
+    assert batch_cost.uncached_input == pytest.approx(0.40)
+    assert batch_cost.output == pytest.approx(1.60)
+
+
+def test_no_provider_silently_falls_back_to_anthropic_shaped_cache_defaults() -> None:
+    for name in ["deepseek", "moonshot", "xai", "alibaba", "zhipu", "mistral", "minimax", "amazon"]:
+        rules = TABLE.rules_for(name)
+        assert (rules.cache_read, rules.cache_write_5m, rules.cache_write_1h, rules.batch) != (
+            0.1,
+            1.25,
+            2.0,
+            0.5,
+        )
+
+
+def test_gpt_5_2_codex_does_not_collide_with_plain_gpt_5() -> None:
+    rate = TABLE.lookup("gpt-5.2-codex")
+    assert rate is not None
+    assert rate.match == "gpt-5.2-codex"
+    assert (rate.input, rate.output) == (1.75, 14.0)
+
+
+def test_claude_fable_5_1_does_not_collide_with_claude_fable_5() -> None:
+    rate = TABLE.lookup("claude-fable-5-1")
+    assert rate is not None
+    assert rate.match == "claude-fable-5-1"
+    assert (rate.input, rate.output) == (10.0, 50.0)
+
+
+def test_claude_fable_5_1_cache_read_uses_its_own_discount_not_the_provider_default() -> None:
+    cost = price(model="claude-fable-5-1", cache_read=M)
+    assert cost.cache_read == pytest.approx(0.25)
+
+
+def test_claude_mythos_5_1_cache_read_uses_its_own_discount_not_the_provider_default() -> None:
+    cost = price(model="claude-mythos-5-1", cache_read=M)
+    assert cost.cache_read == pytest.approx(0.25)
+
+
+def test_claude_fable_5_cache_read_still_uses_the_provider_default() -> None:
+    cost = price(model="claude-fable-5", cache_read=M)
+    assert cost.cache_read == pytest.approx(1.0)
+
+
+def test_claude_fable_5_1_cache_write_and_batch_still_use_the_provider_default() -> None:
+    cost = price(model="claude-fable-5-1", cache_write_5m=M, cache_write_1h=M)
+    assert cost.cache_write == pytest.approx(12.5 + 20.0)
+    batch_cost = price(model="claude-fable-5-1", tier="batch", uncached_input=M)
+    assert batch_cost.uncached_input == pytest.approx(5.0)
+
+
+def test_gpt_6_astra_is_priced() -> None:
+    rate = TABLE.lookup("gpt-6-astra")
+    assert rate is not None
+    assert (rate.input, rate.output) == (10.0, 50.0)
+
+
+def test_lookup_flags_a_versioned_snapshot_as_inherited() -> None:
+    rate = TABLE.lookup("claude-opus-4-5-20251101")
+    assert rate is not None
+    assert rate.inherited is True
+
+
+def test_lookup_does_not_flag_an_exact_match_as_inherited() -> None:
+    rate = TABLE.lookup("claude-fable-5-1")
+    assert rate is not None
+    assert rate.inherited is False
+
+
+def test_lookup_inherited_flag_does_not_mutate_the_shared_rate() -> None:
+    TABLE.lookup("claude-opus-4-5-20251101")
+    stored = next(m for m in TABLE.models if m.match == "claude-opus-4-5")
+    assert stored.inherited is False
+
+
 def test_free_provider_prices_at_zero() -> None:
     local = UsageEvent(
         source="ollama-app", client="ollama-app", provider="local", model="llama3",
@@ -198,3 +337,35 @@ def test_free_provider_prices_at_zero() -> None:
     assert state == "free"
     assert cost is not None
     assert cost.total == 0.0
+
+
+def test_every_declared_context_window_is_a_positive_int() -> None:
+    declared = [rate for rate in TABLE.models if rate.context_window is not None]
+    assert declared
+    for rate in declared:
+        assert isinstance(rate.context_window, int)
+        assert not isinstance(rate.context_window, bool)
+        assert rate.context_window > 0
+
+
+def test_every_priced_model_states_a_context_window() -> None:
+    missing = [rate.match for rate in TABLE.models if rate.context_window is None]
+    assert missing == []
+
+
+def test_context_windows_match_the_vendors_stated_limits() -> None:
+    assert TABLE.lookup("claude-opus-5").context_window == 1_000_000
+    assert TABLE.lookup("claude-haiku-4-5").context_window == 200_000
+    assert TABLE.lookup("gpt-6-astra").context_window == 922_000
+    assert TABLE.lookup("gpt-5-codex").context_window == 272_000
+    assert TABLE.lookup("gemini-3.1-pro").context_window == 1_048_576
+    assert TABLE.lookup("grok-4.3").context_window == 1_000_000
+    assert TABLE.lookup("minimax-m2").context_window == 204_800
+    assert TABLE.lookup("totally-unknown-model") is None
+
+
+def test_a_long_context_model_id_inherits_its_row_and_window() -> None:
+    rate = TABLE.lookup("claude-sonnet-5[1m]")
+    assert rate is not None
+    assert rate.inherited is True
+    assert rate.context_window == 1_000_000

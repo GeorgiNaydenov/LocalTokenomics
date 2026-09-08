@@ -14,7 +14,7 @@
               : window.matchMedia('(prefers-color-scheme: dark)').matches
                 ? 'dark'
                 : 'light'
-          document.documentElement.classList.toggle('dark', mode === 'dark')
+          document.documentElement.dataset.theme = mode
           document.documentElement.style.colorScheme = mode
         } catch (e) {}
       })()

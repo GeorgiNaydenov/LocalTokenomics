@@ -9,6 +9,8 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
+from .collect import collect as collect_samples
+from .collect import select_backend
 from .pipeline import DEFAULT_DB_PATH, analyze, report_of
 from .render.terminal import render
 
@@ -137,6 +139,33 @@ def export(
         console.print(f"[red]Unsupported extension {suffix!r}.[/red] Use .json or .png.")
         raise typer.Exit(code=2)
     console.print(f"Wrote [green]{out}[/green]")
+
+
+@app.command()
+def collect(
+    interval: Annotated[float, typer.Option(help="Seconds between samples.")] = 2.0,
+    tdp_watts: Annotated[
+        float | None,
+        typer.Option(help="GPU TDP in watts. Without it energy stays unavailable."),
+    ] = None,
+    duration: Annotated[
+        float | None, typer.Option(help="Stop after this many seconds. Default: until Ctrl+C.")
+    ] = None,
+    db: Db = None,
+) -> None:
+    backend = select_backend()
+    if backend is None:
+        console.print("[red]No GPU sampler available.[/red] nvidia-smi is not on PATH and "
+                      "PowerShell performance counters are unavailable.")
+        raise typer.Exit(code=1)
+    db_path = db or DEFAULT_DB_PATH
+    console.print(f"Sampling via [green]{backend}[/green] every {interval:g}s -> {db_path}")
+    samples, energy = collect_samples(db_path, interval, tdp_watts, duration=duration)
+    console.print(f"Wrote [green]{len(samples):,}[/green] sample(s).")
+    if energy is None:
+        console.print("[dim]Energy unavailable: pass --tdp-watts to estimate it.[/dim]")
+    else:
+        console.print(f"Energy [green]{energy:.6f}[/green] kWh (estimated from TDP, not measured)")
 
 
 if __name__ == "__main__":

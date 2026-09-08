@@ -1,0 +1,40 @@
+/* ══════════════════════════════════════════════════════
+   FONTS — Agentic AI Library
+   An inclusive-design, fully free (SIL Open Font License) pairing — chosen
+   for legibility and reduced reading strain, self-hosted so the app makes
+   zero network requests.
+     • Lexend      (display / headings — variable family engineered on the
+                    Shaver-Troup formulation to improve reading proficiency and
+                    reduce visual stress; its open counters + expanded spacing
+                    read confidently at large sizes. Google/Bonnie
+                    Shaver-Troup, OFL)
+     • Inter       (sans / body & UI — a tighter, neutral companion that avoids
+                    Lexend's loose feel at 15–16px body sizes and keeps dense UI
+                    microcopy compact and legible, OFL)
+     • Geist Mono  (mono / numerals, labels, code — Vercel, OFL)
+   Rationale: inclusive-type guidance pairs Lexend for reading/brand type with a
+   slightly tighter face for UI text, rather than setting everything in Lexend.
+   Self-hosted as variable woff2 files under ../fonts/ — see LICENSE.md there
+   for the OFL text and attribution.
+══════════════════════════════════════════════════════ */
+@font-face {
+  font-family: 'Lexend';
+  src: url('../fonts/lexend-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/inter-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../fonts/geist-mono-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

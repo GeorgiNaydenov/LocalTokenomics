@@ -14,13 +14,13 @@
               : window.matchMedia('(prefers-color-scheme: dark)').matches
                 ? 'dark'
                 : 'light'
-          document.documentElement.classList.toggle('dark', mode === 'dark')
+          document.documentElement.dataset.theme = mode
           document.documentElement.style.colorScheme = mode
         } catch (e) {}
       })()
     </script>
-    <script type="module" crossorigin src="./assets/index-BdG8UcpG.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Yh_VArBR.css">
+    <script type="module" crossorigin src="./assets/index-DMgy1Hjy.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Cq9KnRNR.css">
   </head>
   <body>
     <div id="root"></div>

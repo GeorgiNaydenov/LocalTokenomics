@@ -1,0 +1,34 @@
+/* ══════════════════════════════════════════════════════
+   SPACING · GEOMETRY · ELEVATION · MOTION — Agentic AI Library
+   8px base grid. Corners are near-square (2px) — the system reads as
+   engineered and editorial, not soft. The only round forms are pills
+   (999px) and circular avatars/markers. Shadows are restrained and
+   neutral-tinted; never colored glows. Motion is quick and precise —
+   no bounce, no decorative loops.
+══════════════════════════════════════════════════════ */
+:root {
+  /* Spacing scale (8px base) */
+  --sp-1: 0.25rem;   /* 4 */
+  --sp-2: 0.5rem;    /* 8 */
+  --sp-3: 0.75rem;   /* 12 */
+  --sp-4: 1rem;      /* 16 */
+  --sp-5: 1.5rem;    /* 24 */
+  --sp-6: 2rem;      /* 32 */
+  --sp-7: 2.5rem;    /* 40 */
+  --sp-8: 3rem;      /* 48 */
+  --sp-9: 4rem;      /* 64 */
+
+  /* Radius — deliberately minimal */
+  --radius: 2px;         /* default: cards, buttons, inputs, badges */
+  --radius-sm: 2px;      /* alias */
+  --radius-pill: 999px;  /* chips, toggles, avatars */
+
+  /* Elevation — subtle, neutral-tinted */
+  --sh-1: 0 1px 2px rgba(20,30,40,.06);
+  --sh-2: 0 2px 8px rgba(20,30,40,.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,.18);
+
+  /* Motion */
+  --dur: 200ms; /* @kind other */
+  --ease: cubic-bezier(.2,.7,.2,1); /* @kind other */
+}

@@ -1,0 +1,17 @@
+/* ══════════════════════════════════════════════════════
+   Agentic AI Library — Design System
+   Global entry point. Consumers link THIS one file.
+   Import order defines the cascade: fonts → tokens → base → components.
+══════════════════════════════════════════════════════ */
+
+/* Foundations */
+@import "./tokens/fonts.css";
+@import "./tokens/colors.css";
+@import "./tokens/typography.css";
+@import "./tokens/spacing.css";
+@import "./tokens/base.css";
+
+/* Component styles (shipped classes) */
+@import "./components/core.css";
+@import "./components/forms.css";
+@import "./components/patterns.css";

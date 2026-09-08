@@ -3,11 +3,15 @@ from __future__ import annotations
 import json
 import sqlite3
 from collections.abc import Callable, Iterator, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Literal
 
 from ..models import UsageEvent
+from ..trace import Capabilities, Span
+
+TokenData = Literal["full", "session"]
 
 
 @dataclass(frozen=True)
@@ -18,11 +22,24 @@ class Source:
     default_roots: Callable[[], list[Path]]
     files: Callable[[Path], list[Path]]
     parse: Callable[[Path, list[str]], Iterator[UsageEvent]]
+    token_data: TokenData
+    display_path: str
+    spans: Callable[[Path, list[str]], Iterator[Span]] | None = None
+    capabilities: Capabilities = field(default_factory=Capabilities)
+
+    @property
+    def root_hint(self) -> str:
+        return f"--root {self.id}=PATH"
+
+
+def present_roots(source: Source, roots: Sequence[Path] | None) -> list[Path]:
+    chosen = roots if roots is not None else source.default_roots()
+    return [root for root in chosen if root.exists()]
 
 
 def scan(
     source: Source, roots: Sequence[Path] | None
-) -> Iterator[tuple[Path, list[UsageEvent], list[str]]]:
+) -> Iterator[tuple[Path, list[UsageEvent], list[Span], list[str]]]:
     for root in roots if roots is not None else source.default_roots():
         if not root.exists():
             continue
@@ -30,10 +47,11 @@ def scan(
             warnings: list[str] = []
             try:
                 events = list(source.parse(path, warnings))
+                spans = list(source.spans(path, warnings)) if source.spans else []
             except OSError as exc:
-                yield path, [], [f"{source.id}: cannot read {path}: {exc}"]
+                yield path, [], [], [f"{source.id}: cannot read {path}: {exc}"]
                 continue
-            yield path, events, warnings
+            yield path, events, spans, warnings
 
 
 def read_json_lines(path: Path, warnings: list[str]) -> Iterator[dict]:
@@ -50,6 +68,27 @@ def read_json_lines(path: Path, warnings: list[str]) -> Iterator[dict]:
                 continue
             if isinstance(obj, dict):
                 yield obj
+    if bad > 1:
+        warnings.append(f"{path.name}: skipped {bad} unparsable lines")
+
+
+def read_json_records(path: Path, warnings: list[str]) -> Iterator[tuple[int, int, dict]]:
+    bad = 0
+    offset = 0
+    with path.open("rb") as handle:
+        for raw in handle:
+            start = offset
+            offset += len(raw)
+            line = raw.decode("utf-8", errors="replace").strip()
+            if not line:
+                continue
+            try:
+                obj = json.loads(line)
+            except json.JSONDecodeError:
+                bad += 1
+                continue
+            if isinstance(obj, dict):
+                yield start, len(raw), obj
     if bad > 1:
         warnings.append(f"{path.name}: skipped {bad} unparsable lines")
 

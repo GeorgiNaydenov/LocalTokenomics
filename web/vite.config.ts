@@ -1,10 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   base: './',
-  plugins: [react(), tailwindcss()],
+  plugins: [react()],
   build: {
     outDir: '../src/ai_usage_cost/web/dist',
     emptyOutDir: true,

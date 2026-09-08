@@ -6,6 +6,7 @@ from collections.abc import Iterator
 from pathlib import Path
 
 from ..models import UsageEvent
+from ..trace import Capabilities
 from .base import Source, parse_timestamp, read_sqlite, single_file
 
 
@@ -49,4 +50,7 @@ SOURCE = Source(
     default_roots=default_roots,
     files=single_file,
     parse=parse,
+    token_data="session",
+    display_path=r"%LOCALAPPDATA%\Ollama\db.sqlite (and platform equivalents)",
+    capabilities=Capabilities(),
 )

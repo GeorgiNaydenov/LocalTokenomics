@@ -16,6 +16,14 @@ class RateVariant(BaseModel):
     output: float
 
 
+class ProviderRules(BaseModel):
+    cache_read: float = 0.1
+    cache_write_5m: float = 1.25
+    cache_write_1h: float = 2.0
+    batch: float = 0.5
+    free: bool = False
+
+
 class ModelRate(BaseModel):
     match: str
     provider: str
@@ -23,20 +31,15 @@ class ModelRate(BaseModel):
     input: float
     output: float
     variants: dict[str, RateVariant] = Field(default_factory=dict)
+    cache_rules: ProviderRules | None = None
+    context_window: int | None = None
+    inherited: bool = False
 
     def for_tier(self, tier: str) -> RateVariant:
         variant = self.variants.get(tier)
         if variant is not None:
             return variant
         return RateVariant(input=self.input, output=self.output)
-
-
-class ProviderRules(BaseModel):
-    cache_read: float = 0.1
-    cache_write_5m: float = 1.25
-    cache_write_1h: float = 2.0
-    batch: float = 0.5
-    free: bool = False
 
 
 class Prefix(BaseModel):
@@ -65,6 +68,8 @@ class RateTable(BaseModel):
         for rate in self.models:
             if name.startswith(rate.match) and (best is None or len(rate.match) > len(best.match)):
                 best = rate
+        if best is not None and len(best.match) < len(name):
+            return best.model_copy(update={"inherited": True})
         return best
 
     def rules_for(self, provider: str) -> ProviderRules:
@@ -120,7 +125,8 @@ def price_event(event: UsageEvent, table: RateTable) -> tuple[CostBreakdown | No
         return CostBreakdown(), "free"
     if state != "priced" or rate is None or event.tokens is None:
         return None, state
-    return cost_of(event.tokens, rate, table.rules_for(rate.provider), event.tier), "priced"
+    rules = rate.cache_rules or table.rules_for(rate.provider)
+    return cost_of(event.tokens, rate, rules, event.tier), "priced"
 
 
 def cost_of(

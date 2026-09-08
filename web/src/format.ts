@@ -55,6 +55,18 @@ export function formatExact(value: number): string {
   return `${plain.format(Math.round(value))} tokens`
 }
 
+export function formatDuration(ms: number): string {
+  if (!Number.isFinite(ms) || ms < 0) return '--'
+  if (ms < 999.5) return `${Math.round(ms)}ms`
+  const seconds = ms / 1000
+  if (seconds < 59.95) return `${seconds.toFixed(1)}s`
+  const total = Math.round(seconds)
+  const hours = Math.floor(total / 3600)
+  const minutes = Math.floor((total % 3600) / 60)
+  if (hours > 0) return `${hours}h ${String(minutes).padStart(2, '0')}m`
+  return `${minutes}m ${String(total % 60).padStart(2, '0')}s`
+}
+
 export function formatPercent(value: number, digits = 0): string {
   return `${(value * 100).toFixed(digits)}%`
 }
@@ -89,6 +101,18 @@ export function formatTimestamp(iso: string | null): string {
     hour: 'numeric',
     minute: '2-digit',
   })
+}
+
+const clock = new Intl.DateTimeFormat('en-GB', {
+  hour: '2-digit',
+  minute: '2-digit',
+  hourCycle: 'h23',
+})
+
+export function formatClock(iso: string): string {
+  const date = new Date(iso)
+  if (Number.isNaN(date.getTime())) return iso
+  return clock.format(date)
 }
 
 export function formatDateRange(first: string | null, last: string | null): string {

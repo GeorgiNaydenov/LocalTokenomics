@@ -1,0 +1,76 @@
+/* ══════════════════════════════════════════════════════
+   CORE COMPONENTS — chips, tags, arrow links, icon buttons, theme toggle.
+   (Buttons, badges, eyebrow and section-title live in tokens/base.css.)
+══════════════════════════════════════════════════════ */
+
+/* ── Chip / Tag (pill) ─────────────────────────────── */
+.chip {
+  display: inline-flex; align-items: center; height: 28px;
+  padding: 0 var(--sp-3); border-radius: 999px;
+  border: 1px solid var(--border); background: var(--bg-panel);
+  font-size: var(--fs-xs); font-weight: var(--fw-bold);
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--fg-muted); cursor: pointer;
+  transition: border-color var(--dur), color var(--dur), background var(--dur);
+}
+.chip:hover, .chip.is-active { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.chip__group {
+  color: var(--fg-faint); margin-right: var(--sp-2);
+  padding-right: var(--sp-2); border-right: 1px solid var(--border);
+}
+.chip__count { font-size: 0.75em; color: var(--fg-faint); margin-left: var(--sp-1); }
+.chip.is-active .chip__count { color: var(--accent); }
+.chip-row { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+/* ── Arrow link (label + sliding arrow) ────────────── */
+.arrow-link {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  color: var(--accent);
+  font-size: var(--fs-sm); font-weight: var(--fw-bold);
+  letter-spacing: var(--tr-eyebrow); text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+  background: none; border: 0;
+}
+.arrow-link svg { transition: transform var(--dur) var(--ease); }
+.arrow-link:hover svg { transform: translateX(3px); }
+.arrow-link--link { color: var(--link); }
+
+/* ── Icon button (square, hairline) ────────────────── */
+.icon-button {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; flex-shrink: 0;
+  border: 1px solid var(--border); border-radius: 2px;
+  background: transparent; color: var(--fg-muted); cursor: pointer;
+  transition: background var(--dur), color var(--dur), border-color var(--dur);
+}
+.icon-button:hover { background: var(--bg-panel); color: var(--fg-strong); border-color: var(--border-strong); }
+.icon-button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* ── Theme toggle (sliding sun / moon pill) ────────── */
+.theme-toggle {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: space-between;
+  gap: var(--sp-2);
+  width: 60px; height: 30px; padding: 0 7px;
+  border: 1px solid var(--border); border-radius: 999px;
+  background: var(--bg-muted); cursor: pointer;
+  transition: background var(--dur), border-color var(--dur);
+}
+.theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.theme-toggle__icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  z-index: 1; line-height: 0; transition: color var(--dur);
+}
+.theme-toggle__icon--sun { color: var(--accent); }
+.theme-toggle__icon--moon { color: var(--fg-faint); }
+.theme-toggle.is-dark .theme-toggle__icon--sun { color: var(--fg-faint); }
+.theme-toggle.is-dark .theme-toggle__icon--moon { color: var(--accent); }
+.theme-toggle__knob {
+  position: absolute; top: 50%; left: 3px;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--bg-panel); border: 1px solid var(--border-strong);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  transform: translateY(-50%);
+  transition: transform var(--dur) var(--ease);
+}
+.theme-toggle.is-dark .theme-toggle__knob { transform: translate(30px, -50%); }

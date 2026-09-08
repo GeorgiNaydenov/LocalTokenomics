@@ -6,6 +6,7 @@ from typing import Literal
 from pydantic import BaseModel, Field, computed_field
 
 CostState = Literal["priced", "free", "unpriced", "unavailable"]
+Provenance = Literal["measured", "derived", "estimated", "inferred", "unavailable"]
 
 
 class TokenUsage(BaseModel):
