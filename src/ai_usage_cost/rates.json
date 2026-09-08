@@ -1,0 +1,795 @@
+{
+  "as_of": "2026-09-08",
+  "currency": "USD",
+  "units": "price per 1,000,000 tokens",
+  "notes": [
+    "Edit this file to correct or extend the price table -- nothing here is fetched at runtime.",
+    "Multipliers apply to the model's base input price.",
+    "Anthropic current-model prices are from the Claude API pricing table cached 2026-06-24.",
+    "OpenAI prices reflect the July 2026 price cut; verify against platform.openai.com/pricing.",
+    "Pre-2025 model rates are best-effort historical values -- check them before trusting old totals.",
+    "claude-fable-5 and claude-mythos-5 copy claude-opus-5's fast-tier price as a placeholder -- unverified, check before trusting totals for these two. claude-fable-5-1 and claude-mythos-5-1 are separately confirmed at the same $10/$50 rate against Anthropic's own announcement (see below), which does not itself confirm the un-suffixed 5-tier guess.",
+    "google, xai, deepseek, alibaba, moonshot, zhipu and mistral base input/output prices confirmed 2026-09-07 against each vendor's own pricing page.",
+    "amazon (Nova) and minimax (international USD) prices are cross-corroborated from secondary sources, not read directly off the official page -- verify before trusting totals.",
+    "nvidia and meta have no published per-token API price (licensing/enterprise or open-weights-only) -- not modeled here; route those through a third-party host's own rate if you need them priced.",
+    "openrouter is a pass-through with no per-token markup; bedrock and vertex are at parity with the direct API for the same model; azure is its own rate card, not assumed at parity.",
+    "Cache and batch multipliers for all twelve providers were researched and set explicitly 2026-09-08 -- a provider absent from `providers` no longer silently inherits anthropic-shaped cache economics. Per-provider citations follow.",
+    "anthropic cache multipliers (read 0.1, write 5m 1.25, write 1h 2.0, batch 0.5) reconfirmed 2026-09-08 against docs.anthropic.com/en/docs/build-with-claude/prompt-caching and claude.com/pricing.",
+    "openai cache multipliers (read 0.1, write 5m/1h 1.25, batch 0.5) reconfirmed 2026-09-08 against developers.openai.com/api/docs/guides/prompt-caching and the gpt-6-astra model page. The 1.25x write premium is real but only applies to gpt-5.6-and-later models -- gpt-5, gpt-5-codex, gpt-5.2-codex, gpt-5-mini, gpt-5-nano, gpt-4.1, gpt-4o, o3 and o4-mini have no cache-write charge per their own model pages (developers.openai.com/api/docs/models/gpt-5, /gpt-5-codex, /gpt-5.2-codex), so this provider-wide rate overstates their cache-write cost slightly; ProviderRules has no per-model-generation override.",
+    "google cache read corrected 2026-09-08 from 0.25x to 0.1x against ai.google.dev/gemini-api/docs/pricing -- Gemini 2.5 Pro, 2.5 Flash and the 3.x Flash line all show cached input at exactly 10% of standard input. Gemini bills cache *writes* as a separate per-token-per-hour storage fee (e.g. $4.50/M tokens/hour for 2.5 Pro) that this app's per-token multiplier cannot express -- cache_write_5m/1h are pinned to 1.0 (written tokens bill like ordinary input, no per-token creation premium); the untracked hourly storage cost is the honest gap this leaves. Do not read cache_write=1.0 as 'writes are free'.",
+    "deepseek cache read set to 0.033x 2026-09-08 against api-docs.deepseek.com/quick_start/pricing/ (deepseek-v4-pro $0.022 cache-hit / $0.66 miss = 0.033x, deepseek-v4-flash $0.007/$0.22 = 0.032x). The dead per-model `cache_hit` variants that used to encode this are removed now that it's a provider rule. DeepSeek has no batch API at all per the same page -- batch is pinned to 1.0, correcting the previous unsupported 0.5 guess. Cache writes have no separate charge (pinned to 1.0).",
+    "moonshot cache read set to 0.2x 2026-09-08 against platform.kimi.ai/docs/pricing/chat-k27-code and chat-k26 (kimi-k2.7-code $0.19/$0.95=0.2x, kimi-k2.6 $0.16/$0.95=0.168x). kimi-k3 actually gets a better 0.1x ($0.30/$3.00 per platform.kimi.ai/docs/pricing/chat-k3) not captured by this flat provider rate -- 0.2x was chosen deliberately as the more conservative (less generous) figure so k3's real savings are never overstated. Batch confirmed at 0.6x against platform.kimi.ai/docs/pricing/batch, but that page only lists kimi-k2.7-code and kimi-k2.6 -- k3 has no published batch rate and inherits this same 0.6x as a best-available approximation. Dead per-model `cache_hit` variants removed now that it's a provider rule. Cache writes have no separate charge.",
+    "xai cache read set to 0.25x 2026-09-08 against docs.x.ai/developers/pricing (grok-4.6 cached $0.50 / input $2.00 = 0.25x); grok-4.5 (0.15x) and grok-4.3/4.20 (0.16x) actually get better rates not captured by this flat figure -- chosen deliberately conservative. Batch pinned to 1.0: xAI's docs list a real 20% batch discount, but only for grok-4.3 and the grok-4.20 variants, not grok-4.5, grok-4.6 or grok-build, so no single provider-wide multiplier can be honest for all five -- 1.0 avoids reporting a discount most requests never get. Cache writes have no separate charge.",
+    "alibaba cache rules set 2026-09-08 against alibabacloud.com/help/en/model-studio/context-cache. This app models Alibaba's *implicit* (automatic) caching, since that's what usage logs actually reflect -- cache_read 0.2x, no write charge (cache_write pinned to 1.0). Alibaba's separate *explicit* developer-managed cache API (write 1.25x, read 0.1x) is not modeled since nothing in this app issues explicit cache-control calls. Batch set to 0.5x per the same research (e.g. Qwen3-Max batch halves both input and output).",
+    "zhipu cache read set to 0.2x 2026-09-08 against docs.z.ai/guides/overview/pricing (glm-5.3/5.2 $0.26/$1.40=0.186x, glm-4.7/4.5 $0.11/$0.60=0.183x, glm-4.5-air $0.03/$0.20=0.15x) -- 0.2x is the conservative round figure so no GLM model's real savings are overstated. Cache write is currently listed as 'limited-time free' -- pinned to 1.0, but that's a promotion, not a permanent rate; recheck before trusting long-run totals. No published batch API/discount was found for Zhipu -- batch pinned to 1.0.",
+    "mistral cache rules set 2026-09-08 against docs.mistral.ai/studio-api/conversations/advanced/prompt-caching and mistral.ai/pricing. Contrary to this file's earlier assumption that Mistral has no caching, Mistral does cache prompts at up to 90% off (cache_read 0.1x), with no write premium documented (cache_write pinned to 1.0). Batch confirmed at 0.5x -- checks out exactly against this file's own mistral-large-3 and mistral-small-4 input prices (published batch rates of $0.25/M and $0.075/M are precisely half of $0.50/M and $0.15/M).",
+    "minimax cache rules set 2026-09-08, secondary-sourced like the rest of this provider's rows (api.minimax.io pricing was not reachable directly at research time) -- verify before trusting totals. minimax-m2 and minimax-m2.7 show cache_read 0.1x-0.2x and a real cache_write premium of 1.25x; minimax-m3 (current flagship) shows cache_read 0.2x with no write premium listed. The provider rule uses the more conservative cache_read 0.2x and keeps the 1.25x write premium since it's real for two of the three minimax models in this file, at the cost of overstating m3's own cache-write cost. Batch set to 0.5x (secondary-sourced).",
+    "amazon (Nova) cache_read set to 0.25x 2026-09-08, corroborated by multiple secondary sources describing Nova's 75%-off cache-read discount. Nova's cache-*write* premium is inconsistently reported across secondary sources (one says free, another gives a much larger multiple) -- this file uses 1.25x for consistency with how every other Bedrock-hosted model (Anthropic, OpenAI GPT-5.6+) prices a cache write on the same platform; verify directly against a Nova-heavy account before trusting cache-write totals specifically. Batch confirmed at 0.5x.",
+    "The `long_context_200k` variants formerly on both Gemini Pro entries and all five Grok models are removed. xAI and Google do genuinely charge more past a long-context threshold (Grok: 200k tokens, 2x; Gemini: 200k tokens, roughly 2x; GPT-6 Astra: 272k tokens, 2x input/cache and 1.5x output), but no source parser in this app reports prompt length, so `for_tier()` could never select them -- they were dead config. The base (short-context) price is what this app bills for every event it can see; recheck this note if a future source starts reporting context length.",
+    "gpt-6-astra added 2026-09-08 from developers.openai.com/api/docs/models/gpt-6-astra: $10/$50 input/output, cached input $1 (0.1x, matches the openai provider rule), cache write $12.50 (1.25x, matches the openai provider rule), batch/flex at 50% off (matches the openai provider rule). Its >272k-token tier and 2x 'Fast mode' are not modeled, for the same reason the long_context_200k variants were removed above.",
+    "gpt-5.2-codex added 2026-09-08 from developers.openai.com/api/docs/models/gpt-5.2-codex ($1.75/$14, cached $0.175) as an explicit row. Without it, the model id 'gpt-5.2-codex' silently matched the shorter 'gpt-5' prefix (input $1.25/output $10) instead of its own real price -- a genuine prefix-collision bug, distinct from and priced higher than gpt-5-codex's own $1.25/$10.",
+    "claude-fable-5-1 and claude-mythos-5-1 added 2026-09-08 from anthropic.com/claude-fable-and-mythos-5-1 and platform.claude.com/docs/en/about-claude/pricing, cross-checked against AWS Bedrock's own supported-model table at docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html: $10/$50 input/output, matching the placeholder guess already in this file for the un-suffixed claude-fable-5/claude-mythos-5 (itself still unverified, see above). Without these explicit rows, 'claude-fable-5-1' and 'claude-mythos-5-1' would silently inherit the shorter 'claude-fable-5'/'claude-mythos-5' prefixes -- another real prefix collision. Anthropic's own pricing page states Fable/Mythos 5.1 cache reads are billed at 0.025x the base input price ($0.25/MTok), not the provider-wide anthropic 0.1x every other current Claude model uses -- this is now modeled with an explicit per-model cache_rules override on these two rows rather than left as an unmodeled overestimate.",
+    "context_window added 2026-09-08 and populated only where the vendor's own documentation states the figure -- a model without it leaves context occupancy unavailable rather than guessing, which is the honest outcome the dashboard is built to render. Anthropic: 1,000,000 for claude-fable-5-1, claude-mythos-5-1, claude-fable-5, claude-mythos-5, claude-opus-5, claude-opus-4-8, claude-opus-4-7, claude-opus-4-6, claude-sonnet-5 and claude-sonnet-4-6; 200,000 for claude-haiku-4-5 and every pre-4.6 Claude row (opus 4.5/4.1/4, 3-opus, sonnet 4.5/4, 3.7-sonnet, 3.5-sonnet, 3.5-haiku, 3-haiku), per platform.claude.com/docs/en/about-claude/models and the Models API max_input_tokens field. Claude Sonnet 4 and 4.5 also offer a 1M-token beta window; 200,000 is used here because that is what an unflagged request gets. A Claude Code model id ending [1m] never reads this column -- the adapter infers 1,000,000 from the suffix, which is the stronger signal.",
+    "context_window is the largest input a request may carry, used only to show how full a model's context was. Where a vendor states a total context and a smaller maximum input separately (OpenAI, Alibaba), the maximum input is used, since occupancy is measured in input tokens. Where a vendor publishes one combined figure (xAI, Zhipu, Mistral, Amazon, Google, Anthropic), that figure is used and slightly overstates the room available. Vendors writing shorthand such as 256k or 300k are read as decimal; MiniMax, DeepSeek, Moonshot and Google publish exact integers. Checked against each vendor's own model pages on 2026-09-08.",
+    "Two context windows needed a judgement call. Alibaba documents qwen-max twice: its own page pins the bare alias to the 2025-01-25 snapshot at 30,720 maximum input, while the model overview lists 128k for the family, so the model's own page is used. xAI documents grok-build-0.1 at 256,000 while the separate grok-build-latest alias points at Grok 4.5 at 500,000; this row is the former."
+  ],
+  "prefixes": [
+    {
+      "prefix": "us.anthropic.",
+      "provider": "bedrock"
+    },
+    {
+      "prefix": "eu.anthropic.",
+      "provider": "bedrock"
+    },
+    {
+      "prefix": "openrouter/",
+      "provider": "openrouter"
+    },
+    {
+      "prefix": "anthropic/",
+      "provider": null
+    },
+    {
+      "prefix": "openai/",
+      "provider": null
+    }
+  ],
+  "providers": {
+    "anthropic": {
+      "cache_read": 0.1,
+      "cache_write_5m": 1.25,
+      "cache_write_1h": 2.0,
+      "batch": 0.5
+    },
+    "openai": {
+      "cache_read": 0.1,
+      "cache_write_5m": 1.25,
+      "cache_write_1h": 1.25,
+      "batch": 0.5
+    },
+    "google": {
+      "cache_read": 0.1,
+      "cache_write_5m": 1.0,
+      "cache_write_1h": 1.0,
+      "batch": 0.5
+    },
+    "deepseek": {
+      "cache_read": 0.033,
+      "cache_write_5m": 1.0,
+      "cache_write_1h": 1.0,
+      "batch": 1.0
+    },
+    "moonshot": {
+      "cache_read": 0.2,
+      "cache_write_5m": 1.0,
+      "cache_write_1h": 1.0,
+      "batch": 0.6
+    },
+    "xai": {
+      "cache_read": 0.25,
+      "cache_write_5m": 1.0,
+      "cache_write_1h": 1.0,
+      "batch": 1.0
+    },
+    "alibaba": {
+      "cache_read": 0.2,
+      "cache_write_5m": 1.0,
+      "cache_write_1h": 1.0,
+      "batch": 0.5
+    },
+    "zhipu": {
+      "cache_read": 0.2,
+      "cache_write_5m": 1.0,
+      "cache_write_1h": 1.0,
+      "batch": 1.0
+    },
+    "mistral": {
+      "cache_read": 0.1,
+      "cache_write_5m": 1.0,
+      "cache_write_1h": 1.0,
+      "batch": 0.5
+    },
+    "minimax": {
+      "cache_read": 0.2,
+      "cache_write_5m": 1.25,
+      "cache_write_1h": 1.25,
+      "batch": 0.5
+    },
+    "amazon": {
+      "cache_read": 0.25,
+      "cache_write_5m": 1.25,
+      "cache_write_1h": 1.25,
+      "batch": 0.5
+    },
+    "local": {
+      "free": true
+    }
+  },
+  "models": [
+    {
+      "match": "claude-fable-5-1",
+      "provider": "anthropic",
+      "display": "Claude Fable 5.1",
+      "input": 10.0,
+      "output": 50.0,
+      "context_window": 1000000,
+      "cache_rules": {
+        "cache_read": 0.025,
+        "cache_write_5m": 1.25,
+        "cache_write_1h": 2.0,
+        "batch": 0.5
+      }
+    },
+    {
+      "match": "claude-mythos-5-1",
+      "provider": "anthropic",
+      "display": "Claude Mythos 5.1",
+      "input": 10.0,
+      "output": 50.0,
+      "context_window": 1000000,
+      "cache_rules": {
+        "cache_read": 0.025,
+        "cache_write_5m": 1.25,
+        "cache_write_1h": 2.0,
+        "batch": 0.5
+      }
+    },
+    {
+      "match": "claude-fable-5",
+      "provider": "anthropic",
+      "display": "Claude Fable 5",
+      "input": 10.0,
+      "output": 50.0,
+      "context_window": 1000000
+    },
+    {
+      "match": "claude-mythos-5",
+      "provider": "anthropic",
+      "display": "Claude Mythos 5",
+      "input": 10.0,
+      "output": 50.0,
+      "context_window": 1000000
+    },
+    {
+      "match": "claude-opus-5",
+      "provider": "anthropic",
+      "display": "Claude Opus 5",
+      "input": 5.0,
+      "output": 25.0,
+      "context_window": 1000000,
+      "variants": {
+        "fast": {
+          "input": 10.0,
+          "output": 50.0
+        }
+      }
+    },
+    {
+      "match": "claude-opus-4-8",
+      "provider": "anthropic",
+      "display": "Claude Opus 4.8",
+      "input": 5.0,
+      "output": 25.0,
+      "context_window": 1000000,
+      "variants": {
+        "fast": {
+          "input": 10.0,
+          "output": 50.0
+        }
+      }
+    },
+    {
+      "match": "claude-opus-4-7",
+      "provider": "anthropic",
+      "display": "Claude Opus 4.7",
+      "input": 5.0,
+      "output": 25.0,
+      "context_window": 1000000
+    },
+    {
+      "match": "claude-opus-4-6",
+      "provider": "anthropic",
+      "display": "Claude Opus 4.6",
+      "input": 5.0,
+      "output": 25.0,
+      "context_window": 1000000
+    },
+    {
+      "match": "claude-opus-4-5",
+      "provider": "anthropic",
+      "display": "Claude Opus 4.5",
+      "input": 5.0,
+      "output": 25.0,
+      "context_window": 200000
+    },
+    {
+      "match": "claude-opus-4-1",
+      "provider": "anthropic",
+      "display": "Claude Opus 4.1",
+      "input": 15.0,
+      "output": 75.0,
+      "context_window": 200000
+    },
+    {
+      "match": "claude-opus-4",
+      "provider": "anthropic",
+      "display": "Claude Opus 4",
+      "input": 15.0,
+      "output": 75.0,
+      "context_window": 200000
+    },
+    {
+      "match": "claude-3-opus",
+      "provider": "anthropic",
+      "display": "Claude 3 Opus",
+      "input": 15.0,
+      "output": 75.0,
+      "context_window": 200000
+    },
+    {
+      "match": "claude-sonnet-5",
+      "provider": "anthropic",
+      "display": "Claude Sonnet 5",
+      "input": 2.0,
+      "output": 10.0,
+      "context_window": 1000000
+    },
+    {
+      "match": "claude-sonnet-4-6",
+      "provider": "anthropic",
+      "display": "Claude Sonnet 4.6",
+      "input": 3.0,
+      "output": 15.0,
+      "context_window": 1000000
+    },
+    {
+      "match": "claude-sonnet-4-5",
+      "provider": "anthropic",
+      "display": "Claude Sonnet 4.5",
+      "input": 3.0,
+      "output": 15.0,
+      "context_window": 200000
+    },
+    {
+      "match": "claude-sonnet-4",
+      "provider": "anthropic",
+      "display": "Claude Sonnet 4",
+      "input": 3.0,
+      "output": 15.0,
+      "context_window": 200000
+    },
+    {
+      "match": "claude-3-7-sonnet",
+      "provider": "anthropic",
+      "display": "Claude 3.7 Sonnet",
+      "input": 3.0,
+      "output": 15.0,
+      "context_window": 200000
+    },
+    {
+      "match": "claude-3-5-sonnet",
+      "provider": "anthropic",
+      "display": "Claude 3.5 Sonnet",
+      "input": 3.0,
+      "output": 15.0,
+      "context_window": 200000
+    },
+    {
+      "match": "claude-haiku-4-5",
+      "provider": "anthropic",
+      "display": "Claude Haiku 4.5",
+      "input": 1.0,
+      "output": 5.0,
+      "context_window": 200000
+    },
+    {
+      "match": "claude-3-5-haiku",
+      "provider": "anthropic",
+      "display": "Claude 3.5 Haiku",
+      "input": 0.8,
+      "output": 4.0,
+      "context_window": 200000
+    },
+    {
+      "match": "claude-3-haiku",
+      "provider": "anthropic",
+      "display": "Claude 3 Haiku",
+      "input": 0.25,
+      "output": 1.25,
+      "context_window": 200000
+    },
+    {
+      "match": "gpt-6-astra",
+      "provider": "openai",
+      "display": "GPT-6 Astra",
+      "input": 10.0,
+      "output": 50.0,
+      "context_window": 922000
+    },
+    {
+      "match": "gpt-5.6-sol",
+      "provider": "openai",
+      "display": "GPT-5.6 Sol",
+      "input": 5.0,
+      "output": 30.0,
+      "context_window": 922000
+    },
+    {
+      "match": "gpt-5.6-terra",
+      "provider": "openai",
+      "display": "GPT-5.6 Terra",
+      "input": 2.0,
+      "output": 12.0,
+      "context_window": 922000
+    },
+    {
+      "match": "gpt-5.6-luna",
+      "provider": "openai",
+      "display": "GPT-5.6 Luna",
+      "input": 0.2,
+      "output": 1.2,
+      "context_window": 922000
+    },
+    {
+      "match": "gpt-5.6",
+      "provider": "openai",
+      "display": "GPT-5.6",
+      "input": 2.0,
+      "output": 12.0,
+      "context_window": 922000
+    },
+    {
+      "match": "gpt-5.2-codex",
+      "provider": "openai",
+      "display": "GPT-5.2 Codex",
+      "input": 1.75,
+      "output": 14.0,
+      "context_window": 272000
+    },
+    {
+      "match": "gpt-5-codex",
+      "provider": "openai",
+      "display": "GPT-5 Codex",
+      "input": 1.25,
+      "output": 10.0,
+      "context_window": 272000
+    },
+    {
+      "match": "gpt-5-mini",
+      "provider": "openai",
+      "display": "GPT-5 mini",
+      "input": 0.25,
+      "output": 2.0,
+      "context_window": 272000
+    },
+    {
+      "match": "gpt-5-nano",
+      "provider": "openai",
+      "display": "GPT-5 nano",
+      "input": 0.05,
+      "output": 0.4,
+      "context_window": 272000
+    },
+    {
+      "match": "gpt-5",
+      "provider": "openai",
+      "display": "GPT-5",
+      "input": 1.25,
+      "output": 10.0,
+      "context_window": 272000
+    },
+    {
+      "match": "o4-mini",
+      "provider": "openai",
+      "display": "o4-mini",
+      "input": 1.1,
+      "output": 4.4,
+      "context_window": 200000
+    },
+    {
+      "match": "o3",
+      "provider": "openai",
+      "display": "o3",
+      "input": 2.0,
+      "output": 8.0,
+      "context_window": 200000
+    },
+    {
+      "match": "gpt-4.1",
+      "provider": "openai",
+      "display": "GPT-4.1",
+      "input": 2.0,
+      "output": 8.0,
+      "context_window": 1047576
+    },
+    {
+      "match": "gpt-4o",
+      "provider": "openai",
+      "display": "GPT-4o",
+      "input": 2.5,
+      "output": 10.0,
+      "context_window": 128000
+    },
+    {
+      "match": "gemini-3.1-pro",
+      "provider": "google",
+      "display": "Gemini 3.1 Pro",
+      "input": 2.0,
+      "output": 12.0,
+      "context_window": 1048576
+    },
+    {
+      "match": "gemini-3.8-flash",
+      "provider": "google",
+      "display": "Gemini 3.8 Flash",
+      "input": 0.75,
+      "output": 3.75,
+      "context_window": 1048576
+    },
+    {
+      "match": "gemini-3.7-flash",
+      "provider": "google",
+      "display": "Gemini 3.7 Flash",
+      "input": 0.75,
+      "output": 3.75,
+      "context_window": 1048576
+    },
+    {
+      "match": "gemini-3.6-flash",
+      "provider": "google",
+      "display": "Gemini 3.6 Flash",
+      "input": 0.75,
+      "output": 3.75,
+      "context_window": 1048576
+    },
+    {
+      "match": "gemini-3.5-flash-lite",
+      "provider": "google",
+      "display": "Gemini 3.5 Flash-Lite",
+      "input": 0.3,
+      "output": 2.5,
+      "context_window": 1048576
+    },
+    {
+      "match": "gemini-3.5-flash",
+      "provider": "google",
+      "display": "Gemini 3.5 Flash",
+      "input": 1.5,
+      "output": 9.0,
+      "context_window": 1048576
+    },
+    {
+      "match": "gemini-3.1-flash-lite",
+      "provider": "google",
+      "display": "Gemini 3.1 Flash-Lite",
+      "input": 0.25,
+      "output": 1.5,
+      "context_window": 1048576
+    },
+    {
+      "match": "gemini-2.5-pro",
+      "provider": "google",
+      "display": "Gemini 2.5 Pro",
+      "input": 1.25,
+      "output": 10.0,
+      "context_window": 1048576
+    },
+    {
+      "match": "gemini-2.5-flash-lite",
+      "provider": "google",
+      "display": "Gemini 2.5 Flash-Lite",
+      "input": 0.1,
+      "output": 0.4,
+      "context_window": 1048576
+    },
+    {
+      "match": "gemini-2.5-flash",
+      "provider": "google",
+      "display": "Gemini 2.5 Flash",
+      "input": 0.3,
+      "output": 2.5,
+      "context_window": 1048576
+    },
+    {
+      "match": "grok-4.6",
+      "provider": "xai",
+      "display": "Grok 4.6",
+      "input": 2.0,
+      "output": 6.0,
+      "context_window": 500000
+    },
+    {
+      "match": "grok-4.5",
+      "provider": "xai",
+      "display": "Grok 4.5",
+      "input": 2.0,
+      "output": 6.0,
+      "context_window": 500000
+    },
+    {
+      "match": "grok-4.3",
+      "provider": "xai",
+      "display": "Grok 4.3",
+      "input": 1.25,
+      "output": 2.5,
+      "context_window": 1000000
+    },
+    {
+      "match": "grok-4.20",
+      "provider": "xai",
+      "display": "Grok 4.20",
+      "input": 1.25,
+      "output": 2.5,
+      "context_window": 1000000
+    },
+    {
+      "match": "grok-build",
+      "provider": "xai",
+      "display": "Grok Build 0.1",
+      "input": 1.0,
+      "output": 2.0,
+      "context_window": 256000
+    },
+    {
+      "match": "deepseek-v4-pro",
+      "provider": "deepseek",
+      "display": "DeepSeek V4 Pro",
+      "input": 0.66,
+      "output": 1.98,
+      "context_window": 1048576
+    },
+    {
+      "match": "deepseek-v4-flash",
+      "provider": "deepseek",
+      "display": "DeepSeek V4 Flash",
+      "input": 0.22,
+      "output": 0.66,
+      "context_window": 1048576
+    },
+    {
+      "match": "qwen-max",
+      "provider": "alibaba",
+      "display": "Qwen Max",
+      "input": 2.0,
+      "output": 6.0,
+      "context_window": 30720
+    },
+    {
+      "match": "qwen-plus",
+      "provider": "alibaba",
+      "display": "Qwen Plus",
+      "input": 0.4,
+      "output": 1.6,
+      "context_window": 997952
+    },
+    {
+      "match": "qwen-flash",
+      "provider": "alibaba",
+      "display": "Qwen Flash",
+      "input": 0.03,
+      "output": 0.13,
+      "context_window": 997952
+    },
+    {
+      "match": "kimi-k3",
+      "provider": "moonshot",
+      "display": "Kimi K3",
+      "input": 3.0,
+      "output": 15.0,
+      "context_window": 1048576
+    },
+    {
+      "match": "kimi-k2.7-code",
+      "provider": "moonshot",
+      "display": "Kimi K2.7 Code",
+      "input": 0.95,
+      "output": 4.0,
+      "context_window": 262144
+    },
+    {
+      "match": "kimi-k2.6",
+      "provider": "moonshot",
+      "display": "Kimi K2.6",
+      "input": 0.95,
+      "output": 4.0,
+      "context_window": 262144
+    },
+    {
+      "match": "glm-5.3-flash",
+      "provider": "zhipu",
+      "display": "GLM-5.3-Flash",
+      "input": 0.075,
+      "output": 0.25,
+      "context_window": 1000000
+    },
+    {
+      "match": "glm-5.3",
+      "provider": "zhipu",
+      "display": "GLM-5.3",
+      "input": 1.4,
+      "output": 4.4,
+      "context_window": 1000000
+    },
+    {
+      "match": "glm-5.2",
+      "provider": "zhipu",
+      "display": "GLM-5.2",
+      "input": 1.4,
+      "output": 4.4,
+      "context_window": 1000000
+    },
+    {
+      "match": "glm-4.7-flashx",
+      "provider": "zhipu",
+      "display": "GLM-4.7-FlashX",
+      "input": 0.07,
+      "output": 0.4,
+      "context_window": 200000
+    },
+    {
+      "match": "glm-4.7",
+      "provider": "zhipu",
+      "display": "GLM-4.7",
+      "input": 0.6,
+      "output": 2.2,
+      "context_window": 200000
+    },
+    {
+      "match": "glm-4.5-air",
+      "provider": "zhipu",
+      "display": "GLM-4.5-Air",
+      "input": 0.2,
+      "output": 1.1,
+      "context_window": 128000
+    },
+    {
+      "match": "glm-4.5",
+      "provider": "zhipu",
+      "display": "GLM-4.5",
+      "input": 0.6,
+      "output": 2.2,
+      "context_window": 128000
+    },
+    {
+      "match": "mistral-medium-3.5",
+      "provider": "mistral",
+      "display": "Mistral Medium 3.5",
+      "input": 1.5,
+      "output": 7.5,
+      "context_window": 256000
+    },
+    {
+      "match": "mistral-large-3",
+      "provider": "mistral",
+      "display": "Mistral Large 3",
+      "input": 0.5,
+      "output": 1.5,
+      "context_window": 256000
+    },
+    {
+      "match": "mistral-small-4",
+      "provider": "mistral",
+      "display": "Mistral Small 4",
+      "input": 0.15,
+      "output": 0.6,
+      "context_window": 256000
+    },
+    {
+      "match": "codestral",
+      "provider": "mistral",
+      "display": "Codestral",
+      "input": 0.3,
+      "output": 0.9,
+      "context_window": 128000
+    },
+    {
+      "match": "ministral-14b",
+      "provider": "mistral",
+      "display": "Ministral 3 (14B)",
+      "input": 0.2,
+      "output": 0.2,
+      "context_window": 256000
+    },
+    {
+      "match": "ministral-8b",
+      "provider": "mistral",
+      "display": "Ministral 3 (8B)",
+      "input": 0.15,
+      "output": 0.15,
+      "context_window": 256000
+    },
+    {
+      "match": "ministral-3b",
+      "provider": "mistral",
+      "display": "Ministral 3 (3B)",
+      "input": 0.1,
+      "output": 0.1,
+      "context_window": 256000
+    },
+    {
+      "match": "minimax-m3",
+      "provider": "minimax",
+      "display": "MiniMax M3",
+      "input": 0.3,
+      "output": 1.2,
+      "context_window": 1000000
+    },
+    {
+      "match": "minimax-m2.7",
+      "provider": "minimax",
+      "display": "MiniMax M2.7",
+      "input": 0.28,
+      "output": 1.1,
+      "context_window": 204800
+    },
+    {
+      "match": "minimax-m2",
+      "provider": "minimax",
+      "display": "MiniMax M2",
+      "input": 0.26,
+      "output": 1.0,
+      "context_window": 204800
+    },
+    {
+      "match": "amazon-nova-2-lite",
+      "provider": "amazon",
+      "display": "Amazon Nova 2 Lite",
+      "input": 0.3,
+      "output": 2.5,
+      "context_window": 1000000
+    },
+    {
+      "match": "amazon-nova-premier",
+      "provider": "amazon",
+      "display": "Amazon Nova Premier",
+      "input": 2.5,
+      "output": 12.5,
+      "context_window": 1000000
+    },
+    {
+      "match": "amazon-nova-pro",
+      "provider": "amazon",
+      "display": "Amazon Nova Pro",
+      "input": 0.8,
+      "output": 3.2,
+      "context_window": 300000
+    },
+    {
+      "match": "amazon-nova-lite",
+      "provider": "amazon",
+      "display": "Amazon Nova Lite",
+      "input": 0.06,
+      "output": 0.24,
+      "context_window": 300000
+    },
+    {
+      "match": "amazon-nova-micro",
+      "provider": "amazon",
+      "display": "Amazon Nova Micro",
+      "input": 0.035,
+      "output": 0.14,
+      "context_window": 128000
+    }
+  ]
+}

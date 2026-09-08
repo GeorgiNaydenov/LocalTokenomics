@@ -1,0 +1,1 @@
+{"timestamp": 1755590700, "params": {"update": {"sessionUpdate": "turn_completed", "usage": {"modelUsage": {"grok-4.3-build": {"inputTokens": 500, "outputTokens": 25, "cachedReadTokens": 0, "reasoningTokens": 0}}}}}, "_meta": {"eventId": "evt-nosum"}}

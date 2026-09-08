@@ -1,0 +1,363 @@
+@import 'tailwindcss';
+
+/* ══════════════════════════════════════════════════════════════════════
+   INSTRUMENT — the AI Usage Tracking design system.
+
+   Cool neutral ramp, one indigo accent, hairline borders, no shadows.
+   Everything the dashboard renders resolves to a token defined here, in
+   both themes. Component styles live with the components; this file owns
+   the vocabulary they speak.
+
+   Layers, in cascade order:
+     1. fonts      self-hosted variable woff2, zero network requests
+     2. tokens     :root (light) and [data-theme="dark"], every value in both
+     3. @theme     the Tailwind bridge — makes tokens available as utilities
+     4. base       document defaults and the primitives every surface reuses
+
+   Token naming follows shadcn/ui so registry components (shadcn, ReUI)
+   drop in unmodified. Domain tokens — cost state, provenance, token
+   bucket, chart series — extend that vocabulary for this product.
+══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Fonts ──────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./fonts/inter-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('./fonts/geist-mono-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Dark mode is driven by data-theme on <html>, set before first paint by
+   the inline script in index.html and thereafter by theme.ts. Tailwind's
+   dark: variant is repointed here so it never falls back to the media
+   query and disagree with the explicit user choice. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* ── 2. Tokens ─────────────────────────────────────────────────────── */
+
+:root {
+  color-scheme: light;
+
+  /* Surfaces ------------------------------------------------------- */
+  --background: #fcfcfd;
+  --foreground: #09090b;
+  --card: #ffffff;
+  --card-foreground: #09090b;
+  --popover: #ffffff;
+  --popover-foreground: #09090b;
+
+  /* Emphasis ------------------------------------------------------- */
+  --primary: #4f6bed;
+  --primary-foreground: #ffffff;
+  --secondary: #f4f4f6;
+  --secondary-foreground: #09090b;
+
+  /* Recessive ------------------------------------------------------ */
+  --muted: #f4f4f6;
+  --muted-foreground: #6b7280;
+  --accent: #f0f0f3;
+  --accent-foreground: #09090b;
+
+  /* Lines and focus ------------------------------------------------ */
+  --border: #e7e7ea;
+  --input: #e7e7ea;
+  --ring: #4f6bed;
+
+  /* Semantic ------------------------------------------------------- */
+  --destructive: #d4504e;
+  --destructive-foreground: #ffffff;
+  --success: #12855f;
+  --success-foreground: #ffffff;
+  --warning: #b4780c;
+  --warning-foreground: #ffffff;
+
+  /* Tinted fills — semantic colour as a surface, not as ink. */
+  --primary-subtle: #eef1fd;
+  --destructive-subtle: #fdeeee;
+  --success-subtle: #e8f6f0;
+  --warning-subtle: #fdf4e3;
+
+  /* Chart series — eight slots, fixed order, well-separated hues.
+     A series keeps its slot across every chart, so filtering the data
+     never repaints a surviving series. */
+  --chart-1: #4f6bed;
+  --chart-2: #12a594;
+  --chart-3: #e0921f;
+  --chart-4: #d4504e;
+  --chart-5: #8b6dd8;
+  --chart-6: #3f9142;
+  --chart-7: #d2559a;
+  --chart-8: #5b7085;
+  --chart-other: #9ca3af;
+
+  /* Chart chrome --------------------------------------------------- */
+  --chart-grid: #eeeef1;
+  --chart-axis: #d4d4d8;
+
+  /* Cost state — the four states every request lands in. `unavailable`
+     is deliberately colourless: no token count exists, so no cost is
+     ever implied. */
+  --state-priced: #4f6bed;
+  --state-free: #12855f;
+  --state-unpriced: #b4780c;
+  --state-unavailable: #9ca3af;
+
+  /* Provenance — how a number was arrived at. */
+  --provenance-measured: #4f6bed;
+  --provenance-derived: #12a594;
+  --provenance-estimated: #e0921f;
+  --provenance-inferred: #8b6dd8;
+  --provenance-unavailable: #9ca3af;
+
+  /* Token buckets — the four disjoint billable buckets, in stack order. */
+  --bucket-uncached-input: #4f6bed;
+  --bucket-cache-read: #12a594;
+  --bucket-cache-write: #e0921f;
+  --bucket-output: #8b6dd8;
+
+  /* Geometry ------------------------------------------------------- */
+  --radius: 0.375rem;
+
+  /* Density — the "comfortable" scale. Every control, row and pad in
+     the system measures itself against these four values. */
+  --text-ui: 0.875rem;
+  --control-height: 2.25rem;
+  --row-height: 2.75rem;
+  --card-padding: 1.5rem;
+
+  /* Motion — quick and precise. No bounce, no decorative loops. */
+  --duration: 150ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --background: #09090b;
+  --foreground: #fafafa;
+  --card: #121215;
+  --card-foreground: #fafafa;
+  --popover: #17171b;
+  --popover-foreground: #fafafa;
+
+  --primary: #7c8ff5;
+  --primary-foreground: #0b0e1c;
+  --secondary: #1a1a1e;
+  --secondary-foreground: #fafafa;
+
+  --muted: #1a1a1e;
+  --muted-foreground: #8b8f98;
+  --accent: #202025;
+  --accent-foreground: #fafafa;
+
+  --border: #232327;
+  --input: #2a2a2f;
+  --ring: #7c8ff5;
+
+  --destructive: #e8706e;
+  --destructive-foreground: #1c0d0d;
+  --success: #35c38e;
+  --success-foreground: #06170f;
+  --warning: #e0a33a;
+  --warning-foreground: #1b1305;
+
+  --primary-subtle: #171a2e;
+  --destructive-subtle: #2a1616;
+  --success-subtle: #0d2019;
+  --warning-subtle: #241b0c;
+
+  --chart-1: #7c8ff5;
+  --chart-2: #2cc0ad;
+  --chart-3: #f0ac4a;
+  --chart-4: #e8706e;
+  --chart-5: #a98be8;
+  --chart-6: #5fb463;
+  --chart-7: #e278b0;
+  --chart-8: #8496a8;
+  --chart-other: #6b7280;
+
+  --chart-grid: #1e1e22;
+  --chart-axis: #3f3f46;
+
+  --state-priced: #7c8ff5;
+  --state-free: #35c38e;
+  --state-unpriced: #e0a33a;
+  --state-unavailable: #6b7280;
+
+  --provenance-measured: #7c8ff5;
+  --provenance-derived: #2cc0ad;
+  --provenance-estimated: #f0ac4a;
+  --provenance-inferred: #a98be8;
+  --provenance-unavailable: #6b7280;
+
+  --bucket-uncached-input: #7c8ff5;
+  --bucket-cache-read: #2cc0ad;
+  --bucket-cache-write: #f0ac4a;
+  --bucket-output: #a98be8;
+}
+
+/* ── 3. Tailwind bridge ────────────────────────────────────────────
+   Every token above becomes a utility: bg-card, text-muted-foreground,
+   border-border, fill-chart-3, and so on. */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+
+  --color-primary-subtle: var(--primary-subtle);
+  --color-destructive-subtle: var(--destructive-subtle);
+  --color-success-subtle: var(--success-subtle);
+  --color-warning-subtle: var(--warning-subtle);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-chart-6: var(--chart-6);
+  --color-chart-7: var(--chart-7);
+  --color-chart-8: var(--chart-8);
+  --color-chart-other: var(--chart-other);
+  --color-chart-grid: var(--chart-grid);
+  --color-chart-axis: var(--chart-axis);
+
+  --color-state-priced: var(--state-priced);
+  --color-state-free: var(--state-free);
+  --color-state-unpriced: var(--state-unpriced);
+  --color-state-unavailable: var(--state-unavailable);
+
+  --color-provenance-measured: var(--provenance-measured);
+  --color-provenance-derived: var(--provenance-derived);
+  --color-provenance-estimated: var(--provenance-estimated);
+  --color-provenance-inferred: var(--provenance-inferred);
+  --color-provenance-unavailable: var(--provenance-unavailable);
+
+  --color-bucket-uncached-input: var(--bucket-uncached-input);
+  --color-bucket-cache-read: var(--bucket-cache-read);
+  --color-bucket-cache-write: var(--bucket-cache-write);
+  --color-bucket-output: var(--bucket-output);
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
+
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', monospace;
+
+  --spacing-control: var(--control-height);
+  --spacing-row: var(--row-height);
+  --spacing-card: var(--card-padding);
+}
+
+/* ── 4. Base ───────────────────────────────────────────────────────── */
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: var(--text-ui);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Every number in this product is a quantity to be compared against
+     another number, so numerals are monospaced and tabular everywhere by
+     default rather than opted into per component. */
+  .tabular,
+  code,
+  kbd,
+  samp {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'zero' 1;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+}
+
+@layer components {
+  /* Scrolling panels keep a thin, self-coloured scrollbar so a table's
+     overflow never introduces a bright native bar into a dark surface. */
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .scroll-thin::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .scroll-thin::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px;
+  }
+
+  .scroll-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+/* Motion is functional here — a value counting up, a panel fading in on
+   load. None of it carries meaning that is lost when it is switched off. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

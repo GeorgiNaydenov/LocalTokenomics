@@ -1,0 +1,5 @@
+{"id": "chatcmpl-basic-001", "model": "gpt-4o", "created": 1787299200, "usage": {"prompt_tokens": 1000, "completion_tokens": 500, "prompt_tokens_details": {"cached_tokens": 200}, "completion_tokens_details": {"reasoning_tokens": 150}}}
+{"id": "chatcmpl-basic-002", "model": "gpt-4o", "created": 1787299200}
+{"id": "chatcmpl-basic-003", "model": "gpt-4o", "created": 1787299200, "provider": "OpenRouter", "usage": {"prompt_tokens": 10, "completion_tokens": 5}}
+{"session_id": "sess-nested", "response": {"id": "chatcmpl-basic-004", "model": "gpt-4o-mini", "created": 1787299200, "usage": {"prompt_tokens": 30, "completion_tokens": 15}}}
+{"conversation_id": "conv-basic-005", "id": "chatcmpl-basic-005", "model": "gpt-4o", "created": 1787299200, "usage": {"prompt_tokens": 0, "completion_tokens": 0}}

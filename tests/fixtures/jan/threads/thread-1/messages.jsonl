@@ -1,0 +1,3 @@
+{"id": "msg-1", "object": "thread.message", "role": "user", "status": "ready", "thread_id": "thread-1", "created": 1755680000000, "updated": 1755680000000}
+{"id": "msg-2", "object": "thread.message", "role": "assistant", "status": "ready", "thread_id": "thread-1", "created": 1755680030000, "updated": 1755680030000}
+{"id": "msg-3", "object": "thread.message", "role": "assistant", "status": "ready", "thread_id": "thread-1", "created": 1755680050000, "updated": 1755680050000}

@@ -1,0 +1,2 @@
+{"type": "assistant", "timestamp": "2026-08-20T12:00:00Z", "sessionId": "sess-unknown", "requestId": "req_u1", "cwd": "/home/user/omega", "message": {"id": "msg_u1", "model": "claude-opus-5", "usage": {"input_tokens": 100, "output_tokens": 100}}}
+{"type": "assistant", "timestamp": "2026-08-20T12:01:00Z", "sessionId": "sess-unknown", "requestId": "req_u2", "cwd": "/home/user/omega", "message": {"id": "msg_u2", "model": "moonshot-v9-turbo", "usage": {"input_tokens": 1000, "cache_read_input_tokens": 2000, "output_tokens": 500}}}
