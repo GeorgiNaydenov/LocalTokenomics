@@ -18,6 +18,7 @@ export interface CostBreakdown {
   no_cache_equivalent: number
   total: number
   cache_savings: number
+  inherited: boolean
 }
 
 export interface Bucket {
@@ -33,6 +34,7 @@ export interface Totals {
   tokens: TokenUsage
   cost: CostBreakdown
   events: number
+  priced_events: number
   sessions: number
   first_event: string | null
   last_event: string | null
@@ -149,7 +151,10 @@ export interface Outcome extends OutcomeUpdate {
 
 export interface EconRow {
   key: string
-  label: string
+  label: string | null
+  ordinal: number | null
+  started_at: string | null
+  is_sidechain: boolean
   model_calls: number
   tool_calls: number
   tokens: TokenUsage | null
@@ -245,6 +250,7 @@ export interface Report {
   rates_as_of: string
   currency: string
   files_scanned: number
+  files_in_slice: number
   totals: Totals
   by_client: Bucket[]
   by_provider: Bucket[]
@@ -260,11 +266,33 @@ export interface Report {
   facets: Facets
 }
 
+export type WarningSeverity = 'info' | 'caution' | 'critical'
+
+export interface WarningInstance {
+  kind: string
+  message: string
+  source: string
+  file: string | null
+  session_id: string | null
+  severity: WarningSeverity
+  delta_tokens: number | null
+  delta_cost: number | null
+  likely_cause: string | null
+  auto_corrected: boolean
+}
+
 export interface WarningGroup {
   kind: string
   label: string
   count: number
   summary: string
+  severity: WarningSeverity
+  total_delta_tokens: number
+  total_delta_cost: number
+  worst_example: WarningInstance | null
+  affected_sessions: number
+  instances: WarningInstance[]
+  /** @deprecated use `instances[].message` */
   warnings: string[]
 }
 
@@ -299,6 +327,8 @@ export interface Meta {
   files_scanned: number
   events: number
   warnings: string[]
+  warning_summary: { critical: number; caution: number; info: number; total_delta_cost: number }
+  session_warnings: Record<string, string[]>
   sources: SourceInfo[]
   client_last_seen: Record<string, string>
   model_last_seen: Record<string, string>
@@ -344,6 +374,7 @@ export interface ModelRate {
   output: number
   variants: Record<string, RateVariant>
   cache_rules: ProviderRules | null
+  context_window: number | null
   inherited: boolean
 }
 

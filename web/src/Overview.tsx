@@ -1,20 +1,25 @@
 import { useState } from 'react'
 import type { JSX } from 'react'
-import type { CostState, Meta, Report, SeriesPoint, SessionRow, View } from './api'
+import type { CostState, Meta, Query, Report, SeriesPoint, SessionRow, View } from './api'
 import {
   RECENCY_DAYS,
+  daySpan,
   formatCount,
   formatDayShort,
   formatDuration,
+  formatExact,
   formatMoney,
+  formatMoneyExact,
   formatMoneyShort,
   formatPercent,
   formatTokens,
   isRecent,
+  logSpanMs,
   sessionDisplayName,
 } from './format'
 import { TimeChart, type TimeSeriesRow } from '@/components/chart-time'
 import { Panel, PanelBody, PanelHeader, PanelNote } from '@/components/panel'
+import { worstState } from '@/components/rank'
 import { seriesColor, TOKEN_BUCKETS } from '@/components/series'
 import { SourceCard } from '@/components/source-card'
 import { Sparkline } from '@/components/sparkline'
@@ -26,10 +31,12 @@ import {
   COST_STATE_META,
   Legend,
   MeterRow,
+  PartialMarker,
   ProvenanceBadge,
   Unavailable,
 } from '@/components/status'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { cn } from '@/design-system/cn'
 
 type StackBy = 'client' | 'provider' | 'model'
 type Metric = 'cost' | 'tokens'
@@ -80,8 +87,9 @@ function DetectedSourcesPanel({
         '',
       )
       const showsCost = isFull && priced
+      const partialCost = priced && ownSessions.some((session) => session.cost === null)
       return {
-        source, isFull, priced, cost, requests, tokensTotal, lastSeen, showsCost,
+        source, isFull, priced, cost, requests, tokensTotal, lastSeen, showsCost, partialCost,
         sessionCount: ownSessions.length,
       }
     })
@@ -102,7 +110,10 @@ function DetectedSourcesPanel({
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
         {shown.map(
-          ({ source, isFull, priced, cost, requests, tokensTotal, showsCost, sessionCount }, index) => (
+          (
+            { source, isFull, priced, cost, requests, tokensTotal, showsCost, partialCost, sessionCount },
+            index,
+          ) => (
           <SourceCard
             key={source.id}
             source={{
@@ -110,11 +121,20 @@ function DetectedSourcesPanel({
               label: source.label,
               path: source.path,
               hasTokens: isFull,
-              headline: isFull
-                ? priced
-                  ? formatMoney(cost)
-                  : <Unavailable />
-                : formatCount(requests),
+              headline: isFull ? (
+                priced ? (
+                  <span className="inline-flex items-center gap-1.5">
+                    {formatMoney(cost)}
+                    {partialCost && (
+                      <PartialMarker hint="Some sessions from this reader have no priced cost, so this total covers only the priced ones." />
+                    )}
+                  </span>
+                ) : (
+                  <Unavailable />
+                )
+              ) : (
+                formatCount(requests)
+              ),
               foot: isFull
                 ? `${formatCount(sessionCount)} sessions, ${formatTokens(tokensTotal)} tokens`
                 : 'requests logged, no token counts',
@@ -140,7 +160,15 @@ function DetectedSourcesPanel({
   )
 }
 
-function KpiRow({ report }: { report: Report }) {
+function KpiRow({
+  report,
+  meta,
+  onSelectView,
+}: {
+  report: Report
+  meta: Meta
+  onSelectView: (view: View) => void
+}) {
   const days = sortedDays(report)
   const dayLabels = days.map(formatDayShort)
   const byDay = new Map(report.by_day.map((bucket) => [bucket.key, bucket]))
@@ -169,6 +197,15 @@ function KpiRow({ report }: { report: Report }) {
         emphasis="hero"
         className="sm:col-span-2"
         hint={`What ${formatCount(totals.events)} requests would cost at published list prices.`}
+        exact={formatMoneyExact(totals.cost.total)}
+        info={{
+          kind: 'metric',
+          meaning:
+            'What every request in this slice would cost at each provider’s published API list price, before any subscription plan or discount.',
+          formula: 'cost = Σ (uncached input + cache read + cache write + output) × each token’s rate',
+          computed: `uncached ${formatMoneyExact(totals.cost.uncached_input)} + cache read ${formatMoneyExact(totals.cost.cache_read)} + cache write ${formatMoneyExact(totals.cost.cache_write)} + output ${formatMoneyExact(totals.cost.output)} = ${formatMoneyExact(totals.cost.total)}`,
+          provenance: `${formatCount(totals.priced_events)} of ${formatCount(totals.events)} requests are priced; the rest have no matching rate and are excluded from this total, not counted as $0.`,
+        }}
       >
         <Sparkline
           values={costPerDay}
@@ -188,6 +225,14 @@ function KpiRow({ report }: { report: Report }) {
         value={totals.tokens.total}
         format={formatTokens}
         hint={`${formatTokens(totals.tokens.cache_read)} of it cache reads`}
+        exact={formatExact(totals.tokens.total)}
+        info={{
+          kind: 'metric',
+          meaning: 'Every token logged in this slice: prompt tokens sent plus tokens produced, across every request.',
+          formula: 'tokens = uncached input + cache read + cache write + output',
+          computed: `${formatExact(totals.tokens.uncached_input)} uncached + ${formatExact(totals.tokens.cache_read)} cache read + ${formatExact(totals.tokens.cache_write)} cache write + ${formatExact(totals.tokens.output)} output = ${formatExact(totals.tokens.total)}`,
+          caveats: 'Reasoning tokens are already counted inside output, never a separate fifth bucket.',
+        }}
       >
         <Sparkline
           values={cacheReadPerDay}
@@ -202,7 +247,11 @@ function KpiRow({ report }: { report: Report }) {
         label="Requests"
         value={totals.events}
         format={formatCount}
-        hint={`across ${formatCount(report.files_scanned)} log files`}
+        hint={`across ${formatCount(report.files_in_slice)} log files in this slice`}
+        info={{
+          kind: 'simple',
+          text: `One request per logged API call in this slice, whether or not a rate matched it. ${formatCount(totals.priced_events)} of these ${formatCount(totals.events)} were priced. ${formatCount(report.files_scanned)} log files exist in the whole store; ${formatCount(report.files_in_slice)} of them contributed a request to this filtered view.`,
+        }}
       >
         <Sparkline
           values={requestsPerDay}
@@ -213,7 +262,16 @@ function KpiRow({ report }: { report: Report }) {
         />
       </Stat>
 
-      <Stat label="Sessions" value={totals.sessions} format={formatCount} hint={avgFoot}>
+      <Stat
+        label="Sessions"
+        value={totals.sessions}
+        format={formatCount}
+        hint={avgFoot}
+        info={{
+          kind: 'simple',
+          text: 'Distinct (source, session id) pairs among the requests in this slice, regardless of how many turns or model calls each one contains.',
+        }}
+      >
         <Sparkline
           values={sessionsPerDay}
           stretch
@@ -234,6 +292,15 @@ function KpiRow({ report }: { report: Report }) {
         }
         format={formatMoney}
         hint={cacheSaveFoot}
+        info={{
+          kind: 'metric',
+          meaning: 'What caching saved against paying full input price for every token, including the extra you pay to write a cache in the first place.',
+          formula: 'cache savings = (all input tokens priced at the full uncached rate) − (what was actually billed)',
+          computed: cachePriced
+            ? `${formatMoneyExact(totals.cost.no_cache_equivalent)} at full price − ${formatMoneyExact(totals.cost.total)} actually billed = ${formatMoneyExact(totals.cost.cache_savings)}`
+            : undefined,
+          caveats: 'Cache writes bill above the standard rate, so a write-heavy slice can show a negative saving: caching cost more than it saved.',
+        }}
       >
         {cachePriced ? (
           <Sparkline
@@ -245,7 +312,31 @@ function KpiRow({ report }: { report: Report }) {
           />
         ) : null}
       </Stat>
+
+      <FlaggedStat meta={meta} onSelectView={onSelectView} />
     </StatGrid>
+  )
+}
+
+function FlaggedStat({ meta, onSelectView }: { meta: Meta; onSelectView: (view: View) => void }) {
+  const summary = meta.warning_summary
+  const total = summary.critical + summary.caution + summary.info
+  return (
+    <Stat
+      label="Flagged"
+      value={total}
+      format={formatCount}
+      onClick={total > 0 ? () => onSelectView('sources') : undefined}
+      hint={
+        total > 0
+          ? `${formatCount(summary.critical)} critical, ${formatCount(summary.caution)} caution, ${formatCount(summary.info)} info. See Sources.`
+          : 'Nothing flagged in the last scan.'
+      }
+      info={{
+        kind: 'simple',
+        text: `A scan warning where the reader found something odd in a log file: a count that does not reconcile, a model with no matching rate, or similar. ${total > 0 ? `About ${formatMoney(summary.total_delta_cost)} of estimated cost impact across every flagged instance.` : ''} Grouped with severity, likely cause and affected sessions on the Sources screen.`,
+      }}
+    />
   )
 }
 
@@ -257,10 +348,9 @@ function OutcomeRow({ report }: { report: Report }) {
     (sum, session) => sum + (session.tokens ? session.tokens.total : 0),
     0,
   )
-  const cost = successful.reduce(
-    (sum, session) => sum + (session.cost ? session.cost.total : 0),
-    0,
-  )
+  const pricedSuccessful = successful.filter((session) => session.cost !== null)
+  const cost = pricedSuccessful.reduce((sum, session) => sum + session.cost!.total, 0)
+  const costPartial = pricedSuccessful.length < successful.length
   const noneRatedFoot = `Nothing is rated yet, so there is no rate to show. Rate a session in its workspace, then rescan: ${formatCount(sessions.length)} sessions are unrated.`
   const noneSuccessfulFoot =
     rated.length > 0
@@ -279,6 +369,10 @@ function OutcomeRow({ report }: { report: Report }) {
             ? `${formatCount(successful.length)} of ${formatCount(rated.length)} rated sessions succeeded, ${formatCount(sessions.length - rated.length)} still unrated`
             : noneRatedFoot
         }
+        info={{
+          kind: 'simple',
+          text: 'Share of manually-rated sessions marked successful. Never inferred from tokens, cost or duration — only a rating you gave the session in its workspace counts, so an unrated session affects neither the numerator nor the denominator.',
+        }}
       />
       <Stat
         label="Tokens per success"
@@ -288,25 +382,43 @@ function OutcomeRow({ report }: { report: Report }) {
             ? `${formatTokens(tokens)} across ${formatCount(successful.length)} successful sessions`
             : noneSuccessfulFoot
         }
+        info={{
+          kind: 'metric',
+          meaning: 'Average token count of sessions rated successful, a rough cost-of-a-win figure.',
+          formula: 'tokens ÷ successful sessions',
+          caveats: 'A session with unknown tokens contributes 0 to the sum but still counts toward the denominator, so this can understate the true average when any successful session is missing token data.',
+        }}
       />
       <Stat
         label="Cost per success"
-        value={successful.length > 0 ? formatMoney(cost / successful.length) : <Unavailable />}
+        value={
+          pricedSuccessful.length > 0 ? (
+            <span className="inline-flex items-center gap-1.5">
+              {formatMoney(cost / pricedSuccessful.length)}
+              {costPartial && (
+                <PartialMarker hint="Some successful sessions have no priced cost, so only the priced ones are averaged in." />
+              )}
+            </span>
+          ) : (
+            <Unavailable />
+          )
+        }
+        info={{
+          kind: 'metric',
+          meaning: 'Average list-price cost of the successful sessions that have a priced cost.',
+          formula: 'cost ÷ successful sessions with a priced cost',
+          caveats: costPartial
+            ? `${formatCount(successful.length - pricedSuccessful.length)} of ${formatCount(successful.length)} successful sessions have no priced cost and are excluded from both the sum and the count, not treated as $0.`
+            : undefined,
+        }}
         hint={
-          successful.length > 0
-            ? `${formatMoney(cost)} of list price bought ${formatCount(successful.length)} successful sessions`
+          pricedSuccessful.length > 0
+            ? `${formatMoney(cost)} of list price bought ${formatCount(pricedSuccessful.length)} successful sessions`
             : noneSuccessfulFoot
         }
       />
     </StatGrid>
   )
-}
-
-function logSpanMs(session: SessionRow): number {
-  const start = Date.parse(session.start_time)
-  const end = Date.parse(session.end_time)
-  if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return 0
-  return end - start
 }
 
 function HeavyRow({
@@ -399,7 +511,15 @@ function HeaviestSessionsPanel({ report }: { report: Report }) {
   )
 }
 
-function TimeChartPanel({ report, meta }: { report: Report; meta: Meta }) {
+function TimeChartPanel({
+  report,
+  meta,
+  query,
+}: {
+  report: Report
+  meta: Meta
+  query: Query
+}) {
   const [stackBy, setStackBy] = useState<StackBy>('client')
   const [metric, setMetric] = useState<Metric>('cost')
 
@@ -422,7 +542,7 @@ function TimeChartPanel({ report, meta }: { report: Report; meta: Meta }) {
     value: metric === 'cost' ? point.cost : point.tokens,
   }))
 
-  const days = sortedDays(report)
+  const days = query.since && query.until ? daySpan(query.since, query.until) : sortedDays(report)
 
   return (
     <Panel>
@@ -478,8 +598,6 @@ function TimeChartPanel({ report, meta }: { report: Report; meta: Meta }) {
   )
 }
 
-const STATE_RANK: Record<CostState, number> = { priced: 0, free: 1, unpriced: 2, unavailable: 3 }
-
 function modelFallbackStates(report: Report): Map<string, CostState> {
   const statesByModel = new Map<string, Set<CostState>>()
   for (const session of report.sessions) {
@@ -498,8 +616,7 @@ function modelFallbackStates(report: Report): Map<string, CostState> {
       continue
     }
     const nonPriced = [...states].filter((state) => state !== 'priced')
-    const worst = nonPriced.sort((a, b) => STATE_RANK[b] - STATE_RANK[a])[0]
-    result.set(model, worst ?? 'unavailable')
+    result.set(model, nonPriced.length > 0 ? worstState(nonPriced) : 'unavailable')
   }
   return result
 }
@@ -518,8 +635,7 @@ function projectFallbackStates(report: Report): Map<string, CostState> {
   const result = new Map<string, CostState>()
   for (const [project, states] of statesByProject) {
     const nonPriced = [...states].filter((state) => state !== 'priced')
-    const worst = nonPriced.sort((a, b) => STATE_RANK[b] - STATE_RANK[a])[0]
-    result.set(project, worst ?? 'unavailable')
+    result.set(project, nonPriced.length > 0 ? worstState(nonPriced) : 'unavailable')
   }
   return result
 }
@@ -602,13 +718,13 @@ function CostByModelPanel({ report, meta, today }: { report: Report; meta: Meta;
 function TokenMixPanel({ report }: { report: Report }) {
   const buckets = report.by_model.filter((bucket) => bucket.tokens.total > 0)
   const totals = report.totals.tokens
-  const cacheShare = totals.total > 0 ? totals.cache_read / totals.total : 0
+  const cacheShare = totals.input_total > 0 ? totals.cache_read / totals.input_total : 0
 
   return (
     <Panel>
       <PanelHeader
         eyebrow="Token mix"
-        title={`${formatPercent(cacheShare)} of all tokens are cache reads`}
+        title={`${formatPercent(cacheShare)} cache hit ratio`}
       />
       <PanelBody className="space-y-3">
         <Legend
@@ -652,9 +768,16 @@ function TokenMixPanel({ report }: { report: Report }) {
 function CacheSavingsPanel({ report }: { report: Report }) {
   const cost = report.totals.cost
   const priced = cost.no_cache_equivalent > 0
-  const headline = priced
-    ? `Caching cut the bill by ${formatPercent(cost.cache_savings / cost.no_cache_equivalent)}`
-    : 'No priced tokens in this slice'
+  const negative = cost.cache_savings < 0
+  const magnitude = priced
+    ? formatPercent(Math.abs(cost.cache_savings) / cost.no_cache_equivalent)
+    : ''
+  const headline = !priced
+    ? 'No priced tokens in this slice'
+    : negative
+      ? `Caching added ${magnitude} to the bill`
+      : `Caching cut the bill by ${magnitude}`
+  const scale = Math.max(cost.no_cache_equivalent, cost.total, 0.01)
 
   return (
     <Panel>
@@ -663,24 +786,32 @@ function CacheSavingsPanel({ report }: { report: Report }) {
         <ComparisonMeter
           caption="Same tokens billed with no cache discount"
           value={formatMoney(cost.no_cache_equivalent)}
-          fraction={priced ? 1 : null}
+          fraction={priced ? cost.no_cache_equivalent / scale : null}
           color="var(--muted-foreground)"
         />
         <ComparisonMeter
           caption="Actually billed at cache rates"
           value={formatMoney(cost.total)}
-          fraction={priced ? cost.total / cost.no_cache_equivalent : null}
+          fraction={priced ? cost.total / scale : null}
+          color={negative ? 'var(--destructive)' : undefined}
         />
         <div className="flex items-baseline gap-3 border-t pt-4">
           {priced ? (
-            <span className="tabular text-2xl font-semibold text-success">
+            <span
+              className={cn(
+                'tabular text-2xl font-semibold',
+                negative ? 'text-destructive' : 'text-success',
+              )}
+            >
               {formatMoney(cost.cache_savings)}
             </span>
           ) : (
             <Unavailable hint="No priced tokens in this slice, so there is no saving to measure." />
           )}
           <span className="text-xs leading-relaxed text-muted-foreground">
-            saved against the same tokens billed with every read and write at full input price.
+            {negative
+              ? 'more than the same tokens would have cost with every read and write at full input price.'
+              : 'saved against the same tokens billed with every read and write at full input price.'}
           </span>
         </div>
       </PanelBody>
@@ -756,18 +887,19 @@ function ByProjectPanel({ report }: { report: Report }) {
 export default function Overview(props: {
   report: Report
   meta: Meta
+  query: Query
   today: string
   onSelectView: (view: View) => void
 }): JSX.Element {
-  const { report, meta, today, onSelectView } = props
+  const { report, meta, query, today, onSelectView } = props
 
   return (
     <div className="flex flex-col gap-3">
       <DetectedSourcesPanel meta={meta} report={report} onSelectView={onSelectView} />
-      <KpiRow report={report} />
+      <KpiRow report={report} meta={meta} onSelectView={onSelectView} />
       <OutcomeRow report={report} />
       <HeaviestSessionsPanel report={report} />
-      <TimeChartPanel report={report} meta={meta} />
+      <TimeChartPanel report={report} meta={meta} query={query} />
       <div className="grid grid-cols-1 gap-3 xl:grid-cols-2">
         <CostByModelPanel report={report} meta={meta} today={today} />
         <TokenMixPanel report={report} />

@@ -7,8 +7,10 @@ import pytest
 
 from ai_usage_cost.models import UsageEvent
 from ai_usage_cost.sources.base import jsonl_files
-from ai_usage_cost.sources.claude_code import parse
+from ai_usage_cost.sources.claude_code import parse, parse_resume, spans
 from conftest import CLAUDE_BASIC, CLAUDE_DEDUP
+
+MESSAGE_SPLIT = Path(__file__).parent / "fixtures" / "claude_code" / "message_split"
 
 
 def scan(root: Path) -> list[UsageEvent]:
@@ -158,6 +160,74 @@ def test_project_name_comes_from_cwd(tmp_path: Path) -> None:
     assert [event.working_directory for event in events] == ["/home/user/alpha"]
 
 
+def test_custom_title_record_sets_the_title_and_tool_source(tmp_path: Path) -> None:
+    write_session(
+        tmp_path,
+        "sess.jsonl",
+        [
+            {"type": "custom-title", "customTitle": "Application naming brainstorm"},
+            assistant("r1", {"input_tokens": 10, "output_tokens": 10}),
+        ],
+    )
+    events = scan(tmp_path)
+    assert [event.title for event in events] == ["Application naming brainstorm"]
+    assert [event.title_source for event in events] == ["tool"]
+
+
+def test_a_later_custom_title_record_wins_over_an_earlier_one(tmp_path: Path) -> None:
+    write_session(
+        tmp_path,
+        "sess.jsonl",
+        [
+            {"type": "custom-title", "customTitle": "first title"},
+            assistant("r1", {"input_tokens": 10, "output_tokens": 10}),
+            {"type": "custom-title", "customTitle": "renamed title"},
+            assistant("r2", {"input_tokens": 10, "output_tokens": 10}),
+        ],
+    )
+    events = scan(tmp_path)
+    assert [event.title for event in events] == ["first title", "renamed title"]
+
+
+def test_no_custom_title_falls_back_to_the_folder_title(tmp_path: Path) -> None:
+    # sessionId=None forces the event's session id to fall back to the filename (path.stem),
+    # matching how the folder-fallback title is expected to read: project_session-id.
+    write_session(
+        tmp_path / "-home-user-alpha",
+        "sess-alpha.jsonl",
+        [
+            assistant(
+                "r1",
+                {"input_tokens": 10, "output_tokens": 10},
+                cwd="/home/user/alpha",
+                sessionId=None,
+            )
+        ],
+    )
+    events = scan(tmp_path)
+    assert events[0].title == "alpha_sess-alpha"
+    assert events[0].title_source == "folder"
+
+
+def test_a_message_split_over_three_records_yields_three_parse_events() -> None:
+    path = MESSAGE_SPLIT / "-home-user-delta" / "sess-split.jsonl"
+    events = list(parse(path, []))
+    assert [event.tokens.output for event in events] == [10, 50, 120]
+
+
+def test_a_message_split_over_three_records_keeps_the_largest_output_in_the_trace() -> None:
+    path = MESSAGE_SPLIT / "-home-user-delta" / "sess-split.jsonl"
+    found = list(spans(path, []))
+    calls = [span for span in found if span.kind == "model_call"]
+    assert len(calls) == 1
+    call = calls[0]
+    assert call.tokens is not None
+    assert call.tokens.output == 120
+    assert call.tokens.reasoning_output == 0
+    assert call.tokens.uncached_input == 200
+    assert call.tokens.cache_read == 5_000
+
+
 def test_session_id_and_timestamp_come_from_the_record(
     basic: dict[str, UsageEvent],
 ) -> None:
@@ -167,3 +237,75 @@ def test_session_id_and_timestamp_come_from_the_record(
     assert event.session_id == "sess-alpha"
     assert event.timestamp.isoformat() == "2026-08-20T10:00:05+00:00"
     assert event.source_file.endswith("sess-alpha.jsonl")
+
+
+def test_parse_resume_yields_only_records_after_the_offset(tmp_path: Path) -> None:
+    path = write_session(
+        tmp_path,
+        "sess-resume.jsonl",
+        [assistant("r1", {"input_tokens": 10, "output_tokens": 5, "total_tokens": 15})],
+    )
+    offset = path.stat().st_size
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(
+            json.dumps(
+                assistant("r2", {"input_tokens": 20, "output_tokens": 8, "total_tokens": 28})
+            )
+            + "\n"
+        )
+
+    full = list(parse(path, []))
+    resumed = list(parse_resume(path, [], offset, None))
+
+    assert [event.request_id for event in full] == ["msg_r1", "msg_r2"]
+    assert [event.request_id for event in resumed] == ["msg_r2"]
+    assert resumed[0].tokens.output == full[1].tokens.output
+
+
+def test_parse_resume_carries_a_seeded_title_forward(tmp_path: Path) -> None:
+    path = write_session(
+        tmp_path,
+        "sess-resume-title.jsonl",
+        [
+            {"type": "custom-title", "customTitle": "Renamed before the resume point"},
+            assistant("r1", {"input_tokens": 10, "output_tokens": 5, "total_tokens": 15}),
+        ],
+    )
+    offset = path.stat().st_size
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(
+            json.dumps(
+                assistant("r2", {"input_tokens": 20, "output_tokens": 8, "total_tokens": 28})
+            )
+            + "\n"
+        )
+
+    without_seed = list(parse_resume(path, [], offset, None))
+    with_seed = list(parse_resume(path, [], offset, "Renamed before the resume point"))
+    full = list(parse(path, []))
+
+    assert without_seed[0].title_source == "folder"
+    assert with_seed[0].title == "Renamed before the resume point"
+    assert with_seed[0].title_source == "tool"
+    assert with_seed[0].title == full[1].title
+
+
+def test_parse_resume_picks_up_a_title_that_changes_after_the_offset(tmp_path: Path) -> None:
+    path = write_session(
+        tmp_path,
+        "sess-resume-retitle.jsonl",
+        [assistant("r1", {"total_tokens": 1, "output_tokens": 1})],
+    )
+    offset = path.stat().st_size
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(
+            json.dumps({"type": "custom-title", "customTitle": "Renamed mid-resume"}) + "\n"
+        )
+        handle.write(
+            json.dumps(assistant("r2", {"input_tokens": 1, "output_tokens": 1, "total_tokens": 2}))
+            + "\n"
+        )
+
+    resumed = list(parse_resume(path, [], offset, None))
+    assert resumed[0].title == "Renamed mid-resume"
+    assert resumed[0].title_source == "tool"

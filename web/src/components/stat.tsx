@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useEffect, useRef, useState } from 'react'
 
+import { InfoGlyph, MetricInfo, type MetricInfoContent } from '@/components/metric-info'
 import { cn } from '@/design-system/cn'
 
 function reducedMotion() {
@@ -63,27 +64,45 @@ export function Stat({
   format,
   unit,
   hint,
+  info,
+  exact,
   emphasis = 'default',
   className,
   children,
+  onClick,
 }: {
   label: string
   value: React.ReactNode
   format?: (value: number) => string
   unit?: string
   hint?: React.ReactNode
+  /** Rich on-demand explanation (meaning, formula, live-value formula, provenance,
+   *  caveats), opened from a small (i) glyph next to the label on hover, focus and tap. */
+  info?: MetricInfoContent
+  /** The full, unrounded value, shown inside the info box so an abbreviated headline
+   *  number (e.g. "1.2B") never hides the true count. */
+  exact?: string
   emphasis?: 'default' | 'hero'
   className?: string
   children?: React.ReactNode
+  onClick?: () => void
 }) {
-  return (
-    <div
-      className={cn(
-        'flex min-w-0 flex-col justify-between gap-3 rounded-md border bg-card p-card',
-        className,
-      )}
-    >
-      <StatLabel>{label}</StatLabel>
+  const infoContent: MetricInfoContent | undefined =
+    info && exact
+      ? info.kind === 'metric'
+        ? { ...info, computed: info.computed ? `${info.computed}\nExact: ${exact}` : `Exact: ${exact}` }
+        : { kind: 'metric', meaning: info.text, computed: `Exact: ${exact}` }
+      : info
+  const content = (
+    <>
+      <div className="flex items-center gap-1.5">
+        <StatLabel>{label}</StatLabel>
+        {infoContent ? (
+          <MetricInfo content={infoContent} ariaLabel={`Explain ${label}`}>
+            <InfoGlyph />
+          </MetricInfo>
+        ) : null}
+      </div>
       <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
         <span
           className={cn(
@@ -103,8 +122,36 @@ export function Stat({
       </div>
       {hint ? <p className="text-xs leading-relaxed text-muted-foreground">{hint}</p> : null}
       {children}
-    </div>
+    </>
   )
+  const cardClassName = cn(
+    'flex min-w-0 flex-col justify-between gap-3 rounded-md border bg-card p-card',
+    onClick && 'cursor-pointer text-left outline-offset-2 hover:border-primary/50 hover:bg-accent/40',
+    className,
+  )
+  if (onClick) {
+    // A `role="button"` div rather than a native <button>: `info` renders its own
+    // focusable, keyboard-operable trigger inside the card, and a native button cannot
+    // contain another interactive element without breaking HTML nesting rules.
+    return (
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={onClick}
+        onKeyDown={(event) => {
+          if (event.target !== event.currentTarget) return
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault()
+            onClick()
+          }
+        }}
+        className={cardClassName}
+      >
+        {content}
+      </div>
+    )
+  }
+  return <div className={cardClassName}>{content}</div>
 }
 
 export function StatGrid({ className, ...props }: React.ComponentProps<'div'>) {

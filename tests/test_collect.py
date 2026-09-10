@@ -68,9 +68,7 @@ def test_ensure_samples_table_is_idempotent(tmp_path: Path) -> None:
         conn.close()
 
 
-def test_collect_writes_a_row_per_sample(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_collect_writes_a_row_per_sample(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     db_path = tmp_path / "usage.db"
     monkeypatch.setattr(collect_module, "select_backend", lambda: "fake")
     monkeypatch.setattr(

@@ -7,12 +7,14 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
-import type { WarningGroup } from '@/api'
+import type { WarningGroup, WarningSeverity } from '@/api'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { CodeBlock } from '@/components/detail'
 import { Panel, PanelBody, PanelHeader } from '@/components/panel'
+import { MetricInfo } from '@/components/metric-info'
 import { cn } from '@/design-system/cn'
+import { formatCount, formatExact, formatMoney } from '@/format'
 
 export type SortDirection = 'asc' | 'desc'
 
@@ -169,12 +171,56 @@ export function DisclosurePanel({
   )
 }
 
+const WARNING_SEVERITY: Record<WarningSeverity, { color: string; label: string }> = {
+  info: { color: 'var(--primary)', label: 'Info' },
+  caution: { color: 'var(--warning)', label: 'Caution' },
+  critical: { color: 'var(--destructive)', label: 'Critical' },
+}
+
+function warningInfo(group: WarningGroup) {
+  const parts = [
+    group.severity === 'critical'
+      ? 'Critical: the affected totals are materially wrong and nothing here has corrected for it.'
+      : group.severity === 'caution'
+        ? 'Caution: the tool already bounded or partly corrected for this, so the effect on totals is limited.'
+        : 'Info: cosmetic — this does not change any total shown.',
+  ]
+  if (group.total_delta_tokens > 0 || group.total_delta_cost > 0) {
+    parts.push(
+      `Estimated impact across ${formatCount(group.count)} instance${group.count === 1 ? '' : 's'}: ${formatExact(group.total_delta_tokens)} tokens, about ${formatMoney(group.total_delta_cost)}.`,
+    )
+  }
+  if (group.affected_sessions > 0) {
+    parts.push(`Touches ${formatCount(group.affected_sessions)} session${group.affected_sessions === 1 ? '' : 's'}.`)
+  }
+  if (group.worst_example?.likely_cause) {
+    parts.push(`Likely cause: ${group.worst_example.likely_cause}.`)
+  }
+  return parts.join(' ')
+}
+
 function WarningGroupRow({ group }: { group: WarningGroup }) {
   const [expanded, setExpanded] = React.useState(false)
+  const meta = WARNING_SEVERITY[group.severity]
+  const instances = group.instances.length > 0 ? group.instances : group.warnings.map((message) => ({ message }))
+
   return (
     <div className="space-y-2 rounded-md border p-3">
       <div className="flex items-baseline justify-between gap-3">
-        <p className="text-xs leading-relaxed">{group.summary}</p>
+        <div className="flex items-start gap-2">
+          <MetricInfo
+            content={{ kind: 'simple', text: warningInfo(group) }}
+            ariaLabel={`Explain the ${meta.label.toLowerCase()} severity of this warning group`}
+            triggerClassName="mt-1 inline-flex"
+          >
+            <span
+              aria-hidden
+              className="size-1.5 shrink-0 rounded-full"
+              style={{ background: meta.color }}
+            />
+          </MetricInfo>
+          <p className="text-xs leading-relaxed">{group.summary}</p>
+        </div>
         {group.count > 1 && (
           <Button variant="ghost" size="xs" onClick={() => setExpanded(!expanded)} className="shrink-0">
             {expanded ? 'Hide files' : `Show ${group.count} files`}
@@ -183,13 +229,13 @@ function WarningGroupRow({ group }: { group: WarningGroup }) {
       </div>
       {(expanded || group.count === 1) && (
         <ul className="space-y-2 border-t pt-2">
-          {group.warnings.map((warning, index) => (
+          {instances.map((instance, index) => (
             <li
               key={index}
               className="tabular flex gap-2.5 text-[11px] leading-relaxed text-muted-foreground"
             >
               <span aria-hidden className="mt-1.5 size-1 shrink-0 rounded-full bg-warning" />
-              {warning}
+              {instance.message}
             </li>
           ))}
         </ul>

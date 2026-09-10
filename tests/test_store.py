@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+import sqlite3
 from collections.abc import Iterator
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -48,13 +50,22 @@ def _span(
     started_at: datetime | None = None,
     source_file: str = "",
     detail: dict[str, RawScalar] | None = None,
+    tokens: TokenUsage | None = None,
 ) -> Span:
     return Span(
-        span_id=span_id, source=source, session_id=session_id, seq=seq, kind=kind,
+        span_id=span_id,
+        source=source,
+        session_id=session_id,
+        seq=seq,
+        kind=kind,
         agent_id=agent_id,
         started_at=started_at or datetime(2026, 8, 20, 10, 0, 0, tzinfo=UTC),
-        source_file=source_file, record_offset=0, record_length=12,
+        source_file=source_file,
+        record_offset=0,
+        record_length=12,
         detail=detail or {},
+        tokens=tokens,
+        tokens_provenance="measured" if tokens is not None else "unavailable",
     )
 
 
@@ -76,11 +87,56 @@ def _source(
         yield from (spans_by_file or {}).get(path, [])
 
     return Source(
-        id=id_, label=id_, clients={"fake-client": "Fake"},
-        default_roots=default_roots, files=files, parse=parse,
-        token_data="full", display_path="fake path",
+        id=id_,
+        label=id_,
+        clients={"fake-client": "Fake"},
+        default_roots=default_roots,
+        files=files,
+        parse=parse,
+        token_data="full",
+        display_path="fake path",
         spans=spans if spans_by_file is not None else None,
     )
+
+
+def _resumable_source(id_: str, path: Path, calls: list[str]) -> tuple[Source, list[UsageEvent]]:
+    """A fake source whose `parse`/`parse_resume` both read from one mutable list the test
+    controls directly, so a test can assert which one `ingest()` actually chose to call
+    without depending on any real parsing logic."""
+    all_events: list[UsageEvent] = []
+
+    def default_roots() -> list[Path]:
+        return []
+
+    def files(root: Path) -> list[Path]:
+        return [path] if path.exists() and path.parent == root else []
+
+    def parse(_path: Path, _warnings: list[str]) -> Iterator[UsageEvent]:
+        calls.append("full")
+        yield from all_events
+
+    def parse_resume(
+        _path: Path, _warnings: list[str], offset: int, _seed_title: str | None
+    ) -> Iterator[UsageEvent]:
+        calls.append(f"resume:{offset}")
+        yield from (
+            event
+            for event in all_events
+            if event.record_offset is None or event.record_offset >= offset
+        )
+
+    source = Source(
+        id=id_,
+        label=id_,
+        clients={"fake-client": "Fake"},
+        default_roots=default_roots,
+        files=files,
+        parse=parse,
+        token_data="full",
+        display_path="fake path",
+        parse_resume=parse_resume,
+    )
+    return source, all_events
 
 
 def test_fresh_store_reaches_the_latest_migration(tmp_path: Path) -> None:
@@ -175,9 +231,14 @@ def test_ingest_collects_per_file_warnings(tmp_path: Path) -> None:
         yield _event(source_file=str(path))
 
     source = Source(
-        id="fake", label="fake", clients={"fake-client": "Fake"},
-        default_roots=list, files=lambda root: [log], parse=parse,
-        token_data="full", display_path="fake path",
+        id="fake",
+        label="fake",
+        clients={"fake-client": "Fake"},
+        default_roots=list,
+        files=lambda root: [log],
+        parse=parse,
+        token_data="full",
+        display_path="fake path",
     )
     store.ingest(conn, [source], {"fake": [root]})
     _, _, warnings = store.load(conn)
@@ -194,6 +255,280 @@ def test_fingerprint_falls_back_when_no_request_id() -> None:
     a = _event(request_id=None, minute=0)
     b = _event(request_id=None, minute=1)
     assert store.fingerprint_of(a) != store.fingerprint_of(b)
+
+
+def test_a_message_split_over_three_records_keeps_the_largest_output(tmp_path: Path) -> None:
+    conn = store.open_store(tmp_path / "usage.db")
+    root, log = _logs(tmp_path)
+
+    def event(output: int) -> UsageEvent:
+        return _event(
+            request_id="split-1",
+            tokens=TokenUsage(
+                uncached_input=50, cache_read=1_000, output=output, reasoning_output=0
+            ),
+            source_file=str(log),
+        )
+
+    # Streaming order: 10, then 50, then the final, complete 120 -- the last (and largest)
+    # record should win, not the first.
+    source = _source("fake", {log: [event(10), event(50), event(120)]})
+    store.ingest(conn, [source], {"fake": [root]})
+
+    row = conn.execute("SELECT output, uncached_input, cache_read FROM requests").fetchone()
+    assert row == (120, 50, 1_000)
+    assert conn.execute("SELECT COUNT(*) FROM requests").fetchone()[0] == 1
+
+
+def test_a_smaller_duplicate_record_never_downgrades_the_kept_output(tmp_path: Path) -> None:
+    conn = store.open_store(tmp_path / "usage.db")
+    root, log = _logs(tmp_path)
+
+    def event(output: int) -> UsageEvent:
+        return _event(
+            request_id="split-2",
+            tokens=TokenUsage(uncached_input=50, output=output),
+            source_file=str(log),
+        )
+
+    # Out-of-order arrival: the largest record shows up first, and the store must not let a
+    # smaller "duplicate" (e.g. a stray partial) overwrite it afterwards.
+    source = _source("fake", {log: [event(120), event(50), event(10)]})
+    store.ingest(conn, [source], {"fake": [root]})
+
+    assert conn.execute("SELECT output FROM requests").fetchone()[0] == 120
+
+
+def test_duplicates_across_two_files_yield_the_max_regardless_of_file_order(tmp_path: Path) -> None:
+    conn = store.open_store(tmp_path / "usage.db")
+    root = tmp_path / "logs"
+    root.mkdir()
+    a, b = root / "a.jsonl", root / "b.jsonl"
+    a.write_text("{}")
+    b.write_text("{}")
+    source = _source(
+        "fake",
+        {
+            a: [
+                _event(
+                    request_id="cross-1",
+                    tokens=TokenUsage(uncached_input=10, output=50),
+                    source_file=str(a),
+                )
+            ],
+            b: [
+                _event(
+                    request_id="cross-1",
+                    tokens=TokenUsage(uncached_input=10, output=120),
+                    source_file=str(b),
+                )
+            ],
+        },
+    )
+    store.ingest(conn, [source], {"fake": [root]})
+    assert conn.execute("SELECT output FROM requests").fetchone()[0] == 120
+
+
+def test_a_span_from_a_later_file_with_larger_output_upgrades_the_kept_span(
+    tmp_path: Path,
+) -> None:
+    # The same message.id can appear as a model_call span in two different files (the 155
+    # real cross-file-split cases the ground-truth audit found) -- the trace_events table
+    # must apply the same last-record-wins rule the requests table already applies, not
+    # leave the trace stuck on whichever file's span happened to be ingested first.
+    conn = store.open_store(tmp_path / "usage.db")
+    root = tmp_path / "logs"
+    root.mkdir()
+    a, b = root / "a.jsonl", root / "b.jsonl"
+    a.write_text("{}")
+    b.write_text("{}")
+    source = _source(
+        "fake",
+        {a: [], b: []},
+        spans_by_file={
+            a: [
+                _span(
+                    span_id="shared-call",
+                    kind="model_call",
+                    source_file=str(a),
+                    tokens=TokenUsage(uncached_input=10, output=10),
+                )
+            ],
+            b: [
+                _span(
+                    span_id="shared-call",
+                    kind="model_call",
+                    source_file=str(b),
+                    tokens=TokenUsage(uncached_input=10, output=120),
+                )
+            ],
+        },
+    )
+    store.ingest(conn, [source], {"fake": [root]})
+
+    spans = store.load_spans(conn, "fake", "s1")
+    assert len(spans) == 1
+    assert spans[0].tokens is not None
+    assert spans[0].tokens.output == 120
+
+
+def test_a_grown_file_with_a_resume_hook_is_parsed_incrementally(tmp_path: Path) -> None:
+    conn = store.open_store(tmp_path / "usage.db")
+    root, log = _logs(tmp_path)
+    calls: list[str] = []
+    source, all_events = _resumable_source("resumable", log, calls)
+
+    first_event = _event(request_id="r1", source_file=str(log))
+    first_event.record_offset = 0
+    all_events.append(first_event)
+    store.ingest(conn, [source], {"resumable": [root]})
+    assert calls == ["full"]
+    assert conn.execute("SELECT COUNT(*) FROM requests").fetchone()[0] == 1
+
+    grew_at = log.stat().st_size
+    with log.open("a", encoding="utf-8") as handle:
+        handle.write("more bytes so the file genuinely grows\n")
+    second_event = _event(request_id="r2", source_file=str(log))
+    second_event.record_offset = grew_at
+    all_events.append(second_event)
+
+    store.ingest(conn, [source], {"resumable": [root]})
+
+    assert calls == ["full", f"resume:{grew_at}"]
+    ids = {row[0] for row in conn.execute("SELECT request_id FROM requests")}
+    assert ids == {"r1", "r2"}
+
+
+def test_a_grown_file_that_was_rewritten_falls_back_to_a_full_reparse(tmp_path: Path) -> None:
+    conn = store.open_store(tmp_path / "usage.db")
+    root, log = _logs(tmp_path)
+    calls: list[str] = []
+    source, all_events = _resumable_source("resumable", log, calls)
+
+    first_event = _event(request_id="r1", source_file=str(log))
+    first_event.record_offset = 0
+    all_events.append(first_event)
+    store.ingest(conn, [source], {"resumable": [root]})
+    assert calls == ["full"]
+
+    # The file grew, but its earlier bytes changed too (a rewrite, not a pure append) --
+    # the boundary-hash check must catch this and fall back to a full reparse rather than
+    # trusting a "resume" that would silently miss whatever changed before the old EOF.
+    log.write_text("entirely different earlier content, then some more\n", encoding="utf-8")
+    second_event = _event(request_id="r2", source_file=str(log))
+    second_event.record_offset = None
+    all_events[:] = [first_event, second_event]
+
+    store.ingest(conn, [source], {"resumable": [root]})
+
+    assert calls == ["full", "full"]
+
+
+def test_a_resumed_scan_does_not_delete_the_earlier_rows_first(tmp_path: Path) -> None:
+    conn = store.open_store(tmp_path / "usage.db")
+    root, log = _logs(tmp_path)
+    calls: list[str] = []
+    source, all_events = _resumable_source("resumable", log, calls)
+
+    first_event = _event(
+        request_id="r1", tokens=TokenUsage(uncached_input=50, output=42), source_file=str(log)
+    )
+    first_event.record_offset = 0
+    all_events.append(first_event)
+    store.ingest(conn, [source], {"resumable": [root]})
+
+    grew_at = log.stat().st_size
+    with log.open("a", encoding="utf-8") as handle:
+        handle.write("more\n")
+    second_event = _event(request_id="r2", source_file=str(log))
+    second_event.record_offset = grew_at
+    all_events.append(second_event)
+    store.ingest(conn, [source], {"resumable": [root]})
+
+    assert calls[1].startswith("resume:")
+    row = conn.execute("SELECT output FROM requests WHERE request_id = 'r1'").fetchone()
+    assert row == (42,)
+
+
+def test_duplicates_across_two_files_the_smaller_file_ingested_last_does_not_win(
+    tmp_path: Path,
+) -> None:
+    conn = store.open_store(tmp_path / "usage.db")
+    root = tmp_path / "logs"
+    root.mkdir()
+    a, b = root / "a.jsonl", root / "b.jsonl"
+    a.write_text("{}")
+    b.write_text("{}")
+    source = _source(
+        "fake",
+        {
+            a: [
+                _event(
+                    request_id="cross-2",
+                    tokens=TokenUsage(uncached_input=10, output=120),
+                    source_file=str(a),
+                )
+            ],
+            b: [
+                _event(
+                    request_id="cross-2",
+                    tokens=TokenUsage(uncached_input=10, output=50),
+                    source_file=str(b),
+                )
+            ],
+        },
+    )
+    store.ingest(conn, [source], {"fake": [root]})
+    assert conn.execute("SELECT output FROM requests").fetchone()[0] == 120
+
+
+def test_disagreeing_input_fields_keep_the_first_record_and_warn(tmp_path: Path) -> None:
+    conn = store.open_store(tmp_path / "usage.db")
+    root, log = _logs(tmp_path)
+    first = _event(
+        request_id="collide", tokens=TokenUsage(uncached_input=100, output=10), source_file=str(log)
+    )
+    second = _event(
+        request_id="collide",
+        tokens=TokenUsage(uncached_input=999, output=999),
+        source_file=str(log),
+    )
+    source = _source("fake", {log: [first, second]})
+
+    store.ingest(conn, [source], {"fake": [root]})
+
+    row = conn.execute("SELECT uncached_input, output FROM requests").fetchone()
+    assert row == (100, 10)
+    warnings = json.loads(conn.execute("SELECT warnings FROM files").fetchone()[0])
+    assert any("disagree" in w for w in warnings)
+
+
+def test_fingerprint_is_namespaced_by_source() -> None:
+    a = _event(source="fake-a", request_id="shared")
+    b = _event(source="fake-b", request_id="shared")
+    assert store.fingerprint_of(a) != store.fingerprint_of(b)
+
+
+def test_fallback_fingerprint_uses_source_file_and_record_offset_to_disambiguate() -> None:
+    a = _event(request_id=None, session_id="s1", minute=0, model="m1", source_file="a.jsonl")
+    b = _event(request_id=None, session_id="s1", minute=0, model="m1", source_file="b.jsonl")
+    assert store.fingerprint_of(a) != store.fingerprint_of(b)
+
+    c = UsageEvent(
+        source="fake",
+        client="fake-client",
+        provider="unknown",
+        model="m1",
+        timestamp=datetime(2026, 8, 20, 10, 0, 0, tzinfo=UTC),
+        session_id="s1",
+        request_id=None,
+        tokens=_UNSET,
+        machine="test-machine",
+        source_file="a.jsonl",
+        record_offset=10,
+    )
+    d = c.model_copy(update={"record_offset": 20})
+    assert store.fingerprint_of(c) != store.fingerprint_of(d)
 
 
 def test_two_files_with_the_same_request_id_dedup_at_ingest(tmp_path: Path) -> None:
@@ -292,8 +627,10 @@ def test_reparsing_a_file_replaces_only_its_own_spans(tmp_path: Path) -> None:
     a_spans = [_span(span_id="sp-a1", source_file=str(a))]
     source = _source(
         "fake",
-        {a: [_event(request_id="ra", source_file=str(a))],
-         b: [_event(request_id="rb", source_file=str(b))]},
+        {
+            a: [_event(request_id="ra", source_file=str(a))],
+            b: [_event(request_id="rb", source_file=str(b))],
+        },
         {a: a_spans, b: [_span(span_id="sp-b1", source_file=str(b))]},
     )
     store.ingest(conn, [source], {"fake": [root]})
@@ -303,7 +640,8 @@ def test_reparsing_a_file_replaces_only_its_own_spans(tmp_path: Path) -> None:
     store.ingest(conn, [source], {"fake": [root]})
 
     assert {row[0] for row in conn.execute("SELECT span_id FROM trace_events")} == {
-        "sp-a2", "sp-b1"
+        "sp-a2",
+        "sp-b1",
     }
 
 
@@ -347,13 +685,18 @@ def test_an_excluded_project_drops_spans_but_keeps_requests(tmp_path: Path) -> N
         log,
         [
             _span(span_id="sp-1", source_file=str(log), detail={"project": "secret"}),
-            _span(span_id="sp-2", source_file=str(log),
-                  detail={"working_directory": "/home/user/secret/deep"}),
+            _span(
+                span_id="sp-2",
+                source_file=str(log),
+                detail={"working_directory": "/home/user/secret/deep"},
+            ),
             _span(span_id="sp-3", source_file=str(log), detail={"project": "public"}),
         ],
     )
     store.ingest(
-        conn, [source], {"fake": [root]},
+        conn,
+        [source],
+        {"fake": [root]},
         exclude_projects=["secret", "/home/user/secret"],
     )
 
@@ -393,6 +736,55 @@ def test_load_spans_reparents_agent_roots_to_their_subagent_span(tmp_path: Path)
     by_id = {span.span_id: span for span in spans}
     assert by_id["agent-turn"].parent_id == "call"
     assert by_id["call"].parent_id is None
+
+
+def test_a_pre_title_store_gets_the_new_columns_and_backfills_folder(tmp_path: Path) -> None:
+    # Simulate a store built before the title/title_source migration existed: apply every
+    # migration except the last one, insert a row the old way (no title columns at all),
+    # then reopen -- the ALTER TABLE migration must run and existing rows must backfill
+    # title_source='folder' (title itself has no DEFAULT, so it stays NULL).
+    path = tmp_path / "usage.db"
+    conn = sqlite3.connect(path)
+    for migration in store.MIGRATIONS[:-1]:
+        conn.executescript(migration)
+    conn.execute(f"PRAGMA user_version = {len(store.MIGRATIONS) - 1}")
+    conn.execute(
+        "INSERT INTO requests (fingerprint, source, client, provider, model, session_id, "
+        "timestamp, request_id, uncached_input, cache_read, cache_write_5m, cache_write_1h, "
+        "output, reasoning_output, is_sidechain, tier, project, working_directory, "
+        "repository, branch, machine, source_file, raw) VALUES "
+        "('fp1', 'fake', 'fake-client', 'unknown', 'm1', 's1', '2026-08-20T10:00:00+00:00', "
+        "'req-1', 100, 0, 0, 0, 50, 0, 0, 'standard', NULL, NULL, NULL, NULL, "
+        "'test-machine', '', '{}')"
+    )
+    conn.commit()
+    conn.close()
+
+    conn = store.open_store(path)
+    assert conn.execute("PRAGMA user_version").fetchone()[0] == len(store.MIGRATIONS)
+    columns = {row[1] for row in conn.execute("PRAGMA table_info(requests)")}
+    assert {"title", "title_source"} <= columns
+    row = conn.execute(
+        "SELECT title, title_source FROM requests WHERE fingerprint = 'fp1'"
+    ).fetchone()
+    assert row == (None, "folder")
+
+
+def test_title_and_title_source_round_trip_through_load(tmp_path: Path) -> None:
+    conn = store.open_store(tmp_path / "usage.db")
+    root = tmp_path / "logs"
+    root.mkdir()
+    log = root / "a.jsonl"
+    log.write_text("{}")
+    event = _event(source_file=str(log)).model_copy(
+        update={"title": "Fix login bug", "title_source": "tool"}
+    )
+    source = _source("fake", {log: [event]})
+    store.ingest(conn, [source], {"fake": [root]})
+
+    events, _, _ = store.load(conn)
+    assert events[0].title == "Fix login bug"
+    assert events[0].title_source == "tool"
 
 
 def test_session_flags_reports_spans_errors_and_outcome(tmp_path: Path) -> None:

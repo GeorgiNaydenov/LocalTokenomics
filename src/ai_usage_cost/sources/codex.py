@@ -15,10 +15,13 @@ from .base import (
     project_of,
     read_json_lines,
     read_json_records,
+    title_of,
 )
 
 RECONCILE_TOLERANCE = 0.01
 RECONCILE_MIN_TOKENS = 1000
+_TITLE_COMMAND_WRAPPER = re.compile(r"^<command-name>.*</command-name>$")
+_SESSION_INDEX_CACHE: dict[Path, dict[str, str]] = {}
 
 _ORIGINATOR_CLIENTS = {
     "Codex Desktop": "codex-desktop",
@@ -44,9 +47,67 @@ def default_roots() -> list[Path]:
     return [Path.home() / ".codex" / "sessions"]
 
 
+def _has_token_usage_records(path: Path) -> bool:
+    """Whether this file uses the newer per-response `token_usage_record` format.
+
+    A one-shot lookahead pass (its own throwaway warnings sink, so a bad line is not
+    reported twice) -- if any such record is present, `parse` prefers those exclusively
+    over the older, coarser `token_count` cumulative snapshots for token accounting.
+    """
+    for record in read_json_lines(path, []):
+        payload = record.get("payload")
+        payload = payload if isinstance(payload, dict) else record
+        kind = payload.get("type") or record.get("type")
+        if kind == "token_usage_record":
+            return True
+    return False
+
+
+def _codex_root(path: Path) -> Path | None:
+    """The `.codex`-equivalent root that holds `session_index.jsonl`, one level above the
+    `sessions/` directory a rollout file lives under (`~/.codex/sessions/**/rollout-*.jsonl`
+    -> `~/.codex/session_index.jsonl`)."""
+    for parent in path.parents:
+        if parent.name == "sessions":
+            return parent.parent
+    return None
+
+
+def _session_index(path: Path) -> dict[str, str]:
+    """Load and cache `session_index.jsonl` once per codex root, not once per rollout file.
+
+    Schema (verified against the real file): one JSON object per line, `{"id": "<thread
+    uuid>", "thread_name": "<title>", "updated_at": ...}`. A `thread_name` that is literally
+    a `<command-name>...</command-name>` wrapper (the thread's only turn was a bare slash
+    command, the one degenerate case found in the real index) is not a usable title -- it is
+    dropped here so the caller falls through to the next rung of the title chain.
+    """
+    root = _codex_root(path)
+    if root is None:
+        return {}
+    cached = _SESSION_INDEX_CACHE.get(root)
+    if cached is not None:
+        return cached
+    index_path = root / "session_index.jsonl"
+    index: dict[str, str] = {}
+    if index_path.is_file():
+        for record in read_json_lines(index_path, []):
+            thread_id = record.get("id")
+            thread_name = record.get("thread_name")
+            if not isinstance(thread_id, str) or not isinstance(thread_name, str):
+                continue
+            thread_name = thread_name.strip()
+            if not thread_name or _TITLE_COMMAND_WRAPPER.match(thread_name):
+                continue
+            index[thread_id] = thread_name
+    _SESSION_INDEX_CACHE[root] = index
+    return index
+
+
 def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
     model = ""
     session_id = _session_id_from_name(path)
+    title = _session_index(path).get(session_id)
     project: str | None = None
     cwd: str | None = None
     client = "codex-cli"
@@ -54,11 +115,17 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
     repository: str | None = None
     branch: str | None = None
     is_sidechain = False
+    forked = False
     summed_reported = 0
     final_total: dict | None = None
+    previous_total_snapshot: dict | None = None
+    first_token_count_seen = False
+    inherited_tokens = 0
+    reset_detected = False
     pending: list[dict[str, Any]] = []
+    prefer_usage_records = _has_token_usage_records(path)
 
-    for record in read_json_lines(path, warnings):
+    for offset, _length, record in read_json_records(path, warnings):
         payload = record.get("payload")
         payload = payload if isinstance(payload, dict) else record
         kind = payload.get("type") or record.get("type")
@@ -73,9 +140,12 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
                 branch = git.get("branch") or branch
             if isinstance(payload.get("source"), dict) and "subagent" in payload["source"]:
                 is_sidechain = True
+            if payload.get("forked_from_id"):
+                forked = True
             found_session = _find_session_id(payload)
             if found_session:
                 session_id = found_session
+                title = _session_index(path).get(session_id) or title
 
         just_discovered = False
         found_model = _find_model(payload)
@@ -92,21 +162,45 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
                 yield UsageEvent(model=model, **kwargs)
             pending = []
 
-        if kind != "token_count":
+        usage: dict | None = None
+        if kind == "token_usage_record" and prefer_usage_records:
+            payload_usage = payload.get("usage")
+            if isinstance(payload_usage, dict):
+                usage = payload_usage
+        elif kind == "token_count":
+            info = payload.get("info")
+            info = info if isinstance(info, dict) else payload
+            last = info.get("last_token_usage")
+            total = info.get("total_token_usage")
+
+            if isinstance(total, dict):
+                if not first_token_count_seen:
+                    first_token_count_seen = True
+                    if isinstance(last, dict):
+                        # A forked/resumed thread's first total_token_usage already carries
+                        # its parent's history; last_token_usage is only this turn's delta,
+                        # so the gap between them is what this file inherited, not earned.
+                        inherited_tokens = max(
+                            0, _int(total.get("total_tokens")) - _int(last.get("total_tokens"))
+                        )
+                if previous_total_snapshot is not None and _int(total.get("total_tokens")) < _int(
+                    previous_total_snapshot.get("total_tokens")
+                ):
+                    reset_detected = True
+                if total == previous_total_snapshot:
+                    # Codex re-emits token_count with an unchanged total_token_usage on
+                    # rate-limit-only updates; counting it again double-counts last_token_usage.
+                    continue
+                previous_total_snapshot = total
+                final_total = total
+            if not prefer_usage_records and isinstance(last, dict):
+                usage = last
+
+        if usage is None:
             continue
 
-        info = payload.get("info")
-        info = info if isinstance(info, dict) else payload
-        last = info.get("last_token_usage")
-        total = info.get("total_token_usage")
-
-        if isinstance(total, dict):
-            final_total = total
-        if not isinstance(last, dict):
-            continue
-
-        summed_reported += _int(last.get("total_tokens"))
-        tokens = _tokens_from_usage(last)
+        summed_reported += _int(usage.get("total_tokens"))
+        tokens = _tokens_from_usage(usage)
         if tokens.total == 0:
             continue
 
@@ -122,7 +216,10 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
             "working_directory": cwd,
             "repository": repository,
             "branch": branch,
+            "title": title if title else title_of(project, session_id),
+            "title_source": "tool" if title else "folder",
             "source_file": str(path),
+            "record_offset": offset,
         }
         if model:
             yield UsageEvent(model=model, **kwargs)
@@ -131,7 +228,15 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
 
     for kwargs in pending:
         yield UsageEvent(model=model or None, **kwargs)
-    _reconcile(path, summed_reported, final_total, warnings)
+    _reconcile(
+        path,
+        summed_reported,
+        final_total,
+        warnings,
+        forked=forked,
+        inherited=inherited_tokens,
+        reset_detected=reset_detected,
+    )
 
 
 def spans(path: Path, warnings: list[str]) -> Iterator[Span]:
@@ -153,6 +258,11 @@ def spans(path: Path, warnings: list[str]) -> Iterator[Span]:
     compaction: Span | None = None
     boundary_at: datetime | None = None
     deltas = 0
+    previous_total_snapshot: dict | None = None
+    # Mirrors parse()'s exclusivity: when a file has any token_usage_record line, that
+    # exact per-response usage replaces token_count's coarser cumulative snapshot for
+    # every model_call span in this file, not just for the aggregate cost pipeline.
+    prefer_usage_records = _has_token_usage_records(path)
 
     def build(
         kind: SpanKind,
@@ -287,8 +397,12 @@ def spans(path: Path, warnings: list[str]) -> Iterator[Span]:
                 target = open_calls.get(item_id)
                 if target is None:
                     target = build(
-                        "subagent", item_id or f"{session_id}:agent:{len(emitted)}", at,
-                        offset, length, name=item_type,
+                        "subagent",
+                        item_id or f"{session_id}:agent:{len(emitted)}",
+                        at,
+                        offset,
+                        length,
+                        name=item_type,
                     )
                     pending.append(target)
                 else:
@@ -333,21 +447,63 @@ def spans(path: Path, warnings: list[str]) -> Iterator[Span]:
                 call.status = "error" if failed else "ok"
             continue
 
+        if kind == "token_usage_record" and prefer_usage_records:
+            usage_payload = payload.get("usage")
+            if not isinstance(usage_payload, dict):
+                continue
+            tokens = _tokens_from_usage(usage_payload)
+            if tokens.total == 0:
+                continue
+            deltas += 1
+            started, ended, elapsed, provenance = _call_bounds(pending, item_timed, boundary_at, at)
+            call_span = build(
+                "model_call",
+                f"{session_id}:mc:{deltas}",
+                started,
+                offset,
+                length,
+                parent_id=turn.span_id if turn else None,
+                model=model or None,
+                status="ok",
+                ended_at=ended,
+                duration_ms=elapsed,
+                duration_provenance=provenance,
+                tokens=tokens,
+                tokens_provenance="measured",
+                context_capacity=capacity or None,
+                capacity_provenance="measured" if capacity else "unavailable",
+            )
+            for span in pending:
+                if span.parent_id is None:
+                    span.parent_id = call_span.span_id
+            pending.clear()
+            boundary_at = at
+            continue
+
         if kind == "token_count":
             info = payload.get("info")
             if not isinstance(info, dict):
                 continue
+            # token_usage_record carries no context-window figure, so keep drawing capacity
+            # from token_count's info even in a file where token_usage_record wins on tokens.
+            capacity = _int(info.get("model_context_window")) or capacity
+            if prefer_usage_records:
+                continue
+            total = info.get("total_token_usage")
+            if isinstance(total, dict):
+                if total == previous_total_snapshot:
+                    # Same duplicate-emission case parse() skips: an unchanged cumulative
+                    # snapshot means this is a re-emitted token_count, not a new API call.
+                    continue
+                previous_total_snapshot = total
             last = info.get("last_token_usage")
             if not isinstance(last, dict):
                 continue
             tokens = _tokens_from_usage(last)
             if tokens.total == 0:
                 continue
-            capacity = _int(info.get("model_context_window")) or capacity
             deltas += 1
-            started, ended, elapsed, provenance = _call_bounds(
-                pending, item_timed, boundary_at, at
-            )
+            started, ended, elapsed, provenance = _call_bounds(pending, item_timed, boundary_at, at)
             call_span = build(
                 "model_call",
                 f"{session_id}:mc:{deltas}",
@@ -637,18 +793,48 @@ def _client_of(originator: object) -> str:
 
 
 def _reconcile(
-    path: Path, summed_reported: int, final_total: dict | None, warnings: list[str]
+    path: Path,
+    summed_reported: int,
+    final_total: dict | None,
+    warnings: list[str],
+    *,
+    forked: bool = False,
+    inherited: int = 0,
+    reset_detected: bool = False,
 ) -> None:
+    if reset_detected:
+        # The file's own cumulative counter went backwards partway through (Codex resets it
+        # on some sessions); the last total_token_usage is no longer a valid whole-file
+        # baseline, so comparing the summed turns against it would just be noise.
+        warnings.append(
+            f"codex: {path.name}: counter reset -- this session's cumulative token count "
+            "decreased partway through the file, so its final total cannot be used as a "
+            "reconciliation baseline"
+        )
+        return
     if final_total is None:
         return
     reported = _int(final_total.get("total_tokens"))
     if reported <= 0:
         return
-    drift = abs(summed_reported - reported)
-    if drift > RECONCILE_MIN_TOKENS and drift / reported > RECONCILE_TOLERANCE:
+    baseline = reported
+    if forked and inherited > 0:
+        baseline = max(0, reported - inherited)
+    if baseline <= 0:
+        return
+    drift = abs(summed_reported - baseline)
+    if drift <= RECONCILE_MIN_TOKENS or drift / baseline <= RECONCILE_TOLERANCE:
+        return
+    if forked:
+        warnings.append(
+            f"codex: {path.name}: forked thread -- summed turns {summed_reported:,} vs "
+            f"{baseline:,} after excluding {inherited:,} tokens inherited from the parent "
+            f"thread ({drift / baseline:.1%} still unexplained)"
+        )
+    else:
         warnings.append(
             f"codex: {path.name}: summed turns {summed_reported:,} vs session total "
-            f"{reported:,} ({drift / reported:.1%} drift)"
+            f"{baseline:,} ({drift / baseline:.1%} drift)"
         )
 
 

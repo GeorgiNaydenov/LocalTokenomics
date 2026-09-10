@@ -54,8 +54,7 @@ def test_a_session_with_no_model_selection_message_stays_unavailable_not_broken(
     session.mkdir(parents=True)
     transcript = session / "transcript_full.jsonl"
     transcript.write_text(
-        '{"type": "PLANNER_RESPONSE", "step_index": 0, '
-        '"created_at": "2026-08-21T09:00:00Z"}\n',
+        '{"type": "PLANNER_RESPONSE", "step_index": 0, "created_at": "2026-08-21T09:00:00Z"}\n',
         encoding="utf-8",
     )
     warnings: list[str] = []

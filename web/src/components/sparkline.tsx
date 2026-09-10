@@ -1,14 +1,23 @@
 import { HoverFrame } from '@/components/chart-hover'
 import { cn } from '@/design-system/cn'
 
-function geometry(values: number[], width: number, height: number) {
-  const max = Math.max(...values, 1)
+export function geometry(values: number[], width: number, height: number) {
+  const max = Math.max(...values, 0)
+  const min = Math.min(...values, 0)
+  const range = max - min
+  const scale = range > 0 ? range : 1
   const step = values.length > 1 ? width / (values.length - 1) : width
-  const points = values.map(
-    (value, index) =>
-      `${(index * step).toFixed(1)},${(height - 1.5 - (value / max) * (height - 4)).toFixed(1)}`,
-  )
-  return { line: points.join(' '), area: `M0,${height} L${points.join(' L')} L${width},${height} Z` }
+  const y = (value: number) => {
+    const raw = height - 1.5 - ((value - min) / scale) * (height - 4)
+    return Math.min(height, Math.max(0, raw))
+  }
+  const points = values.map((value, index) => `${(index * step).toFixed(1)},${y(value).toFixed(1)}`)
+  return {
+    line: points.join(' '),
+    area: `M0,${height} L${points.join(' L')} L${width},${height} Z`,
+    step,
+    y,
+  }
 }
 
 function Chart({
@@ -30,8 +39,7 @@ function Chart({
   label?: string
   hovered: number | null
 }) {
-  const { line, area } = geometry(values, width, height)
-  const max = Math.max(...values, 1)
+  const { line, area, step, y } = geometry(values, width, height)
 
   return (
     <svg
@@ -54,8 +62,8 @@ function Chart({
       {hovered !== null && values[hovered] !== undefined ? (
         <>
           <line
-            x1={(hovered * (values.length > 1 ? width / (values.length - 1) : width)).toFixed(1)}
-            x2={(hovered * (values.length > 1 ? width / (values.length - 1) : width)).toFixed(1)}
+            x1={(hovered * step).toFixed(1)}
+            x2={(hovered * step).toFixed(1)}
             y1={0}
             y2={height}
             stroke="var(--muted-foreground)"
@@ -64,8 +72,8 @@ function Chart({
             vectorEffect="non-scaling-stroke"
           />
           <circle
-            cx={(hovered * (values.length > 1 ? width / (values.length - 1) : width)).toFixed(1)}
-            cy={(height - 1.5 - (values[hovered] / max) * (height - 4)).toFixed(1)}
+            cx={(hovered * step).toFixed(1)}
+            cy={y(values[hovered]).toFixed(1)}
             r={2.4}
             fill={color}
             stroke="var(--card)"

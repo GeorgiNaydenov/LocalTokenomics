@@ -1,4 +1,4 @@
-export const SERIES_SLOTS = 8
+export const SERIES_SLOTS = 12
 
 export function seriesColor(index: number): string {
   return index >= 0 && index < SERIES_SLOTS ? `var(--chart-${index + 1})` : 'var(--chart-other)'

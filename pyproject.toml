@@ -17,7 +17,14 @@ png = ["matplotlib>=3.8"]
 sql = ["datasette>=0.64"]
 alert = ["apprise>=1.8"]
 tui = ["textual>=0.80"]
-dev = ["pytest>=8.0", "ruff>=0.6", "mypy>=1.11", "httpx>=0.27"]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "httpx>=0.27",
+    "pylint>=3.2",
+    "bandit>=1.7",
+]
 
 [project.scripts]
 ai-usage-cost = "ai_usage_cost.cli:app"
@@ -43,3 +50,71 @@ ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.pylint.main]
+# Pydantic uses dynamic attribute generation (validators, model fields) that
+# static analysis can't always see -- let pylint load its introspection
+# plugin instead of only trusting extension-pkg-allow-list guesswork.
+extension-pkg-allow-list = ["pydantic"]
+jobs = 0
+
+[tool.pylint.format]
+max-line-length = 100
+
+[tool.pylint."messages control"]
+# Keep design/refactor (R....) and correctness (E....) checks. Disable only
+# the checks that ruff's selected rule sets (E, F, I, UP, B) already cover,
+# per pylint's own "Analogous checks already covered by ruff/flake8" guidance
+# (https://pylint.pycqa.org/en/latest/user_guide/checkers/features.html) plus
+# the community ruff<->pylint overlap list.
+disable = [
+    # --- style/formatting covered by ruff `E` (pycodestyle) ---
+    "line-too-long",              # C0301 -> ruff E501
+    "trailing-whitespace",        # C0303 -> ruff E/W291-293 (formatter)
+    "missing-final-newline",      # C0304 -> ruff W292 (formatter)
+    "trailing-newlines",          # C0305 -> ruff W391 (formatter)
+    "multiple-statements",        # C0321 -> ruff E701/E702
+    "bad-indentation",            # W0311 -> ruff E111 (formatter)
+    "unnecessary-semicolon",      # W0301 -> ruff E702/E703
+    "superfluous-parens",         # C0325 -> ruff UP034
+    # --- import hygiene covered by ruff `F`/`I` (pyflakes/isort) ---
+    "wrong-import-order",         # C0411 -> ruff I001
+    "wrong-import-position",      # C0413 -> ruff E402
+    "ungrouped-imports",          # C0412 -> ruff I001
+    "multiple-imports",           # C0410 -> ruff E401
+    "useless-import-alias",       # C0414 -> ruff F401 reimport handling
+    "unused-import",              # W0611 -> ruff F401
+    "unused-variable",            # W0612 -> ruff F841
+    "unused-wildcard-import",     # W0614 -> ruff F403/F405
+    "wildcard-import",            # W0401 -> ruff F403
+    "reimported",                 # W0404 -> ruff F811
+    "misplaced-future",           # W0410 -> ruff F404
+    "undefined-variable",         # E0602 -> ruff F821
+    "used-before-assignment",     # E0601 -> ruff F821/F823
+    "redefined-builtin",          # W0622 -> ruff A001/UP (builtins shadow)
+    # --- modernization covered by ruff `UP` (pyupgrade) ---
+    "useless-object-inheritance", # R0205 -> ruff UP004
+    "consider-using-f-string",    # C0209 -> ruff UP031/UP032
+    # --- bug-pattern checks covered by ruff `B` (flake8-bugbear) ---
+    "cell-var-from-loop",         # W0640 -> ruff B023
+    "dangerous-default-value",    # W0102 -> ruff B006
+    "raise-missing-from",         # W0707 -> ruff B904
+    # --- not a ruff duplicate, but this project has no docstring
+    # convention (ruff's `D`/pydocstyle rules are not in `select` either) --
+    # keeping these on would add ~630 blanket findings for every public
+    # module/class/function and swamp the signal from real design and
+    # correctness issues below. Revisit if a docstring policy is adopted.
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+]
+
+[tool.pylint.reports]
+fail-under = 9.0
+
+[tool.pylint.similarities]
+min-similarity-lines = 8
+ignore-imports = true
+
+[tool.bandit]
+exclude_dirs = ["tests", ".venv", "web"]

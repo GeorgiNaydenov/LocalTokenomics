@@ -51,3 +51,20 @@ def test_repo_missing_app_maps_repository_to_none(basic: list[UsageEvent]) -> No
     assert event.model is None
     assert event.tokens is None
     assert event.request_id == "dyad:3"
+
+
+def test_chat_title_becomes_the_tool_title(basic: list[UsageEvent]) -> None:
+    first = next(e for e in basic if e.session_id == "1")
+    assert first.title == "first chat"
+    assert first.title_source == "tool"
+
+    second = next(e for e in basic if e.session_id == "2")
+    assert second.title == "second chat"
+    assert second.title_source == "tool"
+
+
+def test_null_chat_title_falls_back_to_the_folder_title(tmp_path: Path) -> None:
+    db_path = build_db(tmp_path, "null_title.sql")
+    event = list(parse(db_path, []))[0]
+    assert event.title_source == "folder"
+    assert event.title == "gamma_1"

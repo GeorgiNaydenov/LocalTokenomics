@@ -64,6 +64,15 @@ came from:
   and the rate table both live on your machine.
 - **A terminal path for everything the dashboard shows**: `scan`, `export`, and an optional
   Textual `tui`, for anyone who would rather not open a browser.
+- **Every number explains itself.** Hover, focus, or tap the small `i` next to a figure for
+  what it means, the formula behind it, and that formula worked out with this view's own
+  values, not a generic example.
+- **Scans stay fast as your logs grow.** A session log that only gained new lines since the
+  last scan is read from where it left off instead of from the start, and a session's trace is
+  loaded once and shared across its Trace, Economics and Context tabs instead of being
+  rebuilt for each one.
+- **Session titles you already recognise**, taken from whatever each tool calls the session
+  itself, not a folder name and a UUID.
 
 ## Requirements and installation
 
@@ -322,11 +331,13 @@ token counts. A session opens into a workspace with four tabs:
 | Summary | What did this session cost, and what were its token buckets |
 | Trace | What happened, in order: model calls, tool calls and their results, reasoning, retries, compactions, subagents |
 | Economics | Where the tokens, money and time went, per turn, per model and per tool |
-| Context | How full the context window was at each model call, and what grew it |
+| Context | How full the context window was at each model call, what grew it, and an estimated breakdown of what it was made of — user and assistant messages, reasoning, tool results by tool, compaction summaries, and an honest `Other` share for whatever the log does not carry, such as the real system prompt |
 
-You can rate a session successful, partial, failed or abandoned, with notes and tags. Ratings
-are what make cost per successful task meaningful, and they are read at scan time, so a
-session you just rated moves into its bucket after the next rescan.
+You can rate a session successful, partial, failed or abandoned, with notes and tags; an `i`
+next to the rating buttons explains what each one means, including the difference between a
+session you stopped on purpose and one that needed a restart. Ratings are what make cost per
+successful task meaningful, and they are read at scan time, so a session you just rated moves
+into its bucket after the next rescan.
 
 ### Where every number comes from
 
@@ -408,8 +419,12 @@ Linux, `collect` works exactly as it does on Windows.
 Requests are deduplicated and persisted in a local SQLite store at
 `~/.ai-usage-cost/usage.db` (override with `--db`). A scan only reparses files that
 changed since the last run, and a file that later disappears keeps its already-stored
-rows. Cost itself is never stored: it is computed at read time from `rates.json`, so
-editing a price reprices your whole history immediately.
+rows. For Claude Code, a log that only grew since the last scan is read from where the
+previous scan left off rather than from the start again, verified against a hash of the
+bytes on either side of that point first, so a rewritten file always falls back to a full,
+safe reparse instead of trusting a stale checkpoint. Cost itself is never stored: it is
+computed at read time from `rates.json`, so editing a price reprices your whole history
+immediately.
 
 Cross-source deduplication uses each request's own id when the log provides one, such as
 a Claude message id or an OpenAI-compatible `id`. When a log has no such id, it falls back

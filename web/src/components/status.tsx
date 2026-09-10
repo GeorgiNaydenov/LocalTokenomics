@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
 import type { CostState, OutcomeLabel, Provenance } from '@/api'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { MetricInfo } from '@/components/metric-info'
 import { cn } from '@/design-system/cn'
 
 const COST_STATE: Record<CostState, { label: string; color: string; help: string }> = {
@@ -39,27 +39,27 @@ const OUTCOME: Record<OutcomeLabel, { label: string; color: string; help: string
   successful: {
     label: 'Successful',
     color: 'var(--success)',
-    help: 'The last turn completed and nothing was aborted.',
+    help: 'The work was completed and, where that applies, shipped: the last turn finished cleanly and nothing was aborted.',
   },
   partial: {
     label: 'Partial',
-    color: 'var(--warning)',
-    help: 'Finished, but some tools were interrupted or retried.',
+    color: 'var(--chart-5)',
+    help: 'Finished, but not cleanly: some tools were interrupted or retried along the way. A distinct colour from the unpriced cost badge on purpose — they can both appear on the same row and mean different things.',
   },
   failed: {
     label: 'Failed',
     color: 'var(--destructive)',
-    help: 'The last turn ended in an error.',
+    help: 'An error stopped the whole process before it could finish, such as an API error partway through a turn.',
   },
   abandoned: {
     label: 'Abandoned',
     color: 'var(--chart-8)',
-    help: 'The session stopped mid-turn and never resumed.',
+    help: 'Stopped mid-turn and never resumed: either you stopped it right after issuing the action, or the session needed a restart and the work continued in a different session instead of this one.',
   },
   unrated: {
     label: 'Unrated',
     color: 'var(--muted-foreground)',
-    help: 'Not enough signal to judge, and never guessed.',
+    help: 'Not judged yet. Includes sessions still actively in progress, which is expected — this is never guessed from the signals alone.',
   },
 }
 
@@ -86,14 +86,17 @@ export function Unavailable({ hint, className }: { hint?: string; className?: st
   if (!hint) return word
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <span tabIndex={0} className="cursor-default rounded-sm outline-offset-2">
-          {word}
-        </span>
-      </TooltipTrigger>
-      <TooltipContent className="max-w-64">{hint}</TooltipContent>
-    </Tooltip>
+    <MetricInfo content={{ kind: 'simple', text: hint }}>
+      {word}
+    </MetricInfo>
+  )
+}
+
+export function PartialMarker({ hint }: { hint: string }) {
+  return (
+    <MetricInfo content={{ kind: 'simple', text: hint }} triggerClassName="text-[10px] text-muted-foreground">
+      partial
+    </MetricInfo>
   )
 }
 
@@ -110,29 +113,35 @@ function SignalBadge({
   title?: string
   className?: string
 }) {
-  const badge = (
-    <span
-      className={cn(
-        'inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full border px-2 py-0.5 text-xs font-medium whitespace-nowrap',
-        title && 'cursor-default outline-offset-2',
-        className,
-      )}
-      style={{ borderColor: `color-mix(in oklab, ${color} 35%, transparent)`, color }}
-      tabIndex={title ? 0 : undefined}
-    >
+  const dot = (
+    <>
       <Dot color={color} />
       {prefix ? <span className="text-muted-foreground">{prefix}</span> : null}
       {label}
-    </span>
+    </>
   )
+  const badgeClassName = cn(
+    'inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full border px-2 py-0.5 text-xs font-medium whitespace-nowrap',
+    className,
+  )
+  const badgeStyle = { borderColor: `color-mix(in oklab, ${color} 35%, transparent)`, color }
 
-  if (!title) return badge
+  if (!title) {
+    return (
+      <span className={badgeClassName} style={badgeStyle}>
+        {dot}
+      </span>
+    )
+  }
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>{badge}</TooltipTrigger>
-      <TooltipContent className="max-w-64">{title}</TooltipContent>
-    </Tooltip>
+    <MetricInfo
+      content={{ kind: 'simple', text: title }}
+      triggerClassName={badgeClassName}
+      triggerStyle={badgeStyle}
+    >
+      {dot}
+    </MetricInfo>
   )
 }
 
@@ -264,22 +273,18 @@ export function BucketBar({
   return (
     <div className={cn('flex h-2 w-full overflow-hidden rounded-full', className)}>
       {segments.map((segment) => (
-        <Tooltip key={segment.key}>
-          <TooltipTrigger asChild>
-            <div
-              tabIndex={0}
-              aria-label={`${segment.label}, ${((segment.value / total) * 100).toFixed(1)} percent`}
-              className="outline-offset-2 transition-opacity hover:opacity-80"
-              style={{ width: `${(segment.value / total) * 100}%`, background: segment.color }}
-            />
-          </TooltipTrigger>
-          <TooltipContent>
-            <span className="tabular">
-              {segment.label}: {((segment.value / total) * 100).toFixed(1)}%
-              {formatValue ? `, ${formatValue(segment.value)}` : ''}
-            </span>
-          </TooltipContent>
-        </Tooltip>
+        <MetricInfo
+          key={segment.key}
+          content={{
+            kind: 'simple',
+            text: `${segment.label}: ${((segment.value / total) * 100).toFixed(1)}%${formatValue ? `, ${formatValue(segment.value)}` : ''}`,
+          }}
+          triggerClassName="block transition-opacity hover:opacity-80"
+          triggerStyle={{ width: `${(segment.value / total) * 100}%`, background: segment.color }}
+          ariaLabel={`${segment.label}, ${((segment.value / total) * 100).toFixed(1)} percent`}
+        >
+          <span className="sr-only">{segment.label}</span>
+        </MetricInfo>
       ))}
     </div>
   )
@@ -333,23 +338,16 @@ export function MeterRow({
       className={cn('grid items-center gap-3 py-1.5', className)}
       style={{ gridTemplateColumns: `${labelWidth}px minmax(0,1fr) 84px` }}
     >
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div tabIndex={0} className="min-w-0 cursor-default rounded-sm outline-offset-2">
-            <div className="truncate text-[13px]">{label}</div>
-            {meta ? (
-              <div className="tabular truncate text-[11px] text-muted-foreground">{meta}</div>
-            ) : null}
-          </div>
-        </TooltipTrigger>
-        <TooltipContent>
-          <span className="tabular">
-            {label}: {value}
-            {share ? `, ${share}` : ''}
-            {meta ? `, ${meta}` : ''}
-          </span>
-        </TooltipContent>
-      </Tooltip>
+      <MetricInfo
+        content={{
+          kind: 'simple',
+          text: `${label}: ${typeof value === 'string' || typeof value === 'number' ? value : ''}${share ? `, ${share}` : ''}${meta ? `, ${meta}` : ''}`,
+        }}
+        triggerClassName="block min-w-0"
+      >
+        <div className="truncate text-[13px]">{label}</div>
+        {meta ? <div className="tabular truncate text-[11px] text-muted-foreground">{meta}</div> : null}
+      </MetricInfo>
       <div className="relative">
         {fraction === null ? (
           <div className="flex h-3.5 items-center text-[11px]">

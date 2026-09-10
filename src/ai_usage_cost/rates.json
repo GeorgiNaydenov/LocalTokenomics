@@ -28,6 +28,10 @@
     "The `long_context_200k` variants formerly on both Gemini Pro entries and all five Grok models are removed. xAI and Google do genuinely charge more past a long-context threshold (Grok: 200k tokens, 2x; Gemini: 200k tokens, roughly 2x; GPT-6 Astra: 272k tokens, 2x input/cache and 1.5x output), but no source parser in this app reports prompt length, so `for_tier()` could never select them -- they were dead config. The base (short-context) price is what this app bills for every event it can see; recheck this note if a future source starts reporting context length.",
     "gpt-6-astra added 2026-09-08 from developers.openai.com/api/docs/models/gpt-6-astra: $10/$50 input/output, cached input $1 (0.1x, matches the openai provider rule), cache write $12.50 (1.25x, matches the openai provider rule), batch/flex at 50% off (matches the openai provider rule). Its >272k-token tier and 2x 'Fast mode' are not modeled, for the same reason the long_context_200k variants were removed above.",
     "gpt-5.2-codex added 2026-09-08 from developers.openai.com/api/docs/models/gpt-5.2-codex ($1.75/$14, cached $0.175) as an explicit row. Without it, the model id 'gpt-5.2-codex' silently matched the shorter 'gpt-5' prefix (input $1.25/output $10) instead of its own real price -- a genuine prefix-collision bug, distinct from and priced higher than gpt-5-codex's own $1.25/$10.",
+    "gpt-5.6-sol corrected 2026-09-10 to $4.00/$0.40/$20.00 (input/cached/output) against developers.openai.com/api/docs/pricing -- the previous $5.00/$30.00 overbilled input by 25% and output by 50%. Cached ratio is the standard 0.1x, no override needed.",
+    "Fourteen more OpenAI ids added 2026-09-10, each read directly off developers.openai.com/api/docs/pricing and, for context_window, off that model's own page at developers.openai.com/api/docs/models/<id> (fetched 2026-09-10). Every one previously prefix-matched a shorter sibling row and was silently mispriced by -96% to +1900% (e.g. gpt-5.3-codex, the only Codex model surviving in this app's own real logs, billed at the bare gpt-5 rate, 29% low). gpt-5.3-codex 1.75/0.175/14 (context: page states a 400k context window with a 272k maximum-input figure separately -- the smaller max-input figure is used, matching this file's existing gpt-5-codex/gpt-5.2-codex convention). gpt-5.5 5/0.50/30, context 1,050,000 (no separate max-input given, so the stated context window is used directly, matching the gpt-6-astra/gpt-5.6-family convention). gpt-5.5-pro 30/-/180, context 1,050,000; cached input is not listed on the pricing page for the two -pro rows (dash in the comparison table) so no cache_rules override is added -- pro-tier caching support is unconfirmed. gpt-5.4 2.50/0.25/15, context 1,050,000. gpt-5.4-mini 0.75/0.075/4.50, context 400,000. gpt-5.4-nano 0.20/0.02/1.25, context 400,000. gpt-5.4-pro 30/-/180, context 1,050,000 (same caching caveat as gpt-5.5-pro). gpt-5.2 1.75/0.175/14, context 400,000. gpt-5.1 1.25/0.125/10, context 400,000. gpt-5-pro 15/-/120, context 400,000 (same caching caveat). o3-mini 1.10/0.55/4.40, context 200,000 -- cached ratio is 0.5x, not the 0.1x provider default, so cache_rules overrides cache_read to 0.5 (write/batch copied from the openai provider block unchanged so they are not silently reset to ProviderRules' own defaults, since a model's cache_rules fully replaces the provider block rather than merging with it). o3-pro 20/-/80, context 200,000; developers.openai.com/api/docs/models/o3-pro states explicitly 'this model does not support prompt caching' (dash in the cache column) -- no cache_rules override, and no cached tokens are expected from a real o3-pro log. gpt-4.1-mini 0.40/0.10/1.60, context 1,047,576 (confirmed on the model's own page) -- cached ratio 0.25x, cache_rules override added. gpt-4.1-nano 0.10/0.025/0.40, context 1,047,576 -- cached ratio 0.25x, cache_rules override added. gpt-4o-mini 0.15/0.075/0.60, context 128,000 -- cached ratio 0.5x, cache_rules override added.",
+    "Cache-read overrides added 2026-09-10 to the four existing legacy OpenAI rows whose real cached ratio is not the provider's 0.1x default, verified against developers.openai.com/api/docs/pricing: gpt-4o 1.25/2.50=0.5x, o3 0.50/2.00=0.25x, gpt-4.1 0.50/2.00=0.25x, o4-mini 0.275/1.10=0.25x. Each cache_rules block also copies the openai provider's own cache_write_5m/cache_write_1h/batch values unchanged (1.25/1.25/0.5) rather than the ModelRate.cache_rules default cache_write_1h of 2.0, since a model's cache_rules fully replaces the provider block instead of merging with it -- omitting them would have silently doubled these four models' cache-write price. o1 is not modeled: OpenAI's docs put its cached ratio at 0.5x like gpt-4o, but this app has no source that ever emits an 'o1' model id, so no row was added for it.",
+    "codex-auto-review is real (168.4M tokens observed across 226 files on this machine's own Codex logs) but unpriced: it does not appear on developers.openai.com/api/docs/pricing or any developers.openai.com/api/docs/models/<id> page as of 2026-09-10, and third-party cost-estimator sites disagree with each other by more than 2x ($0.88-$2.50 input, $7-$15 output) with no indication which, if any, is the real OpenAI rate -- none of those is trustworthy enough to enter as a number. It is listed in `unpriced_models` below (distinct from the `models` list) purely so the app can say *why* it has no cost, rather than leaving it looking like an oversight; update this entry the moment OpenAI publishes a real rate.",
     "claude-fable-5-1 and claude-mythos-5-1 added 2026-09-08 from anthropic.com/claude-fable-and-mythos-5-1 and platform.claude.com/docs/en/about-claude/pricing, cross-checked against AWS Bedrock's own supported-model table at docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html: $10/$50 input/output, matching the placeholder guess already in this file for the un-suffixed claude-fable-5/claude-mythos-5 (itself still unverified, see above). Without these explicit rows, 'claude-fable-5-1' and 'claude-mythos-5-1' would silently inherit the shorter 'claude-fable-5'/'claude-mythos-5' prefixes -- another real prefix collision. Anthropic's own pricing page states Fable/Mythos 5.1 cache reads are billed at 0.025x the base input price ($0.25/MTok), not the provider-wide anthropic 0.1x every other current Claude model uses -- this is now modeled with an explicit per-model cache_rules override on these two rows rather than left as an unmodeled overestimate.",
     "context_window added 2026-09-08 and populated only where the vendor's own documentation states the figure -- a model without it leaves context occupancy unavailable rather than guessing, which is the honest outcome the dashboard is built to render. Anthropic: 1,000,000 for claude-fable-5-1, claude-mythos-5-1, claude-fable-5, claude-mythos-5, claude-opus-5, claude-opus-4-8, claude-opus-4-7, claude-opus-4-6, claude-sonnet-5 and claude-sonnet-4-6; 200,000 for claude-haiku-4-5 and every pre-4.6 Claude row (opus 4.5/4.1/4, 3-opus, sonnet 4.5/4, 3.7-sonnet, 3.5-sonnet, 3.5-haiku, 3-haiku), per platform.claude.com/docs/en/about-claude/models and the Models API max_input_tokens field. Claude Sonnet 4 and 4.5 also offer a 1M-token beta window; 200,000 is used here because that is what an unflagged request gets. A Claude Code model id ending [1m] never reads this column -- the adapter infers 1,000,000 from the suffix, which is the stronger signal.",
     "context_window is the largest input a request may carry, used only to show how full a model's context was. Where a vendor states a total context and a smaller maximum input separately (OpenAI, Alibaba), the maximum input is used, since occupancy is measured in input tokens. Where a vendor publishes one combined figure (xAI, Zhipu, Mistral, Amazon, Google, Anthropic), that figure is used and slightly overstates the room available. Vendors writing shorthand such as 256k or 300k are read as decimal; MiniMax, DeepSeek, Moonshot and Google publish exact integers. Checked against each vendor's own model pages on 2026-09-08.",
@@ -331,8 +335,8 @@
       "match": "gpt-5.6-sol",
       "provider": "openai",
       "display": "GPT-5.6 Sol",
-      "input": 5.0,
-      "output": 30.0,
+      "input": 4.0,
+      "output": 20.0,
       "context_window": 922000
     },
     {
@@ -360,6 +364,14 @@
       "context_window": 922000
     },
     {
+      "match": "gpt-5.3-codex",
+      "provider": "openai",
+      "display": "GPT-5.3 Codex",
+      "input": 1.75,
+      "output": 14.0,
+      "context_window": 272000
+    },
+    {
       "match": "gpt-5.2-codex",
       "provider": "openai",
       "display": "GPT-5.2 Codex",
@@ -374,6 +386,78 @@
       "input": 1.25,
       "output": 10.0,
       "context_window": 272000
+    },
+    {
+      "match": "gpt-5.5-pro",
+      "provider": "openai",
+      "display": "GPT-5.5 Pro",
+      "input": 30.0,
+      "output": 180.0,
+      "context_window": 1050000
+    },
+    {
+      "match": "gpt-5.5",
+      "provider": "openai",
+      "display": "GPT-5.5",
+      "input": 5.0,
+      "output": 30.0,
+      "context_window": 1050000
+    },
+    {
+      "match": "gpt-5.4-pro",
+      "provider": "openai",
+      "display": "GPT-5.4 Pro",
+      "input": 30.0,
+      "output": 180.0,
+      "context_window": 1050000
+    },
+    {
+      "match": "gpt-5.4-mini",
+      "provider": "openai",
+      "display": "GPT-5.4 mini",
+      "input": 0.75,
+      "output": 4.5,
+      "context_window": 400000
+    },
+    {
+      "match": "gpt-5.4-nano",
+      "provider": "openai",
+      "display": "GPT-5.4 nano",
+      "input": 0.2,
+      "output": 1.25,
+      "context_window": 400000
+    },
+    {
+      "match": "gpt-5.4",
+      "provider": "openai",
+      "display": "GPT-5.4",
+      "input": 2.5,
+      "output": 15.0,
+      "context_window": 1050000
+    },
+    {
+      "match": "gpt-5.2",
+      "provider": "openai",
+      "display": "GPT-5.2",
+      "input": 1.75,
+      "output": 14.0,
+      "context_window": 400000
+    },
+    {
+      "match": "gpt-5.1",
+      "provider": "openai",
+      "display": "GPT-5.1",
+      "input": 1.25,
+      "output": 10.0,
+      "context_window": 400000
+    },
+    {
+      "match": "gpt-5-pro",
+      "provider": "openai",
+      "display": "GPT-5 Pro",
+      "input": 15.0,
+      "output": 120.0,
+      "context_window": 400000
     },
     {
       "match": "gpt-5-mini",
@@ -400,12 +484,40 @@
       "context_window": 272000
     },
     {
+      "match": "o3-mini",
+      "provider": "openai",
+      "display": "o3-mini",
+      "input": 1.1,
+      "output": 4.4,
+      "context_window": 200000,
+      "cache_rules": {
+        "cache_read": 0.5,
+        "cache_write_5m": 1.25,
+        "cache_write_1h": 1.25,
+        "batch": 0.5
+      }
+    },
+    {
+      "match": "o3-pro",
+      "provider": "openai",
+      "display": "o3-pro",
+      "input": 20.0,
+      "output": 80.0,
+      "context_window": 200000
+    },
+    {
       "match": "o4-mini",
       "provider": "openai",
       "display": "o4-mini",
       "input": 1.1,
       "output": 4.4,
-      "context_window": 200000
+      "context_window": 200000,
+      "cache_rules": {
+        "cache_read": 0.25,
+        "cache_write_5m": 1.25,
+        "cache_write_1h": 1.25,
+        "batch": 0.5
+      }
     },
     {
       "match": "o3",
@@ -413,7 +525,41 @@
       "display": "o3",
       "input": 2.0,
       "output": 8.0,
-      "context_window": 200000
+      "context_window": 200000,
+      "cache_rules": {
+        "cache_read": 0.25,
+        "cache_write_5m": 1.25,
+        "cache_write_1h": 1.25,
+        "batch": 0.5
+      }
+    },
+    {
+      "match": "gpt-4.1-mini",
+      "provider": "openai",
+      "display": "GPT-4.1 mini",
+      "input": 0.4,
+      "output": 1.6,
+      "context_window": 1047576,
+      "cache_rules": {
+        "cache_read": 0.25,
+        "cache_write_5m": 1.25,
+        "cache_write_1h": 1.25,
+        "batch": 0.5
+      }
+    },
+    {
+      "match": "gpt-4.1-nano",
+      "provider": "openai",
+      "display": "GPT-4.1 nano",
+      "input": 0.1,
+      "output": 0.4,
+      "context_window": 1047576,
+      "cache_rules": {
+        "cache_read": 0.25,
+        "cache_write_5m": 1.25,
+        "cache_write_1h": 1.25,
+        "batch": 0.5
+      }
     },
     {
       "match": "gpt-4.1",
@@ -421,7 +567,27 @@
       "display": "GPT-4.1",
       "input": 2.0,
       "output": 8.0,
-      "context_window": 1047576
+      "context_window": 1047576,
+      "cache_rules": {
+        "cache_read": 0.25,
+        "cache_write_5m": 1.25,
+        "cache_write_1h": 1.25,
+        "batch": 0.5
+      }
+    },
+    {
+      "match": "gpt-4o-mini",
+      "provider": "openai",
+      "display": "GPT-4o mini",
+      "input": 0.15,
+      "output": 0.6,
+      "context_window": 128000,
+      "cache_rules": {
+        "cache_read": 0.5,
+        "cache_write_5m": 1.25,
+        "cache_write_1h": 1.25,
+        "batch": 0.5
+      }
     },
     {
       "match": "gpt-4o",
@@ -429,7 +595,13 @@
       "display": "GPT-4o",
       "input": 2.5,
       "output": 10.0,
-      "context_window": 128000
+      "context_window": 128000,
+      "cache_rules": {
+        "cache_read": 0.5,
+        "cache_write_5m": 1.25,
+        "cache_write_1h": 1.25,
+        "batch": 0.5
+      }
     },
     {
       "match": "gemini-3.1-pro",
@@ -790,6 +962,12 @@
       "input": 0.035,
       "output": 0.14,
       "context_window": 128000
+    }
+  ],
+  "unpriced_models": [
+    {
+      "match": "codex-auto-review",
+      "note": "no published per-token rate as of 2026-09-10 -- absent from developers.openai.com/api/docs/pricing and every developers.openai.com/api/docs/models/<id> page; third-party cost estimators disagree with each other by more than 2x, so none was trustworthy enough to enter as a number. Its tokens are still counted, just not priced -- update this entry if OpenAI publishes a real rate."
     }
   ]
 }

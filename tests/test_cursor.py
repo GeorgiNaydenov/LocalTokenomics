@@ -45,6 +45,31 @@ def test_second_composer_gets_its_own_request_id(basic: list[UsageEvent]) -> Non
     assert event.timestamp.isoformat() == "2025-08-20T09:53:20+00:00"
 
 
+def test_composer_name_becomes_the_tool_title(basic: list[UsageEvent]) -> None:
+    event = next(e for e in basic if e.session_id == "11111111-1111-1111-1111-111111111111")
+    assert event.title == "Fix login bug"
+    assert event.title_source == "tool"
+
+    other = next(e for e in basic if e.session_id == "22222222-2222-2222-2222-222222222222")
+    assert other.title == "Refactor auth"
+    assert other.title_source == "tool"
+
+
+def test_missing_name_falls_back_to_the_folder_title(tmp_path: Path) -> None:
+    db_path = tmp_path / "state.vscdb"
+    with sqlite3.connect(db_path) as conn:
+        conn.executescript(
+            "CREATE TABLE cursorDiskKV (key TEXT UNIQUE, value BLOB);"
+            "INSERT INTO cursorDiskKV (key, value) VALUES "
+            "('composerData:33333333-3333-3333-3333-333333333333', "
+            '\'{"composerId": "33333333-3333-3333-3333-333333333333", '
+            '"createdAt": 1755680000000}\');'
+        )
+    event = list(parse(db_path, []))[0]
+    assert event.title_source == "folder"
+    assert event.title == "(no project)_33333333-3333-3333-3333-333333333333"
+
+
 def test_empty_database_yields_no_events_and_no_warnings(tmp_path: Path) -> None:
     db_path = build_db(tmp_path, "empty.sql")
     warnings: list[str] = []

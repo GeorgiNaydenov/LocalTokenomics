@@ -26,27 +26,50 @@ export function formatMoneyExact(value: number): string {
   return value !== 0 && Math.abs(value) < 0.01 ? moneyPrecise.format(value) : money.format(value)
 }
 
-/** Axis ticks. Whole dollars stay whole (`$20`); fractional scales get cents
- *  (`$0.35`) so a tick never reads as a rounded lie. */
-export function formatMoneyShort(value: number): string {
-  const abs = Math.abs(value)
-  if (abs >= 1000) return `$${(value / 1000).toFixed(abs >= 10_000 ? 0 : 1)}K`
-  if (Number.isInteger(value)) return `$${value}`
-  if (abs >= 10) return `$${Math.round(value)}`
-  return `$${value.toFixed(2)}`
+function trimMoney(scaled: number): string {
+  const oneDecimal = scaled.toFixed(1)
+  return Math.abs(Number(oneDecimal)) >= 10 ? scaled.toFixed(0) : oneDecimal
 }
 
-/** `161.5M`, `4.9M`, `12.3K`. Exact value belongs in a title/tooltip. */
-export function formatTokens(value: number): string {
+/** Axis ticks. Whole dollars stay whole (`$20`); fractional scales get cents
+ *  (`$0.35`) so a tick never reads as a rounded lie. The sign is handled once,
+ *  up front, so it never lands between the `$` and the digits. */
+export function formatMoneyShort(value: number): string {
+  const sign = value < 0 ? '-' : ''
   const abs = Math.abs(value)
-  if (abs >= 1_000_000_000) return `${trim(value / 1_000_000_000)}B`
-  if (abs >= 1_000_000) return `${trim(value / 1_000_000)}M`
-  if (abs >= 1_000) return `${trim(value / 1_000)}K`
-  return plain.format(Math.round(value))
+  if (abs >= 1_000_000) return `${sign}$${trimMoney(abs / 1_000_000)}M`
+  if (abs >= 1000) return `${sign}$${trimMoney(abs / 1000)}K`
+  if (Number.isInteger(abs)) return `${sign}$${abs}`
+  if (abs >= 10) return `${sign}$${Math.round(abs)}`
+  return `${sign}$${abs.toFixed(2)}`
+}
+
+const TOKEN_UNITS: { threshold: number; suffix: string }[] = [
+  { threshold: 1_000_000_000, suffix: 'B' },
+  { threshold: 1_000_000, suffix: 'M' },
+  { threshold: 1_000, suffix: 'K' },
+]
+
+/** `161.5M`, `4.9M`, `12.3K`. Exact value belongs in a title/tooltip. Rounds
+ *  the scaled value first, then decides the unit, so a value that rounds up
+ *  to the next unit's boundary is shown in that unit rather than as `1000M`. */
+export function formatTokens(value: number): string {
+  const sign = value < 0 ? '-' : ''
+  const abs = Math.abs(value)
+  for (const unit of TOKEN_UNITS) {
+    const trimmed = trim(abs / unit.threshold)
+    if (Number(trimmed) >= 1) return `${sign}${trimmed}${unit.suffix}`
+  }
+  return `${sign}${plain.format(Math.round(abs))}`
 }
 
 function trim(value: number): string {
   return value >= 100 ? value.toFixed(0) : value.toFixed(1)
+}
+
+/** `1 error`, `3 errors`. */
+export function plural(count: number, word: string): string {
+  return `${formatCount(count)} ${word}${count === 1 ? '' : 's'}`
 }
 
 export function formatCount(value: number): string {
@@ -154,4 +177,21 @@ export function daySpan(from: string, to: string): string[] {
     cursor = shiftDays(cursor, 1)
   }
   return days
+}
+
+/** Last log record minus the first, elapsed time in ms, idle minutes included. */
+export function logSpanMs(session: SessionRow): number {
+  const start = Date.parse(session.start_time)
+  const end = Date.parse(session.end_time)
+  if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return 0
+  return end - start
+}
+
+/** Today's date in the viewer's own calendar, not UTC, so range presets and
+ *  recency checks agree with what the viewer sees on their clock. */
+export function today(): string {
+  const now = new Date()
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const day = String(now.getDate()).padStart(2, '0')
+  return `${now.getFullYear()}-${month}-${day}`
 }

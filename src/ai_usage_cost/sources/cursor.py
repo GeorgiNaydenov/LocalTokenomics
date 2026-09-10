@@ -9,7 +9,7 @@ from pathlib import Path
 
 from ..models import UsageEvent
 from ..trace import Capabilities
-from .base import Source, parse_timestamp, read_sqlite
+from .base import Source, parse_timestamp, read_sqlite, title_of
 
 _APP_DIR = "Cursor"
 
@@ -67,6 +67,8 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
             continue
         if not isinstance(data, dict):
             continue
+        name = data.get("name")
+        title = name.strip() if isinstance(name, str) and name.strip() else None
         yield UsageEvent(
             source="cursor",
             client="cursor",
@@ -75,6 +77,8 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
             session_id=composer_id,
             request_id=f"cursor:{composer_id}",
             tokens=None,
+            title=title if title else title_of(None, composer_id),
+            title_source="tool" if title else "folder",
             machine=platform.node(),
             source_file=str(path),
         )

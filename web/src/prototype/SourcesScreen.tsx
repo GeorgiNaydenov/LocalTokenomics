@@ -86,7 +86,7 @@ export function SourcesScreen() {
             title={`${formatCount(SCAN_WARNINGS.length)} file or parse warnings from the last scan`}
           />
           <PanelBody>
-            <WarningsList groups={[{ kind: 'other', label: 'Warnings', count: SCAN_WARNINGS.length, summary: `${SCAN_WARNINGS.length} warnings`, warnings: SCAN_WARNINGS }]} />
+            <WarningsList groups={[{ kind: 'other', label: 'Warnings', count: SCAN_WARNINGS.length, summary: `${SCAN_WARNINGS.length} warnings`, severity: 'info', total_delta_tokens: 0, total_delta_cost: 0, worst_example: null, affected_sessions: 0, instances: [], warnings: SCAN_WARNINGS }]} />
           </PanelBody>
         </Panel>
       ) : null}

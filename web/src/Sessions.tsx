@@ -26,6 +26,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { cn } from '@/design-system/cn'
+import type { Column } from '@/components/columns'
+import { ColumnChooser, useHiddenColumns, visibleColumns } from '@/components/columns'
 
 type SortKey =
   | 'state'
@@ -42,20 +44,6 @@ type SortKey =
 type SortDir = 'asc' | 'desc'
 
 const SHOWN_LIMIT = 120
-
-const COLUMNS: { key: SortKey; label: string; align: 'left' | 'right' }[] = [
-  { key: 'state', label: 'State', align: 'left' },
-  { key: 'outcome', label: 'Outcome', align: 'left' },
-  { key: 'id', label: 'Session', align: 'left' },
-  { key: 'client', label: 'Client', align: 'left' },
-  { key: 'model', label: 'Model', align: 'left' },
-  { key: 'project', label: 'Project', align: 'left' },
-  { key: 'start', label: 'Started', align: 'left' },
-  { key: 'requests', label: 'Req', align: 'right' },
-  { key: 'errors', label: 'Errors', align: 'right' },
-  { key: 'tokens', label: 'Tokens', align: 'right' },
-  { key: 'cost', label: 'Cost', align: 'right' },
-]
 
 const SORT_OPTIONS: { value: string; key: SortKey; dir: SortDir; label: string }[] = [
   { value: 'cost:desc', key: 'cost', dir: 'desc', label: 'Cost, high to low' },
@@ -128,12 +116,119 @@ function ModelCell({ row, report }: { row: SessionRow; report: Report }) {
   )
 }
 
+function buildSessionColumns(report: Report, maxTokens: number): Column<SessionRow>[] {
+  return [
+    {
+      key: 'state',
+      label: 'State',
+      align: 'left',
+      cell: (row) => (
+        <span className="inline-flex items-center gap-2">
+          <CostStateBadge state={row.cost_state} />
+          <TracedDot traced={row.traced} />
+        </span>
+      ),
+    },
+    {
+      key: 'outcome',
+      label: 'Outcome',
+      align: 'left',
+      cell: (row) => <OutcomeBadge outcome={row.outcome} />,
+    },
+    {
+      key: 'id',
+      label: 'Session',
+      align: 'left',
+      cellClassName: 'tabular max-w-40 font-medium',
+      cell: (row) => (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <span tabIndex={0} className="block cursor-default truncate rounded-sm outline-offset-2">
+              {sessionDisplayName(row)}
+            </span>
+          </TooltipTrigger>
+          <TooltipContent>
+            <span className="tabular">{sessionDisplayName(row)}</span>
+          </TooltipContent>
+        </Tooltip>
+      ),
+    },
+    {
+      key: 'client',
+      label: 'Client',
+      align: 'left',
+      cellClassName: 'text-muted-foreground',
+      cell: (row) => row.client,
+    },
+    {
+      key: 'model',
+      label: 'Model',
+      align: 'left',
+      cellClassName: 'text-muted-foreground',
+      cell: (row) => <ModelCell row={row} report={report} />,
+    },
+    {
+      key: 'project',
+      label: 'Project',
+      align: 'left',
+      cellClassName: 'max-w-36 text-muted-foreground',
+      cell: (row) => <span className="block truncate">{row.project ?? '(no project)'}</span>,
+    },
+    {
+      key: 'start',
+      label: 'Started',
+      align: 'left',
+      cellClassName: 'tabular text-muted-foreground',
+      cell: (row) => startLabel(row.start_time),
+    },
+    {
+      key: 'requests',
+      label: 'Req',
+      align: 'right',
+      cellClassName: 'tabular text-muted-foreground',
+      cell: (row) => formatCount(row.request_count),
+    },
+    {
+      key: 'errors',
+      label: 'Errors',
+      align: 'right',
+      cell: (row) => <ErrorCount count={row.error_count} />,
+    },
+    {
+      key: 'tokens',
+      label: 'Tokens',
+      align: 'right',
+      cell: (row) => (
+        <TokenCell
+          label={row.tokens ? formatTokens(row.tokens.total) : null}
+          fraction={row.tokens ? row.tokens.total / maxTokens : 0}
+          state={row.cost_state}
+        />
+      ),
+    },
+    {
+      key: 'cost',
+      label: 'Cost',
+      align: 'right',
+      cellClassName: 'tabular font-semibold',
+      cell: (row) =>
+        row.cost ? (
+          formatMoney(row.cost.total)
+        ) : (
+          <span className="font-normal text-muted-foreground">
+            <Unavailable />
+          </span>
+        ),
+    },
+  ]
+}
+
 export default function Sessions(props: {
   report: Report
   onOpenSession: (sessionId: string) => void
 }): JSX.Element {
   const { report, onOpenSession } = props
-  const [sortKey, setSortKey] = useState<SortKey>('cost')
+  const [sortKey, setSortKey] = useState<SortKey>('start')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const isPhone = useMediaQuery('(max-width: 639px)')
 
@@ -148,6 +243,9 @@ export default function Sessions(props: {
 
   const shown = sorted.slice(0, SHOWN_LIMIT)
   const maxTokens = Math.max(...shown.map((row) => (row.tokens ? row.tokens.total : 0)), 1)
+  const [hiddenColumns, toggleColumn] = useHiddenColumns('auc.columns.sessions')
+  const columns = buildSessionColumns(report, maxTokens)
+  const shownColumns = visibleColumns(columns, hiddenColumns)
 
   const onHeaderSort = (key: SortKey) => {
     if (sortKey === key) {
@@ -175,11 +273,16 @@ export default function Sessions(props: {
         eyebrow="Sessions"
         title={title}
         actions={
-          <SortSelect
-            options={SORT_OPTIONS}
-            value={`${sortKey}:${sortDir}`}
-            onChange={onSortSelect}
-          />
+          <>
+            <SortSelect
+              options={SORT_OPTIONS}
+              value={`${sortKey}:${sortDir}`}
+              onChange={onSortSelect}
+            />
+            {!isPhone && sorted.length > 0 && (
+              <ColumnChooser columns={columns} hidden={hiddenColumns} onToggle={toggleColumn} />
+            )}
+          </>
         }
       />
 
@@ -217,7 +320,7 @@ export default function Sessions(props: {
           <Table>
             <TableHeader>
               <TableRow>
-                {COLUMNS.map((column) => (
+                {shownColumns.map((column) => (
                   <TableHead
                     key={column.key}
                     aria-sort={ariaSort(sortKey === column.key, sortDir)}
@@ -228,7 +331,7 @@ export default function Sessions(props: {
                       align={column.align}
                       active={sortKey === column.key}
                       direction={sortDir}
-                      onClick={() => onHeaderSort(column.key)}
+                      onClick={() => onHeaderSort(column.key as SortKey)}
                       className="w-full"
                     />
                   </TableHead>
@@ -243,58 +346,14 @@ export default function Sessions(props: {
                   className="cursor-pointer"
                   style={{ height: 'var(--row-height)' }}
                 >
-                  <TableCell>
-                    <span className="inline-flex items-center gap-2">
-                      <CostStateBadge state={row.cost_state} />
-                      <TracedDot traced={row.traced} />
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <OutcomeBadge outcome={row.outcome} />
-                  </TableCell>
-                  <TableCell className="tabular max-w-40 font-medium">
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <span tabIndex={0} className="block cursor-default truncate rounded-sm outline-offset-2">
-                          {sessionDisplayName(row)}
-                        </span>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <span className="tabular">{sessionDisplayName(row)}</span>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">{row.client}</TableCell>
-                  <TableCell className="text-muted-foreground">
-                    <ModelCell row={row} report={report} />
-                  </TableCell>
-                  <TableCell className="max-w-36 text-muted-foreground">
-                    <span className="block truncate">{row.project ?? '(no project)'}</span>
-                  </TableCell>
-                  <TableCell className="tabular text-muted-foreground">
-                    {startLabel(row.start_time)}
-                  </TableCell>
-                  <TableCell className="tabular text-right text-muted-foreground">
-                    {formatCount(row.request_count)}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <ErrorCount count={row.error_count} />
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <TokenCell
-                      label={row.tokens ? formatTokens(row.tokens.total) : null}
-                      fraction={row.tokens ? row.tokens.total / maxTokens : 0}
-                      state={row.cost_state}
-                    />
-                  </TableCell>
-                  <TableCell
-                    className={cn(
-                      'tabular text-right font-semibold',
-                      row.cost === null && 'font-normal text-muted-foreground',
-                    )}
-                  >
-                    {row.cost ? formatMoney(row.cost.total) : <Unavailable />}
-                  </TableCell>
+                  {shownColumns.map((column) => (
+                    <TableCell
+                      key={column.key}
+                      className={cn(column.align === 'right' && 'text-right', column.cellClassName)}
+                    >
+                      {column.cell(row)}
+                    </TableCell>
+                  ))}
                 </TableRow>
               ))}
             </TableBody>

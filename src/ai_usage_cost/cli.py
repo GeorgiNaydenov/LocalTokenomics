@@ -96,9 +96,11 @@ def scan(
         typer.echo(report.model_dump_json(indent=2))
         return
     if not report.totals.events:
-        console.print("[yellow]No usage found.[/yellow] Checked "
-                      f"{report.files_scanned} log file(s). Pass --root SOURCE=PATH "
-                      "if your logs live elsewhere.")
+        console.print(
+            "[yellow]No usage found.[/yellow] Checked "
+            f"{report.files_scanned} log file(s). Pass --root SOURCE=PATH "
+            "if your logs live elsewhere."
+        )
         raise typer.Exit(code=1)
     render(report, console, group_by=by, verbose=verbose)
 
@@ -208,8 +210,10 @@ def collect(
 ) -> None:
     backend = select_backend()
     if backend is None:
-        console.print("[red]No GPU sampler available.[/red] nvidia-smi is not on PATH and "
-                      "PowerShell performance counters are unavailable.")
+        console.print(
+            "[red]No GPU sampler available.[/red] nvidia-smi is not on PATH and "
+            "PowerShell performance counters are unavailable."
+        )
         raise typer.Exit(code=1)
     db_path = db or DEFAULT_DB_PATH
     console.print(f"Sampling via [green]{backend}[/green] every {interval:g}s -> {db_path}")
@@ -365,8 +369,9 @@ def tui(
     analysis = analyze(db_path=db, roots=_roots(root), rates_path=rates, rebuild=rebuild)
     report = report_of(analysis, since=_day(since), until=_day(until))
     if not report.sessions:
-        console.print("[yellow]No usage found.[/yellow] Checked "
-                      f"{report.files_scanned} log file(s).")
+        console.print(
+            f"[yellow]No usage found.[/yellow] Checked {report.files_scanned} log file(s)."
+        )
         raise typer.Exit(code=1)
     run_tui(report)
 

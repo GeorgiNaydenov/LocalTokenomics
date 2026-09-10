@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, PrivateAttr
 
 from .models import CostBreakdown, CostState, TokenUsage, UsageEvent
 
@@ -47,6 +47,18 @@ class Prefix(BaseModel):
     provider: str | None = None
 
 
+class UnpricedModel(BaseModel):
+    """A model id that is known but has no published per-token rate.
+
+    Distinct from a model rates.json has simply never heard of: this is an
+    explicit acknowledgement (with `note` explaining why) so the UI can say
+    *why* a real, named model is unpriced instead of implying it was missed.
+    """
+
+    match: str
+    note: str
+
+
 class RateTable(BaseModel):
     as_of: str = ""
     currency: str = "USD"
@@ -55,6 +67,14 @@ class RateTable(BaseModel):
     prefixes: list[Prefix] = Field(default_factory=list)
     providers: dict[str, ProviderRules] = Field(default_factory=dict)
     models: list[ModelRate] = Field(default_factory=list)
+    unpriced_models: list[UnpricedModel] = Field(default_factory=list)
+
+    # `lookup()` is called once per priced span -- tens of thousands of times for one large
+    # session -- and does a linear prefix scan over every rate entry. Sessions are dominated
+    # by a handful of distinct model strings, so caching by the raw (pre-normalised) model
+    # name collapses that scan to one per distinct model actually seen. A private attribute,
+    # not a field: it must never be serialized, diffed, or treated as part of the rate data.
+    _lookup_cache: dict[str, ModelRate | None] = PrivateAttr(default_factory=dict)
 
     @classmethod
     def load(cls, path: Path | None = None) -> RateTable:
@@ -63,14 +83,18 @@ class RateTable(BaseModel):
     def lookup(self, model: str | None) -> ModelRate | None:
         if not model:
             return None
+        if model in self._lookup_cache:
+            return self._lookup_cache[model]
         name = normalise_model(model, self.prefixes)
         best: ModelRate | None = None
         for rate in self.models:
             if name.startswith(rate.match) and (best is None or len(rate.match) > len(best.match)):
                 best = rate
+        result: ModelRate | None = best
         if best is not None and len(best.match) < len(name):
-            return best.model_copy(update={"inherited": True})
-        return best
+            result = best.model_copy(update={"inherited": True})
+        self._lookup_cache[model] = result
+        return result
 
     def rules_for(self, provider: str) -> ProviderRules:
         return self.providers.get(provider, ProviderRules())
@@ -80,6 +104,19 @@ class RateTable(BaseModel):
         if rate:
             return rate.display
         return model or "unknown model"
+
+    def unpriced_note(self, model: str | None) -> str | None:
+        """The explanation for a model that is explicitly known to have no rate."""
+        if not model:
+            return None
+        name = normalise_model(model, self.prefixes)
+        best: UnpricedModel | None = None
+        for entry in self.unpriced_models:
+            if name.startswith(entry.match) and (
+                best is None or len(entry.match) > len(best.match)
+            ):
+                best = entry
+        return best.note if best else None
 
 
 def normalise_model(model: str, prefixes: list[Prefix]) -> str:
@@ -151,4 +188,5 @@ def cost_of(
         cache_write=cache_write_cost,
         output=output_cost,
         no_cache_equivalent=tokens.input_total * in_price + output_cost,
+        inherited=rate.inherited,
     )

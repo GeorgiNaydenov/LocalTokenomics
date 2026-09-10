@@ -612,7 +612,7 @@ export function Gallery() {
         <Row title="Disclosure and warnings" hint="Readers that ship with the tool but found nothing, and parse warnings from the last scan.">
           <div className="space-y-3">
             <DisclosurePanel title="Available, not detected here" summary="2 more readers ship with the tool and found nothing here: dyad, openai-compat">
-              <WarningsList groups={[{ kind: 'other', label: 'Warnings', count: SCAN_WARNINGS.length, summary: `${SCAN_WARNINGS.length} warnings`, warnings: SCAN_WARNINGS }]} />
+              <WarningsList groups={[{ kind: 'other', label: 'Warnings', count: SCAN_WARNINGS.length, summary: `${SCAN_WARNINGS.length} warnings`, severity: 'info', total_delta_tokens: 0, total_delta_cost: 0, worst_example: null, affected_sessions: 0, instances: [], warnings: SCAN_WARNINGS }]} />
             </DisclosurePanel>
           </div>
         </Row>

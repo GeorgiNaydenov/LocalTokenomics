@@ -197,15 +197,17 @@ export function SortSelect({
   value,
   onChange,
   className,
+  ariaLabel = 'Sort sessions',
 }: {
   options: { value: string; label: string }[]
   value: string
   onChange: (value: string) => void
   className?: string
+  ariaLabel?: string
 }) {
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger size="sm" className={cn('w-56', className)} aria-label="Sort sessions">
+      <SelectTrigger size="sm" className={cn('w-56', className)} aria-label={ariaLabel}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

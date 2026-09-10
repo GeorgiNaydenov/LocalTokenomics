@@ -53,3 +53,22 @@ def test_missing_thread_json_yields_events_with_no_model(tmp_path: Path) -> None
     assert events[0].model is None
     assert events[0].provider is None
     assert events[0].session_id == "thread-2"
+
+
+def test_thread_json_title_becomes_the_tool_title() -> None:
+    events = scan(JAN_BASIC)
+    assert events[0].title == "Local model chat"
+    assert events[0].title_source == "tool"
+
+
+def test_missing_thread_json_falls_back_to_the_folder_title(tmp_path: Path) -> None:
+    thread_dir = tmp_path / "thread-2"
+    thread_dir.mkdir(parents=True)
+    messages = thread_dir / "messages.jsonl"
+    messages.write_text(
+        '{"id": "msg-1", "role": "assistant", "thread_id": "thread-2", "created": 1755680000000}\n',
+        encoding="utf-8",
+    )
+    events = scan(tmp_path)
+    assert events[0].title_source == "folder"
+    assert events[0].title == "(no project)_thread-2"

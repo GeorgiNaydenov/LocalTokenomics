@@ -1,8 +1,10 @@
-import { useCallback, useEffect, useId, useState } from 'react'
-import type { JSX, ReactNode } from 'react'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
+import type { JSX, PointerEvent, ReactNode } from 'react'
 import type {
+  Capabilities,
   ContextSnapshot,
   Economics,
+  Meta,
   Outcome,
   OutcomeLabel,
   OutcomeSignals,
@@ -15,13 +17,17 @@ import {
   formatClock,
   formatCount,
   formatDay,
+  formatDuration,
   formatMoney,
   formatTimestamp,
   formatTokens,
+  logSpanMs,
+  plural,
   sessionDisplayName,
   toDayString,
 } from './format'
 import { BucketBar, CostStateBadge, Unavailable } from '@/components/status'
+import { InfoGlyph, MetricInfo } from '@/components/metric-info'
 import { MetaGrid, PathList, Section } from '@/components/detail'
 import { EmptyState } from '@/components/states'
 import { TOKEN_BUCKETS } from '@/components/series'
@@ -36,7 +42,8 @@ import EconomicsTab from './EconomicsTab'
 import TraceTab from './TraceTab'
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { XIcon } from 'lucide-react'
+import { Maximize2Icon, Minimize2Icon, XIcon } from 'lucide-react'
+import { useWorkspacePanel } from '@/components/workspace-panel'
 
 export type WorkspaceTab = 'summary' | 'trace' | 'economics' | 'context'
 
@@ -51,6 +58,7 @@ export interface EconomicsTabProps {
   source: string
   sessionId: string
   economics: Economics
+  capabilities: Capabilities | null
 }
 
 export interface ContextTabProps {
@@ -79,24 +87,26 @@ function messageOf(cause: unknown): string {
   return cause instanceof ApiError ? cause.message : String(cause)
 }
 
+type Settled<T> = { load: (signal: AbortSignal) => Promise<T>; result: Loadable<T> }
+
 function useLazyResource<T>(enabled: boolean, load: (signal: AbortSignal) => Promise<T>): Loadable<T> {
-  const [state, setState] = useState<Loadable<T>>({ status: 'idle' })
+  const [settled, setSettled] = useState<Settled<T> | null>(null)
   useEffect(() => {
     if (!enabled) return
     const controller = new AbortController()
-    setState({ status: 'loading' })
     load(controller.signal)
       .then((data) => {
         if (controller.signal.aborted) return
-        setState({ status: 'ready', data })
+        setSettled({ load, result: { status: 'ready', data } })
       })
       .catch((cause: unknown) => {
         if (controller.signal.aborted) return
-        setState({ status: 'error', message: messageOf(cause) })
+        setSettled({ load, result: { status: 'error', message: messageOf(cause) } })
       })
     return () => controller.abort()
   }, [enabled, load])
-  return state
+  if (!enabled) return { status: 'idle' }
+  return settled && settled.load === load ? settled.result : { status: 'loading' }
 }
 
 function costNote(session: SessionRow): string {
@@ -116,16 +126,6 @@ function costNote(session: SessionRow): string {
     case 'unavailable':
       return 'This client logs no token counts, so cost is left blank instead of guessed.'
   }
-}
-
-function logSpan(startTime: string, endTime: string): string {
-  const startMs = new Date(startTime).getTime()
-  const endMs = new Date(endTime).getTime()
-  const minutes = Math.max(0, Math.round((endMs - startMs) / 60000))
-  if (minutes < 60) return `${minutes} min`
-  const hours = Math.floor(minutes / 60)
-  const remainder = minutes % 60
-  return `${hours}h ${remainder}min`
 }
 
 function TokenBucketsSection({ session }: { session: SessionRow }) {
@@ -187,7 +187,7 @@ function SessionOrigin({ session }: { session: SessionRow }) {
     { label: 'Repository', value: session.repository ?? 'none' },
     { label: 'Branch', value: session.branch ?? 'none' },
     { label: 'Requests', value: formatCount(session.request_count) },
-    { label: 'Log span', value: logSpan(session.start_time, session.end_time) },
+    { label: 'Log span', value: formatDuration(logSpanMs(session)) },
     { label: 'Subagent thread', value: session.is_sidechain ? 'yes' : 'no' },
     { label: 'Machine', value: session.machine },
   ]
@@ -217,10 +217,6 @@ function SummaryTab({ session }: { session: SessionRow }) {
       </Section>
     </div>
   )
-}
-
-function plural(count: number, word: string): string {
-  return `${count} ${word}${count === 1 ? '' : 's'}`
 }
 
 function signalsNote(signals: OutcomeSignals): string {
@@ -309,6 +305,15 @@ function OutcomeControl(props: { source: string; sessionId: string; fallback: Ou
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
+        <MetricInfo
+          ariaLabel="Explain what each outcome rating means"
+          content={{
+            kind: 'simple',
+            text: 'Successful: the work was completed and, where that applies, shipped. Partial: finished, but not cleanly — some tools were interrupted or retried. Failed: an error stopped the whole process before it could finish. Abandoned: stopped mid-turn and never resumed, whether you stopped it right after issuing the action or it needed a restart in a different session. Unrated: not judged yet, including sessions still in progress — never guessed from the signals alone.',
+          }}
+        >
+          <InfoGlyph />
+        </MetricInfo>
         <Button variant="outline" size="sm" aria-expanded={open} onClick={() => setOpen(!open)}>
           Notes and tags
         </Button>
@@ -375,20 +380,61 @@ function LoadableTab<T>(props: {
   }
 }
 
+const RESIZE_STEP = 24
+
+function ResizeHandle(props: { width: number; onWidth: (width: number) => void; onDraggingChange: (dragging: boolean) => void }) {
+  const origin = useRef<{ x: number; width: number } | null>(null)
+
+  const endDrag = () => {
+    origin.current = null
+    props.onDraggingChange(false)
+  }
+
+  return (
+    <div
+      role="separator"
+      aria-orientation="vertical"
+      aria-label="Resize session panel"
+      aria-valuenow={Math.round(props.width)}
+      tabIndex={0}
+      onPointerDown={(event: PointerEvent<HTMLDivElement>) => {
+        origin.current = { x: event.clientX, width: props.width }
+        props.onDraggingChange(true)
+        event.currentTarget.setPointerCapture(event.pointerId)
+      }}
+      onPointerMove={(event: PointerEvent<HTMLDivElement>) => {
+        if (!origin.current) return
+        props.onWidth(origin.current.width - (event.clientX - origin.current.x))
+      }}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+      onKeyDown={(event) => {
+        if (event.key === 'ArrowLeft') props.onWidth(props.width + RESIZE_STEP)
+        if (event.key === 'ArrowRight') props.onWidth(props.width - RESIZE_STEP)
+      }}
+      className="absolute inset-y-0 left-0 z-10 w-1.5 -translate-x-1/2 cursor-col-resize touch-none rounded-full outline-offset-2 hover:bg-primary/30 active:bg-primary/50"
+    />
+  )
+}
+
 export default function SessionWorkspace(props: {
   session: SessionRow
   report: Report
+  meta: Meta
   tab: WorkspaceTab
   docked: boolean
   onSelectTab: (tab: WorkspaceTab) => void
   onClose: () => void
 }): JSX.Element {
-  const { session, report, tab, docked, onSelectTab, onClose } = props
+  const { session, report, meta, tab, docked, onSelectTab, onClose } = props
   const source = session.source
   const sessionId = session.session_id
+  const capabilities = meta.sources.find((entry) => entry.id === source)?.capabilities ?? null
 
   const [requested, setRequested] = useState<WorkspaceTab[]>([tab])
   const [focusSpanId, setFocusSpanId] = useState<string | null>(null)
+  const { width, setWidth, fullscreen, toggleFullscreen } = useWorkspacePanel()
+  const [dragging, setDragging] = useState(false)
 
   const selectTab = (next: WorkspaceTab) => {
     setRequested((seen) => (seen.includes(next) ? seen : [...seen, next]))
@@ -455,9 +501,20 @@ export default function SessionWorkspace(props: {
             )}
           </div>
           {docked && (
-            <Button variant="ghost" size="icon-sm" aria-label="Close session" onClick={onClose}>
-              <XIcon />
-            </Button>
+            <div className="flex shrink-0 items-center gap-1">
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                aria-label={fullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+                aria-pressed={fullscreen}
+                onClick={toggleFullscreen}
+              >
+                {fullscreen ? <Minimize2Icon /> : <Maximize2Icon />}
+              </Button>
+              <Button variant="ghost" size="icon-sm" aria-label="Close session" onClick={onClose}>
+                <XIcon />
+              </Button>
+            </div>
           )}
         </div>
         <OutcomeControl source={source} sessionId={sessionId} fallback={session.outcome} loaded={outcome} />
@@ -501,7 +558,14 @@ export default function SessionWorkspace(props: {
               title="Economics"
               note="The economics endpoint did not answer."
             >
-              {(data) => <EconomicsTab source={source} sessionId={sessionId} economics={data} />}
+              {(data) => (
+                <EconomicsTab
+                  source={source}
+                  sessionId={sessionId}
+                  economics={data}
+                  capabilities={capabilities}
+                />
+              )}
             </LoadableTab>
           </TabsContent>
           <TabsContent value="context">
@@ -524,8 +588,16 @@ export default function SessionWorkspace(props: {
     return (
       <aside
         aria-label="Session workspace"
-        className="sticky top-[52px] flex h-[calc(100vh-52px)] w-[clamp(440px,40vw,600px)] shrink-0 flex-col border-l bg-background [--card-padding:1rem]"
+        className={cn(
+          'relative flex shrink-0 flex-col bg-background [--card-padding:1rem]',
+          fullscreen
+            ? 'fixed inset-0 z-50 h-screen w-screen'
+            : 'sticky top-[52px] h-[calc(100vh-52px)] border-l',
+          dragging && 'select-none',
+        )}
+        style={fullscreen ? undefined : { width }}
       >
+        {!fullscreen && <ResizeHandle width={width} onWidth={setWidth} onDraggingChange={setDragging} />}
         {body}
       </aside>
     )

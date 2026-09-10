@@ -1,4 +1,5 @@
 import type { CostState, OutcomeLabel } from '@/api'
+import { plural } from '@/format'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/design-system/cn'
 import { COST_STATE_META, OutcomeBadge, Unavailable } from '@/components/status'
@@ -165,7 +166,7 @@ export function SessionCard({
                 errorCount > 0 ? 'text-destructive' : 'text-muted-foreground',
               )}
             >
-              {errorCount} errors
+              {plural(errorCount, 'error')}
             </span>
           )}
         </div>

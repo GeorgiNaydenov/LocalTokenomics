@@ -2,11 +2,14 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from ai_usage_cost.pricing import RateTable
 from ai_usage_cost.sources.antigravity import SOURCE, antigravity_files, spans
-from ai_usage_cost.trace import Span
+from ai_usage_cost.trace import Span, economics_of
 
 FIXTURES = Path(__file__).parent / "fixtures"
 ANTIGRAVITY_TRACE = FIXTURES / "antigravity" / "trace"
+
+TABLE = RateTable.load()
 
 
 def scan() -> list[Span]:
@@ -120,3 +123,14 @@ def test_a_failed_command_records_its_exit_code() -> None:
 def test_a_command_without_a_reported_exit_code_records_none() -> None:
     earlier = by_id("test-uuid-trace:4")
     assert "exit_code" not in earlier.detail
+
+
+def test_a_tool_call_error_with_no_paired_result_still_counts() -> None:
+    # Antigravity never emits a separate tool_result span (unlike Claude Code and Codex,
+    # which copy a result's status onto the call span that opened it); the tool_call span
+    # is the only record of the failure, so excluding every tool_call from the error count
+    # would silently drop these. test-uuid-trace:4 and :11 are failed tool_call spans with
+    # no tool_result sibling, plus test-uuid-trace:5 is a standalone error-kind span.
+    assert not [span for span in scan() if span.kind == "tool_result"]
+    econ = economics_of(scan(), TABLE)
+    assert econ.totals.errors == 3

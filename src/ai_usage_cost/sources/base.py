@@ -26,6 +26,15 @@ class Source:
     display_path: str
     spans: Callable[[Path, list[str]], Iterator[Span]] | None = None
     capabilities: Capabilities = field(default_factory=Capabilities)
+    # Most sources accumulate state across a whole file (a model or reconciliation total
+    # discovered once and applied to many records later on) and must be re-read from the
+    # start whenever the file changes -- `parse_resume` is an optional, source-declared
+    # exception for a parser whose only cross-record state is small enough to hand back in:
+    # given a byte offset already ingested and that state, it yields only the events found
+    # after that offset, so a file that has only grown does not have to be parsed all over
+    # again. A source that does not set this is unaffected; `ingest()` falls back to a full
+    # reparse for it exactly as before.
+    parse_resume: Callable[[Path, list[str], int, str | None], Iterator[UsageEvent]] | None = None
 
     @property
     def root_hint(self) -> str:
@@ -68,14 +77,23 @@ def read_json_lines(path: Path, warnings: list[str]) -> Iterator[dict]:
                 continue
             if isinstance(obj, dict):
                 yield obj
-    if bad > 1:
+    if bad > 0:
         warnings.append(f"{path.name}: skipped {bad} unparsable lines")
 
 
-def read_json_records(path: Path, warnings: list[str]) -> Iterator[tuple[int, int, dict]]:
+def read_json_records(
+    path: Path, warnings: list[str], start_offset: int = 0
+) -> Iterator[tuple[int, int, dict]]:
     bad = 0
-    offset = 0
+    offset = start_offset
     with path.open("rb") as handle:
+        if start_offset:
+            # Binary-mode seeking is byte-exact, unlike a text-mode handle's seek (which
+            # Python only guarantees for offsets earlier obtained from that same handle's
+            # own tell(), not an arbitrary size recorded on a previous scan). A resume
+            # offset always sits right after a `\n` an earlier full read consumed, so a
+            # raw byte seek lands exactly on the next record's first byte.
+            handle.seek(start_offset)
         for raw in handle:
             start = offset
             offset += len(raw)
@@ -89,7 +107,7 @@ def read_json_records(path: Path, warnings: list[str]) -> Iterator[tuple[int, in
                 continue
             if isinstance(obj, dict):
                 yield start, len(raw), obj
-    if bad > 1:
+    if bad > 0:
         warnings.append(f"{path.name}: skipped {bad} unparsable lines")
 
 
@@ -143,3 +161,13 @@ def project_of(cwd: object) -> str | None:
 
 def as_int(value: object) -> int:
     return value if isinstance(value, int) and not isinstance(value, bool) else 0
+
+
+def title_of(project: str | None, session_id: str) -> str:
+    """Folder-fallback display title: ``f"{project or '(no project)'}_{session_id}"``.
+
+    This is the last rung of the title fallback chain (``title_source="folder"``),
+    shared by every source so the string is identical to what
+    ``web/src/format.ts``'s ``sessionDisplayName`` used to build client-side.
+    """
+    return f"{project or '(no project)'}_{session_id}"

@@ -167,9 +167,7 @@ def claude_record(
     return ident
 
 
-def claude_usage(
-    index: int, cache_read: int, ceiling: int, rng: random.Random
-) -> tuple[dict, int]:
+def claude_usage(index: int, cache_read: int, ceiling: int, rng: random.Random) -> tuple[dict, int]:
     cache_write = rng.randint(2000, 60000) if index == 0 or rng.random() < 0.15 else 0
     cache_read = min(cache_read + cache_write, ceiling) if index else cache_write
     usage = {
@@ -722,9 +720,7 @@ def write_codex(root: Path, day: datetime, rng: random.Random) -> None:
                     {
                         "type": "reasoning",
                         "id": reason_id,
-                        "summary": [
-                            {"type": "summary_text", "text": rng.choice(CODEX_REASONING)}
-                        ],
+                        "summary": [{"type": "summary_text", "text": rng.choice(CODEX_REASONING)}],
                         "encrypted_content": "gAAAAA-synthetic",
                         **passthrough,
                     },

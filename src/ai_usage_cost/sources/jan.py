@@ -8,7 +8,7 @@ from pathlib import Path
 
 from ..models import UsageEvent
 from ..trace import Capabilities
-from .base import Source, parse_timestamp, read_json_lines
+from .base import Source, parse_timestamp, read_json_lines, title_of
 
 _LOCAL_ENGINES = {"nitro", "llama.cpp", "cortex", "llamacpp"}
 
@@ -33,6 +33,7 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
     thread_id = path.parent.name
     model, engine = _thread_model(path.parent / "thread.json")
     provider = _provider(engine)
+    title = _thread_title(path.parent / "thread.json")
     for record in read_json_lines(path, warnings):
         if record.get("role") != "assistant":
             continue
@@ -46,6 +47,8 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
             session_id=thread_id,
             request_id=f"jan:{message_id}" if message_id else None,
             tokens=None,
+            title=title if title else title_of(None, thread_id),
+            title_source="tool" if title else "folder",
             machine=platform.node(),
             source_file=str(path),
         )
@@ -73,6 +76,19 @@ def _thread_model(path: Path) -> tuple[str | None, str | None]:
         model_id if isinstance(model_id, str) else None,
         engine if isinstance(engine, str) else None,
     )
+
+
+def _thread_title(path: Path) -> str | None:
+    if not path.is_file():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(data, dict):
+        return None
+    title = data.get("title")
+    return title.strip() if isinstance(title, str) and title.strip() else None
 
 
 def _provider(engine: str | None) -> str | None:
