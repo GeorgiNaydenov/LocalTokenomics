@@ -1,6 +1,6 @@
 import { useId } from 'react'
 import type { CostState, FacetGroup as FacetKey, Meta, OutcomeLabel, Query, Report } from './api'
-import { RECENCY_DAYS, isRecent, shiftDays } from './format'
+import { RECENCY_DAYS, formatCount, isRecent, shiftDays } from './format'
 import { ChipRow, DateRange, FacetGroup, SearchField } from '@/components/filters'
 import { seriesColor } from '@/components/series'
 import { StatLabel } from '@/components/stat'
@@ -352,7 +352,7 @@ function RailContent({ meta, report, query, onChange, onToggleFacet, onReset, to
 
       <div className="space-y-2">
         <FacetGroup
-          title={`Clients (${clientSplit.recent.length} shown)`}
+          title={`Clients (${formatCount(clientSplit.recent.length)} shown)`}
           options={clientSplit.recent.map(toFacetOption)}
           selected={query.clients}
           onToggle={(value) => onToggleFacet('clients', value)}
@@ -362,7 +362,7 @@ function RailContent({ meta, report, query, onChange, onToggleFacet, onReset, to
         </p>
         {clientSplit.stale.length > 0 && (
           <DisclosurePanel
-            title={`${clientSplit.stale.length} less recently used clients`}
+            title={`${formatCount(clientSplit.stale.length)} less recently used clients`}
             summary={`Showing your ${RECENT_CLIENTS} most recently active clients by default. Kept out of view, still selectable.`}
           >
             <FacetGroup
@@ -386,7 +386,7 @@ function RailContent({ meta, report, query, onChange, onToggleFacet, onReset, to
         </div>
         {modelSplit.stale.length > 0 && (
           <DisclosurePanel
-            title={`${modelSplit.stale.length} models not used in ${RECENCY_DAYS} days`}
+            title={`${formatCount(modelSplit.stale.length)} models not used in ${RECENCY_DAYS} days`}
             summary="Kept out of the default view, still selectable."
           >
             <div className="scroll-thin max-h-52 overflow-y-auto">
@@ -412,7 +412,7 @@ function RailContent({ meta, report, query, onChange, onToggleFacet, onReset, to
         </div>
         {projectSplit.stale.length > 0 && (
           <DisclosurePanel
-            title={`${projectSplit.stale.length} projects not used in ${RECENCY_DAYS} days`}
+            title={`${formatCount(projectSplit.stale.length)} projects not used in ${RECENCY_DAYS} days`}
             summary="Kept out of the default view, still selectable."
           >
             <div className="scroll-thin max-h-52 overflow-y-auto">
@@ -453,7 +453,7 @@ function RailContent({ meta, report, query, onChange, onToggleFacet, onReset, to
 
       {undetected.length > 0 && (
         <DisclosurePanel
-          title={`${undetected.length} sources not detected here`}
+          title={`${formatCount(undetected.length)} sources not detected here`}
           summary="Not installed here, so they are kept out of every filter and total. Point one at a log path to bring it in."
         >
           <div className="space-y-2">

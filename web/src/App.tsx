@@ -10,13 +10,14 @@ import type { WorkspaceTab } from './SessionWorkspace'
 import Sources from './Sources'
 import Pricing from './Pricing'
 import { useTheme } from './theme'
+import { formatCount, today } from './format'
 import { cn } from '@/design-system/cn'
 import { FilterChips } from '@/components/filters'
 import { StatLabel } from '@/components/stat'
 import { ErrorState, OfflineCard } from '@/components/states'
 import { useMediaQuery } from '@/components/use-media-query'
 
-const TODAY = new Date().toISOString().slice(0, 10)
+const TODAY = today()
 const FIVE_MINUTES = 5 * 60 * 1000
 
 const BLANK_QUERY: Query = {
@@ -136,7 +137,7 @@ export default function App() {
   const [workspace, setWorkspace] = useState<WorkspaceKey | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
-  const [refetching, setRefetching] = useState(false)
+  const [settledQuery, setSettledQuery] = useState<Query | null>(null)
   const [rescanning, setRescanning] = useState(false)
   const [reload, setReload] = useState(0)
   const [lastScanAt, setLastScanAt] = useState<number | null>(null)
@@ -164,11 +165,11 @@ export default function App() {
 
   useEffect(() => {
     const controller = new AbortController()
-    setError(null)
     Promise.all([fetchMeta(controller.signal), fetchRates(controller.signal)])
       .then(([nextMeta, nextRates]) => {
         setMeta(nextMeta)
         setRates(nextRates)
+        setError(null)
         setQuery((q) => (q.since === null && q.until === null ? { ...q, since: nextMeta.first_day, until: TODAY } : q))
       })
       .catch((cause: unknown) => {
@@ -182,7 +183,6 @@ export default function App() {
   useEffect(() => {
     if (!meta) return
     const controller = new AbortController()
-    setRefetching(true)
     fetchReport(query, controller.signal)
       .then((next) => {
         setReport(next)
@@ -194,11 +194,13 @@ export default function App() {
       })
       .finally(() => {
         if (controller.signal.aborted) return
-        setRefetching(false)
+        setSettledQuery(query)
         setLoading(false)
       })
     return () => controller.abort()
   }, [meta, query])
+
+  const refetching = meta !== null && settledQuery !== query
 
   const closeWorkspace = useCallback(() => setWorkspace(null), [])
 
@@ -318,13 +320,15 @@ export default function App() {
         <main className="min-w-0 flex-1 p-3 sm:px-[18px] sm:pb-10 sm:pt-4">
           <div className="mb-3.5 flex flex-wrap items-center gap-2">
             <span className={cn('tabular text-[11px] text-muted-foreground', refetching && 'opacity-50')}>
-              {report ? `${report.totals.sessions} sessions, ${report.totals.events} requests` : 'loading slice…'}
+              {report
+                ? `${formatCount(report.totals.sessions)} sessions, ${formatCount(report.totals.events)} requests`
+                : 'loading slice…'}
             </span>
             <FilterChips filters={activeChips} />
           </div>
 
           {view === 'overview' && report && meta && (
-            <Overview report={report} meta={meta} today={TODAY} onSelectView={setView} />
+            <Overview report={report} meta={meta} query={query} today={TODAY} onSelectView={setView} />
           )}
           {view === 'sessions' && report && (
             <Sessions report={report} onOpenSession={openSession} />
@@ -335,11 +339,12 @@ export default function App() {
           )}
         </main>
 
-        {report && workspace && workspaceSession && (
+        {report && meta && workspace && workspaceSession && (
           <SessionWorkspace
             key={`${workspace.source}/${workspace.id}`}
             session={workspaceSession}
             report={report}
+            meta={meta}
             tab={workspace.tab}
             docked={canDock}
             onSelectTab={selectWorkspaceTab}

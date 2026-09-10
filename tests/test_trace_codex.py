@@ -6,11 +6,15 @@ from pathlib import Path
 
 import pytest
 
+from ai_usage_cost.pricing import RateTable
 from ai_usage_cost.privacy import Config, read_content
 from ai_usage_cost.sources.base import jsonl_files
 from ai_usage_cost.sources.codex import SOURCE, spans
-from ai_usage_cost.trace import Span
+from ai_usage_cost.trace import Span, economics_of
 from conftest import CODEX_TRACE, CODEX_TRACE_LEGACY
+from test_codex import token_count, token_usage_record, usage, write_rollout
+
+TABLE = RateTable.load()
 
 
 def _local(span_id: str | None) -> str:
@@ -113,14 +117,30 @@ def test_a_leading_exit_code_in_the_output_sets_the_result_status(traced: Scanne
 def test_a_non_zero_exit_code_marks_the_result_and_the_call_as_an_error(tmp_path: Path) -> None:
     path = tmp_path / "rollout-2026-09-02T10-00-00-cccccccc-dddd-eeee-ffff-000000000000.jsonl"
     records = [
-        {"timestamp": "2026-09-02T10:00:00Z", "type": "event_msg",
-         "payload": {"type": "task_started", "turn_id": "turn-9"}},
-        {"timestamp": "2026-09-02T10:00:01Z", "type": "response_item",
-         "payload": {"type": "function_call", "name": "shell", "arguments": "{}",
-                     "call_id": "c9"}},
-        {"timestamp": "2026-09-02T10:00:03Z", "type": "response_item",
-         "payload": {"type": "function_call_output", "call_id": "c9",
-                     "output": "Exit code: 2\nboom"}},
+        {
+            "timestamp": "2026-09-02T10:00:00Z",
+            "type": "event_msg",
+            "payload": {"type": "task_started", "turn_id": "turn-9"},
+        },
+        {
+            "timestamp": "2026-09-02T10:00:01Z",
+            "type": "response_item",
+            "payload": {
+                "type": "function_call",
+                "name": "shell",
+                "arguments": "{}",
+                "call_id": "c9",
+            },
+        },
+        {
+            "timestamp": "2026-09-02T10:00:03Z",
+            "type": "response_item",
+            "payload": {
+                "type": "function_call_output",
+                "call_id": "c9",
+                "output": "Exit code: 2\nboom",
+            },
+        },
     ]
     path.write_text("\n".join(json.dumps(r) for r in records) + "\n", encoding="utf-8")
     found = scan(tmp_path)
@@ -131,6 +151,12 @@ def test_a_non_zero_exit_code_marks_the_result_and_the_call_as_an_error(tmp_path
         2_000,
         "derived",
     )
+
+    # Codex copies the result's status onto the tool_call span that opened it (just like
+    # Claude Code's _close_call), so both "c9" (tool_call) and "c9:out" (tool_result)
+    # carry status="error" for the same underlying failure. It must be counted once.
+    econ = economics_of(found.spans, TABLE)
+    assert econ.totals.errors == 1
 
 
 def test_mcp_tool_call_end_duration_is_converted_to_milliseconds(traced: Scanned) -> None:
@@ -220,18 +246,27 @@ def test_a_legacy_rollout_never_reports_a_zero_duration(legacy: Scanned) -> None
 
 def test_a_legacy_rollout_keeps_the_durations_the_log_itself_measured(legacy: Scanned) -> None:
     measured = {
-        _local(span.span_id)
-        for span in legacy.spans
-        if span.duration_provenance == "measured"
+        _local(span.span_id) for span in legacy.spans if span.duration_provenance == "measured"
     }
     assert measured == {"turn-3", "turn-4", "call6"}
 
 
 def test_a_legacy_rollout_still_produces_the_same_span_shape(legacy: Scanned) -> None:
     assert [span.kind for span in legacy.spans] == [
-        "turn", "user", "reasoning", "tool_call", "tool_result", "model_call",
-        "assistant", "model_call", "turn", "tool_call", "tool_result", "tool_call",
-        "compaction", "model_call",
+        "turn",
+        "user",
+        "reasoning",
+        "tool_call",
+        "tool_result",
+        "model_call",
+        "assistant",
+        "model_call",
+        "turn",
+        "tool_call",
+        "tool_result",
+        "tool_call",
+        "compaction",
+        "model_call",
     ]
     assert legacy.warnings == []
 
@@ -245,3 +280,33 @@ def test_every_content_path_resolves_through_the_reader() -> None:
         assert read_content(span, config).content != ""
         checked += 1
     assert checked > 0
+
+
+def test_spans_prefer_token_usage_record_exclusively_over_token_count(
+    tmp_path: Path,
+) -> None:
+    # parse() already ignores token_count for tokens once a file has any token_usage_record
+    # line; spans() must apply the same exclusivity, or the Trace tab would keep showing the
+    # coarser token_count-derived figure even on files the cost pipeline has moved past.
+    write_rollout(
+        tmp_path,
+        [
+            {
+                "timestamp": "2026-08-21T09:00:00Z",
+                "type": "session_meta",
+                "payload": {
+                    "id": "11111111-2222-3333-4444-555555555555",
+                    "model": "gpt-5.3-codex",
+                },
+            },
+            token_count(usage(999_000, 0, 999), usage(999_000, 0, 999), ts="2026-08-21T09:00:30Z"),
+            token_usage_record(usage(10_000, 2_000, 500, reasoning=100), ts="2026-08-21T09:01:00Z"),
+        ],
+    )
+    result = scan(tmp_path)
+    calls = result.of_kind("model_call")
+    assert len(calls) == 1
+    assert calls[0].tokens is not None
+    assert calls[0].tokens.output == 500
+    assert calls[0].tokens.cache_read == 2_000
+    assert calls[0].tokens.reasoning_output == 100

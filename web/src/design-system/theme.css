@@ -87,7 +87,7 @@
   --success-subtle: #e8f6f0;
   --warning-subtle: #fdf4e3;
 
-  /* Chart series — eight slots, fixed order, well-separated hues.
+  /* Chart series — twelve slots, fixed order, well-separated hues.
      A series keeps its slot across every chart, so filtering the data
      never repaints a surviving series. */
   --chart-1: #4f6bed;
@@ -98,6 +98,10 @@
   --chart-6: #3f9142;
   --chart-7: #d2559a;
   --chart-8: #5b7085;
+  --chart-9: #1f8a9e;
+  --chart-10: #b8860b;
+  --chart-11: #7a3e9d;
+  --chart-12: #a0522d;
   --chart-other: #9ca3af;
 
   /* Chart chrome --------------------------------------------------- */
@@ -184,6 +188,10 @@
   --chart-6: #5fb463;
   --chart-7: #e278b0;
   --chart-8: #8496a8;
+  --chart-9: #4dd0e1;
+  --chart-10: #e0c04a;
+  --chart-11: #c66fd1;
+  --chart-12: #d08a5f;
   --chart-other: #6b7280;
 
   --chart-grid: #1e1e22;
@@ -249,6 +257,10 @@
   --color-chart-6: var(--chart-6);
   --color-chart-7: var(--chart-7);
   --color-chart-8: var(--chart-8);
+  --color-chart-9: var(--chart-9);
+  --color-chart-10: var(--chart-10);
+  --color-chart-11: var(--chart-11);
+  --color-chart-12: var(--chart-12);
   --color-chart-other: var(--chart-other);
   --color-chart-grid: var(--chart-grid);
   --color-chart-axis: var(--chart-axis);

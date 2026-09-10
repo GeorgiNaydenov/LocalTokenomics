@@ -142,9 +142,7 @@ def test_alert_needs_exactly_one_threshold() -> None:
     assert neither.exit_code == 2
     assert "--over" in neither.output and "--rise-over" in neither.output
 
-    both = invoke(
-        "alert", "--to", "json://example.invalid", "--over", "5", "--rise-over", "5"
-    )
+    both = invoke("alert", "--to", "json://example.invalid", "--over", "5", "--rise-over", "5")
     assert both.exit_code == 2
     assert "not both" in both.output
 
@@ -215,8 +213,9 @@ def test_sql_hands_the_explicit_db_to_datasette(
     store.touch()
     result = invoke("sql", "--db", str(store), "--port", "9999")
     assert result.exit_code == 0
-    assert datasette_args == [["serve", str(store), "--host", "127.0.0.1", "--port", "9999",
-                              "--open"]]
+    assert datasette_args == [
+        ["serve", str(store), "--host", "127.0.0.1", "--port", "9999", "--open"]
+    ]
 
 
 def test_sql_falls_back_to_the_default_store(

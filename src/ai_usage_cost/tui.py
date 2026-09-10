@@ -31,8 +31,13 @@ def _cost(row: SessionRow) -> float | None:
     return row.cost.total if row.cost else None
 
 
+def _title(row: SessionRow) -> str:
+    return row.title or f"{row.project or UNATTRIBUTED}_{row.session_id}"
+
+
 COLUMNS: tuple[Column, ...] = (
     ("Start", lambda r: f"{r.start_time:%Y-%m-%d %H:%M}", lambda r: r.start_time),
+    ("Title", _title, _title),
     ("Client", lambda r: r.client, lambda r: r.client),
     ("Project", lambda r: r.project or UNATTRIBUTED, lambda r: r.project or UNATTRIBUTED),
     ("Models", lambda r: ", ".join(r.models), lambda r: ", ".join(r.models)),
@@ -55,7 +60,15 @@ def _matches(row: SessionRow, needle: str) -> bool:
     if not needle:
         return True
     haystack = " ".join(
-        [row.session_id, row.client, row.provider, row.project or "", row.cost_state, *row.models]
+        [
+            row.session_id,
+            row.title or "",
+            row.client,
+            row.provider,
+            row.project or "",
+            row.cost_state,
+            *row.models,
+        ]
     )
     return needle in haystack.lower()
 

@@ -1,16 +1,21 @@
 from __future__ import annotations
 
 import json
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
 
+from ai_usage_cost.models import TokenUsage
+from ai_usage_cost.pricing import RateTable
 from ai_usage_cost.sources.claude_code import SOURCE, spans
-from ai_usage_cost.trace import Span
+from ai_usage_cost.trace import UNATTRIBUTED_TURN_KEY, Span, context_of, economics_of
 from conftest import CLAUDE_TRACE
 
 SESSION = CLAUDE_TRACE / "-home-user-gamma" / "sess-trace.jsonl"
 AGENT = CLAUDE_TRACE / "-home-user-gamma" / "sess-trace" / "subagents" / "agent-ag1.jsonl"
+
+TABLE = RateTable.load()
 
 
 def collect(path: Path) -> list[Span]:
@@ -19,9 +24,7 @@ def collect(path: Path) -> list[Span]:
 
 def one(items: list[Span], **fields: object) -> Span:
     matches = [
-        span
-        for span in items
-        if all(getattr(span, key) == value for key, value in fields.items())
+        span for span in items if all(getattr(span, key) == value for key, value in fields.items())
     ]
     assert len(matches) == 1, f"expected exactly one span for {fields}, got {len(matches)}"
     return matches[0]
@@ -192,3 +195,220 @@ def test_the_offset_and_length_re_read_the_source_record(session: list[Span]) ->
         record = json.loads(handle.read(error.record_length))
     assert record["uuid"] == "u7"
     assert record["subtype"] == "api_error"
+
+
+def test_session_duration_does_not_add_a_nested_subagent_turn(
+    session: list[Span], agent: list[Span]
+) -> None:
+    combined = sorted(session + agent, key=lambda span: (span.started_at, span.seq))
+    econ = economics_of(combined, TABLE)
+    assert econ.totals.duration_ms == 80_200
+
+
+def test_turn_rows_carry_ordinal_started_at_and_sidechain(
+    session: list[Span], agent: list[Span]
+) -> None:
+    combined = sorted(session + agent, key=lambda span: (span.started_at, span.seq))
+    econ = economics_of(combined, TABLE)
+    by_key = {row.key: row for row in econ.by_turn}
+
+    assert by_key["p1"].ordinal == 1
+    assert by_key["p1"].is_sidechain is False
+    assert by_key["p1"].started_at is not None
+
+    assert by_key["ap1"].ordinal == 2
+    assert by_key["ap1"].is_sidechain is True
+
+    assert by_key["p2"].ordinal == 3
+    assert by_key["p2"].is_sidechain is False
+
+
+def test_the_model_call_after_a_compaction_is_flagged(session: list[Span]) -> None:
+    snapshots = context_of(session, TABLE)
+    before = next(item for item in snapshots if item.span_id == "msg_c")
+    after = next(item for item in snapshots if item.span_id == "msg_d")
+    assert before.compacted_before is False
+    assert after.compacted_before is True
+
+
+def test_retries_counts_attempts_not_the_sum_of_their_indices() -> None:
+    when = datetime(2026, 9, 5, 10, 0, tzinfo=UTC)
+    turn = Span(
+        span_id="t1",
+        turn_id="t1",
+        source="claude-code",
+        session_id="s1",
+        seq=0,
+        kind="turn",
+        started_at=when,
+        source_file="f",
+        record_offset=0,
+        record_length=0,
+    )
+    errors = [
+        Span(
+            span_id=f"e{index}",
+            turn_id="t1",
+            source="claude-code",
+            session_id="s1",
+            seq=index + 1,
+            kind="error",
+            status="error",
+            started_at=when,
+            retry_attempt=attempt,
+            source_file="f",
+            record_offset=0,
+            record_length=0,
+        )
+        for index, attempt in enumerate((1, 2, 3))
+    ]
+    econ = economics_of([turn, *errors], TABLE)
+    assert econ.totals.retries == 3
+
+
+def test_retries_combines_index_max_and_count_sum_in_one_turn() -> None:
+    # One turn can carry both retry shapes at once: api_error records (an attempt index,
+    # take the max) for one request, and a model_call's usage-iterations count (already a
+    # genuine extra-attempts number, sum it) for a different request. 1/2/3 -> max 3, plus
+    # a count of 2, must read 5 -- not 3+3=6, and not either figure alone.
+    when = datetime(2026, 9, 5, 10, 0, tzinfo=UTC)
+    turn = Span(
+        span_id="t1",
+        turn_id="t1",
+        source="claude-code",
+        session_id="s1",
+        seq=0,
+        kind="turn",
+        started_at=when,
+        source_file="f",
+        record_offset=0,
+        record_length=0,
+    )
+    errors = [
+        Span(
+            span_id=f"e{index}",
+            turn_id="t1",
+            source="claude-code",
+            session_id="s1",
+            seq=index + 1,
+            kind="error",
+            status="error",
+            started_at=when,
+            retry_attempt=attempt,
+            source_file="f",
+            record_offset=0,
+            record_length=0,
+        )
+        for index, attempt in enumerate((1, 2, 3))
+    ]
+    model_call = Span(
+        span_id="mc1",
+        turn_id="t1",
+        source="claude-code",
+        session_id="s1",
+        seq=4,
+        kind="model_call",
+        model="m1",
+        started_at=when,
+        retry_attempt=2,
+        source_file="f",
+        record_offset=0,
+        record_length=0,
+    )
+    econ = economics_of([turn, *errors, model_call], TABLE)
+    assert econ.totals.retries == 5
+
+
+def test_one_failed_tool_call_counts_as_one_error(tmp_path: Path) -> None:
+    path = tmp_path / "sess-err.jsonl"
+    records = [
+        {
+            "type": "user",
+            "uuid": "u1",
+            "promptId": "p1",
+            "timestamp": "2026-09-05T10:00:00.000Z",
+            "sessionId": "sess-err",
+            "message": {"role": "user", "content": "hi"},
+        },
+        {
+            "type": "assistant",
+            "uuid": "a1",
+            "timestamp": "2026-09-05T10:00:01.000Z",
+            "sessionId": "sess-err",
+            "message": {
+                "id": "m1",
+                "model": "claude-opus-5",
+                "usage": {"input_tokens": 10, "output_tokens": 10},
+                "content": [{"type": "tool_use", "id": "t1", "name": "Bash", "input": {}}],
+            },
+        },
+        {
+            "type": "user",
+            "uuid": "u2",
+            "timestamp": "2026-09-05T10:00:02.000Z",
+            "sessionId": "sess-err",
+            "toolUseResult": {"is_error": True},
+            "message": {
+                "role": "user",
+                "content": [{"type": "tool_result", "tool_use_id": "t1", "is_error": True}],
+            },
+        },
+    ]
+    path.write_text("\n".join(json.dumps(record) for record in records) + "\n", encoding="utf-8")
+    found = collect(path)
+    econ = economics_of(found, TABLE)
+    assert econ.totals.errors == 1
+
+
+def test_spans_without_a_turn_id_appear_in_an_unattributed_row() -> None:
+    when = datetime(2026, 9, 5, 10, 0, tzinfo=UTC)
+    turnless_call = Span(
+        span_id="pre1",
+        source="claude-code",
+        session_id="s1",
+        seq=0,
+        kind="model_call",
+        model="claude-opus-5",
+        started_at=when,
+        tokens=TokenUsage(uncached_input=10, output=5),
+        tokens_provenance="measured",
+        source_file="f",
+        record_offset=0,
+        record_length=0,
+    )
+    turn = Span(
+        span_id="t1",
+        turn_id="t1",
+        source="claude-code",
+        session_id="s1",
+        seq=1,
+        kind="turn",
+        started_at=when,
+        source_file="f",
+        record_offset=0,
+        record_length=0,
+    )
+    call = Span(
+        span_id="m1",
+        turn_id="t1",
+        source="claude-code",
+        session_id="s1",
+        seq=2,
+        kind="model_call",
+        model="claude-opus-5",
+        started_at=when,
+        tokens=TokenUsage(uncached_input=1, output=1),
+        tokens_provenance="measured",
+        source_file="f",
+        record_offset=0,
+        record_length=0,
+    )
+    econ = economics_of([turnless_call, turn, call], TABLE)
+
+    unattributed = next(row for row in econ.by_turn if row.key == UNATTRIBUTED_TURN_KEY)
+    assert unattributed.label == "Outside any turn"
+    assert unattributed.ordinal is None
+    assert unattributed.tokens is not None
+    assert unattributed.tokens.total == 15
+
+    assert sum(row.tokens.total for row in econ.by_turn if row.tokens) == econ.totals.tokens.total

@@ -40,6 +40,25 @@ def test_tab_id_and_timestamp_come_from_the_row(basic: list[UsageEvent]) -> None
     assert event.timestamp.isoformat() == "2025-08-20T08:53:20+00:00"
 
 
+def test_chat_title_becomes_the_tool_title(basic: list[UsageEvent]) -> None:
+    assert basic[0].title == "Add tests"
+    assert basic[0].title_source == "tool"
+
+
+def test_missing_chat_title_falls_back_to_the_folder_title(tmp_path: Path) -> None:
+    db_path = tmp_path / "state.vscdb"
+    with sqlite3.connect(db_path) as conn:
+        conn.executescript(
+            "CREATE TABLE ItemTable (key TEXT UNIQUE, value TEXT);"
+            "INSERT INTO ItemTable (key, value) VALUES ('cascade.chatdata', "
+            '\'{"tabs": [{"tabId": "tab-9", "lastSendTime": 1755680000000, '
+            '"bubbles": [{"type": "user", "text": "hi"}]}]}\');'
+        )
+    event = list(parse(db_path, []))[0]
+    assert event.title_source == "folder"
+    assert event.title == "(no project)_tab-9"
+
+
 def test_empty_database_yields_no_events_and_no_warnings(tmp_path: Path) -> None:
     db_path = build_db(tmp_path, "empty.sql")
     warnings: list[str] = []

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { JSX, ReactNode } from 'react'
 import type { ModelRate, ProviderRules, RateTable, Report } from './api'
-import { formatCount, formatMoney, formatTokens } from './format'
+import { formatCount, formatMoney, formatTokens, plural } from './format'
 import { Panel, PanelBody, PanelHeader, PanelNote } from '@/components/panel'
 import { CostStateBadge, MeterRow, Unavailable } from '@/components/status'
 import { CodeBlock } from '@/components/detail'
@@ -35,12 +35,19 @@ const RATE_COLUMNS: { label: string; align: 'left' | 'right' }[] = [
 
 type RateState = 'free' | 'priced' | 'unused'
 
+interface VariantTier {
+  tier: string
+  input: string
+  output: string
+}
+
 interface RateRow {
   rate: ModelRate
   input: string
   output: string
   cacheRead: string
   cacheWrite5m: string
+  variants: VariantTier[]
   spendValue: number
   spendLabel: ReactNode
   state: RateState
@@ -50,13 +57,19 @@ function effectiveRules(rate: ModelRate, rates: RateTable): ProviderRules {
   return rate.cache_rules ?? rates.providers[rate.provider] ?? DEFAULT_RULES
 }
 
-function buildRow(rate: ModelRate, rates: RateTable, report: Report): RateRow {
+export function buildRow(rate: ModelRate, rates: RateTable, report: Report): RateRow {
   const providerRules = rates.providers[rate.provider]
   const isFree = providerRules?.free === true
   const rules = effectiveRules(rate, rates)
-  const bucket = report.by_model.find((b) => b.label === rate.display)
-  const spendValue = bucket ? bucket.cost.total : 0
+  const spendValue = report.by_model
+    .filter((bucket) => bucket.label === rate.display)
+    .reduce((sum, bucket) => sum + bucket.cost.total, 0)
   const state: RateState = isFree ? 'free' : spendValue > 0 ? 'priced' : 'unused'
+  const variants: VariantTier[] = Object.entries(rate.variants).map(([tier, variant]) => ({
+    tier,
+    input: `$${variant.input.toFixed(2)}`,
+    output: `$${variant.output.toFixed(2)}`,
+  }))
 
   return {
     rate,
@@ -64,6 +77,7 @@ function buildRow(rate: ModelRate, rates: RateTable, report: Report): RateRow {
     output: isFree ? 'free' : `$${rate.output.toFixed(2)}`,
     cacheRead: isFree ? 'free' : `$${(rate.input * rules.cache_read).toFixed(3)}`,
     cacheWrite5m: isFree ? 'free' : `$${(rate.input * rules.cache_write_5m).toFixed(3)}`,
+    variants,
     spendValue,
     spendLabel: state === 'unused' ? <Unavailable /> : formatMoney(spendValue),
     state,
@@ -125,6 +139,15 @@ function RateTablePanel({ rates, report }: { rates: RateTable; report: Report })
                     )}
                   </div>
                   <div className="tabular text-[10px] text-muted-foreground">{row.rate.match}</div>
+                  {row.variants.length > 0 && (
+                    <div className="tabular mt-1 space-y-0.5 text-[10px] text-muted-foreground">
+                      {row.variants.map((variant) => (
+                        <div key={variant.tier}>
+                          {`${variant.tier}: ${variant.input} in / ${variant.output} out`}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </TableCell>
                 <TableCell className="text-muted-foreground">{row.rate.provider}</TableCell>
                 <TableCell className="tabular text-right">{row.input}</TableCell>
@@ -160,7 +183,7 @@ function RateTablePanel({ rates, report }: { rates: RateTable; report: Report })
             size="sm"
             onClick={() => setRevealed((current) => current + REVEAL_BATCH)}
           >
-            {`Show ${Math.min(REVEAL_BATCH, hiddenCount)} more rates (${hiddenCount} hidden)`}
+            {`Show ${formatCount(Math.min(REVEAL_BATCH, hiddenCount))} more rates (${formatCount(hiddenCount)} hidden)`}
           </Button>
         </PanelBody>
       )}
@@ -232,7 +255,7 @@ function UnpricedPanel({ report }: { report: Report }) {
     <Panel className="border-l-2 border-l-primary">
       <PanelHeader
         eyebrow="Unpriced"
-        title={`${formatCount(models.length)} model with tokens and no rate`}
+        title={`${plural(models.length, 'model')} with tokens and no rate`}
       />
       <PanelBody className="space-y-3">
         <div>

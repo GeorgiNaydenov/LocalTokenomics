@@ -1,14 +1,31 @@
-import { useState } from 'react'
-import type { JSX, ReactNode } from 'react'
-import type { EconRow, Provenance, TokenUsage } from './api'
+import { useEffect, useState } from 'react'
+import type { JSX, MouseEvent, ReactNode } from 'react'
+import type { Capabilities, EconRow, Provenance, TokenUsage } from './api'
 import type { EconomicsTabProps } from './SessionWorkspace'
-import { formatCount, formatDuration, formatExact, formatMoney, formatPercent, formatTokens } from './format'
+import { formatCount, formatDuration, formatExact, formatMoney, formatPercent, formatTokens, plural } from './format'
+import {
+  NOTABLE_UNATTRIBUTED_SHARE,
+  UNATTRIBUTED_TURN_KEY,
+  costConcentration,
+  economicsRowDomId,
+  errorOrRetryTurns,
+  halfCostTrend,
+  longestTurn,
+  realTurns,
+  sortRealTurns,
+  toolHeaviestTurn,
+  turnLabel,
+  unattributedCostShare,
+  unattributedRow,
+} from './turn-insights'
+import type { TurnSortKey } from './turn-insights'
 import { Panel, PanelBody, PanelHeader, PanelNote } from '@/components/panel'
 import { CostStateBadge, ProvenanceBadge, Unavailable } from '@/components/status'
 import { EmptyState } from '@/components/states'
 import { Stat, StatGrid, StatLabel } from '@/components/stat'
 import { useMediaQuery } from '@/components/use-media-query'
 import { Button } from '@/components/ui/button'
+import { SortSelect } from '@/components/filters'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import {
   Table,
@@ -19,8 +36,23 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { cn } from '@/design-system/cn'
+import type { Column as ColumnOf } from '@/components/columns'
+import { ColumnChooser, useHiddenColumns, visibleColumns } from '@/components/columns'
+import { CheckIcon, CopyIcon } from 'lucide-react'
 
 const REVEAL_BATCH = 40
+const TOP_TURNS = 5
+
+type Column = ColumnOf<EconRow>
+
+const TURN_SORT_OPTIONS: { value: string; key: TurnSortKey; dir: 'asc' | 'desc'; label: string }[] = [
+  { value: 'cost:desc', key: 'cost', dir: 'desc', label: 'Cost, high to low' },
+  { value: 'cost:asc', key: 'cost', dir: 'asc', label: 'Cost, low to high' },
+  { value: 'duration:desc', key: 'duration', dir: 'desc', label: 'Duration, high to low' },
+  { value: 'ordinal:asc', key: 'ordinal', dir: 'asc', label: 'Chronological' },
+  { value: 'ordinal:desc', key: 'ordinal', dir: 'desc', label: 'Chronological, reversed' },
+  { value: 'errors:desc', key: 'errors', dir: 'desc', label: 'Most errors' },
+]
 
 const DURATION_NOTE: Record<Provenance, string> = {
   measured: 'The log records a start and an end for this work.',
@@ -121,11 +153,56 @@ function CacheCell({ row }: { row: EconRow }) {
   return <span className="tabular">{formatPercent(row.cache_hit_ratio)}</span>
 }
 
-interface Column {
-  key: string
-  label: string
-  align: 'left' | 'right'
-  cell: (row: EconRow) => ReactNode
+function CopyKeyButton({ value }: { value: string }) {
+  const [copied, setCopied] = useState(false)
+
+  const copy = (event: MouseEvent) => {
+    event.stopPropagation()
+    navigator.clipboard
+      .writeText(value)
+      .then(() => {
+        setCopied(true)
+        setTimeout(() => setCopied(false), 1500)
+      })
+      .catch(() => undefined)
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={copy}
+      aria-label={copied ? 'Copied turn id' : 'Copy turn id'}
+      className="shrink-0 rounded-sm p-0.5 text-muted-foreground outline-offset-2 hover:text-foreground"
+    >
+      {copied ? <CheckIcon className="size-3" /> : <CopyIcon className="size-3" />}
+    </button>
+  )
+}
+
+function turnLabelColumn(): Column {
+  return {
+    key: 'label',
+    label: 'Turn',
+    align: 'left',
+    cell: (row) => (
+      <span className="inline-flex min-w-0 items-center gap-1">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <span
+              tabIndex={0}
+              className="tabular inline-block max-w-56 cursor-default truncate rounded-sm align-bottom text-foreground outline-offset-2"
+            >
+              {turnLabel(row)}
+            </span>
+          </TooltipTrigger>
+          <TooltipContent>
+            <span className="tabular">{row.key}</span>
+          </TooltipContent>
+        </Tooltip>
+        <CopyKeyButton value={row.key} />
+      </span>
+    ),
+  }
 }
 
 function labelColumn(label: string): Column {
@@ -172,7 +249,7 @@ const TOKENS_COLUMN: Column = { key: 'tokens', label: 'Tokens', align: 'right', 
 const COST_COLUMN: Column = { key: 'cost', label: 'Cost', align: 'right', cell: (row) => <CostCell row={row} /> }
 
 const TURN_COLUMNS: Column[] = [
-  labelColumn('Turn'),
+  turnLabelColumn(),
   ...COUNT_COLUMNS,
   TOKENS_COLUMN,
   COST_COLUMN,
@@ -181,26 +258,40 @@ const TURN_COLUMNS: Column[] = [
   { key: 'retries', label: 'Retries', align: 'right', cell: (row) => <RetriesCell row={row} /> },
 ]
 
-const MODEL_COLUMNS: Column[] = [
-  labelColumn('Model'),
-  COUNT_COLUMNS[0],
-  TOKENS_COLUMN,
-  COST_COLUMN,
-  DURATION_COLUMN,
-  { key: 'cache', label: 'Cache hit', align: 'right', cell: (row) => <CacheCell row={row} /> },
-  { key: 'amplification', label: 'Amplification', align: 'right', cell: (row) => <AmplificationCell row={row} /> },
-  {
-    key: 'rate',
-    label: 'Tokens/s',
-    align: 'right',
-    cell: (row) =>
-      row.tokens_per_second === null ? (
-        <Unavailable hint="Needs measured tokens and a measured duration on the same call. No source logs both today." />
-      ) : (
-        <span className="tabular">{row.tokens_per_second.toFixed(1)}</span>
-      ),
-  },
-]
+export function rateUnavailableHint(capabilities: Capabilities | null): string {
+  if (!capabilities) return 'Needs measured tokens and a measured duration on the same call.'
+  if (capabilities.latency === 'unavailable') {
+    return 'This source logs no timing for its calls, so tokens per second can never be measured here.'
+  }
+  if (capabilities.tokens === 'unavailable') {
+    return 'This source logs no token counts, so tokens per second can never be measured here.'
+  }
+  return 'Needs measured tokens and a measured duration on the same call, which this row does not have.'
+}
+
+function buildModelColumns(capabilities: Capabilities | null): Column[] {
+  const hint = rateUnavailableHint(capabilities)
+  return [
+    labelColumn('Model'),
+    COUNT_COLUMNS[0],
+    TOKENS_COLUMN,
+    COST_COLUMN,
+    DURATION_COLUMN,
+    { key: 'cache', label: 'Cache hit', align: 'right', cell: (row) => <CacheCell row={row} /> },
+    { key: 'amplification', label: 'Amplification', align: 'right', cell: (row) => <AmplificationCell row={row} /> },
+    {
+      key: 'rate',
+      label: 'Tokens/s',
+      align: 'right',
+      cell: (row) =>
+        row.tokens_per_second === null ? (
+          <Unavailable hint={hint} />
+        ) : (
+          <span className="tabular">{row.tokens_per_second.toFixed(1)}</span>
+        ),
+    },
+  ]
+}
 
 const TOOL_COLUMNS: Column[] = [
   labelColumn('Tool'),
@@ -224,6 +315,64 @@ function EconCard({ row, columns }: { row: EconRow; columns: Column[] }) {
   )
 }
 
+function DataRows(props: {
+  columns: Column[]
+  rows: EconRow[]
+  isPhone: boolean
+  rowId?: (row: EconRow) => string
+  highlightKey?: string | null
+}) {
+  if (props.isPhone) {
+    return (
+      <PanelBody className="space-y-2">
+        {props.rows.map((row) => (
+          <EconCard key={row.key} row={row} columns={props.columns} />
+        ))}
+      </PanelBody>
+    )
+  }
+  return (
+    <div className="scroll-thin overflow-x-auto">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            {props.columns.map((column) => (
+              <TableHead
+                key={column.key}
+                className={cn('whitespace-nowrap', column.align === 'right' && 'text-right')}
+              >
+                {column.label}
+              </TableHead>
+            ))}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {props.rows.map((row) => (
+            <TableRow
+              key={row.key}
+              id={props.rowId ? props.rowId(row) : undefined}
+              style={{ height: 'var(--row-height)' }}
+              className={cn(props.highlightKey === row.key && 'bg-accent/60')}
+            >
+              {props.columns.map((column) => (
+                <TableCell
+                  key={column.key}
+                  className={cn(
+                    'whitespace-nowrap text-muted-foreground',
+                    column.align === 'right' && 'text-right',
+                  )}
+                >
+                  {column.cell(row)}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  )
+}
+
 function EconPanel(props: {
   eyebrow: string
   title: string
@@ -232,58 +381,34 @@ function EconPanel(props: {
   rows: EconRow[]
   empty: string
   isPhone: boolean
+  columnsKind: string
 }) {
   const [revealed, setRevealed] = useState(REVEAL_BATCH)
+  const [hiddenColumns, toggleColumn] = useHiddenColumns(`auc.columns.${props.columnsKind}`)
   const shown = props.rows.slice(0, revealed)
   const hidden = props.rows.length - shown.length
 
   return (
     <Panel>
-      <PanelHeader eyebrow={props.eyebrow} title={props.title} />
+      <PanelHeader
+        eyebrow={props.eyebrow}
+        title={props.title}
+        actions={
+          props.rows.length > 0 && !props.isPhone ? (
+            <ColumnChooser columns={props.columns} hidden={hiddenColumns} onToggle={toggleColumn} />
+          ) : undefined
+        }
+      />
       {props.rows.length === 0 ? (
         <PanelBody>
           <EmptyState title={props.empty} />
         </PanelBody>
-      ) : props.isPhone ? (
-        <PanelBody className="space-y-2">
-          {shown.map((row) => (
-            <EconCard key={row.key} row={row} columns={props.columns} />
-          ))}
-        </PanelBody>
       ) : (
-        <div className="scroll-thin overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                {props.columns.map((column) => (
-                  <TableHead
-                    key={column.key}
-                    className={cn('whitespace-nowrap', column.align === 'right' && 'text-right')}
-                  >
-                    {column.label}
-                  </TableHead>
-                ))}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {shown.map((row) => (
-                <TableRow key={row.key} style={{ height: 'var(--row-height)' }}>
-                  {props.columns.map((column) => (
-                    <TableCell
-                      key={column.key}
-                      className={cn(
-                        'whitespace-nowrap text-muted-foreground',
-                        column.align === 'right' && 'text-right',
-                      )}
-                    >
-                      {column.cell(row)}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+        <DataRows
+          columns={props.isPhone ? props.columns : visibleColumns(props.columns, hiddenColumns)}
+          rows={shown}
+          isPhone={props.isPhone}
+        />
       )}
       {hidden > 0 && (
         <PanelBody>
@@ -294,6 +419,184 @@ function EconPanel(props: {
       )}
       <PanelNote>{props.note}</PanelNote>
     </Panel>
+  )
+}
+
+function TurnInsightStrip(props: { rows: EconRow[]; onSelectTurn: (key: string) => void }) {
+  const concentration = costConcentration(props.rows, 3)
+  const longest = longestTurn(props.rows)
+  const flagged = errorOrRetryTurns(props.rows)
+  const worst = flagged.worst
+  const toolHeavy = toolHeaviestTurn(props.rows)
+  const trend = halfCostTrend(props.rows)
+  const unattributed = unattributedCostShare(props.rows)
+  const showUnattributed = unattributed !== null && unattributed.share >= NOTABLE_UNATTRIBUTED_SHARE
+
+  const cards: ReactNode[] = []
+
+  if (concentration) {
+    cards.push(
+      <Stat
+        key="concentration"
+        label="Cost concentration"
+        value={formatPercent(concentration.share)}
+        hint={`Top ${formatCount(concentration.topRows.length)} of ${formatCount(realTurns(props.rows).length)} turns carry this share of turn-attributed cost.`}
+        onClick={() => props.onSelectTurn(concentration.topRows[0].key)}
+      />,
+    )
+  }
+  if (longest) {
+    cards.push(
+      <Stat
+        key="longest"
+        label="Longest turn"
+        value={formatDuration(longest.duration_ms ?? 0)}
+        hint={turnLabel(longest)}
+        onClick={() => props.onSelectTurn(longest.key)}
+      />,
+    )
+  }
+  if (worst) {
+    cards.push(
+      <Stat
+        key="flagged"
+        label="Errors or retries"
+        value={plural(flagged.count, 'turn')}
+        hint={`Worst: ${turnLabel(worst)}`}
+        onClick={() => props.onSelectTurn(worst.key)}
+      />,
+    )
+  }
+  if (toolHeavy) {
+    cards.push(
+      <Stat
+        key="tools"
+        label="Tool-heaviest turn"
+        value={plural(toolHeavy.tool_calls, 'tool call')}
+        hint={turnLabel(toolHeavy)}
+        onClick={() => props.onSelectTurn(toolHeavy.key)}
+      />,
+    )
+  }
+  if (trend) {
+    cards.push(
+      <Stat
+        key="trend"
+        label="Cost trend"
+        value={
+          trend.changeFraction === null
+            ? formatMoney(trend.secondHalfCost)
+            : `${trend.changeFraction >= 0 ? '+' : ''}${formatPercent(trend.changeFraction)}`
+        }
+        hint={`First half ${formatMoney(trend.firstHalfCost)}, second half ${formatMoney(trend.secondHalfCost)}.`}
+        onClick={() => props.onSelectTurn(trend.pivot.key)}
+      />,
+    )
+  }
+  if (showUnattributed && unattributed) {
+    cards.push(
+      <Stat
+        key="unattributed"
+        label="Outside any turn"
+        value={formatPercent(unattributed.share)}
+        hint={`${formatMoney(unattributed.cost)} of spend sits on spans with no turn id.`}
+        onClick={() => props.onSelectTurn(UNATTRIBUTED_TURN_KEY)}
+      />,
+    )
+  }
+
+  if (cards.length === 0) return null
+  return <StatGrid className="xl:grid-cols-3">{cards}</StatGrid>
+}
+
+function TurnPanel(props: { source: string; sessionId: string; rows: EconRow[]; isPhone: boolean }) {
+  const [showAll, setShowAll] = useState(false)
+  const [sortKey, setSortKey] = useState<TurnSortKey>('cost')
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
+  const [selectedKey, setSelectedKey] = useState<string | null>(null)
+  const [hiddenColumns, toggleColumn] = useHiddenColumns('auc.columns.turn')
+
+  const unattributed = unattributedRow(props.rows)
+  const realCount = realTurns(props.rows).length
+  const defaultTop = sortRealTurns(props.rows, 'cost', 'desc').slice(0, TOP_TURNS)
+  const sortedReal = showAll ? sortRealTurns(props.rows, sortKey, sortDir) : defaultTop
+  const tableRows = unattributed ? [...sortedReal, unattributed] : sortedReal
+  const hiddenCount = realCount - defaultTop.length
+
+  const selectTurn = (key: string) => {
+    setSelectedKey(key)
+    if (key !== UNATTRIBUTED_TURN_KEY && !defaultTop.some((row) => row.key === key)) {
+      setShowAll(true)
+    }
+  }
+
+  useEffect(() => {
+    if (!selectedKey) return
+    document
+      .getElementById(economicsRowDomId(props.source, props.sessionId, selectedKey))
+      ?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+  }, [selectedKey, showAll, sortKey, sortDir, props.source, props.sessionId])
+
+  const title = showAll
+    ? `${formatCount(realCount)} turns, sorted by ${sortKey} ${sortDir === 'desc' ? 'high to low' : 'low to high'}`
+    : `${formatCount(Math.min(TOP_TURNS, realCount))} of ${formatCount(realCount)} turns, by cost`
+
+  return (
+    <>
+      <TurnInsightStrip rows={props.rows} onSelectTurn={selectTurn} />
+      <Panel>
+        <PanelHeader
+          eyebrow="Per turn"
+          title={title}
+          actions={
+            props.rows.length > 0 && !props.isPhone ? (
+              <>
+                {showAll && (
+                  <SortSelect
+                    options={TURN_SORT_OPTIONS}
+                    value={`${sortKey}:${sortDir}`}
+                    onChange={(value) => {
+                      const option = TURN_SORT_OPTIONS.find((candidate) => candidate.value === value)
+                      if (!option) return
+                      setSortKey(option.key)
+                      setSortDir(option.dir)
+                    }}
+                    ariaLabel="Sort turns"
+                    className="w-48"
+                  />
+                )}
+                <ColumnChooser columns={TURN_COLUMNS} hidden={hiddenColumns} onToggle={toggleColumn} />
+              </>
+            ) : undefined
+          }
+        />
+        {props.rows.length === 0 ? (
+          <PanelBody>
+            <EmptyState title="No turns carry spans for this session." />
+          </PanelBody>
+        ) : (
+          <DataRows
+            columns={props.isPhone ? TURN_COLUMNS : visibleColumns(TURN_COLUMNS, hiddenColumns)}
+            rows={tableRows}
+            isPhone={props.isPhone}
+            rowId={(row) => economicsRowDomId(props.source, props.sessionId, row.key)}
+            highlightKey={selectedKey}
+          />
+        )}
+        {!showAll && hiddenCount > 0 && (
+          <PanelBody>
+            <Button variant="outline" size="sm" onClick={() => setShowAll(true)}>
+              {`Show all ${formatCount(realCount)}`}
+            </Button>
+          </PanelBody>
+        )}
+        <PanelNote>
+          A turn is one prompt and everything it caused. Cost is the sum of its priced model calls; a row marked
+          partial has model calls that no rate matched. The state badge on a row is the worst cost state among its
+          model calls. Spans with no turn id appear as their own row, excluded from the sort above.
+        </PanelNote>
+      </Panel>
+    </>
   )
 }
 
@@ -354,15 +657,12 @@ export default function EconomicsTab(props: EconomicsTabProps): JSX.Element {
           label="Tokens per second"
           value={
             totals.tokens_per_second === null ? (
-              <Unavailable
-                className="whitespace-normal"
-                hint="Needs measured tokens and a measured duration on the same call."
-              />
+              <Unavailable className="whitespace-normal" hint={rateUnavailableHint(props.capabilities)} />
             ) : (
               <span className="tabular">{totals.tokens_per_second.toFixed(1)}</span>
             )
           }
-          hint="Only measured tokens over a measured duration count. No client here logs both on one call, so it stays blank."
+          hint="Only measured tokens over a measured duration count."
         />
       </StatGrid>
 
@@ -374,13 +674,10 @@ export default function EconomicsTab(props: EconomicsTabProps): JSX.Element {
         </p>
       )}
 
-      <EconPanel
-        eyebrow="Per turn"
-        title={`${formatCount(props.economics.by_turn.length)} turns, in the order they ran`}
-        note="A turn is one prompt and everything it caused. Cost is the sum of its priced model calls; a row marked partial has model calls that no rate matched. The state badge on a row is the worst cost state among its model calls."
-        columns={TURN_COLUMNS}
+      <TurnPanel
+        source={props.source}
+        sessionId={props.sessionId}
         rows={props.economics.by_turn}
-        empty="No turns carry spans for this session."
         isPhone={isPhone}
       />
 
@@ -388,10 +685,11 @@ export default function EconomicsTab(props: EconomicsTabProps): JSX.Element {
         eyebrow="Per model"
         title={`${formatCount(props.economics.by_model.length)} models, heaviest first`}
         note="Sorted by tokens. A model with no rate entry still shows its tokens; its cost stays out."
-        columns={MODEL_COLUMNS}
+        columns={buildModelColumns(props.capabilities)}
         rows={props.economics.by_model}
         empty="No model call in this session carried a model id."
         isPhone={isPhone}
+        columnsKind="model"
       />
 
       <EconPanel
@@ -402,6 +700,7 @@ export default function EconomicsTab(props: EconomicsTabProps): JSX.Element {
         rows={props.economics.by_tool}
         empty="No tool calls in this session."
         isPhone={isPhone}
+        columnsKind="tool"
       />
     </div>
   )

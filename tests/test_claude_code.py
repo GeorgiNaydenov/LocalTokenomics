@@ -7,8 +7,10 @@ import pytest
 
 from ai_usage_cost.models import UsageEvent
 from ai_usage_cost.sources.base import jsonl_files
-from ai_usage_cost.sources.claude_code import parse
+from ai_usage_cost.sources.claude_code import parse, spans
 from conftest import CLAUDE_BASIC, CLAUDE_DEDUP
+
+MESSAGE_SPLIT = Path(__file__).parent / "fixtures" / "claude_code" / "message_split"
 
 
 def scan(root: Path) -> list[UsageEvent]:
@@ -156,6 +158,74 @@ def test_project_name_comes_from_cwd(tmp_path: Path) -> None:
     events = scan(tmp_path)
     assert [event.project for event in events] == ["alpha"]
     assert [event.working_directory for event in events] == ["/home/user/alpha"]
+
+
+def test_custom_title_record_sets_the_title_and_tool_source(tmp_path: Path) -> None:
+    write_session(
+        tmp_path,
+        "sess.jsonl",
+        [
+            {"type": "custom-title", "customTitle": "Application naming brainstorm"},
+            assistant("r1", {"input_tokens": 10, "output_tokens": 10}),
+        ],
+    )
+    events = scan(tmp_path)
+    assert [event.title for event in events] == ["Application naming brainstorm"]
+    assert [event.title_source for event in events] == ["tool"]
+
+
+def test_a_later_custom_title_record_wins_over_an_earlier_one(tmp_path: Path) -> None:
+    write_session(
+        tmp_path,
+        "sess.jsonl",
+        [
+            {"type": "custom-title", "customTitle": "first title"},
+            assistant("r1", {"input_tokens": 10, "output_tokens": 10}),
+            {"type": "custom-title", "customTitle": "renamed title"},
+            assistant("r2", {"input_tokens": 10, "output_tokens": 10}),
+        ],
+    )
+    events = scan(tmp_path)
+    assert [event.title for event in events] == ["first title", "renamed title"]
+
+
+def test_no_custom_title_falls_back_to_the_folder_title(tmp_path: Path) -> None:
+    # sessionId=None forces the event's session id to fall back to the filename (path.stem),
+    # matching how the folder-fallback title is expected to read: project_session-id.
+    write_session(
+        tmp_path / "-home-user-alpha",
+        "sess-alpha.jsonl",
+        [
+            assistant(
+                "r1",
+                {"input_tokens": 10, "output_tokens": 10},
+                cwd="/home/user/alpha",
+                sessionId=None,
+            )
+        ],
+    )
+    events = scan(tmp_path)
+    assert events[0].title == "alpha_sess-alpha"
+    assert events[0].title_source == "folder"
+
+
+def test_a_message_split_over_three_records_yields_three_parse_events() -> None:
+    path = MESSAGE_SPLIT / "-home-user-delta" / "sess-split.jsonl"
+    events = list(parse(path, []))
+    assert [event.tokens.output for event in events] == [10, 50, 120]
+
+
+def test_a_message_split_over_three_records_keeps_the_largest_output_in_the_trace() -> None:
+    path = MESSAGE_SPLIT / "-home-user-delta" / "sess-split.jsonl"
+    found = list(spans(path, []))
+    calls = [span for span in found if span.kind == "model_call"]
+    assert len(calls) == 1
+    call = calls[0]
+    assert call.tokens is not None
+    assert call.tokens.output == 120
+    assert call.tokens.reasoning_output == 0
+    assert call.tokens.uncached_input == 200
+    assert call.tokens.cache_read == 5_000
 
 
 def test_session_id_and_timestamp_come_from_the_record(

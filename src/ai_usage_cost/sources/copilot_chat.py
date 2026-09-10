@@ -8,7 +8,7 @@ from pathlib import Path
 
 from ..models import UsageEvent
 from ..trace import Capabilities
-from .base import Source, parse_timestamp, project_of, read_sqlite, single_file
+from .base import Source, parse_timestamp, project_of, read_sqlite, single_file, title_of
 
 _VARIANTS = ["Code", "Code - Insiders", "VSCodium", "VSCodium - Insiders"]
 
@@ -33,11 +33,13 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
     rows = read_sqlite(
         path,
         "SELECT turns.id, turns.session_id, turns.turn_index, turns.timestamp, "
-        "sessions.cwd, sessions.repository, sessions.branch "
+        "sessions.cwd, sessions.repository, sessions.branch, sessions.summary "
         "FROM turns JOIN sessions ON turns.session_id = sessions.id",
         warnings=warnings,
     )
-    for _turn_id, session_id, turn_index, timestamp, cwd, repository, branch in rows:
+    for _turn_id, session_id, turn_index, timestamp, cwd, repository, branch, summary in rows:
+        project = project_of(cwd)
+        title = summary.strip() if isinstance(summary, str) and summary.strip() else None
         yield UsageEvent(
             source="copilot-chat",
             client="copilot-chat",
@@ -50,7 +52,9 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
             working_directory=cwd if isinstance(cwd, str) else None,
             repository=repository if isinstance(repository, str) else None,
             branch=branch if isinstance(branch, str) else None,
-            project=project_of(cwd),
+            project=project,
+            title=title if title else title_of(project, str(session_id)),
+            title_source="tool" if title else "folder",
             machine=platform.node(),
         )
 

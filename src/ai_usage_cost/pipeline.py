@@ -2,14 +2,14 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass, field
-from datetime import UTC, date, datetime, time
+from datetime import date
 from pathlib import Path
 
 from pydantic import BaseModel, Field
 
 from . import privacy, store
 from .aggregate import Report, SessionFlags, UnknownModel, build_report, facets_of
-from .models import CostState, PricedEvent, UsageEvent
+from .models import CostState, PricedEvent, UsageEvent, local_day
 from .pricing import RateTable, price_event, resolve_provider
 from .sources import client_labels, registry
 from .sources.base import TokenData, present_roots
@@ -62,6 +62,19 @@ def unknown_models(priced: Sequence[PricedEvent]) -> list[UnknownModel]:
         key=lambda u: u.tokens,
         reverse=True,
     )
+
+
+def inherited_models(priced: Sequence[PricedEvent]) -> list[str]:
+    """Distinct model ids that were priced from a shorter prefix's rate, not their own row."""
+    models = {
+        item.event.model
+        for item in priced
+        if item.state == "priced"
+        and item.cost is not None
+        and item.cost.inherited
+        and item.event.model
+    }
+    return sorted(models)
 
 
 def _sources_of(
@@ -133,9 +146,20 @@ def analyze(
         db_path=resolved_db_path,
     )
     for unknown in unknown_models(priced):
+        note = table.unpriced_note(unknown.model)
+        if note:
+            analysis.warnings.append(f"no rate for model {unknown.model!r} -- {note}")
+        else:
+            analysis.warnings.append(
+                f"no rate for model {unknown.model!r} ({unknown.tokens:,} tokens) -- add it to "
+                "rates.json; it is excluded from the cost total, but its tokens are still counted"
+            )
+    for model in inherited_models(priced):
+        rate = table.lookup(model)
+        parent = rate.display if rate is not None else "a shorter prefix"
         analysis.warnings.append(
-            f"no rate for model {unknown.model!r} ({unknown.tokens:,} tokens) -- "
-            "add it to rates.json; it is excluded from all totals"
+            f"model {model!r} has no exact rates.json row of its own -- priced from the "
+            f"{parent} rate because no exact row exists; check whether {model!r} needs its own"
         )
     if config.content_retention_days is not None:
         analysis.warnings.append(
@@ -162,14 +186,12 @@ def filter_events(
     has_errors: bool | None = None,
     session_flags: SessionFlags | None = None,
 ) -> list[PricedEvent]:
-    start = _as_datetime(since, time.min)
-    end = _as_datetime(until, time.max)
     term = search.lower() if search else None
     return [
         item
         for item in priced
-        if (start is None or item.event.timestamp >= start)
-        and (end is None or item.event.timestamp <= end)
+        if (since is None or local_day(item.event.timestamp) >= since)
+        and (until is None or local_day(item.event.timestamp) <= until)
         and (term is None or _matches_search(item.event, term))
         and (not states or item.state in states)
         and (not clients or item.event.client in clients)
@@ -247,9 +269,3 @@ def report_of(
         facets=facets_of(base, analysis.session_flags),
         session_flags=analysis.session_flags,
     )
-
-
-def _as_datetime(day: date | None, at: time) -> datetime | None:
-    if day is None:
-        return None
-    return datetime.combine(day, at).replace(tzinfo=UTC)

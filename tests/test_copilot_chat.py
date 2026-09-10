@@ -61,6 +61,18 @@ def test_null_cwd_falls_back_to_no_project(basic: list[UsageEvent]) -> None:
     assert event.project is None
 
 
+def test_session_summary_becomes_the_tool_title(basic: list[UsageEvent]) -> None:
+    event = next(e for e in basic if e.session_id == "sess-alpha")
+    assert event.title == "a summary"
+    assert event.title_source == "tool"
+
+
+def test_null_summary_falls_back_to_the_folder_title(basic: list[UsageEvent]) -> None:
+    event = next(e for e in basic if e.session_id == "sess-null-cwd")
+    assert event.title_source == "folder"
+    assert event.title == "(no project)_sess-null-cwd"
+
+
 def test_empty_database_yields_no_events_and_no_warnings(tmp_path: Path) -> None:
     db_path = build_db(tmp_path, "empty.sql")
     warnings: list[str] = []

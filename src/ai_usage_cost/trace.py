@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterable, Sequence
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -10,8 +10,17 @@ from .models import CostBreakdown, CostState, Provenance, RawScalar, TokenUsage,
 from .pricing import RateTable, price_event
 
 SpanKind = Literal[
-    "turn", "user", "assistant", "reasoning", "model_call", "tool_call",
-    "tool_result", "retrieval", "compaction", "error", "subagent",
+    "turn",
+    "user",
+    "assistant",
+    "reasoning",
+    "model_call",
+    "tool_call",
+    "tool_result",
+    "retrieval",
+    "compaction",
+    "error",
+    "subagent",
 ]
 SpanStatus = Literal["ok", "error", "interrupted", "aborted", "running", "unknown"]
 OutcomeLabel = Literal["successful", "partial", "failed", "abandoned", "unrated"]
@@ -28,9 +37,18 @@ LOW_CACHE_HIT_RATIO = 0.2
 SUBAGENT_TOKEN_SHARE = 0.4
 LARGE_CALL_TOKENS = 10_000
 
+# Key of the synthetic EconRow that carries spans with no turn_id, so the per-turn
+# table can add up to the totals cards above it. Not a real turn_id.
+UNATTRIBUTED_TURN_KEY = "unattributed"
+UNATTRIBUTED_TURN_LABEL = "Outside any turn"
+
 _COST_RANK: dict[CostState, int] = {"priced": 0, "free": 1, "unpriced": 2, "unavailable": 3}
 _PROVENANCE_RANK: dict[Provenance, int] = {
-    "measured": 0, "derived": 1, "estimated": 2, "inferred": 3, "unavailable": 4,
+    "measured": 0,
+    "derived": 1,
+    "estimated": 2,
+    "inferred": 3,
+    "unavailable": 4,
 }
 
 
@@ -130,7 +148,10 @@ class Outcome(OutcomeUpdate):
 
 class EconRow(BaseModel):
     key: str
-    label: str = ""
+    label: str | None = ""
+    ordinal: int | None = None
+    started_at: datetime | None = None
+    is_sidechain: bool = False
     model_calls: int = 0
     tool_calls: int = 0
     tokens: TokenUsage | None = None
@@ -235,23 +256,83 @@ def _price_span(span: Span, table: RateTable) -> tuple[CostBreakdown | None, Cos
 
 
 def _summed_duration(spans: Sequence[Span]) -> tuple[int | None, Provenance]:
-    total = 0
-    found: list[Provenance] = []
+    """Active time covered by these spans: a union of their (started_at, ended_at)
+    intervals, not a naive sum. A nested subagent turn that runs entirely inside its
+    parent turn therefore adds nothing to the total; two disjoint turns each count in
+    full. Provenance is the worst among the spans that contributed an interval.
+    """
+    intervals: list[tuple[datetime, datetime, Provenance]] = []
     for span in spans:
         if span.duration_ms is None:
             continue
-        total += span.duration_ms
-        found.append(span.duration_provenance)
-    if not found:
+        end = span.started_at + timedelta(milliseconds=span.duration_ms)
+        intervals.append((span.started_at, end, span.duration_provenance))
+    if not intervals:
         return None, "unavailable"
-    return total, max(found, key=lambda p: _PROVENANCE_RANK[p])
+    intervals.sort(key=lambda item: item[0])
+    found: list[Provenance] = [intervals[0][2]]
+    total_ms = 0.0
+    current_start, current_end, _ = intervals[0]
+    for start, end, provenance in intervals[1:]:
+        found.append(provenance)
+        if start > current_end:
+            total_ms += (current_end - current_start).total_seconds() * 1000
+            current_start, current_end = start, end
+        elif end > current_end:
+            current_end = end
+    total_ms += (current_end - current_start).total_seconds() * 1000
+    return round(total_ms), max(found, key=lambda p: _PROVENANCE_RANK[p])
 
 
 def _retries(spans: Sequence[Span]) -> int | None:
-    candidates = [span for span in spans if span.kind in ("model_call", "error")]
-    if not any(span.retry_attempt is not None for span in candidates):
+    """`retry_attempt` is not one thing across producers: Claude Code's `api_error`
+    records carry an attempt *index* (1, 2, 3, ... for the same underlying request), while
+    its usage-iterations count is already a genuine number of extra attempts. Summing both
+    as if they were the same unit overstates retries (three index records 1/2/3 would sum
+    to 6 instead of 3). We take the max of the index-shaped values, once, and add that to
+    the sum of the count-shaped values.
+    """
+    error_indices = [
+        span.retry_attempt
+        for span in spans
+        if span.kind == "error" and span.retry_attempt is not None
+    ]
+    call_counts = [
+        span.retry_attempt
+        for span in spans
+        if span.kind == "model_call" and span.retry_attempt is not None
+    ]
+    if not error_indices and not call_counts:
         return None
-    return sum(span.retry_attempt or 0 for span in candidates)
+    return (max(error_indices) if error_indices else 0) + sum(call_counts)
+
+
+def tool_result_parent_ids(spans: Iterable[Span]) -> set[str]:
+    """span_ids of tool_call/retrieval/subagent spans that are closed by a `tool_result`
+    span. Claude Code and Codex both copy the result's status onto the call span that
+    opened it (`_close_call` / the function_call_output handler), so a failing call and
+    its failing result carry `status == "error"` twice for the same underlying failure.
+    """
+    return {span.parent_id for span in spans if span.kind == "tool_result" and span.parent_id}
+
+
+def is_error_span(span: Span, tool_result_parents: set[str]) -> bool:
+    """Whether this span should count as one failure. An `error`-kind span always counts;
+    a `tool_result` with `status == "error"` always counts. A tool_call/retrieval/subagent
+    span counts only when it has no paired `tool_result` (e.g. Antigravity and Codex's MCP
+    path, which set status directly with no separate result span) — when a paired result
+    exists, that result already counts the failure, so the call span is skipped to avoid
+    counting the same failure twice. Any other span kind with `status == "error"` counts.
+    """
+    if span.kind == "error":
+        return True
+    if span.status != "error":
+        return False
+    if span.kind == "tool_result":
+        return True
+    if span.kind in TOOL_KINDS:
+        return span.span_id not in tool_result_parents
+    return True
 
 
 def _measured_rate(spans: Sequence[Span]) -> float | None:
@@ -271,10 +352,11 @@ def _measured_rate(spans: Sequence[Span]) -> float | None:
 
 def _econ_row(
     key: str,
-    label: str,
+    label: str | None,
     group: Sequence[Span],
     duration_spans: Sequence[Span],
     table: RateTable,
+    tool_result_parents: set[str],
 ) -> EconRow:
     row = EconRow(key=key, label=label)
     states: list[CostState] = []
@@ -291,7 +373,7 @@ def _econ_row(
                 provenances.append(span.tokens_provenance)
         if span.kind in TOOL_KINDS:
             row.tool_calls += 1
-        if span.kind == "error" or span.status == "error":
+        if is_error_span(span, tool_result_parents):
             row.errors += 1
     row.cost_state = max(states, key=lambda s: _COST_RANK[s]) if states else "unavailable"
     row.tokens_provenance = (
@@ -310,61 +392,119 @@ def economics_of(spans: Sequence[Span], table: RateTable) -> Economics:
     by_turn: dict[str, list[Span]] = {}
     by_model: dict[str, list[Span]] = {}
     by_tool: dict[str, list[Span]] = {}
+    turnless: list[Span] = []
     for span in spans:
         if span.kind == "turn":
             turns[span.turn_id or span.span_id] = span
         if span.turn_id:
             by_turn.setdefault(span.turn_id, []).append(span)
+        else:
+            turnless.append(span)
         if span.kind == "model_call":
             by_model.setdefault(span.model or "unknown", []).append(span)
         if span.kind in TOOL_KINDS:
             by_tool.setdefault(span.name or span.kind, []).append(span)
 
+    tool_result_parents = tool_result_parent_ids(spans)
+
     turn_rows: list[EconRow] = []
-    for key, group in by_turn.items():
+    for ordinal, (key, group) in enumerate(by_turn.items(), start=1):
         turn = turns.get(key)
-        label = turn.name if turn is not None and turn.name else key
-        turn_rows.append(_econ_row(key, label, group, [turn] if turn is not None else [], table))
+        row = _econ_row(
+            key,
+            turn.name if turn is not None else None,
+            group,
+            [turn] if turn is not None else [],
+            table,
+            tool_result_parents,
+        )
+        row.ordinal = ordinal
+        row.started_at = turn.started_at if turn is not None else None
+        row.is_sidechain = turn.is_sidechain if turn is not None else False
+        turn_rows.append(row)
+
+    if turnless:
+        turn_rows.append(
+            _econ_row(
+                UNATTRIBUTED_TURN_KEY,
+                UNATTRIBUTED_TURN_LABEL,
+                turnless,
+                [],
+                table,
+                tool_result_parents,
+            )
+        )
 
     return Economics(
-        totals=_econ_row("session", "session", spans, list(turns.values()), table),
+        totals=_econ_row(
+            "session", "session", spans, list(turns.values()), table, tool_result_parents
+        ),
         by_turn=turn_rows,
         by_model=sorted(
-            (_econ_row(key, key, group, group, table) for key, group in by_model.items()),
+            (
+                _econ_row(key, key, group, group, table, tool_result_parents)
+                for key, group in by_model.items()
+            ),
             key=lambda r: r.tokens.total if r.tokens is not None else 0,
             reverse=True,
         ),
         by_tool=sorted(
-            (_econ_row(key, key, group, group, table) for key, group in by_tool.items()),
+            (
+                _econ_row(key, key, group, group, table, tool_result_parents)
+                for key, group in by_tool.items()
+            ),
             key=lambda r: r.tool_calls,
             reverse=True,
         ),
     )
 
 
+def _capacity_of(span: Span, table: RateTable) -> tuple[int | None, Provenance]:
+    """Context capacity for one model call: the span's own measurement if the source
+    logged one, else the rate table's `context_window` for that model, marked estimated.
+    Shared by `context_of` (the Context tab) and `insights_of` (the `context_pressure`
+    insight) so the two never disagree about whether a capacity is known.
+    """
+    if span.capacity_provenance != "unavailable":
+        return span.context_capacity, span.capacity_provenance
+    rate = table.lookup(span.model)
+    if rate is not None and rate.context_window:
+        return rate.context_window, "estimated"
+    return None, "unavailable"
+
+
 def context_of(spans: Sequence[Span], table: RateTable) -> list[ContextSnapshot]:
     snapshots: list[ContextSnapshot] = []
     pending: dict[tuple[str, str | None], list[Span]] = {}
     previous: dict[tuple[str, str | None], int] = {}
+    compacted: dict[tuple[str, str | None], bool] = {}
     for span in spans:
         key = (span.session_id, span.agent_id)
         if span.kind in CONTRIBUTOR_KINDS:
             pending.setdefault(key, []).append(span)
+            if span.kind == "compaction":
+                compacted[key] = True
             continue
         if span.kind != "model_call" or span.tokens is None:
             continue
-        window = [item for item in pending.pop(key, []) if item.turn_id == span.turn_id]
-        capacity = span.context_capacity
-        capacity_provenance = span.capacity_provenance
-        if capacity_provenance == "unavailable":
-            rate = table.lookup(span.model)
-            if rate is not None and rate.context_window:
-                capacity = rate.context_window
-                capacity_provenance = "estimated"
+        # Partition, don't pop: contributors from a turn other than this call's are kept
+        # pending rather than discarded, so a later call belonging to that turn still sees
+        # them (B20 — a compaction landing at the end of one turn must still be visible to
+        # the first model call of the next turn, which is a different turn_id).
+        queued = pending.get(key, [])
+        window = [item for item in queued if item.turn_id == span.turn_id]
+        pending[key] = [item for item in queued if item.turn_id != span.turn_id]
+        capacity, capacity_provenance = _capacity_of(span, table)
         value, value_provenance = occupancy(
             span.tokens.input_total, capacity, span.tokens_provenance, capacity_provenance
         )
         seen = previous.get(key)
+        # "Compaction seen since the last model call" is tracked as a latch per
+        # (session, agent), independent of turn boundaries, because compaction lands at
+        # the end of one turn while the next model call belongs to the next turn — the
+        # old turn_id-scoped window meant this flag was never true (§4.9).
+        compacted_before = compacted.get(key, False)
+        compacted[key] = False
         snapshots.append(
             ContextSnapshot(
                 span_id=span.span_id,
@@ -378,7 +518,7 @@ def context_of(spans: Sequence[Span], table: RateTable) -> list[ContextSnapshot]
                 occupancy_provenance=value_provenance,
                 delta_input=None if seen is None else span.tokens.input_total - seen,
                 added_span_ids=[item.span_id for item in window],
-                compacted_before=any(item.kind == "compaction" for item in window),
+                compacted_before=compacted_before,
             )
         )
         previous[key] = span.tokens.input_total
@@ -393,17 +533,37 @@ def _worst(occurrences: list[Occurrence], *, smallest: bool = False) -> Occurren
     return pick(occurrences, key=lambda o: o[1])
 
 
+def _paid_amplification(tokens: TokenUsage | None) -> float | None:
+    """Ratio of tokens paid at full rate (uncached input plus cache writes — the tokens
+    that were not already sitting in the cache) to output tokens. Unlike the displayed
+    `amplification` field (input_total / output, which includes cheap cache reads and is
+    routinely 30-500x on any normally cached agent turn), this is the ratio the
+    `amplification` insight fires on, so the insight flags turns that are actually
+    reading expensive tokens rather than every turn with a warm cache.
+    """
+    if tokens is None or tokens.output == 0:
+        return None
+    return (tokens.uncached_input + tokens.cache_write) / tokens.output
+
+
 def _amplification_insight(occurrences: list[Occurrence]) -> Insight:
     span_id, value = _worst(occurrences)
     if len(occurrences) == 1:
-        message = f"This turn read {value:,.0f} input tokens for every output token it produced."
+        message = (
+            f"This turn read {value:,.0f} full-price (uncached) input tokens for every "
+            "output token it produced."
+        )
     else:
         message = (
-            f"{len(occurrences)} turns read more than {AMPLIFICATION_LIMIT:.0f} input tokens per "
-            f"output token, the heaviest reading {value:,.0f} to one."
+            f"{len(occurrences)} turns each read more than {AMPLIFICATION_LIMIT:.0f} "
+            "full-price (uncached) input tokens per output token, the heaviest reading "
+            f"{value:,.0f} to one."
         )
     return Insight(
-        kind="amplification", severity="warning", span_id=span_id, message=message,
+        kind="amplification",
+        severity="warning",
+        span_id=span_id,
+        message=message,
         count=len(occurrences),
     )
 
@@ -418,7 +578,10 @@ def _turn_errors_insight(occurrences: list[Occurrence]) -> Insight:
             f"turn failing {value:.0f} spans."
         )
     return Insight(
-        kind="turn_errors", severity="warning", span_id=span_id, message=message,
+        kind="turn_errors",
+        severity="warning",
+        span_id=span_id,
+        message=message,
         count=len(occurrences),
     )
 
@@ -433,7 +596,10 @@ def _repeated_tool_insight(occurrences: list[Occurrence], names: dict[str, str])
             f"times with identical arguments, the most repeated running {value:.0f} times."
         )
     return Insight(
-        kind="repeated_tool", severity="info", span_id=span_id, message=message,
+        kind="repeated_tool",
+        severity="info",
+        span_id=span_id,
+        message=message,
         count=len(occurrences),
     )
 
@@ -448,7 +614,10 @@ def _large_tool_result_insight(occurrences: list[Occurrence]) -> Insight:
             f"the largest at {value:,.0f} KiB."
         )
     return Insight(
-        kind="large_tool_result", severity="info", span_id=span_id, message=message,
+        kind="large_tool_result",
+        severity="info",
+        span_id=span_id,
+        message=message,
         count=len(occurrences),
     )
 
@@ -463,7 +632,10 @@ def _context_pressure_insight(occurrences: list[Occurrence]) -> Insight:
             f"peaking at {value:.0%}."
         )
     return Insight(
-        kind="context_pressure", severity="warning", span_id=span_id, message=message,
+        kind="context_pressure",
+        severity="warning",
+        span_id=span_id,
+        message=message,
         count=len(occurrences),
     )
 
@@ -478,7 +650,10 @@ def _cache_miss_insight(occurrences: list[Occurrence]) -> Insight:
             f"input from the cache, the lowest at {value:.0%}."
         )
     return Insight(
-        kind="cache_miss", severity="info", span_id=span_id, message=message,
+        kind="cache_miss",
+        severity="info",
+        span_id=span_id,
+        message=message,
         count=len(occurrences),
     )
 
@@ -493,7 +668,10 @@ def _subagent_share_insight(occurrences: list[Occurrence]) -> Insight:
             f"session's tokens, the heaviest using {value:.0%}."
         )
     return Insight(
-        kind="subagent_share", severity="info", span_id=span_id, message=message,
+        kind="subagent_share",
+        severity="info",
+        span_id=span_id,
+        message=message,
         count=len(occurrences),
     )
 
@@ -508,21 +686,27 @@ def _error_after_large_call_insight(occurrences: list[Occurrence]) -> Insight:
             f"tokens, the largest call reading {value:,.0f} tokens."
         )
     return Insight(
-        kind="error_after_large_call", severity="warning", span_id=span_id, message=message,
+        kind="error_after_large_call",
+        severity="warning",
+        span_id=span_id,
+        message=message,
         count=len(occurrences),
     )
 
 
-def insights_of(spans: Sequence[Span], economics: Economics) -> list[Insight]:
+def insights_of(spans: Sequence[Span], economics: Economics, table: RateTable) -> list[Insight]:
     found: list[Insight] = []
     anchors = {span.turn_id or span.span_id: span.span_id for span in spans if span.kind == "turn"}
 
     amplification_hits: list[Occurrence] = []
     turn_error_hits: list[Occurrence] = []
     for row in economics.by_turn:
+        if row.key == UNATTRIBUTED_TURN_KEY:
+            continue  # not a real span_id; spans without a turn_id have nothing to anchor to
         anchor = anchors.get(row.key, row.key)
-        if row.amplification is not None and row.amplification > AMPLIFICATION_LIMIT:
-            amplification_hits.append((anchor, row.amplification))
+        paid_ratio = _paid_amplification(row.tokens)
+        if paid_ratio is not None and paid_ratio > AMPLIFICATION_LIMIT:
+            amplification_hits.append((anchor, paid_ratio))
         if row.errors >= TURN_ERROR_LIMIT:
             turn_error_hits.append((anchor, row.errors))
     if amplification_hits:
@@ -557,9 +741,12 @@ def insights_of(spans: Sequence[Span], economics: Economics) -> list[Insight]:
     for span in calls:
         if span.tokens is None:
             continue
+        capacity, capacity_provenance = _capacity_of(span, table)
         value, _ = occupancy(
-            span.tokens.input_total, span.context_capacity,
-            span.tokens_provenance, span.capacity_provenance,
+            span.tokens.input_total,
+            capacity,
+            span.tokens_provenance,
+            capacity_provenance,
         )
         if value is not None and value > HIGH_OCCUPANCY:
             context_pressure_hits.append((span.span_id, value))
@@ -579,7 +766,9 @@ def insights_of(spans: Sequence[Span], economics: Economics) -> list[Insight]:
         if first_model and span.model and span.model != first_model:
             found.append(
                 Insight(
-                    kind="model_switch", severity="info", span_id=span.span_id,
+                    kind="model_switch",
+                    severity="info",
+                    span_id=span.span_id,
                     message=(
                         f"The model changed from {first_model} to {span.model} in this session."
                     ),

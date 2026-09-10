@@ -40,7 +40,11 @@ def price(**kwargs: object) -> CostBreakdown:
 def test_anthropic_multipliers_price_each_bucket_separately() -> None:
     cost = price(
         model="claude-opus-5",
-        uncached_input=M, cache_read=M, cache_write_5m=M, cache_write_1h=M, output=M,
+        uncached_input=M,
+        cache_read=M,
+        cache_write_5m=M,
+        cache_write_1h=M,
+        output=M,
     )
     assert cost.uncached_input == pytest.approx(5.00)
     assert cost.cache_read == pytest.approx(0.50)
@@ -52,7 +56,11 @@ def test_anthropic_multipliers_price_each_bucket_separately() -> None:
 def test_no_cache_equivalent_bills_every_input_token_at_the_full_input_rate() -> None:
     cost = price(
         model="claude-opus-5",
-        uncached_input=M, cache_read=M, cache_write_5m=M, cache_write_1h=M, output=M,
+        uncached_input=M,
+        cache_read=M,
+        cache_write_5m=M,
+        cache_write_1h=M,
+        output=M,
     )
     assert cost.no_cache_equivalent == pytest.approx(45.00)
     assert cost.cache_savings == pytest.approx(45.00 - 46.75)
@@ -75,8 +83,13 @@ def test_cache_write_premium_is_absent_from_the_no_cache_baseline() -> None:
 
 def test_fast_tier_uses_the_opus_5_variant_rate() -> None:
     cost = price(
-        model="claude-opus-5", tier="fast",
-        uncached_input=M, cache_read=M, cache_write_5m=M, cache_write_1h=M, output=M,
+        model="claude-opus-5",
+        tier="fast",
+        uncached_input=M,
+        cache_read=M,
+        cache_write_5m=M,
+        cache_write_1h=M,
+        output=M,
     )
     assert cost.uncached_input == pytest.approx(10.00)
     assert cost.total == pytest.approx(93.50)
@@ -84,8 +97,13 @@ def test_fast_tier_uses_the_opus_5_variant_rate() -> None:
 
 def test_batch_tier_halves_every_component() -> None:
     cost = price(
-        model="claude-opus-5", tier="batch",
-        uncached_input=M, cache_read=M, cache_write_5m=M, cache_write_1h=M, output=M,
+        model="claude-opus-5",
+        tier="batch",
+        uncached_input=M,
+        cache_read=M,
+        cache_write_5m=M,
+        cache_write_1h=M,
+        output=M,
     )
     assert cost.uncached_input == pytest.approx(2.50)
     assert cost.total == pytest.approx(23.375)
@@ -181,8 +199,12 @@ def test_display_name_falls_back_for_unknown_models() -> None:
 
 def test_tokens_none_is_the_unavailable_state() -> None:
     unavailable = UsageEvent(
-        source="dyad", client="dyad", model=None,
-        timestamp=datetime(2026, 8, 20, 10, 0, tzinfo=UTC), session_id="s1", tokens=None,
+        source="dyad",
+        client="dyad",
+        model=None,
+        timestamp=datetime(2026, 8, 20, 10, 0, tzinfo=UTC),
+        session_id="s1",
+        tokens=None,
     )
     cost, state = price_event(unavailable, TABLE)
     assert cost is None
@@ -330,8 +352,12 @@ def test_lookup_inherited_flag_does_not_mutate_the_shared_rate() -> None:
 
 def test_free_provider_prices_at_zero() -> None:
     local = UsageEvent(
-        source="ollama-app", client="ollama-app", provider="local", model="llama3",
-        timestamp=datetime(2026, 8, 20, 10, 0, tzinfo=UTC), session_id="s1",
+        source="ollama-app",
+        client="ollama-app",
+        provider="local",
+        model="llama3",
+        timestamp=datetime(2026, 8, 20, 10, 0, tzinfo=UTC),
+        session_id="s1",
         tokens=TokenUsage(uncached_input=1000, output=500),
     )
     cost, state = price_event(local, TABLE)
@@ -342,8 +368,12 @@ def test_free_provider_prices_at_zero() -> None:
 
 def test_free_provider_without_token_counts_is_unavailable() -> None:
     local = UsageEvent(
-        source="ollama-app", client="ollama-app", provider="local", model="llama3",
-        timestamp=datetime(2026, 8, 20, 10, 0, tzinfo=UTC), session_id="s1",
+        source="ollama-app",
+        client="ollama-app",
+        provider="local",
+        model="llama3",
+        timestamp=datetime(2026, 8, 20, 10, 0, tzinfo=UTC),
+        session_id="s1",
         tokens=None,
     )
     cost, state = price_event(local, TABLE)
@@ -381,3 +411,113 @@ def test_a_long_context_model_id_inherits_its_row_and_window() -> None:
     assert rate is not None
     assert rate.inherited is True
     assert rate.context_window == 1_000_000
+
+
+def test_gpt_5_6_sol_matches_the_published_rate() -> None:
+    rate = TABLE.lookup("gpt-5.6-sol")
+    assert rate is not None
+    assert (rate.input, rate.output) == (4.00, 20.00)
+
+
+def test_gpt_5_3_codex_has_its_own_row_not_the_gpt_5_price() -> None:
+    rate = TABLE.lookup("gpt-5.3-codex")
+    assert rate is not None
+    assert rate.match == "gpt-5.3-codex" and not rate.inherited
+    assert (rate.input, rate.output) == (1.75, 14.0)
+
+
+@pytest.mark.parametrize(
+    "model,expected",
+    [
+        ("gpt-5.5", (5.0, 30.0)),
+        ("gpt-5.5-pro", (30.0, 180.0)),
+        ("gpt-5.4", (2.5, 15.0)),
+        ("gpt-5.4-mini", (0.75, 4.5)),
+        ("gpt-5.4-nano", (0.2, 1.25)),
+        ("gpt-5.4-pro", (30.0, 180.0)),
+        ("gpt-5.2", (1.75, 14.0)),
+        ("gpt-5.1", (1.25, 10.0)),
+        ("gpt-5-pro", (15.0, 120.0)),
+        ("o3-mini", (1.1, 4.4)),
+        ("o3-pro", (20.0, 80.0)),
+        ("gpt-4.1-mini", (0.4, 1.6)),
+        ("gpt-4.1-nano", (0.1, 0.4)),
+        ("gpt-4o-mini", (0.15, 0.6)),
+    ],
+)
+def test_sibling_openai_families_do_not_inherit_a_shorter_prefix(
+    model: str, expected: tuple[float, float]
+) -> None:
+    rate = TABLE.lookup(model)
+    assert rate is not None and not rate.inherited
+    assert (rate.input, rate.output) == expected
+
+
+@pytest.mark.parametrize(
+    "model,ratio",
+    [
+        ("gpt-4o", 0.5),
+        ("gpt-4o-mini", 0.5),
+        ("o3", 0.25),
+        ("o3-mini", 0.5),
+        ("gpt-4.1", 0.25),
+        ("gpt-4.1-mini", 0.25),
+        ("gpt-4.1-nano", 0.25),
+        ("o4-mini", 0.25),
+    ],
+)
+def test_legacy_openai_cache_read_overrides_are_not_the_provider_default(
+    model: str, ratio: float
+) -> None:
+    rate = TABLE.lookup(model)
+    assert rate is not None
+    rules = rate.cache_rules or TABLE.rules_for(rate.provider)
+    assert rules.cache_read == pytest.approx(ratio)
+    cost = price(model=model, cache_read=M)
+    assert cost.cache_read == pytest.approx(rate.input * ratio)
+
+
+def test_legacy_openai_cache_rules_keep_the_providers_own_write_and_batch_multipliers() -> None:
+    # A model's cache_rules fully replaces the provider block rather than merging with it --
+    # each override must repeat the openai provider's own write/batch values, not the
+    # ProviderRules class defaults (cache_write_1h defaults to 2.0, openai's is 1.25).
+    provider_rules = TABLE.rules_for("openai")
+    for model in ("gpt-4o", "o3", "gpt-4.1", "o4-mini"):
+        rate = TABLE.lookup(model)
+        assert rate is not None and rate.cache_rules is not None
+        assert rate.cache_rules.cache_write_5m == provider_rules.cache_write_5m
+        assert rate.cache_rules.cache_write_1h == provider_rules.cache_write_1h
+        assert rate.cache_rules.batch == provider_rules.batch
+
+
+def test_codex_auto_review_is_explicitly_known_unpriced_with_a_note() -> None:
+    assert TABLE.lookup("codex-auto-review") is None
+    note = TABLE.unpriced_note("codex-auto-review")
+    assert note is not None
+    assert "no published" in note
+
+
+def test_unpriced_note_is_none_for_a_model_nobody_ever_flagged() -> None:
+    assert TABLE.unpriced_note("totally-unknown-model") is None
+    assert TABLE.unpriced_note(None) is None
+
+
+def test_inherited_pricing_is_surfaced_on_the_cost_breakdown() -> None:
+    cost, state = price_event(event(model="claude-opus-4-5-20251101", uncached_input=M), TABLE)
+    assert state == "priced"
+    assert cost is not None
+    assert cost.inherited is True
+
+
+def test_exact_match_pricing_is_not_flagged_inherited() -> None:
+    cost, state = price_event(event(model="claude-opus-5", uncached_input=M), TABLE)
+    assert state == "priced"
+    assert cost is not None
+    assert cost.inherited is False
+
+
+def test_summed_cost_breakdowns_carry_inherited_forward() -> None:
+    plain = CostBreakdown(uncached_input=1.0)
+    flagged = CostBreakdown(uncached_input=1.0, inherited=True)
+    assert (plain + flagged).inherited is True
+    assert (plain + plain).inherited is False

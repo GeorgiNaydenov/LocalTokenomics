@@ -66,6 +66,7 @@ export function Stat({
   emphasis = 'default',
   className,
   children,
+  onClick,
 }: {
   label: string
   value: React.ReactNode
@@ -75,14 +76,10 @@ export function Stat({
   emphasis?: 'default' | 'hero'
   className?: string
   children?: React.ReactNode
+  onClick?: () => void
 }) {
-  return (
-    <div
-      className={cn(
-        'flex min-w-0 flex-col justify-between gap-3 rounded-md border bg-card p-card',
-        className,
-      )}
-    >
+  const content = (
+    <>
       <StatLabel>{label}</StatLabel>
       <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
         <span
@@ -103,8 +100,21 @@ export function Stat({
       </div>
       {hint ? <p className="text-xs leading-relaxed text-muted-foreground">{hint}</p> : null}
       {children}
-    </div>
+    </>
   )
+  const cardClassName = cn(
+    'flex min-w-0 flex-col justify-between gap-3 rounded-md border bg-card p-card',
+    onClick && 'cursor-pointer text-left outline-offset-2 hover:border-primary/50 hover:bg-accent/40',
+    className,
+  )
+  if (onClick) {
+    return (
+      <button type="button" onClick={onClick} className={cardClassName}>
+        {content}
+      </button>
+    )
+  }
+  return <div className={cardClassName}>{content}</div>
 }
 
 export function StatGrid({ className, ...props }: React.ComponentProps<'div'>) {

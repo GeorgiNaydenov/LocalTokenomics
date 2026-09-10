@@ -9,12 +9,27 @@ function systemMode(): ThemeMode {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
-function read(): ThemeMode {
+function storedMode(): string | null {
   try {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored === 'light' || stored === 'dark') return stored
-  } catch {}
+    return localStorage.getItem(STORAGE_KEY)
+  } catch {
+    return null
+  }
+}
+
+function read(): ThemeMode {
+  const stored = storedMode()
+  if (stored === 'light' || stored === 'dark') return stored
   return systemMode()
+}
+
+function persist(mode: ThemeMode): boolean {
+  try {
+    localStorage.setItem(STORAGE_KEY, mode)
+    return true
+  } catch {
+    return false
+  }
 }
 
 let current: ThemeMode = typeof window === 'undefined' ? 'light' : read()
@@ -27,9 +42,7 @@ function apply(mode: ThemeMode) {
 export function setTheme(mode: ThemeMode) {
   current = mode
   apply(mode)
-  try {
-    localStorage.setItem(STORAGE_KEY, mode)
-  } catch {}
+  persist(mode)
   listeners.forEach((listener) => listener())
 }
 

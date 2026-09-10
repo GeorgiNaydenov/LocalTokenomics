@@ -1,0 +1,33 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.6
+    hooks:
+      - id: ruff
+        name: ruff check
+        args: [--fix]
+      - id: ruff-format
+        name: ruff format
+
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: mypy src
+        language: system
+        pass_filenames: false
+        files: ^src/
+        stages: [manual]
+
+      - id: pylint
+        name: pylint
+        entry: pylint src tests --fail-under=9.0
+        language: system
+        pass_filenames: false
+        types: [python]
+
+      - id: eslint
+        name: eslint (web)
+        entry: npm run --prefix web lint
+        language: system
+        pass_filenames: false
+        files: ^web/.*\.(ts|tsx)$

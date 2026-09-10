@@ -9,7 +9,7 @@ from pathlib import Path
 
 from ..models import UsageEvent
 from ..trace import Capabilities
-from .base import Source, parse_timestamp, read_sqlite
+from .base import Source, parse_timestamp, read_sqlite, title_of
 
 _APP_DIR = "Windsurf"
 _CHAT_KEY = "cascade.chatdata"
@@ -62,6 +62,8 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
         bubbles = tab.get("bubbles")
         if not tab_id or not isinstance(bubbles, list) or not bubbles:
             continue
+        chat_title = tab.get("chatTitle")
+        title = chat_title.strip() if isinstance(chat_title, str) and chat_title.strip() else None
         yield UsageEvent(
             source="windsurf",
             client="windsurf",
@@ -70,6 +72,8 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
             session_id=str(tab_id),
             request_id=f"windsurf:{tab_id}",
             tokens=None,
+            title=title if title else title_of(None, str(tab_id)),
+            title_source="tool" if title else "folder",
             machine=platform.node(),
             source_file=str(path),
         )

@@ -8,26 +8,21 @@ import { Panel, PanelBody, PanelHeader, PanelNote } from '@/components/panel'
 import { ProvenanceBadge, Unavailable } from '@/components/status'
 import { CodeBlock } from '@/components/detail'
 import { EmptyState } from '@/components/states'
+import { worstProvenance } from '@/components/rank'
 import type { TraceSpanRow } from '@/components/trace'
-import { InsightList, SPAN_STATUS_COLOR, SpanTimeline } from '@/components/trace'
+import { InsightList, SPAN_KIND_GLYPH, SPAN_STATUS_COLOR, SpanTimeline } from '@/components/trace'
+import { SortSelect } from '@/components/filters'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Toggle } from '@/components/ui/toggle'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
-type Mode = 'timeline' | 'tree'
+type Mode = 'timeline' | 'tree' | 'turns'
 
 const INITIAL_ROWS = 200
 const ROW_BATCH = 400
-
-const PROVENANCE_RANK: Record<Provenance, number> = {
-  measured: 0,
-  derived: 1,
-  estimated: 2,
-  inferred: 3,
-  unavailable: 4,
-}
 
 const CAPABILITY_LABELS: { key: keyof Capabilities; label: string }[] = [
   { key: 'trace', label: 'trace' },
@@ -52,11 +47,6 @@ type ContentState =
   | { status: 'ready'; content: SpanContent }
   | { status: 'off' }
   | { status: 'error'; message: string }
-
-function worstProvenance(values: Provenance[]): Provenance {
-  const sorted = [...values].sort((a, b) => PROVENANCE_RANK[b] - PROVENANCE_RANK[a])
-  return sorted[0] ?? 'unavailable'
-}
 
 function rowDomId(spanId: string): string {
   return `trace-span-${spanId}`
@@ -83,7 +73,17 @@ function DurationCell({
   provenance: Provenance
   descendants: number
 }) {
-  if (ms === null) return <Unavailable />
+  if (ms === null) {
+    return (
+      <Unavailable
+        hint={
+          descendants > 0
+            ? 'Neither this span nor any of its descendants carries a start and end time in the log.'
+            : 'This span carries no timing in the log.'
+        }
+      />
+    )
+  }
   const scope = descendants > 0 ? `summed over ${formatCount(descendants + 1)} spans` : 'this span'
   return (
     <span className="inline-flex items-center gap-1.5">
@@ -105,7 +105,17 @@ function TokensCell({
   provenance: Provenance
   descendants: number
 }) {
-  if (provenance === 'unavailable') return null
+  if (provenance === 'unavailable') {
+    return (
+      <Unavailable
+        hint={
+          descendants > 0
+            ? 'Neither this span nor any of its descendants carries a token count in the log.'
+            : 'This span carries no token count in the log.'
+        }
+      />
+    )
+  }
   const scope = descendants > 0 ? `summed over ${formatCount(descendants + 1)} spans` : 'this span'
   return (
     <span className="inline-flex items-center gap-1.5">
@@ -157,14 +167,105 @@ function ContentBlock({ state }: { state: ContentState }) {
   }
 }
 
+interface InsightTurn {
+  key: string
+  spanId: string
+  label: string
+}
+
+interface TurnIndex {
+  byId: Map<string, Span>
+  anchors: Map<string, string>
+  order: Map<string, number>
+}
+
+function buildTurnIndex(spans: Span[]): TurnIndex {
+  const byId = new Map(spans.map((span) => [span.span_id, span]))
+  const anchors = new Map<string, string>()
+  const order = new Map<string, number>()
+  const turns = spans.filter((span) => span.kind === 'turn').sort((a, b) => a.seq - b.seq)
+  turns.forEach((span, index) => {
+    const key = span.turn_id ?? span.span_id
+    anchors.set(key, span.span_id)
+    order.set(key, index + 1)
+  })
+  return { byId, anchors, order }
+}
+
+function resolveTurnFromIndex(spanId: string, index: TurnIndex): InsightTurn | null {
+  let cursor = index.byId.get(spanId)
+  const seen = new Set<string>()
+  for (let guard = 0; cursor && guard < 64; guard += 1) {
+    if (seen.has(cursor.span_id)) return null
+    seen.add(cursor.span_id)
+    const key = cursor.turn_id ?? (cursor.kind === 'turn' ? cursor.span_id : null)
+    if (key !== null) {
+      const anchorSpanId = index.anchors.get(key)
+      const turnNumber = index.order.get(key)
+      if (anchorSpanId && turnNumber) return { key, spanId: anchorSpanId, label: `Turn ${turnNumber}` }
+      return null
+    }
+    cursor = cursor.parent_id ? index.byId.get(cursor.parent_id) : undefined
+  }
+  return null
+}
+
+export function resolveInsightTurn(spanId: string, spans: Span[]): InsightTurn | null {
+  return resolveTurnFromIndex(spanId, buildTurnIndex(spans))
+}
+
+export function summarizeInsightTurns(insights: Insight[], spans: Span[]): string | null {
+  const totalTurns = spans.filter((span) => span.kind === 'turn').length
+  if (totalTurns === 0) return null
+  const index = buildTurnIndex(spans)
+  const weightByTurn = new Map<string, { label: string; weight: number }>()
+  let totalWeight = 0
+  for (const insight of insights) {
+    const turn = resolveTurnFromIndex(insight.span_id, index)
+    if (!turn) continue
+    const weight = insight.count > 0 ? insight.count : 1
+    totalWeight += weight
+    const entry = weightByTurn.get(turn.key)
+    if (entry) entry.weight += weight
+    else weightByTurn.set(turn.key, { label: turn.label, weight })
+  }
+  const turnsWithInsights = weightByTurn.size
+  const turnWord = totalTurns === 1 ? 'turn' : 'turns'
+  if (turnsWithInsights === 0) {
+    return `None of this session's insights could be tied to a turn, out of ${formatCount(totalTurns)} ${turnWord} total.`
+  }
+  const base = `${formatCount(turnsWithInsights)} of ${formatCount(totalTurns)} ${turnWord} carry at least one insight.`
+  if (totalWeight === 0) return base
+  const ranked = [...weightByTurn.values()].sort((a, b) => b.weight - a.weight)
+  let dominant: typeof ranked = []
+  let cumulative = 0
+  for (let k = 0; k < Math.min(2, ranked.length); k += 1) {
+    cumulative += ranked[k].weight
+    if (cumulative / totalWeight > 0.5) {
+      dominant = ranked.slice(0, k + 1)
+      break
+    }
+  }
+  if (dominant.length > 0 && dominant.length < turnsWithInsights) {
+    const names = dominant.map((entry) => entry.label).join(' and ')
+    const share = dominant.reduce((sum, entry) => sum + entry.weight, 0) / totalWeight
+    return `${base} ${names} account${dominant.length === 1 ? 's' : ''} for ${Math.round(share * 100)}% of them.`
+  }
+  return base
+}
+
 function InsightsPanel({
   insights,
+  spans,
   onFocus,
 }: {
   insights: Insight[]
+  spans: Span[]
   onFocus: (spanId: string) => void
 }) {
   if (insights.length === 0) return null
+
+  const summary = summarizeInsightTurns(insights, spans)
 
   return (
     <Panel>
@@ -172,14 +273,20 @@ function InsightsPanel({
         eyebrow="Insights"
         title={`${formatCount(insights.length)} things worth a look in this session`}
       />
-      <PanelBody>
+      <PanelBody className="space-y-2">
+        {summary ? <p className="text-[11px] leading-relaxed text-muted-foreground">{summary}</p> : null}
         <InsightList
-          insights={insights.map((insight) => ({
-            kind: insight.kind,
-            severity: insight.severity,
-            message: insight.message,
-            spanId: insight.span_id,
-          }))}
+          insights={insights.map((insight) => {
+            const turn = resolveInsightTurn(insight.span_id, spans)
+            return {
+              kind: insight.kind,
+              severity: insight.severity,
+              message: insight.message,
+              spanId: insight.span_id,
+              turnLabel: turn?.label,
+              turnSpanId: turn?.spanId,
+            }
+          })}
           onSelectSpan={onFocus}
         />
       </PanelBody>
@@ -222,6 +329,19 @@ interface Subtree {
   tokensProvenance: Provenance
   duration: number | null
   durationProvenance: Provenance
+  minStart: number | null
+  maxEnd: number | null
+}
+
+export function spanWindow(span: Span): { start: number | null; end: number | null } {
+  const parsedStart = Date.parse(span.started_at)
+  const start = Number.isFinite(parsedStart) ? parsedStart : null
+  if (span.ended_at) {
+    const parsedEnd = Date.parse(span.ended_at)
+    return { start, end: Number.isFinite(parsedEnd) ? parsedEnd : null }
+  }
+  if (start !== null && span.duration_ms !== null) return { start, end: start + span.duration_ms }
+  return { start, end: null }
 }
 
 function buildRows(spans: Span[], mode: Mode, visible: Set<string>): Row[] {
@@ -243,35 +363,42 @@ function buildRows(spans: Span[], mode: Mode, visible: Set<string>): Row[] {
   const collect = (span: Span): Subtree => {
     const cached = subtrees.get(span.span_id)
     if (cached) return cached
+    const window = spanWindow(span)
     const placeholder: Subtree = {
       descendants: 0,
       tokens: span.tokens?.total ?? 0,
       tokensProvenance: span.tokens_provenance,
       duration: span.duration_ms,
       durationProvenance: span.duration_provenance,
+      minStart: window.start,
+      maxEnd: window.end,
     }
     subtrees.set(span.span_id, placeholder)
     let descendants = 0
     let tokens = span.tokens?.total ?? 0
-    let duration = span.duration_ms
+    let minStart = window.start
+    let maxEnd = window.end
     const tokenSources: Provenance[] = span.tokens ? [span.tokens_provenance] : []
-    const durationSources: Provenance[] = span.duration_ms === null ? [] : [span.duration_provenance]
     for (const child of children.get(span.span_id) ?? []) {
       const sub = collect(child)
       descendants += sub.descendants + 1
       tokens += sub.tokens
       if (sub.tokensProvenance !== 'unavailable') tokenSources.push(sub.tokensProvenance)
-      if (sub.duration !== null) {
-        duration = (duration ?? 0) + sub.duration
-        durationSources.push(sub.durationProvenance)
-      }
+      if (sub.minStart !== null) minStart = minStart === null ? sub.minStart : Math.min(minStart, sub.minStart)
+      if (sub.maxEnd !== null) maxEnd = maxEnd === null ? sub.maxEnd : Math.max(maxEnd, sub.maxEnd)
     }
+    const impliedDuration = minStart !== null && maxEnd !== null && maxEnd > minStart ? maxEnd - minStart : null
+    const duration = span.duration_ms !== null ? span.duration_ms : impliedDuration
+    const durationProvenance =
+      span.duration_ms !== null ? span.duration_provenance : impliedDuration !== null ? 'derived' : 'unavailable'
     const result: Subtree = {
       descendants,
       tokens,
       tokensProvenance: tokenSources.length > 0 ? worstProvenance(tokenSources) : 'unavailable',
-      duration: durationSources.length > 0 ? duration : null,
-      durationProvenance: durationSources.length > 0 ? worstProvenance(durationSources) : 'unavailable',
+      duration,
+      durationProvenance,
+      minStart,
+      maxEnd,
     }
     subtrees.set(span.span_id, result)
     return result
@@ -334,6 +461,293 @@ function visibleSpanIds(
   return visible
 }
 
+const UNATTRIBUTED_TURN_KEY = 'unattributed'
+const UNATTRIBUTED_TURN_LABEL = 'Outside any turn'
+const TURN_TOOL_KINDS: SpanKind[] = ['tool_call', 'retrieval', 'subagent']
+const TURN_TOP_N = 5
+
+interface TurnTokens {
+  inputTotal: number
+  output: number
+}
+
+export interface TurnRollup {
+  key: string
+  turnId: string | null
+  label: string | null
+  ordinal: number
+  span: Span | null
+  spanIds: string[]
+  startedAt: string | null
+  spanCount: number
+  duration: number | null
+  durationProvenance: Provenance
+  kindCounts: [SpanKind, number][]
+  tokens: TurnTokens | null
+  tokensProvenance: Provenance
+  models: string[]
+  errorCount: number
+  isSidechain: boolean
+}
+
+function turnToolResultParents(spans: Span[]): Set<string> {
+  const parents = new Set<string>()
+  for (const span of spans) {
+    if (span.kind === 'tool_result' && span.parent_id) parents.add(span.parent_id)
+  }
+  return parents
+}
+
+function isTurnErrorSpan(span: Span, toolResultParents: Set<string>): boolean {
+  if (span.kind === 'error') return true
+  if (span.status !== 'error') return false
+  if (span.kind === 'tool_result') return true
+  if (TURN_TOOL_KINDS.includes(span.kind)) return !toolResultParents.has(span.span_id)
+  return true
+}
+
+function parseTurnStart(value: string): number {
+  const parsed = Date.parse(value)
+  return Number.isFinite(parsed) ? parsed : Number.POSITIVE_INFINITY
+}
+
+function turnRollupOf(
+  key: string,
+  turnId: string | null,
+  group: Span[],
+  toolResultParents: Set<string>,
+): Omit<TurnRollup, 'ordinal'> {
+  const turnSpan = turnId !== null ? (group.find((span) => span.kind === 'turn') ?? null) : null
+  const children = turnId !== null ? group.filter((span) => span.kind !== 'turn') : group
+  const earliestChild = children.reduce<Span | null>((earliest, span) => {
+    if (!earliest) return span
+    return parseTurnStart(span.started_at) < parseTurnStart(earliest.started_at) ? span : earliest
+  }, null)
+
+  const kindCounts = new Map<SpanKind, number>()
+  for (const span of children) kindCounts.set(span.kind, (kindCounts.get(span.kind) ?? 0) + 1)
+
+  const modelCalls = children.filter((span) => span.kind === 'model_call')
+  const tokensProvenance = worstProvenance(modelCalls.map((span) => span.tokens_provenance))
+  const tokens: TurnTokens | null =
+    tokensProvenance === 'unavailable'
+      ? null
+      : modelCalls.reduce(
+          (sum, span) => ({
+            inputTotal: sum.inputTotal + (span.tokens?.input_total ?? 0),
+            output: sum.output + (span.tokens?.output ?? 0),
+          }),
+          { inputTotal: 0, output: 0 },
+        )
+
+  const models = [
+    ...new Set(modelCalls.map((span) => span.model).filter((model): model is string => model !== null)),
+  ]
+
+  return {
+    key,
+    turnId,
+    label: turnId === null ? UNATTRIBUTED_TURN_LABEL : null,
+    span: turnSpan,
+    spanIds: group.map((span) => span.span_id),
+    startedAt: turnSpan ? turnSpan.started_at : (earliestChild?.started_at ?? null),
+    spanCount: group.length,
+    duration: turnSpan ? turnSpan.duration_ms : null,
+    durationProvenance: turnSpan ? turnSpan.duration_provenance : 'unavailable',
+    kindCounts: [...kindCounts.entries()],
+    tokens,
+    tokensProvenance,
+    models,
+    errorCount: group.filter((span) => isTurnErrorSpan(span, toolResultParents)).length,
+    isSidechain: turnSpan ? turnSpan.is_sidechain : children.some((span) => span.is_sidechain),
+  }
+}
+
+export function groupSpansByTurn(spans: Span[]): TurnRollup[] {
+  const groups = new Map<string, Span[]>()
+  const unattributed: Span[] = []
+  for (const span of spans) {
+    if (span.turn_id) {
+      const bucket = groups.get(span.turn_id)
+      if (bucket) bucket.push(span)
+      else groups.set(span.turn_id, [span])
+    } else {
+      unattributed.push(span)
+    }
+  }
+
+  const toolResultParents = turnToolResultParents(spans)
+  const turns = [...groups.entries()].map(([turnId, group]) => turnRollupOf(turnId, turnId, group, toolResultParents))
+  turns.sort((a, b) => parseTurnStart(a.startedAt ?? '') - parseTurnStart(b.startedAt ?? ''))
+
+  const ordered =
+    unattributed.length > 0
+      ? [...turns, turnRollupOf(UNATTRIBUTED_TURN_KEY, null, unattributed, toolResultParents)]
+      : turns
+
+  return ordered.map((rollup, index) => ({ ...rollup, ordinal: index + 1 }))
+}
+
+type TurnSort = 'spans' | 'duration' | 'errors' | 'chronological'
+
+const TURN_SORT_OPTIONS: { value: TurnSort; label: string }[] = [
+  { value: 'spans', label: 'By span count' },
+  { value: 'duration', label: 'By duration' },
+  { value: 'errors', label: 'By errors' },
+  { value: 'chronological', label: 'Chronological' },
+]
+
+const TURN_SORT_COMPARE: Record<TurnSort, (a: TurnRollup, b: TurnRollup) => number> = {
+  chronological: (a, b) => a.ordinal - b.ordinal,
+  duration: (a, b) => (b.duration ?? -1) - (a.duration ?? -1),
+  spans: (a, b) => b.spanCount - a.spanCount,
+  errors: (a, b) => b.errorCount - a.errorCount,
+}
+
+function TurnTokensCell({ tokens, provenance }: { tokens: TurnTokens | null; provenance: Provenance }) {
+  if (tokens === null) {
+    return <Unavailable hint="No model_call span in this turn carries a token count in the log." />
+  }
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      <span className="tabular">{`${formatTokens(tokens.inputTotal)} in / ${formatTokens(tokens.output)} out`}</span>
+      <ProvenanceBadge provenance={provenance} />
+    </span>
+  )
+}
+
+function TurnBreakdown({ counts }: { counts: [SpanKind, number][] }) {
+  if (counts.length === 0) return <span className="text-muted-foreground">--</span>
+  return (
+    <span className="inline-flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+      {counts.map(([kind, count]) => (
+        <Tooltip key={kind}>
+          <TooltipTrigger asChild>
+            <span className="tabular inline-flex items-center gap-0.5 rounded-sm border px-1 text-[10px] text-muted-foreground">
+              <span>{SPAN_KIND_GLYPH[kind]}</span>
+              {formatCount(count)}
+            </span>
+          </TooltipTrigger>
+          <TooltipContent>{`${formatCount(count)} ${kind.replace('_', ' ')}`}</TooltipContent>
+        </Tooltip>
+      ))}
+    </span>
+  )
+}
+
+function TurnRollupTable({
+  rollups,
+  sort,
+  onSortChange,
+  showAll,
+  onShowAll,
+  onJump,
+}: {
+  rollups: TurnRollup[]
+  sort: TurnSort
+  onSortChange: (sort: TurnSort) => void
+  showAll: boolean
+  onShowAll: () => void
+  onJump: (rollup: TurnRollup) => void
+}) {
+  const sorted = [...rollups].sort(TURN_SORT_COMPARE[sort])
+  const shown = showAll ? sorted : sorted.slice(0, TURN_TOP_N)
+  const hidden = sorted.length - shown.length
+
+  return (
+    <>
+      <PanelBody className="flex flex-wrap items-center justify-between gap-2">
+        <span className="text-[11px] text-muted-foreground">
+          {showAll
+            ? `All ${formatCount(sorted.length)} turns`
+            : `Top ${formatCount(shown.length)} of ${formatCount(sorted.length)} turns`}
+        </span>
+        <SortSelect options={TURN_SORT_OPTIONS} value={sort} onChange={(value) => onSortChange(value as TurnSort)} />
+      </PanelBody>
+      <PanelBody className="p-2 pt-0">
+        <div className="scroll-thin overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>#</TableHead>
+                <TableHead>Started</TableHead>
+                <TableHead>Duration</TableHead>
+                <TableHead>Spans</TableHead>
+                <TableHead>Tokens</TableHead>
+                <TableHead>Model</TableHead>
+                <TableHead className="text-right">Errors</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {shown.map((rollup) => (
+                <TableRow
+                  key={rollup.key}
+                  tabIndex={0}
+                  role="button"
+                  aria-label={`Jump to turn ${rollup.ordinal}${rollup.label ? ` (${rollup.label})` : ''} in the timeline`}
+                  className="cursor-pointer outline-offset-[-2px]"
+                  onClick={() => onJump(rollup)}
+                  onKeyDown={(event) => {
+                    if (event.key !== 'Enter' && event.key !== ' ') return
+                    event.preventDefault()
+                    onJump(rollup)
+                  }}
+                >
+                  <TableCell className="tabular text-muted-foreground">{rollup.ordinal}</TableCell>
+                  <TableCell className="tabular text-muted-foreground">
+                    <span className="inline-flex items-center gap-1.5">
+                      {rollup.label && (
+                        <Badge variant="outline" className="px-1.5 text-[9px]">
+                          {rollup.label}
+                        </Badge>
+                      )}
+                      {rollup.startedAt ? formatClock(rollup.startedAt) : <Unavailable />}
+                      {rollup.isSidechain && (
+                        <Badge variant="outline" className="px-1 text-[9px]">
+                          sidechain
+                        </Badge>
+                      )}
+                    </span>
+                  </TableCell>
+                  <TableCell>
+                    <DurationCell ms={rollup.duration} provenance={rollup.durationProvenance} descendants={0} />
+                  </TableCell>
+                  <TableCell>
+                    <span className="inline-flex items-center gap-1.5">
+                      <span className="tabular text-muted-foreground">{formatCount(rollup.spanCount)}</span>
+                      <TurnBreakdown counts={rollup.kindCounts} />
+                    </span>
+                  </TableCell>
+                  <TableCell>
+                    <TurnTokensCell tokens={rollup.tokens} provenance={rollup.tokensProvenance} />
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {rollup.models.length === 0 ? '--' : rollup.models.join(', ')}
+                  </TableCell>
+                  <TableCell className="text-right tabular">
+                    {rollup.errorCount > 0 ? (
+                      <span style={{ color: 'var(--destructive)' }}>{formatCount(rollup.errorCount)}</span>
+                    ) : (
+                      <span className="text-muted-foreground">0</span>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </PanelBody>
+      {hidden > 0 && (
+        <PanelBody className="pt-0">
+          <Button variant="outline" size="sm" onClick={onShowAll}>
+            {`Show all ${formatCount(sorted.length)} turns`}
+          </Button>
+        </PanelBody>
+      )}
+    </>
+  )
+}
+
 export default function TraceTab(props: TraceTabProps): JSX.Element {
   const { source, sessionId, trace, focusSpanId } = props
   const [mode, setMode] = useState<Mode>('timeline')
@@ -343,11 +757,14 @@ export default function TraceTab(props: TraceTabProps): JSX.Element {
   const [picked, setPicked] = useState<string | null>(null)
   const [expanded, setExpanded] = useState<string[]>([])
   const [contents, setContents] = useState<Record<string, ContentState>>({})
+  const [turnSort, setTurnSort] = useState<TurnSort>('spans')
+  const [turnShowAll, setTurnShowAll] = useState(false)
 
   const focused = picked ?? focusSpanId
   const spans = trace.spans
-  const visible = visibleSpanIds(spans, kinds, errorsOnly, mode === 'tree')
-  const rows = buildRows(spans, mode, visible)
+  const visible = mode === 'turns' ? new Set<string>() : visibleSpanIds(spans, kinds, errorsOnly, mode === 'tree')
+  const rows = mode === 'turns' ? [] : buildRows(spans, mode, visible)
+  const turnRollups = mode === 'turns' ? groupSpansByTurn(spans) : []
   const focusIndex = focused ? rows.findIndex((row) => row.span.span_id === focused) : -1
   const budget = Math.max(INITIAL_ROWS + revealed * ROW_BATCH, focusIndex + 1)
   const shown = rows.slice(0, budget)
@@ -385,6 +802,22 @@ export default function TraceTab(props: TraceTabProps): JSX.Element {
     setPicked(spanId)
     const index = rows.findIndex((row) => row.span.span_id === spanId)
     if (index >= budget) setRevealed(Math.ceil((index + 1 - INITIAL_ROWS) / ROW_BATCH))
+  }
+
+  const selectSpan = (spanId: string) => {
+    focusSpan(spanId)
+    const span = spans.find((entry) => entry.span_id === spanId)
+    if (span && span.content_path !== null && !expanded.includes(spanId)) toggleContent(span)
+  }
+
+  const jumpToTurn = (rollup: TurnRollup) => {
+    const spanId = rollup.span?.span_id ?? rollup.spanIds[0]
+    if (!spanId) return
+    setMode('timeline')
+    setKinds([])
+    setErrorsOnly(false)
+    setRevealed(0)
+    setPicked(spanId)
   }
 
   const timelineRows: TraceSpanRow[] = shown.map((row) => {
@@ -466,7 +899,11 @@ export default function TraceTab(props: TraceTabProps): JSX.Element {
       <Panel>
         <PanelHeader
           eyebrow="Trace"
-          title={`${formatCount(spans.length)} spans, ${formatCount(rows.length)} in view`}
+          title={
+            mode === 'turns'
+              ? `${formatCount(spans.length)} spans, ${formatCount(turnRollups.length)} turns`
+              : `${formatCount(spans.length)} spans, ${formatCount(rows.length)} in view`
+          }
           actions={
             <ToggleGroup
               type="single"
@@ -477,6 +914,7 @@ export default function TraceTab(props: TraceTabProps): JSX.Element {
             >
               <ToggleGroupItem value="timeline">Timeline</ToggleGroupItem>
               <ToggleGroupItem value="tree">Agent tree</ToggleGroupItem>
+              <ToggleGroupItem value="turns">By turn</ToggleGroupItem>
             </ToggleGroup>
           }
         />
@@ -527,14 +965,37 @@ export default function TraceTab(props: TraceTabProps): JSX.Element {
         <PanelNote>
           {mode === 'timeline'
             ? 'Rows in log order, indented by their place in the tree. Every duration and token figure carries the word for where it came from.'
-            : 'Rows grouped under their turn and subagent. A row with children shows its subtree summed, labelled with the weakest provenance in that subtree.'}
+            : mode === 'tree'
+              ? 'Rows grouped under their turn and subagent. A row with children shows its subtree summed, labelled with the weakest provenance in that subtree.'
+              : 'One row per turn, built only from the spans above. Duration and tokens use the turn’s own figures, never a re-summed total. Select a row to jump to that turn in the Timeline.'}
         </PanelNote>
       </Panel>
 
-      <InsightsPanel insights={trace.insights} onFocus={focusSpan} />
+      <InsightsPanel insights={trace.insights} spans={spans} onFocus={focusSpan} />
 
       <Panel>
-        {shown.length === 0 ? (
+        {mode === 'turns' ? (
+          turnRollups.length === 0 ? (
+            <PanelBody>
+              <EmptyState
+                title="No turns in this trace"
+                description="Every span here is outside a turn, or the trace carries no spans."
+              />
+            </PanelBody>
+          ) : (
+            <TurnRollupTable
+              rollups={turnRollups}
+              sort={turnSort}
+              onSortChange={(next) => {
+                setTurnSort(next)
+                setTurnShowAll(false)
+              }}
+              showAll={turnShowAll}
+              onShowAll={() => setTurnShowAll(true)}
+              onJump={jumpToTurn}
+            />
+          )
+        ) : shown.length === 0 ? (
           <PanelBody>
             <EmptyState
               title="No span matches these filters"
@@ -543,7 +1004,12 @@ export default function TraceTab(props: TraceTabProps): JSX.Element {
           </PanelBody>
         ) : (
           <PanelBody className="p-2">
-            <SpanTimeline spans={timelineRows} rowId={rowDomId} focusedSpanId={focused} />
+            <SpanTimeline
+              spans={timelineRows}
+              rowId={rowDomId}
+              focusedSpanId={focused}
+              onSelectSpan={selectSpan}
+            />
           </PanelBody>
         )}
         {hidden > 0 && (

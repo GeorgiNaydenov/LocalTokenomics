@@ -7,7 +7,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from '@/components/ui/chart'
-import { seriesColor } from '@/components/series'
+import { seriesColor, SERIES_SLOTS } from '@/components/series'
 import { Legend } from '@/components/status'
 
 export interface TimeSeriesRow {
@@ -17,7 +17,8 @@ export interface TimeSeriesRow {
   value: number
 }
 
-const LEGEND_LIMIT = 7
+const LEGEND_LIMIT = SERIES_SLOTS
+const OTHER_KEY = '__other__'
 
 export function TimeChart({
   days,
@@ -64,6 +65,22 @@ export function TimeChart({
       config[key] = { label: labels.get(key) ?? key, color: seriesColor(index) }
     })
 
+    const overflowKeys = keys.slice(LEGEND_LIMIT)
+    const legend = keys.slice(0, LEGEND_LIMIT).map((key, index) => ({
+      key,
+      label: labels.get(key) ?? key,
+      color: seriesColor(index),
+      total: totals.get(key) ?? 0,
+    }))
+    if (overflowKeys.length > 0) {
+      legend.push({
+        key: OTHER_KEY,
+        label: `Other (${overflowKeys.length})`,
+        color: 'var(--chart-other)',
+        total: overflowKeys.reduce((sum, key) => sum + (totals.get(key) ?? 0), 0),
+      })
+    }
+
     return {
       keys,
       data,
@@ -71,12 +88,7 @@ export function TimeChart({
       mean,
       peakDay: days[peakIndex] ?? null,
       peakValue: dayTotals[peakIndex] ?? 0,
-      legend: keys.slice(0, LEGEND_LIMIT).map((key, index) => ({
-        key,
-        label: labels.get(key) ?? key,
-        color: seriesColor(index),
-        total: totals.get(key) ?? 0,
-      })),
+      legend,
     }
   }, [days, rows])
 
@@ -97,7 +109,31 @@ export function TimeChart({
           />
           <YAxis tickLine={false} axisLine={false} width={56} tickFormatter={formatAxis} />
           <ChartTooltip
-            content={<ChartTooltipContent indicator="dot" labelFormatter={(value) => formatDay(String(value))} />}
+            content={
+              <ChartTooltipContent
+                indicator="dot"
+                labelFormatter={(value) => formatDay(String(value))}
+                formatter={(value, name, item) => {
+                  const indicatorColor = item?.payload?.fill ?? item?.color
+                  return (
+                    <>
+                      <div
+                        className="h-2.5 w-2.5 shrink-0 rounded-[2px]"
+                        style={{ backgroundColor: indicatorColor }}
+                      />
+                      <div className="flex flex-1 items-center justify-between gap-2 leading-none">
+                        <span className="text-muted-foreground">
+                          {model.config[String(name)]?.label ?? name}
+                        </span>
+                        <span className="tabular font-mono font-medium text-foreground">
+                          {format(Number(value))}
+                        </span>
+                      </div>
+                    </>
+                  )
+                }}
+              />
+            }
           />
           {model.keys.map((key) => (
             <Bar
@@ -114,7 +150,7 @@ export function TimeChart({
             strokeDasharray="4 4"
             strokeOpacity={0.55}
             label={{
-              value: `mean ${formatAxis(model.mean)} per day`,
+              value: `mean ${formatAxis(model.mean)} per calendar day`,
               position: 'insideTopLeft',
               fill: 'var(--muted-foreground)',
               fontSize: 11,

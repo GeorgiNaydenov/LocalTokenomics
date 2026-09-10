@@ -2,7 +2,7 @@ import type { JSX } from 'react'
 import type { Capabilities, Meta, Provenance, Report, SourceInfo } from './api'
 import { formatCount, formatDayShort, formatMoney } from './format'
 import { Panel, PanelBody, PanelHeader, PanelNote } from '@/components/panel'
-import { ProvenanceBadge, Unavailable } from '@/components/status'
+import { PartialMarker, ProvenanceBadge, Unavailable } from '@/components/status'
 import { SourceDetail } from '@/components/source-card'
 import { DisclosurePanel, WarningsList } from '@/components/states'
 import { seriesColor } from '@/components/series'
@@ -34,6 +34,12 @@ const PROVENANCE_MEANING: Record<Provenance, string> = {
 }
 
 function CapabilityMatrixPanel({ sources }: { sources: SourceInfo[] }) {
+  const undetectedLabels = sources.filter((source) => !source.detected).map((source) => source.label)
+  const undetectedNote =
+    undetectedLabels.length > 0
+      ? ` ${undetectedLabels.join(', ')} ${undetectedLabels.length === 1 ? 'ships' : 'ship'} with a reader, but ${undetectedLabels.length === 1 ? 'it was not' : 'none were'} installed here to check real logs against, so ${undetectedLabels.length === 1 ? 'its' : 'their'} capabilities read unavailable until one is audited on a real install.`
+      : ' Every reader listed here was detected and audited against real logs on this machine.'
+
   return (
     <Panel>
       <PanelHeader
@@ -83,9 +89,7 @@ function CapabilityMatrixPanel({ sources }: { sources: SourceInfo[] }) {
         Every number this tool shows carries where it came from. Measured is read straight out of a
         log, derived is computed from two logged values, estimated comes from a table rather than
         the log, inferred is read off a model id, and unavailable means the log does not carry it,
-        so nothing is shown rather than a zero. Cursor, Windsurf and Grok Build ship with readers,
-        but none were installed here to check their real logs against, so every capability reads
-        unavailable until one is audited on a real install.
+        so nothing is shown rather than a zero.{undetectedNote}
       </PanelNote>
     </Panel>
   )
@@ -121,7 +125,21 @@ function DetectedSource({
     null,
   )
   const showsCost = isFull && priced
-  const headline = isFull ? (priced ? formatMoney(cost) : <Unavailable />) : formatCount(requests)
+  const partialCost = priced && ownSessions.some((session) => session.cost === null)
+  const headline = isFull ? (
+    priced ? (
+      <span className="inline-flex items-center gap-1.5">
+        {formatMoney(cost)}
+        {partialCost && (
+          <PartialMarker hint="Some sessions from this reader have no priced cost, so this total covers only the priced ones." />
+        )}
+      </span>
+    ) : (
+      <Unavailable />
+    )
+  ) : (
+    formatCount(requests)
+  )
   const trend = perDay(report, source.id, showsCost)
 
   return (
@@ -154,7 +172,7 @@ function UndetectedSection({ sources }: { sources: SourceInfo[] }) {
   return (
     <DisclosurePanel
       title="Available, not detected here"
-      summary={`${sources.length} more readers ship with the tool and found nothing here: ${sources
+      summary={`${formatCount(sources.length)} more readers ship with the tool and found nothing here: ${sources
         .map((source) => source.id)
         .join(', ')}`}
     >

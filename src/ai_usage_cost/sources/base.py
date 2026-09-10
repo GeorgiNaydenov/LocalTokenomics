@@ -68,7 +68,7 @@ def read_json_lines(path: Path, warnings: list[str]) -> Iterator[dict]:
                 continue
             if isinstance(obj, dict):
                 yield obj
-    if bad > 1:
+    if bad > 0:
         warnings.append(f"{path.name}: skipped {bad} unparsable lines")
 
 
@@ -89,7 +89,7 @@ def read_json_records(path: Path, warnings: list[str]) -> Iterator[tuple[int, in
                 continue
             if isinstance(obj, dict):
                 yield start, len(raw), obj
-    if bad > 1:
+    if bad > 0:
         warnings.append(f"{path.name}: skipped {bad} unparsable lines")
 
 
@@ -143,3 +143,13 @@ def project_of(cwd: object) -> str | None:
 
 def as_int(value: object) -> int:
     return value if isinstance(value, int) and not isinstance(value, bool) else 0
+
+
+def title_of(project: str | None, session_id: str) -> str:
+    """Folder-fallback display title: ``f"{project or '(no project)'}_{session_id}"``.
+
+    This is the last rung of the title fallback chain (``title_source="folder"``),
+    shared by every source so the string is identical to what
+    ``web/src/format.ts``'s ``sessionDisplayName`` used to build client-side.
+    """
+    return f"{project or '(no project)'}_{session_id}"

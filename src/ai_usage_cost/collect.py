@@ -67,8 +67,13 @@ def insert_sample(conn: sqlite3.Connection, sample: Sample) -> None:
         "(machine, sampled_at, gpu_util, vram_used, vram_total, power_w, source) "
         "VALUES (?, ?, ?, ?, ?, ?, ?)",
         (
-            sample.machine, sample.sampled_at.isoformat(), sample.gpu_util,
-            sample.vram_used, sample.vram_total, sample.power_w, sample.source,
+            sample.machine,
+            sample.sampled_at.isoformat(),
+            sample.gpu_util,
+            sample.vram_used,
+            sample.vram_total,
+            sample.power_w,
+            sample.source,
         ),
     )
     conn.commit()

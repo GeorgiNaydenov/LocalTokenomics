@@ -149,7 +149,10 @@ export interface Outcome extends OutcomeUpdate {
 
 export interface EconRow {
   key: string
-  label: string
+  label: string | null
+  ordinal: number | null
+  started_at: string | null
+  is_sidechain: boolean
   model_calls: number
   tool_calls: number
   tokens: TokenUsage | null
@@ -344,6 +347,7 @@ export interface ModelRate {
   output: number
   variants: Record<string, RateVariant>
   cache_rules: ProviderRules | null
+  context_window: number | null
   inherited: boolean
 }
 

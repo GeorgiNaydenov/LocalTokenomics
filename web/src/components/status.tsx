@@ -97,6 +97,22 @@ export function Unavailable({ hint, className }: { hint?: string; className?: st
   )
 }
 
+export function PartialMarker({ hint }: { hint: string }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span
+          tabIndex={0}
+          className="cursor-default rounded-sm text-[10px] text-muted-foreground outline-offset-2"
+        >
+          partial
+        </span>
+      </TooltipTrigger>
+      <TooltipContent className="max-w-64">{hint}</TooltipContent>
+    </Tooltip>
+  )
+}
+
 function SignalBadge({
   color,
   label,

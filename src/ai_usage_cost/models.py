@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import UTC, date, datetime
 from typing import Literal
 
 from pydantic import BaseModel, Field, computed_field
@@ -61,8 +61,11 @@ class UsageEvent(BaseModel):
     working_directory: str | None = None
     repository: str | None = None
     branch: str | None = None
+    title: str | None = None
+    title_source: Literal["tool", "summary", "prompt", "folder"] = "folder"
     machine: str = ""
     source_file: str = ""
+    record_offset: int | None = None
     raw: dict[str, RawScalar] = Field(default_factory=dict)
 
 
@@ -72,6 +75,10 @@ class CostBreakdown(BaseModel):
     cache_write: float = 0.0
     output: float = 0.0
     no_cache_equivalent: float = 0.0
+    # True when any priced event folded into this breakdown was billed at a rate
+    # inherited from a shorter model-id prefix rather than an exact rates.json row
+    # (RateTable.lookup's `inherited` flag) -- surfaced so a silent mis-price is loud.
+    inherited: bool = False
 
     @computed_field  # type: ignore[prop-decorator]
     @property
@@ -90,6 +97,7 @@ class CostBreakdown(BaseModel):
             cache_write=self.cache_write + other.cache_write,
             output=self.output + other.output,
             no_cache_equivalent=self.no_cache_equivalent + other.no_cache_equivalent,
+            inherited=self.inherited or other.inherited,
         )
 
 
@@ -110,3 +118,15 @@ class Bucket(BaseModel):
     def model_post_init(self, _: object) -> None:
         if not self.label:
             self.label = self.key
+
+
+def local_day(ts: datetime) -> date:
+    """Map a timestamp to the machine's local calendar day.
+
+    Logs carry whatever offset the source tool wrote (Codex writes local time,
+    Claude Code writes UTC); this is the one place that offset is resolved, so
+    bucketing and since/until filtering always agree on which day an event
+    belongs to. A naive timestamp is treated as UTC before conversion.
+    """
+    aware = ts if ts.tzinfo is not None else ts.replace(tzinfo=UTC)
+    return aware.astimezone().date()

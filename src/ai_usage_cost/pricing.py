@@ -47,6 +47,18 @@ class Prefix(BaseModel):
     provider: str | None = None
 
 
+class UnpricedModel(BaseModel):
+    """A model id that is known but has no published per-token rate.
+
+    Distinct from a model rates.json has simply never heard of: this is an
+    explicit acknowledgement (with `note` explaining why) so the UI can say
+    *why* a real, named model is unpriced instead of implying it was missed.
+    """
+
+    match: str
+    note: str
+
+
 class RateTable(BaseModel):
     as_of: str = ""
     currency: str = "USD"
@@ -55,6 +67,7 @@ class RateTable(BaseModel):
     prefixes: list[Prefix] = Field(default_factory=list)
     providers: dict[str, ProviderRules] = Field(default_factory=dict)
     models: list[ModelRate] = Field(default_factory=list)
+    unpriced_models: list[UnpricedModel] = Field(default_factory=list)
 
     @classmethod
     def load(cls, path: Path | None = None) -> RateTable:
@@ -80,6 +93,19 @@ class RateTable(BaseModel):
         if rate:
             return rate.display
         return model or "unknown model"
+
+    def unpriced_note(self, model: str | None) -> str | None:
+        """The explanation for a model that is explicitly known to have no rate."""
+        if not model:
+            return None
+        name = normalise_model(model, self.prefixes)
+        best: UnpricedModel | None = None
+        for entry in self.unpriced_models:
+            if name.startswith(entry.match) and (
+                best is None or len(entry.match) > len(best.match)
+            ):
+                best = entry
+        return best.note if best else None
 
 
 def normalise_model(model: str, prefixes: list[Prefix]) -> str:
@@ -151,4 +177,5 @@ def cost_of(
         cache_write=cache_write_cost,
         output=output_cost,
         no_cache_equivalent=tokens.input_total * in_price + output_cost,
+        inherited=rate.inherited,
     )

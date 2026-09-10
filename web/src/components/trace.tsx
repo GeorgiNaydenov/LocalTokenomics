@@ -281,7 +281,8 @@ export function SpanTimeline({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <span
-                    className="tabular cursor-default text-center text-[13px]"
+                    tabIndex={0}
+                    className="tabular cursor-default rounded-sm text-center text-[13px] outline-offset-2"
                     style={{ color: SPAN_STATUS_COLOR[span.status] }}
                   >
                     {SPAN_KIND_GLYPH[span.kind]}
@@ -324,6 +325,8 @@ export interface TraceInsight {
   severity: 'info' | 'warning' | 'critical'
   message: string
   spanId?: string | null
+  turnLabel?: string | null
+  turnSpanId?: string | null
 }
 
 export function InsightList({
@@ -359,19 +362,42 @@ export function InsightList({
         )
 
         const jumpable = insight.spanId && onSelectSpan
+        const turnJumpable = insight.turnSpanId && onSelectSpan
+        const turnBadge = insight.turnLabel ? (
+          turnJumpable ? (
+            <button
+              type="button"
+              onClick={() => onSelectSpan(insight.turnSpanId as string)}
+              className="shrink-0 rounded-full border px-2 py-0.5 text-[10px] text-muted-foreground outline-offset-2 hover:bg-accent"
+            >
+              {insight.turnLabel}
+            </button>
+          ) : (
+            <span className="shrink-0 rounded-full border px-2 py-0.5 text-[10px] text-muted-foreground">
+              {insight.turnLabel}
+            </span>
+          )
+        ) : null
         return (
-          <li key={`${insight.kind}-${index}`} className="text-xs leading-relaxed">
+          <li
+            key={`${insight.kind}-${index}`}
+            className={cn('text-xs leading-relaxed', turnBadge && 'flex items-center justify-between gap-2')}
+          >
             {jumpable ? (
               <button
                 type="button"
                 onClick={() => onSelectSpan(insight.spanId as string)}
-                className="flex w-full gap-2.5 rounded-sm text-left outline-offset-2 hover:bg-accent"
+                className={cn(
+                  'flex gap-2.5 rounded-sm text-left outline-offset-2 hover:bg-accent',
+                  turnBadge ? 'min-w-0 flex-1' : 'w-full',
+                )}
               >
                 {body}
               </button>
             ) : (
-              <span className="flex gap-2.5">{body}</span>
+              <span className={cn('flex gap-2.5', turnBadge && 'min-w-0 flex-1')}>{body}</span>
             )}
+            {turnBadge}
           </li>
         )
       })}

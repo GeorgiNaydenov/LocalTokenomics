@@ -14,6 +14,7 @@ from .base import (
     project_of,
     read_json_lines,
     read_json_records,
+    title_of,
 )
 
 SYNTHETIC_MODELS = {"<synthetic>", "synthetic"}
@@ -38,7 +39,17 @@ def default_roots() -> list[Path]:
 
 def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
     session_id = path.stem
+    # `custom-title` records carry the title shown in the `claude --resume` picker. The
+    # record is re-emitted (e.g. on every resume) with an identical value once set, or a
+    # newer value on a manual rename -- latest wins during this same linear scan, the same
+    # pattern already used for the sessionId/cwd overrides below.
+    title: str | None = None
     for record in read_json_lines(path, warnings):
+        if record.get("type") == "custom-title":
+            candidate = record.get("customTitle")
+            if isinstance(candidate, str) and candidate.strip():
+                title = candidate.strip()
+            continue
         if record.get("type") != "assistant":
             continue
         message = record.get("message")
@@ -59,20 +70,24 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
         message_id = message.get("id")
         request_id = message.get("requestId") or record.get("requestId")
         cwd = record.get("cwd")
+        event_session_id = str(record.get("sessionId") or session_id)
+        project = _project_name(record, path)
 
         yield UsageEvent(
             source="claude-code",
             client="claude-code",
             model=model,
             timestamp=parse_timestamp(record.get("timestamp"), path),
-            session_id=str(record.get("sessionId") or session_id),
+            session_id=event_session_id,
             request_id=str(message_id or request_id) if (message_id or request_id) else None,
             tokens=tokens,
             is_sidechain=bool(record.get("isSidechain")),
             tier=_tier(usage),
-            project=_project_name(record, path),
+            project=project,
             working_directory=cwd if isinstance(cwd, str) else None,
             branch=record.get("gitBranch") if isinstance(record.get("gitBranch"), str) else None,
+            title=title if title else title_of(project, event_session_id),
+            title_source="tool" if title else "folder",
             source_file=str(path),
         )
 
@@ -303,8 +318,8 @@ def spans(path: Path, warnings: list[str]) -> Iterator[Span]:
 
         message_id = _text(message.get("id")) or uuid
         call = model_calls.get(message_id)
+        usage = message.get("usage")
         if call is None:
-            usage = message.get("usage")
             call = add(
                 _new_span(
                     record,
@@ -334,6 +349,23 @@ def spans(path: Path, warnings: list[str]) -> Iterator[Span]:
                 call.context_capacity = LONG_CONTEXT_CAPACITY
                 call.capacity_provenance = "inferred"
             model_calls[message_id] = call
+        elif isinstance(usage, dict) and call.tokens is not None:
+            # Several assistant records can share one message.id while streaming; input
+            # fields never vary across them but output/reasoning grow, so a later record
+            # carrying a larger count is the final, billed value -- refresh in place rather
+            # than leaving the first (possibly partial) record's tokens on the span.
+            candidate = _tokens_from_usage(usage)
+            if candidate.output > call.tokens.output or (
+                candidate.reasoning_output > call.tokens.reasoning_output
+            ):
+                call.tokens = TokenUsage(
+                    uncached_input=call.tokens.uncached_input,
+                    cache_read=call.tokens.cache_read,
+                    cache_write_5m=call.tokens.cache_write_5m,
+                    cache_write_1h=call.tokens.cache_write_1h,
+                    output=max(call.tokens.output, candidate.output),
+                    reasoning_output=max(call.tokens.reasoning_output, candidate.reasoning_output),
+                )
         call.ended_at = timestamp
 
         for index, block in _indexed_blocks(content):
