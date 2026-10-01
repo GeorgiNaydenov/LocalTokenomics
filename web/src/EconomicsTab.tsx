@@ -20,7 +20,7 @@ import {
 } from './turn-insights'
 import type { TurnSortKey } from './turn-insights'
 import { Panel, PanelBody, PanelHeader, PanelNote } from '@/components/panel'
-import { CostStateBadge, ProvenanceBadge, Unavailable } from '@/components/status'
+import { CostBadges, ProvenanceBadge, Unavailable } from '@/components/status'
 import { EmptyState } from '@/components/states'
 import { Stat, StatGrid, StatLabel } from '@/components/stat'
 import { useMediaQuery } from '@/components/use-media-query'
@@ -99,7 +99,7 @@ function CostCell({ row }: { row: EconRow }) {
           </TooltipContent>
         </Tooltip>
       )}
-      <CostStateBadge state={row.cost_state} />
+      <CostBadges state={row.cost_state} cost={row.cost} />
     </span>
   )
 }
@@ -651,8 +651,8 @@ export default function EconomicsTab(props: EconomicsTabProps): JSX.Element {
                   formula: 'cost = Σ (uncached input + cache read + cache write + output) × each call’s rate',
                   computed: `uncached ${formatMoney(totals.cost.uncached_input)} + cache read ${formatMoney(totals.cost.cache_read)} + cache write ${formatMoney(totals.cost.cache_write)} + output ${formatMoney(totals.cost.output)} = ${formatMoney(totals.cost.total)}`,
                   caveats:
-                    totals.cost.inherited
-                      ? 'At least one call in this session used a rate inherited from a sibling model because no exact rate entry exists for it.'
+                    totals.cost.estimated
+                      ? 'At least one call in this session is estimated from a sibling model’s rate because no exact rate row exists for its model.'
                       : totals.cost_state !== 'priced'
                         ? `State is ${totals.cost_state}: the worst state across this session's calls, so this total may not include every call.`
                         : undefined,

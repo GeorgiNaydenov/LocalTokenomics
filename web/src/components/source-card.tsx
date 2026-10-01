@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 
 import { Badge } from '@/components/ui/badge'
 import { Sparkline } from '@/components/sparkline'
+import { ExperimentalBadge } from '@/components/status'
 import { StatLabel } from '@/components/stat'
 import { cn } from '@/design-system/cn'
 
@@ -10,6 +11,7 @@ export interface SourceSummary {
   label: string
   path: string
   clients?: string[]
+  experimental?: boolean
   hasTokens: boolean
   headline: ReactNode
   foot: string
@@ -85,7 +87,10 @@ export function SourceDetail({
         {source.clients?.length ? (
           <p className="tabular text-[11px] text-muted-foreground">{source.clients.join(', ')}</p>
         ) : null}
-        <TokenDataBadge hasTokens={source.hasTokens} />
+        <div className="flex flex-wrap items-center gap-1.5">
+          <TokenDataBadge hasTokens={source.hasTokens} />
+          {source.experimental ? <ExperimentalBadge /> : null}
+        </div>
         <div className="tabular pt-1 text-xl font-semibold leading-none">{source.headline}</div>
       </div>
       <div className="min-w-0 space-y-3">

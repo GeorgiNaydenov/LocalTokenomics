@@ -48,6 +48,7 @@ function cost(total: number) {
     total,
     no_cache_equivalent: total,
     cache_savings: 0,
+    estimated: false,
     inherited: false,
   }
 }

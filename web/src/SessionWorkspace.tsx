@@ -26,7 +26,8 @@ import {
   sessionDisplayName,
   toDayString,
 } from './format'
-import { BucketBar, CostStateBadge, Unavailable } from '@/components/status'
+import { BucketBar, CostBadges, Unavailable } from '@/components/status'
+import { reportedNote } from '@/pricing-notes'
 import { InfoGlyph, MetricInfo } from '@/components/metric-info'
 import { MetaGrid, PathList, Section } from '@/components/detail'
 import { EmptyState } from '@/components/states'
@@ -199,13 +200,25 @@ function SessionOrigin({ session }: { session: SessionRow }) {
 }
 
 function SummaryTab({ session }: { session: SessionRow }) {
+  const reported = reportedNote(session.cost ? session.cost.total : null, session.reported_cost)
   return (
     <div className="flex flex-col gap-4">
-      <Section title="Cost" action={<CostStateBadge state={session.cost_state} />}>
+      <Section title="Cost" action={
+          <span className="inline-flex items-center gap-1.5">
+            <CostBadges state={session.cost_state} cost={session.cost} />
+          </span>
+        }
+      >
         <div className="tabular text-[28px] font-semibold leading-none">
           {session.cost ? formatMoney(session.cost.total) : <Unavailable hint={costNote(session)} />}
         </div>
         <p className="text-[11px] leading-relaxed text-muted-foreground">{costNote(session)}</p>
+        {reported ? (
+          <p className="tabular text-[11px] leading-relaxed text-muted-foreground">
+            {reported.line}
+            {reported.note ? ` · ${reported.note}` : ''}
+          </p>
+        ) : null}
       </Section>
 
       <TokenBucketsSection session={session} />

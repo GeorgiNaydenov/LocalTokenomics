@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import type { CostState, OutcomeLabel, Provenance } from '@/api'
 import { MetricInfo } from '@/components/metric-info'
 import { cn } from '@/design-system/cn'
+import { ESTIMATED_HELP, EXPERIMENTAL_HELP, isEstimatedPriced } from '@/pricing-notes'
 
 const COST_STATE: Record<CostState, { label: string; color: string; help: string }> = {
   priced: {
@@ -160,6 +161,36 @@ export function CostStateBadge({
       title={meta.help}
       className={className}
     />
+  )
+}
+
+// Purple (the inferred hue), never the amber of `unpriced`: an estimated row is still
+// counted in totals, an unpriced one is not, and both can sit in the same table.
+const ESTIMATED_COLOR = 'var(--provenance-inferred)'
+
+export function EstimatedBadge({ className }: { className?: string }) {
+  return <SignalBadge color={ESTIMATED_COLOR} label="Estimated" title={ESTIMATED_HELP} className={className} />
+}
+
+export function ExperimentalBadge({ className }: { className?: string }) {
+  return <SignalBadge color="var(--warning)" label="Experimental" title={EXPERIMENTAL_HELP} className={className} />
+}
+
+/** CostStateBadge, plus an Estimated marker when a priced row used a sibling model's rate. */
+export function CostBadges({
+  state,
+  cost,
+  className,
+}: {
+  state: CostState
+  cost: { estimated: boolean } | null
+  className?: string
+}) {
+  return (
+    <>
+      <CostStateBadge state={state} className={className} />
+      {isEstimatedPriced(state, cost) ? <EstimatedBadge className={className} /> : null}
+    </>
   )
 }
 

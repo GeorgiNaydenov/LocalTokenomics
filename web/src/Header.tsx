@@ -5,6 +5,7 @@ import type { ThemeMode } from './theme'
 import { StatLabel } from '@/components/stat'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/design-system/cn'
+import { ratesAgeNotice } from './pricing-notes'
 
 interface HeaderProps {
   view: View
@@ -40,6 +41,7 @@ function scanReadout(lastScanAt: number | null): string | null {
 export default function Header({
   view,
   onSelectView,
+  meta,
   ratesAsOf,
   filesScanned,
   onRescan,
@@ -55,6 +57,7 @@ export default function Header({
     return () => clearInterval(interval)
   }, [])
   const readout = scanReadout(lastScanAt)
+  const stale = ratesAgeNotice(meta?.rates_age_days)
 
   return (
     <header className="sticky top-0 z-40 flex min-h-13 flex-wrap items-center gap-5 border-b bg-card px-4">
@@ -98,6 +101,20 @@ export default function Header({
         <span className="tabular hidden whitespace-nowrap text-[10.5px] text-muted-foreground xl:inline">
           rates as of {ratesAsOf}, {filesScanned} log files
         </span>
+        {stale && (
+          <button
+            type="button"
+            onClick={() => onSelectView('pricing')}
+            title={stale.text}
+            aria-label={stale.text}
+            className={cn(
+              'tabular max-w-40 truncate whitespace-nowrap text-[10.5px] sm:max-w-none',
+              stale.severity === 'caution' ? 'text-warning' : 'text-primary',
+            )}
+          >
+            {stale.text}
+          </button>
+        )}
         {readout && (
           <span
             className={cn(

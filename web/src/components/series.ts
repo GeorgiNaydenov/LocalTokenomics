@@ -18,12 +18,12 @@ export const TOKEN_BUCKETS: TokenBucket[] = [
     color: 'var(--bucket-uncached-input)',
     multiplier: '1x',
   },
-  { key: 'cache_read', label: 'Cache read', color: 'var(--bucket-cache-read)', multiplier: '0.1x' },
+  { key: 'cache_read', label: 'Cache read', color: 'var(--bucket-cache-read)', multiplier: 'discounted' },
   {
     key: 'cache_write',
     label: 'Cache write',
     color: 'var(--bucket-cache-write)',
-    multiplier: '1.25x',
+    multiplier: 'surcharge',
   },
   { key: 'output', label: 'Output', color: 'var(--bucket-output)', multiplier: 'output rate' },
 ]

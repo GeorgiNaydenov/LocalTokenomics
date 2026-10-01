@@ -11,7 +11,9 @@ import {
   toDayString,
 } from './format'
 import { Panel, PanelHeader, PanelNote } from '@/components/panel'
-import { CostStateBadge, OutcomeBadge, Unavailable } from '@/components/status'
+import { MetricInfo } from '@/components/metric-info'
+import { CostBadges, OutcomeBadge, Unavailable } from '@/components/status'
+import { reportedTitle } from '@/pricing-notes'
 import { ErrorCount, SessionCard, TokenCell, TracedDot } from '@/components/session'
 import { SortSelect } from '@/components/filters'
 import { EmptyState, SortButton, ariaSort } from '@/components/states'
@@ -124,7 +126,7 @@ function buildSessionColumns(report: Report, maxTokens: number): Column<SessionR
       align: 'left',
       cell: (row) => (
         <span className="inline-flex items-center gap-2">
-          <CostStateBadge state={row.cost_state} />
+          <CostBadges state={row.cost_state} cost={row.cost} />
           <TracedDot traced={row.traced} />
         </span>
       ),
@@ -213,7 +215,14 @@ function buildSessionColumns(report: Report, maxTokens: number): Column<SessionR
       cellClassName: 'tabular font-semibold',
       cell: (row) =>
         row.cost ? (
-          formatMoney(row.cost.total)
+          (() => {
+            const title = reportedTitle(row.cost.total, row.reported_cost)
+            return title ? (
+              <MetricInfo content={{ kind: 'simple', text: title }}>{formatMoney(row.cost.total)}</MetricInfo>
+            ) : (
+              formatMoney(row.cost.total)
+            )
+          })()
         ) : (
           <span className="font-normal text-muted-foreground">
             <Unavailable />

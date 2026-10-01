@@ -661,6 +661,7 @@ function CostByModelPanel({ report, meta, today }: { report: Report; meta: Meta;
         {buckets.map((bucket, index) => {
           const priced = bucket.cost.total > 0
           const state = priced ? null : (fallbackStates.get(bucket.key) ?? 'unavailable')
+          const estimated = priced && bucket.cost.estimated
 
           return (
             <MeterRow
@@ -669,7 +670,9 @@ function CostByModelPanel({ report, meta, today }: { report: Report; meta: Meta;
               meta={
                 state
                   ? `${formatCount(bucket.sessions)} sessions, ${state}`
-                  : `${formatCount(bucket.sessions)} sessions`
+                  : estimated
+                    ? `${formatCount(bucket.sessions)} sessions, estimated rate`
+                    : `${formatCount(bucket.sessions)} sessions`
               }
               value={
                 priced ? (
@@ -697,7 +700,8 @@ function CostByModelPanel({ report, meta, today }: { report: Report; meta: Meta;
       </PanelBody>
       <PanelNote>
         Bars are absolute spend, the number beside each bar is its share. Free and unpriced models
-        keep their row so nothing disappears from view.
+        keep their row so nothing disappears from view. An estimated rate means the model has no
+        rate row of its own and was priced from a sibling model's.
         {!showAll && stale.length > 0 && recent.length > 0 && (
           <>
             {' '}
@@ -758,7 +762,7 @@ function TokenMixPanel({ report }: { report: Report }) {
         </div>
       </PanelBody>
       <PanelNote>
-        Cache reads bill at a tenth of the input price, so the widest band is also the cheapest.
+        Cache reads bill at a fraction of the input price (the exact ratio is per model: see Pricing), so the widest band is also the cheapest.
         Output is the narrow band that costs the most.
       </PanelNote>
     </Panel>

@@ -2,7 +2,7 @@ import type { JSX } from 'react'
 import type { Capabilities, Meta, Provenance, Report, SourceInfo } from './api'
 import { formatCount, formatDayShort, formatMoney } from './format'
 import { Panel, PanelBody, PanelHeader, PanelNote } from '@/components/panel'
-import { PartialMarker, ProvenanceBadge, Unavailable } from '@/components/status'
+import { ExperimentalBadge, PartialMarker, ProvenanceBadge, Unavailable } from '@/components/status'
 import { SourceDetail } from '@/components/source-card'
 import { DisclosurePanel, WarningsList } from '@/components/states'
 import { seriesColor } from '@/components/series'
@@ -33,6 +33,11 @@ const PROVENANCE_MEANING: Record<Provenance, string> = {
   unavailable: 'the log does not carry it',
 }
 
+/** Stable: verified readers keep their order, experimental ones follow. */
+function verifiedFirst(sources: SourceInfo[]): SourceInfo[] {
+  return [...sources.filter((source) => !source.experimental), ...sources.filter((source) => source.experimental)]
+}
+
 function CapabilityMatrixPanel({ sources }: { sources: SourceInfo[] }) {
   const undetectedLabels = sources.filter((source) => !source.detected).map((source) => source.label)
   const undetectedNote =
@@ -59,10 +64,11 @@ function CapabilityMatrixPanel({ sources }: { sources: SourceInfo[] }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {sources.map((source) => (
+            {verifiedFirst(sources).map((source) => (
               <TableRow key={source.id}>
                 <TableCell className={cn(!source.detected && 'text-muted-foreground')}>
                   {source.label}
+                  {source.experimental ? <ExperimentalBadge className="ml-2" /> : null}
                   {source.detected ? null : (
                     <span className="tabular ml-2 text-[10px] text-muted-foreground">
                       not detected
@@ -149,6 +155,7 @@ function DetectedSource({
         label: source.label,
         path: source.path,
         clients: source.clients,
+        experimental: source.experimental,
         hasTokens: isFull,
         headline,
         foot: '',
@@ -182,7 +189,10 @@ function UndetectedSection({ sources }: { sources: SourceInfo[] }) {
             key={source.id}
             className="grid gap-x-4 gap-y-1 border-t pt-3 lg:grid-cols-[200px_minmax(0,1fr)]"
           >
-            <StatLabel className="normal-case tracking-normal">{source.label}</StatLabel>
+            <div className="flex flex-wrap items-center gap-2">
+              <StatLabel className="normal-case tracking-normal">{source.label}</StatLabel>
+              {source.experimental ? <ExperimentalBadge /> : null}
+            </div>
             <div className="min-w-0 space-y-1">
               <p className="tabular text-[11px] break-all text-muted-foreground">{source.path}</p>
               <p className="tabular text-[11px] text-muted-foreground">{source.root_hint}</p>
@@ -201,8 +211,8 @@ function UndetectedSection({ sources }: { sources: SourceInfo[] }) {
 
 export default function Sources(props: { report: Report; meta: Meta }): JSX.Element {
   const { report, meta } = props
-  const detected = meta.sources.filter((source) => source.detected)
-  const undetected = meta.sources.filter((source) => !source.detected)
+  const detected = verifiedFirst(meta.sources.filter((source) => source.detected))
+  const undetected = verifiedFirst(meta.sources.filter((source) => !source.detected))
   const withTokens = detected.filter((source) => source.token_data === 'full').length
 
   return (
