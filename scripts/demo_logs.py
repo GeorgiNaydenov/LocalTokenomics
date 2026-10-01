@@ -1,4 +1,4 @@
-"""Generate synthetic Claude Code and Codex logs for developing the dashboard.
+"""Generate synthetic Claude Code, Codex, Jan and Dyad logs for developing the dashboard.
 
 Not test data -- the numbers are plausible rather than exact. Use it to run the UI
 without touching real logs:
@@ -18,15 +18,23 @@ import uuid
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
-CLAUDE_MODELS = [("claude-opus-5", 0.55), ("claude-sonnet-5", 0.35), ("claude-haiku-4-5", 0.10)]
-CODEX_MODELS = [("gpt-5-codex", 0.6), ("gpt-5.6-terra", 0.3), ("gpt-5.6-luna", 0.1)]
-JAN_MODELS = [
-    ("llama3.1-8b-instruct", 0.5),
-    ("qwen2.5-7b-instruct", 0.3),
-    ("mistral-7b-instruct", 0.2),
-]
-JAN_ENGINES = [("llama.cpp", 0.6), ("nitro", 0.4)]
-PROJECTS = ["checkout-api", "ai-usage-cost", "portfolio-site", "scratch"]
+try:
+    import ai_usage_cost  # noqa: F401
+except ImportError:  # run from a source checkout without installing the package
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
+
+# The model lists, projects and context windows are shared with `ai-usage-cost demo`.
+from ai_usage_cost.demo import (  # noqa: E402
+    CLAUDE_MODELS,
+    CODEX_MODELS,
+    DYAD_APPS_SCHEMA,
+    JAN_ENGINES,
+    JAN_MODELS,
+    PROJECTS,
+    context_window,
+    pick,
+    pick_model,
+)
 
 MODULES = ["src/service.py", "src/api.py", "src/models.py", "tests/test_service.py", "README.md"]
 CLAUDE_PROMPTS = [
@@ -83,55 +91,6 @@ CODEX_ERRORS = [
     "request timed out after 60s",
 ]
 
-DYAD_APPS_SCHEMA = """
-CREATE TABLE apps (
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    path TEXT,
-    created_at INTEGER,
-    updated_at INTEGER,
-    github_org TEXT,
-    github_repo TEXT,
-    chat_context TEXT,
-    github_branch TEXT,
-    vercel_project_id TEXT,
-    vercel_project_name TEXT,
-    vercel_team_id TEXT,
-    vercel_deployment_url TEXT,
-    neon_project_id TEXT,
-    neon_development_branch_id TEXT,
-    neon_preview_branch_id TEXT
-);
-
-CREATE TABLE chats (
-    id INTEGER PRIMARY KEY,
-    app_id INTEGER,
-    title TEXT,
-    created_at INTEGER,
-    initial_commit_hash TEXT
-);
-
-CREATE TABLE messages (
-    id INTEGER PRIMARY KEY,
-    chat_id INTEGER,
-    role TEXT,
-    content TEXT,
-    created_at INTEGER,
-    approval_state TEXT,
-    commit_hash TEXT
-);
-"""
-
-
-def pick(weighted: list[tuple[str, float]], rng: random.Random) -> str:
-    roll = rng.random()
-    cumulative = 0.0
-    for name, weight in weighted:
-        cumulative += weight
-        if roll <= cumulative:
-            return name
-    return weighted[-1][0]
-
 
 def iso(stamp: datetime) -> str:
     return stamp.isoformat().replace("+00:00", "Z")
@@ -187,7 +146,7 @@ def claude_usage(index: int, cache_read: int, ceiling: int, rng: random.Random) 
 
 
 def context_ceiling(model: str) -> int:
-    return 135_000 if "haiku" in model else 900_000
+    return context_window(model) * 9 // 10
 
 
 def claude_tool(project: str, rng: random.Random) -> tuple[str, dict, str]:
@@ -343,13 +302,14 @@ def write_subagent(
     return total, tool_uses
 
 
-def write_claude(root: Path, day: datetime, rng: random.Random) -> None:
+def write_claude(root: Path, day: datetime, rng: random.Random, ordinal: int = 1_000) -> None:
     project = pick([(p, 1 / len(PROJECTS)) for p in PROJECTS], rng)
     session = str(uuid.uuid4())
     folder = root / f"-home-user-{project}"
     folder.mkdir(parents=True, exist_ok=True)
-    model = pick(CLAUDE_MODELS, rng)
-    if rng.random() < 0.12:
+    model = pick_model(CLAUDE_MODELS, rng, ordinal)
+    # The 1M-context tag is quiet-suffix matched; Haiku has no 1M variant.
+    if rng.random() < 0.12 and "haiku" not in model:
         model = f"{model}[1m]"
     ceiling = context_ceiling(model)
     cwd = f"/home/user/{project}"
@@ -613,14 +573,14 @@ def codex_item(
     )
 
 
-def write_codex(root: Path, day: datetime, rng: random.Random) -> None:
+def write_codex(root: Path, day: datetime, rng: random.Random, ordinal: int = 1_000) -> None:
     project = pick([(p, 1 / len(PROJECTS)) for p in PROJECTS], rng)
     session = str(uuid.uuid4())
     folder = root / f"{day:%Y/%m/%d}"
     folder.mkdir(parents=True, exist_ok=True)
-    model = pick(CODEX_MODELS, rng)
+    model = pick_model(CODEX_MODELS, rng, ordinal)
     cwd = f"/home/user/{project}"
-    capacity = 400000
+    capacity = context_window(model)
     clock = day
     lines = [
         codex_record(
@@ -1130,14 +1090,17 @@ def main(target: Path, days: int = 45, seed: int = 7) -> None:
     jan_root = target / "jan"
     dyad_root = target / "dyad"
     end = datetime.now(tz=UTC).replace(hour=9, minute=0, second=0, microsecond=0)
+    claude_count = codex_count = 0
     for offset in range(days):
         day = end - timedelta(days=offset)
         if day.weekday() >= 5 and rng.random() < 0.7:
             continue
         for _ in range(rng.randint(1, 3)):
-            write_claude(claude_root, day + timedelta(hours=rng.randint(0, 9)), rng)
+            write_claude(claude_root, day + timedelta(hours=rng.randint(0, 9)), rng, claude_count)
+            claude_count += 1
         if rng.random() < 0.6:
-            write_codex(codex_root, day + timedelta(hours=rng.randint(0, 9)), rng)
+            write_codex(codex_root, day + timedelta(hours=rng.randint(0, 9)), rng, codex_count)
+            codex_count += 1
     write_jan(jan_root, rng, days)
     write_dyad(dyad_root, rng, days)
     print(f"demo logs written to {target}")

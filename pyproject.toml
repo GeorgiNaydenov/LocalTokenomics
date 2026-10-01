@@ -1,7 +1,7 @@
 [project]
 name = "ai-usage-cost"
-version = "0.1.0"
-description = "Local dashboard for Claude Code and Codex CLI token usage and API-equivalent cost"
+version = "0.2.0"
+description = "Local, read-only dashboard for token usage and API-equivalent cost across AI coding tools"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

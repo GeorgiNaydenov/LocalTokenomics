@@ -6,23 +6,47 @@ import sqlite3
 import uuid
 from contextlib import closing
 from datetime import UTC, datetime, timedelta
+from functools import cache
 from pathlib import Path
 
 from .pipeline import DEFAULT_DB_PATH
+from .pricing import RateTable
 from .sources import registry
 
 DEMO_DIR = DEFAULT_DB_PATH.parent / "demo"
 DEMO_DB_PATH = DEMO_DIR / "usage.db"
 
-CLAUDE_MODELS = [("claude-opus-5", 0.55), ("claude-sonnet-5", 0.35), ("claude-haiku-4-5", 0.10)]
-CODEX_MODELS = [("gpt-5-codex", 0.6), ("gpt-5.6-terra", 0.3), ("gpt-5.6-luna", 0.1)]
+# The single source of truth for the demo's models, shared with scripts/demo_logs.py. Every
+# id is priced in rates.json except the two marked below, which exist so each cost state shows
+# up in the dashboard: priced, priced with a benign suffix, estimated and unpriced.
+DEMO_ESTIMATED_MODEL = "claude-opus-5-6"
+DEMO_UNPRICED_MODEL = "codex-auto-review"
+CLAUDE_MODELS = [
+    ("claude-opus-5-5", 0.42),
+    ("claude-sonnet-5-5", 0.30),
+    # A dated id: resolves to the claude-haiku-4-5 row through the quiet suffix match.
+    ("claude-haiku-4-5-20251001", 0.20),
+    # Deliberately has no row of its own: priced from its parent claude-opus-5 and shown under
+    # this id with a caution warning. This is the demo of the Estimated cost state.
+    (DEMO_ESTIMATED_MODEL, 0.08),
+]
+CODEX_MODELS = [
+    ("gpt-6-sol", 0.40),
+    ("gpt-6-luna", 0.25),
+    ("gpt-5.5", 0.30),
+    # Known to have no published per-token rate (an `unpriced_models` entry): the demo of the
+    # Unpriced cost state, with tokens counted and cost left out.
+    (DEMO_UNPRICED_MODEL, 0.05),
+]
 JAN_MODELS = [
     ("llama3.1-8b-instruct", 0.5),
     ("qwen2.5-7b-instruct", 0.3),
     ("mistral-7b-instruct", 0.2),
 ]
 JAN_ENGINES = [("llama.cpp", 0.6), ("nitro", 0.4)]
-PROJECTS = ["indotalent", "ai-usage-cost", "portfolio-site", "scratch"]
+PROJECTS = ["checkout-api", "ai-usage-cost", "portfolio-site", "scratch"]
+# Context window for a model whose id has no rate row or whose row states none.
+DEFAULT_CONTEXT_WINDOW = 272_000
 
 DYAD_APPS_SCHEMA = """
 CREATE TABLE apps (
@@ -74,12 +98,32 @@ def pick(weighted: list[tuple[str, float]], rng: random.Random) -> str:
     return weighted[-1][0]
 
 
-def write_claude(root: Path, day: datetime, rng: random.Random) -> None:
+def pick_model(weighted: list[tuple[str, float]], rng: random.Random, ordinal: int) -> str:
+    """Weighted pick, except the first `len(weighted)` sessions of a tool take each model in
+    list order, so every model (and so every cost state) appears whatever the seed rolls."""
+    chosen = pick(weighted, rng)
+    return weighted[ordinal][0] if ordinal < len(weighted) else chosen
+
+
+@cache
+def _rates() -> RateTable:
+    return RateTable.load()
+
+
+def context_window(model: str) -> int:
+    """The model's context window from rates.json (an estimated id uses its parent row's)."""
+    rate = _rates().lookup(model)
+    return (
+        rate.context_window if rate is not None and rate.context_window else DEFAULT_CONTEXT_WINDOW
+    )
+
+
+def write_claude(root: Path, day: datetime, rng: random.Random, ordinal: int = 1_000) -> None:
     project = pick([(p, 1 / len(PROJECTS)) for p in PROJECTS], rng)
     session = str(uuid.uuid4())
     folder = root / f"-home-user-{project}"
     folder.mkdir(parents=True, exist_ok=True)
-    model = pick(CLAUDE_MODELS, rng)
+    model = pick_model(CLAUDE_MODELS, rng, ordinal)
     cache_read = 0
     lines = []
     for turn in range(rng.randint(6, 40)):
@@ -119,12 +163,12 @@ def write_claude(root: Path, day: datetime, rng: random.Random) -> None:
     (folder / f"{session}.jsonl").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def write_codex(root: Path, day: datetime, rng: random.Random) -> None:
+def write_codex(root: Path, day: datetime, rng: random.Random, ordinal: int = 1_000) -> None:
     project = pick([(p, 1 / len(PROJECTS)) for p in PROJECTS], rng)
     session = str(uuid.uuid4())
     folder = root / f"{day:%Y/%m/%d}"
     folder.mkdir(parents=True, exist_ok=True)
-    model = pick(CODEX_MODELS, rng)
+    model = pick_model(CODEX_MODELS, rng, ordinal)
     lines = [
         json.dumps(
             {
@@ -166,7 +210,7 @@ def write_codex(root: Path, day: datetime, rng: random.Random) -> None:
                         "info": {
                             "total_token_usage": dict(running),
                             "last_token_usage": last,
-                            "model_context_window": 400000,
+                            "model_context_window": context_window(model),
                         },
                     },
                 }
@@ -310,13 +354,16 @@ def generate(target: Path, days: int = 45, seed: int = 7) -> None:
     jan_root = target / "jan"
     dyad_root = target / "dyad"
     end = datetime.now(tz=UTC).replace(hour=9, minute=0, second=0, microsecond=0)
+    claude_count = codex_count = 0
     for offset in range(days):
         day = end - timedelta(days=offset)
         if day.weekday() >= 5 and rng.random() < 0.7:
             continue
         for _ in range(rng.randint(1, 3)):
-            write_claude(claude_root, day + timedelta(hours=rng.randint(0, 9)), rng)
+            write_claude(claude_root, day + timedelta(hours=rng.randint(0, 9)), rng, claude_count)
+            claude_count += 1
         if rng.random() < 0.6:
-            write_codex(codex_root, day + timedelta(hours=rng.randint(0, 9)), rng)
+            write_codex(codex_root, day + timedelta(hours=rng.randint(0, 9)), rng, codex_count)
+            codex_count += 1
     write_jan(jan_root, rng, days)
     write_dyad(dyad_root, rng, days)

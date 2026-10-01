@@ -12,7 +12,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from . import privacy, store
+from . import __version__, privacy, store
 from .aggregate import Report, WarningGroup, WarningSeverity, warning_groups_of
 from .models import CostState, PricedEvent, UsageEvent
 from .pipeline import Analysis, SourceInfo, analyze, report_of
@@ -211,7 +211,7 @@ def create_app(
     # generation; `/api/refresh` below is the only place that generation ever changes, so
     # clearing the cache there is the entire invalidation story.
     span_cache: dict[tuple[str, str], list[Span]] = {}
-    app = FastAPI(title="ai-usage-cost", version="0.1.0", docs_url="/api/docs")
+    app = FastAPI(title="ai-usage-cost", version=__version__, docs_url="/api/docs")
 
     def current() -> Analysis:
         return state["analysis"]

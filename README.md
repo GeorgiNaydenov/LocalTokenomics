@@ -8,8 +8,10 @@
 
 LocalTokenomics (command name: `ai-usage-cost`) is a local, read-only tool that reads the log
 files and data stores that AI coding tools already write on your machine, whatever those
-tools happen to be: Claude Code, Codex, Ollama, Jan, Dyad, GitHub Copilot Chat, Google
-Antigravity, Cursor, Windsurf, Grok Build, and any OpenAI-compatible gateway export. It turns
+tools happen to be: Claude Code, Codex, Gemini CLI, Qwen Code, OpenCode, Kilo Code, Cline,
+Roo Code, GitHub Copilot CLI, Muse Code, Ollama, Jan, Dyad, GitHub Copilot Chat, Google
+Antigravity, Cursor, Windsurf, Grok Build, and any OpenAI-compatible gateway export. Nine of
+those readers are experimental (see Where it reads). It turns
 that raw usage into what it would have cost at published API list prices, broken down by
 provider, client, model, and project. You can read the result in the terminal or open a local
 dashboard, which shows only what you actually use by default and keeps everything else one
@@ -49,7 +51,8 @@ came from:
 
 - **Cost, without a subscription bill to compare against.** Every request is priced at
   published API list rates from `rates.json`, broken down by provider, client, model, and
-  project, with cache and batch discounts applied per provider.
+  project. Prices are exact per model where the vendor publishes them: cache reads and writes,
+  long-input bands, fast/priority/flex/batch tiers and dated price changes.
 - **Recency aware by default.** The dashboard shows the clients you actually use and your top
   projects, not a wall of every tool and folder it has ever seen. Everything else stays one
   click away in a collapsed panel, never hidden outright.
@@ -58,7 +61,7 @@ came from:
   session, each with a cost and duration.
 - **Nothing is guessed at.** Every number is labelled measured, derived, estimated, or
   unavailable. A cost that cannot be known is shown as the word `unavailable`, never as `$0.00`.
-- **Ten plus sources out of the box**, auto-discovered from a single module per source, so
+- **Twenty sources out of the box**, auto-discovered from a single module per source, so
   adding one more is a small, self-contained change, not a rewrite.
 - **Fully local.** No API key, no account, no network call to price anything. The SQLite store
   and the rate table both live on your machine.
@@ -237,6 +240,15 @@ and again to reverse, type in the box to filter, `q` to quit. The same numbers `
 | Cursor | `cursor` | `<vscode-data>/User/globalStorage/state.vscdb` and every `<vscode-data>/User/workspaceStorage/*/state.vscdb` | none, session only |
 | Windsurf | `windsurf` | same `state.vscdb` layout as Cursor | none, session only |
 | Grok Build | `grok-build` | `$GROK_HOME/sessions/**/updates.jsonl`, default `~/.grok` | full |
+| Gemini CLI (experimental) | `gemini-cli` | `$GEMINI_CLI_HOME/.gemini/tmp/<slug>/chats/session-*.jsonl`, default home `~` | full |
+| Qwen Code (experimental) | `qwen-code` | `$QWEN_HOME/projects/<sanitized-cwd>/chats/<session-id>.jsonl`, default `~/.qwen` | full |
+| OpenCode (experimental) | `opencode` | `$XDG_DATA_HOME/opencode/opencode.db`, else `~/.local/share/opencode` or `%APPDATA%\opencode` | full |
+| Kilo Code v7 (experimental) | `kilo-code` | `$XDG_DATA_HOME/kilo/kilo.db`, else `~/.local/share/kilo` or `%APPDATA%\kilo` | full |
+| Cline (experimental) | `cline` | `<vscode-data>/User/globalStorage/saoudrizwan.claude-dev/tasks/<id>/ui_messages.json`; SDK sessions under `$CLINE_DATA_DIR` or `~/.cline/data/sessions` | full |
+| Roo Code (experimental) | `roo-code` | `<vscode-data>/User/globalStorage/rooveterinaryinc.roo-cline/tasks/<id>/ui_messages.json` | full |
+| Kilo Code legacy (experimental) | `kilo-code-legacy` | `<vscode-data>/User/globalStorage/kilocode.kilo-code/tasks/<id>/ui_messages.json` | full |
+| GitHub Copilot CLI (experimental) | `copilot-cli` | `$COPILOT_HOME/session-state/<session-id>/events.jsonl` | per-session totals only |
+| Muse Code (experimental) | `muse-code` | `$MUSE_DATA_DIR`, else `~/.local/share/muse/sessions/YYYY/MM/DD/<id>/session.jsonl` | full |
 | OpenAI-compatible | `openai-compat` | none by default, pass `--root openai-compat=PATH` | full, when the log has `usage` |
 
 `~` is your home directory: `%USERPROFILE%` on Windows, `$HOME` on Linux and macOS.
@@ -249,6 +261,16 @@ Claude Code's and Codex's paths are identical on all three platforms: both tools
 under your home directory the same way regardless of OS, so there is nothing to translate for
 them. Most clients log that a session happened but not its token counts. The Cost states
 section below explains how that is represented honestly instead of hidden or guessed at.
+
+The nine sources marked experimental were written from each tool's own source code or
+documentation and tested on synthetic fixtures only; none has been confirmed against a real
+session yet, so treat their token totals as unconfirmed until one has. Details that matter:
+GitHub Copilot CLI only writes per-session cumulative totals at shutdown (the per-request
+events are never persisted), so a session that crashed before shutdown has no usage and is
+reported with a warning rather than guessed; Muse Code's format is undocumented and was
+reconstructed from third-party parsers; Cline, Roo Code and Kilo Code legacy share one
+parser, and whether their input figure already includes cached tokens is an assumption per
+tool. Every experimental source is flagged `experimental` in `/api/meta`.
 
 Cursor, Windsurf and Grok Build ship readers, but none of the three were verified against a
 real install: this machine had none of them to test against. Cursor's `state.vscdb` layout was
@@ -264,6 +286,7 @@ What each source supports beyond cost:
 | Codex | full | measured | measured, and it logs its compactions |
 | Claude Code | full, with an exact subagent tree | derived from timestamps | estimated from the rate table |
 | Antigravity | full, typed steps | derived from timestamps | not recorded |
+| Qwen Code (experimental) | not supported | not recorded | measured |
 | Everything else | not supported | not recorded | not recorded |
 
 ## How cost is worked out
@@ -275,49 +298,82 @@ CLI:
 
 | State | Meaning |
 |---|---|
-| `priced` | Has a matching rate in `rates.json`. Counted in every total. |
+| `priced` | Has a matching rate in `rates.json`, either exactly or with a harmless suffix such as a date or `[1m]`. Counted in every total. |
+| `estimated` | A priced request whose model id has no row of its own, only a shorter row it extends (for example `claude-opus-5-6` against `claude-opus-5`). Counted in totals at the parent's price, shown under its own id, and raises a caution warning because a new model is rarely priced like its predecessor. |
 | `free` | The provider is marked free, such as a local model runtime. Counted at $0.00. |
 | `unpriced` | Token counts exist, but no rate entry matches the model. Listed with its token count and left out of cost totals until a price is added. |
 | `unavailable` | The client's log carries no token counts at all. The request and session are still counted; cost is never invented. |
 
-A model is never silently priced at zero.
+A model is never silently priced at zero. Which suffixes count as harmless is fixed: a dated
+snapshot (`-20251001`, `-2025-10-01`, `@20251001`), `[1m]`, a Bedrock version (`-v1:0`) or
+`-latest`. Anything else (`-mini`, `-5`, `.7`, `:free`, `-preview`) is a different model and
+is `estimated`, not matched quietly.
 
-### Token buckets and multipliers
+Some tools also log a dollar figure of their own (OpenCode, Kilo Code, Cline and Roo Code).
+It is kept as **Reported** next to the cost computed from tokens, never substituted for it,
+and a session where the two disagree by more than 5% of the reported figure (minimum $0.01) raises a divergence warning.
+
+### Token buckets and prices
 
 Tokens are normalized into four disjoint billable buckets: uncached input, cache read,
-cache write, and output. Each is priced from `src/ai_usage_cost/rates.json`, and the cache
-and batch multipliers apply to a model's base input price:
+cache write, and output (reasoning tokens are already inside output). Each is priced from
+`src/ai_usage_cost/rates.json`, resolved in this order for a request:
 
-| Bucket | Typical multiplier |
+1. **Period.** A row can carry dated price periods; the one covering the request's UTC date
+   wins, so history is priced at the price in force then.
+2. **Band.** If the request's total input reaches a band's threshold (for example OpenAI's
+   272K or xAI's 200K), the band's prices apply to the whole request.
+3. **Service tier.** A request's tier (Codex's `service_tier`, Claude's `speed`, batch)
+   selects a `fast`, `priority`, `flex`, `batch` or `ultrafast` variant when the row
+   publishes one. A tier with no published price bills at the standard rate and says so in
+   an info warning.
+4. **Peak window.** A UTC weekday/hour window with its own price (DeepSeek).
+5. **Cache prices.** Each row publishes its own cache read and write prices where the vendor
+   does. Only when a row omits one is the price derived: first from that row's own
+   cache-to-input ratio, then from the provider's ratio in `rates.json`.
+
+| Fallback ratio (provider block) | Typical value |
 |---|---|
-| Cache read | around 0.1x, varies by provider |
+| Cache read | around 0.1x input, varies by provider |
 | Cache write, short TTL | around 1.25x, varies by provider |
 | Cache write, long TTL | around 2.0x, varies by provider |
-| Batch tier | around 0.5x on everything, when the provider offers one |
+| Batch tier | around 0.5x on everything, when there is no explicit `batch` variant |
 
-The exact multiplier for each provider is set in `rates.json`, since not every vendor
-prices caching or batching the same way, and some do not offer either at all.
+A row can override any of these ratios with its own `cache_rules`. Codex logs the service tier
+a request *asked for*, not the one OpenAI billed, so a Fast request that OpenAI downgraded is
+priced slightly high.
 
 ### Provider and model coverage
 
 Rates are tracked per model in `rates.json`, covering every major hosted provider,
-including Anthropic, OpenAI, Google, xAI, DeepSeek, Moonshot, Alibaba, Zhipu, Mistral,
-MiniMax, and Amazon, alongside free local runtimes. The table is plain data you edit
-yourself; see Editing rates below for how to add or correct a model.
+including Anthropic, OpenAI, Google, xAI, Meta, TypeSafe, DeepSeek, Moonshot, Alibaba,
+Zhipu, Mistral, MiniMax, and Amazon, alongside free local runtimes. Each row names the vendor
+page it came from and the date it was last read there. The table is plain data you edit
+yourself; see Keeping prices current and Editing rates below.
 
 ### Provider resolution
 
 The provider billing a request is resolved in order: an adapter that already knows who is
 billing declares it directly, then a gateway prefix in the model id (`us.anthropic.` for
 Bedrock, `openrouter/` for OpenRouter, and so on), then finally the matched rate entry's
-own vendor. `rates.json` is a snapshot, not a live feed. Check its `as_of` field and edit
-it whenever you want.
+own vendor. Prefixes are stripped repeatedly, so `openrouter/anthropic/claude-opus-5-5`
+resolves to OpenRouter billing and the Claude Opus 5.5 row, and Claude ids written with dots
+(`claude-sonnet-4.6`) match their dashed rows. `rates.json` is a snapshot, not a live feed:
+nothing is fetched at runtime, and its rows were last checked on the date in its `as_of`
+field.
 
 ### Worth knowing
 
 - These are list-price equivalents for the tokens you actually spent, not what a
   subscription billed you. The two numbers are not directly comparable.
 - Only requests that reached the model and were logged are counted.
+- Not modelled, so a real bill can differ: Anthropic's `inference_geo` +10% and Bedrock or
+  Vertex regional uplifts, OpenAI's regional +10%, Gemini cache storage per hour and audio
+  rates, Qwen's split between thinking and non-thinking output prices, DeepSeek's Chinese
+  public-holiday off-peak pricing, and web-search or other tool fees. Amazon and the older
+  Claude 3 prices could not be confirmed against a vendor page.
+- A model with no published list price, such as `codex-auto-review`, is listed as unpriced
+  with a note saying why. `gemini-4` is a watchlist entry: it has no API id yet.
 - Several sources here, including the Ollama app, Jan, Dyad, Copilot Chat, and
   Antigravity, log sessions but not token counts on real machines. See Cost states above.
 
@@ -432,21 +488,97 @@ to session plus timestamp plus model plus token total, so the same request logge
 overlapping tools, for example a Codex CLI rollout and its desktop app's own telemetry, is
 still counted once.
 
-## Editing rates
+## Keeping prices current
 
-`src/ai_usage_cost/rates.json` is plain data. To add a model:
+Every total depends on `rates.json`, and vendors change prices. Once the table is more than
+30 days past its `as_of` date, scans and the dashboard show an info notice saying how old it
+is; past 90 days the notice becomes a caution. Because cost is computed when you view it,
+fixing the file reprices all history at once.
 
-```json
-{"match": "claude-opus-6", "provider": "anthropic", "display": "Claude Opus 6",
- "input": 5.0, "output": 25.0}
+`scripts/rates_diff.py` is a maintainer tool, not part of the installed package. It downloads
+LiteLLM's public price catalogue, compares it with your table and prints what is worth a
+look. It never writes `rates.json`, and its figures are a secondary source, so confirm each
+one on the vendor's own page.
+
+```bash
+python scripts/rates_diff.py                          # text report, fetches the catalogue
+python scripts/rates_diff.py --catalog litellm.json   # a saved copy instead of the network
+python scripts/rates_diff.py --format json --fail-on-findings   # exit 1 if anything is found
+python scripts/rates_diff.py --stale-days 60 --today 2026-12-01 # tune the staleness check
 ```
 
-`match` is a prefix, and the longest matching prefix wins. To mark an entire provider's
-models as always free, such as a local runtime, add an entry under `providers`:
+The report has five sections: (1) models in the catalogue that your table lacks, each with a
+proposed v2 row to check; (2) price drift, where a number in one of your rows differs from the
+catalogue's; (3) preview rows, which vendors change first; (4) retired rows still in the
+catalogue, and rows unverified or last verified more than `--stale-days` ago; (5) the
+watchlist, models in `unpriced_models` that the catalogue now prices. The exit code is 0
+unless `--fail-on-findings` is given and there is a finding, and 2 if a file or the catalogue
+cannot be loaded.
+
+## Editing rates
+
+`src/ai_usage_cost/rates.json` is plain data, validated when it loads: a duplicate `match`
+key, a row whose `provider` has no block under `providers`, or overlapping periods stops the
+tool with an error instead of pricing quietly. All prices are USD per million tokens.
+
+Required on every row: `match`, `provider`, `display`, `input`, `output`. Also fill in
+`source` (the vendor page), `verified` (the date you read it; `null` if you could not) and,
+where the vendor states it, `context_window`. Optional: `cache_read`, `cache_write_5m`,
+`cache_write_1h` (absolute prices; omit when the vendor publishes none), `variants`, `bands`,
+`peak`, `periods`, `cache_rules`, `status` (`ga`, `preview` or `retired`), `released`,
+`retired`, `note`. A worked row with a long-input band, a priority tier and a past price
+period:
+
+```json
+{
+  "match": "acme-pro-2",
+  "provider": "acme",
+  "display": "Acme Pro 2",
+  "input": 4.0, "output": 20.0, "cache_read": 0.4,
+  "variants": { "priority": { "input": 8.0, "output": 40.0, "cache_read": 0.8 } },
+  "bands": [
+    { "min_input_tokens": 200001, "input": 8.0, "output": 30.0, "cache_read": 0.8 }
+  ],
+  "periods": [
+    { "from": "2026-06-01", "until": "2026-08-15",
+      "input": 5.0, "output": 30.0, "cache_read": 0.5, "variants": {}, "bands": [] }
+  ],
+  "context_window": 1000000,
+  "source": "https://example.com/pricing",
+  "verified": "2026-10-01",
+  "status": "ga"
+}
+```
+
+The top-level numbers are today's standard price. A period prices requests dated inside its
+window (`from` inclusive, `until` exclusive, UTC) at the old figures; it replaces the row's
+fields wholesale, so restate every cache price, `variants` and `bands` entry it should not
+inherit. A band's `min_input_tokens` is the first token count billed at the higher rate (a
+vendor's "over 200K" is 200001), and the band prices the whole request. `variants` hold
+`fast`, `priority`, `flex`, `batch` or `ultrafast` prices. `peak` takes `weekdays` (0 is
+Monday), `utc_hours` as half-open `[start, end)` ranges, and the prices for that window.
+
+Rules worth knowing:
+
+- `match` is a lowercase prefix and the longest matching prefix wins, but **every id or alias
+  the vendor publishes needs its own row key**. An id with no row of its own is only
+  `estimated` from the nearest shorter row, which is a guess. Add the new id, and any alias
+  such as a `-latest` name, instead of relying on the parent.
+- Only a dated snapshot, `[1m]`, `-vN[:M]` or `-latest` after a row's key counts as the same
+  model. `-mini`, `-5`, `.7` and similar are different models.
+- Keep `as_of` equal to the oldest `verified` date among the rows that have one.
+- A model with no published per-token price goes in `unpriced_models` (`match`, `note`, and
+  optionally `status`: `no_list_price` or `watchlist`) so the dashboard can say why it is
+  unpriced. An entry at least as specific as a priced row wins over an estimate from that row.
+- To mark an entire provider's models as free, such as a local runtime, add `"free": true` to
+  its block under `providers`:
 
 ```json
 {"providers": {"my-provider": {"free": true}}}
 ```
+
+Run `pytest tests/test_rates_data.py tests/test_pricing.py` after editing; they check the
+schema invariants and the headline prices.
 
 ## Adding another source
 
@@ -501,6 +633,7 @@ src/ai_usage_cost/
   api.py        FastAPI JSON API and static host for the dashboard
   cli.py        scan, serve, demo, export, collect, sql, alert, and tui
   render/       terminal output (rich) and PNG export (matplotlib)
+scripts/        maintainer tools: demo_logs.py (richer synthetic logs), rates_diff.py (price table check)
 web/            the dashboard's frontend source, built separately and committed as static assets
 ```
 
@@ -508,8 +641,10 @@ web/            the dashboard's frontend source, built separately and committed 
 
 ```bash
 pytest
-ruff check src tests
+ruff check src tests scripts
+ruff format --check src tests scripts
 mypy src
+pylint src tests --fail-under=9.0
 
 python scripts/demo_logs.py /tmp/demo      # writes synthetic logs to develop against
 ai-usage-cost serve --root claude-code=/tmp/demo/claude --root codex=/tmp/demo/codex \
