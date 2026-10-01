@@ -11,7 +11,7 @@ import pytest
 from ai_usage_cost import privacy
 from ai_usage_cost.aggregate import Report, build_report
 from ai_usage_cost.models import PricedEvent, TokenUsage, UsageEvent, local_day
-from ai_usage_cost.pipeline import Analysis, filter_events, inherited_models, report_of
+from ai_usage_cost.pipeline import Analysis, estimated_models, filter_events, report_of
 from ai_usage_cost.pricing import RateTable, price_event
 from conftest import (
     CLAUDE_BASIC,
@@ -503,7 +503,7 @@ def test_unpriced_model_warning_says_cost_not_all_totals() -> None:
     assert "all totals" not in warning
 
 
-def test_inherited_model_pricing_produces_a_warning_naming_the_parent_rate(
+def test_estimated_model_pricing_warns_naming_the_parent_rate_and_volume(
     tmp_path: Path,
 ) -> None:
     root = tmp_path / "claude"
@@ -517,7 +517,7 @@ def test_inherited_model_pricing_produces_a_warning_naming_the_parent_rate(
                 "sessionId": "sess-inherit",
                 "message": {
                     "id": "m1",
-                    "model": "claude-opus-4-5-20251101",
+                    "model": "claude-opus-5-6",
                     "usage": {"input_tokens": 1000, "output_tokens": 500},
                 },
             }
@@ -527,13 +527,15 @@ def test_inherited_model_pricing_produces_a_warning_naming_the_parent_rate(
     )
     found = analyze_roots(tmp_path, **{"claude-code": root})
 
-    assert "claude-opus-4-5-20251101" in inherited_models(found.events)
-    warning = next(w for w in found.warnings if "claude-opus-4-5-20251101" in w)
-    assert "priced from" in warning
-    assert "Claude Opus 4.5" in warning
+    assert estimated_models(found.events) == {"claude-opus-5-6": 1500}
+    warning = next(w for w in found.warnings if "claude-opus-5-6" in w)
+    assert "estimated from the Claude Opus 5 rate" in warning
+    assert "1,500 tokens" in warning
+    group = next(g for g in report_of(found).warning_groups if g.kind == "estimated_pricing")
+    assert group.severity.value == "caution"
 
 
-def test_an_exact_match_produces_no_inherited_warning(tmp_path: Path) -> None:
+def test_an_exact_match_produces_no_estimated_warning(tmp_path: Path) -> None:
     root = tmp_path / "claude"
     root.mkdir()
     log = root / "sess-exact.jsonl"
@@ -555,8 +557,8 @@ def test_an_exact_match_produces_no_inherited_warning(tmp_path: Path) -> None:
     )
     found = analyze_roots(tmp_path, **{"claude-code": root})
 
-    assert inherited_models(found.events) == []
-    assert not any("priced from" in warning for warning in found.warnings)
+    assert estimated_models(found.events) == {}
+    assert not any("estimated from" in warning for warning in found.warnings)
 
 
 _MODEL_RE = re.compile(r'"model"\s*:\s*"([^"<>]+)"')
@@ -589,5 +591,7 @@ def test_every_distinct_model_id_in_the_fixtures_is_exact_or_the_pipeline_warns_
         rate = table.lookup(model)
         if rate is None:
             assert model in warned, f"{model!r} is unpriced with no warning naming it"
-        elif rate.inherited:
-            assert model in warned, f"{model!r} silently inherits {rate.match!r} with no warning"
+        elif rate.estimated:
+            assert model in warned, (
+                f"{model!r} is silently estimated from {rate.match!r} with no warning"
+            )

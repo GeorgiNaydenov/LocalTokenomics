@@ -1,0 +1,817 @@
+[
+  {
+    "id": "claude-haiku-4-5-20251001",
+    "expect_match": "claude-haiku-4-5",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "claude-haiku-4-5",
+    "expect_match": "claude-haiku-4-5",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "claude-opus-4-5-20251101",
+    "expect_match": "claude-opus-4-5",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "claude-sonnet-4-5-20250929",
+    "expect_match": "claude-sonnet-4-5",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "claude-opus-5-5",
+    "expect_match": "claude-opus-5-5",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "claude-opus-5-5[1m]",
+    "expect_match": "claude-opus-5-5",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "claude-sonnet-5-5",
+    "expect_match": "claude-sonnet-5-5",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "claude-sonnet-5-5[1m]",
+    "expect_match": "claude-sonnet-5-5",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "claude-opus-5",
+    "expect_match": "claude-opus-5",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "claude-fable-5-1",
+    "expect_match": "claude-fable-5-1",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "claude-fable-5",
+    "expect_match": "claude-fable-5",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "anthropic.claude-opus-5-5",
+    "expect_match": "claude-opus-5-5",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "anthropic.claude-opus-4-6-v1",
+    "expect_match": "claude-opus-4-6",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "anthropic.claude-opus-4-5-20251101-v1:0",
+    "expect_match": "claude-opus-4-5",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "us.anthropic.claude-sonnet-5-5",
+    "expect_match": "claude-sonnet-5-5",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "claude-opus-4-5@20251101",
+    "expect_match": "claude-opus-4-5",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "claude-opus-5-6",
+    "expect_match": "claude-opus-5",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "gpt-6.1-sol",
+    "expect_match": "gpt-6.1-sol",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-6-sol",
+    "expect_match": "gpt-6-sol",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-6-luna",
+    "expect_match": "gpt-6-luna",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-6-astra",
+    "expect_match": "gpt-6-astra",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-5.6",
+    "expect_match": "gpt-5.6",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-5.6-sol",
+    "expect_match": "gpt-5.6-sol",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-5.6-cyber",
+    "expect_match": "gpt-5.6-cyber",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-5.5",
+    "expect_match": "gpt-5.5",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-5.5-2026-04-23",
+    "expect_match": "gpt-5.5",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "gpt-5.4",
+    "expect_match": "gpt-5.4",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-5.4-mini",
+    "expect_match": "gpt-5.4-mini",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-5.3-codex",
+    "expect_match": "gpt-5.3-codex",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-5.2",
+    "expect_match": "gpt-5.2",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-5.2-pro",
+    "expect_match": "gpt-5.2-pro",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-5.1-codex-max",
+    "expect_match": "gpt-5.1-codex-max",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "chat-latest",
+    "expect_match": "chat-latest",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-5-2025-08-07",
+    "expect_match": "gpt-5",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "o3-2025-04-16",
+    "expect_match": "o3",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "openai/gpt-5.5",
+    "expect_match": "gpt-5.5",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gpt-5.7",
+    "expect_match": "gpt-5",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "gemini-3.8-flash",
+    "expect_match": "gemini-3.8-flash",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "google/gemini-3.8-flash",
+    "expect_match": "gemini-3.8-flash",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "models/gemini-3.8-flash",
+    "expect_match": "gemini-3.8-flash",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gemini-3.8-flash-latest",
+    "expect_match": "gemini-3.8-flash",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "gemini-3.8-flash-20260902",
+    "expect_match": "gemini-3.8-flash",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "gemini-3.7-flash",
+    "expect_match": "gemini-3.7-flash",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gemini-3.6-flash",
+    "expect_match": "gemini-3.6-flash",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gemini-3.5-flash",
+    "expect_match": "gemini-3.5-flash",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gemini-3.5-flash-lite",
+    "expect_match": "gemini-3.5-flash-lite",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gemini-3.1-flash-lite",
+    "expect_match": "gemini-3.1-flash-lite",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gemini-3.1-pro-preview",
+    "expect_match": "gemini-3.1-pro-preview",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gemini-3.1-pro-preview-customtools",
+    "expect_match": "gemini-3.1-pro-preview-customtools",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gemini-3-flash-preview",
+    "expect_match": "gemini-3-flash-preview",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gemini-2.5-pro",
+    "expect_match": "gemini-2.5-pro",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gemini-2.5-flash",
+    "expect_match": "gemini-2.5-flash",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gemini-2.5-flash-lite",
+    "expect_match": "gemini-2.5-flash-lite",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "gemini-2.5-flash-image",
+    "expect_match": "gemini-2.5-flash",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "gemini-3.8-flash-tts",
+    "expect_match": "gemini-3.8-flash",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "gemini-4-argon",
+    "expect_match": null,
+    "expect_kind": "none"
+  },
+  {
+    "id": "gemini-4",
+    "expect_match": null,
+    "expect_kind": "none"
+  },
+  {
+    "id": "gemini-flash-latest",
+    "expect_match": null,
+    "expect_kind": "none"
+  },
+  {
+    "id": "grok-4.7",
+    "expect_match": "grok-4.7",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "x-ai/grok-4.7",
+    "expect_match": "grok-4.7",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "grok-4.7-20260920",
+    "expect_match": "grok-4.7",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "grok-4.6",
+    "expect_match": "grok-4.6",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "grok-4.5",
+    "expect_match": "grok-4.5",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "grok-4.3",
+    "expect_match": "grok-4.3",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "grok-4.20-0309-reasoning",
+    "expect_match": "grok-4.20-0309-reasoning",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "grok-4.20-0309-non-reasoning",
+    "expect_match": "grok-4.20-0309-non-reasoning",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "grok-4.20-multi-agent-0309",
+    "expect_match": "grok-4.20-multi-agent-0309",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "grok-4.20",
+    "expect_match": "grok-4.20",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "grok-4.20-beta",
+    "expect_match": "grok-4.20",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "grok-build-0.1",
+    "expect_match": "grok-build-0.1",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "grok-4.5-build",
+    "expect_match": "grok-4.5",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "grok-4.3-build",
+    "expect_match": "grok-4.3",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "grok-build-latest",
+    "expect_match": null,
+    "expect_kind": "none"
+  },
+  {
+    "id": "meta/muse-spark-1.3",
+    "expect_match": "muse-spark-1.3",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "muse-spark-1.3",
+    "expect_match": "muse-spark-1.3",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "muse-spark-1.2",
+    "expect_match": "muse-spark-1.2",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "muse-spark-1.1",
+    "expect_match": "muse-spark-1.1",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "muse-spark-1.3-contributor",
+    "expect_match": "muse-spark-1.3-contributor",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "muse-spark-1.2-contributor",
+    "expect_match": "muse-spark-1.2-contributor",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "muse-spark-1.1-contributor",
+    "expect_match": "muse-spark-1.1",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "typesafe/jev-latest",
+    "expect_match": "jev-latest",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "jev-latest",
+    "expect_match": "jev-latest",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "jev-1.13.0",
+    "expect_match": "jev-1.13.0",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "jev-preview",
+    "expect_match": "jev-preview",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "deepseek-flash",
+    "expect_match": "deepseek-flash",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "deepseek/deepseek-flash",
+    "expect_match": "deepseek-flash",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "deepseek-v4-pro",
+    "expect_match": "deepseek-v4-pro",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "deepseek-v4-pro-0813",
+    "expect_match": "deepseek-v4-pro",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "deepseek-v4-flash",
+    "expect_match": "deepseek-v4-flash",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "deepseek-v4-flash-vision-exp",
+    "expect_match": "deepseek-v4-flash",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "qwen3.8-max",
+    "expect_match": "qwen3.8-max",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "qwen3.8-max-0902",
+    "expect_match": "qwen3.8-max-0902",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "qwen3.8-max-prime",
+    "expect_match": null,
+    "expect_kind": "none"
+  },
+  {
+    "id": "qwen3.8-flash",
+    "expect_match": "qwen3.8-flash",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "qwen3.7-plus-2026-05-26",
+    "expect_match": "qwen3.7-plus",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "qwen3.7-flash-2026-07-15",
+    "expect_match": "qwen3.7-flash",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "qwen-plus-2025-12-01",
+    "expect_match": "qwen-plus",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "qwen-flash-2025-07-28",
+    "expect_match": "qwen-flash",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "qwen-max-latest",
+    "expect_match": "qwen-max",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "qwen/qwen3.8-flash",
+    "expect_match": "qwen3.8-flash",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "kimi-k3",
+    "expect_match": "kimi-k3",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "moonshotai/kimi-k3",
+    "expect_match": "kimi-k3",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "kimi-k3-thinking",
+    "expect_match": "kimi-k3",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "kimi-k2.7-code",
+    "expect_match": "kimi-k2.7-code",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "kimi-k2.7-code-highspeed",
+    "expect_match": "kimi-k2.7-code-highspeed",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "kimi-k2.6",
+    "expect_match": "kimi-k2.6",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "glm-5.3",
+    "expect_match": "glm-5.3",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "z-ai/glm-5.3",
+    "expect_match": "glm-5.3",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "glm-5.3-flash",
+    "expect_match": "glm-5.3-flash",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "glm-5.3-flashx",
+    "expect_match": "glm-5.3-flashx",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "glm-5.1",
+    "expect_match": "glm-5.1",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "glm-5",
+    "expect_match": "glm-5",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "glm-5.4",
+    "expect_match": "glm-5",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "glm-5.3-prime",
+    "expect_match": "glm-5.3",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "glm-4.6",
+    "expect_match": "glm-4.6",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "glm-4.7-flashx",
+    "expect_match": "glm-4.7-flashx",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "glm-4.5-air",
+    "expect_match": "glm-4.5-air",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "mistral-medium-3-5",
+    "expect_match": "mistral-medium-3-5",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "mistral-medium-latest",
+    "expect_match": "mistral-medium-latest",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "mistral-large-2512",
+    "expect_match": "mistral-large-2512",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "mistral-large-latest",
+    "expect_match": "mistral-large-latest",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "mistral-small-2603",
+    "expect_match": "mistral-small-2603",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "mistral-small-latest",
+    "expect_match": "mistral-small-latest",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "codestral-2508",
+    "expect_match": "codestral-2508",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "codestral-latest",
+    "expect_match": "codestral-latest",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "ministral-14b-2512",
+    "expect_match": "ministral-14b-2512",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "ministral-14b-latest",
+    "expect_match": "ministral-14b-latest",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "ministral-8b-2512",
+    "expect_match": "ministral-8b-2512",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "ministral-8b-latest",
+    "expect_match": "ministral-8b-latest",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "ministral-3b-2512",
+    "expect_match": "ministral-3b-2512",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "ministral-3b-latest",
+    "expect_match": "ministral-3b-latest",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "mistralai/mistral-large-2512",
+    "expect_match": "mistral-large-2512",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "mistral-large-2512-20251202",
+    "expect_match": "mistral-large-2512",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "mistral-small-2603@20260316",
+    "expect_match": "mistral-small-2603",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "ministral-8b-2512-instruct",
+    "expect_match": "ministral-8b-2512",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "MiniMax-M3",
+    "expect_match": "minimax-m3",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "MiniMax-M2.7",
+    "expect_match": "minimax-m2.7",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "MiniMax-M2.7-highspeed",
+    "expect_match": "minimax-m2.7-highspeed",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "MiniMax-M2.5-highspeed",
+    "expect_match": "minimax-m2.5-highspeed",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "MiniMax-M2.1",
+    "expect_match": "minimax-m2.1",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "MiniMax-M2",
+    "expect_match": "minimax-m2",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "minimax/minimax-m3",
+    "expect_match": "minimax-m3",
+    "expect_kind": "exact"
+  },
+  {
+    "id": "MiniMax-M3.1-Flash-Preview",
+    "expect_match": "minimax-m3",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "amazon.nova-pro-v1:0",
+    "expect_match": "nova-pro",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "us.amazon.nova-pro-v1:0",
+    "expect_match": "nova-pro",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "eu.amazon.nova-lite-v1:0",
+    "expect_match": "nova-lite",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "apac.amazon.nova-micro-v1:0",
+    "expect_match": "nova-micro",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "amazon.nova-2-lite-v1:0",
+    "expect_match": "nova-2-lite",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "us.amazon.nova-2-lite-v1:0",
+    "expect_match": "nova-2-lite",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "amazon.nova-premier-v1:0",
+    "expect_match": "nova-premier",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "us.amazon.nova-premier-v1:0",
+    "expect_match": "nova-premier",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "amazon/nova-pro-v1",
+    "expect_match": "nova-pro",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "global.amazon.nova-2-lite-v1:0",
+    "expect_match": "nova-2-lite",
+    "expect_kind": "suffix"
+  },
+  {
+    "id": "amazon.nova-lite-v1:0:300k",
+    "expect_match": "nova-lite",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "amazon.nova-pro-v1:0:300k",
+    "expect_match": "nova-pro",
+    "expect_kind": "estimated"
+  },
+  {
+    "id": "mistral-large-2601",
+    "expect_match": null,
+    "expect_kind": "none"
+  },
+  {
+    "id": "minimax-m4",
+    "expect_match": null,
+    "expect_kind": "none"
+  },
+  {
+    "id": "gpt-5.3-codex-spark",
+    "expect_match": null,
+    "expect_kind": "none"
+  },
+  {
+    "id": "codex-auto-review",
+    "expect_match": null,
+    "expect_kind": "none"
+  },
+  {
+    "id": "gpt-6-terra",
+    "expect_match": null,
+    "expect_kind": "none"
+  },
+  {
+    "id": "amazon-nova-pro",
+    "expect_match": null,
+    "expect_kind": "none"
+  },
+  {
+    "id": "mistral-large-3",
+    "expect_match": null,
+    "expect_kind": "none"
+  },
+  {
+    "id": "grok-build",
+    "expect_match": null,
+    "expect_kind": "none"
+  }
+]

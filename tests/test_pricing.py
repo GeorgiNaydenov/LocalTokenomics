@@ -8,6 +8,7 @@ from ai_usage_cost.models import CostBreakdown, TokenUsage, UsageEvent
 from ai_usage_cost.pipeline import unknown_models
 from ai_usage_cost.pricing import RateTable, price_event, resolve_provider
 from conftest import CLAUDE_UNKNOWN, analyze_roots
+from test_rates_data import CONTEXT_WINDOW_UNSTATED
 
 M = 1_000_000
 
@@ -212,9 +213,10 @@ def test_tokens_none_is_the_unavailable_state() -> None:
 
 
 def test_google_cache_read_is_ten_percent_not_the_old_25_percent() -> None:
-    cost = price(model="gemini-2.5-pro", uncached_input=M, cache_read=M, output=M)
-    assert cost.uncached_input == pytest.approx(1.25)
-    assert cost.cache_read == pytest.approx(0.125)
+    # 100K uncached + 100K cached = 200,000 input, one token under the >200K whole-request band.
+    cost = price(model="gemini-2.5-pro", uncached_input=100_000, cache_read=100_000, output=M)
+    assert cost.uncached_input == pytest.approx(0.125)
+    assert cost.cache_read == pytest.approx(0.0125)
     assert cost.output == pytest.approx(10.00)
 
 
@@ -226,7 +228,7 @@ def test_google_cache_write_is_billed_like_ordinary_input() -> None:
 def test_deepseek_cache_read_reflects_the_real_cache_hit_discount() -> None:
     cost = price(model="deepseek-v4-pro", uncached_input=M, cache_read=M)
     assert cost.uncached_input == pytest.approx(0.66)
-    assert cost.cache_read == pytest.approx(0.66 * 0.033)
+    assert cost.cache_read == pytest.approx(0.022)  # published cache-hit price, off-peak
 
 
 def test_deepseek_has_no_batch_discount() -> None:
@@ -242,39 +244,44 @@ def test_moonshot_batch_and_cache_read_multipliers() -> None:
 
 
 def test_xai_has_no_batch_discount_by_default() -> None:
-    cost = price(model="grok-4.6", tier="batch", uncached_input=M, cache_read=M)
-    assert cost.uncached_input == pytest.approx(2.00)
-    assert cost.cache_read == pytest.approx(2.00 * 0.25)
+    # 50K + 50K = 100K input, under the >=200K whole-request band; 1M would bill the 4.00 band.
+    cost = price(model="grok-4.6", tier="batch", uncached_input=50_000, cache_read=50_000)
+    assert cost.uncached_input == pytest.approx(0.05 * 2.00)
+    assert cost.cache_read == pytest.approx(0.05 * 2.00 * 0.25)
 
 
 def test_alibaba_implicit_cache_read_discount() -> None:
     cost = price(model="qwen-max", uncached_input=M, cache_read=M)
-    assert cost.cache_read == pytest.approx(2.00 * 0.2)
+    assert cost.cache_read == pytest.approx(1.60 * 0.2)
 
 
 def test_zhipu_has_no_batch_discount() -> None:
     cost = price(model="glm-4.5", tier="batch", uncached_input=M, cache_read=M)
     assert cost.uncached_input == pytest.approx(0.60)
-    assert cost.cache_read == pytest.approx(0.60 * 0.2)
+    assert cost.cache_read == pytest.approx(0.11)  # published cached-input price
 
 
 def test_mistral_has_a_real_cache_discount_and_batch_halves_the_price() -> None:
-    cost = price(model="mistral-large-3", uncached_input=M, cache_read=M)
+    cost = price(model="mistral-large-2512", uncached_input=M, cache_read=M)
     assert cost.cache_read == pytest.approx(0.50 * 0.1)
-    batch_cost = price(model="mistral-large-3", tier="batch", uncached_input=M, output=M)
+    batch_cost = price(model="mistral-large-2512", tier="batch", uncached_input=M, output=M)
     assert batch_cost.uncached_input == pytest.approx(0.25)
     assert batch_cost.output == pytest.approx(0.75)
 
 
 def test_minimax_cache_write_premium() -> None:
-    cost = price(model="minimax-m3", uncached_input=M, cache_write_5m=M)
+    # M2.7 publishes a write price (0.375 = 1.25x input); M3 publishes none, so writes bill as
+    # plain input. 100K + 100K stays under M3's >512K tier.
+    cost = price(model="minimax-m2.7", uncached_input=M, cache_write_5m=M)
     assert cost.cache_write == pytest.approx(0.30 * 1.25)
+    m3 = price(model="minimax-m3", uncached_input=100_000, cache_write_5m=100_000)
+    assert m3.cache_write == pytest.approx(0.1 * 0.30)
 
 
 def test_amazon_nova_cache_read_and_batch() -> None:
-    cost = price(model="amazon-nova-pro", uncached_input=M, cache_read=M)
+    cost = price(model="nova-pro", uncached_input=M, cache_read=M)
     assert cost.cache_read == pytest.approx(0.80 * 0.25)
-    batch_cost = price(model="amazon-nova-pro", tier="batch", uncached_input=M, output=M)
+    batch_cost = price(model="nova-pro", tier="batch", uncached_input=M, output=M)
     assert batch_cost.uncached_input == pytest.approx(0.40)
     assert batch_cost.output == pytest.approx(1.60)
 
@@ -332,22 +339,25 @@ def test_gpt_6_astra_is_priced() -> None:
     assert (rate.input, rate.output) == (10.0, 50.0)
 
 
-def test_lookup_flags_a_versioned_snapshot_as_inherited() -> None:
+def test_lookup_treats_a_dated_snapshot_as_a_quiet_suffix_match() -> None:
     rate = TABLE.lookup("claude-opus-4-5-20251101")
     assert rate is not None
-    assert rate.inherited is True
+    assert rate.match_kind == "suffix"
+    assert rate.estimated is False
 
 
-def test_lookup_does_not_flag_an_exact_match_as_inherited() -> None:
+def test_lookup_does_not_flag_an_exact_match_as_estimated() -> None:
     rate = TABLE.lookup("claude-fable-5-1")
     assert rate is not None
-    assert rate.inherited is False
+    assert rate.match_kind == "exact"
+    assert rate.estimated is False
 
 
-def test_lookup_inherited_flag_does_not_mutate_the_shared_rate() -> None:
-    TABLE.lookup("claude-opus-4-5-20251101")
-    stored = next(m for m in TABLE.models if m.match == "claude-opus-4-5")
-    assert stored.inherited is False
+def test_lookup_estimated_flag_does_not_mutate_the_shared_rate() -> None:
+    TABLE.lookup("claude-opus-5-6")
+    stored = next(m for m in TABLE.models if m.match == "claude-opus-5")
+    assert stored.estimated is False
+    assert stored.match_kind is None
 
 
 def test_lookup_is_cached_and_repeated_calls_agree() -> None:
@@ -420,8 +430,9 @@ def test_every_declared_context_window_is_a_positive_int() -> None:
 
 
 def test_every_priced_model_states_a_context_window() -> None:
+    # Rows whose vendor page states no window are listed in test_rates_data.
     missing = [rate.match for rate in TABLE.models if rate.context_window is None]
-    assert missing == []
+    assert set(missing) == CONTEXT_WINDOW_UNSTATED
 
 
 def test_context_windows_match_the_vendors_stated_limits() -> None:
@@ -435,10 +446,11 @@ def test_context_windows_match_the_vendors_stated_limits() -> None:
     assert TABLE.lookup("totally-unknown-model") is None
 
 
-def test_a_long_context_model_id_inherits_its_row_and_window() -> None:
+def test_a_long_context_model_id_is_a_quiet_suffix_of_its_row_and_keeps_the_window() -> None:
     rate = TABLE.lookup("claude-sonnet-5[1m]")
     assert rate is not None
-    assert rate.inherited is True
+    assert rate.match_kind == "suffix"
+    assert rate.estimated is False
     assert rate.context_window == 1_000_000
 
 
@@ -451,7 +463,7 @@ def test_gpt_5_6_sol_matches_the_published_rate() -> None:
 def test_gpt_5_3_codex_has_its_own_row_not_the_gpt_5_price() -> None:
     rate = TABLE.lookup("gpt-5.3-codex")
     assert rate is not None
-    assert rate.match == "gpt-5.3-codex" and not rate.inherited
+    assert rate.match == "gpt-5.3-codex" and rate.match_kind == "exact"
     assert (rate.input, rate.output) == (1.75, 14.0)
 
 
@@ -478,7 +490,7 @@ def test_sibling_openai_families_do_not_inherit_a_shorter_prefix(
     model: str, expected: tuple[float, float]
 ) -> None:
     rate = TABLE.lookup(model)
-    assert rate is not None and not rate.inherited
+    assert rate is not None and not rate.estimated
     assert (rate.input, rate.output) == expected
 
 
@@ -500,23 +512,25 @@ def test_legacy_openai_cache_read_overrides_are_not_the_provider_default(
 ) -> None:
     rate = TABLE.lookup(model)
     assert rate is not None
-    rules = rate.cache_rules or TABLE.rules_for(rate.provider)
+    rules = TABLE.rules_of(rate)
     assert rules.cache_read == pytest.approx(ratio)
     cost = price(model=model, cache_read=M)
     assert cost.cache_read == pytest.approx(rate.input * ratio)
 
 
-def test_legacy_openai_cache_rules_keep_the_providers_own_write_and_batch_multipliers() -> None:
-    # A model's cache_rules fully replaces the provider block rather than merging with it --
-    # each override must repeat the openai provider's own write/batch values, not the
-    # ProviderRules class defaults (cache_write_1h defaults to 2.0, openai's is 1.25).
+def test_legacy_openai_cache_rules_keep_the_providers_own_batch_and_bill_writes_as_input() -> None:
+    # cache_rules merges over the provider block: batch must stay the openai provider's, not
+    # the ProviderRules class default. Pre-5.6 models have no cache-write charge on their model
+    # pages (writes bill as plain input), so the rows pin both write multipliers to 1.0 rather
+    # than inherit the provider's 1.25 (which only applies to gpt-5.6 and later).
     provider_rules = TABLE.rules_for("openai")
     for model in ("gpt-4o", "o3", "gpt-4.1", "o4-mini"):
         rate = TABLE.lookup(model)
         assert rate is not None and rate.cache_rules is not None
-        assert rate.cache_rules.cache_write_5m == provider_rules.cache_write_5m
-        assert rate.cache_rules.cache_write_1h == provider_rules.cache_write_1h
-        assert rate.cache_rules.batch == provider_rules.batch
+        merged = TABLE.rules_of(rate)
+        assert merged.cache_write_5m == 1.0
+        assert merged.cache_write_1h == 1.0
+        assert merged.batch == provider_rules.batch
 
 
 def test_codex_auto_review_is_explicitly_known_unpriced_with_a_note() -> None:
@@ -531,22 +545,34 @@ def test_unpriced_note_is_none_for_a_model_nobody_ever_flagged() -> None:
     assert TABLE.unpriced_note(None) is None
 
 
-def test_inherited_pricing_is_surfaced_on_the_cost_breakdown() -> None:
-    cost, state = price_event(event(model="claude-opus-4-5-20251101", uncached_input=M), TABLE)
+def test_estimated_pricing_is_surfaced_on_the_cost_breakdown() -> None:
+    cost, state = price_event(event(model="claude-opus-5-6", uncached_input=M), TABLE)
     assert state == "priced"
     assert cost is not None
-    assert cost.inherited is True
+    assert cost.estimated is True
+    assert cost.inherited is True  # read-only alias of `estimated`
 
 
-def test_exact_match_pricing_is_not_flagged_inherited() -> None:
-    cost, state = price_event(event(model="claude-opus-5", uncached_input=M), TABLE)
-    assert state == "priced"
-    assert cost is not None
-    assert cost.inherited is False
+def test_exact_and_suffix_pricing_are_not_flagged_estimated() -> None:
+    for model in ("claude-opus-5", "claude-opus-5-20260101", "claude-sonnet-5[1m]"):
+        cost, state = price_event(event(model=model, uncached_input=M), TABLE)
+        assert state == "priced"
+        assert cost is not None
+        assert cost.estimated is False
 
 
-def test_summed_cost_breakdowns_carry_inherited_forward() -> None:
+def test_summed_cost_breakdowns_carry_estimated_forward() -> None:
     plain = CostBreakdown(uncached_input=1.0)
-    flagged = CostBreakdown(uncached_input=1.0, inherited=True)
-    assert (plain + flagged).inherited is True
-    assert (plain + plain).inherited is False
+    flagged = CostBreakdown(uncached_input=1.0, estimated=True)
+    assert (plain + flagged).estimated is True
+    assert (plain + plain).estimated is False
+
+
+def test_the_inherited_json_key_is_still_emitted_next_to_estimated() -> None:
+    dumped = CostBreakdown(estimated=True).model_dump()
+    assert dumped["estimated"] is True and dumped["inherited"] is True
+    assert "tier_unpriced" not in dumped
+    rate = TABLE.lookup("claude-opus-5-6")
+    assert rate is not None
+    row = rate.model_dump()
+    assert row["estimated"] is True and row["inherited"] is True

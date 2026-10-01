@@ -1,64 +1,21 @@
 {
-  "as_of": "2026-09-08",
+  "as_of": "2026-10-01",
   "currency": "USD",
   "units": "price per 1,000,000 tokens",
   "notes": [
-    "Edit this file to correct or extend the price table -- nothing here is fetched at runtime.",
-    "Multipliers apply to the model's base input price.",
-    "Anthropic current-model prices are from the Claude API pricing table cached 2026-06-24.",
-    "OpenAI prices reflect the July 2026 price cut; verify against platform.openai.com/pricing.",
-    "Pre-2025 model rates are best-effort historical values -- check them before trusting old totals.",
-    "claude-fable-5 and claude-mythos-5 copy claude-opus-5's fast-tier price as a placeholder -- unverified, check before trusting totals for these two. claude-fable-5-1 and claude-mythos-5-1 are separately confirmed at the same $10/$50 rate against Anthropic's own announcement (see below), which does not itself confirm the un-suffixed 5-tier guess.",
-    "google, xai, deepseek, alibaba, moonshot, zhipu and mistral base input/output prices confirmed 2026-09-07 against each vendor's own pricing page.",
-    "amazon (Nova) and minimax (international USD) prices are cross-corroborated from secondary sources, not read directly off the official page -- verify before trusting totals.",
-    "nvidia and meta have no published per-token API price (licensing/enterprise or open-weights-only) -- not modeled here; route those through a third-party host's own rate if you need them priced.",
-    "openrouter is a pass-through with no per-token markup; bedrock and vertex are at parity with the direct API for the same model; azure is its own rate card, not assumed at parity.",
-    "Cache and batch multipliers for all twelve providers were researched and set explicitly 2026-09-08 -- a provider absent from `providers` no longer silently inherits anthropic-shaped cache economics. Per-provider citations follow.",
-    "anthropic cache multipliers (read 0.1, write 5m 1.25, write 1h 2.0, batch 0.5) reconfirmed 2026-09-08 against docs.anthropic.com/en/docs/build-with-claude/prompt-caching and claude.com/pricing.",
-    "openai cache multipliers (read 0.1, write 5m/1h 1.25, batch 0.5) reconfirmed 2026-09-08 against developers.openai.com/api/docs/guides/prompt-caching and the gpt-6-astra model page. The 1.25x write premium is real but only applies to gpt-5.6-and-later models -- gpt-5, gpt-5-codex, gpt-5.2-codex, gpt-5-mini, gpt-5-nano, gpt-4.1, gpt-4o, o3 and o4-mini have no cache-write charge per their own model pages (developers.openai.com/api/docs/models/gpt-5, /gpt-5-codex, /gpt-5.2-codex), so this provider-wide rate overstates their cache-write cost slightly; ProviderRules has no per-model-generation override.",
-    "google cache read corrected 2026-09-08 from 0.25x to 0.1x against ai.google.dev/gemini-api/docs/pricing -- Gemini 2.5 Pro, 2.5 Flash and the 3.x Flash line all show cached input at exactly 10% of standard input. Gemini bills cache *writes* as a separate per-token-per-hour storage fee (e.g. $4.50/M tokens/hour for 2.5 Pro) that this app's per-token multiplier cannot express -- cache_write_5m/1h are pinned to 1.0 (written tokens bill like ordinary input, no per-token creation premium); the untracked hourly storage cost is the honest gap this leaves. Do not read cache_write=1.0 as 'writes are free'.",
-    "deepseek cache read set to 0.033x 2026-09-08 against api-docs.deepseek.com/quick_start/pricing/ (deepseek-v4-pro $0.022 cache-hit / $0.66 miss = 0.033x, deepseek-v4-flash $0.007/$0.22 = 0.032x). The dead per-model `cache_hit` variants that used to encode this are removed now that it's a provider rule. DeepSeek has no batch API at all per the same page -- batch is pinned to 1.0, correcting the previous unsupported 0.5 guess. Cache writes have no separate charge (pinned to 1.0).",
-    "moonshot cache read set to 0.2x 2026-09-08 against platform.kimi.ai/docs/pricing/chat-k27-code and chat-k26 (kimi-k2.7-code $0.19/$0.95=0.2x, kimi-k2.6 $0.16/$0.95=0.168x). kimi-k3 actually gets a better 0.1x ($0.30/$3.00 per platform.kimi.ai/docs/pricing/chat-k3) not captured by this flat provider rate -- 0.2x was chosen deliberately as the more conservative (less generous) figure so k3's real savings are never overstated. Batch confirmed at 0.6x against platform.kimi.ai/docs/pricing/batch, but that page only lists kimi-k2.7-code and kimi-k2.6 -- k3 has no published batch rate and inherits this same 0.6x as a best-available approximation. Dead per-model `cache_hit` variants removed now that it's a provider rule. Cache writes have no separate charge.",
-    "xai cache read set to 0.25x 2026-09-08 against docs.x.ai/developers/pricing (grok-4.6 cached $0.50 / input $2.00 = 0.25x); grok-4.5 (0.15x) and grok-4.3/4.20 (0.16x) actually get better rates not captured by this flat figure -- chosen deliberately conservative. Batch pinned to 1.0: xAI's docs list a real 20% batch discount, but only for grok-4.3 and the grok-4.20 variants, not grok-4.5, grok-4.6 or grok-build, so no single provider-wide multiplier can be honest for all five -- 1.0 avoids reporting a discount most requests never get. Cache writes have no separate charge.",
-    "alibaba cache rules set 2026-09-08 against alibabacloud.com/help/en/model-studio/context-cache. This app models Alibaba's *implicit* (automatic) caching, since that's what usage logs actually reflect -- cache_read 0.2x, no write charge (cache_write pinned to 1.0). Alibaba's separate *explicit* developer-managed cache API (write 1.25x, read 0.1x) is not modeled since nothing in this app issues explicit cache-control calls. Batch set to 0.5x per the same research (e.g. Qwen3-Max batch halves both input and output).",
-    "zhipu cache read set to 0.2x 2026-09-08 against docs.z.ai/guides/overview/pricing (glm-5.3/5.2 $0.26/$1.40=0.186x, glm-4.7/4.5 $0.11/$0.60=0.183x, glm-4.5-air $0.03/$0.20=0.15x) -- 0.2x is the conservative round figure so no GLM model's real savings are overstated. Cache write is currently listed as 'limited-time free' -- pinned to 1.0, but that's a promotion, not a permanent rate; recheck before trusting long-run totals. No published batch API/discount was found for Zhipu -- batch pinned to 1.0.",
-    "mistral cache rules set 2026-09-08 against docs.mistral.ai/studio-api/conversations/advanced/prompt-caching and mistral.ai/pricing. Contrary to this file's earlier assumption that Mistral has no caching, Mistral does cache prompts at up to 90% off (cache_read 0.1x), with no write premium documented (cache_write pinned to 1.0). Batch confirmed at 0.5x -- checks out exactly against this file's own mistral-large-3 and mistral-small-4 input prices (published batch rates of $0.25/M and $0.075/M are precisely half of $0.50/M and $0.15/M).",
-    "minimax cache rules set 2026-09-08, secondary-sourced like the rest of this provider's rows (api.minimax.io pricing was not reachable directly at research time) -- verify before trusting totals. minimax-m2 and minimax-m2.7 show cache_read 0.1x-0.2x and a real cache_write premium of 1.25x; minimax-m3 (current flagship) shows cache_read 0.2x with no write premium listed. The provider rule uses the more conservative cache_read 0.2x and keeps the 1.25x write premium since it's real for two of the three minimax models in this file, at the cost of overstating m3's own cache-write cost. Batch set to 0.5x (secondary-sourced).",
-    "amazon (Nova) cache_read set to 0.25x 2026-09-08, corroborated by multiple secondary sources describing Nova's 75%-off cache-read discount. Nova's cache-*write* premium is inconsistently reported across secondary sources (one says free, another gives a much larger multiple) -- this file uses 1.25x for consistency with how every other Bedrock-hosted model (Anthropic, OpenAI GPT-5.6+) prices a cache write on the same platform; verify directly against a Nova-heavy account before trusting cache-write totals specifically. Batch confirmed at 0.5x.",
-    "The `long_context_200k` variants formerly on both Gemini Pro entries and all five Grok models are removed. xAI and Google do genuinely charge more past a long-context threshold (Grok: 200k tokens, 2x; Gemini: 200k tokens, roughly 2x; GPT-6 Astra: 272k tokens, 2x input/cache and 1.5x output), but no source parser in this app reports prompt length, so `for_tier()` could never select them -- they were dead config. The base (short-context) price is what this app bills for every event it can see; recheck this note if a future source starts reporting context length.",
-    "gpt-6-astra added 2026-09-08 from developers.openai.com/api/docs/models/gpt-6-astra: $10/$50 input/output, cached input $1 (0.1x, matches the openai provider rule), cache write $12.50 (1.25x, matches the openai provider rule), batch/flex at 50% off (matches the openai provider rule). Its >272k-token tier and 2x 'Fast mode' are not modeled, for the same reason the long_context_200k variants were removed above.",
-    "gpt-5.2-codex added 2026-09-08 from developers.openai.com/api/docs/models/gpt-5.2-codex ($1.75/$14, cached $0.175) as an explicit row. Without it, the model id 'gpt-5.2-codex' silently matched the shorter 'gpt-5' prefix (input $1.25/output $10) instead of its own real price -- a genuine prefix-collision bug, distinct from and priced higher than gpt-5-codex's own $1.25/$10.",
-    "gpt-5.6-sol corrected 2026-09-10 to $4.00/$0.40/$20.00 (input/cached/output) against developers.openai.com/api/docs/pricing -- the previous $5.00/$30.00 overbilled input by 25% and output by 50%. Cached ratio is the standard 0.1x, no override needed.",
-    "Fourteen more OpenAI ids added 2026-09-10, each read directly off developers.openai.com/api/docs/pricing and, for context_window, off that model's own page at developers.openai.com/api/docs/models/<id> (fetched 2026-09-10). Every one previously prefix-matched a shorter sibling row and was silently mispriced by -96% to +1900% (e.g. gpt-5.3-codex, the only Codex model surviving in this app's own real logs, billed at the bare gpt-5 rate, 29% low). gpt-5.3-codex 1.75/0.175/14 (context: page states a 400k context window with a 272k maximum-input figure separately -- the smaller max-input figure is used, matching this file's existing gpt-5-codex/gpt-5.2-codex convention). gpt-5.5 5/0.50/30, context 1,050,000 (no separate max-input given, so the stated context window is used directly, matching the gpt-6-astra/gpt-5.6-family convention). gpt-5.5-pro 30/-/180, context 1,050,000; cached input is not listed on the pricing page for the two -pro rows (dash in the comparison table) so no cache_rules override is added -- pro-tier caching support is unconfirmed. gpt-5.4 2.50/0.25/15, context 1,050,000. gpt-5.4-mini 0.75/0.075/4.50, context 400,000. gpt-5.4-nano 0.20/0.02/1.25, context 400,000. gpt-5.4-pro 30/-/180, context 1,050,000 (same caching caveat as gpt-5.5-pro). gpt-5.2 1.75/0.175/14, context 400,000. gpt-5.1 1.25/0.125/10, context 400,000. gpt-5-pro 15/-/120, context 400,000 (same caching caveat). o3-mini 1.10/0.55/4.40, context 200,000 -- cached ratio is 0.5x, not the 0.1x provider default, so cache_rules overrides cache_read to 0.5 (write/batch copied from the openai provider block unchanged so they are not silently reset to ProviderRules' own defaults, since a model's cache_rules fully replaces the provider block rather than merging with it). o3-pro 20/-/80, context 200,000; developers.openai.com/api/docs/models/o3-pro states explicitly 'this model does not support prompt caching' (dash in the cache column) -- no cache_rules override, and no cached tokens are expected from a real o3-pro log. gpt-4.1-mini 0.40/0.10/1.60, context 1,047,576 (confirmed on the model's own page) -- cached ratio 0.25x, cache_rules override added. gpt-4.1-nano 0.10/0.025/0.40, context 1,047,576 -- cached ratio 0.25x, cache_rules override added. gpt-4o-mini 0.15/0.075/0.60, context 128,000 -- cached ratio 0.5x, cache_rules override added.",
-    "Cache-read overrides added 2026-09-10 to the four existing legacy OpenAI rows whose real cached ratio is not the provider's 0.1x default, verified against developers.openai.com/api/docs/pricing: gpt-4o 1.25/2.50=0.5x, o3 0.50/2.00=0.25x, gpt-4.1 0.50/2.00=0.25x, o4-mini 0.275/1.10=0.25x. Each cache_rules block also copies the openai provider's own cache_write_5m/cache_write_1h/batch values unchanged (1.25/1.25/0.5) rather than the ModelRate.cache_rules default cache_write_1h of 2.0, since a model's cache_rules fully replaces the provider block instead of merging with it -- omitting them would have silently doubled these four models' cache-write price. o1 is not modeled: OpenAI's docs put its cached ratio at 0.5x like gpt-4o, but this app has no source that ever emits an 'o1' model id, so no row was added for it.",
-    "codex-auto-review is real (168.4M tokens observed across 226 files on this machine's own Codex logs) but unpriced: it does not appear on developers.openai.com/api/docs/pricing or any developers.openai.com/api/docs/models/<id> page as of 2026-09-10, and third-party cost-estimator sites disagree with each other by more than 2x ($0.88-$2.50 input, $7-$15 output) with no indication which, if any, is the real OpenAI rate -- none of those is trustworthy enough to enter as a number. It is listed in `unpriced_models` below (distinct from the `models` list) purely so the app can say *why* it has no cost, rather than leaving it looking like an oversight; update this entry the moment OpenAI publishes a real rate.",
-    "claude-fable-5-1 and claude-mythos-5-1 added 2026-09-08 from anthropic.com/claude-fable-and-mythos-5-1 and platform.claude.com/docs/en/about-claude/pricing, cross-checked against AWS Bedrock's own supported-model table at docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html: $10/$50 input/output, matching the placeholder guess already in this file for the un-suffixed claude-fable-5/claude-mythos-5 (itself still unverified, see above). Without these explicit rows, 'claude-fable-5-1' and 'claude-mythos-5-1' would silently inherit the shorter 'claude-fable-5'/'claude-mythos-5' prefixes -- another real prefix collision. Anthropic's own pricing page states Fable/Mythos 5.1 cache reads are billed at 0.025x the base input price ($0.25/MTok), not the provider-wide anthropic 0.1x every other current Claude model uses -- this is now modeled with an explicit per-model cache_rules override on these two rows rather than left as an unmodeled overestimate.",
-    "context_window added 2026-09-08 and populated only where the vendor's own documentation states the figure -- a model without it leaves context occupancy unavailable rather than guessing, which is the honest outcome the dashboard is built to render. Anthropic: 1,000,000 for claude-fable-5-1, claude-mythos-5-1, claude-fable-5, claude-mythos-5, claude-opus-5, claude-opus-4-8, claude-opus-4-7, claude-opus-4-6, claude-sonnet-5 and claude-sonnet-4-6; 200,000 for claude-haiku-4-5 and every pre-4.6 Claude row (opus 4.5/4.1/4, 3-opus, sonnet 4.5/4, 3.7-sonnet, 3.5-sonnet, 3.5-haiku, 3-haiku), per platform.claude.com/docs/en/about-claude/models and the Models API max_input_tokens field. Claude Sonnet 4 and 4.5 also offer a 1M-token beta window; 200,000 is used here because that is what an unflagged request gets. A Claude Code model id ending [1m] never reads this column -- the adapter infers 1,000,000 from the suffix, which is the stronger signal.",
-    "context_window is the largest input a request may carry, used only to show how full a model's context was. Where a vendor states a total context and a smaller maximum input separately (OpenAI, Alibaba), the maximum input is used, since occupancy is measured in input tokens. Where a vendor publishes one combined figure (xAI, Zhipu, Mistral, Amazon, Google, Anthropic), that figure is used and slightly overstates the room available. Vendors writing shorthand such as 256k or 300k are read as decimal; MiniMax, DeepSeek, Moonshot and Google publish exact integers. Checked against each vendor's own model pages on 2026-09-08.",
-    "Two context windows needed a judgement call. Alibaba documents qwen-max twice: its own page pins the bare alias to the 2025-01-25 snapshot at 30,720 maximum input, while the model overview lists 128k for the family, so the model's own page is used. xAI documents grok-build-0.1 at 256,000 while the separate grok-build-latest alias points at Grok 4.5 at 500,000; this row is the former."
+    "2026-10-01: every row carries `source` (vendor page), `verified` (date the page was read; null = vendor page no longer lists the model, historical price kept), `status` and, where the vendor states it, `context_window`. Reasoning/thinking tokens are billed as output. Nothing here is fetched at runtime.",
+    "2026-10-01 Anthropic (platform.claude.com pricing, models, deprecations): claude-opus-5-5 $4/$20 (cache read $0.20, 5m write $5, 1h write $8) and claude-sonnet-5-5 $2/$10 added; Opus 5.5 fast $8/$40, Opus 5 and 4.8 fast $10/$50. Fable/Mythos 5 confirmed $10/$50, 5.1 cache read $0.25. No long-context premium. Fast-variant cache prices are arithmetic (stacked multipliers). claude-3-7-sonnet, 3-5-sonnet, 3-opus and 3-haiku are retired and off the pricing page (verified null, price historical).",
+    "2026-10-01 OpenAI (developers.openai.com pricing + models): GPT-5.6 Sol promotional $4/$20 from 2026-08-21 through at least 2026-11-21, post-promo rate unannounced. Pre-cut periods (Sol $5/$30, Terra $2.50/$15, Luna $1/$6) come from developer-community announcements and hold base and cached prices only. >272K input bills the whole request at 2x input and 1.5x output. Flex = Batch rates; Fast mode stored as priority (plus fast on GPT-6). Pre-5.6 rows have no cache-write price (writes bill as input). codex-auto-review and gpt-5.3-codex-spark are unpriced.",
+    "2026-10-01 Google (ai.google.dev pricing): Gemini 3.6, 3.7 and 3.8 Flash introductory $0.75/$0.075/$3.75 through 2026-12-31, then $1.50/$0.15/$7.50 from 2027-01-01. >200K prompts bill the whole request at the higher rate (3.1 Pro, 2.5 Pro). Gemini 4 Argon is a watchlist entry: no API id or paid access yet (announced $2/$10 intro, $4/$20 after). Not modelled: cache storage per token-hour, audio rates.",
+    "2026-10-01 xAI (docs.x.ai): >=200K prompt tokens bill the whole request at the higher rate; priority 2x; batch -20% only for grok-4.3 and grok-4.20; grok-4.7 added at $2/$0.50/$6; grok-build is now grok-build-0.1. US regional endpoint +10% not modelled.",
+    "2026-10-01 Meta (dev.meta.ai pricing): Muse Spark now has a paid API (standard $1.25/$0.15/$4.25, contributor $0.10/$0.002/$0.20); the earlier note that Meta has no per-token price is withdrawn. TypeSafe (docs.typesafe.ai): Jev $0.042/M input, output free, 64k per request, no caching or batch.",
+    "2026-10-01 DeepSeek (api-docs.deepseek.com): peak 01:00-04:00 and 06:00-10:00 UTC Mon-Fri at higher rates since 2026-08-16; Chinese public holidays are not modelled. V4.1 Flash released 2026-09-10; deepseek-v4-flash names retired but billed at Flash price. No cache-write charge, no batch API.",
+    "2026-10-01 Alibaba (alibabacloud.com Model Studio, international/Singapore prices): tiers apply to the whole request by input tokens; implicit cache hit billed at a ratio (no absolute figures published). Explicit cache and the Qwen thinking-output split are not modelled. qwen3.8-max-prime is China-only (unpriced).",
+    "2026-10-01 Moonshot (platform.kimi.ai): kimi-k3 has cache writes (5m $3.00, 1h $6.00) and cache read 0.1x; K2.x have no write charge; batch 0.6x listed only for k2.7-code and k2.6. Zhipu (docs.z.ai): GLM cache storage is limited-time free (promotion, recheck); no batch API.",
+    "2026-10-01 Mistral (docs.mistral.ai): rows re-keyed to the real API ids (e.g. mistral-large-2512) with *-latest aliases; cache read 10% of input, no write charge, batch 50%. MiniMax (platform.minimax.io): M3 prices are a permanent 50% off list, >512K input is its own tier, priority 1.5x, no batch. Amazon Nova (AWS Price List API, us-east-1): cache read 0.25x, cache write free, batch 0.5x; Bedrock ids match as nova-*, non-US regions cost more and are not modelled.",
+    "Not modelled anywhere: Anthropic inference_geo +10% and Bedrock/Vertex regional endpoint uplifts, OpenAI regional/FedRAMP +10%, web-search and tool fees. openrouter is a pass-through; bedrock and vertex follow the direct API rate; azure is its own rate card."
   ],
-  "prefixes": [
-    {
-      "prefix": "us.anthropic.",
-      "provider": "bedrock"
-    },
-    {
-      "prefix": "eu.anthropic.",
-      "provider": "bedrock"
-    },
-    {
-      "prefix": "openrouter/",
-      "provider": "openrouter"
-    },
-    {
-      "prefix": "anthropic/",
-      "provider": null
-    },
-    {
-      "prefix": "openai/",
-      "provider": null
-    }
-  ],
+  "prefixes": [],
   "providers": {
     "anthropic": {
       "cache_read": 0.1,
@@ -78,20 +35,26 @@
       "cache_write_1h": 1.0,
       "batch": 0.5
     },
-    "deepseek": {
-      "cache_read": 0.033,
+    "xai": {
+      "cache_read": 0.25,
       "cache_write_5m": 1.0,
       "cache_write_1h": 1.0,
       "batch": 1.0
     },
-    "moonshot": {
-      "cache_read": 0.2,
+    "meta": {
+      "cache_read": 0.12,
       "cache_write_5m": 1.0,
       "cache_write_1h": 1.0,
-      "batch": 0.6
+      "batch": 1.0
     },
-    "xai": {
-      "cache_read": 0.25,
+    "typesafe": {
+      "cache_read": 1.0,
+      "cache_write_5m": 1.0,
+      "cache_write_1h": 1.0,
+      "batch": 1.0
+    },
+    "deepseek": {
+      "cache_read": 0.03,
       "cache_write_5m": 1.0,
       "cache_write_1h": 1.0,
       "batch": 1.0
@@ -102,8 +65,14 @@
       "cache_write_1h": 1.0,
       "batch": 0.5
     },
-    "zhipu": {
+    "moonshot": {
       "cache_read": 0.2,
+      "cache_write_5m": 1.0,
+      "cache_write_1h": 1.0,
+      "batch": 0.6
+    },
+    "zhipu": {
+      "cache_read": 0.18,
       "cache_write_5m": 1.0,
       "cache_write_1h": 1.0,
       "batch": 1.0
@@ -118,12 +87,12 @@
       "cache_read": 0.2,
       "cache_write_5m": 1.25,
       "cache_write_1h": 1.25,
-      "batch": 0.5
+      "batch": 1.0
     },
     "amazon": {
       "cache_read": 0.25,
-      "cache_write_5m": 1.25,
-      "cache_write_1h": 1.25,
+      "cache_write_5m": 0.0,
+      "cache_write_1h": 0.0,
       "batch": 0.5
     },
     "local": {
@@ -135,176 +104,351 @@
       "match": "claude-fable-5-1",
       "provider": "anthropic",
       "display": "Claude Fable 5.1",
-      "input": 10.0,
-      "output": 50.0,
-      "context_window": 1000000,
+      "input": 10,
+      "output": 50,
+      "cache_read": 0.25,
+      "cache_write_5m": 12.5,
+      "cache_write_1h": 20,
       "cache_rules": {
         "cache_read": 0.025,
         "cache_write_5m": 1.25,
         "cache_write_1h": 2.0,
         "batch": 0.5
-      }
+      },
+      "released": "2026-09-01",
+      "context_window": 1000000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "claude-mythos-5-1",
       "provider": "anthropic",
       "display": "Claude Mythos 5.1",
-      "input": 10.0,
-      "output": 50.0,
-      "context_window": 1000000,
+      "input": 10,
+      "output": 50,
+      "cache_read": 0.25,
+      "cache_write_5m": 12.5,
+      "cache_write_1h": 20,
       "cache_rules": {
         "cache_read": 0.025,
         "cache_write_5m": 1.25,
         "cache_write_1h": 2.0,
         "batch": 0.5
-      }
+      },
+      "released": "2026-09-01",
+      "note": "Limited availability (Project Glasswing, invite only); shares Fable 5.1 specs and pricing.",
+      "context_window": 1000000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "claude-opus-5-5",
+      "provider": "anthropic",
+      "display": "Claude Opus 5.5",
+      "input": 4,
+      "output": 20,
+      "cache_read": 0.2,
+      "cache_write_5m": 5,
+      "cache_write_1h": 8,
+      "cache_rules": {
+        "cache_read": 0.05,
+        "cache_write_5m": 1.25,
+        "cache_write_1h": 2.0,
+        "batch": 0.5
+      },
+      "variants": {
+        "fast": {
+          "input": 8,
+          "output": 40,
+          "cache_read": 0.4,
+          "cache_write_5m": 10,
+          "cache_write_1h": 16
+        }
+      },
+      "note": "Cache hits 0.05x base input. Fast variant cache prices are derived (multipliers stack), not printed on the vendor page.",
+      "context_window": 1000000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "claude-sonnet-5-5",
+      "provider": "anthropic",
+      "display": "Claude Sonnet 5.5",
+      "input": 2,
+      "output": 10,
+      "cache_read": 0.2,
+      "cache_write_5m": 2.5,
+      "cache_write_1h": 4,
+      "context_window": 1000000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "claude-fable-5",
       "provider": "anthropic",
       "display": "Claude Fable 5",
-      "input": 10.0,
-      "output": 50.0,
-      "context_window": 1000000
+      "input": 10,
+      "output": 50,
+      "cache_read": 1.0,
+      "cache_write_5m": 12.5,
+      "cache_write_1h": 20,
+      "released": "2026-06-09",
+      "note": "Legacy; cache read 0.1x ($1/MTok), confirmed on the pricing page (no longer a placeholder).",
+      "context_window": 1000000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "claude-mythos-5",
       "provider": "anthropic",
       "display": "Claude Mythos 5",
-      "input": 10.0,
-      "output": 50.0,
-      "context_window": 1000000
+      "input": 10,
+      "output": 50,
+      "cache_read": 1.0,
+      "cache_write_5m": 12.5,
+      "cache_write_1h": 20,
+      "note": "Limited availability (Project Glasswing, invite only); shares Fable 5 specs and pricing. Cache read $1/MTok.",
+      "context_window": 1000000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "claude-opus-5",
       "provider": "anthropic",
       "display": "Claude Opus 5",
-      "input": 5.0,
-      "output": 25.0,
-      "context_window": 1000000,
+      "input": 5,
+      "output": 25,
+      "cache_read": 0.5,
+      "cache_write_5m": 6.25,
+      "cache_write_1h": 10,
       "variants": {
         "fast": {
-          "input": 10.0,
-          "output": 50.0
+          "input": 10,
+          "output": 50,
+          "cache_read": 1.0,
+          "cache_write_5m": 12.5,
+          "cache_write_1h": 20
         }
-      }
-    },
-    {
-      "match": "claude-opus-4-8",
-      "provider": "anthropic",
-      "display": "Claude Opus 4.8",
-      "input": 5.0,
-      "output": 25.0,
+      },
+      "released": "2026-07-24",
+      "note": "Fast variant cache prices derived (multipliers stack).",
       "context_window": 1000000,
-      "variants": {
-        "fast": {
-          "input": 10.0,
-          "output": 50.0
-        }
-      }
-    },
-    {
-      "match": "claude-opus-4-7",
-      "provider": "anthropic",
-      "display": "Claude Opus 4.7",
-      "input": 5.0,
-      "output": 25.0,
-      "context_window": 1000000
-    },
-    {
-      "match": "claude-opus-4-6",
-      "provider": "anthropic",
-      "display": "Claude Opus 4.6",
-      "input": 5.0,
-      "output": 25.0,
-      "context_window": 1000000
-    },
-    {
-      "match": "claude-opus-4-5",
-      "provider": "anthropic",
-      "display": "Claude Opus 4.5",
-      "input": 5.0,
-      "output": 25.0,
-      "context_window": 200000
-    },
-    {
-      "match": "claude-opus-4-1",
-      "provider": "anthropic",
-      "display": "Claude Opus 4.1",
-      "input": 15.0,
-      "output": 75.0,
-      "context_window": 200000
-    },
-    {
-      "match": "claude-opus-4",
-      "provider": "anthropic",
-      "display": "Claude Opus 4",
-      "input": 15.0,
-      "output": 75.0,
-      "context_window": 200000
-    },
-    {
-      "match": "claude-3-opus",
-      "provider": "anthropic",
-      "display": "Claude 3 Opus",
-      "input": 15.0,
-      "output": 75.0,
-      "context_window": 200000
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "claude-sonnet-5",
       "provider": "anthropic",
       "display": "Claude Sonnet 5",
-      "input": 2.0,
-      "output": 10.0,
-      "context_window": 1000000
+      "input": 2,
+      "output": 10,
+      "cache_read": 0.2,
+      "cache_write_5m": 2.5,
+      "cache_write_1h": 4,
+      "released": "2026-06-30",
+      "note": "$2/$10 intro pricing became permanent (scheduled $3/$15 increase on 2026-09-01 cancelled), per pricing page footnote 3.",
+      "context_window": 1000000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "claude-opus-4-8",
+      "provider": "anthropic",
+      "display": "Claude Opus 4.8",
+      "input": 5,
+      "output": 25,
+      "cache_read": 0.5,
+      "cache_write_5m": 6.25,
+      "cache_write_1h": 10,
+      "variants": {
+        "fast": {
+          "input": 10,
+          "output": 50,
+          "cache_read": 1.0,
+          "cache_write_5m": 12.5,
+          "cache_write_1h": 20
+        }
+      },
+      "released": "2026-05-28",
+      "note": "Fast variant cache prices derived (multipliers stack).",
+      "context_window": 1000000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "claude-opus-4-7",
+      "provider": "anthropic",
+      "display": "Claude Opus 4.7",
+      "input": 5,
+      "output": 25,
+      "cache_read": 0.5,
+      "cache_write_5m": 6.25,
+      "cache_write_1h": 10,
+      "released": "2026-04-16",
+      "note": "No fast mode: speed:fast on this model errors.",
+      "context_window": 1000000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "claude-opus-4-6",
+      "provider": "anthropic",
+      "display": "Claude Opus 4.6",
+      "input": 5,
+      "output": 25,
+      "cache_read": 0.5,
+      "cache_write_5m": 6.25,
+      "cache_write_1h": 10,
+      "released": "2026-02-05",
+      "note": "speed:fast silently runs at standard speed and bills standard rates.",
+      "context_window": 1000000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "claude-sonnet-4-6",
       "provider": "anthropic",
       "display": "Claude Sonnet 4.6",
-      "input": 3.0,
-      "output": 15.0,
-      "context_window": 1000000
+      "input": 3,
+      "output": 15,
+      "cache_read": 0.3,
+      "cache_write_5m": 3.75,
+      "cache_write_1h": 6,
+      "released": "2026-02-17",
+      "context_window": 1000000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "claude-opus-4-5",
+      "provider": "anthropic",
+      "display": "Claude Opus 4.5",
+      "input": 5,
+      "output": 25,
+      "cache_read": 0.5,
+      "cache_write_5m": 6.25,
+      "cache_write_1h": 10,
+      "released": "2025-11-24",
+      "note": "Active (legacy); retirement not sooner than 2026-11-24 per deprecations page.",
+      "context_window": 200000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "claude-sonnet-4-5",
       "provider": "anthropic",
       "display": "Claude Sonnet 4.5",
-      "input": 3.0,
-      "output": 15.0,
-      "context_window": 200000
+      "input": 3,
+      "output": 15,
+      "cache_read": 0.3,
+      "cache_write_5m": 3.75,
+      "cache_write_1h": 6,
+      "note": "DEPRECATED 2026-09-30, retires 2026-11-30 (replacement claude-sonnet-5-5), per deprecations page. Still billable today. Context 200,000 is the repo's existing value (unflagged request); not restated on the pages read this session.",
+      "context_window": 200000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "claude-haiku-4-5",
+      "provider": "anthropic",
+      "display": "Claude Haiku 4.5",
+      "input": 1,
+      "output": 5,
+      "cache_read": 0.1,
+      "cache_write_5m": 1.25,
+      "cache_write_1h": 2,
+      "note": "Retirement not sooner than 2026-10-15 (deprecations page and models overview). API ID claude-haiku-4-5-20251001, alias claude-haiku-4-5.",
+      "context_window": 200000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "claude-opus-4-1",
+      "provider": "anthropic",
+      "display": "Claude Opus 4.1",
+      "input": 15,
+      "output": 75,
+      "cache_read": 1.5,
+      "cache_write_5m": 18.75,
+      "cache_write_1h": 30,
+      "status": "retired",
+      "retired": "2026-08-05",
+      "note": "Retired on the Claude API 2026-08-05 (deprecations page); still billable on Bedrock/Google Cloud. Price from pricing page. Context 200,000 is the repo's existing value (not restated on pages read).",
+      "context_window": 200000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01"
+    },
+    {
+      "match": "claude-opus-4",
+      "provider": "anthropic",
+      "display": "Claude Opus 4",
+      "input": 15,
+      "output": 75,
+      "cache_read": 1.5,
+      "cache_write_5m": 18.75,
+      "cache_write_1h": 30,
+      "status": "retired",
+      "retired": "2026-06-15",
+      "note": "Retired on the Claude API 2026-06-15; still on Google Cloud. Context 200,000 is the repo's existing value.",
+      "context_window": 200000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01"
     },
     {
       "match": "claude-sonnet-4",
       "provider": "anthropic",
       "display": "Claude Sonnet 4",
-      "input": 3.0,
-      "output": 15.0,
-      "context_window": 200000
+      "input": 3,
+      "output": 15,
+      "cache_read": 0.3,
+      "cache_write_5m": 3.75,
+      "cache_write_1h": 6,
+      "status": "retired",
+      "retired": "2026-06-15",
+      "note": "Retired on the Claude API 2026-06-15; still on Bedrock/Google Cloud. Context 200,000 is the repo's existing value (a 1M beta also existed; not restated).",
+      "context_window": 200000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01"
     },
     {
       "match": "claude-3-7-sonnet",
       "provider": "anthropic",
       "display": "Claude 3.7 Sonnet",
-      "input": 3.0,
-      "output": 15.0,
+      "input": 3,
+      "output": 15,
+      "status": "retired",
+      "retired": "2026-02-19",
+      "verified": null,
+      "source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+      "note": "Retired 2026-02-19 (deprecations page). No longer on the pricing page: historical price kept from rates.json, price NOT re-verified. Cache prices derived from provider multipliers.",
       "context_window": 200000
     },
     {
       "match": "claude-3-5-sonnet",
       "provider": "anthropic",
       "display": "Claude 3.5 Sonnet",
-      "input": 3.0,
-      "output": 15.0,
-      "context_window": 200000
-    },
-    {
-      "match": "claude-haiku-4-5",
-      "provider": "anthropic",
-      "display": "Claude Haiku 4.5",
-      "input": 1.0,
-      "output": 5.0,
+      "input": 3,
+      "output": 15,
+      "status": "retired",
+      "retired": "2025-10-28",
+      "verified": null,
+      "source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+      "note": "Retired 2025-10-28 (deprecations page; both -20240620 and -20241022). Historical price kept, NOT re-verified; cache derived.",
       "context_window": 200000
     },
     {
@@ -312,7 +456,28 @@
       "provider": "anthropic",
       "display": "Claude 3.5 Haiku",
       "input": 0.8,
-      "output": 4.0,
+      "output": 4,
+      "cache_read": 0.08,
+      "cache_write_5m": 1.0,
+      "cache_write_1h": 1.6,
+      "status": "retired",
+      "retired": "2026-02-19",
+      "note": "Retired on the Claude API 2026-02-19; still on Bedrock/Google Cloud. Price from pricing page. Context 200,000 is the repo's existing value.",
+      "context_window": 200000,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified": "2026-10-01"
+    },
+    {
+      "match": "claude-3-opus",
+      "provider": "anthropic",
+      "display": "Claude 3 Opus",
+      "input": 15,
+      "output": 75,
+      "status": "retired",
+      "retired": "2026-01-05",
+      "verified": null,
+      "source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+      "note": "Retired 2026-01-05 (deprecations page). No longer on the pricing page: historical price kept, NOT re-verified; cache derived.",
       "context_window": 200000
     },
     {
@@ -321,31 +486,461 @@
       "display": "Claude 3 Haiku",
       "input": 0.25,
       "output": 1.25,
+      "status": "retired",
+      "retired": "2026-04-20",
+      "verified": null,
+      "source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+      "note": "Retired 2026-04-20 (deprecations page). No longer on the pricing page: historical price kept, NOT re-verified; cache derived.",
       "context_window": 200000
+    },
+    {
+      "match": "gpt-6.1-sol",
+      "provider": "openai",
+      "display": "GPT-6.1 Sol",
+      "input": 2,
+      "output": 10,
+      "cache_read": 0.1,
+      "cache_write_5m": 2.5,
+      "cache_write_1h": 2.5,
+      "variants": {
+        "flex": {
+          "input": 1,
+          "output": 5,
+          "cache_read": 0.05,
+          "cache_write_5m": 1.25,
+          "cache_write_1h": 1.25
+        },
+        "priority": {
+          "input": 4,
+          "output": 20,
+          "cache_read": 0.2,
+          "cache_write_5m": 5,
+          "cache_write_1h": 5
+        },
+        "fast": {
+          "input": 4,
+          "output": 20,
+          "cache_read": 0.2,
+          "cache_write_5m": 5,
+          "cache_write_1h": 5
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 272001,
+          "input": 4,
+          "output": 15,
+          "cache_read": 0.2,
+          "cache_write_5m": 5,
+          "cache_write_1h": 5,
+          "variants": {
+            "flex": {
+              "input": 2,
+              "output": 7.5,
+              "cache_read": 0.1,
+              "cache_write_5m": 2.5,
+              "cache_write_1h": 2.5
+            },
+            "priority": {
+              "input": 8,
+              "output": 30,
+              "cache_read": 0.4,
+              "cache_write_5m": 10,
+              "cache_write_1h": 10
+            },
+            "fast": {
+              "input": 8,
+              "output": 30,
+              "cache_read": 0.4,
+              "cache_write_5m": 10,
+              "cache_write_1h": 10
+            }
+          }
+        }
+      ],
+      "context_window": 922000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "gpt-6-sol",
+      "provider": "openai",
+      "display": "GPT-6 Sol",
+      "input": 2,
+      "output": 10,
+      "cache_read": 0.2,
+      "cache_write_5m": 2.5,
+      "cache_write_1h": 2.5,
+      "variants": {
+        "flex": {
+          "input": 1,
+          "output": 5,
+          "cache_read": 0.1,
+          "cache_write_5m": 1.25,
+          "cache_write_1h": 1.25
+        },
+        "priority": {
+          "input": 4,
+          "output": 20,
+          "cache_read": 0.4,
+          "cache_write_5m": 5,
+          "cache_write_1h": 5
+        },
+        "fast": {
+          "input": 4,
+          "output": 20,
+          "cache_read": 0.4,
+          "cache_write_5m": 5,
+          "cache_write_1h": 5
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 272001,
+          "input": 4,
+          "output": 15,
+          "cache_read": 0.4,
+          "cache_write_5m": 5,
+          "cache_write_1h": 5,
+          "variants": {
+            "flex": {
+              "input": 2,
+              "output": 7.5,
+              "cache_read": 0.2,
+              "cache_write_5m": 2.5,
+              "cache_write_1h": 2.5
+            },
+            "priority": {
+              "input": 8,
+              "output": 30,
+              "cache_read": 0.8,
+              "cache_write_5m": 10,
+              "cache_write_1h": 10
+            },
+            "fast": {
+              "input": 8,
+              "output": 30,
+              "cache_read": 0.8,
+              "cache_write_5m": 10,
+              "cache_write_1h": 10
+            }
+          }
+        }
+      ],
+      "context_window": 922000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "gpt-6-luna",
+      "provider": "openai",
+      "display": "GPT-6 Luna",
+      "input": 0.1,
+      "output": 0.5,
+      "cache_read": 0.01,
+      "cache_write_5m": 0.125,
+      "cache_write_1h": 0.125,
+      "variants": {
+        "flex": {
+          "input": 0.05,
+          "output": 0.25,
+          "cache_read": 0.005,
+          "cache_write_5m": 0.0625,
+          "cache_write_1h": 0.0625
+        },
+        "priority": {
+          "input": 0.2,
+          "output": 1.0,
+          "cache_read": 0.02,
+          "cache_write_5m": 0.25,
+          "cache_write_1h": 0.25
+        },
+        "fast": {
+          "input": 0.2,
+          "output": 1.0,
+          "cache_read": 0.02,
+          "cache_write_5m": 0.25,
+          "cache_write_1h": 0.25
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 272001,
+          "input": 0.2,
+          "output": 0.75,
+          "cache_read": 0.02,
+          "cache_write_5m": 0.25,
+          "cache_write_1h": 0.25,
+          "variants": {
+            "flex": {
+              "input": 0.1,
+              "output": 0.375,
+              "cache_read": 0.01,
+              "cache_write_5m": 0.125,
+              "cache_write_1h": 0.125
+            },
+            "priority": {
+              "input": 0.4,
+              "output": 1.5,
+              "cache_read": 0.04,
+              "cache_write_5m": 0.5,
+              "cache_write_1h": 0.5
+            },
+            "fast": {
+              "input": 0.4,
+              "output": 1.5,
+              "cache_read": 0.04,
+              "cache_write_5m": 0.5,
+              "cache_write_1h": 0.5
+            }
+          }
+        }
+      ],
+      "context_window": 922000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "gpt-6-astra",
       "provider": "openai",
       "display": "GPT-6 Astra",
-      "input": 10.0,
-      "output": 50.0,
-      "context_window": 922000
+      "input": 10,
+      "output": 50,
+      "cache_read": 1,
+      "cache_write_5m": 12.5,
+      "cache_write_1h": 12.5,
+      "variants": {
+        "flex": {
+          "input": 5,
+          "output": 25,
+          "cache_read": 0.5,
+          "cache_write_5m": 6.25,
+          "cache_write_1h": 6.25
+        },
+        "priority": {
+          "input": 20,
+          "output": 100,
+          "cache_read": 2,
+          "cache_write_5m": 25,
+          "cache_write_1h": 25
+        },
+        "fast": {
+          "input": 20,
+          "output": 100,
+          "cache_read": 2,
+          "cache_write_5m": 25,
+          "cache_write_1h": 25
+        },
+        "ultrafast": {
+          "input": 60,
+          "output": 300,
+          "cache_read": 6,
+          "cache_write_5m": 75,
+          "cache_write_1h": 75
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 272001,
+          "input": 20,
+          "output": 75,
+          "cache_read": 2,
+          "cache_write_5m": 25,
+          "cache_write_1h": 25,
+          "variants": {
+            "flex": {
+              "input": 10,
+              "output": 37.5,
+              "cache_read": 1,
+              "cache_write_5m": 12.5,
+              "cache_write_1h": 12.5
+            },
+            "priority": {
+              "input": 40,
+              "output": 150,
+              "cache_read": 4,
+              "cache_write_5m": 50,
+              "cache_write_1h": 50
+            },
+            "fast": {
+              "input": 40,
+              "output": 150,
+              "cache_read": 4,
+              "cache_write_5m": 50,
+              "cache_write_1h": 50
+            },
+            "ultrafast": {
+              "input": 120,
+              "output": 450,
+              "cache_read": 12,
+              "cache_write_5m": 150,
+              "cache_write_1h": 150
+            }
+          }
+        }
+      ],
+      "context_window": 922000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "gpt-5.6-cyber",
+      "provider": "openai",
+      "display": "GPT-5.6 Cyber",
+      "input": 12.5,
+      "output": 75,
+      "cache_read": 1.25,
+      "cache_write_5m": 15.625,
+      "cache_write_1h": 15.625,
+      "context_window": 272000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Approval only (Daybreak program). Cache write 1.25x input ($15.625) per the pricing page's Cyber table. Context 400,000 / max input 272,000 per model page; no long-context band or other tiers published."
     },
     {
       "match": "gpt-5.6-sol",
       "provider": "openai",
       "display": "GPT-5.6 Sol",
-      "input": 4.0,
-      "output": 20.0,
-      "context_window": 922000
+      "input": 4,
+      "output": 20,
+      "cache_read": 0.4,
+      "cache_write_5m": 5,
+      "cache_write_1h": 5,
+      "variants": {
+        "flex": {
+          "input": 2,
+          "output": 10,
+          "cache_read": 0.2,
+          "cache_write_5m": 2.5,
+          "cache_write_1h": 2.5
+        },
+        "priority": {
+          "input": 8,
+          "output": 40,
+          "cache_read": 0.8,
+          "cache_write_5m": 10,
+          "cache_write_1h": 10
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 272001,
+          "input": 8,
+          "output": 30,
+          "cache_read": 0.8,
+          "cache_write_5m": 10,
+          "cache_write_1h": 10,
+          "variants": {
+            "flex": {
+              "input": 4,
+              "output": 15,
+              "cache_read": 0.4,
+              "cache_write_5m": 5,
+              "cache_write_1h": 5
+            },
+            "priority": {
+              "input": 16,
+              "output": 60,
+              "cache_read": 1.6,
+              "cache_write_5m": 20,
+              "cache_write_1h": 20
+            }
+          }
+        }
+      ],
+      "periods": [
+        {
+          "from": "2026-07-09",
+          "until": "2026-08-21",
+          "input": 5,
+          "output": 30,
+          "cache_read": 0.5,
+          "variants": {},
+          "bands": [],
+          "cache_write_5m": null,
+          "cache_write_1h": null
+        }
+      ],
+      "context_window": 922000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Promotional $4/$20 from 2026-08-21, available at least through 2026-11-21 (pricing page + model page); post-promo rate unannounced. Pre-cut $5/$30, cached $0.50 per OpenAI developer-community announcement. Pre-cut period carries only the announced base input/output/cached-input prices (cache writes derived from the row's 1.25x ratio); pre-cut tier and long-context tables were never published, so inside the period flex/priority events fall back to the standard price (tier_unpriced) and there is no >272K band."
     },
     {
       "match": "gpt-5.6-terra",
       "provider": "openai",
       "display": "GPT-5.6 Terra",
-      "input": 2.0,
-      "output": 12.0,
-      "context_window": 922000
+      "input": 2,
+      "output": 12,
+      "cache_read": 0.2,
+      "cache_write_5m": 2.5,
+      "cache_write_1h": 2.5,
+      "variants": {
+        "flex": {
+          "input": 1,
+          "output": 6,
+          "cache_read": 0.1,
+          "cache_write_5m": 1.25,
+          "cache_write_1h": 1.25
+        },
+        "priority": {
+          "input": 4,
+          "output": 24,
+          "cache_read": 0.4,
+          "cache_write_5m": 5,
+          "cache_write_1h": 5
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 272001,
+          "input": 4,
+          "output": 18,
+          "cache_read": 0.4,
+          "cache_write_5m": 5,
+          "cache_write_1h": 5,
+          "variants": {
+            "flex": {
+              "input": 2,
+              "output": 9,
+              "cache_read": 0.2,
+              "cache_write_5m": 2.5,
+              "cache_write_1h": 2.5
+            },
+            "priority": {
+              "input": 8,
+              "output": 36,
+              "cache_read": 0.8,
+              "cache_write_5m": 10,
+              "cache_write_1h": 10
+            }
+          }
+        }
+      ],
+      "periods": [
+        {
+          "from": "2026-07-09",
+          "until": "2026-07-30",
+          "input": 2.5,
+          "output": 15,
+          "cache_read": 0.25,
+          "variants": {},
+          "bands": [],
+          "cache_write_5m": null,
+          "cache_write_1h": null
+        }
+      ],
+      "context_window": 922000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Cut 20% on 2026-07-30 (was $2.50/$15, cached $0.25 per OpenAI developer-community announcement). Pre-cut period carries only the announced base input/output/cached-input prices (cache writes derived from the row's 1.25x ratio); pre-cut tier and long-context tables were never published, so inside the period flex/priority events fall back to the standard price (tier_unpriced) and there is no >272K band."
     },
     {
       "match": "gpt-5.6-luna",
@@ -353,63 +948,314 @@
       "display": "GPT-5.6 Luna",
       "input": 0.2,
       "output": 1.2,
-      "context_window": 922000
+      "cache_read": 0.02,
+      "cache_write_5m": 0.25,
+      "cache_write_1h": 0.25,
+      "variants": {
+        "flex": {
+          "input": 0.1,
+          "output": 0.6,
+          "cache_read": 0.01,
+          "cache_write_5m": 0.125,
+          "cache_write_1h": 0.125
+        },
+        "priority": {
+          "input": 0.4,
+          "output": 2.4,
+          "cache_read": 0.04,
+          "cache_write_5m": 0.5,
+          "cache_write_1h": 0.5
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 272001,
+          "input": 0.4,
+          "output": 1.8,
+          "cache_read": 0.04,
+          "cache_write_5m": 0.5,
+          "cache_write_1h": 0.5,
+          "variants": {
+            "flex": {
+              "input": 0.2,
+              "output": 0.9,
+              "cache_read": 0.02,
+              "cache_write_5m": 0.25,
+              "cache_write_1h": 0.25
+            },
+            "priority": {
+              "input": 0.8,
+              "output": 3.6,
+              "cache_read": 0.08,
+              "cache_write_5m": 1.0,
+              "cache_write_1h": 1.0
+            }
+          }
+        }
+      ],
+      "periods": [
+        {
+          "from": "2026-07-09",
+          "until": "2026-07-30",
+          "input": 1,
+          "output": 6,
+          "cache_read": 0.1,
+          "variants": {},
+          "bands": [],
+          "cache_write_5m": null,
+          "cache_write_1h": null
+        }
+      ],
+      "context_window": 922000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Cut 80% on 2026-07-30 (was $1.00/$6.00, cached $0.10 per OpenAI developer-community announcement). Pre-cut period carries only the announced base input/output/cached-input prices (cache writes derived from the row's 1.25x ratio); pre-cut tier and long-context tables were never published, so inside the period flex/priority events fall back to the standard price (tier_unpriced) and there is no >272K band."
     },
     {
       "match": "gpt-5.6",
       "provider": "openai",
       "display": "GPT-5.6",
-      "input": 2.0,
-      "output": 12.0,
-      "context_window": 922000
+      "input": 4,
+      "output": 20,
+      "cache_read": 0.4,
+      "cache_write_5m": 5,
+      "cache_write_1h": 5,
+      "variants": {
+        "flex": {
+          "input": 2,
+          "output": 10,
+          "cache_read": 0.2,
+          "cache_write_5m": 2.5,
+          "cache_write_1h": 2.5
+        },
+        "priority": {
+          "input": 8,
+          "output": 40,
+          "cache_read": 0.8,
+          "cache_write_5m": 10,
+          "cache_write_1h": 10
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 272001,
+          "input": 8,
+          "output": 30,
+          "cache_read": 0.8,
+          "cache_write_5m": 10,
+          "cache_write_1h": 10,
+          "variants": {
+            "flex": {
+              "input": 4,
+              "output": 15,
+              "cache_read": 0.4,
+              "cache_write_5m": 5,
+              "cache_write_1h": 5
+            },
+            "priority": {
+              "input": 16,
+              "output": 60,
+              "cache_read": 1.6,
+              "cache_write_5m": 20,
+              "cache_write_1h": 20
+            }
+          }
+        }
+      ],
+      "periods": [
+        {
+          "from": "2026-07-09",
+          "until": "2026-08-21",
+          "input": 5,
+          "output": 30,
+          "cache_read": 0.5,
+          "variants": {},
+          "bands": [],
+          "cache_write_5m": null,
+          "cache_write_1h": null
+        }
+      ],
+      "context_window": 922000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Alias: gpt-5.6 routes to GPT-5.6 Sol (model page); follows Sol's price, periods, bands and variants. Promotional $4/$20 from 2026-08-21, available at least through 2026-11-21 (pricing page + model page); post-promo rate unannounced. Pre-cut $5/$30, cached $0.50 per OpenAI developer-community announcement. Pre-cut period carries only the announced base input/output/cached-input prices (cache writes derived from the row's 1.25x ratio); pre-cut tier and long-context tables were never published, so inside the period flex/priority events fall back to the standard price (tier_unpriced) and there is no >272K band."
     },
     {
-      "match": "gpt-5.3-codex",
+      "match": "chat-latest",
       "provider": "openai",
-      "display": "GPT-5.3 Codex",
-      "input": 1.75,
-      "output": 14.0,
-      "context_window": 272000
-    },
-    {
-      "match": "gpt-5.2-codex",
-      "provider": "openai",
-      "display": "GPT-5.2 Codex",
-      "input": 1.75,
-      "output": 14.0,
-      "context_window": 272000
-    },
-    {
-      "match": "gpt-5-codex",
-      "provider": "openai",
-      "display": "GPT-5 Codex",
-      "input": 1.25,
-      "output": 10.0,
-      "context_window": 272000
+      "display": "ChatGPT latest (Instant)",
+      "input": 5,
+      "output": 30,
+      "cache_read": 0.5,
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 272000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Rolling alias: points to the latest Instant model used in ChatGPT; snapshot changes regularly. Context 400,000 / max input 272,000 (model page). No cache-write price: writes bill as ordinary input."
     },
     {
       "match": "gpt-5.5-pro",
       "provider": "openai",
       "display": "GPT-5.5 Pro",
-      "input": 30.0,
-      "output": 180.0,
-      "context_window": 1050000
+      "input": 30,
+      "output": 180,
+      "variants": {
+        "flex": {
+          "input": 15,
+          "output": 90
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 272001,
+          "input": 60,
+          "output": 270,
+          "variants": {
+            "flex": {
+              "input": 30,
+              "output": 135
+            }
+          }
+        }
+      ],
+      "cache_rules": {
+        "cache_read": 1.0,
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1050000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Model page: no cached-input discount, so cached tokens (if ever logged) bill as ordinary input. Long-context flex $30/$135 is DERIVED (2x/1.5x of flex short); the pricing page leaves it blank. Flex = batch pricing."
     },
     {
       "match": "gpt-5.5",
       "provider": "openai",
       "display": "GPT-5.5",
-      "input": 5.0,
-      "output": 30.0,
-      "context_window": 1050000
+      "input": 5,
+      "output": 30,
+      "cache_read": 0.5,
+      "variants": {
+        "flex": {
+          "input": 2.5,
+          "output": 15
+        },
+        "priority": {
+          "input": 12.5,
+          "output": 75,
+          "cache_read": 1.25
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 272001,
+          "input": 10,
+          "output": 45,
+          "cache_read": 1.0,
+          "variants": {
+            "flex": {
+              "input": 5,
+              "output": 22.5,
+              "cache_read": 0.5
+            }
+          }
+        }
+      ],
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1050000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "No cache-write price (writes bill as ordinary input). Fast long-context price not published. Retires from ChatGPT/Codex 2026-10-14, stays on API (Codex docs). Context 1,050,000 (no separate max input stated)."
     },
     {
       "match": "gpt-5.4-pro",
       "provider": "openai",
       "display": "GPT-5.4 Pro",
-      "input": 30.0,
-      "output": 180.0,
-      "context_window": 1050000
+      "input": 30,
+      "output": 180,
+      "variants": {
+        "flex": {
+          "input": 15,
+          "output": 90
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 272001,
+          "input": 60,
+          "output": 270,
+          "variants": {
+            "flex": {
+              "input": 30,
+              "output": 135
+            }
+          }
+        }
+      ],
+      "cache_rules": {
+        "cache_read": 1.0,
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1050000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Pricing page lists no cached input for this model -> cached tokens bill as ordinary input. Flex = batch."
+    },
+    {
+      "match": "gpt-5.4",
+      "provider": "openai",
+      "display": "GPT-5.4",
+      "input": 2.5,
+      "output": 15,
+      "cache_read": 0.25,
+      "variants": {
+        "flex": {
+          "input": 1.25,
+          "output": 7.5
+        },
+        "priority": {
+          "input": 5,
+          "output": 30,
+          "cache_read": 0.5
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 272001,
+          "input": 5,
+          "output": 22.5,
+          "cache_read": 0.5,
+          "variants": {
+            "flex": {
+              "input": 2.5,
+              "output": 11.25,
+              "cache_read": 0.25
+            }
+          }
+        }
+      ],
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1050000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Flex cached input is printed rounded ($0.13); left null so it derives to $0.125 (0.1x). No cache-write price. Fast long-context not published."
     },
     {
       "match": "gpt-5.4-mini",
@@ -417,7 +1263,27 @@
       "display": "GPT-5.4 mini",
       "input": 0.75,
       "output": 4.5,
-      "context_window": 400000
+      "cache_read": 0.075,
+      "variants": {
+        "flex": {
+          "input": 0.375,
+          "output": 2.25
+        },
+        "priority": {
+          "input": 1.5,
+          "output": 9,
+          "cache_read": 0.15
+        }
+      },
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 272000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Context 400,000 / max input 272,000 on the model page: max input used per repo convention (was 400,000)."
     },
     {
       "match": "gpt-5.4-nano",
@@ -425,47 +1291,248 @@
       "display": "GPT-5.4 nano",
       "input": 0.2,
       "output": 1.25,
-      "context_window": 400000
+      "cache_read": 0.02,
+      "variants": {
+        "flex": {
+          "input": 0.1,
+          "output": 0.625
+        }
+      },
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 272000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Context 400,000 / max input 272,000 on the model page: max input used (was 400,000)."
     },
     {
-      "match": "gpt-5.4",
+      "match": "gpt-5.3-codex",
       "provider": "openai",
-      "display": "GPT-5.4",
-      "input": 2.5,
-      "output": 15.0,
-      "context_window": 1050000
+      "display": "GPT-5.3 Codex",
+      "input": 1.75,
+      "output": 14,
+      "cache_read": 0.175,
+      "variants": {
+        "priority": {
+          "input": 3.5,
+          "output": 28,
+          "cache_read": 0.35
+        }
+      },
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 272000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "No flex/batch row on the pricing page. Context 400,000 / max input 272,000. No cache-write price."
+    },
+    {
+      "match": "gpt-5.2-pro",
+      "provider": "openai",
+      "display": "GPT-5.2 Pro",
+      "input": 21,
+      "output": 168,
+      "cache_rules": {
+        "cache_read": 1.0,
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 400000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Cached input not listed -> bills as ordinary input. No flex row."
+    },
+    {
+      "match": "gpt-5.2-codex",
+      "provider": "openai",
+      "display": "GPT-5.2 Codex",
+      "input": 1.75,
+      "output": 14,
+      "cache_read": 0.175,
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 272000,
+      "source": "https://developers.openai.com/api/docs/models/gpt-5.2-codex",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Not on the pricing page table; price from the model page (context 400,000 / max input 272,000). No cache-write price."
     },
     {
       "match": "gpt-5.2",
       "provider": "openai",
       "display": "GPT-5.2",
       "input": 1.75,
-      "output": 14.0,
-      "context_window": 400000
+      "output": 14,
+      "cache_read": 0.175,
+      "variants": {
+        "flex": {
+          "input": 0.875,
+          "output": 7
+        },
+        "priority": {
+          "input": 3.5,
+          "output": 28,
+          "cache_read": 0.35
+        }
+      },
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 400000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "No cache-write price. Context 400,000 (no separate max input stated)."
+    },
+    {
+      "match": "gpt-5.1-codex-max",
+      "provider": "openai",
+      "display": "GPT-5.1 Codex Max",
+      "input": 1.25,
+      "output": 10,
+      "cache_read": 0.125,
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 400000,
+      "source": "https://developers.openai.com/api/docs/models/gpt-5.1-codex-max",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Not on the pricing page table; price from the model page. No cache-write price stated."
+    },
+    {
+      "match": "gpt-5.1-codex-mini",
+      "provider": "openai",
+      "display": "GPT-5.1 Codex mini",
+      "input": 0.25,
+      "output": 2,
+      "cache_read": 0.025,
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 400000,
+      "source": "https://developers.openai.com/api/docs/models/gpt-5.1-codex-mini",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Not on the pricing page table; price from the model page. No cache-write price stated."
+    },
+    {
+      "match": "gpt-5.1-codex",
+      "provider": "openai",
+      "display": "GPT-5.1 Codex",
+      "input": 1.25,
+      "output": 10,
+      "cache_read": 0.125,
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 400000,
+      "source": "https://developers.openai.com/api/docs/models/gpt-5.1-codex",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Not on the pricing page table; price from the model page. No cache-write price stated."
     },
     {
       "match": "gpt-5.1",
       "provider": "openai",
       "display": "GPT-5.1",
       "input": 1.25,
-      "output": 10.0,
-      "context_window": 400000
+      "output": 10,
+      "cache_read": 0.125,
+      "variants": {
+        "flex": {
+          "input": 0.625,
+          "output": 5
+        },
+        "priority": {
+          "input": 2.5,
+          "output": 20,
+          "cache_read": 0.25
+        }
+      },
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 400000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "No cache-write price."
     },
     {
       "match": "gpt-5-pro",
       "provider": "openai",
       "display": "GPT-5 Pro",
-      "input": 15.0,
-      "output": 120.0,
-      "context_window": 400000
+      "input": 15,
+      "output": 120,
+      "cache_rules": {
+        "cache_read": 1.0,
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 400000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Cached input '-' on pricing page and model page -> bills as ordinary input. Batch $7.50/$60 = 0.5x (provider multiplier)."
+    },
+    {
+      "match": "gpt-5-codex",
+      "provider": "openai",
+      "display": "GPT-5 Codex",
+      "input": 1.25,
+      "output": 10,
+      "cache_read": 0.125,
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 272000,
+      "source": "https://developers.openai.com/api/docs/models/gpt-5-codex",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Not on the pricing page table; price from the model page (context 400,000 / max input 272,000). No cache-write price stated."
     },
     {
       "match": "gpt-5-mini",
       "provider": "openai",
       "display": "GPT-5 mini",
       "input": 0.25,
-      "output": 2.0,
-      "context_window": 272000
+      "output": 2,
+      "cache_read": 0.025,
+      "variants": {
+        "flex": {
+          "input": 0.125,
+          "output": 1
+        },
+        "priority": {
+          "input": 0.45,
+          "output": 3.6,
+          "cache_read": 0.045
+        }
+      },
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 272000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "gpt-5-nano",
@@ -473,37 +1540,66 @@
       "display": "GPT-5 nano",
       "input": 0.05,
       "output": 0.4,
-      "context_window": 272000
+      "cache_read": 0.005,
+      "variants": {
+        "flex": {
+          "input": 0.025,
+          "output": 0.2
+        }
+      },
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 272000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "gpt-5",
       "provider": "openai",
       "display": "GPT-5",
       "input": 1.25,
-      "output": 10.0,
-      "context_window": 272000
-    },
-    {
-      "match": "o3-mini",
-      "provider": "openai",
-      "display": "o3-mini",
-      "input": 1.1,
-      "output": 4.4,
-      "context_window": 200000,
+      "output": 10,
+      "cache_read": 0.125,
+      "variants": {
+        "flex": {
+          "input": 0.625,
+          "output": 5
+        },
+        "priority": {
+          "input": 2.5,
+          "output": 20,
+          "cache_read": 0.25
+        }
+      },
       "cache_rules": {
-        "cache_read": 0.5,
-        "cache_write_5m": 1.25,
-        "cache_write_1h": 1.25,
-        "batch": 0.5
-      }
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 272000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Context 400,000 / max input 272,000 (model page)."
     },
     {
       "match": "o3-pro",
       "provider": "openai",
       "display": "o3-pro",
-      "input": 20.0,
-      "output": 80.0,
-      "context_window": 200000
+      "input": 20,
+      "output": 80,
+      "cache_rules": {
+        "cache_read": 1.0,
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 200000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Model page: no prompt caching (cached input '-')."
     },
     {
       "match": "o4-mini",
@@ -511,27 +1607,74 @@
       "display": "o4-mini",
       "input": 1.1,
       "output": 4.4,
-      "context_window": 200000,
+      "cache_read": 0.275,
+      "variants": {
+        "flex": {
+          "input": 0.55,
+          "output": 2.2
+        },
+        "priority": {
+          "input": 2,
+          "output": 8,
+          "cache_read": 0.5
+        }
+      },
       "cache_rules": {
         "cache_read": 0.25,
-        "cache_write_5m": 1.25,
-        "cache_write_1h": 1.25,
-        "batch": 0.5
-      }
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 200000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Flex cached printed rounded ($0.138); derived (0.25x)."
+    },
+    {
+      "match": "o3-mini",
+      "provider": "openai",
+      "display": "o3-mini",
+      "input": 1.1,
+      "output": 4.4,
+      "cache_read": 0.55,
+      "cache_rules": {
+        "cache_read": 0.5,
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 200000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "o3",
       "provider": "openai",
       "display": "o3",
-      "input": 2.0,
-      "output": 8.0,
-      "context_window": 200000,
+      "input": 2,
+      "output": 8,
+      "cache_read": 0.5,
+      "variants": {
+        "flex": {
+          "input": 1,
+          "output": 4,
+          "cache_read": 0.25
+        },
+        "priority": {
+          "input": 3.5,
+          "output": 14,
+          "cache_read": 0.875
+        }
+      },
       "cache_rules": {
         "cache_read": 0.25,
-        "cache_write_5m": 1.25,
-        "cache_write_1h": 1.25,
-        "batch": 0.5
-      }
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 200000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "gpt-4.1-mini",
@@ -539,13 +1682,23 @@
       "display": "GPT-4.1 mini",
       "input": 0.4,
       "output": 1.6,
-      "context_window": 1047576,
+      "cache_read": 0.1,
+      "variants": {
+        "priority": {
+          "input": 0.7,
+          "output": 2.8,
+          "cache_read": 0.175
+        }
+      },
       "cache_rules": {
         "cache_read": 0.25,
-        "cache_write_5m": 1.25,
-        "cache_write_1h": 1.25,
-        "batch": 0.5
-      }
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1047576,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "gpt-4.1-nano",
@@ -553,27 +1706,47 @@
       "display": "GPT-4.1 nano",
       "input": 0.1,
       "output": 0.4,
-      "context_window": 1047576,
+      "cache_read": 0.025,
+      "variants": {
+        "priority": {
+          "input": 0.2,
+          "output": 0.8,
+          "cache_read": 0.05
+        }
+      },
       "cache_rules": {
         "cache_read": 0.25,
-        "cache_write_5m": 1.25,
-        "cache_write_1h": 1.25,
-        "batch": 0.5
-      }
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1047576,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "gpt-4.1",
       "provider": "openai",
       "display": "GPT-4.1",
-      "input": 2.0,
-      "output": 8.0,
-      "context_window": 1047576,
+      "input": 2,
+      "output": 8,
+      "cache_read": 0.5,
+      "variants": {
+        "priority": {
+          "input": 3.5,
+          "output": 14,
+          "cache_read": 0.875
+        }
+      },
       "cache_rules": {
         "cache_read": 0.25,
-        "cache_write_5m": 1.25,
-        "cache_write_1h": 1.25,
-        "batch": 0.5
-      }
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1047576,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "gpt-4o-mini",
@@ -581,35 +1754,47 @@
       "display": "GPT-4o mini",
       "input": 0.15,
       "output": 0.6,
-      "context_window": 128000,
+      "cache_read": 0.075,
+      "variants": {
+        "priority": {
+          "input": 0.25,
+          "output": 1,
+          "cache_read": 0.125
+        }
+      },
       "cache_rules": {
         "cache_read": 0.5,
-        "cache_write_5m": 1.25,
-        "cache_write_1h": 1.25,
-        "batch": 0.5
-      }
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 128000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "gpt-4o",
       "provider": "openai",
       "display": "GPT-4o",
       "input": 2.5,
-      "output": 10.0,
-      "context_window": 128000,
+      "output": 10,
+      "cache_read": 1.25,
+      "variants": {
+        "priority": {
+          "input": 4.25,
+          "output": 17,
+          "cache_read": 2.125
+        }
+      },
       "cache_rules": {
         "cache_read": 0.5,
-        "cache_write_5m": 1.25,
-        "cache_write_1h": 1.25,
-        "batch": 0.5
-      }
-    },
-    {
-      "match": "gemini-3.1-pro",
-      "provider": "google",
-      "display": "Gemini 3.1 Pro",
-      "input": 2.0,
-      "output": 12.0,
-      "context_window": 1048576
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 128000,
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "gemini-3.8-flash",
@@ -617,7 +1802,49 @@
       "display": "Gemini 3.8 Flash",
       "input": 0.75,
       "output": 3.75,
-      "context_window": 1048576
+      "cache_read": 0.075,
+      "variants": {
+        "flex": {
+          "input": 0.375,
+          "output": 1.875,
+          "cache_read": 0.0375
+        },
+        "priority": {
+          "input": 1.35,
+          "output": 6.75,
+          "cache_read": 0.135
+        }
+      },
+      "periods": [
+        {
+          "from": "2027-01-01",
+          "until": null,
+          "input": 1.5,
+          "output": 7.5,
+          "cache_read": 0.15,
+          "variants": {
+            "flex": {
+              "input": 0.75,
+              "output": 3.75,
+              "cache_read": 0.075
+            },
+            "priority": {
+              "input": 2.7,
+              "output": 13.5,
+              "cache_read": 0.27
+            }
+          }
+        }
+      ],
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1048576,
+      "source": "https://ai.google.dev/gemini-api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Stable. Same prices as 3.7/3.6 Flash on the page. Current price is INTRODUCTORY through 2026-12-31; from 2027-01-01 it doubles (period row): input 1.50, cached 0.15, output 7.50, flex/batch 0.75/3.75 (cached 0.075), priority 2.70/13.50 (cached 0.27). Google bills context-cache STORAGE per token-hour ($0.50/M/h intro for 3.6-3.8 Flash, $1.00 other Flash, $4.50 Pro) and has no per-token cache-write price; storage is NOT modelled (cache_write pinned to 1.0 via cache_rules). Do not read 1.0 as 'writes are free'. flex pricing equals batch pricing on the page."
     },
     {
       "match": "gemini-3.7-flash",
@@ -625,7 +1852,49 @@
       "display": "Gemini 3.7 Flash",
       "input": 0.75,
       "output": 3.75,
-      "context_window": 1048576
+      "cache_read": 0.075,
+      "variants": {
+        "flex": {
+          "input": 0.375,
+          "output": 1.875,
+          "cache_read": 0.0375
+        },
+        "priority": {
+          "input": 1.35,
+          "output": 6.75,
+          "cache_read": 0.135
+        }
+      },
+      "periods": [
+        {
+          "from": "2027-01-01",
+          "until": null,
+          "input": 1.5,
+          "output": 7.5,
+          "cache_read": 0.15,
+          "variants": {
+            "flex": {
+              "input": 0.75,
+              "output": 3.75,
+              "cache_read": 0.075
+            },
+            "priority": {
+              "input": 2.7,
+              "output": 13.5,
+              "cache_read": 0.27
+            }
+          }
+        }
+      ],
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1048576,
+      "source": "https://ai.google.dev/gemini-api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Stable. Current price is INTRODUCTORY through 2026-12-31; from 2027-01-01 it doubles (period row): input 1.50, cached 0.15, output 7.50, flex/batch 0.75/3.75 (cached 0.075), priority 2.70/13.50 (cached 0.27). Google bills context-cache STORAGE per token-hour ($0.50/M/h intro for 3.6-3.8 Flash, $1.00 other Flash, $4.50 Pro) and has no per-token cache-write price; storage is NOT modelled (cache_write pinned to 1.0 via cache_rules). Do not read 1.0 as 'writes are free'. flex pricing equals batch pricing on the page."
     },
     {
       "match": "gemini-3.6-flash",
@@ -633,7 +1902,49 @@
       "display": "Gemini 3.6 Flash",
       "input": 0.75,
       "output": 3.75,
-      "context_window": 1048576
+      "cache_read": 0.075,
+      "variants": {
+        "flex": {
+          "input": 0.375,
+          "output": 1.875,
+          "cache_read": 0.0375
+        },
+        "priority": {
+          "input": 1.35,
+          "output": 6.75,
+          "cache_read": 0.135
+        }
+      },
+      "periods": [
+        {
+          "from": "2027-01-01",
+          "until": null,
+          "input": 1.5,
+          "output": 7.5,
+          "cache_read": 0.15,
+          "variants": {
+            "flex": {
+              "input": 0.75,
+              "output": 3.75,
+              "cache_read": 0.075
+            },
+            "priority": {
+              "input": 2.7,
+              "output": 13.5,
+              "cache_read": 0.27
+            }
+          }
+        }
+      ],
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1048576,
+      "source": "https://ai.google.dev/gemini-api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Stable. Current price is INTRODUCTORY through 2026-12-31; from 2027-01-01 it doubles (period row): input 1.50, cached 0.15, output 7.50, flex/batch 0.75/3.75 (cached 0.075), priority 2.70/13.50 (cached 0.27). Google bills context-cache STORAGE per token-hour ($0.50/M/h intro for 3.6-3.8 Flash, $1.00 other Flash, $4.50 Pro) and has no per-token cache-write price; storage is NOT modelled (cache_write pinned to 1.0 via cache_rules). Do not read 1.0 as 'writes are free'. flex pricing equals batch pricing on the page."
     },
     {
       "match": "gemini-3.5-flash-lite",
@@ -641,7 +1952,33 @@
       "display": "Gemini 3.5 Flash-Lite",
       "input": 0.3,
       "output": 2.5,
-      "context_window": 1048576
+      "cache_read": 0.03,
+      "variants": {
+        "flex": {
+          "input": 0.15,
+          "output": 1.25,
+          "cache_read": 0.02
+        },
+        "batch": {
+          "input": 0.15,
+          "output": 1.25,
+          "cache_read": 0.02
+        },
+        "priority": {
+          "input": 0.54,
+          "output": 4.5,
+          "cache_read": 0.05
+        }
+      },
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1048576,
+      "source": "https://ai.google.dev/gemini-api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Stable. Batch/flex cached 0.02 and priority cached 0.05 are absolute page values (not 0.1x of input), hence explicit batch variant. Google bills context-cache STORAGE per token-hour ($0.50/M/h intro for 3.6-3.8 Flash, $1.00 other Flash, $4.50 Pro) and has no per-token cache-write price; storage is NOT modelled (cache_write pinned to 1.0 via cache_rules). Do not read 1.0 as 'writes are free'. flex pricing equals batch pricing on the page."
     },
     {
       "match": "gemini-3.5-flash",
@@ -649,7 +1986,27 @@
       "display": "Gemini 3.5 Flash",
       "input": 1.5,
       "output": 9.0,
-      "context_window": 1048576
+      "cache_read": 0.15,
+      "variants": {
+        "flex": {
+          "input": 0.75,
+          "output": 4.5,
+          "cache_read": 0.075
+        },
+        "priority": {
+          "input": 2.7,
+          "output": 16.2
+        }
+      },
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1048576,
+      "source": "https://ai.google.dev/gemini-api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Stable; permanent price (no Jan-2027 change on page). Priority cached not read separately; derived 0.1x of input. Google bills context-cache STORAGE per token-hour ($0.50/M/h intro for 3.6-3.8 Flash, $1.00 other Flash, $4.50 Pro) and has no per-token cache-write price; storage is NOT modelled (cache_write pinned to 1.0 via cache_rules). Do not read 1.0 as 'writes are free'. flex pricing equals batch pricing on the page."
     },
     {
       "match": "gemini-3.1-flash-lite",
@@ -657,7 +2014,237 @@
       "display": "Gemini 3.1 Flash-Lite",
       "input": 0.25,
       "output": 1.5,
-      "context_window": 1048576
+      "cache_read": 0.025,
+      "variants": {
+        "flex": {
+          "input": 0.125,
+          "output": 0.75
+        },
+        "priority": {
+          "input": 0.45,
+          "output": 2.7
+        }
+      },
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1048576,
+      "source": "https://ai.google.dev/gemini-api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Stable. Text/image/video prices; audio input is 0.50 (flex 0.25, priority 0.90) and not modelled. Variant cached derived 0.1x of input. Google bills context-cache STORAGE per token-hour ($0.50/M/h intro for 3.6-3.8 Flash, $1.00 other Flash, $4.50 Pro) and has no per-token cache-write price; storage is NOT modelled (cache_write pinned to 1.0 via cache_rules). Do not read 1.0 as 'writes are free'. flex pricing equals batch pricing on the page."
+    },
+    {
+      "match": "gemini-3.1-pro-preview-customtools",
+      "provider": "google",
+      "display": "Gemini 3.1 Pro Preview (Custom Tools)",
+      "input": 2.0,
+      "output": 12.0,
+      "cache_read": 0.2,
+      "variants": {
+        "flex": {
+          "input": 1.0,
+          "output": 6.0,
+          "cache_read": 0.2
+        },
+        "batch": {
+          "input": 1.0,
+          "output": 6.0,
+          "cache_read": 0.2
+        },
+        "priority": {
+          "input": 3.6,
+          "output": 21.6,
+          "cache_read": 0.36
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 200001,
+          "input": 4.0,
+          "output": 18.0,
+          "cache_read": 0.4,
+          "variants": {
+            "flex": {
+              "input": 2.0,
+              "output": 9.0,
+              "cache_read": 0.4
+            },
+            "batch": {
+              "input": 2.0,
+              "output": 9.0,
+              "cache_read": 0.4
+            },
+            "priority": {
+              "input": 7.2,
+              "output": 32.4,
+              "cache_read": 0.72
+            }
+          }
+        }
+      ],
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1048576,
+      "source": "https://ai.google.dev/gemini-api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "preview",
+      "note": "Preview. >200k-prompt-token rates apply to the whole request (page: pricing applies to the entire request by prompt size; read via summarised fetch, see unverified). Batch/flex cached stays at the standard cached price (0.20/0.40), so explicit batch variants are added. Separate real ID, same prices as gemini-3.1-pro-preview. Google bills context-cache STORAGE per token-hour ($0.50/M/h intro for 3.6-3.8 Flash, $1.00 other Flash, $4.50 Pro) and has no per-token cache-write price; storage is NOT modelled (cache_write pinned to 1.0 via cache_rules). Do not read 1.0 as 'writes are free'. flex pricing equals batch pricing on the page."
+    },
+    {
+      "match": "gemini-3.1-pro-preview",
+      "provider": "google",
+      "display": "Gemini 3.1 Pro Preview",
+      "input": 2.0,
+      "output": 12.0,
+      "cache_read": 0.2,
+      "variants": {
+        "flex": {
+          "input": 1.0,
+          "output": 6.0,
+          "cache_read": 0.2
+        },
+        "batch": {
+          "input": 1.0,
+          "output": 6.0,
+          "cache_read": 0.2
+        },
+        "priority": {
+          "input": 3.6,
+          "output": 21.6,
+          "cache_read": 0.36
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 200001,
+          "input": 4.0,
+          "output": 18.0,
+          "cache_read": 0.4,
+          "variants": {
+            "flex": {
+              "input": 2.0,
+              "output": 9.0,
+              "cache_read": 0.4
+            },
+            "batch": {
+              "input": 2.0,
+              "output": 9.0,
+              "cache_read": 0.4
+            },
+            "priority": {
+              "input": 7.2,
+              "output": 32.4,
+              "cache_read": 0.72
+            }
+          }
+        }
+      ],
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1048576,
+      "source": "https://ai.google.dev/gemini-api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "preview",
+      "note": "Preview. >200k-prompt-token rates apply to the whole request (page: pricing applies to the entire request by prompt size; read via summarised fetch, see unverified). Batch/flex cached stays at the standard cached price (0.20/0.40), so explicit batch variants are added. Google bills context-cache STORAGE per token-hour ($0.50/M/h intro for 3.6-3.8 Flash, $1.00 other Flash, $4.50 Pro) and has no per-token cache-write price; storage is NOT modelled (cache_write pinned to 1.0 via cache_rules). Do not read 1.0 as 'writes are free'. flex pricing equals batch pricing on the page."
+    },
+    {
+      "match": "gemini-3.1-pro",
+      "provider": "google",
+      "display": "Gemini 3.1 Pro (family prefix)",
+      "input": 2.0,
+      "output": 12.0,
+      "cache_read": 0.2,
+      "variants": {
+        "flex": {
+          "input": 1.0,
+          "output": 6.0,
+          "cache_read": 0.2
+        },
+        "batch": {
+          "input": 1.0,
+          "output": 6.0,
+          "cache_read": 0.2
+        },
+        "priority": {
+          "input": 3.6,
+          "output": 21.6,
+          "cache_read": 0.36
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 200001,
+          "input": 4.0,
+          "output": 18.0,
+          "cache_read": 0.4,
+          "variants": {
+            "flex": {
+              "input": 2.0,
+              "output": 9.0,
+              "cache_read": 0.4
+            },
+            "batch": {
+              "input": 2.0,
+              "output": 9.0,
+              "cache_read": 0.4
+            },
+            "priority": {
+              "input": 7.2,
+              "output": 32.4,
+              "cache_read": 0.72
+            }
+          }
+        }
+      ],
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1048576,
+      "source": "https://ai.google.dev/gemini-api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "preview",
+      "note": "Preview. >200k-prompt-token rates apply to the whole request (page: pricing applies to the entire request by prompt size; read via summarised fetch, see unverified). Batch/flex cached stays at the standard cached price (0.20/0.40), so explicit batch variants are added. Kept because the previous table keyed this id; not itself an API model id. Google bills context-cache STORAGE per token-hour ($0.50/M/h intro for 3.6-3.8 Flash, $1.00 other Flash, $4.50 Pro) and has no per-token cache-write price; storage is NOT modelled (cache_write pinned to 1.0 via cache_rules). Do not read 1.0 as 'writes are free'. flex pricing equals batch pricing on the page."
+    },
+    {
+      "match": "gemini-3-flash-preview",
+      "provider": "google",
+      "display": "Gemini 3 Flash Preview",
+      "input": 0.5,
+      "output": 3.0,
+      "cache_read": 0.05,
+      "variants": {
+        "flex": {
+          "input": 0.25,
+          "output": 1.5,
+          "cache_read": 0.05
+        },
+        "batch": {
+          "input": 0.25,
+          "output": 1.5,
+          "cache_read": 0.05
+        },
+        "priority": {
+          "input": 0.9,
+          "output": 5.4,
+          "cache_read": 0.09
+        }
+      },
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1048576,
+      "source": "https://ai.google.dev/gemini-api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "preview",
+      "note": "Preview. Text/image/video prices; audio input 1.00 (cached 0.10) not modelled. Batch/flex cached stays 0.05, so explicit batch variant. Google bills context-cache STORAGE per token-hour ($0.50/M/h intro for 3.6-3.8 Flash, $1.00 other Flash, $4.50 Pro) and has no per-token cache-write price; storage is NOT modelled (cache_write pinned to 1.0 via cache_rules). Do not read 1.0 as 'writes are free'. flex pricing equals batch pricing on the page."
     },
     {
       "match": "gemini-2.5-pro",
@@ -665,7 +2252,58 @@
       "display": "Gemini 2.5 Pro",
       "input": 1.25,
       "output": 10.0,
-      "context_window": 1048576
+      "cache_read": 0.125,
+      "variants": {
+        "flex": {
+          "input": 0.625,
+          "output": 5.0,
+          "cache_read": 0.125
+        },
+        "batch": {
+          "input": 0.625,
+          "output": 5.0,
+          "cache_read": 0.125
+        },
+        "priority": {
+          "input": 2.25,
+          "output": 18.0,
+          "cache_read": 0.225
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 200001,
+          "input": 2.5,
+          "output": 15.0,
+          "cache_read": 0.25,
+          "variants": {
+            "flex": {
+              "input": 1.25,
+              "output": 7.5,
+              "cache_read": 0.25
+            },
+            "batch": {
+              "input": 1.25,
+              "output": 7.5,
+              "cache_read": 0.25
+            },
+            "priority": {
+              "input": 4.5,
+              "output": 27.0,
+              "cache_read": 0.45
+            }
+          }
+        }
+      ],
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1048576,
+      "source": "https://ai.google.dev/gemini-api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Access restricted since 2026-09-18 to users who actively used the 2.5 models before (models page + changelog); price unchanged. >200k prompt rates apply to the whole request (same page wording as 3.1 Pro). Batch/flex cached stays 0.125/0.25, so explicit batch variants. Google bills context-cache STORAGE per token-hour ($0.50/M/h intro for 3.6-3.8 Flash, $1.00 other Flash, $4.50 Pro) and has no per-token cache-write price; storage is NOT modelled (cache_write pinned to 1.0 via cache_rules). Do not read 1.0 as 'writes are free'. flex pricing equals batch pricing on the page."
     },
     {
       "match": "gemini-2.5-flash-lite",
@@ -673,7 +2311,33 @@
       "display": "Gemini 2.5 Flash-Lite",
       "input": 0.1,
       "output": 0.4,
-      "context_window": 1048576
+      "cache_read": 0.01,
+      "variants": {
+        "flex": {
+          "input": 0.05,
+          "output": 0.2,
+          "cache_read": 0.01
+        },
+        "batch": {
+          "input": 0.05,
+          "output": 0.2,
+          "cache_read": 0.01
+        },
+        "priority": {
+          "input": 0.18,
+          "output": 0.72,
+          "cache_read": 0.018
+        }
+      },
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1048576,
+      "source": "https://ai.google.dev/gemini-api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Access restricted since 2026-09-18 to users who actively used the 2.5 models before (models page + changelog); price unchanged. Text/image/video prices; audio input 0.30 not modelled. Google bills context-cache STORAGE per token-hour ($0.50/M/h intro for 3.6-3.8 Flash, $1.00 other Flash, $4.50 Pro) and has no per-token cache-write price; storage is NOT modelled (cache_write pinned to 1.0 via cache_rules). Do not read 1.0 as 'writes are free'. flex pricing equals batch pricing on the page."
     },
     {
       "match": "gemini-2.5-flash",
@@ -681,23 +2345,138 @@
       "display": "Gemini 2.5 Flash",
       "input": 0.3,
       "output": 2.5,
-      "context_window": 1048576
+      "cache_read": 0.03,
+      "variants": {
+        "flex": {
+          "input": 0.15,
+          "output": 1.25,
+          "cache_read": 0.03
+        },
+        "batch": {
+          "input": 0.15,
+          "output": 1.25,
+          "cache_read": 0.03
+        },
+        "priority": {
+          "input": 0.54,
+          "output": 4.5,
+          "cache_read": 0.054
+        }
+      },
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "context_window": 1048576,
+      "source": "https://ai.google.dev/gemini-api/docs/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Access restricted since 2026-09-18 to users who actively used the 2.5 models before (models page + changelog); price unchanged. Text/image/video prices; audio input 1.00 not modelled. Google bills context-cache STORAGE per token-hour ($0.50/M/h intro for 3.6-3.8 Flash, $1.00 other Flash, $4.50 Pro) and has no per-token cache-write price; storage is NOT modelled (cache_write pinned to 1.0 via cache_rules). Do not read 1.0 as 'writes are free'. flex pricing equals batch pricing on the page."
+    },
+    {
+      "match": "grok-4.7",
+      "provider": "xai",
+      "display": "Grok 4.7",
+      "input": 2,
+      "output": 6,
+      "cache_read": 0.5,
+      "variants": {
+        "priority": {
+          "input": 4,
+          "output": 12,
+          "cache_read": 1.0
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 200000,
+          "input": 4,
+          "output": 12,
+          "cache_read": 1.0,
+          "variants": {
+            "priority": {
+              "input": 8,
+              "output": 24,
+              "cache_read": 2.0
+            }
+          }
+        }
+      ],
+      "context_window": 500000,
+      "source": "https://docs.x.ai/developers/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": ">=200k prompt tokens bills ALL tokens of the request at the higher rate (page wording). priority = 2x all token types. No cache-write price published (pinned 1.0). Release date: page gives month only, omitted. Batch discount not offered for this model."
     },
     {
       "match": "grok-4.6",
       "provider": "xai",
       "display": "Grok 4.6",
-      "input": 2.0,
-      "output": 6.0,
-      "context_window": 500000
+      "input": 2,
+      "output": 6,
+      "cache_read": 0.5,
+      "variants": {
+        "priority": {
+          "input": 4,
+          "output": 12,
+          "cache_read": 1.0
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 200000,
+          "input": 4,
+          "output": 12,
+          "cache_read": 1.0,
+          "variants": {
+            "priority": {
+              "input": 8,
+              "output": 24,
+              "cache_read": 2.0
+            }
+          }
+        }
+      ],
+      "context_window": 500000,
+      "source": "https://docs.x.ai/developers/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": ">=200k prompt tokens bills ALL tokens of the request at the higher rate (page wording). priority = 2x all token types. No cache-write price published (pinned 1.0). Release date: page gives month only, omitted. Batch discount not offered for this model."
     },
     {
       "match": "grok-4.5",
       "provider": "xai",
       "display": "Grok 4.5",
-      "input": 2.0,
-      "output": 6.0,
-      "context_window": 500000
+      "input": 2,
+      "output": 6,
+      "cache_read": 0.3,
+      "variants": {
+        "priority": {
+          "input": 4,
+          "output": 12,
+          "cache_read": 0.6
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 200000,
+          "input": 4,
+          "output": 12,
+          "cache_read": 0.6,
+          "variants": {
+            "priority": {
+              "input": 8,
+              "output": 24,
+              "cache_read": 1.2
+            }
+          }
+        }
+      ],
+      "context_window": 500000,
+      "source": "https://docs.x.ai/developers/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": ">=200k prompt tokens bills ALL tokens of the request at the higher rate (page wording). priority = 2x all token types. No cache-write price published (pinned 1.0). Release date: page gives month only, omitted. Batch discount not offered for this model."
     },
     {
       "match": "grok-4.3",
@@ -705,23 +2484,350 @@
       "display": "Grok 4.3",
       "input": 1.25,
       "output": 2.5,
-      "context_window": 1000000
+      "cache_read": 0.2,
+      "variants": {
+        "priority": {
+          "input": 2.5,
+          "output": 5.0,
+          "cache_read": 0.4
+        },
+        "batch": {
+          "input": 1.0,
+          "output": 2.0
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 200000,
+          "input": 2.5,
+          "output": 5,
+          "cache_read": 0.4,
+          "variants": {
+            "priority": {
+              "input": 5.0,
+              "output": 10,
+              "cache_read": 0.8
+            },
+            "batch": {
+              "input": 2.0,
+              "output": 4.0
+            }
+          }
+        }
+      ],
+      "context_window": 1000000,
+      "source": "https://docs.x.ai/developers/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": ">=200k prompt tokens bills ALL tokens of the request at the higher rate (page wording). priority = 2x all token types. No cache-write price published (pinned 1.0). Release date: page gives month only, omitted. Batch API is 20% off input/output (batch cached derived at the same ratio)."
+    },
+    {
+      "match": "grok-4.20-0309-reasoning",
+      "provider": "xai",
+      "display": "Grok 4.20 (0309, reasoning)",
+      "input": 1.25,
+      "output": 2.5,
+      "cache_read": 0.2,
+      "variants": {
+        "priority": {
+          "input": 2.5,
+          "output": 5.0,
+          "cache_read": 0.4
+        },
+        "batch": {
+          "input": 1.0,
+          "output": 2.0
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 200000,
+          "input": 2.5,
+          "output": 5,
+          "cache_read": 0.4,
+          "variants": {
+            "priority": {
+              "input": 5.0,
+              "output": 10,
+              "cache_read": 0.8
+            },
+            "batch": {
+              "input": 2.0,
+              "output": 4.0
+            }
+          }
+        }
+      ],
+      "context_window": 1000000,
+      "source": "https://docs.x.ai/developers/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": ">=200k prompt tokens bills ALL tokens of the request at the higher rate (page wording). priority = 2x all token types. No cache-write price published (pinned 1.0). Release date: page gives month only, omitted. Batch API is 20% off input/output (batch cached derived at the same ratio)."
+    },
+    {
+      "match": "grok-4.20-0309-non-reasoning",
+      "provider": "xai",
+      "display": "Grok 4.20 (0309, non-reasoning)",
+      "input": 1.25,
+      "output": 2.5,
+      "cache_read": 0.2,
+      "variants": {
+        "priority": {
+          "input": 2.5,
+          "output": 5.0,
+          "cache_read": 0.4
+        },
+        "batch": {
+          "input": 1.0,
+          "output": 2.0
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 200000,
+          "input": 2.5,
+          "output": 5,
+          "cache_read": 0.4,
+          "variants": {
+            "priority": {
+              "input": 5.0,
+              "output": 10,
+              "cache_read": 0.8
+            },
+            "batch": {
+              "input": 2.0,
+              "output": 4.0
+            }
+          }
+        }
+      ],
+      "context_window": 1000000,
+      "source": "https://docs.x.ai/developers/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": ">=200k prompt tokens bills ALL tokens of the request at the higher rate (page wording). priority = 2x all token types. No cache-write price published (pinned 1.0). Release date: page gives month only, omitted. Batch API is 20% off input/output (batch cached derived at the same ratio)."
+    },
+    {
+      "match": "grok-4.20-multi-agent-0309",
+      "provider": "xai",
+      "display": "Grok 4.20 Multi-Agent (0309)",
+      "input": 1.25,
+      "output": 2.5,
+      "cache_read": 0.2,
+      "variants": {
+        "priority": {
+          "input": 2.5,
+          "output": 5.0,
+          "cache_read": 0.4
+        },
+        "batch": {
+          "input": 1.0,
+          "output": 2.0
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 200000,
+          "input": 2.5,
+          "output": 5,
+          "cache_read": 0.4,
+          "variants": {
+            "priority": {
+              "input": 5.0,
+              "output": 10,
+              "cache_read": 0.8
+            },
+            "batch": {
+              "input": 2.0,
+              "output": 4.0
+            }
+          }
+        }
+      ],
+      "context_window": 1000000,
+      "source": "https://docs.x.ai/developers/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": ">=200k prompt tokens bills ALL tokens of the request at the higher rate (page wording). priority = 2x all token types. No cache-write price published (pinned 1.0). Release date: page gives month only, omitted. Batch API is 20% off input/output (batch cached derived at the same ratio)."
     },
     {
       "match": "grok-4.20",
       "provider": "xai",
-      "display": "Grok 4.20",
+      "display": "Grok 4.20 (family prefix)",
       "input": 1.25,
       "output": 2.5,
-      "context_window": 1000000
+      "cache_read": 0.2,
+      "variants": {
+        "priority": {
+          "input": 2.5,
+          "output": 5.0,
+          "cache_read": 0.4
+        },
+        "batch": {
+          "input": 1.0,
+          "output": 2.0
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 200000,
+          "input": 2.5,
+          "output": 5,
+          "cache_read": 0.4,
+          "variants": {
+            "priority": {
+              "input": 5.0,
+              "output": 10,
+              "cache_read": 0.8
+            },
+            "batch": {
+              "input": 2.0,
+              "output": 4.0
+            }
+          }
+        }
+      ],
+      "context_window": 1000000,
+      "source": "https://docs.x.ai/developers/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Family prefix row kept from the previous table; real ids have their own rows. >=200k prompt tokens bills ALL tokens of the request at the higher rate (page wording). priority = 2x all token types. No cache-write price published (pinned 1.0). Release date: page gives month only, omitted. Batch API is 20% off input/output (batch cached derived at the same ratio)."
     },
     {
-      "match": "grok-build",
+      "match": "grok-build-0.1",
       "provider": "xai",
       "display": "Grok Build 0.1",
-      "input": 1.0,
-      "output": 2.0,
-      "context_window": 256000
+      "input": 1,
+      "output": 2,
+      "cache_read": 0.2,
+      "variants": {
+        "priority": {
+          "input": 2,
+          "output": 4,
+          "cache_read": 0.4
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 200000,
+          "input": 2,
+          "output": 4,
+          "cache_read": 0.4,
+          "variants": {
+            "priority": {
+              "input": 4,
+              "output": 8,
+              "cache_read": 0.8
+            }
+          }
+        }
+      ],
+      "context_window": 256000,
+      "source": "https://docs.x.ai/developers/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": ">=200k prompt tokens bills ALL tokens of the request at the higher rate (page wording). priority = 2x all token types. No cache-write price published (pinned 1.0). Release date: page gives month only, omitted. Batch discount not offered for this model."
+    },
+    {
+      "match": "muse-spark-1.3-contributor",
+      "provider": "meta",
+      "display": "Muse Spark 1.3 (Contributor)",
+      "input": 0.1,
+      "output": 0.2,
+      "cache_read": 0.002,
+      "context_window": 1048576,
+      "source": "https://dev.meta.ai/docs/pricing-rate-limits",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Contributor tier: heavily discounted in exchange for permission to train Meta models on prompts and completions. No long-context premium; no cache-write charge. Release date omitted. "
+    },
+    {
+      "match": "muse-spark-1.2-contributor",
+      "provider": "meta",
+      "display": "Muse Spark 1.2 (Contributor)",
+      "input": 0.1,
+      "output": 0.2,
+      "cache_read": 0.002,
+      "context_window": 1048576,
+      "source": "https://dev.meta.ai/docs/pricing-rate-limits",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Contributor tier: heavily discounted in exchange for permission to train Meta models on prompts and completions. No long-context premium; no cache-write charge. Release date omitted. "
+    },
+    {
+      "match": "muse-spark-1.3",
+      "provider": "meta",
+      "display": "Muse Spark 1.3",
+      "input": 1.25,
+      "output": 4.25,
+      "cache_read": 0.15,
+      "context_window": 1048576,
+      "source": "https://dev.meta.ai/docs/pricing-rate-limits",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Standard tier: no training on your data. No long-context premium (page states it explicitly). No cache-write charge. Web-search grounding $2.50 per 1,000 queries not modelled. Release date omitted (only secondary sources). Pages do not state GA/waitlist wording; paid per-token prices are published. "
+    },
+    {
+      "match": "muse-spark-1.2",
+      "provider": "meta",
+      "display": "Muse Spark 1.2",
+      "input": 1.25,
+      "output": 4.25,
+      "cache_read": 0.15,
+      "context_window": 1048576,
+      "source": "https://dev.meta.ai/docs/pricing-rate-limits",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Standard tier: no training on your data. No long-context premium (page states it explicitly). No cache-write charge. Web-search grounding $2.50 per 1,000 queries not modelled. Release date omitted (only secondary sources). Pages do not state GA/waitlist wording; paid per-token prices are published. "
+    },
+    {
+      "match": "muse-spark-1.1",
+      "provider": "meta",
+      "display": "Muse Spark 1.1",
+      "input": 1.25,
+      "output": 4.25,
+      "cache_read": 0.15,
+      "context_window": 1048576,
+      "source": "https://dev.meta.ai/docs/pricing-rate-limits",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Standard tier: no training on your data. No long-context premium (page states it explicitly). No cache-write charge. Web-search grounding $2.50 per 1,000 queries not modelled. Release date omitted (only secondary sources). Pages do not state GA/waitlist wording; paid per-token prices are published. No muse-spark-1.1-contributor id is published."
+    },
+    {
+      "match": "deepseek-flash",
+      "provider": "deepseek",
+      "display": "DeepSeek V4.1 Flash",
+      "input": 0.15,
+      "output": 0.6,
+      "cache_read": 0.003,
+      "peak": {
+        "weekdays": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "utc_hours": [
+          [
+            1,
+            4
+          ],
+          [
+            6,
+            10
+          ]
+        ],
+        "input": 0.3,
+        "output": 1.2,
+        "cache_read": 0.006
+      },
+      "released": "2026-09-10",
+      "note": "Prices are OFF-PEAK; peak (2x) in `peak` block: Mon-Fri 01:00-04:00 and 06:00-10:00 UTC, effective 2026-08-16 16:00 UTC. Chinese public holidays (peak excluded by vendor) are NOT modelled, so holiday-weekday cost is slightly overstated. No cache write charge, no batch API, no long-context tier. Max output 384K.",
+      "context_window": 1000000,
+      "source": "https://api-docs.deepseek.com/quick_start/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "deepseek-v4-pro",
@@ -729,39 +2835,206 @@
       "display": "DeepSeek V4 Pro",
       "input": 0.66,
       "output": 1.98,
-      "context_window": 1048576
+      "cache_read": 0.022,
+      "peak": {
+        "weekdays": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "utc_hours": [
+          [
+            1,
+            4
+          ],
+          [
+            6,
+            10
+          ]
+        ],
+        "input": 1.32,
+        "output": 3.96,
+        "cache_read": 0.044
+      },
+      "released": "2026-08-13",
+      "note": "Prices are OFF-PEAK; peak (2x) in `peak` block: Mon-Fri 01:00-04:00 and 06:00-10:00 UTC, effective 2026-08-16 16:00 UTC. Chinese public holidays (peak excluded by vendor) are NOT modelled, so holiday-weekday cost is slightly overstated. V4-Pro-0813 GA; service continues past 2026-09-14 at unchanged rates. No cache write, no batch, no long-context tier.",
+      "context_window": 1000000,
+      "source": "https://api-docs.deepseek.com/quick_start/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "deepseek-v4-flash",
       "provider": "deepseek",
-      "display": "DeepSeek V4 Flash",
-      "input": 0.22,
-      "output": 0.66,
-      "context_window": 1048576
+      "display": "DeepSeek V4 Flash (retired, routed to V4.1 Flash)",
+      "input": 0.15,
+      "output": 0.6,
+      "cache_read": 0.003,
+      "peak": {
+        "weekdays": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "utc_hours": [
+          [
+            1,
+            4
+          ],
+          [
+            6,
+            10
+          ]
+        ],
+        "input": 0.3,
+        "output": 1.2,
+        "cache_read": 0.006
+      },
+      "status": "retired",
+      "retired": "2026-09-10",
+      "note": "Retired 2026-09-10; legacy names (deepseek-v4-flash, deepseek-v4-flash-vision-exp) still accepted and billed at V4.1 Flash pricing, so this row mirrors deepseek-flash. The pre-2026-09-10 V4 Flash price is NOT on the vendor's /updates log (it only says prices were 'reduced accordingly'), so no `periods` entry; earlier events are billed at the new Flash price. Prices are OFF-PEAK; peak (2x) in `peak` block: Mon-Fri 01:00-04:00 and 06:00-10:00 UTC, effective 2026-08-16 16:00 UTC. Chinese public holidays (peak excluded by vendor) are NOT modelled, so holiday-weekday cost is slightly overstated.",
+      "context_window": 1000000,
+      "source": "https://api-docs.deepseek.com/quick_start/pricing",
+      "verified": "2026-10-01"
+    },
+    {
+      "match": "qwen3.8-max",
+      "provider": "alibaba",
+      "display": "Qwen3.8-Max",
+      "input": 2.0,
+      "output": 6.0,
+      "note": "International (Singapore) price, single tier to 1M. Cache: page says non-standard rates per console for this model; provider 0.2x implicit ratio used as approximation.",
+      "context_window": 1000000,
+      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "qwen3.8-max-0902",
+      "provider": "alibaba",
+      "display": "Qwen3.8-Max (0902)",
+      "input": 2.0,
+      "output": 6.0,
+      "note": "Same price as qwen3.8-max; own row because '-0902' is not a date suffix in the match grammar.",
+      "context_window": 1000000,
+      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "qwen3.8-flash",
+      "provider": "alibaba",
+      "display": "Qwen3.8-Flash",
+      "input": 0.15,
+      "output": 0.47,
+      "note": "Single tier to 1M. Cache rate per console (non-standard); provider ratio used as approximation.",
+      "context_window": 1000000,
+      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "qwen3.7-plus",
+      "provider": "alibaba",
+      "display": "Qwen3.7-Plus",
+      "input": 0.4,
+      "output": 1.6,
+      "bands": [
+        {
+          "min_input_tokens": 262145,
+          "input": 1.2,
+          "output": 4.8
+        }
+      ],
+      "cache_rules": {
+        "batch": 1.0
+      },
+      "note": "Tiers by input tokens per request (<=256K: 0.40/1.60; 256K-1M: 1.20/4.80), whole request. Page shows a 'limited-time 20% off' label; figures are the page's listed prices (unclear if promo already applied). Batch not listed for this model -> batch 1.0. 256K boundary assumed 262144 tokens.",
+      "context_window": 1000000,
+      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "qwen3.7-flash",
+      "provider": "alibaba",
+      "display": "Qwen3.7-Flash",
+      "input": 0.03,
+      "output": 0.13,
+      "bands": [
+        {
+          "min_input_tokens": 32769,
+          "input": 0.1,
+          "output": 0.4
+        },
+        {
+          "min_input_tokens": 262145,
+          "input": 0.2,
+          "output": 0.8
+        }
+      ],
+      "note": "Three tiers by input tokens per request (<=32K, 32K-256K, 256K-1M), whole request. Boundaries assumed 32768 / 262144.",
+      "context_window": 1000000,
+      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "qwen-max",
       "provider": "alibaba",
       "display": "Qwen Max",
-      "input": 2.0,
-      "output": 6.0,
-      "context_window": 30720
+      "input": 1.6,
+      "output": 6.4,
+      "note": "Bare alias; international price 1.60/6.40 (old table carried qwen3.8-max's 2.00/6.00). context_window 30720 carried from old table, not re-confirmed.",
+      "context_window": 30720,
+      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "qwen-plus",
       "provider": "alibaba",
       "display": "Qwen Plus",
       "input": 0.4,
-      "output": 1.6,
-      "context_window": 997952
+      "output": 1.2,
+      "bands": [
+        {
+          "min_input_tokens": 262145,
+          "input": 1.2,
+          "output": 3.6
+        }
+      ],
+      "cache_rules": {
+        "batch": 1.0
+      },
+      "note": "Non-thinking output prices (0.40/1.20; >256K 1.20/3.60). THINKING output is 4.00 (<=256K) / 12.00 (>256K); thinking is not distinguishable in logs so non-thinking is used and thinking turns are under-costed. Batch not listed -> 1.0. context_window carried from old table.",
+      "context_window": 997952,
+      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "qwen-flash",
       "provider": "alibaba",
       "display": "Qwen Flash",
-      "input": 0.03,
-      "output": 0.13,
-      "context_window": 997952
+      "input": 0.05,
+      "output": 0.4,
+      "bands": [
+        {
+          "min_input_tokens": 262145,
+          "input": 0.25,
+          "output": 2.0
+        }
+      ],
+      "note": "Two tiers by input tokens per request (<=256K, 256K-1M). Batch 50%. context_window carried from old table.",
+      "context_window": 997952,
+      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "kimi-k3",
@@ -769,7 +3042,17 @@
       "display": "Kimi K3",
       "input": 3.0,
       "output": 15.0,
-      "context_window": 1048576
+      "cache_read": 0.3,
+      "cache_write_5m": 3.0,
+      "cache_write_1h": 6.0,
+      "cache_rules": {
+        "batch": 1.0
+      },
+      "note": "Explicit cache write tiers: 5m $3.00, 1h $6.00 (contradicts old 'no cache write' note). No batch price published for K3 -> batch 1.0.",
+      "context_window": 1048576,
+      "source": "https://platform.kimi.ai/docs/pricing/chat-k3",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "kimi-k2.7-code",
@@ -777,7 +3060,35 @@
       "display": "Kimi K2.7 Code",
       "input": 0.95,
       "output": 4.0,
-      "context_window": 262144
+      "cache_read": 0.19,
+      "variants": {
+        "batch": {
+          "input": 0.57,
+          "output": 2.4,
+          "cache_read": 0.114
+        }
+      },
+      "note": "No cache write charge. Batch is 60% of standard (batch page).",
+      "context_window": 262144,
+      "source": "https://platform.kimi.ai/docs/pricing/chat",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "kimi-k2.7-code-highspeed",
+      "provider": "moonshot",
+      "display": "Kimi K2.7 Code Highspeed",
+      "input": 1.9,
+      "output": 8.0,
+      "cache_read": 0.38,
+      "cache_rules": {
+        "batch": 1.0
+      },
+      "note": "New row: 2x K2.7 Code price. No cache write; not on batch page -> batch 1.0.",
+      "context_window": 262144,
+      "source": "https://platform.kimi.ai/docs/pricing/chat",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "kimi-k2.6",
@@ -785,14 +3096,44 @@
       "display": "Kimi K2.6",
       "input": 0.95,
       "output": 4.0,
-      "context_window": 262144
+      "cache_read": 0.16,
+      "variants": {
+        "batch": {
+          "input": 0.57,
+          "output": 2.4,
+          "cache_read": 0.1
+        }
+      },
+      "note": "No cache write charge. Batch 60% (batch page: 0.57/2.40, hit 0.10).",
+      "context_window": 262144,
+      "source": "https://platform.kimi.ai/docs/pricing/chat",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "glm-5.3-flash",
       "provider": "zhipu",
       "display": "GLM-5.3-Flash",
-      "input": 0.075,
-      "output": 0.25,
+      "input": 0.15,
+      "output": 0.5,
+      "cache_read": 0.03,
+      "note": "Corrected from old 0.075/0.25. Cache storage limited-time free (promo, recheck).",
+      "context_window": 1000000,
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "glm-5.3-flashx",
+      "provider": "zhipu",
+      "display": "GLM-5.3-FlashX",
+      "input": 0.37,
+      "output": 1.25,
+      "cache_read": 0.075,
+      "note": "New. Cache storage limited-time free (promo, recheck). context_window copied from sibling glm-5.3-flash in the previous table; the vendor page does not state it.",
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
       "context_window": 1000000
     },
     {
@@ -801,7 +3142,12 @@
       "display": "GLM-5.3",
       "input": 1.4,
       "output": 4.4,
-      "context_window": 1000000
+      "cache_read": 0.26,
+      "note": "Cache storage limited-time free (promo, recheck).",
+      "context_window": 1000000,
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "glm-5.2",
@@ -809,7 +3155,36 @@
       "display": "GLM-5.2",
       "input": 1.4,
       "output": 4.4,
-      "context_window": 1000000
+      "cache_read": 0.26,
+      "note": "Cache storage limited-time free (promo, recheck).",
+      "context_window": 1000000,
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "glm-5.1",
+      "provider": "zhipu",
+      "display": "GLM-5.1",
+      "input": 1.4,
+      "output": 4.4,
+      "cache_read": 0.26,
+      "note": "New. Cache storage limited-time free (promo, recheck).",
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "glm-5",
+      "provider": "zhipu",
+      "display": "GLM-5",
+      "input": 1.0,
+      "output": 3.2,
+      "cache_read": 0.2,
+      "note": "New. Cache storage limited-time free (promo, recheck).",
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "glm-4.7-flashx",
@@ -817,6 +3192,23 @@
       "display": "GLM-4.7-FlashX",
       "input": 0.07,
       "output": 0.4,
+      "cache_read": 0.01,
+      "context_window": 200000,
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "glm-4.7-flash",
+      "provider": "zhipu",
+      "display": "GLM-4.7-Flash (free)",
+      "input": 0.0,
+      "output": 0.0,
+      "cache_read": 0.0,
+      "note": "Listed Free on vendor page. context_window copied from sibling glm-4.7-flashx in the previous table; the vendor page does not state it.",
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
       "context_window": 200000
     },
     {
@@ -825,7 +3217,36 @@
       "display": "GLM-4.7",
       "input": 0.6,
       "output": 2.2,
-      "context_window": 200000
+      "cache_read": 0.11,
+      "context_window": 200000,
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "glm-4.6",
+      "provider": "zhipu",
+      "display": "GLM-4.6",
+      "input": 0.6,
+      "output": 2.2,
+      "cache_read": 0.11,
+      "note": "New. Vision variants (glm-4.6v*) are priced differently and fall through to this row as 'estimated'.",
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "glm-4.5-airx",
+      "provider": "zhipu",
+      "display": "GLM-4.5-AirX",
+      "input": 1.1,
+      "output": 4.5,
+      "cache_read": 0.22,
+      "note": "Added so glm-4.5-airx does not prefix-match glm-4.5-air. context_window copied from sibling glm-4.5-air in the previous table; the vendor page does not state it.",
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "context_window": 128000
     },
     {
       "match": "glm-4.5-air",
@@ -833,6 +3254,36 @@
       "display": "GLM-4.5-Air",
       "input": 0.2,
       "output": 1.1,
+      "cache_read": 0.03,
+      "context_window": 128000,
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "glm-4.5-flash",
+      "provider": "zhipu",
+      "display": "GLM-4.5-Flash (free)",
+      "input": 0.0,
+      "output": 0.0,
+      "cache_read": 0.0,
+      "note": "Listed Free on vendor page. context_window copied from sibling glm-4.5 in the previous table; the vendor page does not state it.",
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "context_window": 128000
+    },
+    {
+      "match": "glm-4.5-x",
+      "provider": "zhipu",
+      "display": "GLM-4.5-X",
+      "input": 2.2,
+      "output": 8.9,
+      "cache_read": 0.45,
+      "note": "Added so glm-4.5-x does not prefix-match glm-4.5. context_window copied from sibling glm-4.5 in the previous table; the vendor page does not state it.",
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga",
       "context_window": 128000
     },
     {
@@ -841,63 +3292,233 @@
       "display": "GLM-4.5",
       "input": 0.6,
       "output": 2.2,
-      "context_window": 128000
+      "cache_read": 0.11,
+      "context_window": 128000,
+      "source": "https://docs.z.ai/guides/overview/pricing",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
-      "match": "mistral-medium-3.5",
+      "match": "mistral-medium-3-5",
       "provider": "mistral",
       "display": "Mistral Medium 3.5",
       "input": 1.5,
       "output": 7.5,
-      "context_window": 256000
+      "cache_read": null,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 256000,
+      "source": "https://docs.mistral.ai/models/mistral-medium-3-5-26-04",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "released": "2026-04-28",
+      "note": "Cache read/write not published as absolute USD; derived from provider block (read 0.1x per docs prompt-caching page, no write charge)."
     },
     {
-      "match": "mistral-large-3",
+      "match": "mistral-medium-latest",
+      "provider": "mistral",
+      "display": "Mistral Medium 3.5",
+      "input": 1.5,
+      "output": 7.5,
+      "cache_read": null,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 256000,
+      "source": "https://docs.mistral.ai/models/mistral-medium-3-5-26-04",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "released": "2026-04-28",
+      "note": "Published alias of mistral-medium-3-5; own row because a trailing -latest only counts as benign after a full key."
+    },
+    {
+      "match": "mistral-large-2512",
       "provider": "mistral",
       "display": "Mistral Large 3",
       "input": 0.5,
       "output": 1.5,
-      "context_window": 256000
+      "cache_read": null,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 256000,
+      "source": "https://docs.mistral.ai/models/mistral-large-3-25-12",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "released": "2025-12-02",
+      "note": "Cache read/write not published as absolute USD; derived from provider block (read 0.1x per docs prompt-caching page, no write charge)."
     },
     {
-      "match": "mistral-small-4",
+      "match": "mistral-large-latest",
+      "provider": "mistral",
+      "display": "Mistral Large 3",
+      "input": 0.5,
+      "output": 1.5,
+      "cache_read": null,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 256000,
+      "source": "https://docs.mistral.ai/models/mistral-large-3-25-12",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "released": "2025-12-02",
+      "note": "Published alias of mistral-large-2512; own row because a trailing -latest only counts as benign after a full key."
+    },
+    {
+      "match": "mistral-small-2603",
       "provider": "mistral",
       "display": "Mistral Small 4",
       "input": 0.15,
       "output": 0.6,
-      "context_window": 256000
+      "cache_read": null,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 256000,
+      "source": "https://docs.mistral.ai/models/mistral-small-4-0-26-03",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "released": "2026-03-16",
+      "note": "Cache read/write not published as absolute USD; derived from provider block (read 0.1x per docs prompt-caching page, no write charge)."
     },
     {
-      "match": "codestral",
+      "match": "mistral-small-latest",
+      "provider": "mistral",
+      "display": "Mistral Small 4",
+      "input": 0.15,
+      "output": 0.6,
+      "cache_read": null,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 256000,
+      "source": "https://docs.mistral.ai/models/mistral-small-4-0-26-03",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "released": "2026-03-16",
+      "note": "Published alias of mistral-small-2603; own row because a trailing -latest only counts as benign after a full key."
+    },
+    {
+      "match": "codestral-2508",
       "provider": "mistral",
       "display": "Codestral",
       "input": 0.3,
       "output": 0.9,
-      "context_window": 128000
+      "cache_read": null,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 128000,
+      "source": "https://docs.mistral.ai/models/codestral-25-08",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Cache read/write not published as absolute USD; derived from provider block (read 0.1x per docs prompt-caching page, no write charge)."
     },
     {
-      "match": "ministral-14b",
+      "match": "codestral-latest",
+      "provider": "mistral",
+      "display": "Codestral",
+      "input": 0.3,
+      "output": 0.9,
+      "cache_read": null,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 128000,
+      "source": "https://docs.mistral.ai/models/codestral-25-08",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Published alias of codestral-2508; own row because a trailing -latest only counts as benign after a full key."
+    },
+    {
+      "match": "ministral-14b-2512",
       "provider": "mistral",
       "display": "Ministral 3 (14B)",
       "input": 0.2,
       "output": 0.2,
-      "context_window": 256000
+      "cache_read": null,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 256000,
+      "source": "https://docs.mistral.ai/models/ministral-3-14b-25-12",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "released": "2025-12-02",
+      "note": "Cache read/write not published as absolute USD; derived from provider block (read 0.1x per docs prompt-caching page, no write charge)."
     },
     {
-      "match": "ministral-8b",
+      "match": "ministral-14b-latest",
+      "provider": "mistral",
+      "display": "Ministral 3 (14B)",
+      "input": 0.2,
+      "output": 0.2,
+      "cache_read": null,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 256000,
+      "source": "https://docs.mistral.ai/models/ministral-3-14b-25-12",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "released": "2025-12-02",
+      "note": "Published alias of ministral-14b-2512; own row because a trailing -latest only counts as benign after a full key."
+    },
+    {
+      "match": "ministral-8b-2512",
       "provider": "mistral",
       "display": "Ministral 3 (8B)",
       "input": 0.15,
       "output": 0.15,
-      "context_window": 256000
+      "cache_read": null,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 256000,
+      "source": "https://docs.mistral.ai/models/ministral-3-8b-25-12",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "released": "2025-12-02",
+      "note": "Cache read/write not published as absolute USD; derived from provider block (read 0.1x per docs prompt-caching page, no write charge)."
     },
     {
-      "match": "ministral-3b",
+      "match": "ministral-8b-latest",
+      "provider": "mistral",
+      "display": "Ministral 3 (8B)",
+      "input": 0.15,
+      "output": 0.15,
+      "cache_read": null,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 256000,
+      "source": "https://docs.mistral.ai/models/ministral-3-8b-25-12",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "released": "2025-12-02",
+      "note": "Published alias of ministral-8b-2512; own row because a trailing -latest only counts as benign after a full key."
+    },
+    {
+      "match": "ministral-3b-2512",
       "provider": "mistral",
       "display": "Ministral 3 (3B)",
       "input": 0.1,
       "output": 0.1,
-      "context_window": 256000
+      "cache_read": null,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 256000,
+      "source": "https://docs.mistral.ai/models/ministral-3-3b-25-12",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "released": "2025-12-02",
+      "note": "Cache read/write not published as absolute USD; derived from provider block (read 0.1x per docs prompt-caching page, no write charge)."
+    },
+    {
+      "match": "ministral-3b-latest",
+      "provider": "mistral",
+      "display": "Ministral 3 (3B)",
+      "input": 0.1,
+      "output": 0.1,
+      "cache_read": null,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 256000,
+      "source": "https://docs.mistral.ai/models/ministral-3-3b-25-12",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "released": "2025-12-02",
+      "note": "Published alias of ministral-3b-2512; own row because a trailing -latest only counts as benign after a full key."
     },
     {
       "match": "minimax-m3",
@@ -905,69 +3526,389 @@
       "display": "MiniMax M3",
       "input": 0.3,
       "output": 1.2,
-      "context_window": 1000000
+      "cache_read": 0.06,
+      "cache_write_5m": null,
+      "cache_write_1h": null,
+      "context_window": 1000000,
+      "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "variants": {
+        "priority": {
+          "input": 0.45,
+          "output": 1.8,
+          "cache_read": 0.09,
+          "cache_write_5m": null,
+          "cache_write_1h": null
+        }
+      },
+      "bands": [
+        {
+          "min_input_tokens": 512001,
+          "input": 0.6,
+          "output": 2.4,
+          "cache_read": 0.12,
+          "cache_write_5m": null,
+          "cache_write_1h": null,
+          "variants": {
+            "priority": {
+              "input": 0.9,
+              "output": 3.6,
+              "cache_read": 0.18,
+              "cache_write_5m": null,
+              "cache_write_1h": null
+            }
+          }
+        }
+      ],
+      "cache_rules": {
+        "cache_write_5m": 1.0,
+        "cache_write_1h": 1.0
+      },
+      "note": "Top-level = current 'Permanent 50% off' price (<=512k input). The >512k tier is a distinct tier on the page; page does not say whole-request vs marginal, assumed whole-request. Priority = 1.5x per page. No cache-write price published: writes billed as plain input (cache_rules 1.0). Undiscounted list was 2x (0.60/2.40/0.12)."
+    },
+    {
+      "match": "minimax-m2.7-highspeed",
+      "provider": "minimax",
+      "display": "MiniMax M2.7 Highspeed",
+      "input": 0.6,
+      "output": 2.4,
+      "cache_read": 0.06,
+      "cache_write_5m": 0.375,
+      "cache_write_1h": 0.375,
+      "context_window": 204800,
+      "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
+      "verified": "2026-10-01",
+      "status": "ga"
     },
     {
       "match": "minimax-m2.7",
       "provider": "minimax",
       "display": "MiniMax M2.7",
-      "input": 0.28,
-      "output": 1.1,
-      "context_window": 204800
+      "input": 0.3,
+      "output": 1.2,
+      "cache_read": 0.06,
+      "cache_write_5m": 0.375,
+      "cache_write_1h": 0.375,
+      "context_window": 204800,
+      "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
+      "verified": "2026-10-01",
+      "status": "ga"
+    },
+    {
+      "match": "minimax-m2.5-highspeed",
+      "provider": "minimax",
+      "display": "MiniMax M2.5 Highspeed",
+      "input": 0.6,
+      "output": 2.4,
+      "cache_read": 0.03,
+      "cache_write_5m": 0.375,
+      "cache_write_1h": 0.375,
+      "context_window": 204800,
+      "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Legacy row on pricing page."
+    },
+    {
+      "match": "minimax-m2.5",
+      "provider": "minimax",
+      "display": "MiniMax M2.5",
+      "input": 0.3,
+      "output": 1.2,
+      "cache_read": 0.03,
+      "cache_write_5m": 0.375,
+      "cache_write_1h": 0.375,
+      "context_window": 204800,
+      "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Legacy row on pricing page."
+    },
+    {
+      "match": "minimax-m2.1-highspeed",
+      "provider": "minimax",
+      "display": "MiniMax M2.1 Highspeed",
+      "input": 0.6,
+      "output": 2.4,
+      "cache_read": 0.03,
+      "cache_write_5m": 0.375,
+      "cache_write_1h": 0.375,
+      "context_window": 204800,
+      "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Legacy row on pricing page."
+    },
+    {
+      "match": "minimax-m2.1",
+      "provider": "minimax",
+      "display": "MiniMax M2.1",
+      "input": 0.3,
+      "output": 1.2,
+      "cache_read": 0.03,
+      "cache_write_5m": 0.375,
+      "cache_write_1h": 0.375,
+      "context_window": 204800,
+      "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Legacy row on pricing page."
     },
     {
       "match": "minimax-m2",
       "provider": "minimax",
       "display": "MiniMax M2",
-      "input": 0.26,
-      "output": 1.0,
-      "context_window": 204800
+      "input": 0.3,
+      "output": 1.2,
+      "cache_read": 0.03,
+      "cache_write_5m": 0.375,
+      "cache_write_1h": 0.375,
+      "context_window": 204800,
+      "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Legacy row on pricing page."
     },
     {
-      "match": "amazon-nova-2-lite",
+      "match": "nova-2-lite",
       "provider": "amazon",
       "display": "Amazon Nova 2 Lite",
-      "input": 0.3,
-      "output": 2.5,
-      "context_window": 1000000
+      "input": 0.33,
+      "output": 2.75,
+      "cache_read": 0.0825,
+      "cache_write_5m": 0.0,
+      "cache_write_1h": 0.0,
+      "variants": {
+        "priority": {
+          "input": 0.5775,
+          "output": 4.8125,
+          "cache_read": 0.144375,
+          "cache_write_5m": 0.0,
+          "cache_write_1h": 0.0
+        },
+        "flex": {
+          "input": 0.165,
+          "output": 1.375,
+          "cache_read": 0.04125,
+          "cache_write_5m": 0.0,
+          "cache_write_1h": 0.0
+        },
+        "batch": {
+          "input": 0.165,
+          "output": 1.375,
+          "cache_read": null,
+          "cache_write_5m": null,
+          "cache_write_1h": null
+        }
+      },
+      "context_window": 1000000,
+      "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/index.json",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "AWS Price List API AmazonBedrock offer (publicationDate 2026-09-30), us-east-1/us-east-2/us-west-2 on-demand, converted 1K->1M. In-region/geo (us.) price. global.amazon.nova-2-lite-v1:0 is cheaper: 0.30/2.50, cache read 0.075 (not modeled). Cache write 0."
     },
     {
-      "match": "amazon-nova-premier",
+      "match": "nova-premier",
       "provider": "amazon",
       "display": "Amazon Nova Premier",
       "input": 2.5,
       "output": 12.5,
-      "context_window": 1000000
+      "cache_read": 0.625,
+      "cache_write_5m": 0.0,
+      "cache_write_1h": 0.0,
+      "variants": {
+        "priority": {
+          "input": 4.375,
+          "output": 21.875,
+          "cache_read": 1.09375,
+          "cache_write_5m": 0.0,
+          "cache_write_1h": 0.0
+        },
+        "flex": {
+          "input": 1.25,
+          "output": 6.25,
+          "cache_read": 0.3125,
+          "cache_write_5m": 0.0,
+          "cache_write_1h": 0.0
+        },
+        "batch": {
+          "input": 1.25,
+          "output": 6.25,
+          "cache_read": null,
+          "cache_write_5m": null,
+          "cache_write_1h": null
+        }
+      },
+      "context_window": 1000000,
+      "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/index.json",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "AWS Price List API AmazonBedrock offer (publicationDate 2026-09-30), us-east-1/us-east-2/us-west-2 on-demand, converted 1K->1M. Cache write 0."
     },
     {
-      "match": "amazon-nova-pro",
+      "match": "nova-pro",
       "provider": "amazon",
       "display": "Amazon Nova Pro",
       "input": 0.8,
       "output": 3.2,
-      "context_window": 300000
+      "cache_read": 0.2,
+      "cache_write_5m": 0.0,
+      "cache_write_1h": 0.0,
+      "variants": {
+        "priority": {
+          "input": 1.4,
+          "output": 5.6,
+          "cache_read": 0.35,
+          "cache_write_5m": 0.0,
+          "cache_write_1h": 0.0
+        },
+        "flex": {
+          "input": 0.4,
+          "output": 1.6,
+          "cache_read": 0.1,
+          "cache_write_5m": 0.0,
+          "cache_write_1h": 0.0
+        },
+        "batch": {
+          "input": 0.4,
+          "output": 1.6,
+          "cache_read": null,
+          "cache_write_5m": null,
+          "cache_write_1h": null
+        }
+      },
+      "context_window": 300000,
+      "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/index.json",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "AWS Price List API AmazonBedrock offer (publicationDate 2026-09-30), us-east-1/us-east-2/us-west-2 on-demand, converted 1K->1M. Cache write 0. Separate 'Latency Optimized' SKU 1.00/4.00 not modeled (no tier fits)."
     },
     {
-      "match": "amazon-nova-lite",
+      "match": "nova-lite",
       "provider": "amazon",
       "display": "Amazon Nova Lite",
       "input": 0.06,
       "output": 0.24,
-      "context_window": 300000
+      "cache_read": 0.015,
+      "cache_write_5m": 0.0,
+      "cache_write_1h": 0.0,
+      "variants": {
+        "batch": {
+          "input": 0.03,
+          "output": 0.12,
+          "cache_read": null,
+          "cache_write_5m": null,
+          "cache_write_1h": null
+        }
+      },
+      "context_window": 300000,
+      "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/index.json",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "AWS Price List API AmazonBedrock offer (publicationDate 2026-09-30), us-east-1/us-east-2/us-west-2 on-demand, converted 1K->1M. Cache write 0. No priority/flex SKUs."
     },
     {
-      "match": "amazon-nova-micro",
+      "match": "nova-micro",
       "provider": "amazon",
       "display": "Amazon Nova Micro",
       "input": 0.035,
       "output": 0.14,
-      "context_window": 128000
+      "cache_read": 0.00875,
+      "cache_write_5m": 0.0,
+      "cache_write_1h": 0.0,
+      "variants": {
+        "batch": {
+          "input": 0.0175,
+          "output": 0.07,
+          "cache_read": null,
+          "cache_write_5m": null,
+          "cache_write_1h": null
+        }
+      },
+      "context_window": 128000,
+      "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/index.json",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "AWS Price List API AmazonBedrock offer (publicationDate 2026-09-30), us-east-1/us-east-2/us-west-2 on-demand, converted 1K->1M. Cache write 0. No priority/flex SKUs."
+    },
+    {
+      "match": "jev-1.13.0",
+      "provider": "typesafe",
+      "display": "Jev 1.13.0",
+      "input": 0.042,
+      "output": 0.0,
+      "context_window": 64000,
+      "source": "https://docs.typesafe.ai/models",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Jev is a hosted decision model (text state + typed questions -> typed structured answers), not a text-generation LLM; output tokens are free. No local logs exist: usage appears only in API responses (usage.input_tokens/output_tokens, model field) from POST https://api.typesafe.ai/v1/systemone. No cache, no batch. Context 64000 = '64k tokens per request' (32k of it for state plus the longest question) per docs. Docs say generally available; the 2026-09-15 blog said early access/waitlist (docs are newer)."
+    },
+    {
+      "match": "jev-latest",
+      "provider": "typesafe",
+      "display": "Jev (latest)",
+      "input": 0.042,
+      "output": 0.0,
+      "context_window": 64000,
+      "source": "https://docs.typesafe.ai/models",
+      "verified": "2026-10-01",
+      "status": "ga",
+      "note": "Jev is a hosted decision model (text state + typed questions -> typed structured answers), not a text-generation LLM; output tokens are free. No local logs exist: usage appears only in API responses (usage.input_tokens/output_tokens, model field) from POST https://api.typesafe.ai/v1/systemone. No cache, no batch. Context 64000 = '64k tokens per request' (32k of it for state plus the longest question) per docs. Alias that currently points to jev-1.13.0."
+    },
+    {
+      "match": "jev-preview",
+      "provider": "typesafe",
+      "display": "Jev (preview)",
+      "input": 0.042,
+      "output": 0.0,
+      "context_window": 64000,
+      "source": "https://docs.typesafe.ai/models",
+      "verified": "2026-10-01",
+      "status": "preview",
+      "note": "Jev is a hosted decision model (text state + typed questions -> typed structured answers), not a text-generation LLM; output tokens are free. No local logs exist: usage appears only in API responses (usage.input_tokens/output_tokens, model field) from POST https://api.typesafe.ai/v1/systemone. No cache, no batch. Context 64000 = '64k tokens per request' (32k of it for state plus the longest question) per docs. Alias that currently points to jev-1.13.0; docs say no separate preview model exists right now."
     }
   ],
   "unpriced_models": [
     {
       "match": "codex-auto-review",
-      "note": "no published per-token rate as of 2026-09-10 -- absent from developers.openai.com/api/docs/pricing and every developers.openai.com/api/docs/models/<id> page; third-party cost estimators disagree with each other by more than 2x, so none was trustworthy enough to enter as a number. Its tokens are still counted, just not priced -- update this entry if OpenAI publishes a real rate."
+      "status": "no_list_price",
+      "note": "As of 2026-10-01 no published per-token rate: absent from developers.openai.com/api/docs/pricing and every /api/docs/models/<id> page (fetched this session), and the Codex auto-review doc (learn.chatgpt.com/docs/sandboxing/auto-review) names neither the model nor billing. Per the Codex source (research guide section 2, not re-verified): with ChatGPT login the reviewer slug is codex-auto-review; with API-key auth the reviewer is gpt-5.6-luna ($0.20/$1.20, see row); billing is controlled by the backend and undocumented. OpenAI's developer-community post of 2026-07-30 says Auto-review moved from GPT-5.4 to GPT-5.6 Luna. Tokens are counted, not priced."
+    },
+    {
+      "match": "gpt-5.3-codex-spark",
+      "status": "no_list_price",
+      "note": "No API model page (developers.openai.com/api/docs/models/gpt-5.3-codex-spark returns 404) and no price on the pricing page. Codex docs (learn.chatgpt.com/docs/models) list it as retired 2026-09-14. NB: the prefix 'gpt-5.3-codex' in models would otherwise price it as an estimated gpt-5.3-codex; integrator should let unpriced_models win for this id."
+    },
+    {
+      "match": "gemini-4",
+      "status": "watchlist",
+      "note": "Gemini 4 Argon: announced 2026-09-30 (blog.google); rolling out only to trusted cyber defenders via the Fairwind Program (plus Google-internal use); paid API customers and AI Ultra are 'next' with no date. No API model id exists: ai.google.dev pricing, models and changelog pages (fetched 2026-10-01) contain no gemini-4/argon id. Announced intro price $2 input / $10 output per M tokens, cached input 95% off input, rising to $4/$20 afterwards; blog gives no model id and no context window (only a 1M output limit). Pages unchanged from the 2026-09-30 announcement facts. Add a real preview row if a gemini-4* id appears on ai.google.dev."
+    },
+    {
+      "match": "gemini-flash-latest",
+      "status": "no_list_price",
+      "note": "Floating alias to the latest Flash release (models page); target changes over time, so it is not priced. Resolve to a real id instead."
+    },
+    {
+      "match": "grok-build-latest",
+      "status": "no_list_price",
+      "note": "Alias not documented on docs.x.ai models/pricing pages read 2026-10-01; older notes said it points to Grok 4.5 (500k) but that is unconfirmed. Not priced."
+    },
+    {
+      "match": "qwen3.8-max-prime",
+      "status": "no_list_price",
+      "note": "Listed only under China (Beijing) on alibabacloud.com model-pricing (Fast mode Prime); no international price. NB prefix 'qwen3.8-max' still matches it as 'estimated' at 2.00/6.00."
+    },
+    {
+      "match": "command-a-plus-05-2026",
+      "status": "no_list_price",
+      "note": "No per-token list price on cohere.com/pricing (only legacy Command/Command R rows) as of 2026-10-01; docs.cohere.com/docs/pricing returned 404. Secondary prices deliberately not used."
+    },
+    {
+      "match": "north-mini-code-1-0",
+      "status": "no_list_price",
+      "note": "No per-token list price on cohere.com/pricing as of 2026-10-01; docs.cohere.com/docs/pricing returned 404. Secondary prices deliberately not used."
     }
   ]
 }

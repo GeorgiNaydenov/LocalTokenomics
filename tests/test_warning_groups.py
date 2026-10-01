@@ -166,14 +166,48 @@ def test_inert_retention_config_pipeline_warning_is_now_grouped() -> None:
     assert groups[0].instances[0].severity == WarningSeverity.info
 
 
-def test_inherited_pricing_pipeline_warning_is_now_grouped() -> None:
+def test_estimated_pricing_pipeline_warning_is_grouped_at_caution() -> None:
     warning = (
-        "model 'gpt-9' has no exact rates.json row of its own -- priced from the GPT-9 rate "
-        "because no exact row exists; check whether 'gpt-9' needs its own"
+        "model 'gpt-9-mini' has no rates.json row of its own -- cost is estimated from the "
+        "GPT-9 rate (1,500 tokens); add a row for 'gpt-9-mini' to price it exactly"
     )
     groups = warning_groups_of([warning])
     assert len(groups) == 1
-    assert groups[0].kind == "inherited_pricing"
+    assert groups[0].kind == "estimated_pricing"
+    assert groups[0].severity == WarningSeverity.caution
+    assert groups[0].instances[0].source == "pipeline"
+
+
+def test_tier_unpriced_warning_is_grouped_at_info() -> None:
+    warning = (
+        "model 'gpt-9' has no priority tier price in rates.json -- 900 tokens were billed at "
+        "the standard rate instead"
+    )
+    group = warning_groups_of([warning])[0]
+    assert group.kind == "tier_unpriced"
+    assert group.severity == WarningSeverity.info
+
+
+@pytest.mark.parametrize(
+    "days,expected",
+    [(31, WarningSeverity.info), (90, WarningSeverity.info), (91, WarningSeverity.caution)],
+)
+def test_stale_rates_severity_follows_the_age(days: int, expected: WarningSeverity) -> None:
+    warning = f"rates.json is {days} days old (as of 2026-01-01) -- prices may have changed"
+    group = warning_groups_of([warning])[0]
+    assert group.kind == "stale_rates"
+    assert group.severity == expected
+
+
+def test_reported_cost_divergence_is_caution_and_resolves_its_session() -> None:
+    warning = (
+        "session sess-7: tool-reported cost $1.0000 differs from computed cost $2.0000 (opencode)"
+    )
+    group = warning_groups_of([warning])[0]
+    assert group.kind == "reported_cost_divergence"
+    assert group.severity == WarningSeverity.caution
+    assert group.instances[0].session_id == "sess-7"
+    assert group.instances[0].source == "pipeline"
 
 
 def test_warnings_alias_still_lists_raw_messages_for_back_compat() -> None:
