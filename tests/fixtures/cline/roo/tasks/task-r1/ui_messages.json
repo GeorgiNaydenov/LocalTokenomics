@@ -1,0 +1,20 @@
+[
+  {
+    "ts": 1790000000000,
+    "type": "say",
+    "say": "text",
+    "text": "synthetic"
+  },
+  {
+    "ts": 1790000001000,
+    "type": "say",
+    "say": "api_req_started",
+    "text": "{\"request\": \"x\", \"apiProtocol\": \"anthropic\", \"tokensIn\": 18200, \"tokensOut\": 410, \"cacheWrites\": 2000, \"cacheReads\": 15000, \"cost\": 0.0431}"
+  },
+  {
+    "ts": 1790000002000,
+    "type": "say",
+    "say": "api_req_started",
+    "text": "{\"apiProtocol\": \"openai\", \"tokensIn\": 100, \"tokensOut\": 10, \"cost\": 0.001}"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "files_in_context": [],
+  "model_usage": [
+    {
+      "ts": 1790000000500,
+      "model_id": "claude-opus-4-1",
+      "model_provider_id": "anthropic",
+      "mode": "plan"
+    },
+    {
+      "ts": 1790000006500,
+      "model_id": "gpt-5",
+      "model_provider_id": "openai",
+      "mode": "act"
+    }
+  ]
+}

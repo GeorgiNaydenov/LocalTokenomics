@@ -1,0 +1,7 @@
+{"sessionId":"a1b2c3d4-0000-4000-8000-000000000001","projectHash":"9f2c","startTime":"2026-09-30T10:15:02.000Z","lastUpdated":"2026-09-30T10:15:02.000Z","kind":"main","directories":["/other/dir"]}
+{"id":"m1","timestamp":"2026-09-30T10:15:05.000Z","type":"user","content":[{"text":"x"}]}
+{"id":"m2","timestamp":"2026-09-30T10:15:09.000Z","type":"gemini","content":[{"text":"y"}],"model":"gemini-2.5-pro"}
+{"id":"m2","timestamp":"2026-09-30T10:15:09.000Z","type":"gemini","content":[{"text":"y"}],"model":"gemini-2.5-pro","tokens":{"input":12000,"output":300,"cached":9000,"thoughts":150,"tool":0,"total":12450}}
+{"$set":{"summary":"Demo session","lastUpdated":"2026-09-30T10:15:10.000Z"}}
+{"id":"m3","timestamp":"2026-09-30T10:16:00.000Z","type":"gemini","content":[{"text":"z"}],"model":"gemini-2.5-pro","tokens":{"input":5000,"output":100,"cached":0,"thoughts":0,"tool":200,"total":5300}}
+{"$rewindTo":"m3"}

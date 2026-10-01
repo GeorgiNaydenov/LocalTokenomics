@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "session_id": "sess_01",
+  "source": "cli",
+  "status": "completed",
+  "provider": "anthropic",
+  "model": "claude-haiku-4-5",
+  "cwd": "/work/sdkdemo",
+  "messages_path": "sess_01.messages.json",
+  "metadata": {}
+}

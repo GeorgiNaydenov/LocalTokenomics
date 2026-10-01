@@ -106,6 +106,7 @@ def _session_index(path: Path) -> dict[str, str]:
 
 def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
     model = ""
+    tier = "standard"
     session_id = _session_id_from_name(path)
     title = _session_index(path).get(session_id)
     project: str | None = None
@@ -122,7 +123,9 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
     first_token_count_seen = False
     inherited_tokens = 0
     reset_detected = False
-    pending: list[dict[str, Any]] = []
+    # Events seen before the model is known, each with the tier in force when it was seen:
+    # only the model is back-filled, an event ran under the setting that preceded it.
+    pending: list[tuple[dict[str, Any], str]] = []
     prefer_usage_records = _has_token_usage_records(path)
 
     for offset, _length, record in read_json_records(path, warnings):
@@ -152,14 +155,15 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
         if found_model:
             just_discovered = not model
             model = found_model
+        tier = _next_tier(payload, kind, tier)
         found_cwd = _find_raw_cwd(payload)
         if found_cwd:
             cwd = found_cwd
             project = project_of(found_cwd)
 
         if just_discovered and pending:
-            for kwargs in pending:
-                yield UsageEvent(model=model, **kwargs)
+            for kwargs, held_tier in pending:
+                yield UsageEvent(model=model, tier=held_tier, **kwargs)
             pending = []
 
         usage: dict | None = None
@@ -222,12 +226,12 @@ def parse(path: Path, warnings: list[str]) -> Iterator[UsageEvent]:
             "record_offset": offset,
         }
         if model:
-            yield UsageEvent(model=model, **kwargs)
+            yield UsageEvent(model=model, tier=tier, **kwargs)
         else:
-            pending.append(kwargs)
+            pending.append((kwargs, tier))
 
-    for kwargs in pending:
-        yield UsageEvent(model=model or None, **kwargs)
+    for kwargs, held_tier in pending:
+        yield UsageEvent(model=None, tier=held_tier, **kwargs)
     _reconcile(
         path,
         summed_reported,
@@ -243,6 +247,7 @@ def spans(path: Path, warnings: list[str]) -> Iterator[Span]:
     source_file = str(path)
     session_id = _session_id_from_name(path)
     model = ""
+    tier = "standard"
     cwd: str | None = None
     project: str | None = None
     effort: str | None = None
@@ -327,6 +332,7 @@ def spans(path: Path, warnings: list[str]) -> Iterator[Span]:
         found_model = _find_model(payload)
         if found_model:
             model = found_model
+        tier = _next_tier(payload, kind, tier)
         found_cwd = _find_raw_cwd(payload)
         if found_cwd:
             cwd = found_cwd
@@ -472,6 +478,7 @@ def spans(path: Path, warnings: list[str]) -> Iterator[Span]:
                 tokens_provenance="measured",
                 context_capacity=capacity or None,
                 capacity_provenance="measured" if capacity else "unavailable",
+                detail={"tier": tier},
             )
             for span in pending:
                 if span.parent_id is None:
@@ -520,6 +527,7 @@ def spans(path: Path, warnings: list[str]) -> Iterator[Span]:
                 tokens_provenance="measured",
                 context_capacity=capacity or None,
                 capacity_provenance="measured" if capacity else "unavailable",
+                detail={"tier": tier},
             )
             for span in pending:
                 if span.parent_id is None:
@@ -858,6 +866,43 @@ def _find_model(payload: dict) -> str:
         _nested(payload, "turn_context", "model"),
         _nested(payload, "info", "model"),
         _nested(payload, "model", "slug"),
+    ):
+        if isinstance(candidate, str) and candidate:
+            return candidate
+    return ""
+
+
+# What the rollout logs is the thread setting (`thread_settings_applied`), i.e. the tier the
+# request asked for, not a tier echoed back by the response. Codex maps its `fast` setting to
+# the request value `priority`; `default`/`auto`/`scale` and anything unrecognised bill standard.
+_TIER_ALIASES = {
+    "priority": "priority",
+    "fast": "priority",
+    "flex": "flex",
+    "ultrafast": "ultrafast",
+}
+
+
+def _price_tier(raw: str) -> str:
+    return _TIER_ALIASES.get(raw.strip().lower(), "standard")
+
+
+def _next_tier(payload: dict, kind: object, current: str) -> str:
+    """The price tier after this record. A `thread_settings_applied` record is the full
+    setting: without a `service_tier` the thread is back on standard (Fast turned off).
+    Any other record only changes the tier when it names one."""
+    found = _find_tier(payload)
+    if found:
+        return _price_tier(found)
+    return "standard" if kind == "thread_settings_applied" else current
+
+
+def _find_tier(payload: dict) -> str:
+    for candidate in (
+        _nested(payload, "thread_settings", "service_tier"),
+        payload.get("service_tier"),
+        _nested(payload, "turn_context", "service_tier"),
+        _nested(payload, "info", "service_tier"),
     ):
         if isinstance(candidate, str) and candidate:
             return candidate

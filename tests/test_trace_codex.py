@@ -11,7 +11,7 @@ from ai_usage_cost.privacy import Config, read_content
 from ai_usage_cost.sources.base import jsonl_files
 from ai_usage_cost.sources.codex import SOURCE, spans
 from ai_usage_cost.trace import Span, economics_of
-from conftest import CODEX_TRACE, CODEX_TRACE_LEGACY
+from conftest import CODEX_TRACE, CODEX_TRACE_LEGACY, FIXTURES
 from test_codex import token_count, token_usage_record, usage, write_rollout
 
 TABLE = RateTable.load()
@@ -310,3 +310,42 @@ def test_spans_prefer_token_usage_record_exclusively_over_token_count(
     assert calls[0].tokens.output == 500
     assert calls[0].tokens.cache_read == 2_000
     assert calls[0].tokens.reasoning_output == 100
+
+
+# --- service tier --------------------------------------------------------------------------
+
+CODEX_TIER = FIXTURES / "codex" / "tier"
+
+
+def test_model_call_spans_carry_the_tier_in_force_when_they_were_made() -> None:
+    found = scan(CODEX_TIER)
+    calls = found.of_kind("model_call")
+    assert [call.detail["tier"] for call in calls] == ["standard", "priority"]
+
+
+def test_a_rollout_without_a_tier_stamps_standard_on_its_model_calls(traced: Scanned) -> None:
+    assert {call.detail["tier"] for call in traced.of_kind("model_call")} == {"standard"}
+
+
+def test_per_turn_repricing_uses_the_span_tier() -> None:
+    rates = RateTable.model_validate(
+        {
+            "as_of": "2026-10-01",
+            "providers": {"openai": {}},
+            "models": [
+                {
+                    "match": "gpt-5.6-terra",
+                    "provider": "openai",
+                    "display": "GPT-5.6 Terra",
+                    "input": 2.0,
+                    "output": 10.0,
+                    "variants": {"priority": {"input": 5.0, "output": 25.0}},
+                }
+            ],
+        }
+    )
+    totals = economics_of(scan(CODEX_TIER).spans, rates).totals
+    assert totals.cost is not None
+    # 1000 in / 100 out at standard, then 2000 in / 200 out at the priority variant.
+    assert totals.cost.uncached_input == pytest.approx(1000 * 2.0 / 1e6 + 2000 * 5.0 / 1e6)
+    assert totals.cost.output == pytest.approx(100 * 10.0 / 1e6 + 200 * 25.0 / 1e6)

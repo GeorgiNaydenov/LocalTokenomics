@@ -46,6 +46,34 @@ def readable_content(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     monkeypatch.setattr(privacy, "DEFAULT_CONFIG_PATH", config)
 
 
+# Parsers built from tool source and synthetic fixtures only, not yet checked against a real
+# session on a machine that runs the tool. Remove an id here once its parser is verified.
+EXPERIMENTAL_SOURCE_IDS = {
+    "gemini-cli",
+    "qwen-code",
+    "opencode",
+    "kilo-code",
+    "cline",
+    "roo-code",
+    "kilo-code-legacy",
+    "copilot-cli",
+    "muse-code",
+}
+ALL_SOURCE_IDS = EXPERIMENTAL_SOURCE_IDS | {
+    "antigravity",
+    "claude-code",
+    "codex",
+    "copilot-chat",
+    "cursor",
+    "dyad",
+    "grok-build",
+    "jan",
+    "ollama-app",
+    "openai-compat",
+    "windsurf",
+}
+
+
 def test_meta_describes_the_scan(client: TestClient) -> None:
     response = client.get("/api/meta")
     assert response.status_code == 200
@@ -73,7 +101,7 @@ def test_meta_describes_the_scan(client: TestClient) -> None:
     assert "anthropic" in meta["providers"]
     assert "openai" in meta["providers"]
 
-    assert len(meta["sources"]) == 11
+    assert {source["id"] for source in meta["sources"]} == ALL_SOURCE_IDS
     for source in meta["sources"]:
         assert {"id", "token_data", "detected", "files", "root_hint", "capabilities"} <= set(source)
     detected = {source["id"]: source for source in meta["sources"] if source["detected"]}
@@ -180,8 +208,10 @@ def test_computed_fields_are_serialized(client: TestClient) -> None:
         "no_cache_equivalent",
         "total",
         "cache_savings",
+        "estimated",
         "inherited",
     }
+    assert cost["estimated"] is cost["inherited"]
     assert cost["total"] == pytest.approx(
         cost["uncached_input"] + cost["cache_read"] + cost["cache_write"] + cost["output"]
     )
@@ -274,7 +304,30 @@ def test_rates_returns_the_loaded_table(client: TestClient) -> None:
     assert opus["provider"] == "anthropic"
     assert opus["display"] == "Claude Opus 5"
     assert (opus["input"], opus["output"]) == (5.0, 25.0)
-    assert opus["variants"]["fast"] == {"input": 10.0, "output": 50.0}
+    assert opus["variants"]["fast"]["input"] == 10.0
+    assert opus["variants"]["fast"]["output"] == 50.0
+    # schema v2 fields ride along even on a v1 row, plus the read-only `inherited` alias
+    assert opus["estimated"] is False and opus["inherited"] is False
+    assert opus["status"] == "ga" and opus["bands"] == [] and opus["periods"] == []
+
+
+def test_meta_and_report_carry_the_rates_age_and_model_matches(client: TestClient) -> None:
+    meta = client.get("/api/meta").json()
+    assert isinstance(meta["rates_age_days"], int)
+    report = client.get("/api/report").json()
+    assert report["rates_age_days"] == meta["rates_age_days"]
+    assert report["model_matches"]
+    for model, found in report["model_matches"].items():
+        assert set(found) == {"match", "kind"}
+        assert found["kind"] in {"exact", "suffix", "estimated", "none"}
+        assert model in {bucket["key"] for bucket in report["by_model"]}
+
+
+def test_sources_expose_the_experimental_flag(client: TestClient) -> None:
+    meta = client.get("/api/meta").json()
+    flags = {source["id"]: source["experimental"] for source in meta["sources"]}
+    assert {source_id for source_id, flag in flags.items() if flag} == EXPERIMENTAL_SOURCE_IDS
+    assert all("reported_cost" in bucket for bucket in client.get("/api/report").json()["by_model"])
 
 
 def test_cursor_is_registered_with_nothing_available(client: TestClient) -> None:

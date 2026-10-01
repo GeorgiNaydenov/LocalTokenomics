@@ -1,0 +1,14 @@
+{
+  "id": "task-r1",
+  "number": 1,
+  "ts": 1790000009000,
+  "task": "SYNTHETIC",
+  "tokensIn": 18300,
+  "tokensOut": 420,
+  "cacheWrites": 2000,
+  "cacheReads": 15000,
+  "totalCost": 0.0441,
+  "workspace": "/work/demo",
+  "mode": "code",
+  "apiConfigName": "default"
+}

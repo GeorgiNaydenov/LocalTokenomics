@@ -1,15 +1,17 @@
 from __future__ import annotations
 
 import json
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
 import pytest
 
 from ai_usage_cost.models import UsageEvent
+from ai_usage_cost.pricing import RateTable, price_event
 from ai_usage_cost.sources.base import jsonl_files
 from ai_usage_cost.sources.codex import parse
-from conftest import CODEX_BASIC, CODEX_DRIFT
+from conftest import CODEX_BASIC, CODEX_DRIFT, FIXTURES
 
 ROLLOUT = "rollout-2026-08-21T09-00-00-11111111-2222-3333-4444-555555555555.jsonl"
 
@@ -596,3 +598,216 @@ def test_fingerprint_disambiguates_duplicate_token_count_fallback_keys(tmp_path:
     events = scan(tmp_path).events
     assert len(events) == 2
     assert events[0].record_offset != events[1].record_offset
+
+
+# --- service tier --------------------------------------------------------------------------
+
+CODEX_TIER = FIXTURES / "codex" / "tier"
+
+
+def thread_settings(tier: object, ts: str = "2026-08-21T09:00:30Z", **extra: object) -> dict:
+    """The record the real logs carry: event_msg/thread_settings_applied."""
+    settings: dict = {"model": "gpt-5.6-terra", "reasoning_effort": "medium", **extra}
+    if tier is not None:
+        settings["service_tier"] = tier
+    return {
+        "timestamp": ts,
+        "type": "event_msg",
+        "payload": {"type": "thread_settings_applied", "thread_settings": settings},
+    }
+
+
+def meta(model: str | None = "gpt-5.6-terra") -> dict:
+    payload: dict = {"id": "s1"}
+    if model:
+        payload["model"] = model
+    return {"timestamp": "2026-08-21T09:00:00Z", "type": "session_meta", "payload": payload}
+
+
+def tiers_of(tmp_path: Path, records: list[dict]) -> list[str]:
+    write_rollout(tmp_path, records)
+    return [event.tier for event in scan(tmp_path).events]
+
+
+@pytest.mark.parametrize(
+    ("raw", "expected"),
+    [
+        ("default", "standard"),
+        ("auto", "standard"),
+        ("priority", "priority"),
+        ("fast", "priority"),
+        ("Priority", "priority"),
+        ("flex", "flex"),
+        ("ultrafast", "ultrafast"),
+        ("scale", "standard"),
+        ("something-new", "standard"),
+        (None, "standard"),
+        (7, "standard"),
+    ],
+)
+def test_service_tier_maps_to_a_price_tier(tmp_path: Path, raw: object, expected: str) -> None:
+    records = [meta(), thread_settings(raw), token_count(usage(100, 0, 10), usage(100, 0, 10))]
+    assert tiers_of(tmp_path, records) == [expected]
+
+
+def test_a_rollout_that_never_names_a_tier_is_standard_and_keeps_its_models(
+    tmp_path: Path,
+) -> None:
+    write_rollout(
+        tmp_path,
+        [
+            meta("gpt-5-codex"),
+            token_count(usage(100, 0, 10), usage(100, 0, 10), ts="2026-08-21T09:01:00Z"),
+            {
+                "timestamp": "2026-08-21T09:02:00Z",
+                "type": "turn_context",
+                "payload": {"model": "gpt-5.6-terra"},
+            },
+            token_count(usage(100, 0, 10), usage(200, 0, 20), ts="2026-08-21T09:03:00Z"),
+        ],
+    )
+    events = scan(tmp_path).events
+    assert [event.model for event in events] == ["gpt-5-codex", "gpt-5.6-terra"]
+    assert [event.tier for event in events] == ["standard", "standard"]
+
+
+def test_a_late_tier_is_not_applied_to_events_that_ran_before_it(tmp_path: Path) -> None:
+    records = [
+        meta(),
+        token_count(usage(100, 0, 10), usage(100, 0, 10), ts="2026-08-21T09:01:00Z"),
+        token_count(usage(100, 0, 10), usage(200, 0, 20), ts="2026-08-21T09:02:00Z"),
+        thread_settings("priority", ts="2026-08-21T09:02:30Z"),
+        token_count(usage(100, 0, 10), usage(300, 0, 30), ts="2026-08-21T09:03:00Z"),
+    ]
+    write_rollout(tmp_path, records)
+    events = scan(tmp_path).events
+    assert [event.tier for event in events] == ["standard", "standard", "priority"]
+    assert [event.timestamp.minute for event in events] == [1, 2, 3]
+
+
+def test_only_the_model_is_backfilled_the_tier_is_the_one_in_force_at_the_time(
+    tmp_path: Path,
+) -> None:
+    records = [
+        meta(model=None),
+        token_count(usage(100, 0, 10), usage(100, 0, 10), ts="2026-08-21T09:01:00Z"),
+        thread_settings("flex", ts="2026-08-21T09:02:00Z"),
+        token_count(usage(100, 0, 10), usage(200, 0, 20), ts="2026-08-21T09:03:00Z"),
+        {
+            "timestamp": "2026-08-21T09:04:00Z",
+            "type": "turn_context",
+            "payload": {"model": "gpt-5.6-terra"},
+        },
+        token_count(usage(100, 0, 10), usage(300, 0, 30), ts="2026-08-21T09:05:00Z"),
+    ]
+    write_rollout(tmp_path, records)
+    events = scan(tmp_path).events
+    assert [event.model for event in events] == ["gpt-5.6-terra"] * 3
+    assert [event.tier for event in events] == ["standard", "flex", "flex"]
+    assert [event.timestamp.minute for event in events] == [1, 3, 5]
+
+
+def test_a_tier_change_mid_session_applies_only_to_later_events(tmp_path: Path) -> None:
+    records = [
+        meta(),
+        thread_settings("default", ts="2026-08-21T09:00:10Z"),
+        token_count(usage(100, 0, 10), usage(100, 0, 10), ts="2026-08-21T09:01:00Z"),
+        thread_settings("fast", ts="2026-08-21T09:01:30Z"),
+        token_count(usage(100, 0, 10), usage(200, 0, 20), ts="2026-08-21T09:02:00Z"),
+        thread_settings("flex", ts="2026-08-21T09:02:30Z"),
+        token_count(usage(100, 0, 10), usage(300, 0, 30), ts="2026-08-21T09:03:00Z"),
+    ]
+    assert tiers_of(tmp_path, records) == ["standard", "priority", "flex"]
+
+
+def test_a_settings_record_without_a_tier_resets_to_standard(tmp_path: Path) -> None:
+    records = [
+        meta(),
+        thread_settings("priority"),
+        token_count(usage(100, 0, 10), usage(100, 0, 10), ts="2026-08-21T09:00:35Z"),
+        thread_settings(None, ts="2026-08-21T09:00:40Z"),
+        token_count(usage(100, 0, 10), usage(200, 0, 20), ts="2026-08-21T09:00:50Z"),
+    ]
+    assert tiers_of(tmp_path, records) == ["priority", "standard"]
+
+
+def test_a_non_settings_record_without_a_tier_does_not_reset_it(tmp_path: Path) -> None:
+    records = [
+        meta(),
+        thread_settings("priority"),
+        {
+            "timestamp": "2026-08-21T09:00:40Z",
+            "type": "turn_context",
+            "payload": {"model": "gpt-5.6-terra"},
+        },
+        token_count(usage(100, 0, 10), usage(100, 0, 10)),
+    ]
+    assert tiers_of(tmp_path, records) == ["priority"]
+
+
+def test_parsing_a_large_rollout_with_no_tier_stays_linear(tmp_path: Path) -> None:
+    pairs = 8_000
+    records: list[dict] = [meta(model=None)]
+    for i in range(pairs):
+        records.append(
+            {
+                "timestamp": "2026-08-21T09:00:00Z",
+                "type": "turn_context",
+                "payload": {"model": "gpt-5.6-terra"} if i else {"cwd": "/home/user/x"},
+            }
+        )
+        records.append(token_count(usage(100, 0, 10), usage(100 * (i + 1), 0, 10 * (i + 1))))
+    write_rollout(tmp_path, records)
+    started = time.perf_counter()
+    events = scan(tmp_path).events
+    elapsed = time.perf_counter() - started
+    assert len(events) == pairs
+    assert {event.tier for event in events} == {"standard"}
+    assert elapsed < 2.0
+
+
+def test_the_tier_also_applies_to_token_usage_record_files(tmp_path: Path) -> None:
+    records = [meta(), thread_settings("priority"), token_usage_record(usage(100, 0, 10))]
+    assert tiers_of(tmp_path, records) == ["priority"]
+
+
+def test_the_tier_fixture_carries_the_real_key_path() -> None:
+    events = scan(CODEX_TIER).events
+    assert [event.tier for event in events] == ["standard", "priority"]
+
+
+def test_a_priority_event_is_priced_at_the_priority_variant(tmp_path: Path) -> None:
+    rates = RateTable.model_validate(
+        {
+            "as_of": "2026-10-01",
+            "providers": {"openai": {}},
+            "models": [
+                {
+                    "match": "gpt-5.6-terra",
+                    "provider": "openai",
+                    "display": "GPT-5.6 Terra",
+                    "input": 2.0,
+                    "output": 10.0,
+                    "variants": {"priority": {"input": 5.0, "output": 25.0}},
+                }
+            ],
+        }
+    )
+    records = [
+        meta(),
+        thread_settings("default"),
+        token_count(usage(1_000_000, 0, 1_000_000), usage(1_000_000, 0, 1_000_000)),
+        thread_settings("fast", ts="2026-08-21T09:01:30Z"),
+        token_count(
+            usage(1_000_000, 0, 1_000_000),
+            usage(2_000_000, 0, 2_000_000),
+            ts="2026-08-21T09:02:00Z",
+        ),
+    ]
+    write_rollout(tmp_path, records)
+    standard, priority = (price_event(e, rates)[0] for e in scan(tmp_path).events)
+    assert standard is not None
+    assert priority is not None
+    assert (standard.uncached_input, standard.output) == (pytest.approx(2.0), pytest.approx(10.0))
+    assert (priority.uncached_input, priority.output) == (pytest.approx(5.0), pytest.approx(25.0))
+    assert priority.tier_unpriced is False

@@ -1,0 +1,8 @@
+{
+  "id": "task-r2",
+  "rootTaskId": "task-r1",
+  "parentTaskId": "task-r1",
+  "ts": 1790000100000,
+  "workspace": "/work/demo",
+  "mode": "debug"
+}

@@ -18,6 +18,9 @@ export interface CostBreakdown {
   no_cache_equivalent: number
   total: number
   cache_savings: number
+  /** True when any priced event used a prefix-only (estimated) rate row. */
+  estimated: boolean
+  /** Read-only alias of `estimated`, kept by the API for older consumers. */
   inherited: boolean
 }
 
@@ -28,11 +31,15 @@ export interface Bucket {
   cost: CostBreakdown
   events: number
   sessions: number
+  /** Sum of the cost figures tools wrote themselves; null when none did. Not comparable to
+   * `cost` when only some events carry one. */
+  reported_cost: number | null
 }
 
 export interface Totals {
   tokens: TokenUsage
   cost: CostBreakdown
+  reported_cost: number | null
   events: number
   priced_events: number
   sessions: number
@@ -216,6 +223,7 @@ export interface SessionRow {
   request_count: number
   tokens: TokenUsage | null
   cost: CostBreakdown | null
+  reported_cost: number | null
   cost_state: CostState
   cost_states: CostState[]
   is_sidechain: boolean
@@ -245,9 +253,21 @@ export interface Facets {
   outcomes: Record<string, number>
 }
 
+export type MatchKind = 'exact' | 'suffix' | 'estimated' | 'none'
+
+export interface ModelMatch {
+  /** The `match` key of the rate row this model priced against; null when unpriced. */
+  match: string | null
+  kind: MatchKind
+}
+
 export interface Report {
   generated_at: string
   rates_as_of: string
+  /** Days since the oldest verified price; null when unknown. */
+  rates_age_days: number | null
+  /** Keyed by the raw model id of every `by_model` bucket. */
+  model_matches: Record<string, ModelMatch>
   currency: string
   files_scanned: number
   files_in_slice: number
@@ -313,6 +333,8 @@ export interface SourceInfo {
   detected: boolean
   files: number
   capabilities: Capabilities
+  /** Parser built from tool source and fixtures, not yet confirmed on a real session. */
+  experimental: boolean
 }
 
 export interface Meta {
@@ -323,6 +345,7 @@ export interface Meta {
   first_day: string | null
   last_day: string | null
   rates_as_of: string
+  rates_age_days: number | null
   currency: string
   files_scanned: number
   events: number
@@ -353,10 +376,17 @@ export interface Query {
   hasErrors: boolean | null
 }
 
-export interface RateVariant {
+/** One set of USD-per-million prices. Cache fields are absolute figures as published; null
+ * means "not published", and the cost code derives it from the provider's ratio. */
+export interface PriceSet {
   input: number
   output: number
+  cache_read: number | null
+  cache_write_5m: number | null
+  cache_write_1h: number | null
 }
+
+export type RateVariant = PriceSet
 
 export interface ProviderRules {
   cache_read: number
@@ -366,16 +396,71 @@ export interface ProviderRules {
   free: boolean
 }
 
-export interface ModelRate {
+/** A per-model override merged over the provider block; every field is optional. */
+export interface PartialRules {
+  cache_read: number | null
+  cache_write_5m: number | null
+  cache_write_1h: number | null
+  batch: number | null
+  free: boolean | null
+}
+
+/** Whole-request price once a request's total input reaches `min_input_tokens`. */
+export interface RateBand extends PriceSet {
+  min_input_tokens: number
+  variants: Record<string, PriceSet> | null
+}
+
+/** A recurring UTC window (Monday = 0) with its own price. Hours are half-open [start, end). */
+export interface RatePeak extends PriceSet {
+  weekdays: number[]
+  utc_hours: [number, number][]
+}
+
+/** A dated override of the row's price fields. A null field here may mean "omitted" (keeps the
+ * row's value) or "derive"; the API does not distinguish them. */
+export interface RatePeriod {
+  from: string | null
+  until: string | null
+  input: number | null
+  output: number | null
+  cache_read: number | null
+  cache_write_5m: number | null
+  cache_write_1h: number | null
+  variants: Record<string, PriceSet> | null
+  bands: RateBand[] | null
+  peak: RatePeak | null
+}
+
+export type RateStatus = 'ga' | 'preview' | 'retired'
+
+export interface ModelRate extends PriceSet {
   match: string
   provider: string
   display: string
-  input: number
-  output: number
-  variants: Record<string, RateVariant>
-  cache_rules: ProviderRules | null
+  variants: Record<string, PriceSet>
+  bands: RateBand[]
+  peak: RatePeak | null
+  periods: RatePeriod[]
+  cache_rules: PartialRules | null
   context_window: number | null
+  /** Vendor page the figures were read from. */
+  source: string | null
+  /** Date a human read `source`; null = could not be verified. */
+  verified: string | null
+  status: RateStatus
+  released: string | null
+  retired: string | null
+  note: string | null
+  estimated: boolean
   inherited: boolean
+  match_kind: MatchKind | null
+}
+
+export interface UnpricedModelEntry {
+  match: string
+  note: string
+  status: 'watchlist' | 'no_list_price' | null
 }
 
 export interface RatePrefix {
@@ -391,6 +476,7 @@ export interface RateTable {
   prefixes: RatePrefix[]
   providers: Record<string, ProviderRules>
   models: ModelRate[]
+  unpriced_models: UnpricedModelEntry[]
 }
 
 export class ApiError extends Error {

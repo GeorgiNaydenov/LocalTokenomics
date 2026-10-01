@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "updated_at": "2026-09-30T10:00:10.000Z",
+  "agent": "lead",
+  "sessionId": "sess_legacy",
+  "origin": {},
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "synthetic"
+        }
+      ],
+      "ts": 1790000000000
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "synthetic"
+        }
+      ],
+      "ts": 1790000004000,
+      "metrics": {
+        "inputTokens": 18200,
+        "outputTokens": 410,
+        "cacheReadTokens": 15000,
+        "cacheWriteTokens": 2000,
+        "cost": 0.0431
+      },
+      "modelInfo": {
+        "id": "claude-sonnet-4-5",
+        "provider": "anthropic",
+        "family": "claude"
+      }
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "synthetic"
+        }
+      ],
+      "ts": 1790000008000,
+      "metrics": {
+        "inputTokens": 500,
+        "outputTokens": 50,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "cost": 0.001
+      }
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "no metrics"
+        }
+      ],
+      "ts": 1790000009000
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+[
+  {
+    "ts": 1790000000000,
+    "type": "say",
+    "say": "text",
+    "text": "synthetic"
+  },
+  {
+    "ts": 1790000001000,
+    "type": "say",
+    "say": "api_req_started",
+    "text": "{\"request\": \"SYNTHETIC PROMPT\", \"tokensIn\": 3200, \"tokensOut\": 410, \"cacheWrites\": 2000, \"cacheReads\": 15000, \"cost\": 0.0431}",
+    "modelInfo": {
+      "providerId": "anthropic",
+      "modelId": "claude-sonnet-4-5",
+      "mode": "act"
+    }
+  },
+  {
+    "ts": 1790000002000,
+    "type": "say",
+    "say": "api_req_started",
+    "text": "{\"request\": \"SYNTHETIC PROMPT\", \"tokensIn\": 100, \"tokensOut\": 20}"
+  },
+  {
+    "ts": 1790000003000,
+    "type": "say",
+    "say": "api_req_started",
+    "text": "{\"request\": \"SYNTHETIC PROMPT\", \"tokensIn\": 5, \"tokensOut\": 5, \"cost\": 0.001}",
+    "partial": true
+  },
+  {
+    "ts": 1790000004000,
+    "type": "say",
+    "say": "api_req_started",
+    "text": "{\"request\": \"SYNTHETIC PROMPT\", \"tokensIn\": 500, \"tokensOut\": 0, \"cancelReason\": \"user_cancelled\"}",
+    "modelInfo": {
+      "providerId": "anthropic",
+      "modelId": "claude-sonnet-4-5",
+      "mode": "act"
+    }
+  },
+  {
+    "ts": 1790000005000,
+    "type": "say",
+    "say": "deleted_api_reqs",
+    "text": "{\"request\": \"SYNTHETIC PROMPT\", \"tokensIn\": 1000, \"tokensOut\": 100, \"cacheWrites\": 0, \"cacheReads\": 0, \"cost\": 0.01}"
+  },
+  {
+    "ts": 1790000006000,
+    "type": "say",
+    "say": "subagent_usage",
+    "text": "{\"request\": \"SYNTHETIC PROMPT\", \"tokensIn\": 700, \"tokensOut\": 70, \"cost\": 0.007}"
+  },
+  {
+    "ts": 1790000007000,
+    "type": "say",
+    "say": "api_req_started",
+    "text": "{\"request\": \"SYNTHETIC PROMPT\", \"tokensIn\": 300, \"tokensOut\": 30, \"cost\": 0.003}"
+  }
+]
