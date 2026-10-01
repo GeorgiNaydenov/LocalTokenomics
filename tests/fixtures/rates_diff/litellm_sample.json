@@ -1,0 +1,95 @@
+{
+  "sample_spec": {"mode": "one of: chat, embedding", "input_cost_per_token": 0.0, "litellm_provider": "x"},
+  "claude-opus-5-5": {
+    "litellm_provider": "anthropic", "mode": "chat", "max_input_tokens": 1000000,
+    "input_cost_per_token": 5e-06, "output_cost_per_token": 2.5e-05,
+    "cache_read_input_token_cost": 5e-07, "cache_creation_input_token_cost": 6.25e-06,
+    "cache_creation_input_token_cost_above_1hr": 1e-05
+  },
+  "anthropic.claude-opus-5-5-20260101-v1:0": {
+    "litellm_provider": "bedrock_converse", "mode": "chat", "max_input_tokens": 1000000,
+    "input_cost_per_token": 5e-06, "output_cost_per_token": 2.5e-05
+  },
+  "claude-opus-5-5-latest": {
+    "litellm_provider": "anthropic", "mode": "chat",
+    "input_cost_per_token": 5e-06, "output_cost_per_token": 2.5e-05
+  },
+  "vertex_ai/claude-opus-5-5@20260101": {
+    "litellm_provider": "vertex_ai-anthropic_models", "mode": "chat",
+    "input_cost_per_token": 5e-06, "output_cost_per_token": 2.5e-05
+  },
+  "eu.anthropic.claude-opus-5-5-v1:0": {
+    "litellm_provider": "bedrock_converse", "mode": "chat",
+    "input_cost_per_token": 5.5e-06, "output_cost_per_token": 2.75e-05
+  },
+  "openrouter/anthropic/claude-opus-5-5": {
+    "litellm_provider": "openrouter", "mode": "chat",
+    "input_cost_per_token": 9e-06, "output_cost_per_token": 9e-05
+  },
+  "claude-sonnet-5-5": {
+    "litellm_provider": "anthropic", "mode": "chat", "max_input_tokens": 1000000,
+    "input_cost_per_token": 3e-06, "output_cost_per_token": 1.5e-05
+  },
+  "gpt-6-sol": {
+    "litellm_provider": "openai", "mode": "chat", "max_input_tokens": 922000,
+    "input_cost_per_token": 4e-06, "output_cost_per_token": 2e-05
+  },
+  "gpt-6-luna": {
+    "litellm_provider": "openai", "mode": "chat",
+    "input_cost_per_token": 1e-06, "output_cost_per_token": 5e-06
+  },
+  "gpt-6.1-sol": {
+    "litellm_provider": "openai", "mode": "responses", "max_input_tokens": 922000,
+    "input_cost_per_token": 2.5e-06, "output_cost_per_token": 1.5e-05,
+    "cache_read_input_token_cost": 2.5e-07,
+    "cache_creation_input_token_cost": 3.125e-06,
+    "cache_creation_input_token_cost_above_1hr": 5e-06,
+    "input_cost_per_token_above_272k_tokens": 5e-06,
+    "output_cost_per_token_above_272k_tokens": 2.25e-05,
+    "cache_read_input_token_cost_above_272k_tokens": 5e-07,
+    "input_cost_per_token_priority": 5e-06, "output_cost_per_token_priority": 3e-05,
+    "input_cost_per_token_above_272k_tokens_priority": 1e-05,
+    "output_cost_per_token_above_272k_tokens_priority": 4.5e-05,
+    "input_cost_per_token_flex": 1.25e-06, "output_cost_per_token_flex": 7.5e-06,
+    "input_cost_per_token_batches": 1.25e-06, "output_cost_per_token_batches": 7.5e-06
+  },
+  "ft:gpt-6-sol:acme:custom": {
+    "litellm_provider": "openai", "mode": "chat",
+    "input_cost_per_token": 1e-05, "output_cost_per_token": 4e-05
+  },
+  "gemini/gemini-3-flash": {
+    "litellm_provider": "gemini", "mode": "chat", "max_input_tokens": 1048576,
+    "input_cost_per_token": 3e-07, "output_cost_per_token": 2.5e-06
+  },
+  "gemini/gemini-4-pro-preview": {
+    "litellm_provider": "gemini", "mode": "chat", "max_input_tokens": 2000000,
+    "input_cost_per_token": 2e-06, "output_cost_per_token": 1.2e-05,
+    "input_cost_per_token_above_200k_tokens": 4e-06,
+    "output_cost_per_token_above_200k_tokens": 1.8e-05
+  },
+  "deepseek/deepseek-flash": {
+    "litellm_provider": "deepseek", "mode": "chat", "max_input_tokens": 128000,
+    "input_cost_per_token": 1.4e-07, "output_cost_per_token": 2.8e-07,
+    "cache_read_input_token_cost": 1.4e-08
+  },
+  "xai/grok-4.7": {
+    "litellm_provider": "xai", "mode": "chat", "max_input_tokens": 256000,
+    "input_cost_per_token": 3e-06, "output_cost_per_token": 1.5e-05
+  },
+  "bedrock/us-east-1/claude-opus-5-5": {
+    "litellm_provider": "bedrock", "mode": "chat",
+    "input_cost_per_token": 5e-06, "output_cost_per_token": 2.5e-05
+  },
+  "text-embedding-3-small": {
+    "litellm_provider": "openai", "mode": "embedding",
+    "input_cost_per_token": 2e-08, "output_cost_per_token": 0.0
+  },
+  "gpt-image-1": {
+    "litellm_provider": "openai", "mode": "image_generation",
+    "input_cost_per_token": 5e-06, "output_cost_per_token": 4e-05
+  },
+  "rerank-v4": {
+    "litellm_provider": "cohere", "mode": "rerank",
+    "input_cost_per_token": 0.0, "output_cost_per_token": 0.0
+  }
+}

@@ -81,9 +81,12 @@ MIGRATIONS: list[str] = [
     ALTER TABLE files ADD COLUMN boundary_hash TEXT;
     ALTER TABLE files ADD COLUMN title_seed TEXT;
     """,
+    """
+    ALTER TABLE requests ADD COLUMN reported_cost REAL;
+    """,
 ]
 
-PARSER_VERSION = 5
+PARSER_VERSION = 6
 
 _TOKEN_COLUMNS = (
     "uncached_input",
@@ -356,13 +359,15 @@ def _insert(conn: sqlite3.Connection, event: UsageEvent, warnings: list[str] | N
                 # the last (equivalently, largest) record carries the final, billed count.
                 conn.execute(
                     "UPDATE requests SET output = ?, reasoning_output = ?, "
-                    "source_file = ?, timestamp = ?, raw = ? WHERE fingerprint = ?",
+                    "source_file = ?, timestamp = ?, raw = ?, "
+                    "reported_cost = COALESCE(?, reported_cost) WHERE fingerprint = ?",
                     (
                         max(tokens.output, existing_output),
                         max(tokens.reasoning_output, existing_reasoning),
                         event.source_file,
                         timestamp,
                         json.dumps(event.raw),
+                        event.reported_cost,
                         fingerprint,
                     ),
                 )
@@ -374,10 +379,10 @@ def _insert(conn: sqlite3.Connection, event: UsageEvent, warnings: list[str] | N
           fingerprint, source, client, provider, model, session_id, timestamp, request_id,
           {", ".join(_TOKEN_COLUMNS)},
           is_sidechain, tier, project, working_directory, repository, branch,
-          title, title_source, machine, source_file, raw
+          title, title_source, machine, source_file, raw, reported_cost
         ) VALUES (
           ?, ?, ?, ?, ?, ?, ?, ?, {", ".join("?" * len(_TOKEN_COLUMNS))},
-          ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+          ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
         )
         """,
         (
@@ -401,6 +406,7 @@ def _insert(conn: sqlite3.Connection, event: UsageEvent, warnings: list[str] | N
             event.machine,
             event.source_file,
             json.dumps(event.raw),
+            event.reported_cost,
         ),
     )
 
@@ -680,6 +686,7 @@ def load(conn: sqlite3.Connection) -> tuple[list[UsageEvent], int, list[str]]:
         "machine",
         "source_file",
         "raw",
+        "reported_cost",
     ]
     rows = conn.execute(f"SELECT {', '.join(columns)} FROM requests ORDER BY timestamp").fetchall()
     events = [_event_from_row(dict(zip(columns, row, strict=True))) for row in rows]
@@ -716,4 +723,5 @@ def _event_from_row(row: dict) -> UsageEvent:
         machine=row["machine"],
         source_file=row["source_file"],
         raw=json.loads(row["raw"]),
+        reported_cost=row["reported_cost"],
     )

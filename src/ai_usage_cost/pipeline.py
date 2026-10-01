@@ -1,19 +1,29 @@
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Callable, Hashable, Sequence
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
+from typing import TypeVar
 
 from pydantic import BaseModel, Field
 
 from . import privacy, store
-from .aggregate import Report, SessionFlags, UnknownModel, build_report, facets_of
-from .models import CostState, PricedEvent, UsageEvent, local_day
+from .aggregate import (
+    STALE_INFO_DAYS,
+    Report,
+    SessionFlags,
+    UnknownModel,
+    build_report,
+    facets_of,
+)
+from .models import CostBreakdown, CostState, PricedEvent, UsageEvent, local_day
 from .pricing import RateTable, price_event, resolve_provider
 from .sources import client_labels, registry
 from .sources.base import TokenData, present_roots
 from .trace import Capabilities, OutcomeLabel
+
+K = TypeVar("K", bound=Hashable)
 
 DEFAULT_DB_PATH = Path.home() / ".ai-usage-cost" / "usage.db"
 
@@ -28,6 +38,7 @@ class SourceInfo(BaseModel):
     detected: bool
     files: int
     capabilities: Capabilities = Field(default_factory=Capabilities)
+    experimental: bool = False
 
 
 @dataclass
@@ -40,6 +51,12 @@ class Analysis:
     sources: list[SourceInfo] = field(default_factory=list)
     session_flags: dict[tuple[str, str], tuple[bool, int, str]] = field(default_factory=dict)
     db_path: Path | None = None
+    # "Today" for rate staleness; None means the real date. Injectable so tests can pin it.
+    today: date | None = None
+
+    @property
+    def rates_age_days(self) -> int | None:
+        return self.table.age_days(self.today)
 
     @property
     def client_labels(self) -> dict[str, str]:
@@ -64,17 +81,61 @@ def unknown_models(priced: Sequence[PricedEvent]) -> list[UnknownModel]:
     )
 
 
-def inherited_models(priced: Sequence[PricedEvent]) -> list[str]:
-    """Distinct model ids that were priced from a shorter prefix's rate, not their own row."""
-    models = {
-        item.event.model
-        for item in priced
-        if item.state == "priced"
-        and item.cost is not None
-        and item.cost.inherited
-        and item.event.model
-    }
-    return sorted(models)
+def _tokens_by(
+    priced: Sequence[PricedEvent],
+    flagged: Callable[[CostBreakdown], bool],
+    key: Callable[[UsageEvent], K],
+) -> dict[K, int]:
+    totals: dict[K, int] = {}
+    for item in priced:
+        if item.state != "priced" or item.cost is None or not flagged(item.cost):
+            continue
+        if not item.event.model:
+            continue
+        volume = item.event.tokens.total if item.event.tokens else 0
+        totals[key(item.event)] = totals.get(key(item.event), 0) + volume
+    return totals
+
+
+def estimated_models(priced: Sequence[PricedEvent]) -> dict[str, int]:
+    """Model id -> token volume, for models priced from a shorter prefix's row (match kind
+    `estimated`). Benign-suffix matches (dated ids, `[1m]`, ...) are not included."""
+    totals = _tokens_by(priced, lambda cost: cost.estimated, lambda event: event.model or "")
+    return dict(sorted(totals.items(), key=lambda entry: entry[1], reverse=True))
+
+
+def tier_unpriced_models(priced: Sequence[PricedEvent]) -> dict[tuple[str, str], int]:
+    """(model id, tier) -> token volume, for requests billed at the standard price because
+    the row publishes no price for the tier they ran on."""
+    totals = _tokens_by(
+        priced,
+        lambda cost: cost.tier_unpriced,
+        lambda event: (event.model or "", event.tier),
+    )
+    return dict(sorted(totals.items(), key=lambda entry: entry[1], reverse=True))
+
+
+def reported_cost_divergences(priced: Sequence[PricedEvent]) -> list[str]:
+    """One message per session whose tool-reported cost and computed cost disagree by more
+    than max(5% of the reported figure, $0.01). Compared only over the events carrying both
+    figures, so a session the tool reported on partially is not flagged for the gap."""
+    sums: dict[tuple[str, str], tuple[float, float]] = {}
+    for item in priced:
+        # A free (local) model computes to $0 by definition; any figure the tool reports for
+        # it is not a pricing disagreement.
+        if item.event.reported_cost is None or item.cost is None or item.state == "free":
+            continue
+        key = (item.event.source, item.event.session_id)
+        reported, computed = sums.get(key, (0.0, 0.0))
+        sums[key] = (reported + item.event.reported_cost, computed + item.cost.total)
+    messages = []
+    for (source, session_id), (reported, computed) in sums.items():
+        if abs(reported - computed) > max(0.05 * reported, 0.01):
+            messages.append(
+                f"session {session_id}: tool-reported cost ${reported:,.4f} differs from "
+                f"computed cost ${computed:,.4f} ({source})"
+            )
+    return messages
 
 
 def _sources_of(
@@ -96,6 +157,7 @@ def _sources_of(
                 detected=files_found > 0,
                 files=files_found,
                 capabilities=source.capabilities,
+                experimental=source.experimental,
             )
         )
     return infos
@@ -107,6 +169,7 @@ def analyze(
     rates_path: Path | None = None,
     *,
     rebuild: bool = False,
+    today: date | None = None,
 ) -> Analysis:
     resolved_db_path = db_path or DEFAULT_DB_PATH
     config = privacy.load_config()
@@ -144,6 +207,7 @@ def analyze(
         sources=_sources_of(roots, file_counts),
         session_flags=session_flags,
         db_path=resolved_db_path,
+        today=today,
     )
     for unknown in unknown_models(priced):
         note = table.unpriced_note(unknown.model)
@@ -154,12 +218,24 @@ def analyze(
                 f"no rate for model {unknown.model!r} ({unknown.tokens:,} tokens) -- add it to "
                 "rates.json; it is excluded from the cost total, but its tokens are still counted"
             )
-    for model in inherited_models(priced):
+    for model, volume in estimated_models(priced).items():
         rate = table.lookup(model)
         parent = rate.display if rate is not None else "a shorter prefix"
         analysis.warnings.append(
-            f"model {model!r} has no exact rates.json row of its own -- priced from the "
-            f"{parent} rate because no exact row exists; check whether {model!r} needs its own"
+            f"model {model!r} has no rates.json row of its own -- cost is estimated from the "
+            f"{parent} rate ({volume:,} tokens); add a row for {model!r} to price it exactly"
+        )
+    for (model, tier), volume in tier_unpriced_models(priced).items():
+        analysis.warnings.append(
+            f"model {model!r} has no {tier} tier price in rates.json -- {volume:,} tokens were "
+            "billed at the standard rate instead"
+        )
+    analysis.warnings.extend(reported_cost_divergences(priced))
+    age = analysis.rates_age_days
+    if age is not None and age > STALE_INFO_DAYS:
+        analysis.warnings.append(
+            f"rates.json is {age} days old (as of {table.as_of}) -- prices may have changed "
+            "since; re-verify the table"
         )
     if config.content_retention_days is not None:
         analysis.warnings.append(
@@ -261,6 +337,8 @@ def report_of(
         client_labels=analysis.client_labels,
         model_label=analysis.table.display_name,
         rates_as_of=analysis.table.as_of,
+        rates_age_days=analysis.rates_age_days,
+        model_match=analysis.table.match_of,
         currency=analysis.table.currency,
         files_scanned=analysis.files,
         warnings=analysis.warnings,

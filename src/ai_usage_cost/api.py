@@ -110,6 +110,7 @@ class Meta(BaseModel):
     first_day: date | None = None
     last_day: date | None = None
     rates_as_of: str = ""
+    rates_age_days: int | None = None
     currency: str = "USD"
     files_scanned: int = 0
     events: int = 0
@@ -272,6 +273,7 @@ def create_app(
             first_day=min(days) if days else None,
             last_day=max(days) if days else None,
             rates_as_of=found.table.as_of,
+            rates_age_days=found.rates_age_days,
             currency=found.table.currency,
             files_scanned=found.files,
             events=len(found.events),

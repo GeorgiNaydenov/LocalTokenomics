@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import UTC, date, datetime
 from typing import Literal
 
-from pydantic import BaseModel, Field, computed_field
+from pydantic import AliasChoices, BaseModel, Field, computed_field
 
 CostState = Literal["priced", "free", "unpriced", "unavailable"]
 Provenance = Literal["measured", "derived", "estimated", "inferred", "unavailable"]
@@ -67,6 +67,9 @@ class UsageEvent(BaseModel):
     source_file: str = ""
     record_offset: int | None = None
     raw: dict[str, RawScalar] = Field(default_factory=dict)
+    # The cost the tool itself logged, when it logs one -- kept beside (never instead of)
+    # the cost we compute from tokens.
+    reported_cost: float | None = None
 
 
 class CostBreakdown(BaseModel):
@@ -75,10 +78,19 @@ class CostBreakdown(BaseModel):
     cache_write: float = 0.0
     output: float = 0.0
     no_cache_equivalent: float = 0.0
-    # True when any priced event folded into this breakdown was billed at a rate
-    # inherited from a shorter model-id prefix rather than an exact rates.json row
-    # (RateTable.lookup's `inherited` flag) -- surfaced so a silent mis-price is loud.
-    inherited: bool = False
+    # True when any priced event folded into this breakdown was billed at a rate guessed
+    # from a shorter model-id prefix (RateTable.lookup's `estimated` match kind) rather than
+    # a row or a benign suffix of one -- surfaced so a silent mis-price is loud.
+    estimated: bool = Field(default=False, validation_alias=AliasChoices("estimated", "inherited"))
+    # True when an event asked for a service tier the row has no price for and was billed at
+    # the standard price instead. Internal: feeds the `tier_unpriced` warning, never serialized.
+    tier_unpriced: bool = Field(default=False, exclude=True)
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def inherited(self) -> bool:
+        """Read-only alias of `estimated`, kept so existing JSON consumers keep working."""
+        return self.estimated
 
     @computed_field  # type: ignore[prop-decorator]
     @property
@@ -97,7 +109,8 @@ class CostBreakdown(BaseModel):
             cache_write=self.cache_write + other.cache_write,
             output=self.output + other.output,
             no_cache_equivalent=self.no_cache_equivalent + other.no_cache_equivalent,
-            inherited=self.inherited or other.inherited,
+            estimated=self.estimated or other.estimated,
+            tier_unpriced=self.tier_unpriced or other.tier_unpriced,
         )
 
 
@@ -114,6 +127,7 @@ class Bucket(BaseModel):
     cost: CostBreakdown = Field(default_factory=CostBreakdown)
     events: int = 0
     sessions: int = 0
+    reported_cost: float | None = None
 
     def model_post_init(self, _: object) -> None:
         if not self.label:

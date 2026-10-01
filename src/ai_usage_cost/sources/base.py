@@ -26,6 +26,9 @@ class Source:
     display_path: str
     spans: Callable[[Path, list[str]], Iterator[Span]] | None = None
     capabilities: Capabilities = field(default_factory=Capabilities)
+    # True for a parser built from the tool's source and synthetic fixtures but not yet
+    # checked against a real session; surfaced as a badge so its numbers are read as such.
+    experimental: bool = False
     # Most sources accumulate state across a whole file (a model or reconciliation total
     # discovered once and applied to many records later on) and must be re-read from the
     # start whenever the file changes -- `parse_resume` is an optional, source-declared

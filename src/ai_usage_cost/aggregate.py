@@ -9,6 +9,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 
 from .models import Bucket, CostBreakdown, CostState, PricedEvent, TokenUsage, local_day
+from .pricing import ModelMatch
 from .sources.base import title_of
 from .trace import OutcomeLabel
 
@@ -25,6 +26,7 @@ _TITLE_SOURCE_RANK: dict[str, int] = {"tool": 0, "summary": 1, "prompt": 2, "fol
 class Totals(BaseModel):
     tokens: TokenUsage = Field(default_factory=TokenUsage)
     cost: CostBreakdown = Field(default_factory=CostBreakdown)
+    reported_cost: float | None = None
     events: int = 0
     priced_events: int = 0
     sessions: int = 0
@@ -54,6 +56,7 @@ class SessionRow(BaseModel):
     request_count: int = 0
     tokens: TokenUsage | None = None
     cost: CostBreakdown | None = None
+    reported_cost: float | None = None
     cost_state: CostState = "unavailable"
     cost_states: list[CostState] = Field(default_factory=list)
     is_sidechain: bool = False
@@ -144,9 +147,24 @@ _WARNING_PATTERNS: list[tuple[str, str, re.Pattern[str]]] = [
     ("read_error", "Could not read a file", re.compile(r"^\S+: cannot read ")),
     ("unknown_model_rate", "Unknown model rate", re.compile(r"^no rate for model ")),
     (
-        "inherited_pricing",
-        "Priced from a sibling rate",
-        re.compile(r"has no exact rates\.json row of its own"),
+        "estimated_pricing",
+        "Estimated pricing",
+        re.compile(r"cost is estimated from the .+ rate"),
+    ),
+    (
+        "tier_unpriced",
+        "Service tier not priced",
+        re.compile(r"no \S+ tier price in rates\.json"),
+    ),
+    (
+        "stale_rates",
+        "Rates may be out of date",
+        re.compile(r"^rates\.json is \d+ days old"),
+    ),
+    (
+        "reported_cost_divergence",
+        "Tool-reported cost differs",
+        re.compile(r"tool-reported cost .+ differs from computed cost"),
     ),
     (
         "inert_retention_config",
@@ -154,6 +172,12 @@ _WARNING_PATTERNS: list[tuple[str, str, re.Pattern[str]]] = [
         re.compile(r"^content_retention_days is set but inert"),
     ),
 ]
+
+_STALE_DAYS = re.compile(r"^rates\.json is (\d+) days old")
+_DIVERGENCE_SESSION = re.compile(r"^session (.+?): tool-reported cost ")
+# Rates older than this many days raise `stale_rates` at info, older than the second at caution.
+STALE_INFO_DAYS = 30
+STALE_CAUTION_DAYS = 90
 
 _DRIFT_PERCENT = re.compile(r"\(([\d.]+)% drift\)$")
 _CODEX_FILE = re.compile(r"^codex: ([^:]+):")
@@ -174,7 +198,10 @@ _KIND_SOURCE: dict[str, str] = {
     "codex_forked_thread": "codex",
     "codex_counter_reset": "codex",
     "unknown_model_rate": "pipeline",
-    "inherited_pricing": "pipeline",
+    "estimated_pricing": "pipeline",
+    "tier_unpriced": "pipeline",
+    "stale_rates": "pipeline",
+    "reported_cost_divergence": "pipeline",
     "inert_retention_config": "pipeline",
 }
 
@@ -252,9 +279,17 @@ def _file_of(kind: str, message: str) -> str | None:
 # (severity, likely_cause) for kinds that never carry a parseable token delta.
 _SIMPLE_CLASSIFICATION: dict[str, tuple[WarningSeverity, str | None]] = {
     "unknown_model_rate": (WarningSeverity.caution, "model missing from rates.json"),
-    "inherited_pricing": (
+    "estimated_pricing": (
+        WarningSeverity.caution,
+        "priced from the closest rate row, not a row of its own",
+    ),
+    "tier_unpriced": (
         WarningSeverity.info,
-        "priced via a sibling rate row, not an exact match",
+        "no price published for this service tier in rates.json; billed at the standard rate",
+    ),
+    "reported_cost_divergence": (
+        WarningSeverity.caution,
+        "the tool's own cost figure disagrees with the cost computed from tokens",
     ),
     "inert_retention_config": (
         WarningSeverity.info,
@@ -294,6 +329,11 @@ def _classify(kind: str, message: str) -> tuple[WarningSeverity, int | None, str
     appends; a message that doesn't match its kind's expected shape just comes back
     unclassified (``None`` delta, ``caution`` severity) instead of raising.
     """
+    if kind == "stale_rates":
+        match = _STALE_DAYS.search(message)
+        days = int(match.group(1)) if match else 0
+        severity = WarningSeverity.caution if days > STALE_CAUTION_DAYS else WarningSeverity.info
+        return severity, None, "price table not re-verified recently"
     if kind == "codex_counter_reset":
         return WarningSeverity.critical, None, "mid-session counter reset -- no valid baseline"
     if kind == "codex_forked_thread":
@@ -319,6 +359,9 @@ def _instance_of(
 ) -> WarningInstance:
     file = _file_of(kind, warning)
     session_id = session_lookup.get(file) if session_lookup and file else None
+    if kind == "reported_cost_divergence":
+        found = _DIVERGENCE_SESSION.match(warning)
+        session_id = found.group(1) if found else None
     severity, delta_tokens, likely_cause = _classify(kind, warning)
     delta_cost = None
     if delta_tokens is not None and session_id and session_totals:
@@ -419,6 +462,7 @@ class Facets(BaseModel):
 class Report(BaseModel):
     generated_at: datetime
     rates_as_of: str = ""
+    rates_age_days: int | None = None
     currency: str = "USD"
     files_scanned: int = 0
     files_in_slice: int = 0
@@ -435,6 +479,13 @@ class Report(BaseModel):
     scan_warnings: list[str] = Field(default_factory=list)
     warning_groups: list[WarningGroup] = Field(default_factory=list)
     facets: Facets = Field(default_factory=Facets)
+    model_matches: dict[str, ModelMatch] = Field(default_factory=dict)
+
+
+def _add_reported(current: float | None, event_cost: float | None) -> float | None:
+    if event_cost is None:
+        return current
+    return (current or 0.0) + event_cost
 
 
 def totals_of(priced: Sequence[PricedEvent]) -> Totals:
@@ -446,6 +497,7 @@ def totals_of(priced: Sequence[PricedEvent]) -> Totals:
         if item.cost is not None:
             totals.cost = totals.cost + item.cost
             totals.priced_events += 1
+        totals.reported_cost = _add_reported(totals.reported_cost, item.event.reported_cost)
         totals.events += 1
         sessions.add((item.event.source, item.event.session_id))
         stamp = item.event.timestamp
@@ -476,6 +528,7 @@ def group(
             bucket.tokens = bucket.tokens + item.event.tokens
         if item.cost is not None:
             bucket.cost = bucket.cost + item.cost
+        bucket.reported_cost = _add_reported(bucket.reported_cost, item.event.reported_cost)
         bucket.events += 1
         seen_sessions[raw].add((item.event.source, item.event.session_id))
     for raw, bucket in buckets.items():
@@ -559,6 +612,7 @@ def sessions_of(
             row.tokens = (row.tokens or TokenUsage()) + event.tokens
         if item.cost is not None:
             row.cost = (row.cost or CostBreakdown()) + item.cost
+        row.reported_cost = _add_reported(row.reported_cost, event.reported_cost)
         if row.project is None and event.project:
             row.project = event.project
         # Title needs "prefer highest-ranked title_source seen, then latest" rather than
@@ -624,6 +678,8 @@ def build_report(
     client_labels: dict[str, str],
     model_label: Callable[[str | None], str],
     rates_as_of: str = "",
+    rates_age_days: int | None = None,
+    model_match: Callable[[str | None], ModelMatch] | None = None,
     currency: str = "USD",
     files_scanned: int = 0,
     warnings: Sequence[str] = (),
@@ -632,16 +688,18 @@ def build_report(
     facets: Facets | None = None,
     session_flags: SessionFlags | None = None,
 ) -> Report:
+    by_model = group(priced, lambda p: p.event.model or "unknown", model_label)
     return Report(
         generated_at=datetime.now().astimezone(),
         rates_as_of=rates_as_of,
+        rates_age_days=rates_age_days,
         currency=currency,
         files_scanned=files_scanned,
         files_in_slice=len({item.event.source_file for item in priced}),
         totals=totals_of(priced),
         by_client=group(priced, lambda p: p.event.client, lambda k: client_labels.get(k, k)),
         by_provider=group(priced, lambda p: p.event.provider or "unknown"),
-        by_model=group(priced, lambda p: p.event.model or "unknown", model_label),
+        by_model=by_model,
         by_project=group(priced, lambda p: p.event.project or UNATTRIBUTED),
         by_day=group(priced, lambda p: local_day(p.event.timestamp).isoformat()),
         series=series_of(priced),
@@ -659,4 +717,7 @@ def build_report(
             },
         ),
         facets=facets if facets is not None else Facets(),
+        model_matches=(
+            {bucket.key: model_match(bucket.key) for bucket in by_model} if model_match else {}
+        ),
     )
