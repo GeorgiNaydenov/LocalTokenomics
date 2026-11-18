@@ -1,0 +1,146 @@
+[
+ [
+  "actor",
+  "Dashboard reader"
+ ],
+ [
+  "glossary-term",
+  "Cost state"
+ ],
+ [
+  "glossary-term",
+  "Provenance"
+ ],
+ [
+  "glossary-term",
+  "Estimated rate"
+ ],
+ [
+  "glossary-term",
+  "Reported cost"
+ ],
+ [
+  "glossary-term",
+  "Session outcome"
+ ],
+ [
+  "glossary-term",
+  "Unattributed turn"
+ ],
+ [
+  "glossary-term",
+  "Sidechain"
+ ],
+ [
+  "rule",
+  "Unavailable is never shown as zero"
+ ],
+ [
+  "rule",
+  "Unpriced cost stays out of totals"
+ ],
+ [
+  "rule",
+  "Reported cost divergence threshold"
+ ],
+ [
+  "rule",
+  "Rate age notice thresholds"
+ ],
+ [
+  "rule",
+  "Cache price derivation"
+ ],
+ [
+  "rule",
+  "Rate row state"
+ ],
+ [
+  "rule",
+  "Sub cent money keeps four decimals"
+ ],
+ [
+  "rule",
+  "Unattributed turn is excluded from rankings"
+ ],
+ [
+  "rule",
+  "Session table row limit"
+ ],
+ [
+  "rule",
+  "Outcome notes are saved only when changed"
+ ],
+ [
+  "rule",
+  "Automatic rescan every five minutes"
+ ],
+ [
+  "use-case",
+  "Read usage and cost for a period"
+ ],
+ [
+  "use-case",
+  "Inspect one session"
+ ],
+ [
+  "use-case",
+  "Rate a session outcome"
+ ],
+ [
+  "use-case",
+  "Check list prices"
+ ],
+ [
+  "risk",
+  "Risk 1: The dashboard client can write to the"
+ ],
+ [
+  "risk",
+  "Risk 2: Most files in this chunk have no"
+ ],
+ [
+  "open-question",
+  "Question 3: Does the DELETE session endpoint remove the"
+ ],
+ [
+  "open-question",
+  "Question 4: Is deleteSession reachable from any screen in"
+ ],
+ [
+  "state-machine",
+  "RateState lifecycle"
+ ],
+ [
+  "state-machine",
+  "CostState lifecycle"
+ ],
+ [
+  "state-machine",
+  "SpanKind lifecycle"
+ ],
+ [
+  "state-machine",
+  "SpanStatus lifecycle"
+ ],
+ [
+  "state-machine",
+  "MatchKind lifecycle"
+ ],
+ [
+  "state-machine",
+  "TokenDataKind lifecycle"
+ ],
+ [
+  "state-machine",
+  "RateStatus lifecycle"
+ ],
+ [
+  "rule",
+  "getJson refuses when !response.ok"
+ ],
+ [
+  "rule",
+  "useChart refuses when !context"
+ ]
+]
