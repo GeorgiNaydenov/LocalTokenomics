@@ -63,9 +63,9 @@ chunks:
       entities; where their data comes from and where it goes, dfd: 'data moves between
       routes, stores and callers', module-dependency: 36 imports cross this module's
       border, glossary-map: 2 entities and 1 enums name domain terms}
-  diagrams: [c4, dfd, sequence, flowchart, erd-conceptual]
+  diagrams: [c4, mind-map, class, data-lineage, dfd, module-dependency, glossary-map]
   diagrams_confirmed: true
-  estimate: {tokens: 151013, minutes: 17, note: rough estimate; tune after the first
+  estimate: {tokens: 160113, minutes: 18, note: rough estimate; tune after the first
       runs}
   existing_docs: covered
   approved_by: human
@@ -102,9 +102,11 @@ chunks:
       located refusals, assertions or validators; how failures are handled', glossary-map: 51
       entities and 9 enums name domain terms, package-tree: 38 files in 3 folders;
       the structure of this module}
-  diagrams: [c4, erd, erd-conceptual, state, sequence, flowchart, dfd, bpmn]
+  diagrams: [c4, mind-map, api-map, sequence, use-case-diagram, flowchart, erd, erd-conceptual,
+    class, data-lineage, state, dfd, activity, timeline, gantt, bpmn, error-flow,
+    glossary-map, package-tree]
   diagrams_confirmed: true
-  estimate: {tokens: 170076, minutes: 19, note: rough estimate; tune after the first
+  estimate: {tokens: 220126, minutes: 24, note: rough estimate; tune after the first
       runs}
   existing_docs: stale
 - id: ch-localtokenomics-src-ai-usage-cost-render
@@ -121,9 +123,9 @@ chunks:
   recommended: {c4: 3 files form this module; shows what it contains and depends on,
     mind-map: 3 files; the concepts of this module in one picture for a newcomer,
     module-dependency: 2 imports cross this module's border}
-  diagrams: [c4, sequence, flowchart, dfd]
+  diagrams: [c4, mind-map, module-dependency]
   diagrams_confirmed: true
-  estimate: {tokens: 75717, minutes: 8, note: rough estimate; tune after the first
+  estimate: {tokens: 71167, minutes: 8, note: rough estimate; tune after the first
       runs}
   existing_docs: none
   approved_by: human
@@ -153,9 +155,10 @@ chunks:
       components, none named like a screen; how the user moves between them', module-dependency: 44
       imports cross this module's border, error-flow: '1 located refusals, assertions
       or validators; how failures are handled'}
-  diagrams: [c4, screen-flow, capability, flowchart]
+  diagrams: [c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow,
+    module-dependency, error-flow]
   diagrams_confirmed: true
-  estimate: {tokens: 119974, minutes: 13, note: rough estimate; tune after the first
+  estimate: {tokens: 142724, minutes: 16, note: rough estimate; tune after the first
       runs}
   existing_docs: none
   approved_by: human
@@ -186,9 +189,10 @@ chunks:
       located refusals, assertions or validators; how failures are handled', glossary-map: 0
       entities and 28 enums name domain terms, package-tree: 83 files in 5 folders;
       the structure of this module}
-  diagrams: [c4, sequence, flowchart, dfd, screen-flow]
+  diagrams: [c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow,
+    sitemap, user-journey, error-flow, glossary-map, package-tree]
   diagrams_confirmed: true
-  estimate: {tokens: 188531, minutes: 21, note: rough estimate; tune after the first
+  estimate: {tokens: 220381, minutes: 24, note: rough estimate; tune after the first
       runs}
   existing_docs: stale
   approved_by: human
@@ -216,9 +220,9 @@ chunks:
       on, mind-map: 25 files; the concepts of this module in one picture for a newcomer,
     module-dependency: 24 imports cross this module's border, error-flow: '1 located
       refusals, assertions or validators; how failures are handled'}
-  diagrams: [c4, capability]
+  diagrams: [c4, mind-map, module-dependency, error-flow]
   diagrams_confirmed: true
-  estimate: {tokens: 96194, minutes: 11, note: rough estimate; tune after the first
+  estimate: {tokens: 105294, minutes: 12, note: rough estimate; tune after the first
       runs}
   existing_docs: none
   approved_by: human
@@ -247,9 +251,10 @@ chunks:
       moves between them, sitemap: 4 screens; how they are grouped and nested, user-journey: 4
       screens; the steps a user takes across them, module-dependency: 88 imports cross
       this module's border, glossary-map: 0 entities and 4 enums name domain terms}
-  diagrams: [c4, screen-flow]
+  diagrams: [c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow,
+    sitemap, user-journey, module-dependency, glossary-map]
   diagrams_confirmed: true
-  estimate: {tokens: 113854, minutes: 13, note: rough estimate; tune after the first
+  estimate: {tokens: 154804, minutes: 17, note: rough estimate; tune after the first
       runs}
   existing_docs: stale
   approved_by: human
@@ -266,11 +271,11 @@ The ordered plan for documenting this codebase one chunk at a time. Edit the `ch
 | Chunk | Title | State | Depends on | Files | Lines | Est. tokens | Diagrams | Existing docs |
 |---|---|---|---|---|---|---|---|---|
 | ch-localtokenomics-root | localtokenomics root | approved | - | 2 | 56 | 78223 | c4, mind-map, capability, config-map, package-tree | stale |
-| ch-localtokenomics-src-ai-usage-cost-sources | src/ai_usage_cost/sources | approved | ch-localtokenomics-src-ai-usage-cost | 22 | 4722 | 151013 | c4, dfd, sequence, flowchart, erd-conceptual | covered |
-| ch-localtokenomics-src-ai-usage-cost | src/ai_usage_cost | in-review | ch-localtokenomics-src-ai-usage-cost-render, ch-localtokenomics-src-ai-usage-cost-sources | 13 | 5069 | 170076 | c4, erd, erd-conceptual, state, sequence, flowchart, dfd, bpmn | stale |
-| ch-localtokenomics-src-ai-usage-cost-render | src/ai_usage_cost/render | approved | ch-localtokenomics-src-ai-usage-cost | 3 | 187 | 75717 | c4, sequence, flowchart, dfd | none |
-| ch-localtokenomics-web-src-components | web/src/components | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components-ui | 18 | 3024 | 119974 | c4, screen-flow, capability, flowchart | none |
-| ch-localtokenomics-web-src | web/src | approved | ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 20 | 7127 | 188531 | c4, sequence, flowchart, dfd, screen-flow | stale |
-| ch-localtokenomics-web-src-components-ui | web/src/components/ui | approved | ch-localtokenomics-web-src | 25 | 2083 | 96194 | c4, capability | none |
-| ch-localtokenomics-web-src-prototype | web/src/prototype | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 10 | 3215 | 113854 | c4, screen-flow | stale |
+| ch-localtokenomics-src-ai-usage-cost-sources | src/ai_usage_cost/sources | approved | ch-localtokenomics-src-ai-usage-cost | 22 | 4722 | 160113 | c4, mind-map, class, data-lineage, dfd, module-dependency, glossary-map | covered |
+| ch-localtokenomics-src-ai-usage-cost | src/ai_usage_cost | in-review | ch-localtokenomics-src-ai-usage-cost-render, ch-localtokenomics-src-ai-usage-cost-sources | 13 | 5069 | 220126 | c4, mind-map, api-map, sequence, use-case-diagram, flowchart, erd, erd-conceptual, class, data-lineage, state, dfd, activity, timeline, gantt, bpmn, error-flow, glossary-map, package-tree | stale |
+| ch-localtokenomics-src-ai-usage-cost-render | src/ai_usage_cost/render | approved | ch-localtokenomics-src-ai-usage-cost | 3 | 187 | 71167 | c4, mind-map, module-dependency | none |
+| ch-localtokenomics-web-src-components | web/src/components | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components-ui | 18 | 3024 | 142724 | c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow, module-dependency, error-flow | none |
+| ch-localtokenomics-web-src | web/src | approved | ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 20 | 7127 | 220381 | c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow, sitemap, user-journey, error-flow, glossary-map, package-tree | stale |
+| ch-localtokenomics-web-src-components-ui | web/src/components/ui | approved | ch-localtokenomics-web-src | 25 | 2083 | 105294 | c4, mind-map, module-dependency, error-flow | none |
+| ch-localtokenomics-web-src-prototype | web/src/prototype | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 10 | 3215 | 154804 | c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow, sitemap, user-journey, module-dependency, glossary-map | stale |
 %% generated:plan-table end %%
