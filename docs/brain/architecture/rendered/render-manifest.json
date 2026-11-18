@@ -1,0 +1,16 @@
+{
+ "drawio-src-sources-c4.svg": {
+  "bytes": 633841,
+  "output_sha256": "4c9be500fba3d57e0e51440906ad2e6daf82089e180fcff6ef7aba5cd71c2aef",
+  "source": "docs/brain/architecture/drawio/drawio-src-sources-c4.drawio",
+  "source_sha256": "1b119539cbb27bddcac85652e50b7967c433d549012b9f07faf3df59a8aaba99",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-src-sources-dfd.svg": {
+  "bytes": 414658,
+  "output_sha256": "cb2d4fe416ba0a92b7d4e5a09c07e86565b27d2ccd7d34b2b08c3557e4a1e767",
+  "source": "docs/brain/architecture/drawio/drawio-src-sources-dfd.drawio",
+  "source_sha256": "7c4ddc76e515ae56afeacb0f25fd1a0c8618af9316011e96c547a1233493b01c",
+  "tool": "draw.io 28.1.2"
+ }
+}
