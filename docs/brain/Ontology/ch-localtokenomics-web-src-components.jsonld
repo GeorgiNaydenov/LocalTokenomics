@@ -8,6 +8,68 @@
     "owl": "http://www.w3.org/2002/07/owl#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
-  "@graph": [],
+  "@graph": [
+    {
+      "@id": "urn:product-brain:localtokenomics:nfr/nfr:keyboard-and-screen-reader-access-to-charts-and-timelines",
+      "@type": [
+        "pb:nfr"
+      ],
+      "schema:name": "Keyboard and screen reader access to charts and timelines",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:Requirement",
+      "pb:definedAt": [
+        "web/src/components/chart-hover.tsx:61"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:nfr/nfr:reduced-motion-is-respected",
+      "@type": [
+        "pb:nfr"
+      ],
+      "schema:name": "Reduced motion is respected",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:Requirement",
+      "pb:definedAt": [
+        "web/src/components/stat.tsx:10"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:open-question/open-question:why-the-other-series-limit-is-twelve",
+      "@type": [
+        "pb:open-question"
+      ],
+      "schema:name": "Why the Other series limit is twelve",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:Assessment",
+      "pb:definedAt": [
+        "web/src/components/series.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:risk/risk:most-shared-components-have-no-tests",
+      "@type": [
+        "pb:risk"
+      ],
+      "schema:name": "Most shared components have no tests",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:Assessment",
+      "pb:definedAt": [
+        "web/src/components/rank.test.ts:4"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:risk/risk:popover-timing-depends-on-a-polling-interval",
+      "@type": [
+        "pb:risk"
+      ],
+      "schema:name": "Popover timing depends on a polling interval",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:Assessment",
+      "pb:definedAt": [
+        "web/src/components/metric-info.tsx:11",
+        "web/src/components/metric-info.tsx:143"
+      ]
+    }
+  ],
   "unresolved": []
 }

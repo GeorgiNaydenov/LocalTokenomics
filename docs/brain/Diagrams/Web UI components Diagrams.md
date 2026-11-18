@@ -3,22 +3,21 @@ title: Web UI components Diagrams
 aliases: []
 tags: [c4, diagram, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/components/*]
+verified-against: 4a002de17be5
 sources: [docs/brain/architecture/diagrams/module-ch-localtokenomics-web-src-components.mmd]
 chunk: ch-localtokenomics-web-src-components
 node_citations:
   module-ch-localtokenomics-web-src-components:
-    web/src/components:
-      - web/src/components/status.tsx:1-454
-      - web/src/components/trace.tsx:1-435
-    web/src:
-      - web/src/components/status.tsx:3-6
-    web/src/components/ui:
-      - web/src/components/columns.tsx:4-12
+    web/src/components: ['web/src/components/status.tsx:1-454', 'web/src/components/trace.tsx:1-435']
+    web/src: ['web/src/components/status.tsx:3-6']
+    web/src/components/ui: ['web/src/components/columns.tsx:4-12']
+approved-by: human
+approved-at: '2026-11-18T19:03:01+00:00'
 ---
 
 # Web UI components Diagrams
