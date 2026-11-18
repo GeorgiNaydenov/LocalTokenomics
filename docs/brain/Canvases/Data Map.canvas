@@ -20,9 +20,15 @@
       "height": 70
     },
     {
+<<<<<<< HEAD
       "id": "n-web-prototype-data-model",
       "type": "file",
       "file": "docs/brain/Data/Web prototype Data Model.md",
+=======
+      "id": "n-localtokenomics-root-data-model",
+      "type": "file",
+      "file": "docs/brain/Data/localtokenomics root Data Model.md",
+>>>>>>> docs/chunk-ch-localtokenomics-root
       "x": 380,
       "y": 0,
       "width": 320,

@@ -29,6 +29,7 @@
       "height": 70
     },
     {
+<<<<<<< HEAD
       "id": "c-business-map",
       "type": "file",
       "file": "docs/brain/Canvases/Business Map.canvas",
@@ -43,6 +44,13 @@
       "file": "docs/brain/Canvases/Catalogs Map.canvas",
       "x": 0,
       "y": 110,
+=======
+      "id": "c-catalogs-map",
+      "type": "file",
+      "file": "docs/brain/Canvases/Catalogs Map.canvas",
+      "x": 760,
+      "y": 0,
+>>>>>>> docs/chunk-ch-localtokenomics-root
       "width": 320,
       "height": 70
     },
@@ -50,7 +58,11 @@
       "id": "c-data-map",
       "type": "file",
       "file": "docs/brain/Canvases/Data Map.canvas",
+<<<<<<< HEAD
       "x": 380,
+=======
+      "x": 0,
+>>>>>>> docs/chunk-ch-localtokenomics-root
       "y": 110,
       "width": 320,
       "height": 70
@@ -59,7 +71,11 @@
       "id": "c-decisions-map",
       "type": "file",
       "file": "docs/brain/Canvases/Decisions Map.canvas",
+<<<<<<< HEAD
       "x": 760,
+=======
+      "x": 380,
+>>>>>>> docs/chunk-ch-localtokenomics-root
       "y": 110,
       "width": 320,
       "height": 70
@@ -68,8 +84,13 @@
       "id": "c-diagrams-map",
       "type": "file",
       "file": "docs/brain/Canvases/Diagrams Map.canvas",
+<<<<<<< HEAD
       "x": 0,
       "y": 220,
+=======
+      "x": 760,
+      "y": 110,
+>>>>>>> docs/chunk-ch-localtokenomics-root
       "width": 320,
       "height": 70
     },
@@ -77,7 +98,11 @@
       "id": "c-operations-map",
       "type": "file",
       "file": "docs/brain/Canvases/Operations Map.canvas",
+<<<<<<< HEAD
       "x": 380,
+=======
+      "x": 0,
+>>>>>>> docs/chunk-ch-localtokenomics-root
       "y": 220,
       "width": 320,
       "height": 70
@@ -86,10 +111,27 @@
       "id": "c-security-map",
       "type": "file",
       "file": "docs/brain/Canvases/Security Map.canvas",
+<<<<<<< HEAD
       "x": 760,
       "y": 220,
       "width": 320,
       "height": 70
+=======
+      "x": 380,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "start",
+      "type": "file",
+      "file": "docs/brain/00 Start Here.md",
+      "x": -380,
+      "y": 0,
+      "width": 320,
+      "height": 70,
+      "color": "1"
+>>>>>>> docs/chunk-ch-localtokenomics-root
     }
   ],
   "edges": []

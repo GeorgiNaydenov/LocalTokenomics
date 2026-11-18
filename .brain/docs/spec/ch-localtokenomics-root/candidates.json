@@ -1,0 +1,337 @@
+{
+ "chunk": "ch-localtokenomics-root",
+ "repo": "localtokenomics",
+ "routes": [],
+ "screens": [],
+ "test_scenarios": [
+  {
+   "file": "web/src/EconomicsTab.test.ts",
+   "count": 5,
+   "names": [
+    "rateUnavailableHint",
+    "names the missing timing capability instead of claiming no source anywhere logs it",
+    "names the missing token capability when latency is fine but tokens are not",
+    "falls back to a generic reason when both capabilities are present but this row lacks one",
+    "falls back to a generic reason when capability data was not supplied"
+   ],
+   "first_line": 16
+  },
+  {
+   "file": "web/src/Pricing.test.ts",
+   "count": 22,
+   "names": [
+    "buildRow spend join by model key",
+    "sums every bucket matched to this row",
+    "ignores buckets matched to another row",
+    "does not collide when two rows share a display label",
+    "does not credit an estimated bucket to the parent, and lists it separately",
+    "reports unused with zero spend when nothing matches",
+    "estimatedModels",
+    "only returns estimated matches, biggest cost first",
+    "buildRow cache columns",
+    "derives cache prices from the provider rules",
+    "prefers absolute prices the row publishes",
+    "mixes absolute and derived per field",
+    "keeps provider fields when cache_rules is partial",
+    "is unavailable (null) with no provider block and no absolute price",
+    "shows free for a free provider",
+    "buildRow metadata",
+    "formats the context window",
+    "lists variants with prices",
+    "carries band, peak and period detail strings",
+    "tags preview, retired and unverified rows",
+    "splitUnpriced",
+    "matches the longest prefix and separates truly unknown models"
+   ],
+   "first_line": 96
+  },
+  {
+   "file": "web/src/TraceTab.test.ts",
+   "count": 32,
+   "names": [
+    "spanWindow",
+    "uses the logged end time when present",
+    "derives the end from start plus duration when no end time is logged",
+    "leaves the end unknown when neither an end time nor a duration is logged",
+    "leaves the start unknown for an unparsable timestamp",
+    "resolveInsightTurn",
+    "uses the span own turn_id directly when set",
+    "walks the parent_id chain to find an ancestor turn span",
+    "numbers turns in seq order across multiple turns",
+    "returns null when the span has no resolvable turn",
+    "returns null for an unknown span id",
+    "stops at the depth cap instead of looping on a cyclical parent chain",
+    "summarizeInsightTurns",
+    "returns null when the session has no turns at all",
+    "reports every turn carrying an insight when spread evenly",
+    "names the dominant turns once they pass half the weighted total",
+    "stays under the threshold when the top turns hold half or less",
+    "says nothing could be tied to a turn when every insight is unresolvable",
+    "groupSpansByTurn",
+    "groups spans under the turn span sharing their turn_id, excluding it from the breakdown",
+    "orders turns chronologically by the turn span started_at",
+    "falls back to the earliest child span start when the turn span itself is missing",
+    "uses the turn span's own duration directly and never sums children",
+    "marks duration unavailable when the turn span carries none, even though children do",
+    "sums input and output tokens across the turn's model_call spans",
+    "marks tokens unavailable when any contributing model_call span has none, rather than treating it as zero",
+    "collects spans with no turn_id into an \"Outside any turn\" group placed last",
+    "counts a failed tool call once, not twice for the call and its paired result",
+    "still counts a failed tool call with no paired result",
+    "collects the distinct models used by the turn's model_call spans",
+    "reads is_sidechain from the turn span",
+    "returns nothing for an empty trace"
+   ],
+   "first_line": 64
+  },
+  {
+   "file": "web/src/components/metric-info.test.tsx",
+   "count": 4,
+   "names": [
+    "MetricInfo",
+    "opens on click and shows the simple content",
+    "closes on a second click and does not return focus to the trigger",
+    "renders the rich metric content with meaning, formula and computed value"
+   ],
+   "first_line": 6
+  },
+  {
+   "file": "web/src/components/rank.test.ts",
+   "count": 9,
+   "names": [
+    "worstState",
+    "picks unavailable over unpriced, free and priced",
+    "picks unpriced over free and priced",
+    "returns unavailable for an empty list",
+    "is order-independent",
+    "worstProvenance",
+    "picks unavailable as the worst",
+    "picks measured as the best when nothing worse is present",
+    "returns unavailable for an empty list"
+   ],
+   "first_line": 4
+  },
+  {
+   "file": "web/src/components/sparkline.test.ts",
+   "count": 5,
+   "names": [
+    "geometry",
+    "scales a series that peaks below 1 to the real max instead of flattening it",
+    "keeps every y coordinate inside the viewBox height for a series with negative dips",
+    "falls back to a flat line without dividing by zero when every value is identical",
+    "draws the highest value nearest the top of the box"
+   ],
+   "first_line": 4
+  },
+  {
+   "file": "web/src/format.test.ts",
+   "count": 49,
+   "names": [
+    "formatMoney",
+    "formats whole dollars with two decimal places",
+    "formatMoneyExact",
+    "keeps four decimal places for a sub-cent value instead of collapsing to $0.00",
+    "falls back to two decimal places once a cent is reached",
+    "renders exactly zero as $0.00, not four decimal places",
+    "formatTokens",
+    "abbreviates millions",
+    "renders small counts as-is",
+    "rolls 999,999 tokens up to the next unit instead of \"1000K\"",
+    "rolls 999,999,999 tokens up to the next unit instead of \"1000M\"",
+    "does not promote a value that legitimately rounds within its unit",
+    "handles negative values with the sign in front",
+    "formats zero as a plain count",
+    "formatMoneyShort",
+    "gains a millions branch instead of stopping at K",
+    "places a negative sign before the dollar sign, not after",
+    "rounds a negative two-digit value to a whole number",
+    "promotes a value that rounds up to a whole ten-thousands figure",
+    "keeps a whole dollar amount unscaled",
+    "keeps a fractional amount under $10 in cents",
+    "formatDuration",
+    "renders sub-second durations in ms",
+    "returns a placeholder for invalid input",
+    "formatPercent",
+    "formats a ratio as a whole-number percentage by default",
+    "honors the requested digit count",
+    "plural",
+    "keeps the singular form for a count of one",
+    "adds an s for every other count",
+    "formats the count with thousands separators",
+    "logSpanMs",
+    "returns the gap between the first and last record",
+    "returns zero when the end is not after the start",
+    "returns zero for an unparsable timestamp instead of NaN",
+    "today",
+    "returns an ISO date string in the local calendar",
+    "formatDay",
+    "parses the ISO day as a plain date, never shifted by the viewer's time zone",
+    "can omit the year"
+   ],
+   "first_line": 20
+  },
+  {
+   "file": "web/src/pricing-format.test.ts",
+   "count": 14,
+   "names": [
+    "providerLabel",
+    "maps known providers",
+    "capitalises unknown providers",
+    "formatContextWindow",
+    "formats K and M",
+    "is null when unknown",
+    "peakWindowText",
+    "compresses weekday runs and lists hour ranges in UTC",
+    "handles split weekday sets",
+    "stalenessBadge",
+    "has thresholds at 30 and 90 days",
+    "matchUnpriced",
+    "prefers the longest prefix, case-insensitively",
+    "returns null with no prefix match"
+   ],
+   "first_line": 12
+  },
+  {
+   "file": "web/src/pricing-notes.test.ts",
+   "count": 13,
+   "names": [
+    "ratesAgeNotice",
+    "is silent when fresh or unknown",
+    "is info from 30 days",
+    "is caution from 90 days",
+    "reportedDiverges",
+    "ignores differences within 5% or one cent",
+    "flags larger differences",
+    "reportedNote",
+    "returns null when no reported cost",
+    "formats the line without a note when close",
+    "adds the note when divergent",
+    "isEstimatedPriced",
+    "requires priced state and estimated cost"
+   ],
+   "first_line": 11
+  },
+  {
+   "file": "web/src/turn-insights.test.ts",
+   "count": 35,
+   "names": [
+    "truncateLabel",
+    "leaves a short label untouched",
+    "cuts a long label to the limit and appends an ellipsis",
+    "never appends an ellipsis when the label exactly fits",
+    "turnLabel",
+    "formats an ordinal with a quoted, truncated snippet",
+    "falls back to just the ordinal when the label is null, never an empty quoted string",
+    "shows the unattributed row label unchanged, not an ordinal",
+    "realTurns",
+    "excludes the unattributed row",
+    "sortRealTurns",
+    "excludes the unattributed row from ordinal sorting entirely, not just ranks it last",
+    "sorts by cost descending",
+    "sorts by duration ascending",
+    "sorts by errors descending",
+    "costConcentration",
+    "is null when no turn carries a priced cost",
+    "computes the top-N share against the sum of turn cost, not the unattributed row",
+    "longestTurn",
+    "picks the turn with the largest known duration, ignoring turns with no duration",
+    "is null when no turn has a known duration",
+    "errorOrRetryTurns",
+    "counts turns with an error or a retry and finds the worst by errors first",
+    "is empty when nothing has an error or a retry",
+    "toolHeaviestTurn",
+    "picks the turn with the most tool calls",
+    "is null when no turn made a tool call",
+    "halfCostTrend",
+    "is null with fewer than two turns",
+    "splits by ordinal into two halves and sums each half separately",
+    "leaves changeFraction null when the first half has no cost to compare against",
+    "unattributedCostShare",
+    "is null when there is no unattributed row",
+    "is null when the unattributed row carries no cost",
+    "shares against turn cost plus its own, matching costConcentration's denominator"
+   ],
+   "first_line": 56
+  }
+ ],
+ "state_enums": [
+  {
+   "name": "RateState",
+   "values": [
+    "free",
+    "priced",
+    "unused"
+   ],
+   "cite": "web/src/Pricing.tsx:55-55"
+  },
+  {
+   "name": "CostState",
+   "values": [
+    "priced",
+    "free",
+    "unpriced",
+    "unavailable"
+   ],
+   "cite": "web/src/api.ts:61-61"
+  },
+  {
+   "name": "SpanKind",
+   "values": [
+    "turn",
+    "user",
+    "assistant",
+    "reasoning",
+    "model_call",
+    "tool_call",
+    "tool_result",
+    "retrieval",
+    "compaction",
+    "error",
+    "subagent"
+   ],
+   "cite": "web/src/api.ts:67-78"
+  },
+  {
+   "name": "SpanStatus",
+   "values": [
+    "ok",
+    "error",
+    "interrupted",
+    "aborted",
+    "running",
+    "unknown"
+   ],
+   "cite": "web/src/api.ts:80-80"
+  },
+  {
+   "name": "MatchKind",
+   "values": [
+    "exact",
+    "suffix",
+    "estimated",
+    "none"
+   ],
+   "cite": "web/src/api.ts:256-256"
+  },
+  {
+   "name": "TokenDataKind",
+   "values": [
+    "full",
+    "session"
+   ],
+   "cite": "web/src/api.ts:324-324"
+  },
+  {
+   "name": "RateStatus",
+   "values": [
+    "ga",
+    "preview",
+    "retired"
+   ],
+   "cite": "web/src/api.ts:435-435"
+  }
+ ],
+ "external_calls": [],
+ "entities": [],
+ "existing": []
+}

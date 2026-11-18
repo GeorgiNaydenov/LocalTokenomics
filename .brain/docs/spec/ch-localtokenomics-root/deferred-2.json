@@ -1,0 +1,345 @@
+[
+ {
+  "op": "add",
+  "kind": "actor",
+  "data": {
+   "name": "Maintainer",
+   "classification": "human",
+   "Description": "A person who changes the dashboard source or the Python package and runs the build and the checks.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "web/package.json",
+     "quote": "\"build\": \"tsc --noEmit && vite build\",",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "actor",
+  "data": {
+   "name": "GitHub workflow runner",
+   "classification": "system",
+   "Description": "The hosted runner that executes the Python, web and CodeQL workflows on pull requests, pushes to main and a weekly schedule.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": ".github/workflows/web.yml",
+     "quote": "runs-on: ubuntu-latest",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Dashboard bundle",
+   "Definition": "The built static files of the web dashboard, written into the Python package folder so the installed tool can serve them without Node.js. `web/vite.config.ts:15`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Dev proxy",
+   "Definition": "The Vite development server setting that forwards requests starting with /api to the Python server on port 8420. `web/vite.config.ts:21`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "API-equivalent cost",
+   "Definition": "What logged usage would have cost at published API list prices, the figure LocalTokenomics reports. `pyproject.toml:4`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A type error stops the dashboard build",
+   "Statement": "The web build script runs the TypeScript check before Vite, so a type error prevents a bundle from being written.",
+   "category": "quality",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/package.json",
+     "quote": "\"build\": \"tsc --noEmit && vite build\",",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A production build replaces the committed bundle",
+   "Statement": "Every production build empties the output folder inside the Python package before writing the new bundle.",
+   "category": "build",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/vite.config.ts",
+     "quote": "emptyOutDir: true,",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Lint skips build output",
+   "Statement": "ESLint ignores the local dist folder and the bundle inside the Python package.",
+   "category": "quality",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/eslint.config.js",
+     "quote": "{ ignores: ['dist', '../src/ai_usage_cost/web/dist'] },",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Python code must keep a pylint score of 9.0",
+   "Statement": "Both the Python workflow and the pre-commit hook fail when pylint scores below 9.0.",
+   "category": "quality",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "pyproject.toml",
+     "quote": "fail-under = 9.0",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": ".github/workflows/python.yml",
+     "quote": "run: uv run --no-sync pylint src tests --fail-under=9.0",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Web dependencies are installed from the lockfile",
+   "Statement": "The web workflow installs with npm ci, which installs exactly what package-lock.json records.",
+   "category": "build",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": ".github/workflows/web.yml",
+     "quote": "run: npm ci",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "nfr",
+  "data": {
+   "name": "Python version support",
+   "Statement": "The package supports Python 3.11 or newer and the workflow tests 3.11, 3.12 and 3.13 on Ubuntu and Windows.",
+   "target": "3 Python versions on 2 operating systems",
+   "category": "portability",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": ".github/workflows/python.yml",
+     "quote": "python-version: [\"3.11\", \"3.12\", \"3.13\"]",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "Risk": "Mypy is a manual pre-commit stage, so type errors in the Python package are caught only by the workflow or a deliberate local run.",
+   "Mitigation": "The Python workflow runs mypy on src for every pull request.",
+   "impact": "low",
+   "likelihood": "medium",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": ".pre-commit-config.yaml",
+     "quote": "stages: [manual]",
+     "confidence": "confirmed"
+    }
+   ],
+   "name": "Mypy is a manual pre-commit stage, so type errors in the Pyt",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "Risk": "Bandit security scanning skips the web folder, so dashboard code gets security analysis only from CodeQL.",
+   "Mitigation": "The CodeQL workflow scans JavaScript and TypeScript on every pull request and weekly.",
+   "impact": "low",
+   "likelihood": "low",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "pyproject.toml",
+     "quote": "exclude_dirs = [\"tests\", \".venv\", \"web\"]",
+     "confidence": "confirmed"
+    }
+   ],
+   "name": "Bandit security scanning skips the web folder, so dashboard ",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "Question": "The README asks for Node.js 20 or newer to rebuild the dashboard, but the web workflow only runs Node 22. Is Node 20 meant to be tested?",
+   "priority": "low",
+   "name": "Is Node 20 tested for the dashboard build",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Rebuild the dashboard bundle",
+   "Description": "A maintainer changes the dashboard source and rebuilds the bundle that the Python package serves.",
+   "primary_actor": "Maintainer",
+   "Preconditions": "Node.js and npm are installed and dependencies are installed in the web folder.",
+   "Postconditions": "The output folder inside the Python package holds the new bundle.",
+   "Main flow": [
+    "1. The maintainer runs the build script from the web folder. `web/package.json:8`",
+    "2. The TypeScript check runs first and a type error stops the build. `web/package.json:8`",
+    "3. Vite writes the bundle into the Python package folder after emptying it. `web/vite.config.ts:16`"
+   ],
+   "Alternative flows": "2a. A type error stops the build and no bundle is written. `web/package.json:8`",
+   "Acceptance criteria": "The bundle is written to the folder the package ships. `web/vite.config.ts:15`",
+   "Special requirements": "Asset paths are relative so the bundle loads from whatever URL the server mounts it on. `web/vite.config.ts:7`",
+   "actors": [
+    "Maintainer"
+   ],
+   "rules": [
+    "A type error stops the dashboard build",
+    "A production build replaces the committed bundle"
+   ],
+   "refs": [
+    {
+     "confidence": "inferred",
+     "loc": "web/package.json",
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "quote": "\"build\": \"tsc --noEmit && vite build\","
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Develop the dashboard against live data",
+   "Description": "A maintainer runs the dashboard dev server, which forwards API requests to the Python server.",
+   "primary_actor": "Maintainer",
+   "Preconditions": "The Python server is running on port 8420.",
+   "Postconditions": "The dev server shows the dashboard with live data.",
+   "Main flow": [
+    "1. The maintainer starts the dev server with the dev script. `web/package.json:7`",
+    "2. The dev server listens on port 5173. `web/vite.config.ts:19`",
+    "3. Requests starting with /api are forwarded to the Python server. `web/vite.config.ts:22`"
+   ],
+   "Alternative flows": "3a. The proxy target is the local server only, so with no Python server running the API requests get no answer. `web/vite.config.ts:22`",
+   "Acceptance criteria": "The dev server answers on its own port and proxies the API path. `web/vite.config.ts:23`",
+   "actors": [
+    "Maintainer"
+   ],
+   "refs": [
+    {
+     "confidence": "inferred",
+     "loc": "web/package.json",
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "quote": "\"dev\": \"vite\","
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Check a change before merge",
+   "Description": "A pull request triggers the Python, web and CodeQL workflows, which run the same checks a maintainer runs locally.",
+   "primary_actor": "GitHub workflow runner",
+   "Preconditions": "A pull request is opened or main is pushed.",
+   "Postconditions": "Each workflow reports pass or fail.",
+   "Main flow": [
+    "1. The workflows start on a pull request or a push to main. `.github/workflows/python.yml:6`",
+    "2. The Python workflow runs ruff, pylint, mypy and pytest. `.github/workflows/python.yml:54`",
+    "3. The web workflow lints, type checks, tests and builds. `.github/workflows/web.yml:46`",
+    "4. CodeQL analyses Python and JavaScript or TypeScript. `.github/workflows/codeql.yml:25`"
+   ],
+   "Alternative flows": "2a. A failure in one Python version and operating system pair does not cancel the others. `.github/workflows/python.yml:20`",
+   "Acceptance criteria": "The pylint step fails below 9.0. `.github/workflows/python.yml:48`",
+   "Special requirements": "CodeQL also runs weekly on Monday. `.github/workflows/codeql.yml:8`",
+   "actors": [
+    "GitHub workflow runner"
+   ],
+   "rules": [
+    "Python code must keep a pylint score of 9.0",
+    "Web dependencies are installed from the lockfile"
+   ],
+   "refs": [
+    {
+     "confidence": "inferred",
+     "loc": ".github/workflows/python.yml",
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "quote": "pull_request:"
+    }
+   ],
+   "maturity": "draft"
+  }
+ }
+]

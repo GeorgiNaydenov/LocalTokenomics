@@ -1,0 +1,86 @@
+{
+  "colorGroups": [
+    {
+      "query": "path:\"docs/brain/Business\"",
+      "color": {
+        "a": 1,
+        "rgb": 16770764
+      }
+    },
+    {
+      "query": "path:\"docs/brain/Use Cases\"",
+      "color": {
+        "a": 1,
+        "rgb": 16773836
+      }
+    },
+    {
+      "query": "path:\"docs/brain/Subdomains\"",
+      "color": {
+        "a": 1,
+        "rgb": 16305868
+      }
+    },
+    {
+      "query": "path:\"docs/brain/Glossary\"",
+      "color": {
+        "a": 1,
+        "rgb": 14800359
+      }
+    },
+    {
+      "query": "path:\"docs/brain/Application\"",
+      "color": {
+        "a": 1,
+        "rgb": 14346492
+      }
+    },
+    {
+      "query": "path:\"docs/brain/Data\"",
+      "color": {
+        "a": 1,
+        "rgb": 14018772
+      }
+    },
+    {
+      "query": "path:\"docs/brain/Security\"",
+      "color": {
+        "a": 1,
+        "rgb": 14800359
+      }
+    },
+    {
+      "query": "path:\"docs/brain/Operations\"",
+      "color": {
+        "a": 1,
+        "rgb": 16119285
+      }
+    },
+    {
+      "query": "path:\"docs/brain/Diagrams\"",
+      "color": {
+        "a": 1,
+        "rgb": 16773836
+      }
+    },
+    {
+      "query": "path:\"docs/brain/Decisions\"",
+      "color": {
+        "a": 1,
+        "rgb": 14346492
+      }
+    },
+    {
+      "query": "path:\"docs/brain/Releases\"",
+      "color": {
+        "a": 1,
+        "rgb": 16119285
+      }
+    }
+  ],
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "search": "path:\"docs/brain\""
+}

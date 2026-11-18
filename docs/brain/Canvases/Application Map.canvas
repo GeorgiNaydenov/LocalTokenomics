@@ -13,7 +13,11 @@
     {
       "id": "n-invariants-catalogue",
       "type": "file",
+<<<<<<< HEAD
       "file": "docs/brain/Application/Invariants Catalogue.md",
+=======
+      "file": "docs/brain/Operations/Invariants Catalogue.md",
+>>>>>>> docs/chunk-ch-localtokenomics-root
       "x": 0,
       "y": 0,
       "width": 320,
@@ -38,6 +42,7 @@
       "height": 70
     },
     {
+<<<<<<< HEAD
       "id": "n-systems-and-data-stores",
       "type": "file",
       "file": "docs/brain/Application/Systems and Data Stores.md",
@@ -50,37 +55,70 @@
       "id": "n-test-coverage-matrix",
       "type": "file",
       "file": "docs/brain/Application/Test Coverage Matrix.md",
+=======
+      "id": "n-test-coverage-matrix",
+      "type": "file",
+      "file": "docs/brain/Operations/Test Coverage Matrix.md",
+      "x": 0,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-localtokenomics-root-api",
+      "type": "file",
+      "file": "docs/brain/Application/localtokenomics root API.md",
+>>>>>>> docs/chunk-ch-localtokenomics-root
       "x": 380,
       "y": 110,
       "width": 320,
       "height": 70
     },
     {
+<<<<<<< HEAD
       "id": "n-web-prototype-api",
       "type": "file",
       "file": "docs/brain/Application/Web prototype API.md",
+=======
+      "id": "n-localtokenomics-root-overview",
+      "type": "file",
+      "file": "docs/brain/Application/localtokenomics root Overview.md",
+>>>>>>> docs/chunk-ch-localtokenomics-root
       "x": 760,
       "y": 110,
       "width": 320,
       "height": 70
     },
     {
+<<<<<<< HEAD
       "id": "n-web-prototype-overview",
       "type": "file",
       "file": "docs/brain/Application/Web prototype Overview.md",
+=======
+      "id": "n-localtokenomics-root-tests",
+      "type": "file",
+      "file": "docs/brain/Application/localtokenomics root Tests.md",
+>>>>>>> docs/chunk-ch-localtokenomics-root
       "x": 0,
       "y": 220,
       "width": 320,
       "height": 70
     },
     {
+<<<<<<< HEAD
       "id": "n-web-prototype-specification",
       "type": "file",
       "file": "docs/brain/Application/Web prototype Specification.md",
+=======
+      "id": "n-localtokenomics-root-workflows",
+      "type": "file",
+      "file": "docs/brain/Application/localtokenomics root Workflows.md",
+>>>>>>> docs/chunk-ch-localtokenomics-root
       "x": 380,
       "y": 220,
       "width": 320,
       "height": 70
+<<<<<<< HEAD
     },
     {
       "id": "n-web-prototype-tests",
@@ -99,6 +137,8 @@
       "y": 330,
       "width": 320,
       "height": 70
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-root
     }
   ],
   "edges": []

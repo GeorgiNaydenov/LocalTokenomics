@@ -18,6 +18,18 @@ The entry point to every diagram, grouped by the question each group answers. Fo
 %% generated:hub start (do not edit; run brain docs generate) %%
 ## Architecture and structure
 
+<<<<<<< HEAD
 - [[Web prototype C4 components]]
 - [[Web prototype Diagrams]]
+=======
+- [[ER Data Model]]
+- [[Layered Viewpoints]]
+- [[LocalTokenomics root wiring]]
+- [[Module Map Diagrams]]
+- [[localtokenomics root Diagrams]]
+
+## Behaviour and runtime
+
+- [[CI and Delivery Diagrams]]
+>>>>>>> docs/chunk-ch-localtokenomics-root
 %% generated:hub end %%
