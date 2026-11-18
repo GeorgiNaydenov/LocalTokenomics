@@ -33,7 +33,7 @@ chunks:
   components: ['localtokenomics:src-ai-usage-cost-sources']
   globs: [src/ai_usage_cost/sources/**]
   depends_on: [ch-localtokenomics-src-ai-usage-cost]
-  state: in-review
+  state: approved
   display_name: Ai usage cost sources
   files: 22
   lines: 4722
@@ -44,6 +44,8 @@ chunks:
   estimate: {tokens: 137363, minutes: 15, note: rough estimate; tune after the first
       runs}
   existing_docs: covered
+  approved_by: human
+  approved_at: '2026-11-18T19:05:23+00:00'
 - id: ch-localtokenomics-src-ai-usage-cost
   title: src/ai_usage_cost
   repo: localtokenomics
@@ -170,13 +172,8 @@ The ordered plan for documenting this codebase one chunk at a time. Edit the `ch
 %% generated:plan-table start (do not edit; run brain docs generate) %%
 | Chunk | Title | State | Depends on | Files | Lines | Est. tokens | Diagrams | Existing docs |
 |---|---|---|---|---|---|---|---|---|
-<<<<<<< HEAD
 | ch-localtokenomics-root | localtokenomics root | approved | - | 2 | 56 | 60023 | c4 | stale |
-| ch-localtokenomics-src-ai-usage-cost-sources | src/ai_usage_cost/sources | planned | ch-localtokenomics-src-ai-usage-cost | 22 | 4722 | 137363 | c4, dfd | covered |
-=======
-| ch-localtokenomics-root | localtokenomics root | planned | - | 2 | 56 | 60023 | c4 | stale |
-| ch-localtokenomics-src-ai-usage-cost-sources | src/ai_usage_cost/sources | in-review | ch-localtokenomics-src-ai-usage-cost | 22 | 4722 | 137363 | c4, dfd | covered |
->>>>>>> docs/c-sources
+| ch-localtokenomics-src-ai-usage-cost-sources | src/ai_usage_cost/sources | approved | ch-localtokenomics-src-ai-usage-cost | 22 | 4722 | 137363 | c4, dfd | covered |
 | ch-localtokenomics-src-ai-usage-cost | src/ai_usage_cost | planned | ch-localtokenomics-src-ai-usage-cost-render, ch-localtokenomics-src-ai-usage-cost-sources | 13 | 5069 | 170076 | c4, erd, erd-conceptual, state, sequence, flowchart, dfd, bpmn | stale |
 | ch-localtokenomics-src-ai-usage-cost-render | src/ai_usage_cost/render | planned | ch-localtokenomics-src-ai-usage-cost | 3 | 187 | 62067 | c4 | none |
 | ch-localtokenomics-web-src-components | web/src/components | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components-ui | 18 | 3024 | 106324 | c4 | none |

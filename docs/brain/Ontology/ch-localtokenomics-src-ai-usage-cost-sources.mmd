@@ -1,0 +1,22 @@
+flowchart LR
+    n0["A reader is found by its SOURCE va<br/>rule"]
+    n1["Discover AI tool usage from local <br/>use-case"]
+    n2["Experimental readers carry a flag<br/>rule"]
+    n3["Muse Code control folders are skip<br/>rule"]
+    n4["Read a tools SQLite store without <br/>use-case"]
+    n5["Readers only read<br/>rule"]
+    n6["Repeated Codex token totals are no<br/>rule"]
+    n7["Source<br/>class"]
+    n8["Source<br/>model"]
+    n9["Spec<br/>class"]
+    n10["Spec<br/>model"]
+    n11["Synthetic Claude Code records are <br/>rule"]
+    n12["Unparsable lines are skipped and c<br/>rule"]
+    classDef k_class fill:#dae8fc,stroke:#222222,color:#222222
+    class n7,n9 k_class
+    classDef k_model fill:#dae8fc,stroke:#222222,color:#222222
+    class n8,n10 k_model
+    classDef k_rule fill:#e1d5e7,stroke:#222222,color:#222222
+    class n0,n2,n3,n5,n6,n11,n12 k_rule
+    classDef k_usecase fill:#fff2cc,stroke:#222222,color:#222222
+    class n1,n4 k_usecase
