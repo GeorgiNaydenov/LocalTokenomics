@@ -1,0 +1,119 @@
+erDiagram
+    apps {
+        INTEGER id PK
+        TEXT name
+        TEXT path
+        INTEGER created_at
+        INTEGER updated_at
+        TEXT github_org
+        TEXT github_repo
+        TEXT chat_context
+        TEXT github_branch
+        TEXT vercel_project_id
+        TEXT vercel_project_name
+        TEXT vercel_team_id
+        TEXT vercel_deployment_url
+        TEXT neon_project_id
+        TEXT neon_development_branch_id
+        TEXT neon_preview_branch_id
+    }
+    chats {
+        INTEGER id PK
+        INTEGER app_id
+        TEXT title
+        INTEGER created_at
+        TEXT initial_commit_hash
+    }
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    apps {
+        INTEGER id PK
+        TEXT name
+        TEXT path
+        INTEGER created_at
+        INTEGER updated_at
+        TEXT github_org
+        TEXT github_repo
+        TEXT chat_context
+        TEXT github_branch
+        TEXT vercel_project_id
+        TEXT vercel_project_name
+        TEXT vercel_team_id
+        TEXT vercel_deployment_url
+        TEXT neon_project_id
+        TEXT neon_development_branch_id
+        TEXT neon_preview_branch_id
+    }
+    chats {
+        INTEGER id PK
+        INTEGER app_id
+        TEXT title
+        INTEGER created_at
+        TEXT initial_commit_hash
+    }
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    apps {
+        INTEGER id PK
+        TEXT name
+        TEXT path
+        INTEGER created_at
+        INTEGER updated_at
+        TEXT github_org
+        TEXT github_repo
+        TEXT chat_context
+        TEXT github_branch
+        TEXT vercel_project_id
+        TEXT vercel_project_name
+        TEXT vercel_team_id
+        TEXT vercel_deployment_url
+        TEXT neon_project_id
+        TEXT neon_development_branch_id
+        TEXT neon_preview_branch_id
+    }
+    chats {
+        INTEGER id PK
+        INTEGER app_id
+        TEXT title
+        INTEGER created_at
+        TEXT initial_commit_hash
+    }
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    messages {
+        INTEGER id PK
+        TEXT chat_id
+        TEXT role
+        TEXT content
+        TEXT thinking
+        INTEGER stream
+        TEXT model_name
+        INTEGER model_cloud
+        TEXT model_ollama_host
+        TEXT created_at
+        TEXT updated_at
+        TEXT thinking_time_start
+        TEXT thinking_time_end
+        TEXT tool_result
+    }

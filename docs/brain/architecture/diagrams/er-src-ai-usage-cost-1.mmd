@@ -1,0 +1,318 @@
+erDiagram
+    Totals {
+        TokenUsage tokens
+        CostBreakdown cost
+        float reported_cost
+        int events
+        int priced_events
+        int sessions
+        datetime first_event
+        datetime last_event
+    }
+    SeriesPoint {
+        date day
+        str client
+        str provider
+        str model
+        str source
+        float cost
+        int tokens
+        int events
+    }
+    SessionRow {
+        str session_id
+        str source
+        str client
+        str provider
+        list models
+        datetime start_time
+        datetime end_time
+        int request_count
+        TokenUsage tokens
+        CostBreakdown cost
+        float reported_cost
+        CostState cost_state
+        list cost_states
+        bool is_sidechain
+        bool has_sidechain
+        str currency
+        str project
+        str working_directory
+        str repository
+        str branch
+        str machine
+        list raw_source
+        OutcomeLabel outcome
+        bool traced
+        int error_count
+        str title
+    }
+    UnknownModel {
+        str model
+        int tokens
+        int events
+    }
+    WarningInstance {
+        str kind
+        str message
+        str source
+        str file
+        str session_id
+        WarningSeverity severity
+        int delta_tokens
+        float delta_cost
+        str likely_cause
+        bool auto_corrected
+    }
+    WarningGroup {
+        str kind
+        str label
+        int count
+        str summary
+        WarningSeverity severity
+        int total_delta_tokens
+        float total_delta_cost
+        WarningInstance worst_example
+        int affected_sessions
+        list instances
+        list warnings
+    }
+    Facets {
+        dict states
+        dict clients
+        dict models
+        dict projects
+        dict outcomes
+    }
+    Report {
+        datetime generated_at
+        str rates_as_of
+        int rates_age_days
+        str currency
+        int files_scanned
+        int files_in_slice
+        Totals totals
+        list by_client
+        list by_provider
+        list by_model
+        list by_project
+        list by_day
+        list series
+        list sessions
+        list unknown_models
+        list warnings
+        list scan_warnings
+        list warning_groups
+        Facets facets
+        dict model_matches
+    }
+    ClientInfo {
+        str id
+        str label
+    }
+    WarningSummary {
+        int critical
+        int caution
+        int info
+        float total_delta_cost
+    }
+    Meta {
+        list clients
+        list providers
+        list models
+        list projects
+        date first_day
+        date last_day
+        str rates_as_of
+        int rates_age_days
+        str currency
+        int files_scanned
+        int events
+        list warnings
+        WarningSummary warning_summary
+        dict session_warnings
+        list sources
+        dict client_last_seen
+        dict model_last_seen
+        dict project_last_seen
+    }
+    AlertDecision {
+        bool fire
+        str message
+    }
+    Sample {
+        str machine
+        datetime sampled_at
+        float gpu_util
+        int vram_used
+        int vram_total
+        float power_w
+        str source
+    }
+    samples {
+        TEXT machine
+        TEXT sampled_at
+        REAL gpu_util
+        INTEGER vram_used
+        INTEGER vram_total
+        REAL power_w
+        TEXT source
+    }
+    apps {
+        INTEGER id PK
+        TEXT name
+        TEXT path
+        INTEGER created_at
+        INTEGER updated_at
+        TEXT github_org
+        TEXT github_repo
+        TEXT chat_context
+        TEXT github_branch
+        TEXT vercel_project_id
+        TEXT vercel_project_name
+        TEXT vercel_team_id
+        TEXT vercel_deployment_url
+        TEXT neon_project_id
+        TEXT neon_development_branch_id
+        TEXT neon_preview_branch_id
+    }
+    chats {
+        INTEGER id PK
+        INTEGER app_id
+        TEXT title
+        INTEGER created_at
+        TEXT initial_commit_hash
+    }
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    TokenUsage {
+        int uncached_input
+        int cache_read
+        int cache_write_5m
+        int cache_write_1h
+        int output
+        int reasoning_output
+    }
+    UsageEvent {
+        str source
+        str client
+        str provider
+        str model
+        datetime timestamp
+        str session_id
+        str request_id
+        TokenUsage tokens
+        bool is_sidechain
+        str tier
+        str project
+        str working_directory
+        str repository
+        str branch
+        str title
+        Literal title_source
+        str machine
+        str source_file
+        int record_offset
+        dict raw
+        float reported_cost
+    }
+    CostBreakdown {
+        float uncached_input
+        float cache_read
+        float cache_write
+        float output
+        float no_cache_equivalent
+        bool estimated
+        bool tier_unpriced
+    }
+    apps {
+        INTEGER id PK
+        TEXT name
+        TEXT path
+        INTEGER created_at
+        INTEGER updated_at
+        TEXT github_org
+        TEXT github_repo
+        TEXT chat_context
+        TEXT github_branch
+        TEXT vercel_project_id
+        TEXT vercel_project_name
+        TEXT vercel_team_id
+        TEXT vercel_deployment_url
+        TEXT neon_project_id
+        TEXT neon_development_branch_id
+        TEXT neon_preview_branch_id
+    }
+    chats {
+        INTEGER id PK
+        INTEGER app_id
+        TEXT title
+        INTEGER created_at
+        TEXT initial_commit_hash
+    }
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    apps {
+        INTEGER id PK
+        TEXT name
+        TEXT path
+        INTEGER created_at
+        INTEGER updated_at
+        TEXT github_org
+        TEXT github_repo
+        TEXT chat_context
+        TEXT github_branch
+        TEXT vercel_project_id
+        TEXT vercel_project_name
+        TEXT vercel_team_id
+        TEXT vercel_deployment_url
+        TEXT neon_project_id
+        TEXT neon_development_branch_id
+        TEXT neon_preview_branch_id
+    }
+    chats {
+        INTEGER id PK
+        INTEGER app_id
+        TEXT title
+        INTEGER created_at
+        TEXT initial_commit_hash
+    }
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    messages {
+        INTEGER id PK
+        TEXT chat_id
+        TEXT role
+        TEXT content
+        TEXT thinking
+        INTEGER stream
+        TEXT model_name
+        INTEGER model_cloud
+        TEXT model_ollama_host
+        TEXT created_at
+        TEXT updated_at
+        TEXT thinking_time_start
+        TEXT thinking_time_end
+        TEXT tool_result
+    }

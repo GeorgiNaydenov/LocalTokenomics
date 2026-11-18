@@ -1,0 +1,43 @@
+erDiagram
+    turns }o--|o sessions : "session_id"
+    turns }o--|o sessions : "session_id"
+    sessions {
+        TEXT id PK
+        TEXT cwd
+        TEXT repository
+        TEXT host_type
+        TEXT branch
+        TEXT summary
+        TEXT agent_name
+        TEXT agent_description
+        TEXT created_at
+        TEXT updated_at
+    }
+    turns {
+        INTEGER id PK
+        TEXT session_id FK
+        INTEGER turn_index
+        TEXT user_message
+        TEXT assistant_response
+        TEXT timestamp
+    }
+    sessions {
+        TEXT id PK
+        TEXT cwd
+        TEXT repository
+        TEXT host_type
+        TEXT branch
+        TEXT summary
+        TEXT agent_name
+        TEXT agent_description
+        TEXT created_at
+        TEXT updated_at
+    }
+    turns {
+        INTEGER id PK
+        TEXT session_id FK
+        INTEGER turn_index
+        TEXT user_message
+        TEXT assistant_response
+        TEXT timestamp
+    }

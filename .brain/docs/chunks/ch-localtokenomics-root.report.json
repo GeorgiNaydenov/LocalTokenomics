@@ -1,0 +1,69 @@
+{
+ "chunk": "ch-localtokenomics-root",
+ "notes": [
+  {
+   "note": "docs/brain/Application/localtokenomics root API.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/localtokenomics root Overview.md",
+   "claims": 168,
+   "supported": 168,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/localtokenomics root Tests.md",
+   "claims": 193,
+   "supported": 193,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/localtokenomics root Workflows.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Data/localtokenomics root Data Model.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/localtokenomics root Diagrams.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/LocalTokenomics root wiring.md",
+   "claims": 14,
+   "supported": 14,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Ontology/localtokenomics root Ontology.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Operations/localtokenomics root Operations.md",
+   "claims": 11,
+   "supported": 11,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Security/localtokenomics root Security.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  }
+ ],
+ "blocking": 0,
+ "findings": [],
+ "claims": 386,
+ "supported": 386
+}

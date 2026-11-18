@@ -1,0 +1,21 @@
+{
+  "alwaysUpdateLinks": true,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "docs/brain",
+  "showUnsupportedFiles": true,
+  "attachmentFolderPath": "docs/brain/architecture/rendered",
+  "showInlineTitle": true,
+  "readableLineLength": false,
+  "uriCallbacks": true,
+  "userIgnoreFilters": [
+    "node_modules/",
+    ".venv/",
+    "venv/",
+    "dist/",
+    "build/",
+    "coverage/",
+    "__pycache__/",
+    ".next/",
+    "docs-site/"
+  ]
+}

@@ -1,0 +1,15 @@
+flowchart LR
+    subgraph g_root["root"]
+        localtokenomics_root["(root)<br/>2 files, 1668 lines<br/>python"]:::system
+    end
+    subgraph g_src["src"]
+        localtokenomics_src_ai_usage_cost["src/ai_usage_cost<br/>13 files, 5069 lines<br/>python"]:::system
+    end
+    localtokenomics_root --> localtokenomics_src_ai_usage_cost
+    subgraph Legend
+        direction LR
+        zlegend_a["Component: part of this system"]:::system
+        zlegend_b["Solid arrow: imports or calls"]:::system
+        zlegend_a ~~~ zlegend_b
+    end
+    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233

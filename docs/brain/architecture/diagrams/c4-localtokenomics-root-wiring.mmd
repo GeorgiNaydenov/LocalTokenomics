@@ -1,0 +1,30 @@
+flowchart LR
+    dev(["Maintainer<br/>person"]):::person
+    subgraph sys["LocalTokenomics repository root"]
+        pkg["pyproject.toml<br/>ai-usage-cost package<br/>Python, hatchling"]:::system
+        vite["web/vite.config.ts<br/>dashboard build and dev server<br/>Vite, React, Tailwind"]:::system
+        lint["web/eslint.config.js<br/>dashboard lint rules<br/>ESLint"]:::system
+        dist["src/ai_usage_cost/web/dist<br/>built dashboard bundle<br/>static files"]:::system
+    end
+    ci["GitHub workflows<br/>run by a schedule or a pull request<br/>python, web, codeql"]:::run
+    api["Python server<br/>127.0.0.1:8420<br/>serves /api"]:::external
+    dev -->|"edits web/src, runs npm build"| vite
+    vite -->|"writes bundle"| dist
+    pkg -->|"ships wheel with"| dist
+    vite -.->|"dev proxy of /api"| api
+    ci -->|"runs lint, typecheck, test, build"| lint
+    ci -->|"runs ruff, pylint, mypy, pytest"| pkg
+    subgraph Legend
+        direction LR
+        zl_a(["Person"]):::person
+        zl_b["Part of this system"]:::system
+        zl_c["Run by a schedule or a pull request"]:::run
+        zl_d["System with its own source folder"]:::external
+        zl_e["Solid arrow: required call or output"]:::system
+        zl_f["Dashed arrow: development only"]:::system
+        zl_a ~~~ zl_b ~~~ zl_c ~~~ zl_d ~~~ zl_e ~~~ zl_f
+    end
+    classDef person fill:#fff2cc,stroke:#222222,color:#111111
+    classDef system fill:#dae8fc,stroke:#222222,color:#111111
+    classDef run fill:#ffe6cc,stroke:#222222,color:#111111
+    classDef external fill:#eeeeee,stroke:#222222,stroke-dasharray:5 3,color:#111111

@@ -16,5 +16,15 @@ generated: true
 The entry point to every diagram, grouped by the question each group answers. For the complete list see [[Diagram Index]]; notation is explained in [[Diagram Notation Guide]].
 
 %% generated:hub start (do not edit; run brain docs generate) %%
-No diagrams yet.
+## Architecture and structure
+
+- [[ER Data Model]]
+- [[Layered Viewpoints]]
+- [[LocalTokenomics root wiring]]
+- [[Module Map Diagrams]]
+- [[localtokenomics root Diagrams]]
+
+## Behaviour and runtime
+
+- [[CI and Delivery Diagrams]]
 %% generated:hub end %%
