@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "archimate": "https://www.opengroup.org/archimate#",
+    "ddd": "urn:product-brain:ddd#",
+    "pb": "urn:product-brain:vocab#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+  },
+  "@graph": [],
+  "unresolved": []
+}

@@ -1,0 +1,24 @@
+flowchart LR
+    subgraph localtokenomics__github_workflows_codeql_yml["CodeQL"]
+        localtokenomics__github_workflows_codeql_yml_on(["push, pull_request, schedule"]):::admin
+        localtokenomics__github_workflows_codeql_yml_analyze["analyze (${{ matrix.language }})<br/>4 steps"]:::system
+    end
+    localtokenomics__github_workflows_codeql_yml_on --> localtokenomics__github_workflows_codeql_yml_analyze
+    subgraph localtokenomics__github_workflows_python_yml["Python"]
+        localtokenomics__github_workflows_python_yml_on(["push, pull_request"]):::admin
+        localtokenomics__github_workflows_python_yml_test["test (${{ matrix.os }}, py${{ matrix.python-version }})<br/>9 steps"]:::system
+    end
+    localtokenomics__github_workflows_python_yml_on --> localtokenomics__github_workflows_python_yml_test
+    subgraph localtokenomics__github_workflows_web_yml["Web"]
+        localtokenomics__github_workflows_web_yml_on(["push, pull_request"]):::admin
+        localtokenomics__github_workflows_web_yml_build["lint, typecheck, test, build<br/>7 steps"]:::system
+    end
+    localtokenomics__github_workflows_web_yml_on --> localtokenomics__github_workflows_web_yml_build
+    subgraph Legend
+        direction LR
+        zlegend_a["Trigger of a workflow"]:::admin
+        zlegend_b["Job"]:::system
+        zlegend_c["Arrow: runs after"]:::system
+    end
+    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233
+    classDef admin fill:#ffe6cc,stroke:#d79b00,color:#142233

@@ -1,0 +1,83 @@
+erDiagram
+    Capabilities {
+        Provenance trace
+        Provenance tokens
+        Provenance cost
+        Provenance context
+        Provenance latency
+    }
+    ContextSnapshot {
+        str span_id
+        str model
+        datetime started_at
+        int input_total
+        Provenance tokens_provenance
+        int capacity
+        Provenance capacity_provenance
+        float occupancy
+        Provenance occupancy_provenance
+        int delta_input
+        list added_span_ids
+        bool compacted_before
+        dict composition
+        ConfigDict model_config
+    }
+    OutcomeSignals {
+        int aborted_turns
+        int interrupted_tools
+        int errors
+        SpanStatus last_turn_status
+    }
+    OutcomeUpdate {
+        OutcomeLabel outcome
+        str notes
+        list tags
+    }
+    EconRow {
+        str key
+        str label
+        int ordinal
+        datetime started_at
+        bool is_sidechain
+        int model_calls
+        int tool_calls
+        TokenUsage tokens
+        Provenance tokens_provenance
+        CostBreakdown cost
+        CostState cost_state
+        int duration_ms
+        Provenance duration_provenance
+        int errors
+        int retries
+        float amplification
+        float cache_hit_ratio
+        float tokens_per_second
+        ConfigDict model_config
+    }
+    Economics {
+        EconRow totals
+        list by_turn
+        list by_model
+        list by_tool
+    }
+    Insight {
+        str kind
+        Literal severity
+        str span_id
+        str message
+        int count
+    }
+    Trace {
+        str source
+        str session_id
+        Capabilities capabilities
+        list spans
+        Outcome outcome
+        list insights
+    }
+    SpanContent {
+        str span_id
+        str content
+        bool truncated
+        int redactions
+    }

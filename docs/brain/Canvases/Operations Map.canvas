@@ -1,0 +1,86 @@
+{
+  "nodes": [
+    {
+      "id": "title",
+      "type": "text",
+      "text": "# Operations map",
+      "x": 0,
+      "y": -140,
+      "width": 320,
+      "height": 60,
+      "color": "2"
+    },
+    {
+      "id": "n-coverage-map",
+      "type": "file",
+      "file": "docs/brain/Operations/Coverage Map.md",
+      "x": 0,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-environment-variables",
+      "type": "file",
+      "file": "docs/brain/Operations/Environment Variables.md",
+      "x": 380,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-project-facts",
+      "type": "file",
+      "file": "docs/brain/Operations/Project Facts.md",
+      "x": 760,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-release-checklist",
+      "type": "file",
+      "file": "docs/brain/Releases/Release Checklist.md",
+      "x": 0,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-requirement-catalogue",
+      "type": "file",
+      "file": "docs/brain/Operations/Requirement Catalogue.md",
+      "x": 380,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-rollback-runbook",
+      "type": "file",
+      "file": "docs/brain/Releases/Rollback Runbook.md",
+      "x": 760,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-operations",
+      "type": "file",
+      "file": "docs/brain/Operations/Web Operations.md",
+      "x": 0,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0-n-coverage-map-n-web-operations",
+      "fromNode": "n-coverage-map",
+      "toNode": "n-web-operations",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ]
+}

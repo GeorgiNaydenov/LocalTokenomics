@@ -1,0 +1,231 @@
+erDiagram
+    PricedEvent {
+        UsageEvent event
+        CostBreakdown cost
+        CostState state
+    }
+    Bucket {
+        str key
+        str label
+        TokenUsage tokens
+        CostBreakdown cost
+        int events
+        int sessions
+        float reported_cost
+    }
+    SourceInfo {
+        str id
+        str label
+        list clients
+        TokenData token_data
+        str path
+        str root_hint
+        bool detected
+        int files
+        Capabilities capabilities
+        bool experimental
+    }
+    Analysis {
+        list events
+        RateTable table
+        int files
+        list warnings
+        list scan_warnings
+        list sources
+        dict session_flags
+        Path db_path
+        date today
+    }
+    PriceSet {
+        float input
+        float output
+        float cache_read
+        float cache_write_5m
+        float cache_write_1h
+    }
+    Period {
+        ConfigDict model_config
+        date from_
+        date until
+        float input
+        float output
+        float cache_read
+        float cache_write_5m
+        float cache_write_1h
+        dict variants
+        list bands
+        Peak peak
+    }
+    ProviderRules {
+        float cache_read
+        float cache_write_5m
+        float cache_write_1h
+        float batch
+        bool free
+    }
+    PartialRules {
+        float cache_read
+        float cache_write_5m
+        float cache_write_1h
+        float batch
+        bool free
+    }
+    Prefix {
+        str prefix
+        str provider
+    }
+    ModelMatch {
+        str match
+        Literal kind
+    }
+    UnpricedModel {
+        str match
+        str note
+        Literal status
+    }
+    RateTable {
+        str as_of
+        str currency
+        str units
+        list notes
+        list prefixes
+        dict providers
+        list models
+        list unpriced_models
+        dict _lookup_cache
+        dict _rules_cache
+        list _prefix_cache
+    }
+    Config {
+        bool metadata_only
+        list exclude_projects
+        int max_content_bytes
+        int metadata_retention_days
+        int content_retention_days
+    }
+    IngestSummary {
+        int files_parsed
+        int files_skipped
+        list warnings
+    }
+    requests {
+        TEXT fingerprint PK
+        TEXT source
+        TEXT client
+        TEXT provider
+        TEXT model
+        TEXT session_id
+        TEXT timestamp
+        TEXT request_id
+        INTEGER uncached_input
+        INTEGER cache_read
+        INTEGER cache_write_5m
+        INTEGER cache_write_1h
+        INTEGER output
+        INTEGER reasoning_output
+        INTEGER is_sidechain
+        TEXT tier
+        TEXT project
+        TEXT working_directory
+        TEXT repository
+        TEXT branch
+        TEXT machine
+        TEXT source_file
+        TEXT raw
+        TEXT title
+        TEXT title_source
+        REAL reported_cost
+    }
+    files {
+        TEXT path PK
+        TEXT source
+        REAL mtime
+        INTEGER size
+        TEXT ingested_at
+        TEXT warnings
+        INTEGER parser_version
+        INTEGER ingested_offset
+        TEXT boundary_hash
+        TEXT title_seed
+    }
+    trace_events {
+        TEXT span_id PK
+        TEXT parent_id
+        TEXT record_parent
+        TEXT source
+        TEXT session_id
+        TEXT turn_id
+        TEXT agent_id
+        INTEGER is_sidechain
+        INTEGER seq
+        TEXT kind
+        TEXT name
+        TEXT model
+        TEXT status
+        TEXT started_at
+        TEXT ended_at
+        INTEGER duration_ms
+        TEXT duration_provenance
+        INTEGER ttft_ms
+        INTEGER uncached_input
+        INTEGER cache_read
+        INTEGER cache_write_5m
+        INTEGER cache_write_1h
+        INTEGER output
+        INTEGER reasoning_output
+        TEXT tokens_provenance
+        INTEGER context_capacity
+        TEXT capacity_provenance
+        INTEGER retry_attempt
+        TEXT error
+        TEXT source_file
+        INTEGER record_offset
+        INTEGER record_length
+        TEXT content_path
+        TEXT detail
+    }
+    outcomes {
+        TEXT source PK
+        TEXT session_id PK
+        TEXT outcome
+        TEXT notes
+        TEXT tags
+        TEXT updated_at
+    }
+    session_exclusions {
+        TEXT source PK
+        TEXT session_id PK
+        TEXT excluded_at
+    }
+    Span {
+        ConfigDict model_config
+        str span_id
+        str parent_id
+        str record_parent
+        str source
+        str session_id
+        str turn_id
+        str agent_id
+        bool is_sidechain
+        int seq
+        SpanKind kind
+        str name
+        str model
+        SpanStatus status
+        datetime started_at
+        datetime ended_at
+        int duration_ms
+        Provenance duration_provenance
+        int ttft_ms
+        TokenUsage tokens
+        Provenance tokens_provenance
+        int context_capacity
+        Provenance capacity_provenance
+        int retry_attempt
+        str error
+        str source_file
+        int record_offset
+        int record_length
+        str content_path
+        dict detail
+    }

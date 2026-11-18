@@ -1,0 +1,69 @@
+{
+ "chunk": "ch-localtokenomics-web-src",
+ "notes": [
+  {
+   "note": "docs/brain/Application/Web API.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Web Overview.md",
+   "claims": 172,
+   "supported": 172,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Web Tests.md",
+   "claims": 188,
+   "supported": 188,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Web Workflows.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Data/Web Data Model.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Dashboard Components.md",
+   "claims": 13,
+   "supported": 13,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Diagrams.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Ontology/Web Ontology.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Operations/Web Operations.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Security/Web Security.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  }
+ ],
+ "blocking": 0,
+ "findings": [],
+ "claims": 373,
+ "supported": 373
+}
