@@ -1,0 +1,50 @@
+[
+ [
+  "glossary-term",
+  "UI primitive"
+ ],
+ [
+  "glossary-term",
+  "Slot attribute"
+ ],
+ [
+  "glossary-term",
+  "Chart config"
+ ],
+ [
+  "rule",
+  "Caller class names override primitive defaults"
+ ],
+ [
+  "rule",
+  "Toggle group settings win over item settings"
+ ],
+ [
+  "rule",
+  "Chart parts require a chart container"
+ ],
+ [
+  "rule",
+  "Sheet opens from the right by default"
+ ],
+ [
+  "rule",
+  "Tooltip provider default delay is zero"
+ ],
+ [
+  "nfr",
+  "Chart colours follow the light and dark theme"
+ ],
+ [
+  "risk",
+  "Primitives have no tests of their own"
+ ],
+ [
+  "open-question",
+  "Which primitives are unused"
+ ],
+ [
+  "rule",
+  "useChart refuses when !context"
+ ]
+]

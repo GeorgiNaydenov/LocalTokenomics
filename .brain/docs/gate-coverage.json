@@ -14,5 +14,9 @@
  "ch-localtokenomics-web-src-components": {
   "maturity": "approved",
   "ok": true
+ },
+ "ch-localtokenomics-web-src-components-ui": {
+  "maturity": "approved",
+  "ok": true
  }
 }
