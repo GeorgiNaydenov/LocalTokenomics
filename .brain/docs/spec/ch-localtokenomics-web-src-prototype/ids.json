@@ -1,0 +1,70 @@
+[
+ [
+  "glossary-term",
+  "Prototype"
+ ],
+ [
+  "glossary-term",
+  "Mock data"
+ ],
+ [
+  "glossary-term",
+  "Reference screen"
+ ],
+ [
+  "glossary-term",
+  "Design system page"
+ ],
+ [
+  "actor",
+  "Dashboard developer"
+ ],
+ [
+  "rule",
+  "The prototype is excluded from the production build"
+ ],
+ [
+  "rule",
+  "Prototype filters do not filter the screens"
+ ],
+ [
+  "rule",
+  "Prototype session table shows at most 120 rows"
+ ],
+ [
+  "rule",
+  "Prototype splits session cost across token buckets by fixed weights"
+ ],
+ [
+  "rule",
+  "Prototype rescan is staged"
+ ],
+ [
+  "rule",
+  "Prototype figures are invented"
+ ],
+ [
+  "rule",
+  "Do not import from the prototype folder"
+ ],
+ [
+  "use-case",
+  "Compare a dashboard screen with its reference"
+ ],
+ [
+  "risk",
+  "Prototype looks live but is staged"
+ ],
+ [
+  "risk",
+  "Design system README and migration guide are out of date"
+ ],
+ [
+  "risk",
+  "No tests cover the prototype"
+ ],
+ [
+  "open-question",
+  "Is the prototype still wanted once every screen is ported?"
+ ]
+]

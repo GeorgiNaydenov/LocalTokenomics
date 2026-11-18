@@ -18,4 +18,11 @@ After code changes run `brain docs drift --ask`; if new functionality is reporte
 | `docs/brain/Reading Paths by Role.md` | reading order by role |
 | `docs/brain/Vault Documentation Rules.md` | how notes are written |
 | `docs/brain/Diagrams/Diagram Notation Guide.md` | how diagrams are drawn |
+| `docs/brain/architecture/Chunk Plan.md` | the chunk plan |
+| `docs/brain/Operations/Environment Variables.md` | environment variables |
+| `docs/brain/Operations/Requirement Catalogue.md` | measures the repository enforces |
+| `docs/brain/Application/Invariants Catalogue.md` | rules the code enforces |
+| `docs/brain/Operations/Coverage Map.md` | which note and test reach each file |
+| `docs/brain/Operations/Release Checklist.md` | how a release is made |
+| `docs/brain/Operations/Rollback Runbook.md` | how to go back |
 <!-- END product-brain:docs -->

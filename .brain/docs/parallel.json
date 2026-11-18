@@ -1,0 +1,52 @@
+{
+ "ch-localtokenomics-root": {
+  "status": "prepared",
+  "path": "C:\\Users\\gnayd\\Downloads\\Product Brain Workspace\\scratch\\localtokenomics-docs-ch-localtokenomics-root",
+  "branch": "docs/chunk-ch-localtokenomics-root",
+  "exit": 0,
+  "error": ""
+ },
+ "ch-localtokenomics-src-ai-usage-cost-sources": {
+  "status": "failed",
+  "error": "Preparing worktree (new branch 'docs/chunk-ch-localtokenomics-src-ai-usage-cost-sources')\nwarning: unable to access 'tests/fixtures/muse_code/basic/2026/10/01/7c1d0000-0000-4000-8000-000000000001/subagent/7c1d0000-0000-4000-8000-0000000000c1/.gitattributes': Filename too long\nerror: unable to create"
+ },
+ "ch-localtokenomics-src-ai-usage-cost": {
+  "status": "prepared",
+  "path": "C:\\Users\\gnayd\\Downloads\\Product Brain Workspace\\scratch\\localtokenomics-docs-ch-localtokenomics-src-ai-usage-cost",
+  "branch": "docs/chunk-ch-localtokenomics-src-ai-usage-cost",
+  "exit": 0,
+  "error": ""
+ },
+ "ch-localtokenomics-src-ai-usage-cost-render": {
+  "status": "failed",
+  "error": "Preparing worktree (new branch 'docs/chunk-ch-localtokenomics-src-ai-usage-cost-render')\nwarning: unable to access 'tests/fixtures/muse_code/basic/2026/10/01/7c1d0000-0000-4000-8000-000000000001/subagent/7c1d0000-0000-4000-8000-0000000000c1/.gitattributes': Filename too long\nerror: unable to create "
+ },
+ "ch-localtokenomics-web-src-components": {
+  "status": "prepared",
+  "path": "C:\\Users\\gnayd\\Downloads\\Product Brain Workspace\\scratch\\localtokenomics-docs-ch-localtokenomics-web-src-components",
+  "branch": "docs/chunk-ch-localtokenomics-web-src-components",
+  "exit": 0,
+  "error": ""
+ },
+ "ch-localtokenomics-web-src": {
+  "status": "prepared",
+  "path": "C:\\Users\\gnayd\\Downloads\\Product Brain Workspace\\scratch\\localtokenomics-docs-ch-localtokenomics-web-src",
+  "branch": "docs/chunk-ch-localtokenomics-web-src",
+  "exit": 0,
+  "error": ""
+ },
+ "ch-localtokenomics-web-src-components-ui": {
+  "status": "prepared",
+  "path": "C:\\Users\\gnayd\\Downloads\\Product Brain Workspace\\scratch\\localtokenomics-docs-ch-localtokenomics-web-src-components-ui",
+  "branch": "docs/chunk-ch-localtokenomics-web-src-components-ui",
+  "exit": 0,
+  "error": ""
+ },
+ "ch-localtokenomics-web-src-prototype": {
+  "status": "merged",
+  "path": "",
+  "branch": "docs/chunk-ch-localtokenomics-web-src-prototype",
+  "exit": 0,
+  "error": ""
+ }
+}
