@@ -30,6 +30,7 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "id": "c-business-map",
       "type": "file",
       "file": "docs/brain/Canvases/Business Map.canvas",
@@ -45,12 +46,17 @@
       "x": 0,
       "y": 110,
 =======
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "id": "c-catalogs-map",
       "type": "file",
       "file": "docs/brain/Canvases/Catalogs Map.canvas",
       "x": 760,
       "y": 0,
+<<<<<<< HEAD
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "width": 320,
       "height": 70
     },
@@ -59,10 +65,14 @@
       "type": "file",
       "file": "docs/brain/Canvases/Data Map.canvas",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "x": 380,
 =======
       "x": 0,
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "x": 0,
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "y": 110,
       "width": 320,
       "height": 70
@@ -72,10 +82,14 @@
       "type": "file",
       "file": "docs/brain/Canvases/Decisions Map.canvas",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "x": 760,
 =======
       "x": 380,
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "x": 380,
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "y": 110,
       "width": 320,
       "height": 70
@@ -85,12 +99,17 @@
       "type": "file",
       "file": "docs/brain/Canvases/Diagrams Map.canvas",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "x": 0,
       "y": 220,
 =======
       "x": 760,
       "y": 110,
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "x": 760,
+      "y": 110,
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "width": 320,
       "height": 70
     },
@@ -99,10 +118,14 @@
       "type": "file",
       "file": "docs/brain/Canvases/Operations Map.canvas",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "x": 380,
 =======
       "x": 0,
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "x": 0,
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "y": 220,
       "width": 320,
       "height": 70
@@ -112,11 +135,14 @@
       "type": "file",
       "file": "docs/brain/Canvases/Security Map.canvas",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "x": 760,
       "y": 220,
       "width": 320,
       "height": 70
 =======
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "x": 380,
       "y": 220,
       "width": 320,
@@ -131,7 +157,10 @@
       "width": 320,
       "height": 70,
       "color": "1"
+<<<<<<< HEAD
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
     }
   ],
   "edges": []

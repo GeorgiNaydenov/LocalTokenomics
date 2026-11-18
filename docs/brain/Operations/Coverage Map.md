@@ -17,10 +17,14 @@ Which note owns each source file and which tests reach it. A row with none is a 
 
 %% generated:coverage-map start (do not edit; run brain docs generate) %%
 <<<<<<< HEAD
+<<<<<<< HEAD
 115 source files; 10 have an owning note; 45 are imported by a test; 70 have no test that imports them.
 =======
 115 source files; 75 have an owning note; 45 are imported by a test; 70 have no test that imports them.
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+115 source files; 73 have an owning note; 45 are imported by a test; 70 have no test that imports them.
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
 
 | Source file | Owning notes | Tests that import it |
 |---|---|---|
@@ -64,6 +68,7 @@ Which note owns each source file and which tests reach it. A row with none is a 
 | `src/ai_usage_cost/store.py` | none | `tests/test_cline.py`, `tests/test_collect.py`, `tests/test_copilot_cli.py` and 6 more |
 | `src/ai_usage_cost/trace.py` | none | `tests/test_insights.py`, `tests/test_pricing_v2.py`, `tests/test_privacy.py` and 4 more |
 | `src/ai_usage_cost/tui.py` | none | none |
+<<<<<<< HEAD
 <<<<<<< HEAD
 | `web/eslint.config.js` | none | none |
 | `web/src/App.tsx` | none | none |
@@ -217,4 +222,81 @@ Which note owns each source file and which tests reach it. A row with none is a 
 | `web/src/turn-insights.ts` | [[LocalTokenomics root wiring]], [[localtokenomics root API]], [[localtokenomics root Data Model]], [[localtokenomics root Diagrams]], [[localtokenomics root Operations]], [[localtokenomics root Overview]], [[localtokenomics root Security]], [[localtokenomics root Tests]], [[localtokenomics root Workflows]] | `web/src/turn-insights.test.ts` |
 | `web/vite.config.ts` | [[LocalTokenomics root wiring]], [[localtokenomics root API]], [[localtokenomics root Data Model]], [[localtokenomics root Diagrams]], [[localtokenomics root Operations]], [[localtokenomics root Overview]], [[localtokenomics root Security]], [[localtokenomics root Tests]], [[localtokenomics root Workflows]] | none |
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+| `web/eslint.config.js` | none | none |
+| `web/src/App.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/ContextTab.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/EconomicsTab.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | `web/src/EconomicsTab.test.ts` |
+| `web/src/FilterRail.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/Header.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/Overview.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/Pricing.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | `web/src/Pricing.test.ts` |
+| `web/src/SessionWorkspace.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/Sessions.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/Sources.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/TraceTab.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | `web/src/TraceTab.test.ts` |
+| `web/src/api.ts` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | `web/src/EconomicsTab.test.ts`, `web/src/Pricing.test.ts`, `web/src/TraceTab.test.ts` and 2 more |
+| `web/src/components/chart-hover.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/chart-time.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/columns.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/detail.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/filters.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/metric-info.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | `web/src/components/metric-info.test.tsx` |
+| `web/src/components/panel.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/rank.ts` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | `web/src/components/rank.test.ts` |
+| `web/src/components/series.ts` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/session.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/source-card.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/sparkline.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | `web/src/components/sparkline.test.ts` |
+| `web/src/components/stat.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/states.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/status.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/trace.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/accordion.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/alert.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/badge.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/button.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/chart.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/checkbox.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/collapsible.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/dialog.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/dropdown-menu.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/input.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/label.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/popover.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/progress.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/select.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/separator.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/sheet.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/skeleton.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/sonner.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/switch.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/table.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/tabs.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/textarea.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/toggle-group.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/toggle.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/ui/tooltip.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/use-media-query.ts` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/components/workspace-panel.ts` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/design-system/cn.ts` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/format.ts` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | `web/src/format.test.ts` |
+| `web/src/main.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/pricing-format.ts` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | `web/src/pricing-format.test.ts` |
+| `web/src/pricing-notes.ts` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | `web/src/pricing-notes.test.ts` |
+| `web/src/prototype/Gallery.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/prototype/OverviewScreen.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/prototype/PricingScreen.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/prototype/Prototype.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/prototype/Rail.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/prototype/Screens.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/prototype/SessionsScreen.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/prototype/SourcesScreen.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/prototype/data.ts` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/prototype/main.tsx` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/test-setup.ts` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/theme.ts` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | none |
+| `web/src/turn-insights.ts` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | `web/src/turn-insights.test.ts` |
+| `web/vite.config.ts` | none | none |
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
 %% generated:coverage-map end %%

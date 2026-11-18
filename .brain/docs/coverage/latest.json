@@ -161,250 +161,7 @@
    "test": false
   },
   "web/eslint.config.js": {
-<<<<<<< HEAD
    "note": false,
-   "test": false
-  },
-  "web/src/App.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/ContextTab.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/EconomicsTab.tsx": {
-   "note": false,
-   "test": true
-  },
-  "web/src/FilterRail.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/Header.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/Overview.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/Pricing.tsx": {
-   "note": false,
-   "test": true
-  },
-  "web/src/SessionWorkspace.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/Sessions.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/Sources.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/TraceTab.tsx": {
-   "note": false,
-   "test": true
-  },
-  "web/src/api.ts": {
-   "note": false,
-   "test": true
-  },
-  "web/src/components/chart-hover.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/chart-time.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/columns.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/detail.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/filters.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/metric-info.tsx": {
-   "note": false,
-   "test": true
-  },
-  "web/src/components/panel.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/rank.ts": {
-   "note": false,
-   "test": true
-  },
-  "web/src/components/series.ts": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/session.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/source-card.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/sparkline.tsx": {
-   "note": false,
-   "test": true
-  },
-  "web/src/components/stat.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/states.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/status.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/trace.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/accordion.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/alert.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/badge.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/button.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/chart.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/checkbox.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/collapsible.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/dialog.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/dropdown-menu.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/input.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/label.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/popover.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/progress.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/select.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/separator.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/sheet.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/skeleton.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/sonner.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/switch.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/table.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/tabs.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/textarea.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/toggle-group.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/toggle.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/ui/tooltip.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/use-media-query.ts": {
-   "note": false,
-   "test": false
-  },
-  "web/src/components/workspace-panel.ts": {
-   "note": false,
-   "test": false
-  },
-  "web/src/design-system/cn.ts": {
-   "note": false,
-   "test": false
-  },
-  "web/src/format.ts": {
-   "note": false,
-   "test": true
-  },
-  "web/src/main.tsx": {
-   "note": false,
-   "test": false
-  },
-  "web/src/pricing-format.ts": {
-   "note": false,
-   "test": true
-  },
-  "web/src/pricing-notes.ts": {
-   "note": false,
-=======
-   "note": true,
    "test": false
   },
   "web/src/App.tsx": {
@@ -645,7 +402,6 @@
   },
   "web/src/pricing-notes.ts": {
    "note": true,
->>>>>>> docs/chunk-ch-localtokenomics-root
    "test": true
   },
   "web/src/prototype/Gallery.tsx": {
@@ -689,26 +445,6 @@
    "test": false
   },
   "web/src/test-setup.ts": {
-<<<<<<< HEAD
-   "note": false,
-   "test": false
-  },
-  "web/src/theme.ts": {
-   "note": false,
-   "test": false
-  },
-  "web/src/turn-insights.ts": {
-   "note": false,
-   "test": true
-  },
-  "web/vite.config.ts": {
-   "note": false,
-   "test": false
-  }
- },
- "note_ratio": 0.087,
- "noted": 10,
-=======
    "note": true,
    "test": false
   },
@@ -721,13 +457,12 @@
    "test": true
   },
   "web/vite.config.ts": {
-   "note": true,
+   "note": false,
    "test": false
   }
  },
- "note_ratio": 0.6522,
- "noted": 75,
->>>>>>> docs/chunk-ch-localtokenomics-root
+ "note_ratio": 0.6348,
+ "noted": 73,
  "test_ratio": 0.3913,
  "tested": 45,
  "total": 115

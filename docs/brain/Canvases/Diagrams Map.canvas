@@ -21,11 +21,14 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "id": "n-diagram-index",
       "type": "file",
       "file": "docs/brain/Diagrams/Diagram Index.md",
       "x": 380,
 =======
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "id": "n-ci-and-delivery-diagrams",
       "type": "file",
       "file": "docs/brain/Diagrams/CI and Delivery Diagrams.md",
@@ -39,7 +42,10 @@
       "type": "file",
       "file": "docs/brain/Diagrams/Diagram Index.md",
       "x": 760,
+<<<<<<< HEAD
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "y": 0,
       "width": 320,
       "height": 70
@@ -48,6 +54,7 @@
       "id": "n-diagram-notation-guide",
       "type": "file",
       "file": "docs/brain/Diagrams/Diagram Notation Guide.md",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "x": 760,
       "y": 0,
@@ -60,12 +67,15 @@
       "file": "docs/brain/Diagrams/Web prototype C4 components.md",
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "x": 0,
       "y": 110,
       "width": 320,
       "height": 70
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
       "id": "n-web-prototype-diagrams",
       "type": "file",
@@ -75,12 +85,20 @@
       "type": "file",
       "file": "docs/brain/Diagrams/ER Data Model.md",
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "id": "n-er-data-model",
+      "type": "file",
+      "file": "docs/brain/Diagrams/ER Data Model.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "x": 380,
       "y": 110,
       "width": 320,
       "height": 70
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
     },
     {
       "id": "n-layered-viewpoints",
@@ -92,32 +110,53 @@
       "height": 70
     },
     {
+<<<<<<< HEAD
       "id": "n-localtokenomics-root-wiring",
       "type": "file",
       "file": "docs/brain/Diagrams/LocalTokenomics root wiring.md",
+=======
+      "id": "n-module-map-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Module Map Diagrams.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "x": 0,
       "y": 220,
       "width": 320,
       "height": 70
     },
     {
+<<<<<<< HEAD
       "id": "n-module-map-diagrams",
       "type": "file",
       "file": "docs/brain/Diagrams/Module Map Diagrams.md",
+=======
+      "id": "n-web-dashboard-components",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Dashboard Components.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "x": 380,
       "y": 220,
       "width": 320,
       "height": 70
     },
     {
+<<<<<<< HEAD
       "id": "n-localtokenomics-root-diagrams",
       "type": "file",
       "file": "docs/brain/Diagrams/localtokenomics root Diagrams.md",
+=======
+      "id": "n-web-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Diagrams.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "x": 760,
       "y": 220,
       "width": 320,
       "height": 70
+<<<<<<< HEAD
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
     }
   ],
   "edges": [
@@ -137,6 +176,7 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "id": "e2-n-architecture-diagram-hub-n-web-prototype-c4-components",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-web-prototype-c4-components",
@@ -145,10 +185,16 @@
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-er-data-model",
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "id": "e2-n-architecture-diagram-hub-n-er-data-model",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-er-data-model",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
       "id": "e3-n-architecture-diagram-hub-n-web-prototype-diagrams",
       "fromNode": "n-architecture-diagram-hub",
@@ -158,10 +204,16 @@
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-layered-viewpoints",
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "id": "e3-n-architecture-diagram-hub-n-layered-viewpoints",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-layered-viewpoints",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
       "id": "e4-n-diagram-index-n-web-prototype-c4-components",
       "fromNode": "n-diagram-index",
@@ -175,15 +227,31 @@
     },
     {
       "id": "e5-n-architecture-diagram-hub-n-module-map-diagrams",
+=======
+      "id": "e4-n-architecture-diagram-hub-n-module-map-diagrams",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-module-map-diagrams",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
+<<<<<<< HEAD
       "id": "e6-n-architecture-diagram-hub-n-localtokenomics-root-diagrams",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-localtokenomics-root-diagrams",
+=======
+      "id": "e5-n-architecture-diagram-hub-n-web-dashboard-components",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-dashboard-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e6-n-architecture-diagram-hub-n-web-diagrams",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-diagrams",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "fromSide": "bottom",
       "toSide": "top"
     },
@@ -198,11 +266,15 @@
       "id": "e8-n-diagram-index-n-ci-and-delivery-diagrams",
       "fromNode": "n-diagram-index",
       "toNode": "n-ci-and-delivery-diagrams",
+<<<<<<< HEAD
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
       "id": "e5-n-diagram-index-n-web-prototype-diagrams",
       "fromNode": "n-diagram-index",
@@ -212,13 +284,21 @@
       "fromNode": "n-diagram-index",
       "toNode": "n-er-data-model",
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "id": "e9-n-diagram-index-n-er-data-model",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-er-data-model",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "id": "e6-n-diagram-notation-guide-n-diagram-index",
 =======
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "id": "e10-n-diagram-index-n-layered-viewpoints",
       "fromNode": "n-diagram-index",
       "toNode": "n-layered-viewpoints",
@@ -226,6 +306,7 @@
       "toSide": "top"
     },
     {
+<<<<<<< HEAD
       "id": "e11-n-diagram-index-n-localtokenomics-root-diagrams",
       "fromNode": "n-diagram-index",
       "toNode": "n-localtokenomics-root-diagrams",
@@ -241,14 +322,35 @@
     },
     {
       "id": "e13-n-diagram-index-n-module-map-diagrams",
+=======
+      "id": "e11-n-diagram-index-n-module-map-diagrams",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "fromNode": "n-diagram-index",
       "toNode": "n-module-map-diagrams",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
+<<<<<<< HEAD
       "id": "e14-n-diagram-notation-guide-n-diagram-index",
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "id": "e12-n-diagram-index-n-web-dashboard-components",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-dashboard-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e13-n-diagram-index-n-web-diagrams",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e14-n-diagram-notation-guide-n-diagram-index",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "fromNode": "n-diagram-notation-guide",
       "toNode": "n-diagram-index",
       "fromSide": "bottom",
@@ -256,16 +358,21 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "id": "e7-n-diagram-notation-guide-n-architecture-diagram-hub",
 =======
       "id": "e15-n-diagram-notation-guide-n-architecture-diagram-hub",
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "id": "e15-n-diagram-notation-guide-n-architecture-diagram-hub",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "fromNode": "n-diagram-notation-guide",
       "toNode": "n-architecture-diagram-hub",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
       "id": "e8-n-web-prototype-c4-components-n-web-prototype-diagrams",
       "fromNode": "n-web-prototype-c4-components",
@@ -275,6 +382,11 @@
       "fromNode": "n-localtokenomics-root-wiring",
       "toNode": "n-localtokenomics-root-diagrams",
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "id": "e16-n-web-dashboard-components-n-web-diagrams",
+      "fromNode": "n-web-dashboard-components",
+      "toNode": "n-web-diagrams",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "fromSide": "bottom",
       "toSide": "top"
     }

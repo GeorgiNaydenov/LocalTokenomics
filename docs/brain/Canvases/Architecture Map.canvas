@@ -23,10 +23,14 @@
       "id": "n-module-atlas",
       "type": "file",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "file": "docs/brain/architecture/Module Atlas.md",
 =======
       "file": "docs/brain/Application/Module Atlas.md",
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "file": "docs/brain/Application/Module Atlas.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "x": 380,
       "y": 0,
       "width": 320,

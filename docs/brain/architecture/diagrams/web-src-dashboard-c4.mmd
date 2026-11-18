@@ -1,0 +1,38 @@
+flowchart LR
+    person(["Person<br/>reads usage and cost"]):::person
+    server["ai-usage-cost server<br/>external, not in this chunk<br/>JSON over HTTP"]:::external
+    subgraph dash["Web dashboard (web/src, React and TypeScript)"]
+        app["App<br/>component<br/>state, loading, refresh"]:::system
+        api["api.ts<br/>module<br/>typed fetch helpers"]:::system
+        views["Overview, Sessions, Sources, Pricing<br/>components<br/>four views"]:::system
+        ws["SessionWorkspace<br/>component<br/>Summary, Trace, Economics, Context"]:::system
+        helpers["format, pricing-notes, pricing-format, turn-insights<br/>modules<br/>pure display rules"]:::system
+        theme["theme.ts<br/>module<br/>light or dark mode"]:::system
+    end
+    store[("Browser local storage<br/>theme choice")]:::data
+    person --> app
+    app --> api
+    app --> views
+    app --> ws
+    views --> helpers
+    ws --> api
+    ws --> helpers
+    app --> theme
+    api -.-> server
+    theme -.-> store
+    subgraph Legend
+        direction LR
+        zlegend_a(["Stadium: a person"]):::person
+        zlegend_b["Rounded box: part of this system"]:::system
+        zlegend_c["Dashed grey box: external system"]:::external
+        zlegend_d[("Cylinder: data store")]:::data
+        zlegend_e["Solid arrow: call or use. Dashed arrow: network or storage access"]:::system
+        zlegend_a ~~~ zlegend_b
+        zlegend_b ~~~ zlegend_c
+        zlegend_c ~~~ zlegend_d
+        zlegend_d ~~~ zlegend_e
+    end
+    classDef system fill:#dae8fc,stroke:#222222,color:#142233
+    classDef person fill:#fff2cc,stroke:#222222,color:#222222
+    classDef external fill:#eeeeee,stroke:#222222,stroke-dasharray:5 3,color:#222222
+    classDef data fill:#d5e8d4,stroke:#222222,color:#142233

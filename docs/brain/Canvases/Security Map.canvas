@@ -12,6 +12,7 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "id": "n-web-prototype-security",
       "type": "file",
       "file": "docs/brain/Security/Web prototype Security.md",
@@ -20,6 +21,11 @@
       "type": "file",
       "file": "docs/brain/Security/localtokenomics root Security.md",
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "id": "n-web-security",
+      "type": "file",
+      "file": "docs/brain/Security/Web Security.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "x": 0,
       "y": 0,
       "width": 320,

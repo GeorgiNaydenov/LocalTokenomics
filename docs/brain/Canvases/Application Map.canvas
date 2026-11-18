@@ -14,10 +14,14 @@
       "id": "n-invariants-catalogue",
       "type": "file",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "file": "docs/brain/Application/Invariants Catalogue.md",
 =======
       "file": "docs/brain/Operations/Invariants Catalogue.md",
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "file": "docs/brain/Operations/Invariants Catalogue.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "x": 0,
       "y": 0,
       "width": 320,
@@ -43,6 +47,7 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "id": "n-systems-and-data-stores",
       "type": "file",
       "file": "docs/brain/Application/Systems and Data Stores.md",
@@ -56,6 +61,8 @@
       "type": "file",
       "file": "docs/brain/Application/Test Coverage Matrix.md",
 =======
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "id": "n-test-coverage-matrix",
       "type": "file",
       "file": "docs/brain/Operations/Test Coverage Matrix.md",
@@ -65,16 +72,23 @@
       "height": 70
     },
     {
+<<<<<<< HEAD
       "id": "n-localtokenomics-root-api",
       "type": "file",
       "file": "docs/brain/Application/localtokenomics root API.md",
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "id": "n-web-api",
+      "type": "file",
+      "file": "docs/brain/Application/Web API.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "x": 380,
       "y": 110,
       "width": 320,
       "height": 70
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
       "id": "n-web-prototype-api",
       "type": "file",
@@ -84,12 +98,18 @@
       "type": "file",
       "file": "docs/brain/Application/localtokenomics root Overview.md",
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "id": "n-web-overview",
+      "type": "file",
+      "file": "docs/brain/Application/Web Overview.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "x": 760,
       "y": 110,
       "width": 320,
       "height": 70
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
       "id": "n-web-prototype-overview",
       "type": "file",
@@ -99,12 +119,18 @@
       "type": "file",
       "file": "docs/brain/Application/localtokenomics root Tests.md",
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "id": "n-web-tests",
+      "type": "file",
+      "file": "docs/brain/Application/Web Tests.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "x": 0,
       "y": 220,
       "width": 320,
       "height": 70
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
       "id": "n-web-prototype-specification",
       "type": "file",
@@ -114,10 +140,16 @@
       "type": "file",
       "file": "docs/brain/Application/localtokenomics root Workflows.md",
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+      "id": "n-web-workflows",
+      "type": "file",
+      "file": "docs/brain/Application/Web Workflows.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
       "x": 380,
       "y": 220,
       "width": 320,
       "height": 70
+<<<<<<< HEAD
 <<<<<<< HEAD
     },
     {
@@ -139,6 +171,8 @@
       "height": 70
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
     }
   ],
   "edges": []

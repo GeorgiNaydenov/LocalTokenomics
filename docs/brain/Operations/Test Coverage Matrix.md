@@ -53,6 +53,7 @@ Which code each test file exercises through imports.
 | `tests/test_trace_codex.py` | 24 | `src/ai_usage_cost/pricing.py`, `src/ai_usage_cost/privacy.py`, `src/ai_usage_cost/sources/base.py`, `src/ai_usage_cost/sources/codex.py`, `src/ai_usage_cost/trace.py` | [[tests/test_trace_codex.py]] `tests/test_trace_codex.py:56` |
 | `tests/test_warning_groups.py` | 21 | `src/ai_usage_cost/aggregate.py` | [[tests/test_warning_groups.py]] `tests/test_warning_groups.py:8` |
 | `tests/test_windsurf.py` | 10 | `src/ai_usage_cost/models.py`, `src/ai_usage_cost/sources/windsurf.py` | [[tests/test_windsurf.py]] `tests/test_windsurf.py:28` |
+<<<<<<< HEAD
 | `web/src/EconomicsTab.test.ts` | 5 | [[localtokenomics root Overview\|web/src/EconomicsTab.tsx]], [[localtokenomics root Overview\|web/src/api.ts]] | [[web/src/EconomicsTab.test.ts]] `web/src/EconomicsTab.test.ts:16` |
 | `web/src/Pricing.test.ts` | 22 | [[localtokenomics root Overview\|web/src/Pricing.tsx]], [[localtokenomics root Overview\|web/src/api.ts]] | [[web/src/Pricing.test.ts]] `web/src/Pricing.test.ts:96` |
 | `web/src/TraceTab.test.ts` | 32 | [[localtokenomics root Overview\|web/src/TraceTab.tsx]], [[localtokenomics root Overview\|web/src/api.ts]] | [[web/src/TraceTab.test.ts]] `web/src/TraceTab.test.ts:64` |
@@ -63,6 +64,18 @@ Which code each test file exercises through imports.
 | `web/src/pricing-format.test.ts` | 14 | [[localtokenomics root Overview\|web/src/pricing-format.ts]] | [[web/src/pricing-format.test.ts]] `web/src/pricing-format.test.ts:12` |
 | `web/src/pricing-notes.test.ts` | 13 | [[localtokenomics root Overview\|web/src/pricing-notes.ts]] | [[web/src/pricing-notes.test.ts]] `web/src/pricing-notes.test.ts:11` |
 | `web/src/turn-insights.test.ts` | 35 | [[localtokenomics root Overview\|web/src/api.ts]], [[localtokenomics root Overview\|web/src/turn-insights.ts]] | [[web/src/turn-insights.test.ts]] `web/src/turn-insights.test.ts:56` |
+=======
+| `web/src/EconomicsTab.test.ts` | 5 | [[Web Overview\|web/src/EconomicsTab.tsx]], [[Web Overview\|web/src/api.ts]] | [[web/src/EconomicsTab.test.ts]] `web/src/EconomicsTab.test.ts:16` |
+| `web/src/Pricing.test.ts` | 22 | [[Web Overview\|web/src/Pricing.tsx]], [[Web Overview\|web/src/api.ts]] | [[web/src/Pricing.test.ts]] `web/src/Pricing.test.ts:96` |
+| `web/src/TraceTab.test.ts` | 32 | [[Web Overview\|web/src/TraceTab.tsx]], [[Web Overview\|web/src/api.ts]] | [[web/src/TraceTab.test.ts]] `web/src/TraceTab.test.ts:64` |
+| `web/src/components/metric-info.test.tsx` | 4 | [[Web Overview\|web/src/components/metric-info.tsx]] | [[web/src/components/metric-info.test.tsx]] `web/src/components/metric-info.test.tsx:6` |
+| `web/src/components/rank.test.ts` | 9 | [[Web Overview\|web/src/components/rank.ts]] | [[web/src/components/rank.test.ts]] `web/src/components/rank.test.ts:4` |
+| `web/src/components/sparkline.test.ts` | 5 | [[Web Overview\|web/src/components/sparkline.tsx]] | [[web/src/components/sparkline.test.ts]] `web/src/components/sparkline.test.ts:4` |
+| `web/src/format.test.ts` | 49 | [[Web Overview\|web/src/api.ts]], [[Web Overview\|web/src/format.ts]] | [[web/src/format.test.ts]] `web/src/format.test.ts:20` |
+| `web/src/pricing-format.test.ts` | 14 | [[Web Overview\|web/src/pricing-format.ts]] | [[web/src/pricing-format.test.ts]] `web/src/pricing-format.test.ts:12` |
+| `web/src/pricing-notes.test.ts` | 13 | [[Web Overview\|web/src/pricing-notes.ts]] | [[web/src/pricing-notes.test.ts]] `web/src/pricing-notes.test.ts:11` |
+| `web/src/turn-insights.test.ts` | 35 | [[Web Overview\|web/src/api.ts]], [[Web Overview\|web/src/turn-insights.ts]] | [[web/src/turn-insights.test.ts]] `web/src/turn-insights.test.ts:56` |
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
 
 Owned code files with no importing test: 70.
 

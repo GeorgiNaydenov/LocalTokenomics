@@ -1,0 +1,467 @@
+[
+ {
+  "op": "add",
+  "kind": "actor",
+  "data": {
+   "name": "Dashboard reader",
+   "classification": "human",
+   "Description": "The person who opens the local dashboard to read usage and list price cost. The code has no login or role check, so there is one human actor.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "web/src/main.tsx",
+     "quote": "createRoot(document.getElementById('root') as HTMLElement).render(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Cost state",
+   "Definition": "How a session or request was priced: priced, free, unpriced or unavailable. Only priced figures enter cost totals. Defined at `web/src/api.ts:61`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Provenance",
+   "Definition": "Where a shown number came from: measured, derived, estimated, inferred or unavailable. Defined at `web/src/api.ts:63`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Estimated rate",
+   "Definition": "A price taken from a sibling model's rate row because the model has no row of its own, shown with an estimated marker. Help text at `web/src/pricing-notes.ts:4`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Reported cost",
+   "Definition": "The cost figure a coding tool wrote itself, shown beside the computed list price cost. Built at `web/src/pricing-notes.ts:48`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Session outcome",
+   "Definition": "A person's rating of a session: successful, partial, failed, abandoned or unrated. Defined at `web/src/api.ts:82`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Unattributed turn",
+   "Definition": "The row that holds spend outside any turn. It is left out of every turn ranking. Key defined at `web/src/turn-insights.ts:4`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Sidechain",
+   "Definition": "A subagent thread of a session. The query can exclude it with a flag at `web/src/api.ts:373`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Unavailable is never shown as zero",
+   "Statement": "When a log does not carry a value, the dashboard shows it as unavailable instead of a zero or a guess.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/Sources.tsx",
+     "quote": "unavailable: 'the log does not carry it',",
+     "confidence": "inferred"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/SessionWorkspace.tsx",
+     "quote": "return 'This client logs no token counts, so cost is left blank instead of guessed.'",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Unpriced cost stays out of totals",
+   "Statement": "A session whose model matches no rate entry shows its tokens but its cost is kept out of totals.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/SessionWorkspace.tsx",
+     "quote": "return 'Tokens are counted, no rate entry matches this model, so cost stays out of totals.'",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Reported cost divergence threshold",
+   "Statement": "The tool's own cost is flagged as different when it differs from the computed cost by more than five percent or one cent, whichever is larger.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/pricing-notes.ts",
+     "quote": "return Math.abs(computed - reported) > Math.max(0.05 * Math.abs(computed), 0.01)",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Rate age notice thresholds",
+   "Statement": "A notice about old prices appears from 30 days and becomes a caution from 90 days. Unknown age shows nothing.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/pricing-notes.ts",
+     "quote": "if (days < STALE_INFO_DAYS) return null",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/pricing-notes.ts",
+     "quote": "severity: days >= STALE_CAUTION_DAYS ? 'caution' : 'info',",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Cache price derivation",
+   "Statement": "A cache price is the published figure when present, otherwise the input price times the provider ratio, otherwise it is not shown.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/pricing-format.ts",
+     "quote": "return rate.input * rules[field]",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Rate row state",
+   "Statement": "A rate row is free when its rules say free, priced when matched buckets carry spend, and unused otherwise.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/Pricing.tsx",
+     "quote": "const state: RateState = isFree ? 'free' : spendValue > 0 ? 'priced' : 'unused'",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Sub cent money keeps four decimals",
+   "Statement": "A nonzero amount under one cent is shown with up to four decimals so it never reads as zero dollars.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/format.ts",
+     "quote": "return value !== 0 && Math.abs(value) < 0.01 ? moneyPrecise.format(value) : money.format(value)",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Unattributed turn is excluded from rankings",
+   "Statement": "Turn rankings and insights ignore the row for spend outside any turn.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/turn-insights.ts",
+     "quote": "return rows.filter((row) => row.key !== UNATTRIBUTED_TURN_KEY)",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Session table row limit",
+   "Statement": "The sessions table shows at most 120 rows of the sorted list.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/Sessions.tsx",
+     "quote": "const SHOWN_LIMIT = 120",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Outcome notes are saved only when changed",
+   "Statement": "Notes and tags are sent to the server on blur only when the text differs from the saved value.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/SessionWorkspace.tsx",
+     "quote": "if (current.notes === persisted.notes && current.tagsText === persisted.tagsText) return",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Automatic rescan every five minutes",
+   "Statement": "While the tab is visible the dashboard asks the server to rescan logs every five minutes.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/App.tsx",
+     "quote": "const FIVE_MINUTES = 5 * 60 * 1000",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/App.tsx",
+     "quote": "if (interval === null) interval = setInterval(doRefresh, FIVE_MINUTES)",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Read usage and cost for a period",
+   "Description": "The Dashboard reader sees token usage and list price cost, filtered by date, client, model, project and cost state.",
+   "primary_actor": "Dashboard reader",
+   "Preconditions": "The ai-usage-cost server is running.",
+   "Postconditions": "The overview, sessions, sources or pricing view shows the filtered slice.",
+   "Main flow": [
+    "The page loads metadata and rates together. `web/src/App.tsx:168`",
+    "The report is fetched for the current query. `web/src/App.tsx:186`",
+    "The chosen view renders once its data is present. `web/src/App.tsx:333`"
+   ],
+   "Alternative flows": [
+    "At step 1, an unreachable server shows an offline card with a retry button. `web/src/api.ts:494`"
+   ],
+   "Acceptance criteria": [
+    "A value under one cent keeps four decimal places. `web/src/format.test.ts:27`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/App.tsx",
+     "quote": "fetchReport(query, controller.signal)",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Inspect one session",
+   "Description": "The Dashboard reader opens a session to see its summary, trace, economics and context.",
+   "primary_actor": "Dashboard reader",
+   "Preconditions": "A report with sessions is loaded.",
+   "Postconditions": "The workspace shows the selected tab; trace, economics and context are fetched only once requested.",
+   "Main flow": [
+    "The reader selects a session row. `web/src/App.tsx:287`",
+    "The workspace asks for the outcome at once. `web/src/SessionWorkspace.tsx:471`",
+    "A tab's data is fetched when that tab was requested. `web/src/SessionWorkspace.tsx:472`"
+   ],
+   "Alternative flows": [
+    "At step 3, a failed fetch shows the endpoint did not answer note with the error text. `web/src/SessionWorkspace.tsx:561`"
+   ],
+   "Acceptance criteria": [
+    "A trace breaks into turns by turn id. `web/src/TraceTab.test.ts:196`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/SessionWorkspace.tsx",
+     "quote": "const trace = useLazyResource<Trace>(requested.includes('trace'), loadTrace)",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Rate a session outcome",
+   "Description": "The Dashboard reader marks a session successful, partial, failed, abandoned or unrated and adds notes and tags.",
+   "primary_actor": "Dashboard reader",
+   "Preconditions": "A session workspace is open.",
+   "Postconditions": "The server holds the outcome, notes and tags.",
+   "Main flow": [
+    "The reader picks an outcome label. `web/src/SessionWorkspace.tsx:312`",
+    "The page sends it with PUT. `web/src/api.ts:577`"
+   ],
+   "Alternative flows": [
+    "At step 2, a failed save shows the error text in the status line. `web/src/SessionWorkspace.tsx:287`"
+   ],
+   "Acceptance criteria": [
+    "Notes and tags are not resent when unchanged. `web/src/SessionWorkspace.tsx:292`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/SessionWorkspace.tsx",
+     "quote": "function OutcomeControl(props",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Check list prices",
+   "Description": "The Dashboard reader reviews the rate table, which rates are used, and which models were priced from a sibling rate.",
+   "primary_actor": "Dashboard reader",
+   "Preconditions": "The rate table and report are loaded.",
+   "Postconditions": "The pricing view shows one row per rate with its state and spend.",
+   "Main flow": [
+    "The reader opens the pricing view. `web/src/App.tsx:337`",
+    "Each rate row gets a state from its rules and spend. `web/src/Pricing.tsx:128`"
+   ],
+   "Alternative flows": [
+    "At step 2, a model with only a prefix match is listed separately under its parent rate. `web/src/Pricing.tsx:106`"
+   ],
+   "Acceptance criteria": [
+    "An estimated bucket is not credited to the parent. `web/src/Pricing.test.ts:127`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/Pricing.tsx",
+     "quote": "export function buildRow(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "Risk": "The dashboard client can write to the server with PUT for outcomes and DELETE for sessions, although it mainly reads usage.",
+   "Mitigation": "Confirm in the server chunk that delete only removes derived trace data; see `web/src/api.ts:593`.",
+   "name": "Risk 1: The dashboard client can write to the",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "Risk": "Most files in this chunk have no test importing them, only the pure helper modules are tested.",
+   "Mitigation": "Add component tests for the views if they change often; the tested helpers include `web/src/format.ts:20`.",
+   "name": "Risk 2: Most files in this chunk have no",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "Question": "Does the DELETE session endpoint remove the user's own log files or only the derived trace store? The client only reports a deleted span count, see web/src/api.ts.",
+   "name": "Question 3: Does the DELETE session endpoint remove the",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "Question": "Is deleteSession reachable from any screen in this chunk? No caller was found in the pages read, only its definition in web/src/api.ts.",
+   "name": "Question 4: Is deleteSession reachable from any screen in",
+   "maturity": "draft"
+  }
+ }
+]

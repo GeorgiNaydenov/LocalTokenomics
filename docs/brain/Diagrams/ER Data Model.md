@@ -421,6 +421,33 @@ erDiagram
 ```
 %% generated:diagram-er-src-ai-usage-cost-1 end %%
 
+<<<<<<< HEAD
+=======
+%% generated:diagram-er-src-ai-usage-cost-1-nodes start (do not edit; run brain docs generate) %%
+### Node citations
+
+- AlertDecision: `src/ai_usage_cost/cli.py:252-254`
+- ClientInfo: `src/ai_usage_cost/api.py:86-88`
+- CostBreakdown: `src/ai_usage_cost/models.py:75-114`
+- Facets: `src/ai_usage_cost/aggregate.py:454-459`
+- Meta: `src/ai_usage_cost/api.py:105-128`
+- Report: `src/ai_usage_cost/aggregate.py:462-482`
+- Sample: `src/ai_usage_cost/collect.py:49-56`
+- SeriesPoint: `src/ai_usage_cost/aggregate.py:37-45`
+- SessionRow: `src/ai_usage_cost/aggregate.py:48-74`
+- TokenUsage: `src/ai_usage_cost/models.py:12-43`
+- Totals: `src/ai_usage_cost/aggregate.py:26-34`
+- UnknownModel: `src/ai_usage_cost/aggregate.py:77-80`
+- UsageEvent: `src/ai_usage_cost/models.py:49-72`
+- WarningGroup: `src/ai_usage_cost/aggregate.py:115-127`
+- WarningInstance: `src/ai_usage_cost/aggregate.py:100-111`
+- WarningSummary: `src/ai_usage_cost/api.py:91-102`
+- apps: `tests/fixtures/dyad/null_title.sql:1-18`
+- chats: `tests/fixtures/dyad/null_title.sql:20-26`
+- messages: `tests/fixtures/ollama_app/basic.sql:1-16`
+- samples: `src/ai_usage_cost/collect.py:19-23`
+%% generated:diagram-er-src-ai-usage-cost-1-nodes end %%
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
 
 ## ER view: src/ai_usage_cost (2)
 
@@ -660,6 +687,33 @@ erDiagram
 ```
 %% generated:diagram-er-src-ai-usage-cost-2 end %%
 
+<<<<<<< HEAD
+=======
+%% generated:diagram-er-src-ai-usage-cost-2-nodes start (do not edit; run brain docs generate) %%
+### Node citations
+
+- Analysis: `src/ai_usage_cost/pipeline.py:45-63`
+- Bucket: `src/ai_usage_cost/models.py:123-134`
+- Config: `src/ai_usage_cost/privacy.py:52-57`
+- IngestSummary: `src/ai_usage_cost/store.py:134-137`
+- ModelMatch: `src/ai_usage_cost/pricing.py:224-229`
+- PartialRules: `src/ai_usage_cost/pricing.py:109-117`
+- Period: `src/ai_usage_cost/pricing.py:68-98`
+- Prefix: `src/ai_usage_cost/pricing.py:169-171`
+- PriceSet: `src/ai_usage_cost/pricing.py:29-37`
+- PricedEvent: `src/ai_usage_cost/models.py:117-120`
+- ProviderRules: `src/ai_usage_cost/pricing.py:101-106`
+- RateTable: `src/ai_usage_cost/pricing.py:252-372`
+- SourceInfo: `src/ai_usage_cost/pipeline.py:31-41`
+- Span: `src/ai_usage_cost/trace.py:55-101`
+- UnpricedModel: `src/ai_usage_cost/pricing.py:232-242`
+- files: `src/ai_usage_cost/store.py:36-82`
+- outcomes: `src/ai_usage_cost/store.py:63-68`
+- requests: `src/ai_usage_cost/store.py:23-85`
+- session_exclusions: `src/ai_usage_cost/store.py:69-72`
+- trace_events: `src/ai_usage_cost/store.py:43-60`
+%% generated:diagram-er-src-ai-usage-cost-2-nodes end %%
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
 
 ## ER view: src/ai_usage_cost (3)
 
@@ -751,6 +805,22 @@ erDiagram
 ```
 %% generated:diagram-er-src-ai-usage-cost-3 end %%
 
+<<<<<<< HEAD
+=======
+%% generated:diagram-er-src-ai-usage-cost-3-nodes start (do not edit; run brain docs generate) %%
+### Node citations
+
+- Capabilities: `src/ai_usage_cost/trace.py:104-109`
+- ContextSnapshot: `src/ai_usage_cost/trace.py:112-131`
+- EconRow: `src/ai_usage_cost/trace.py:154-174`
+- Economics: `src/ai_usage_cost/trace.py:177-181`
+- Insight: `src/ai_usage_cost/trace.py:184-189`
+- OutcomeSignals: `src/ai_usage_cost/trace.py:134-138`
+- OutcomeUpdate: `src/ai_usage_cost/trace.py:141-144`
+- SpanContent: `src/ai_usage_cost/trace.py:201-205`
+- Trace: `src/ai_usage_cost/trace.py:192-198`
+%% generated:diagram-er-src-ai-usage-cost-3-nodes end %%
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
 
 ## ER view: src/ai_usage_cost/sources
 
@@ -781,6 +851,15 @@ erDiagram
 ```
 %% generated:diagram-er-src-ai-usage-cost-sources end %%
 
+<<<<<<< HEAD
+=======
+%% generated:diagram-er-src-ai-usage-cost-sources-nodes start (do not edit; run brain docs generate) %%
+### Node citations
+
+- Source: `src/ai_usage_cost/sources/base.py:18-44`
+- Spec: `src/ai_usage_cost/sources/cline.py:82-87`
+%% generated:diagram-er-src-ai-usage-cost-sources-nodes end %%
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
 
 ## ER view: tests
 
@@ -882,6 +961,19 @@ erDiagram
 ```
 %% generated:diagram-er-tests end %%
 
+<<<<<<< HEAD
+=======
+%% generated:diagram-er-tests-nodes start (do not edit; run brain docs generate) %%
+### Node citations
+
+- ItemTable: `tests/fixtures/windsurf/no_chat_key.sql:1`
+- Scanned: `tests/test_trace_codex.py:28-36`
+- cursorDiskKV: `tests/fixtures/cursor/empty.sql:1`
+- message: `tests/test_opencode.py:318`
+- part: `tests/test_opencode.py:319`
+- session: `tests/test_opencode.py:317`
+%% generated:diagram-er-tests-nodes end %%
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
 
 ## ER view: tests/fixtures/copilot_chat
 
@@ -933,6 +1025,15 @@ erDiagram
 ```
 %% generated:diagram-er-tests-fixtures-copilot-chat end %%
 
+<<<<<<< HEAD
+=======
+%% generated:diagram-er-tests-fixtures-copilot-chat-nodes start (do not edit; run brain docs generate) %%
+### Node citations
+
+- sessions: `tests/fixtures/copilot_chat/empty.sql:1-12`
+- turns: `tests/fixtures/copilot_chat/empty.sql:14-21`
+%% generated:diagram-er-tests-fixtures-copilot-chat-nodes end %%
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
 
 ## ER view: tests/fixtures/cursor
 
@@ -969,6 +1070,15 @@ erDiagram
 ```
 %% generated:diagram-er-tests-fixtures-cursor end %%
 
+<<<<<<< HEAD
+=======
+%% generated:diagram-er-tests-fixtures-cursor-nodes start (do not edit; run brain docs generate) %%
+### Node citations
+
+- ItemTable: `tests/fixtures/windsurf/no_chat_key.sql:1`
+- cursorDiskKV: `tests/fixtures/cursor/empty.sql:1`
+%% generated:diagram-er-tests-fixtures-cursor-nodes end %%
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
 
 ## ER view: tests/fixtures/dyad
 
@@ -1096,6 +1206,16 @@ erDiagram
 ```
 %% generated:diagram-er-tests-fixtures-dyad end %%
 
+<<<<<<< HEAD
+=======
+%% generated:diagram-er-tests-fixtures-dyad-nodes start (do not edit; run brain docs generate) %%
+### Node citations
+
+- apps: `tests/fixtures/dyad/null_title.sql:1-18`
+- chats: `tests/fixtures/dyad/null_title.sql:20-26`
+- messages: `tests/fixtures/ollama_app/basic.sql:1-16`
+%% generated:diagram-er-tests-fixtures-dyad-nodes end %%
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
 
 ## ER view: tests/fixtures/ollama_app
 
@@ -1148,6 +1268,14 @@ erDiagram
 ```
 %% generated:diagram-er-tests-fixtures-ollama-app end %%
 
+<<<<<<< HEAD
+=======
+%% generated:diagram-er-tests-fixtures-ollama-app-nodes start (do not edit; run brain docs generate) %%
+### Node citations
+
+- messages: `tests/fixtures/ollama_app/basic.sql:1-16`
+%% generated:diagram-er-tests-fixtures-ollama-app-nodes end %%
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
 
 ## ER view: tests/fixtures/windsurf
 
@@ -1175,3 +1303,11 @@ erDiagram
 ```
 %% generated:diagram-er-tests-fixtures-windsurf end %%
 
+<<<<<<< HEAD
+=======
+%% generated:diagram-er-tests-fixtures-windsurf-nodes start (do not edit; run brain docs generate) %%
+### Node citations
+
+- ItemTable: `tests/fixtures/windsurf/no_chat_key.sql:1`
+%% generated:diagram-er-tests-fixtures-windsurf-nodes end %%
+>>>>>>> docs/chunk-ch-localtokenomics-web-src

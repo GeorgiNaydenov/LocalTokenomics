@@ -19,6 +19,7 @@ The entry point to every diagram, grouped by the question each group answers. Fo
 ## Architecture and structure
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 - [[Web prototype C4 components]]
 - [[Web prototype Diagrams]]
 =======
@@ -27,9 +28,19 @@ The entry point to every diagram, grouped by the question each group answers. Fo
 - [[LocalTokenomics root wiring]]
 - [[Module Map Diagrams]]
 - [[localtokenomics root Diagrams]]
+=======
+- [[ER Data Model]]
+- [[Layered Viewpoints]]
+- [[Module Map Diagrams]]
+- [[Web Dashboard Components]]
+- [[Web Diagrams]]
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
 
 ## Behaviour and runtime
 
 - [[CI and Delivery Diagrams]]
+<<<<<<< HEAD
 >>>>>>> docs/chunk-ch-localtokenomics-root
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src
 %% generated:hub end %%
