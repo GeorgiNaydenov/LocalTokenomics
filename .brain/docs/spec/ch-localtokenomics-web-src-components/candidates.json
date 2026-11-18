@@ -1,0 +1,53 @@
+{
+ "chunk": "ch-localtokenomics-web-src-components",
+ "repo": "localtokenomics",
+ "routes": [],
+ "screens": [],
+ "test_scenarios": [
+  {
+   "file": "web/src/components/metric-info.test.tsx",
+   "count": 4,
+   "names": [
+    "MetricInfo",
+    "opens on click and shows the simple content",
+    "closes on a second click and does not return focus to the trigger",
+    "renders the rich metric content with meaning, formula and computed value"
+   ],
+   "first_line": 6
+  },
+  {
+   "file": "web/src/components/rank.test.ts",
+   "count": 9,
+   "names": [
+    "worstState",
+    "picks unavailable over unpriced, free and priced",
+    "picks unpriced over free and priced",
+    "returns unavailable for an empty list",
+    "is order-independent",
+    "worstProvenance",
+    "picks unavailable as the worst",
+    "picks measured as the best when nothing worse is present",
+    "returns unavailable for an empty list"
+   ],
+   "first_line": 4
+  },
+  {
+   "file": "web/src/components/sparkline.test.ts",
+   "count": 5,
+   "names": [
+    "geometry",
+    "scales a series that peaks below 1 to the real max instead of flattening it",
+    "keeps every y coordinate inside the viewBox height for a series with negative dips",
+    "falls back to a flat line without dividing by zero when every value is identical",
+    "draws the highest value nearest the top of the box"
+   ],
+   "first_line": 4
+  }
+ ],
+ "state_enums": [],
+ "external_calls": [],
+ "entities": [],
+ "existing": [
+  "candidates.json"
+ ]
+}
