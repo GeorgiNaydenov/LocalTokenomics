@@ -1,0 +1,12 @@
+{
+ "ADR Index": "Decisions/ADR Index.md",
+ "Web prototype API": "Application/Web prototype API.md",
+ "Web prototype C4 components": "Diagrams/Web prototype C4 components.md",
+ "Web prototype Data Model": "Data/Web prototype Data Model.md",
+ "Web prototype Diagrams": "Diagrams/Web prototype Diagrams.md",
+ "Web prototype Operations": "Operations/Web prototype Operations.md",
+ "Web prototype Overview": "Application/Web prototype Overview.md",
+ "Web prototype Security": "Security/Web prototype Security.md",
+ "Web prototype Tests": "Application/Web prototype Tests.md",
+ "Web prototype Workflows": "Application/Web prototype Workflows.md"
+}

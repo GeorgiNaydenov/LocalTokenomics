@@ -1,0 +1,64 @@
+{
+  "colorGroups": [
+    {
+      "query": "path:Application",
+      "color": {
+        "a": 1,
+        "rgb": 14346492
+      }
+    },
+    {
+      "query": "path:Data",
+      "color": {
+        "a": 1,
+        "rgb": 14018772
+      }
+    },
+    {
+      "query": "path:Security",
+      "color": {
+        "a": 1,
+        "rgb": 14800359
+      }
+    },
+    {
+      "query": "path:Operations",
+      "color": {
+        "a": 1,
+        "rgb": 16770764
+      }
+    },
+    {
+      "query": "path:Tests",
+      "color": {
+        "a": 1,
+        "rgb": 16119285
+      }
+    },
+    {
+      "query": "path:Diagrams",
+      "color": {
+        "a": 1,
+        "rgb": 16773836
+      }
+    },
+    {
+      "query": "path:Ontology",
+      "color": {
+        "a": 1,
+        "rgb": 16305868
+      }
+    },
+    {
+      "query": "path:Navigation",
+      "color": {
+        "a": 1,
+        "rgb": 16119285
+      }
+    }
+  ],
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true
+}
