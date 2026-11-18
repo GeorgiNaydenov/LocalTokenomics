@@ -1,0 +1,63 @@
+{
+ "chunk": "ch-localtokenomics-src-ai-usage-cost-render",
+ "notes": [
+  {
+   "note": "docs/brain/Application/Ai usage cost render API.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Ai usage cost render Overview.md",
+   "claims": 21,
+   "supported": 21,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Ai usage cost render Tests.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Ai usage cost render Workflows.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Data/Ai usage cost render Data Model.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Ai usage cost render Diagrams.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Render layer components.md",
+   "claims": 11,
+   "supported": 11,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Operations/Ai usage cost render Operations.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Security/Ai usage cost render Security.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  }
+ ],
+ "blocking": 0,
+ "findings": [],
+ "claims": 32,
+ "supported": 32
+}

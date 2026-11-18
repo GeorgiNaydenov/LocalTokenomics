@@ -1,0 +1,13 @@
+{
+ "chunk": "ch-localtokenomics-src-ai-usage-cost-render",
+ "repo": "localtokenomics",
+ "routes": [],
+ "screens": [],
+ "test_scenarios": [],
+ "state_enums": [],
+ "external_calls": [],
+ "entities": [],
+ "existing": [
+  "candidates.json"
+ ]
+}
