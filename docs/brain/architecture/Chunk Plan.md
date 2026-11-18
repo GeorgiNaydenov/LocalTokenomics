@@ -15,7 +15,7 @@ chunks:
   components: ['localtokenomics:root']
   globs: [web/*]
   depends_on: []
-  state: in-review
+  state: approved
   display_name: localtokenomics root
   files: 2
   lines: 56
@@ -25,6 +25,8 @@ chunks:
   estimate: {tokens: 60023, minutes: 7, note: rough estimate; tune after the first
       runs}
   existing_docs: stale
+  approved_by: human
+  approved_at: '2026-11-18T19:00:54+00:00'
 - id: ch-localtokenomics-src-ai-usage-cost-sources
   title: src/ai_usage_cost/sources
   repo: localtokenomics
@@ -162,7 +164,7 @@ The ordered plan for documenting this codebase one chunk at a time. Edit the `ch
 %% generated:plan-table start (do not edit; run brain docs generate) %%
 | Chunk | Title | State | Depends on | Files | Lines | Est. tokens | Diagrams | Existing docs |
 |---|---|---|---|---|---|---|---|---|
-| ch-localtokenomics-root | localtokenomics root | in-review | - | 2 | 56 | 60023 | c4 | stale |
+| ch-localtokenomics-root | localtokenomics root | approved | - | 2 | 56 | 60023 | c4 | stale |
 | ch-localtokenomics-src-ai-usage-cost-sources | src/ai_usage_cost/sources | planned | ch-localtokenomics-src-ai-usage-cost | 22 | 4722 | 137363 | c4, dfd | covered |
 | ch-localtokenomics-src-ai-usage-cost | src/ai_usage_cost | planned | ch-localtokenomics-src-ai-usage-cost-render, ch-localtokenomics-src-ai-usage-cost-sources | 13 | 5069 | 170076 | c4, erd, erd-conceptual, state, sequence, flowchart, dfd, bpmn | stale |
 | ch-localtokenomics-src-ai-usage-cost-render | src/ai_usage_cost/render | planned | ch-localtokenomics-src-ai-usage-cost | 3 | 187 | 62067 | c4 | none |

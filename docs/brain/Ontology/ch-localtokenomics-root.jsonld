@@ -8,6 +8,259 @@
     "owl": "http://www.w3.org/2002/07/owl#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
-  "@graph": [],
+  "@graph": [
+    {
+      "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer",
+      "@type": [
+        "pb:actor"
+      ],
+      "schema:name": "Maintainer",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:BusinessActor",
+      "schema:maps_to": "schema:Person",
+      "pb:definedAt": [
+        "web/package.json"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:a-production-build-replaces-the-committed-bundle",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "A production build replaces the committed bundle",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/vite.config.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:a-type-error-stops-the-dashboard-build",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "A type error stops the dashboard build",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/package.json"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:do-not-import-from-the-prototype-folder",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Do not import from the prototype folder",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/design-system/MIGRATION.md"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:lint-skips-build-output",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Lint skips build output",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/eslint.config.js"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-figures-are-invented",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Prototype figures are invented",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/prototype/data.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-filters-do-not-filter-the-screens",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Prototype filters do not filter the screens",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/prototype/Screens.tsx"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-rescan-is-staged",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Prototype rescan is staged",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/prototype/Prototype.tsx"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-session-table-shows-at-most-120-rows",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Prototype session table shows at most 120 rows",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/prototype/SessionsScreen.tsx",
+        "web/src/prototype/data.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-splits-session-cost-across-token-buckets-by-fixed-weights",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Prototype splits session cost across token buckets by fixed weights",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/prototype/Screens.tsx"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:the-prototype-is-excluded-from-the-production-build",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "The prototype is excluded from the production build",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/design-system/MIGRATION.md",
+        "web/vite.config.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:system/system:web-prototype",
+      "@type": [
+        "pb:system"
+      ],
+      "schema:name": "Web prototype",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:ApplicationComponent",
+      "schema:maps_to": "schema:SoftwareApplication",
+      "pb:definedAt": [
+        "web/src/prototype/Gallery.tsx:1-5"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:use-case/use-case:compare-a-dashboard-screen-with-its-reference",
+      "@type": [
+        "pb:use-case"
+      ],
+      "schema:name": "Compare a dashboard screen with its reference",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:ApplicationService",
+      "schema:maps_to": "schema:Action",
+      "pb:definedAt": [
+        "web/src/prototype/Prototype.tsx"
+      ],
+      "pb:uses": [
+        {
+          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer"
+        },
+        {
+          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer"
+        }
+      ],
+      "pb:mentions": [
+        {
+          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer"
+        },
+        {
+          "@id": "urn:product-brain:localtokenomics:glossary-term/glossary-term:prototype"
+        },
+        {
+          "@id": "urn:product-brain:localtokenomics:glossary-term/glossary-term:mock-data"
+        },
+        {
+          "@id": "urn:product-brain:localtokenomics:glossary-term/glossary-term:reference-screen"
+        }
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:use-case/use-case:develop-the-dashboard-against-live-data",
+      "@type": [
+        "pb:use-case"
+      ],
+      "schema:name": "Develop the dashboard against live data",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:ApplicationService",
+      "schema:maps_to": "schema:Action",
+      "pb:definedAt": [
+        "web/package.json"
+      ],
+      "pb:uses": [
+        {
+          "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer"
+        },
+        {
+          "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer"
+        }
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:use-case/use-case:rebuild-the-dashboard-bundle",
+      "@type": [
+        "pb:use-case"
+      ],
+      "schema:name": "Rebuild the dashboard bundle",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:ApplicationService",
+      "schema:maps_to": "schema:Action",
+      "pb:definedAt": [
+        "web/package.json"
+      ],
+      "pb:uses": [
+        {
+          "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer"
+        },
+        {
+          "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer"
+        },
+        {
+          "@id": "urn:product-brain:localtokenomics:rule/rule:a-type-error-stops-the-dashboard-build"
+        },
+        {
+          "@id": "urn:product-brain:localtokenomics:rule/rule:a-production-build-replaces-the-committed-bundle"
+        }
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer",
+      "@type": [
+        "pb:actor"
+      ],
+      "schema:name": "Dashboard developer",
+      "pb:outside": true
+    }
+  ],
   "unresolved": []
 }
