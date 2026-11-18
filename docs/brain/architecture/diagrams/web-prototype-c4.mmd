@@ -1,0 +1,46 @@
+flowchart LR
+    dev(["Developer<br/>Person<br/>porting a screen"]):::person
+    subgraph proto["Web prototype: web/src/prototype (dev server only, not in the build)"]
+        page["prototype.html + main.tsx<br/>Container: entry page<br/>React"]:::system
+        shell["Prototype<br/>Component: header, tabs, theme<br/>React"]:::system
+        screens["Screens<br/>Component: filters, chips, session drawer<br/>React"]:::system
+        rail["FilterRail<br/>Component: filter form<br/>React"]:::system
+        four["Overview, Sessions, Sources, Pricing<br/>Component: four reference screens<br/>React"]:::system
+        gallery["Gallery<br/>Component: design system page<br/>React"]:::system
+        mock[("data.ts<br/>Mock data: invented sessions,<br/>rates and totals<br/>TypeScript")]:::data
+    end
+    shared["Shared components and design system<br/>web/src/components, web/src/design-system<br/>Used by the prototype and the shipped app"]:::system
+    shipped["Shipped dashboard<br/>web/index.html, web/src/main.tsx, App.tsx<br/>Container: real screens"]:::system
+    api["Local usage API<br/>External system: never called by the prototype"]:::external
+
+    dev -->|opens /prototype.html| page
+    page --> shell
+    shell --> screens
+    shell --> gallery
+    screens --> rail
+    screens --> four
+    four --> mock
+    rail --> mock
+    screens --> shared
+    gallery --> shared
+    shipped --> shared
+    shipped -->|fetches reports| api
+    dev -.->|copies the layout, not the module| shipped
+
+    subgraph Legend
+        direction LR
+        zl1(["Person: yellow stadium"]):::person
+        zl2["Component or container: blue box, part of this system"]:::system
+        zl3[("Data store: green cylinder, mock data only")]:::data
+        zl4["External system: grey box, dashed border"]:::external
+        zl5["Solid arrow: import or call. Dashed arrow: manual copy by a person"]:::system
+        zl1 ~~~ zl2
+        zl2 ~~~ zl3
+        zl3 ~~~ zl4
+        zl4 ~~~ zl5
+    end
+
+    classDef person fill:#fff2cc,stroke:#222222,color:#111111
+    classDef system fill:#dae8fc,stroke:#222222,color:#111111
+    classDef data fill:#d5e8d4,stroke:#222222,color:#111111
+    classDef external fill:#e6e6e6,stroke:#222222,stroke-dasharray:5 3,color:#111111

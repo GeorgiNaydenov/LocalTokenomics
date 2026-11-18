@@ -1,0 +1,63 @@
+{
+ "chunk": "ch-localtokenomics-web-src-prototype",
+ "notes": [
+  {
+   "note": "docs/brain/Application/Web prototype API.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Web prototype Overview.md",
+   "claims": 58,
+   "supported": 58,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Web prototype Tests.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Web prototype Workflows.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Data/Web prototype Data Model.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web prototype C4 components.md",
+   "claims": 18,
+   "supported": 18,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web prototype Diagrams.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Operations/Web prototype Operations.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Security/Web prototype Security.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  }
+ ],
+ "blocking": 0,
+ "findings": [],
+ "claims": 76,
+ "supported": 76
+}

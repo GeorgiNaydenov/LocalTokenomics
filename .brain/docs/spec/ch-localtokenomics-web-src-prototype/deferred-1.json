@@ -1,0 +1,284 @@
+[
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Prototype",
+   "Definition": "The second browser app under web/src/prototype that mirrors the four dashboard screens and a design system page against invented data. It is a design reference and is not part of the shipped dashboard.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Mock data",
+   "Definition": "The invented sessions, rates, sources and totals in the prototype data file, which stand in for the real API response.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Reference screen",
+   "Definition": "A prototype screen that a developer reads beside the shipped screen it corresponds to, then copies the layout of.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Design system page",
+   "Definition": "The prototype tab named Design system, a gallery of tokens, controls and domain components, with no counterpart in the shipped dashboard.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "actor",
+  "data": {
+   "name": "Dashboard developer",
+   "classification": "human",
+   "Description": "A person who builds or restyles the dashboard and opens the prototype to see how a screen or component should look.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "The prototype is excluded from the production build",
+   "Statement": "The production build writes to the Python package folder from a single page, and the repository guide states the prototype page is deliberately left out of it.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/vite.config.ts",
+     "quote": "outDir: '../src/ai_usage_cost/web/dist',",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/design-system/MIGRATION.md",
+     "quote": "inside the Python wheel. It must stay working. `prototype.html` is deliberately excluded",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Prototype filters do not filter the screens",
+   "Statement": "The filter rail in the prototype changes its own state and chips, but the screens are rendered without any filter value, so the figures on screen never change.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/Screens.tsx",
+     "quote": "const [filters, setFilters] = useState<FilterState>(INITIAL_FILTERS)",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/Screens.tsx",
+     "quote": "<SessionsScreen onOpen={setActive} />",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Prototype session table shows at most 120 rows",
+   "Statement": "The prototype sorts all sessions and then displays only the first 120.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/data.ts",
+     "quote": "export const SESSION_LIMIT = 120",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/SessionsScreen.tsx",
+     "quote": "const shown = sorted.slice(0, SESSION_LIMIT)",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Prototype splits session cost across token buckets by fixed weights",
+   "Statement": "The session drawer apportions a session's cost across the four token buckets with constant weights, not with real rates.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/Screens.tsx",
+     "quote": "const BUCKET_WEIGHT: Record<string, number> = {",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/Screens.tsx",
+     "quote": "total > 0 ? (weighted[index] / total) * session.cost! : 0,",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Prototype rescan is staged",
+   "Statement": "The Rescan logs button only shows a scanning state for 900 milliseconds and reads no logs.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/Prototype.tsx",
+     "quote": "setTimeout(() => setScanning(false), 900)",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Prototype figures are invented",
+   "Statement": "The headline totals are literal numbers and the session list is generated from a few seed sessions.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/data.ts",
+     "quote": "cost: 3_431.96,",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/data.ts",
+     "quote": "for (let index = 0; generated.length + seeded.length < 184; index++) {",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Do not import from the prototype folder",
+   "Statement": "The migration guide tells porters to copy the composition of a prototype screen and never to import from the prototype folder.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/design-system/MIGRATION.md",
+     "quote": "from `prototype/` \u2014 it is mock data; copy the composition, not the module.",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Compare a dashboard screen with its reference",
+   "primary_actor": "Dashboard developer",
+   "actors": [
+    "Dashboard developer"
+   ],
+   "Description": "A [[Dashboard developer]] opens the [[Prototype]] page to see how one of the four screens, or a design system part, should look against [[Mock data]], then reads the matching [[Reference screen]] before changing the shipped screen.",
+   "Preconditions": "The Vite development server is running.",
+   "Postconditions": "Nothing is stored; the developer knows the target layout.",
+   "Main flow": [
+    "1. The developer opens /prototype.html, which loads the prototype entry script. `web/prototype.html:25`",
+    "2. The entry script mounts the Prototype shell. `web/src/prototype/main.tsx:9`",
+    "3. The developer picks a tab: Overview, Sessions, Sources, Models and pricing, or Design system. `web/src/prototype/Prototype.tsx:16`",
+    "4. The shell renders the Design system page for the gallery tab and the Screens component for every other tab. `web/src/prototype/Prototype.tsx:98-107`",
+    "5. Screens renders the chosen reference screen from mock data. `web/src/prototype/Screens.tsx:360-368`",
+    "6. In Sessions, the developer opens a row to see the session drawer. `web/src/prototype/Screens.tsx:375`"
+   ],
+   "Alternative flows": "4a. For the gallery tab the Filters button is hidden. `web/src/prototype/Prototype.tsx:70-79`",
+   "Acceptance criteria": "No test covers the prototype. Criteria come from the code: the page offers five tabs, the Rescan logs button reads no logs, and filters do not change the screens.",
+   "Special requirements": "The prototype is served only by the development server and is not in the production build.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/prototype/Prototype.tsx",
+     "quote": "export default function Prototype() {",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Prototype looks live but is staged",
+   "Risk": "Filters, the rescan button and the scanned 2 min ago text suggest real behaviour but do nothing, so a reader may take the prototype for working product.",
+   "Mitigation": "Notes state the staged parts; the migration guide marks the folder read only.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Design system README and migration guide are out of date",
+   "Risk": "The README says the shipped dashboard still runs on the old src/ds CSS system, but the shipped entry point already imports the new theme and the ds folder is absent.",
+   "Mitigation": "Open question for the owner of the web folder; this chunk does not edit those files.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "No tests cover the prototype",
+   "Risk": "No test file imports or lives inside the prototype folder, so a change to a reference screen is unchecked except by typecheck and lint.",
+   "Mitigation": "Accepted: the folder is read only reference code.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Is the prototype still wanted once every screen is ported?",
+   "Question": "The migration guide treats the folder as a working reference during the port. Should it be deleted or kept after the port, and should the README and guide be updated to say the port is done? Checked web/src/design-system/MIGRATION.md and README.md.",
+   "priority": "medium",
+   "maturity": "draft"
+  }
+ }
+]
