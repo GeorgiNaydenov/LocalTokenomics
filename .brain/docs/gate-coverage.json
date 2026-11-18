@@ -10,5 +10,9 @@
  "ch-localtokenomics-web-src": {
   "maturity": "approved",
   "ok": true
+ },
+ "ch-localtokenomics-web-src-components": {
+  "maturity": "approved",
+  "ok": true
  }
 }

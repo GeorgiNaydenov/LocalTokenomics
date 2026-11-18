@@ -7,4 +7,4 @@ maturity: approved
 
 ## Definition
 
-A person's rating of a session: successful, partial, failed, abandoned or unrated. Defined at `web/src/api.ts:82`.
+A label for how a session ended: successful, partial, failed, abandoned or unrated. Unrated is never guessed from signals alone. See `web/src/components/status.tsx:39`.

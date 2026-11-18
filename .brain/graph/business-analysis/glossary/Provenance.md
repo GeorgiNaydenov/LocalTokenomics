@@ -7,4 +7,4 @@ maturity: approved
 
 ## Definition
 
-Where a shown number came from: measured, derived, estimated, inferred or unavailable. Defined at `web/src/api.ts:63`.
+How a number was obtained: measured, derived, estimated, inferred or unavailable. See `web/src/components/status.tsx:31`.

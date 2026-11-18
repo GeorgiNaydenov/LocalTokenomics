@@ -1,0 +1,98 @@
+[
+ [
+  "glossary-term",
+  "Cost state"
+ ],
+ [
+  "glossary-term",
+  "Provenance"
+ ],
+ [
+  "glossary-term",
+  "Session outcome"
+ ],
+ [
+  "glossary-term",
+  "Context occupancy"
+ ],
+ [
+  "glossary-term",
+  "Unavailable marker"
+ ],
+ [
+  "actor",
+  "Dashboard reader"
+ ],
+ [
+  "rule",
+  "A missing value is shown as unavailable, never as zero"
+ ],
+ [
+  "rule",
+  "A rollup shows its least trustworthy cost state and provenance"
+ ],
+ [
+  "rule",
+  "An estimated price is marked next to the cost state"
+ ],
+ [
+  "rule",
+  "The daily chart names at most twelve series"
+ ],
+ [
+  "rule",
+  "A table always keeps at least one column"
+ ],
+ [
+  "rule",
+  "The date range cannot cross itself"
+ ],
+ [
+  "rule",
+  "The side panel width is bounded"
+ ],
+ [
+  "rule",
+  "An explanation popover does not take focus back on close"
+ ],
+ [
+  "use-case",
+  "Read a figure and see how far to trust it"
+ ],
+ [
+  "use-case",
+  "Narrow a list and choose its columns"
+ ],
+ [
+  "use-case",
+  "Inspect a chart point"
+ ],
+ [
+  "use-case",
+  "Review a session's spans and context use"
+ ],
+ [
+  "nfr",
+  "Keyboard and screen reader access to charts and timelines"
+ ],
+ [
+  "nfr",
+  "Reduced motion is respected"
+ ],
+ [
+  "risk",
+  "Most shared components have no tests"
+ ],
+ [
+  "risk",
+  "Popover timing depends on a polling interval"
+ ],
+ [
+  "open-question",
+  "Why the Other series limit is twelve"
+ ],
+ [
+  "rule",
+  "useChart refuses when !context"
+ ]
+]
