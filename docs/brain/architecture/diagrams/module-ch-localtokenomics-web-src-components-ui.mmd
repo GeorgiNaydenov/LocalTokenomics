@@ -1,0 +1,14 @@
+flowchart LR
+    subgraph g_web["web"]
+        localtokenomics_web_src_components_ui["web/src/components/ui<br/>25 files, 2083 lines<br/>typescript"]:::system
+        localtokenomics_web_src["web/src<br/>20 files, 7127 lines<br/>typescript"]:::system
+    end
+    localtokenomics_web_src_components_ui --> localtokenomics_web_src
+    localtokenomics_web_src --> localtokenomics_web_src_components_ui
+    subgraph Legend
+        direction LR
+        zlegend_a["Component: part of this system"]:::system
+        zlegend_b["Solid arrow: imports or calls"]:::system
+        zlegend_a ~~~ zlegend_b
+    end
+    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233

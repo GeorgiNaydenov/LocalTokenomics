@@ -1,0 +1,171 @@
+[
+ {
+  "op": "add",
+  "data": {
+   "name": "UI primitive",
+   "Definition": "A small wrapper in the dashboard design system layer around one interface element, such as a button, input, dialog or table, that fixes its look so screens compose it instead of styling from scratch.",
+   "maturity": "draft"
+  },
+  "kind": "glossary-term"
+ },
+ {
+  "op": "add",
+  "data": {
+   "name": "Slot attribute",
+   "Definition": "The data-slot attribute every primitive puts on its element, naming the part (for example button or dialog-content) so parents and tests can target it.",
+   "maturity": "draft"
+  },
+  "kind": "glossary-term"
+ },
+ {
+  "op": "add",
+  "data": {
+   "name": "Chart config",
+   "Definition": "The ChartConfig map from a series key to a label, an optional icon and either one colour or a light and dark colour pair, shared by a chart container and its tooltip and legend.",
+   "maturity": "draft"
+  },
+  "kind": "glossary-term"
+ },
+ {
+  "op": "add",
+  "data": {
+   "category": "design system",
+   "name": "Caller class names override primitive defaults",
+   "Statement": "Every primitive merges its default Tailwind classes with the caller className through cn, so a caller override replaces a conflicting default instead of stacking with it.",
+   "refs": [
+    {
+     "confidence": "confirmed",
+     "loc": "web/src/design-system/cn.ts::cn",
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "quote": "return twMerge(clsx(inputs))"
+    }
+   ],
+   "maturity": "draft"
+  },
+  "kind": "rule"
+ },
+ {
+  "op": "add",
+  "data": {
+   "category": "design system",
+   "name": "Toggle group settings win over item settings",
+   "Statement": "A toggle group passes its variant, size and spacing to its items through a context, and an item uses its own variant or size only when the group sets none.",
+   "refs": [
+    {
+     "confidence": "confirmed",
+     "loc": "web/src/components/ui/toggle-group.tsx::ToggleGroupItem",
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "quote": "data-variant={context.variant || variant}"
+    }
+   ],
+   "maturity": "draft"
+  },
+  "kind": "rule"
+ },
+ {
+  "op": "add",
+  "data": {
+   "category": "design system",
+   "name": "Chart parts require a chart container",
+   "Statement": "The chart tooltip and legend content read the chart config through a context, and using them outside a chart container throws an error.",
+   "refs": [
+    {
+     "confidence": "confirmed",
+     "loc": "web/src/components/ui/chart.tsx::useChart",
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "quote": "throw new Error(\"useChart must be used within a <ChartContainer />\")"
+    }
+   ],
+   "maturity": "draft"
+  },
+  "kind": "rule"
+ },
+ {
+  "op": "add",
+  "data": {
+   "category": "design system",
+   "name": "Sheet opens from the right by default",
+   "Statement": "A sheet slides in from the right unless a side of top, bottom or left is given, and both sheet and dialog show a close button unless showCloseButton is false.",
+   "refs": [
+    {
+     "confidence": "confirmed",
+     "loc": "web/src/components/ui/sheet.tsx::SheetContent",
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "quote": "side = \"right\","
+    },
+    {
+     "confidence": "confirmed",
+     "loc": "web/src/components/ui/dialog.tsx::DialogContent",
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "quote": "showCloseButton = true,"
+    }
+   ],
+   "maturity": "draft"
+  },
+  "kind": "rule"
+ },
+ {
+  "op": "add",
+  "data": {
+   "category": "design system",
+   "name": "Tooltip provider default delay is zero",
+   "Statement": "The tooltip provider shows tooltips without a hover delay unless the app gives a delayDuration, and the dashboard roots give 200 milliseconds.",
+   "refs": [
+    {
+     "confidence": "confirmed",
+     "loc": "web/src/components/ui/tooltip.tsx::TooltipProvider",
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "quote": "delayDuration = 0,"
+    }
+   ],
+   "maturity": "draft"
+  },
+  "kind": "rule"
+ },
+ {
+  "op": "add",
+  "data": {
+   "target": "Both themes covered by ChartStyle",
+   "category": "usability",
+   "name": "Chart colours follow the light and dark theme",
+   "Statement": "A chart writes one set of colour variables for the light theme and one scoped to the dark selector, so series colours change with the theme.",
+   "refs": [
+    {
+     "confidence": "confirmed",
+     "loc": "web/src/components/ui/chart.tsx::THEMES",
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "quote": "const THEMES = { light: \"\", dark: \".dark\" } as const"
+    }
+   ],
+   "maturity": "draft"
+  },
+  "kind": "nfr"
+ },
+ {
+  "op": "add",
+  "data": {
+   "Mitigation": "Cover primitives through the screens that use them, or add tests beside the primitives.",
+   "name": "Primitives have no tests of their own",
+   "Risk": "No test file lives in this folder, so a change to a shared primitive is exercised only through the screens that import it.",
+   "maturity": "draft"
+  },
+  "kind": "risk"
+ },
+ {
+  "op": "add",
+  "data": {
+   "priority": "low",
+   "name": "Which primitives are unused",
+   "Question": "Dialog, Alert, Accordion and Progress are imported only by the component gallery. Should they stay in the layer or be removed?",
+   "maturity": "draft"
+  },
+  "kind": "open-question"
+ }
+]

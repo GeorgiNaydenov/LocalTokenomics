@@ -1,0 +1,87 @@
+{
+  "nodes": [
+    {
+      "id": "title",
+      "type": "text",
+      "text": "# Application map",
+      "x": 0,
+      "y": -140,
+      "width": 320,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "n-invariants-catalogue",
+      "type": "file",
+      "file": "docs/brain/Operations/Invariants Catalogue.md",
+      "x": 0,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-route-and-api-index",
+      "type": "file",
+      "file": "docs/brain/Application/Route and API Index.md",
+      "x": 380,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-screens-and-ui-inventory",
+      "type": "file",
+      "file": "docs/brain/Application/Screens and UI Inventory.md",
+      "x": 760,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-test-coverage-matrix",
+      "type": "file",
+      "file": "docs/brain/Operations/Test Coverage Matrix.md",
+      "x": 0,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-ui-components-api",
+      "type": "file",
+      "file": "docs/brain/Application/Web ui UI components API.md",
+      "x": 380,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-ui-components-overview",
+      "type": "file",
+      "file": "docs/brain/Application/Web ui UI components Overview.md",
+      "x": 760,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-ui-components-tests",
+      "type": "file",
+      "file": "docs/brain/Application/Web ui UI components Tests.md",
+      "x": 0,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-ui-components-workflows",
+      "type": "file",
+      "file": "docs/brain/Application/Web ui UI components Workflows.md",
+      "x": 380,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    }
+  ],
+  "edges": []
+}

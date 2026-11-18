@@ -1,0 +1,186 @@
+{
+  "nodes": [
+    {
+      "id": "title",
+      "type": "text",
+      "text": "# Diagrams map",
+      "x": 0,
+      "y": -140,
+      "width": 320,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "n-architecture-diagram-hub",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Architecture Diagram Hub.md",
+      "x": 0,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ci-and-delivery-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/CI and Delivery Diagrams.md",
+      "x": 380,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-diagram-index",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Diagram Index.md",
+      "x": 760,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-diagram-notation-guide",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Diagram Notation Guide.md",
+      "x": 0,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-er-data-model",
+      "type": "file",
+      "file": "docs/brain/Diagrams/ER Data Model.md",
+      "x": 380,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-layered-viewpoints",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Layered Viewpoints.md",
+      "x": 760,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-module-map-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Module Map Diagrams.md",
+      "x": 0,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-ui-components-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web ui UI components Diagrams.md",
+      "x": 380,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0-n-architecture-diagram-hub-n-diagram-index",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-diagram-index",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e1-n-architecture-diagram-hub-n-diagram-notation-guide",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-diagram-notation-guide",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e2-n-architecture-diagram-hub-n-er-data-model",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-er-data-model",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e3-n-architecture-diagram-hub-n-layered-viewpoints",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-layered-viewpoints",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e4-n-architecture-diagram-hub-n-module-map-diagrams",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-module-map-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e5-n-architecture-diagram-hub-n-web-ui-ui-components-diagrams",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-ui-ui-components-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e6-n-architecture-diagram-hub-n-ci-and-delivery-diagrams",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-ci-and-delivery-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e7-n-diagram-index-n-ci-and-delivery-diagrams",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-ci-and-delivery-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e8-n-diagram-index-n-er-data-model",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-er-data-model",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e9-n-diagram-index-n-layered-viewpoints",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-layered-viewpoints",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e10-n-diagram-index-n-module-map-diagrams",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-module-map-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e11-n-diagram-index-n-web-ui-ui-components-diagrams",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-ui-ui-components-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e12-n-diagram-notation-guide-n-diagram-index",
+      "fromNode": "n-diagram-notation-guide",
+      "toNode": "n-diagram-index",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e13-n-diagram-notation-guide-n-architecture-diagram-hub",
+      "fromNode": "n-diagram-notation-guide",
+      "toNode": "n-architecture-diagram-hub",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ]
+}

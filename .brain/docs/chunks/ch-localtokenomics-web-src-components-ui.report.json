@@ -1,0 +1,63 @@
+{
+ "chunk": "ch-localtokenomics-web-src-components-ui",
+ "notes": [
+  {
+   "note": "docs/brain/Application/Web ui UI components API.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Web ui UI components Overview.md",
+   "claims": 41,
+   "supported": 41,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Web ui UI components Tests.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Web ui UI components Workflows.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Data/Web ui UI components Data Model.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web ui UI components Diagrams.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Ontology/Web ui UI components Ontology.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Operations/Web ui UI components Operations.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Security/Web ui UI components Security.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  }
+ ],
+ "blocking": 0,
+ "findings": [],
+ "claims": 41,
+ "supported": 41
+}

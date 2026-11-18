@@ -1,0 +1,60 @@
+{
+  "nodes": [
+    {
+      "id": "title",
+      "type": "text",
+      "text": "# Catalogs map",
+      "x": 0,
+      "y": -140,
+      "width": 320,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "n-application-catalog",
+      "type": "file",
+      "file": "docs/brain/Catalogs/Application Catalog.md",
+      "x": 0,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-data-entity-catalog",
+      "type": "file",
+      "file": "docs/brain/Catalogs/Data Entity Catalog.md",
+      "x": 380,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-interface-catalog",
+      "type": "file",
+      "file": "docs/brain/Catalogs/Interface Catalog.md",
+      "x": 760,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-technology-catalog",
+      "type": "file",
+      "file": "docs/brain/Catalogs/Technology Catalog.md",
+      "x": 0,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-traceability-matrices",
+      "type": "file",
+      "file": "docs/brain/Catalogs/Traceability Matrices.md",
+      "x": 380,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    }
+  ],
+  "edges": []
+}

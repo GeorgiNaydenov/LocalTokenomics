@@ -1,0 +1,93 @@
+erDiagram
+    Scanned {
+        list events
+        list warnings
+    }
+    Scanned {
+        list events
+        list warnings
+    }
+    cursorDiskKV {
+        BLOB value
+    }
+    Scanned {
+        list events
+        list warnings
+    }
+    Scanned {
+        list events
+        list warnings
+    }
+    session {
+        TEXT id PK
+        TEXT project_id
+        TEXT parent_id
+        TEXT slug
+        TEXT directory
+        TEXT title
+        TEXT version
+        REAL cost
+        INTEGER tokens_input
+        INTEGER tokens_output
+        INTEGER tokens_reasoning
+        INTEGER tokens_cache_read
+        INTEGER tokens_cache_write
+        INTEGER time_created
+        INTEGER time_updated
+    }
+    message {
+        TEXT id PK
+        TEXT session_id
+        INTEGER time_created
+        INTEGER time_updated
+        TEXT data
+    }
+    part {
+        TEXT id PK
+        TEXT message_id
+        TEXT session_id
+        INTEGER time_created
+        INTEGER time_updated
+        TEXT data
+    }
+    session {
+        TEXT id PK
+    }
+    message {
+        TEXT id PK
+        TEXT session_id
+        TEXT data
+    }
+    part {
+        TEXT id PK
+        TEXT message_id
+        TEXT data
+    }
+    Scanned {
+        list spans
+        list warnings
+    }
+    ItemTable {
+        TEXT value
+    }
+    cursorDiskKV {
+        BLOB value
+    }
+    cursorDiskKV {
+        BLOB value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
