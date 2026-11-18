@@ -61,91 +61,91 @@
    "test": false
   },
   "src/ai_usage_cost/sources/__init__.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/antigravity.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/base.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/claude_code.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/cline.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/codex.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/copilot_chat.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/copilot_cli.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/cursor.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/dyad.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/gemini_cli.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/grok_build.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/jan.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/kilo_code.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/kilo_legacy.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/muse_code.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/ollama_app.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/openai_compat.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/opencode.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/qwen_code.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/roo_code.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/windsurf.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/store.py": {
@@ -461,8 +461,8 @@
    "test": false
   }
  },
- "note_ratio": 0.6522,
- "noted": 75,
+ "note_ratio": 0.8435,
+ "noted": 97,
  "test_ratio": 0.3913,
  "tested": 45,
  "total": 115

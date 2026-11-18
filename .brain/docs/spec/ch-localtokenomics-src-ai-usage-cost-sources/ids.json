@@ -1,0 +1,82 @@
+[
+ [
+  "glossary-term",
+  "Reader"
+ ],
+ [
+  "glossary-term",
+  "Experimental reader"
+ ],
+ [
+  "glossary-term",
+  "Token data"
+ ],
+ [
+  "glossary-term",
+  "Root"
+ ],
+ [
+  "model",
+  "Source"
+ ],
+ [
+  "model",
+  "Spec"
+ ],
+ [
+  "rule",
+  "Readers only read"
+ ],
+ [
+  "rule",
+  "A reader is found by its SOURCE value"
+ ],
+ [
+  "rule",
+  "Unparsable lines are skipped and counted"
+ ],
+ [
+  "rule",
+  "Synthetic Claude Code records are not usage"
+ ],
+ [
+  "rule",
+  "Repeated Codex token totals are not counted twice"
+ ],
+ [
+  "rule",
+  "Muse Code control folders are skipped"
+ ],
+ [
+  "rule",
+  "Experimental readers carry a flag"
+ ],
+ [
+  "risk",
+  "Cline family token semantics unverified"
+ ],
+ [
+  "risk",
+  "Copilot CLI and Muse Code unchecked against real logs"
+ ],
+ [
+  "open-question",
+  "Experimental readers verified?"
+ ],
+ [
+  "open-question",
+  "Muse Code cache write tokens"
+ ],
+ [
+  "use-case",
+  "Discover AI tool usage from local files"
+ ],
+ [
+  "use-case",
+  "Read a tool's SQLite store without a token count"
+ ],
+ [
+  "data-store",
+  "Data of Ai usage cost sources"
+ ]
+]

@@ -18,5 +18,9 @@
  "ch-localtokenomics-web-src-components-ui": {
   "maturity": "approved",
   "ok": true
+ },
+ "ch-localtokenomics-src-ai-usage-cost-sources": {
+  "maturity": "approved",
+  "ok": true
  }
 }
