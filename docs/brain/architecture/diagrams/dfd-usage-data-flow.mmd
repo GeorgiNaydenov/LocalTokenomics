@@ -1,0 +1,50 @@
+flowchart LR
+    e1["External: AI coding tool logs and databases"]:::extsys
+    e2(["Person: reads the report, rates sessions"]):::person
+    e3["External: notification target"]:::extsys
+    subgraph tb["Trust boundary: the owner's machine"]
+        p1("1.0 Ingest changed log files"):::proc
+        p2("2.0 Price every request"):::proc
+        p3("3.0 Build the report"):::proc
+        p4("4.0 Present report and alerts"):::proc
+        p5("5.0 Release span text with redaction"):::sec
+        p6("6.0 Record a rating or forget a session"):::proc
+        d1[("D1 usage.db store")]:::store
+        d2[("D2 rates.json")]:::store
+        d3[("D3 config.json privacy settings")]:::store
+    end
+
+    e1 -->|"log records, read only"| p1
+    d3 -->|"excluded projects, retention days"| p1
+    p1 -->|"requests, spans, file fingerprints"| d1
+    d1 -->|"requests, session flags"| p2
+    d2 -->|"rate rows, prefixes, as-of date"| p2
+    p2 -->|"priced events, warnings"| p3
+    p3 -->|"report: totals, buckets, sessions"| p4
+    e2 -->|"filters, commands"| p4
+    p4 -->|"report as table, JSON, PNG or API reply"| e2
+    p4 -->|"spend alert text"| e3
+    e2 -->|"rating, forget request"| p6
+    p6 -->|"outcome row, exclusion row"| d1
+    e2 -->|"span id"| p5
+    d1 -->|"record offset and content path"| p5
+    d3 -->|"metadata only flag, size limit"| p5
+    e1 -->|"raw record text"| p5
+    p5 -->|"redacted text or refusal"| e2
+
+    subgraph Legend
+        direction LR
+        zlegend_a("1.0 Process"):::proc
+        zlegend_b("Security control"):::sec
+        zlegend_c[("D1 Data store")]:::store
+        zlegend_d(["Person"]):::person
+        zlegend_e["External system, not controlled"]:::extsys
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d ~~~ zlegend_e
+    end
+
+    classDef proc fill:#dae8fc,stroke:#222222,color:#222222
+    classDef sec fill:#e1d5e7,stroke:#222222,color:#222222
+    classDef store fill:#d5e8d4,stroke:#222222,color:#222222
+    classDef person fill:#fff2cc,stroke:#222222,color:#222222
+    classDef extsys fill:#f5f5f5,stroke:#666666,stroke-dasharray:5 5,color:#222222
+    style tb fill:none,stroke:#9673a6,stroke-dasharray:5 5

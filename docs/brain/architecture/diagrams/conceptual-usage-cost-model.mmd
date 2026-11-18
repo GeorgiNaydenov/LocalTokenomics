@@ -1,0 +1,35 @@
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#dae8fc", "primaryBorderColor": "#222222", "primaryTextColor": "#222222", "lineColor": "#333333", "tertiaryColor": "#ffffff"}}}%%
+erDiagram
+    %% Conceptual model: one box is one concept of the domain, not one table.
+    SOURCE ||--o{ LOG_FILE : "is read from"
+    LOG_FILE ||--o{ USAGE_EVENT : "yields"
+    SESSION ||--|{ USAGE_EVENT : "groups"
+    USAGE_EVENT ||--o| TOKEN_USAGE : "counts"
+    USAGE_EVENT ||--|| PRICED_EVENT : "becomes"
+    PRICED_EVENT }o--o| RATE_ROW : "uses"
+    PRICED_EVENT ||--o| COST_BREAKDOWN : "costs"
+    SESSION ||--o| OUTCOME : "is rated by"
+    SESSION ||--o{ SPAN : "is traced as"
+    REPORT ||--o{ BUCKET : "sums into"
+    REPORT ||--o{ WARNING : "carries"
+    USAGE_EVENT {
+        string client "the AI tool"
+        string model "as logged"
+        string tier "service tier"
+    }
+    PRICED_EVENT {
+        string state "priced, free, unpriced, unavailable"
+    }
+    RATE_ROW {
+        string match "model id prefix"
+        float input_per_million "USD"
+    }
+    BUCKET {
+        string key "client, provider, model, project or day"
+    }
+    LEGEND {
+        mark concept "every box is a concept of the domain"
+        line crow_foot "line ends: one bar is exactly one, ring is optional, three prongs are many"
+        color blue "blue boxes are parts of this system"
+        text label "the words on a line say how the first concept relates to the second"
+    }

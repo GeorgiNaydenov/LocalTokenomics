@@ -1,0 +1,9 @@
+{
+ "bpmn-scan-and-report.svg": {
+  "bytes": 22581,
+  "output_sha256": "d5e7c4f8a231ecc6879ab4d47989142c1975ffa43a0e1a25c42d700160040ea8",
+  "source": "docs/brain/architecture/bpmn/bpmn-scan-and-report.bpmn",
+  "source_sha256": "eb4e97547c7d66ac592bb8b2ab66d734a0515b60069a8065490476eb148a0e0f",
+  "tool": "product-brain BPMN renderer 1"
+ }
+}

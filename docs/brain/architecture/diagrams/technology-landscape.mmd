@@ -1,0 +1,39 @@
+flowchart TB
+    subgraph g_Languages["Languages"]
+        lang_python["python"]:::system
+        lang_sql["sql"]:::system
+        lang_typescript["typescript"]:::system
+    end
+    subgraph g_Frameworks_and_libraries["Frameworks and libraries"]
+        dep_pydantic["pydantic"]:::system
+        dep_fastapi["fastapi"]:::system
+        dep_react["react"]:::system
+        dep_tailwindcss["tailwindcss"]:::system
+    end
+    subgraph g_Data["Data"]
+        data_store["Database (from entity definitions)"]:::store
+    end
+    subgraph g_Build_and_delivery["Build and delivery"]
+        ops__github_workflows_codeql_yml[".github/workflows/codeql.yml"]:::system
+        ops__github_workflows_python_yml[".github/workflows/python.yml"]:::system
+        ops__github_workflows_web_yml[".github/workflows/web.yml"]:::system
+    end
+    subgraph g_Tests["Tests"]
+        dep_pytest["pytest"]:::system
+        dep_vitest["vitest"]:::system
+    end
+    g_Languages --> g_Frameworks_and_libraries
+    g_Frameworks_and_libraries --> g_Data
+    g_Data --> g_Build_and_delivery
+    g_Build_and_delivery --> g_Tests
+    subgraph Legend
+        direction LR
+        zlegend_a["Component: part of this system"]:::system
+        zlegend_d["Arrow: the layer above is implemented with the layer below"]:::system
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d
+    end
+    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233
+    classDef store fill:#d5e8d4,stroke:#82b366,color:#142233
+    classDef external fill:#f5f5f5,stroke:#666666,color:#142233
+    classDef admin fill:#ffe6cc,stroke:#d79b00,color:#142233
+    classDef security fill:#e1d5e7,stroke:#9673a6,color:#142233

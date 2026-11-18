@@ -1,0 +1,464 @@
+{
+  "nodes": [
+    {
+      "id": "title",
+      "type": "text",
+      "text": "# Diagrams map",
+      "x": 0,
+      "y": -140,
+      "width": 320,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "n-ai-usage-cost-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Ai usage cost Diagrams.md",
+      "x": 0,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-architecture-diagram-hub",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Architecture Diagram Hub.md",
+      "x": 380,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ci-and-delivery-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/CI and Delivery Diagrams.md",
+      "x": 760,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-cost-state-of-a-request",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Cost state of a request.md",
+      "x": 0,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-diagram-index",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Diagram Index.md",
+      "x": 380,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-diagram-notation-guide",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Diagram Notation Guide.md",
+      "x": 760,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-er-data-model",
+      "type": "file",
+      "file": "docs/brain/Diagrams/ER Data Model.md",
+      "x": 0,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-how-one-request-is-priced",
+      "type": "file",
+      "file": "docs/brain/Diagrams/How one request is priced.md",
+      "x": 380,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-layered-viewpoints",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Layered Viewpoints.md",
+      "x": 760,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-module-map-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Module Map Diagrams.md",
+      "x": 0,
+      "y": 330,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-scan-and-report-process",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Scan and report process.md",
+      "x": 380,
+      "y": 330,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-scan-pipeline-from-logs-to-report",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Scan pipeline from logs to report.md",
+      "x": 760,
+      "y": 330,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-usage-cost-conceptual-model",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Usage cost conceptual model.md",
+      "x": 0,
+      "y": 440,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-usage-data-flow",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Usage data flow.md",
+      "x": 380,
+      "y": 440,
+      "width": 320,
+      "height": 70
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0-n-ai-usage-cost-diagrams-n-usage-cost-conceptual-model",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-usage-cost-conceptual-model",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e1-n-ai-usage-cost-diagrams-n-cost-state-of-a-request",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-cost-state-of-a-request",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e2-n-ai-usage-cost-diagrams-n-scan-pipeline-from-logs-to-report",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-scan-pipeline-from-logs-to-report",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e3-n-ai-usage-cost-diagrams-n-how-one-request-is-priced",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-how-one-request-is-priced",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e4-n-ai-usage-cost-diagrams-n-usage-data-flow",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-usage-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e5-n-ai-usage-cost-diagrams-n-scan-and-report-process",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-scan-and-report-process",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e6-n-architecture-diagram-hub-n-diagram-index",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-diagram-index",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e7-n-architecture-diagram-hub-n-diagram-notation-guide",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-diagram-notation-guide",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e8-n-architecture-diagram-hub-n-ai-usage-cost-diagrams",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-ai-usage-cost-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e9-n-architecture-diagram-hub-n-er-data-model",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-er-data-model",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e10-n-architecture-diagram-hub-n-layered-viewpoints",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-layered-viewpoints",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e11-n-architecture-diagram-hub-n-module-map-diagrams",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-module-map-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e12-n-architecture-diagram-hub-n-usage-cost-conceptual-model",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-usage-cost-conceptual-model",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e13-n-architecture-diagram-hub-n-usage-data-flow",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-usage-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e14-n-architecture-diagram-hub-n-ci-and-delivery-diagrams",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-ci-and-delivery-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e15-n-architecture-diagram-hub-n-cost-state-of-a-request",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-cost-state-of-a-request",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e16-n-architecture-diagram-hub-n-how-one-request-is-priced",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-how-one-request-is-priced",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e17-n-architecture-diagram-hub-n-scan-pipeline-from-logs-to-report",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-scan-pipeline-from-logs-to-report",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e18-n-architecture-diagram-hub-n-scan-and-report-process",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-scan-and-report-process",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e19-n-cost-state-of-a-request-n-how-one-request-is-priced",
+      "fromNode": "n-cost-state-of-a-request",
+      "toNode": "n-how-one-request-is-priced",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e20-n-diagram-index-n-ai-usage-cost-diagrams",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-ai-usage-cost-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e21-n-diagram-index-n-ci-and-delivery-diagrams",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-ci-and-delivery-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e22-n-diagram-index-n-cost-state-of-a-request",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-cost-state-of-a-request",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e23-n-diagram-index-n-er-data-model",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-er-data-model",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e24-n-diagram-index-n-how-one-request-is-priced",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-how-one-request-is-priced",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e25-n-diagram-index-n-layered-viewpoints",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-layered-viewpoints",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e26-n-diagram-index-n-module-map-diagrams",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-module-map-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e27-n-diagram-index-n-scan-and-report-process",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-scan-and-report-process",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e28-n-diagram-index-n-scan-pipeline-from-logs-to-report",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-scan-pipeline-from-logs-to-report",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e29-n-diagram-index-n-usage-cost-conceptual-model",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-usage-cost-conceptual-model",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e30-n-diagram-index-n-usage-data-flow",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-usage-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e31-n-diagram-notation-guide-n-diagram-index",
+      "fromNode": "n-diagram-notation-guide",
+      "toNode": "n-diagram-index",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e32-n-diagram-notation-guide-n-architecture-diagram-hub",
+      "fromNode": "n-diagram-notation-guide",
+      "toNode": "n-architecture-diagram-hub",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e33-n-how-one-request-is-priced-n-cost-state-of-a-request",
+      "fromNode": "n-how-one-request-is-priced",
+      "toNode": "n-cost-state-of-a-request",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e34-n-how-one-request-is-priced-n-scan-pipeline-from-logs-to-report",
+      "fromNode": "n-how-one-request-is-priced",
+      "toNode": "n-scan-pipeline-from-logs-to-report",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e35-n-scan-and-report-process-n-scan-pipeline-from-logs-to-report",
+      "fromNode": "n-scan-and-report-process",
+      "toNode": "n-scan-pipeline-from-logs-to-report",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e36-n-scan-and-report-process-n-usage-data-flow",
+      "fromNode": "n-scan-and-report-process",
+      "toNode": "n-usage-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e37-n-scan-and-report-process-n-how-one-request-is-priced",
+      "fromNode": "n-scan-and-report-process",
+      "toNode": "n-how-one-request-is-priced",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e38-n-scan-pipeline-from-logs-to-report-n-usage-data-flow",
+      "fromNode": "n-scan-pipeline-from-logs-to-report",
+      "toNode": "n-usage-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e39-n-scan-pipeline-from-logs-to-report-n-scan-and-report-process",
+      "fromNode": "n-scan-pipeline-from-logs-to-report",
+      "toNode": "n-scan-and-report-process",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e40-n-scan-pipeline-from-logs-to-report-n-how-one-request-is-priced",
+      "fromNode": "n-scan-pipeline-from-logs-to-report",
+      "toNode": "n-how-one-request-is-priced",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e41-n-scan-pipeline-from-logs-to-report-n-cost-state-of-a-request",
+      "fromNode": "n-scan-pipeline-from-logs-to-report",
+      "toNode": "n-cost-state-of-a-request",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e42-n-usage-cost-conceptual-model-n-ai-usage-cost-diagrams",
+      "fromNode": "n-usage-cost-conceptual-model",
+      "toNode": "n-ai-usage-cost-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e43-n-usage-cost-conceptual-model-n-how-one-request-is-priced",
+      "fromNode": "n-usage-cost-conceptual-model",
+      "toNode": "n-how-one-request-is-priced",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e44-n-usage-cost-conceptual-model-n-cost-state-of-a-request",
+      "fromNode": "n-usage-cost-conceptual-model",
+      "toNode": "n-cost-state-of-a-request",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e45-n-usage-data-flow-n-scan-pipeline-from-logs-to-report",
+      "fromNode": "n-usage-data-flow",
+      "toNode": "n-scan-pipeline-from-logs-to-report",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ]
+}

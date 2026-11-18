@@ -1,0 +1,2228 @@
+[
+ {
+  "op": "add",
+  "kind": "subdomain",
+  "data": {
+   "name": "Usage collection",
+   "type": "supporting",
+   "Description": "Finds the logs and databases that AI coding tools write, parses changed files and keeps one stored request per fingerprint. Main code: `src/ai_usage_cost/store.py:190` and `src/ai_usage_cost/sources/base.py:18`.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "bounded-by",
+     "loc": "src/ai_usage_cost/store.py::ingest",
+     "quote": "def ingest(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "subdomain",
+  "data": {
+   "name": "Cost pricing",
+   "type": "core",
+   "Description": "Turns token counts into the cost the same usage would have had at published API list prices, using a rate table with periods, bands, tiers and peak windows. Main code: `src/ai_usage_cost/pricing.py:495` and `src/ai_usage_cost/pricing.py:252`.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "bounded-by",
+     "loc": "src/ai_usage_cost/pricing.py::cost_of",
+     "quote": "def cost_of(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "subdomain",
+  "data": {
+   "name": "Spend reporting",
+   "type": "core",
+   "Description": "Joins priced requests into totals, buckets, sessions, facets and warning groups and presents them on the command line and over HTTP. Main code: `src/ai_usage_cost/pipeline.py:166`, `src/ai_usage_cost/aggregate.py:675`, `src/ai_usage_cost/cli.py:24` and `src/ai_usage_cost/api.py:198`.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "bounded-by",
+     "loc": "src/ai_usage_cost/aggregate.py::build_report",
+     "quote": "def build_report(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "subdomain",
+  "data": {
+   "name": "Privacy and retention",
+   "type": "supporting",
+   "Description": "Decides whether span text may be shown, cuts and redacts it, and applies project exclusion and trace retention. Main code: `src/ai_usage_cost/privacy.py:86` and `src/ai_usage_cost/privacy.py:52`.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "bounded-by",
+     "loc": "src/ai_usage_cost/privacy.py::read_content",
+     "quote": "def read_content(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "actor",
+  "data": {
+   "name": "Person using the tool",
+   "classification": "human",
+   "Description": "The owner of the machine who runs the commands and opens the dashboard. The code has no other role and no login: `src/ai_usage_cost/cli.py:24`.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/cli.py::app",
+     "quote": "app = typer.Typer(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "actor",
+  "data": {
+   "name": "AI coding tool logs",
+   "classification": "external",
+   "Description": "The files and databases that AI coding tools write on the machine. They are read and never changed: `src/ai_usage_cost/sources/base.py:123`.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/sources/base.py::Source",
+     "quote": "class Source:",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "actor",
+  "data": {
+   "name": "Notification target",
+   "classification": "external",
+   "Description": "A service reached through an Apprise address the person passes to the alert command: `src/ai_usage_cost/cli.py:344`.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/cli.py::alert",
+     "quote": "notifier = apprise.Apprise()",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "model",
+  "data": {
+   "name": "TokenUsage",
+   "archetype": "value object",
+   "subdomain": "Cost pricing",
+   "Description": "The token counts of one request, split into uncached input, cache read, two cache write buckets, output and reasoning output. `src/ai_usage_cost/models.py:12`",
+   "Attributes": "- uncached_input, cache_read, cache_write_5m, cache_write_1h, output, reasoning_output: whole numbers, default 0\n- cache_write, input_total, total: derived, never stored",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "manifests-as",
+     "loc": "src/ai_usage_cost/models.py::TokenUsage",
+     "quote": "class TokenUsage(BaseModel):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "model",
+  "data": {
+   "name": "UsageEvent",
+   "archetype": "entity",
+   "subdomain": "Usage collection",
+   "Description": "One request read from a log: who made it, when, with which model and how many tokens, plus project and title context. `src/ai_usage_cost/models.py:49`",
+   "Attributes": "- source, client, session_id, timestamp: required\n- provider, model, request_id, tokens: optional; tokens is None when the log has no counts\n- tier: service tier, default standard\n- reported_cost: the cost the tool itself logged, kept beside the computed one",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "manifests-as",
+     "loc": "src/ai_usage_cost/models.py::UsageEvent",
+     "quote": "class UsageEvent(BaseModel):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "model",
+  "data": {
+   "name": "CostBreakdown",
+   "archetype": "value object",
+   "subdomain": "Cost pricing",
+   "Description": "The computed cost of a request or of a group of requests, split into uncached input, cache read, cache write and output, with the no cache baseline. `src/ai_usage_cost/models.py:75`",
+   "Attributes": "- uncached_input, cache_read, cache_write, output, no_cache_equivalent: dollars\n- estimated: true when any part was priced from a shorter id prefix\n- total, cache_savings: derived",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "manifests-as",
+     "loc": "src/ai_usage_cost/models.py::CostBreakdown",
+     "quote": "class CostBreakdown(BaseModel):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "model",
+  "data": {
+   "name": "PricedEvent",
+   "archetype": "entity",
+   "subdomain": "Cost pricing",
+   "Description": "A usage event with its cost breakdown (absent when not priced) and its cost state. `src/ai_usage_cost/models.py:117`",
+   "Attributes": "- event: the usage event\n- cost: breakdown or None\n- state: priced, free, unpriced or unavailable",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "manifests-as",
+     "loc": "src/ai_usage_cost/models.py::PricedEvent",
+     "quote": "class PricedEvent(BaseModel):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "model",
+  "data": {
+   "name": "Bucket",
+   "archetype": "value object",
+   "subdomain": "Spend reporting",
+   "Description": "A group of priced events under one key such as a client, provider, model, project or day, with summed tokens and cost. `src/ai_usage_cost/models.py:123`",
+   "Attributes": "- key, label, tokens, cost, events, sessions, reported_cost",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "manifests-as",
+     "loc": "src/ai_usage_cost/models.py::Bucket",
+     "quote": "class Bucket(BaseModel):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "model",
+  "data": {
+   "name": "RateTable",
+   "archetype": "aggregate root",
+   "subdomain": "Cost pricing",
+   "Description": "The loaded rates.json: model rows, provider cache rules, gateway prefixes and models known to have no price. `src/ai_usage_cost/pricing.py:252`",
+   "Attributes": "- as_of, currency, units, notes\n- models: rows keyed by a match prefix\n- providers: cache and batch rules per provider\n- prefixes, unpriced_models",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "manifests-as",
+     "loc": "src/ai_usage_cost/pricing.py::RateTable",
+     "quote": "class RateTable(BaseModel):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "model",
+  "data": {
+   "name": "ModelRate",
+   "archetype": "entity",
+   "subdomain": "Cost pricing",
+   "Description": "One row of the rate table: prices per million tokens for a model id prefix, with variants, bands, a peak window and dated periods. `src/ai_usage_cost/pricing.py:126`",
+   "Attributes": "- match, provider, display: required\n- input, output, cache_read, cache_write_5m, cache_write_1h: dollars per million tokens\n- variants, bands, peak, periods, cache_rules, context_window, status",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "manifests-as",
+     "loc": "src/ai_usage_cost/pricing.py::ModelRate",
+     "quote": "class ModelRate(PriceSet):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "model",
+  "data": {
+   "name": "Report",
+   "archetype": "aggregate root",
+   "subdomain": "Spend reporting",
+   "Description": "The answer to one query: totals, buckets by client, provider, model, project and day, session rows, warnings and facets. `src/ai_usage_cost/aggregate.py:462`",
+   "Attributes": "- totals, by_client, by_provider, by_model, by_project, by_day, series, sessions\n- unknown_models, warnings, scan_warnings, warning_groups, facets, model_matches\n- rates_as_of, rates_age_days, currency, files_scanned, files_in_slice",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "manifests-as",
+     "loc": "src/ai_usage_cost/aggregate.py::Report",
+     "quote": "class Report(BaseModel):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "model",
+  "data": {
+   "name": "SessionRow",
+   "archetype": "entity",
+   "subdomain": "Spend reporting",
+   "Description": "One session in a report: its time span, models, summed tokens and cost, worst cost state and rating. `src/ai_usage_cost/aggregate.py:48`",
+   "Attributes": "- session_id, source, client, provider: identity\n- start_time, end_time, request_count, tokens, cost, reported_cost\n- cost_state: worst of its requests; outcome, traced, error_count, title",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "manifests-as",
+     "loc": "src/ai_usage_cost/aggregate.py::SessionRow",
+     "quote": "class SessionRow(BaseModel):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "model",
+  "data": {
+   "name": "Config",
+   "archetype": "value object",
+   "subdomain": "Privacy and retention",
+   "Description": "The privacy settings read from config.json in the store folder. `src/ai_usage_cost/privacy.py:52`",
+   "Attributes": "- metadata_only: default true\n- exclude_projects, max_content_bytes\n- metadata_retention_days, content_retention_days: default None",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "manifests-as",
+     "loc": "src/ai_usage_cost/privacy.py::Config",
+     "quote": "class Config(BaseModel):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "model",
+  "data": {
+   "name": "Span",
+   "archetype": "entity",
+   "subdomain": "Usage collection",
+   "Description": "One step of a session trace: a turn, a message, a model call, a tool call or an error, with timing, tokens and where its record sits in the log. `src/ai_usage_cost/trace.py:55`",
+   "Attributes": "- span_id, parent_id, session_id, turn_id, agent_id, kind, status\n- started_at, ended_at, duration_ms, tokens, context_capacity, each with a provenance\n- source_file, record_offset, record_length, content_path",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "manifests-as",
+     "loc": "src/ai_usage_cost/trace.py::Span",
+     "quote": "class Span(BaseModel):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "model",
+  "data": {
+   "name": "Outcome",
+   "archetype": "entity",
+   "subdomain": "Spend reporting",
+   "Description": "The rating a person gives to a session, with notes and tags, plus signals computed from its spans. `src/ai_usage_cost/trace.py:147`",
+   "Attributes": "- source, session_id: identity\n- outcome: successful, partial, failed, abandoned or unrated\n- notes, tags, updated_at, signals",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "manifests-as",
+     "loc": "src/ai_usage_cost/trace.py::Outcome",
+     "quote": "class Outcome(OutcomeUpdate):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "data-store",
+  "data": {
+   "name": "Usage store",
+   "persists_models": [
+    "UsageEvent",
+    "Span",
+    "Outcome"
+   ],
+   "Description": "A SQLite file in the home folder that holds requests, files, trace events, outcomes, exclusions and GPU samples: `src/ai_usage_cost/pipeline.py:28`.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/pipeline.py::DEFAULT_DB_PATH",
+     "quote": "DEFAULT_DB_PATH = Path.home()",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "data-store",
+  "data": {
+   "name": "Rate table file",
+   "persists_models": [
+    "RateTable",
+    "ModelRate"
+   ],
+   "Description": "The shipped rates.json beside the pricing code, replaceable with the rates option: `src/ai_usage_cost/pricing.py:22`.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/pricing.py::DEFAULT_RATES_PATH",
+     "quote": "DEFAULT_RATES_PATH = Path(__file__)",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "data-store",
+  "data": {
+   "name": "Privacy configuration file",
+   "persists_models": [
+    "Config"
+   ],
+   "Description": "An optional config.json in the store folder. When it is missing or invalid the defaults apply: `src/ai_usage_cost/privacy.py:12`.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/privacy.py::DEFAULT_CONFIG_PATH",
+     "quote": "DEFAULT_CONFIG_PATH = Path.home()",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Request",
+   "Definition": "One call to a model as logged by an AI coding tool, stored as a usage event. `src/ai_usage_cost/models.py:49`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Session",
+   "Definition": "The requests that share a source and a session id. `src/ai_usage_cost/aggregate.py:582`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Source",
+   "Definition": "A supported AI coding tool with its log locations and parser. `src/ai_usage_cost/sources/base.py:18`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Service tier",
+   "Definition": "The speed or discount class a request ran on, standard unless the log says otherwise, such as fast or batch. `src/ai_usage_cost/models.py:59`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Cache read",
+   "Definition": "Input tokens served from a prompt cache, priced at a lower rate. `src/ai_usage_cost/models.py:14`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Cache write",
+   "Definition": "Input tokens written to a prompt cache in a five minute or one hour bucket. `src/ai_usage_cost/models.py:15`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Sidechain",
+   "Definition": "A request made by a subagent rather than the main conversation. `src/ai_usage_cost/models.py:58`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Fingerprint",
+   "Definition": "The short deterministic key that identifies a stored request, from the request id when there is one. `src/ai_usage_cost/store.py:154`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Rate table",
+   "Definition": "The rates.json data that prices models, with its as of date. `src/ai_usage_cost/pricing.py:252`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Price band",
+   "Definition": "A price that applies once a request's total input reaches a minimum size. `src/ai_usage_cost/pricing.py:40`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Price period",
+   "Definition": "A date range in which a row's prices are replaced by others. `src/ai_usage_cost/pricing.py:68`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Peak window",
+   "Definition": "A recurring UTC weekday and hour window with its own price. `src/ai_usage_cost/pricing.py:47`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Estimated price",
+   "Definition": "A price taken from a shorter model id prefix, flagged so a guess is never silent. `src/ai_usage_cost/models.py:84`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Unpriced model",
+   "Definition": "A model with tokens but no rate row. Its tokens count and its cost is left out. `src/ai_usage_cost/pricing.py:425`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Cost state",
+   "Definition": "One of priced, free, unpriced or unavailable. `src/ai_usage_cost/models.py:8`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Provenance",
+   "Definition": "How a value is known: measured, derived, estimated, inferred or unavailable. `src/ai_usage_cost/models.py:9`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Bucket",
+   "Definition": "A group of requests under one key in a report. `src/ai_usage_cost/models.py:123`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Outcome",
+   "Definition": "The rating a person gives a session. `src/ai_usage_cost/trace.py:26`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Span",
+   "Definition": "One step of a session trace. `src/ai_usage_cost/trace.py:55`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Metadata only",
+   "Definition": "The privacy mode, on by default, in which no span text is released. `src/ai_usage_cost/privacy.py:53`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Redaction",
+   "Definition": "Replacing secrets in released text with a marker that names the kind. `src/ai_usage_cost/privacy.py:78`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Parser version",
+   "Definition": "A number that, when raised, makes every file be parsed again. `src/ai_usage_cost/store.py:89`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Amplification",
+   "Definition": "Total input tokens divided by output tokens over the model calls of a session. `src/ai_usage_cost/trace.py:208`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Missing token counts mean unavailable",
+   "category": "pricing",
+   "subdomain": "Cost pricing",
+   "Statement": "A request whose log carries no token counts has the cost state unavailable. It is never priced as zero and never called free. `src/ai_usage_cost/pricing.py:420`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::cost_state_of",
+     "quote": "if tokens is None:",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A free provider costs zero",
+   "category": "pricing",
+   "subdomain": "Cost pricing",
+   "Statement": "A request from a provider marked free gets the state free and a zero cost breakdown, provided its tokens are known. `src/ai_usage_cost/pricing.py:434`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::price_event",
+     "quote": "return CostBreakdown(), \"free\"",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A model without a rate row is unpriced",
+   "category": "pricing",
+   "subdomain": "Cost pricing",
+   "Statement": "A request whose model matches no rate row has the state unpriced. Its tokens are counted and its cost is excluded from totals. `src/ai_usage_cost/pricing.py:425`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::cost_state_of",
+     "quote": "return \"unpriced\"",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A prefix match is an estimate",
+   "category": "pricing",
+   "subdomain": "Cost pricing",
+   "Statement": "When a model id matches a row only through a shorter prefix and a remainder that is not a known suffix, the price is flagged estimated and the pipeline raises a warning. `src/ai_usage_cost/pricing.py:313`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::RateTable.lookup",
+     "quote": "kind = \"estimated\"",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Only listed suffixes count as the same model",
+   "category": "pricing",
+   "subdomain": "Cost pricing",
+   "Statement": "A remainder after a row's match key counts as the same model only when it is a dated snapshot, a context window tag, a version or latest. `src/ai_usage_cost/pricing.py:221`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::_BENIGN_SUFFIX",
+     "quote": "_BENIGN_SUFFIX = re.compile(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "The longest matching row wins",
+   "category": "pricing",
+   "subdomain": "Cost pricing",
+   "Statement": "When several rows match a model id, the row with the longest match key is used. `src/ai_usage_cost/pricing.py:302`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::RateTable.lookup",
+     "quote": "len(rate.match) > len(best.match)",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A known unpriced model beats a guess",
+   "category": "pricing",
+   "subdomain": "Cost pricing",
+   "Statement": "An unpriced entry at least as specific as the matching row stops a prefix estimate, so a variant of a priced model is not guessed from its parent. `src/ai_usage_cost/pricing.py:314`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::RateTable.lookup",
+     "quote": "An unpriced entry at least as specific as the row",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Duplicate rate keys are rejected",
+   "category": "data integrity",
+   "subdomain": "Cost pricing",
+   "Statement": "A rate table with two rows that share a match key fails to load. `src/ai_usage_cost/pricing.py:276`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::RateTable._consistent",
+     "quote": "duplicate model match keys",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A row must name a defined provider",
+   "category": "data integrity",
+   "subdomain": "Cost pricing",
+   "Statement": "When a rate table defines provider blocks, every row must name one of them, so no row is priced silently with default cache rules. `src/ai_usage_cost/pricing.py:282`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::RateTable._consistent",
+     "quote": "models reference undefined providers",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Price periods must not overlap",
+   "category": "data integrity",
+   "subdomain": "Cost pricing",
+   "Statement": "A row whose dated periods overlap is rejected at load, because the first matching period would otherwise decide by file order. `src/ai_usage_cost/pricing.py:159`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::ModelRate._disjoint_periods",
+     "quote": "overlapping periods",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Peak windows must not wrap midnight",
+   "category": "data integrity",
+   "subdomain": "Cost pricing",
+   "Statement": "A peak window uses weekdays 0 to 6 and hour ranges with start below end and end at most 24, so a window across midnight must be split in the file. `src/ai_usage_cost/pricing.py:59`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::Peak._valid_window",
+     "quote": "peak utc_hours ranges must satisfy",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "The first covering period replaces the row prices",
+   "category": "pricing",
+   "subdomain": "Cost pricing",
+   "Statement": "The first period that covers the request's UTC date replaces the row's own price fields, and only the fields the file wrote. `src/ai_usage_cost/pricing.py:449`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::_period_applied",
+     "quote": "The row's price fields after the first period covering",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "The largest band at or under the request size applies",
+   "category": "pricing",
+   "subdomain": "Cost pricing",
+   "Statement": "Bands are sorted by minimum input and the last band whose minimum is at or under the request's total input prices the whole request. `src/ai_usage_cost/pricing.py:511`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::cost_of",
+     "quote": "sorted ascending: the last band at or under the request size wins",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "An unpriced tier is billed standard and flagged",
+   "category": "pricing",
+   "subdomain": "Cost pricing",
+   "Statement": "A service tier other than standard and batch that the row has no price for is billed at the standard price and flagged tier unpriced, which raises a warning. `src/ai_usage_cost/pricing.py:526`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::cost_of",
+     "quote": "tier_unpriced = True",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Cache prices fall back in a fixed order",
+   "category": "pricing",
+   "subdomain": "Cost pricing",
+   "Statement": "A cache price is the price set's own figure, else the row's published cache to input ratio times the set's input price, else the provider multiplier times it. `src/ai_usage_cost/pricing.py:486`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pricing.py::_cache_price",
+     "quote": "the set's own absolute figure",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A request is stored once per fingerprint",
+   "category": "data integrity",
+   "subdomain": "Usage collection",
+   "Statement": "A later record with the same fingerprint replaces an earlier one only when it carries more output, because streamed records grow and the last one holds the billed count. `src/ai_usage_cost/store.py:359`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/store.py::_insert",
+     "quote": "the last (equivalently, largest) record carries the final, billed count",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Records that disagree on input tokens keep the first",
+   "category": "data integrity",
+   "subdomain": "Usage collection",
+   "Statement": "When two records for one request disagree on input tokens, the first is kept and a warning is added. `src/ai_usage_cost/store.py:352`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/store.py::_insert",
+     "quote": "disagree on input tokens -- keeping the first",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "An unchanged file is not parsed again",
+   "category": "performance",
+   "subdomain": "Usage collection",
+   "Statement": "A file whose modification time, size and parser version match the stored values is skipped. `src/ai_usage_cost/store.py:229`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/store.py::ingest",
+     "quote": "(mtime, size, PARSER_VERSION) == prior[:3]",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A grown file resumes only when its earlier bytes are unchanged",
+   "category": "performance",
+   "subdomain": "Usage collection",
+   "Statement": "A file is read from its old end only when its source has a resume hook, it only grew, the previous scan reached its old end and a hash of the bytes before that point still matches. `src/ai_usage_cost/store.py:250`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/store.py::ingest",
+     "quote": "_boundary_hash(path, prior[1]) == prior[4]",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A forgotten session is not stored again",
+   "category": "privacy",
+   "subdomain": "Privacy and retention",
+   "Statement": "After a person forgets a session its spans and rating are deleted and an exclusion row keeps its spans out of later scans. Its requests stay. `src/ai_usage_cost/store.py:273`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/store.py::ingest",
+     "quote": "if (span.source, span.session_id) in excluded_sessions:",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "An excluded project drops its spans",
+   "category": "privacy",
+   "subdomain": "Privacy and retention",
+   "Statement": "A span whose project equals an excluded entry, or whose working directory starts with it, is not stored. `src/ai_usage_cost/store.py:314`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/store.py::_in_excluded_project",
+     "quote": "directory.startswith(entry)",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Span text is refused in metadata only mode",
+   "category": "privacy",
+   "subdomain": "Privacy and retention",
+   "Statement": "While metadata only is on, or when a span has no content path, reading its text raises content unavailable and the API answers 404. `src/ai_usage_cost/privacy.py:87`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/privacy.py::read_content",
+     "quote": "if config.metadata_only or span.content_path is None:",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Released text is cut and then redacted",
+   "category": "privacy",
+   "subdomain": "Privacy and retention",
+   "Statement": "Text that is released is truncated to the configured byte limit and then has secrets replaced by a marker that names the kind. `src/ai_usage_cost/privacy.py:97`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/privacy.py::read_content",
+     "quote": "text, truncated = truncate(text, config.max_content_bytes)",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A bad configuration file gives the defaults",
+   "category": "privacy",
+   "subdomain": "Privacy and retention",
+   "Statement": "A missing, unreadable or invalid config.json is replaced by the defaults, which keep metadata only on. `src/ai_usage_cost/privacy.py:63`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/privacy.py::load_config",
+     "quote": "except (OSError, ValueError):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "The local calendar day decides the day of an event",
+   "category": "reporting",
+   "subdomain": "Spend reporting",
+   "Statement": "An event belongs to the machine's local calendar day, a timestamp without an offset is read as UTC, and both bucketing and date filters use the same function. `src/ai_usage_cost/models.py:146`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/models.py::local_day",
+     "quote": "return aware.astimezone().date()",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A session shows its worst cost state",
+   "category": "reporting",
+   "subdomain": "Spend reporting",
+   "Statement": "The cost state of a session is the worst of its requests, ranked priced, free, unpriced, unavailable. `src/ai_usage_cost/aggregate.py:640`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/aggregate.py::sessions_of",
+     "quote": "row.cost_state = max(states[key], key=lambda s: _STATE_RANK[s])",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A session title prefers the tool, then the latest",
+   "category": "reporting",
+   "subdomain": "Spend reporting",
+   "Statement": "The title of a session comes from the highest ranked title source among its events, a tool title first and a folder fallback last, and among equals the latest wins. `src/ai_usage_cost/aggregate.py:21`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/aggregate.py::_TITLE_SOURCE_RANK",
+     "quote": "Lower rank wins when picking a session's display title",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A reported cost that differs is flagged",
+   "category": "reporting",
+   "subdomain": "Spend reporting",
+   "Statement": "A session whose tool reported cost and computed cost differ by more than five percent of the reported figure or one cent gets a warning. Free models are never compared. `src/ai_usage_cost/pipeline.py:133`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pipeline.py::reported_cost_divergences",
+     "quote": "if abs(reported - computed) > max(0.05 * reported, 0.01):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Old rates raise a warning",
+   "category": "reporting",
+   "subdomain": "Spend reporting",
+   "Statement": "When the rate table's as of date is more than 30 days old a warning asks for the table to be checked again. `src/ai_usage_cost/pipeline.py:235`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pipeline.py::analyze",
+     "quote": "if age is not None and age > STALE_INFO_DAYS:",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Content retention is inert",
+   "category": "privacy",
+   "subdomain": "Privacy and retention",
+   "Statement": "Setting content retention days only adds a warning, because no content is stored. `src/ai_usage_cost/pipeline.py:242`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pipeline.py::analyze",
+     "quote": "content_retention_days is set but inert",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "An alert needs exactly one threshold",
+   "category": "reporting",
+   "subdomain": "Spend reporting",
+   "Statement": "The alert command needs a window length of at least one day and exactly one of a window total threshold or a rise threshold. `src/ai_usage_cost/cli.py:323`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/cli.py::alert",
+     "quote": "pass --over or --rise-over, not both",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "An unknown session answers 404",
+   "category": "interface",
+   "subdomain": "Spend reporting",
+   "Statement": "A session route for a source and session id that the store does not hold, or that was forgotten, answers 404. `src/ai_usage_cost/api.py:236`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/api.py::create_app.session_spans",
+     "quote": "no session {session_id!r} under source {source!r}",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Source databases are opened read only",
+   "category": "privacy",
+   "subdomain": "Usage collection",
+   "Statement": "A source database is opened with a read only URI, so the tool never changes another tool's data. `src/ai_usage_cost/sources/base.py:123`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/sources/base.py::read_sqlite",
+     "quote": "?mode=ro",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "state-machine",
+  "data": {
+   "name": "Request cost state",
+   "entity": "PricedEvent",
+   "States": "- priced\n- free\n- unpriced\n- unavailable\n\nEach request ends in exactly one state. The estimated flag is a mark on priced, not a state. `src/ai_usage_cost/models.py:8`",
+   "Transitions": "| From | To | Trigger | Code |\n|---|---|---|---|\n| loaded | unavailable | the request has no token counts | `src/ai_usage_cost/pricing.py:421` |\n| loaded | free | the provider rules say free | `src/ai_usage_cost/pricing.py:422` |\n| loaded | unpriced | no rate row matches the model | `src/ai_usage_cost/pricing.py:425` |\n| loaded | priced | a rate row matches | `src/ai_usage_cost/pricing.py:426` |\n\nTransitions out of a state are not found: the state is recomputed on every analysis and never changes in place.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "src/ai_usage_cost/pricing.py::cost_state_of",
+     "quote": "def cost_state_of(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "event",
+  "data": {
+   "name": "Unpriced model warning",
+   "Description": "Raised once per model that has tokens and no rate. `src/ai_usage_cost/pipeline.py:215`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/pipeline.py::analyze",
+     "quote": "no rate for model {unknown.model!r}",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "event",
+  "data": {
+   "name": "Estimated price warning",
+   "Description": "Raised once per model priced from a shorter prefix, naming the parent rate and the token volume. `src/ai_usage_cost/pipeline.py:225`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/pipeline.py::analyze",
+     "quote": "has no rates.json row of its own",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "event",
+  "data": {
+   "name": "Tier unpriced warning",
+   "Description": "Raised when requests ran on a tier the row has no price for and were billed at the standard rate. `src/ai_usage_cost/pipeline.py:231`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/pipeline.py::analyze",
+     "quote": "billed at the standard rate instead",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "event",
+  "data": {
+   "name": "Reported cost divergence warning",
+   "Description": "Raised for a session whose tool reported cost and computed cost disagree. `src/ai_usage_cost/pipeline.py:135`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/pipeline.py::reported_cost_divergences",
+     "quote": "differs from ",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "event",
+  "data": {
+   "name": "Stale rates warning",
+   "Description": "Raised when the rate table is older than the threshold. `src/ai_usage_cost/pipeline.py:237`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/pipeline.py::analyze",
+     "quote": "prices may have changed",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "event",
+  "data": {
+   "name": "Session rated",
+   "Description": "Recorded when a person stores an outcome for a session. `src/ai_usage_cost/store.py:568`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/store.py::put_outcome",
+     "quote": "def put_outcome(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "event",
+  "data": {
+   "name": "Session forgotten",
+   "Description": "Recorded when a person forgets a session: its spans and rating go and an exclusion is stored. `src/ai_usage_cost/store.py:595`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/store.py::delete_session",
+     "quote": "def delete_session(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "event",
+  "data": {
+   "name": "Spend alert sent",
+   "Description": "Raised when the window's spend or rise crosses the threshold and the notification is delivered. `src/ai_usage_cost/cli.py:349`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/cli.py::alert",
+     "quote": "if not notifier.notify(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "event",
+  "data": {
+   "name": "Conflicting records warning",
+   "Description": "Raised when two records for one request disagree on input tokens. `src/ai_usage_cost/store.py:352`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/store.py::_insert",
+     "quote": "disagree on input tokens",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "nfr",
+  "data": {
+   "name": "Incremental ingest",
+   "category": "performance",
+   "target": "An unchanged file is skipped and a grown file is read from its old end when its source allows",
+   "applies_to": [
+    "Usage collection"
+   ],
+   "Statement": "Ingest avoids reparsing work: it skips unchanged files `src/ai_usage_cost/store.py:229` and hashes a fixed window of `src/ai_usage_cost/store.py:19` bytes to check a resumed file.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "nfr",
+  "data": {
+   "name": "Rate lookup is cached",
+   "category": "performance",
+   "target": "One prefix scan per distinct model id",
+   "applies_to": [
+    "Cost pricing"
+   ],
+   "Statement": "Rate lookups are cached by the raw model id because a session calls them tens of thousands of times: `src/ai_usage_cost/pricing.py:267`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "nfr",
+  "data": {
+   "name": "Released text size limit",
+   "category": "privacy",
+   "target": "At most 65,536 bytes of span text per request by default",
+   "applies_to": [
+    "Privacy and retention"
+   ],
+   "Statement": "Span text is cut to a byte limit before it is returned: `src/ai_usage_cost/privacy.py:11`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "nfr",
+  "data": {
+   "name": "Store uses write ahead logging",
+   "category": "reliability",
+   "target": "Journal mode WAL and migrations by user version",
+   "applies_to": [
+    "Usage collection"
+   ],
+   "Statement": "The store opens in WAL mode and applies pending migrations in order: `src/ai_usage_cost/store.py:144` and `src/ai_usage_cost/store.py:146`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "nfr",
+  "data": {
+   "name": "GPU sampler command timeouts",
+   "category": "reliability",
+   "target": "10 seconds for nvidia-smi and rocm-smi, 30 seconds for PowerShell counters, 0.5 seconds for Ollama",
+   "applies_to": [
+    "Usage collection"
+   ],
+   "Statement": "Each external sampler call has a timeout: `src/ai_usage_cost/collect.py:214`, `src/ai_usage_cost/collect.py:183` and `src/ai_usage_cost/collect.py:197`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "nfr",
+  "data": {
+   "name": "Server binds to loopback by default",
+   "category": "security",
+   "target": "Host 127.0.0.1",
+   "applies_to": [
+    "Spend reporting"
+   ],
+   "Statement": "The serve and sql commands listen on the loopback address unless told otherwise: `src/ai_usage_cost/cli.py:110`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "HTTP routes have no authentication",
+   "impact": "Anyone who can reach the port can read costs and, with the content route, span text if metadata only is off, and can forget sessions",
+   "likelihood": "low while the host stays on loopback",
+   "Risk": "No route checks a caller `src/ai_usage_cost/api.py:198`.",
+   "Mitigation": "The default host is the loopback address `src/ai_usage_cost/cli.py:110` and metadata only is on by default `src/ai_usage_cost/privacy.py:53`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Daily series uses the UTC date",
+   "impact": "The by day buckets and the series can place the same event on different days near midnight",
+   "likelihood": "medium",
+   "Risk": "Buckets by day use the local day `src/ai_usage_cost/aggregate.py:704` while the series uses `src/ai_usage_cost/aggregate.py:544`.",
+   "Mitigation": "Not found in the code. See the open question on the series day.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Secret patterns are a fixed list",
+   "impact": "A secret in a form the patterns do not match is returned in released text",
+   "likelihood": "low, and only when metadata only is off",
+   "Risk": "Redaction relies on nine patterns `src/ai_usage_cost/privacy.py:14`.",
+   "Mitigation": "Content is off by default `src/ai_usage_cost/privacy.py:53` and text is cut to a byte limit `src/ai_usage_cost/privacy.py:11`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "A privacy typo silently resets the settings",
+   "impact": "A person who mistypes config.json believes a project is excluded but the defaults apply",
+   "likelihood": "medium",
+   "Risk": "An invalid file is replaced by defaults without a message `src/ai_usage_cost/privacy.py:67`.",
+   "Mitigation": "Not found in the code.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Content retention is accepted but does nothing",
+   "impact": "A person may expect text to expire",
+   "likelihood": "low",
+   "Risk": "The setting is read but no content is stored `src/ai_usage_cost/pipeline.py:242`.",
+   "Mitigation": "The pipeline adds a warning when it is set.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Prices drift from the vendors",
+   "impact": "Cost figures can be wrong without any warning until the table is 30 days old",
+   "likelihood": "medium",
+   "Risk": "The table carries an as of date and warns only after a fixed age `src/ai_usage_cost/aggregate.py:179`.",
+   "Mitigation": "Estimated, unpriced and tier gaps are warned about each scan.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Should the series use the local day",
+   "priority": "medium",
+   "status": "open",
+   "linked": [
+    "SessionRow"
+   ],
+   "Question": "The series groups by the UTC date of an event `src/ai_usage_cost/aggregate.py:544` while every other day view uses the local day `src/ai_usage_cost/models.py:146`. Is that intended?",
+   "Raised by": "Reading aggregate.py and models.py",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Who may use the HTTP interface",
+   "priority": "medium",
+   "status": "open",
+   "linked": [
+    "Person using the tool"
+   ],
+   "Question": "The code has no caller check `src/ai_usage_cost/api.py:198`. Is loopback binding the intended only control, and is a non loopback host a supported setup?",
+   "Raised by": "Reading api.py and cli.py",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Will content capture be built",
+   "priority": "low",
+   "status": "open",
+   "linked": [
+    "Config"
+   ],
+   "Question": "Metadata only and content retention exist `src/ai_usage_cost/privacy.py:57` but the pipeline says no content is persisted `src/ai_usage_cost/pipeline.py:242`. Is persisted content planned?",
+   "Raised by": "Reading privacy.py and pipeline.py",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Why 30 days for stale rates",
+   "priority": "low",
+   "status": "open",
+   "linked": [
+    "RateTable"
+   ],
+   "Question": "The stale rate threshold is a constant `src/ai_usage_cost/aggregate.py:179`. What is the reason for the value?",
+   "Raised by": "Reading aggregate.py",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "See what my AI usage would cost",
+   "primary_actor": "Person using the tool",
+   "subdomain": "Spend reporting",
+   "level": "goal",
+   "actors": [
+    "Person using the tool",
+    "AI coding tool logs"
+   ],
+   "models": [
+    "UsageEvent",
+    "PricedEvent",
+    "Report"
+   ],
+   "rules": [
+    "An unchanged file is not parsed again",
+    "A model without a rate row is unpriced",
+    "The local calendar day decides the day of an event"
+   ],
+   "Description": "The person runs one command and sees what the usage of all their AI coding tools would have cost at list prices, by model, client, provider, project or day.",
+   "Preconditions": "At least one supported tool has written logs on the machine, or the person points to them with a root option.",
+   "Postconditions": "A report is printed or returned as JSON. The store holds the parsed requests for the next run.",
+   "Main flow": [
+    "The person runs the scan command, which accepts since, until, source, by, json, root, db, rates and rebuild options. `src/ai_usage_cost/cli.py:72`",
+    "The command analyses the logs. `src/ai_usage_cost/cli.py:87`",
+    "The analysis loads the privacy settings and opens the store. `src/ai_usage_cost/pipeline.py:175`",
+    "Changed files are ingested into the store. `src/ai_usage_cost/pipeline.py:178`",
+    "Stored requests are loaded and each is priced against the rate table. `src/ai_usage_cost/pipeline.py:198`",
+    "The report is filtered by the dates and sources. `src/ai_usage_cost/cli.py:88`",
+    "With the json option the report is printed as JSON. `src/ai_usage_cost/cli.py:96`",
+    "Otherwise the terminal tables are printed. `src/ai_usage_cost/cli.py:105`"
+   ],
+   "Alternative flows": [
+    "When the report has no requests the command prints that no usage was found and exits with code 1. `src/ai_usage_cost/cli.py:104`",
+    "A model with no rate is listed as unpriced and left out of the total. `src/ai_usage_cost/render/terminal.py:34`"
+   ],
+   "Acceptance criteria": [
+    "Since and until include their boundary days. `tests/test_pipeline.py:71`",
+    "Every breakdown sums to the grand total. `tests/test_pipeline.py:203`",
+    "Unavailable and unpriced requests count but do not add cost. `tests/test_pipeline.py:486`",
+    "Scanning twice changes nothing. `tests/test_store.py:158`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "src/ai_usage_cost/cli.py::scan",
+     "quote": "def scan(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Explore spend in the dashboard",
+   "primary_actor": "Person using the tool",
+   "subdomain": "Spend reporting",
+   "level": "goal",
+   "actors": [
+    "Person using the tool"
+   ],
+   "models": [
+    "Report",
+    "SessionRow"
+   ],
+   "rules": [
+    "An unknown session answers 404"
+   ],
+   "Description": "The person opens a local web dashboard to filter and compare cost by client, model, project and session.",
+   "Preconditions": "The dashboard bundle is built, otherwise the root page says how to build it.",
+   "Postconditions": "The browser shows the report; the interface answers the same filters as the command line.",
+   "Main flow": [
+    "The person runs the serve command, which scans the logs first. `src/ai_usage_cost/cli.py:109`",
+    "The command builds the application from the analysis. `src/ai_usage_cost/cli.py:133`",
+    "The browser asks for the meta data and the report. `src/ai_usage_cost/api.py:255`",
+    "The report route passes its filters to the same function the command line uses. `src/ai_usage_cost/api.py:304`",
+    "A refresh route analyses again and clears the span cache. `src/ai_usage_cost/api.py:390`"
+   ],
+   "Alternative flows": [
+    "Without the built bundle the root page returns a message to build it. `src/ai_usage_cost/api.py:401`"
+   ],
+   "Acceptance criteria": [
+    "The report has the expected shape. `tests/test_api.py:133`",
+    "Each filter narrows the report. `tests/test_api.py:233`",
+    "A filter that matches nothing returns an empty report. `tests/test_api.py:284`",
+    "Refresh invalidates the span cache. `tests/test_api.py:392`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "src/ai_usage_cost/api.py::create_app",
+     "quote": "def create_app(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Export a report as a file",
+   "primary_actor": "Person using the tool",
+   "subdomain": "Spend reporting",
+   "level": "goal",
+   "actors": [
+    "Person using the tool"
+   ],
+   "models": [
+    "Report"
+   ],
+   "rules": [],
+   "Description": "The person saves a report as JSON for other tools or as a PNG chart to share.",
+   "Preconditions": "Logs or a store exist for the period.",
+   "Postconditions": "A file with the chosen extension is written.",
+   "Main flow": [
+    "The person runs the export command with an output path. `src/ai_usage_cost/cli.py:176`",
+    "The command analyses and builds the report for the dates. `src/ai_usage_cost/cli.py:185`",
+    "A json path gets the report as JSON. `src/ai_usage_cost/cli.py:188`",
+    "A png path gets four charts. `src/ai_usage_cost/render/png.py:18`"
+   ],
+   "Alternative flows": [
+    "Any other extension is refused with exit code 2. `src/ai_usage_cost/cli.py:194`"
+   ],
+   "Acceptance criteria": [
+    "Computed fields are serialized in the report. `tests/test_api.py:199`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "src/ai_usage_cost/cli.py::export",
+     "quote": "def export(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Be alerted when spend rises",
+   "primary_actor": "Person using the tool",
+   "subdomain": "Spend reporting",
+   "level": "goal",
+   "actors": [
+    "Person using the tool",
+    "Notification target"
+   ],
+   "models": [
+    "Report"
+   ],
+   "rules": [
+    "An alert needs exactly one threshold"
+   ],
+   "Description": "The person is notified through a service of their choice when the spend of a window, or its rise over the window before, passes a threshold.",
+   "Preconditions": "The alert extra is installed and one threshold is given.",
+   "Postconditions": "A notification is delivered when the threshold is crossed, and nothing is sent otherwise.",
+   "Main flow": [
+    "The person runs the alert command with a target and a threshold. `src/ai_usage_cost/cli.py:299`",
+    "The command checks the window and the threshold options. `src/ai_usage_cost/cli.py:323`",
+    "It builds the report for the window, and for the window before when the rise is asked for. `src/ai_usage_cost/cli.py:335`",
+    "It decides whether to fire. `src/ai_usage_cost/cli.py:282`",
+    "It sends the message to every target. `src/ai_usage_cost/cli.py:349`"
+   ],
+   "Alternative flows": [
+    "A rejected target exits with code 1. `src/ai_usage_cost/cli.py:347`",
+    "A failed delivery exits with code 1. `src/ai_usage_cost/cli.py:353`",
+    "A missing extra prints how to install it and exits with code 2. `src/ai_usage_cost/cli.py:53`"
+   ],
+   "Acceptance criteria": [
+    "Spend over the threshold fires and exactly at it does not. `tests/test_cli.py:73` `tests/test_cli.py:77`",
+    "A drop never fires in rise mode. `tests/test_cli.py:90`",
+    "The message lists unpriced and unavailable usage as excluded. `tests/test_cli.py:94`",
+    "The command needs exactly one threshold. `tests/test_cli.py:150`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "src/ai_usage_cost/cli.py::alert",
+     "quote": "def alert(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Inspect and rate one session",
+   "primary_actor": "Person using the tool",
+   "subdomain": "Spend reporting",
+   "level": "goal",
+   "actors": [
+    "Person using the tool"
+   ],
+   "models": [
+    "Span",
+    "Outcome"
+   ],
+   "rules": [
+    "An unknown session answers 404"
+   ],
+   "Description": "The person opens the trace of a session, sees where cost and errors came from, and records whether it went well.",
+   "Preconditions": "The session exists in the store.",
+   "Postconditions": "A rating is stored for the session.",
+   "Main flow": [
+    "The person asks for the trace of a session. `src/ai_usage_cost/api.py:321`",
+    "The interface loads the spans once and caches them. `src/ai_usage_cost/api.py:240`",
+    "The person asks for the economics of the session, which are summed per turn, model and tool. `src/ai_usage_cost/api.py:336`",
+    "The person stores a rating with notes and tags. `src/ai_usage_cost/api.py:358`",
+    "The stored rating comes back with signals computed from the spans. `src/ai_usage_cost/api.py:359`"
+   ],
+   "Alternative flows": [
+    "An unknown session answers 404. `src/ai_usage_cost/api.py:236`"
+   ],
+   "Acceptance criteria": [
+    "An unknown session has no trace. `tests/test_api.py:364`",
+    "An outcome round trips and carries computed signals. `tests/test_api.py:525`",
+    "Economics totals equal the sum over model calls. `tests/test_api.py:454`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "src/ai_usage_cost/api.py::create_app",
+     "quote": "def trace(source: str, session_id: str)",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Forget a session",
+   "primary_actor": "Person using the tool",
+   "subdomain": "Privacy and retention",
+   "level": "goal",
+   "actors": [
+    "Person using the tool"
+   ],
+   "models": [
+    "Span"
+   ],
+   "rules": [
+    "A forgotten session is not stored again"
+   ],
+   "Description": "The person removes the trace of a session from the store and keeps it from coming back on later scans.",
+   "Preconditions": "The session exists.",
+   "Postconditions": "Its spans and rating are gone and an exclusion row is kept. Its requests stay in the totals.",
+   "Main flow": [
+    "The person sends a delete for the session. `src/ai_usage_cost/api.py:362`",
+    "The store deletes the spans and the rating. `src/ai_usage_cost/store.py:597`",
+    "It records an exclusion. `src/ai_usage_cost/store.py:601`",
+    "The span cache entry of that session is dropped. `src/ai_usage_cost/api.py:367`"
+   ],
+   "Alternative flows": [
+    "An unknown session answers 404. `src/ai_usage_cost/api.py:235`"
+   ],
+   "Acceptance criteria": [
+    "Deleting removes the trace but not the requests. `tests/test_api.py:553`",
+    "The exclusion survives a later scan. `tests/test_store.py:665`",
+    "Only the deleted session's cache entry is dropped. `tests/test_api.py:427`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "src/ai_usage_cost/api.py::create_app",
+     "quote": "def forget_session(source: str, session_id: str)",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Read the text of one span",
+   "primary_actor": "Person using the tool",
+   "subdomain": "Privacy and retention",
+   "level": "goal",
+   "actors": [
+    "Person using the tool"
+   ],
+   "models": [
+    "Span",
+    "Config"
+   ],
+   "rules": [
+    "Span text is refused in metadata only mode",
+    "Released text is cut and then redacted"
+   ],
+   "Description": "The person reads the text of one step of a session, safely, when they have allowed it.",
+   "Preconditions": "Metadata only is off in the settings and the span has a content path.",
+   "Postconditions": "The text is returned cut and redacted, with counts.",
+   "Main flow": [
+    "The person asks for the content of a span. `src/ai_usage_cost/api.py:374`",
+    "The interface finds the span in the session. `src/ai_usage_cost/api.py:376`",
+    "The privacy module reads the record from the log at the stored offset. `src/ai_usage_cost/privacy.py:91`",
+    "The text is truncated and then redacted. `src/ai_usage_cost/privacy.py:98`"
+   ],
+   "Alternative flows": [
+    "In metadata only mode the answer is 404. `src/ai_usage_cost/api.py:382`",
+    "An unknown span answers 404. `src/ai_usage_cost/api.py:378`"
+   ],
+   "Acceptance criteria": [
+    "Content is unavailable while metadata only is on. `tests/test_api.py:568`",
+    "Content is redacted when capture is allowed. `tests/test_api.py:574`",
+    "Each secret pattern is replaced. `tests/test_privacy.py:56`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "src/ai_usage_cost/api.py::create_app",
+     "quote": "def span_content(source: str, session_id: str, span_id: str)",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Try the tool with demo data",
+   "primary_actor": "Person using the tool",
+   "subdomain": "Usage collection",
+   "level": "goal",
+   "actors": [
+    "Person using the tool"
+   ],
+   "models": [
+    "UsageEvent"
+   ],
+   "rules": [],
+   "Description": "A new person sees a full dashboard from synthetic logs without exposing their own data.",
+   "Preconditions": "None.",
+   "Postconditions": "A demo tree and a demo store exist apart from the real ones.",
+   "Main flow": [
+    "The person runs the demo command. `src/ai_usage_cost/cli.py:141`",
+    "If the demo folder is missing the synthetic logs are generated. `src/ai_usage_cost/cli.py:161`",
+    "The command says the data is synthetic and that the real store is not touched. `src/ai_usage_cost/cli.py:163`",
+    "It serves the demo roots with the demo store. `src/ai_usage_cost/cli.py:171`"
+   ],
+   "Alternative flows": [
+    "With the off option the demo tree is deleted and the real logs are served. `src/ai_usage_cost/cli.py:151`"
+   ],
+   "Acceptance criteria": [
+    "The demo store is separate from the real store. `tests/test_demo.py:27`",
+    "The demo shows priced, estimated and unpriced states. `tests/test_demo.py:89`",
+    "Off removes the demo tree and serves real data. `tests/test_demo.py:61`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "src/ai_usage_cost/cli.py::demo",
+     "quote": "def demo(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Sample GPU use for local models",
+   "primary_actor": "Person using the tool",
+   "subdomain": "Usage collection",
+   "level": "subfunction",
+   "actors": [
+    "Person using the tool"
+   ],
+   "models": [],
+   "rules": [],
+   "Description": "The person records GPU load and memory while local models run, so energy can be estimated from a power rating.",
+   "Preconditions": "A sampler is available: nvidia-smi, rocm-smi or Windows performance counters.",
+   "Postconditions": "Samples are stored, and energy is shown when a power rating is given.",
+   "Main flow": [
+    "The person runs the collect command. `src/ai_usage_cost/cli.py:200`",
+    "The command picks a backend. `src/ai_usage_cost/collect.py:85`",
+    "Each interval it takes a sample and stores it. `src/ai_usage_cost/collect.py:275`",
+    "Energy is the rating times utilisation times elapsed time, only when a rating is given. `src/ai_usage_cost/collect.py:255`"
+   ],
+   "Alternative flows": [
+    "With no sampler the command prints that none is available and exits with code 1. `src/ai_usage_cost/cli.py:214`"
+   ],
+   "Acceptance criteria": [
+    "Energy is unavailable without a rating. `tests/test_collect.py:105`",
+    "No rows are written when no backend exists. `tests/test_collect.py:87`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "src/ai_usage_cost/cli.py::collect",
+     "quote": "def collect(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Query the store with SQL",
+   "primary_actor": "Person using the tool",
+   "subdomain": "Spend reporting",
+   "level": "subfunction",
+   "actors": [
+    "Person using the tool"
+   ],
+   "models": [],
+   "rules": [],
+   "Description": "The person explores the stored requests with SQL in a browser through Datasette.",
+   "Preconditions": "The sql extra is installed and a store exists.",
+   "Postconditions": "Datasette serves the store.",
+   "Main flow": [
+    "The person runs the sql command. `src/ai_usage_cost/cli.py:229`",
+    "The command needs Datasette. `src/ai_usage_cost/cli.py:235`",
+    "It checks that the store file exists. `src/ai_usage_cost/cli.py:239`",
+    "It hands the store to Datasette. `src/ai_usage_cost/cli.py:248`"
+   ],
+   "Alternative flows": [
+    "A missing store prints a hint and exits with code 2. `src/ai_usage_cost/cli.py:241`"
+   ],
+   "Acceptance criteria": [
+    "The explicit store is handed to Datasette. `tests/test_cli.py:219`",
+    "A missing store is named instead of launching. `tests/test_cli.py:241`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "src/ai_usage_cost/cli.py::sql",
+     "quote": "def sql(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Browse sessions in the terminal",
+   "primary_actor": "Person using the tool",
+   "subdomain": "Spend reporting",
+   "level": "subfunction",
+   "actors": [
+    "Person using the tool"
+   ],
+   "models": [
+    "SessionRow"
+   ],
+   "rules": [],
+   "Description": "The person lists and sorts sessions in a terminal table and filters them as they type.",
+   "Preconditions": "The tui extra is installed and the report has sessions.",
+   "Postconditions": "A full screen table is shown.",
+   "Main flow": [
+    "The person runs the tui command. `src/ai_usage_cost/cli.py:358`",
+    "The command shows a notice and exits with code 1 when there are no sessions. `src/ai_usage_cost/cli.py:371`",
+    "The table is filled from the report sessions. `src/ai_usage_cost/tui.py:119`",
+    "A header click sorts and a second click reverses. `src/ai_usage_cost/tui.py:105`"
+   ],
+   "Alternative flows": [
+    "Without the extra the command prints an install hint and exits with code 2. `src/ai_usage_cost/cli.py:366`"
+   ],
+   "Acceptance criteria": [
+    "The filter matches any visible session field. `tests/test_cli.py:197`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "src/ai_usage_cost/cli.py::tui",
+     "quote": "def tui(",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ }
+]

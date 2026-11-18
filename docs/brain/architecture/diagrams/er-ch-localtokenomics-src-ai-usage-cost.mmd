@@ -1,0 +1,99 @@
+erDiagram
+    samples {
+        TEXT machine
+        TEXT sampled_at
+        REAL gpu_util
+        INTEGER vram_used
+        INTEGER vram_total
+        REAL power_w
+        TEXT source
+    }
+    requests {
+        TEXT fingerprint PK
+        TEXT source
+        TEXT client
+        TEXT provider
+        TEXT model
+        TEXT session_id
+        TEXT timestamp
+        TEXT request_id
+        INTEGER uncached_input
+        INTEGER cache_read
+        INTEGER cache_write_5m
+        INTEGER cache_write_1h
+        INTEGER output
+        INTEGER reasoning_output
+        INTEGER is_sidechain
+        TEXT tier
+        TEXT project
+        TEXT working_directory
+        TEXT repository
+        TEXT branch
+        TEXT machine
+        TEXT source_file
+        TEXT raw
+        TEXT title
+        TEXT title_source
+        REAL reported_cost
+    }
+    files {
+        TEXT path PK
+        TEXT source
+        REAL mtime
+        INTEGER size
+        TEXT ingested_at
+        TEXT warnings
+        INTEGER parser_version
+        INTEGER ingested_offset
+        TEXT boundary_hash
+        TEXT title_seed
+    }
+    trace_events {
+        TEXT span_id PK
+        TEXT parent_id
+        TEXT record_parent
+        TEXT source
+        TEXT session_id
+        TEXT turn_id
+        TEXT agent_id
+        INTEGER is_sidechain
+        INTEGER seq
+        TEXT kind
+        TEXT name
+        TEXT model
+        TEXT status
+        TEXT started_at
+        TEXT ended_at
+        INTEGER duration_ms
+        TEXT duration_provenance
+        INTEGER ttft_ms
+        INTEGER uncached_input
+        INTEGER cache_read
+        INTEGER cache_write_5m
+        INTEGER cache_write_1h
+        INTEGER output
+        INTEGER reasoning_output
+        TEXT tokens_provenance
+        INTEGER context_capacity
+        TEXT capacity_provenance
+        INTEGER retry_attempt
+        TEXT error
+        TEXT source_file
+        INTEGER record_offset
+        INTEGER record_length
+        TEXT content_path
+        TEXT detail
+    }
+    outcomes {
+        TEXT source PK
+        TEXT session_id PK
+        TEXT outcome
+        TEXT notes
+        TEXT tags
+        TEXT updated_at
+    }
+    session_exclusions {
+        TEXT source PK
+        TEXT session_id PK
+        TEXT excluded_at
+    }

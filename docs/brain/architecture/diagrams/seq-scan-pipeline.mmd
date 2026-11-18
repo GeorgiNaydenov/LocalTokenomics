@@ -1,0 +1,48 @@
+sequenceDiagram
+    autonumber
+    box rgb(255,242,204) Person
+        actor U as Person
+    end
+    box rgb(218,232,252) This system
+        participant C as Command line
+        participant A as Pipeline
+        participant X as Source parsers
+        participant R as Rate table
+        participant G as Report builder
+    end
+    box rgb(213,232,212) Data
+        participant S as Store
+    end
+    U->>+C: ai-usage-cost scan
+    C->>+A: analyze with db, roots, rates and rebuild
+    A->>+S: open_store, migrate to the latest version
+    S-->>-A: connection
+    A->>+S: ingest with privacy exclusions
+    loop each file under each present root
+        alt size, mtime and parser version unchanged
+            S->>S: skip the file
+        else changed or new
+            S->>+X: parse, or parse_resume when the file only grew
+            X-->>-S: events, spans and warnings
+            S->>S: insert requests, keep the largest output
+        end
+    end
+    S-->>-A: ingest summary
+    Note over A,S: Rule: a request is stored once per fingerprint, and a later record with more output replaces the earlier one
+    A->>+S: load requests, file counts, session flags
+    S-->>-A: events, counts, flags
+    A->>+R: load the rate table
+    R-->>-A: rows, prefixes, as of date
+    loop each event
+        A->>R: price_event
+        R-->>A: cost breakdown and state
+    end
+    A-->>-C: Analysis with warnings
+    C->>+G: report_of with since, until and filters
+    G-->>-C: Report
+    alt the report has no requests
+        C-->>U: No usage found, exit code 1
+    else requests found
+        C-->>-U: terminal tables or JSON
+    end
+    Note over U,S: Legend: yellow is a person, blue is this system, green is data, a solid arrow is a call, a dashed arrow is a reply, a bar on a lifeline is a participant working, a framed block is a loop or a branch, a note is a rule
