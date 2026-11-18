@@ -20,9 +20,9 @@ chunks:
   files: 2
   lines: 56
   recommended: {c4: 2 files form this module; shows what it contains and depends on}
-  diagrams: [c4]
+  diagrams: [c4, capability, flowchart]
   diagrams_confirmed: true
-  estimate: {tokens: 60023, minutes: 7, note: rough estimate; tune after the first
+  estimate: {tokens: 69123, minutes: 8, note: rough estimate; tune after the first
       runs}
   existing_docs: stale
   approved_by: human
@@ -39,9 +39,9 @@ chunks:
   lines: 4722
   recommended: {c4: 22 files form this module; shows what it contains and depends
       on, dfd: 'data moves between routes, stores and callers'}
-  diagrams: [c4, dfd]
+  diagrams: [c4, dfd, sequence, flowchart, erd-conceptual]
   diagrams_confirmed: true
-  estimate: {tokens: 137363, minutes: 15, note: rough estimate; tune after the first
+  estimate: {tokens: 151013, minutes: 17, note: rough estimate; tune after the first
       runs}
   existing_docs: covered
   approved_by: human
@@ -79,9 +79,9 @@ chunks:
   files: 3
   lines: 187
   recommended: {c4: 3 files form this module; shows what it contains and depends on}
-  diagrams: [c4]
+  diagrams: [c4, sequence, flowchart, dfd]
   diagrams_confirmed: true
-  estimate: {tokens: 62067, minutes: 7, note: rough estimate; tune after the first
+  estimate: {tokens: 75717, minutes: 8, note: rough estimate; tune after the first
       runs}
   existing_docs: none
   approved_by: human
@@ -98,9 +98,9 @@ chunks:
   lines: 3024
   recommended: {c4: 18 files form this module; shows what it contains and depends
       on}
-  diagrams: [c4]
+  diagrams: [c4, screen-flow, capability, flowchart]
   diagrams_confirmed: true
-  estimate: {tokens: 106324, minutes: 12, note: rough estimate; tune after the first
+  estimate: {tokens: 119974, minutes: 13, note: rough estimate; tune after the first
       runs}
   existing_docs: none
   approved_by: human
@@ -117,9 +117,9 @@ chunks:
   lines: 7127
   recommended: {c4: 20 files form this module; shows what it contains and depends
       on}
-  diagrams: [c4]
+  diagrams: [c4, sequence, flowchart, dfd, screen-flow]
   diagrams_confirmed: true
-  estimate: {tokens: 170331, minutes: 19, note: rough estimate; tune after the first
+  estimate: {tokens: 188531, minutes: 21, note: rough estimate; tune after the first
       runs}
   existing_docs: stale
   approved_by: human
@@ -136,9 +136,9 @@ chunks:
   lines: 2083
   recommended: {c4: 25 files form this module; shows what it contains and depends
       on}
-  diagrams: [c4]
+  diagrams: [c4, capability]
   diagrams_confirmed: true
-  estimate: {tokens: 91644, minutes: 10, note: rough estimate; tune after the first
+  estimate: {tokens: 96194, minutes: 11, note: rough estimate; tune after the first
       runs}
   existing_docs: none
   approved_by: human
@@ -156,9 +156,9 @@ chunks:
   lines: 3215
   recommended: {c4: 10 files form this module; shows what it contains and depends
       on}
-  diagrams: [c4]
+  diagrams: [c4, screen-flow]
   diagrams_confirmed: true
-  estimate: {tokens: 109304, minutes: 12, note: rough estimate; tune after the first
+  estimate: {tokens: 113854, minutes: 13, note: rough estimate; tune after the first
       runs}
   existing_docs: stale
   approved_by: human
@@ -174,12 +174,12 @@ The ordered plan for documenting this codebase one chunk at a time. Edit the `ch
 %% generated:plan-table start (do not edit; run brain docs generate) %%
 | Chunk | Title | State | Depends on | Files | Lines | Est. tokens | Diagrams | Existing docs |
 |---|---|---|---|---|---|---|---|---|
-| ch-localtokenomics-root | localtokenomics root | approved | - | 2 | 56 | 60023 | c4 | stale |
-| ch-localtokenomics-src-ai-usage-cost-sources | src/ai_usage_cost/sources | approved | ch-localtokenomics-src-ai-usage-cost | 22 | 4722 | 137363 | c4, dfd | covered |
+| ch-localtokenomics-root | localtokenomics root | approved | - | 2 | 56 | 69123 | c4, capability, flowchart | stale |
+| ch-localtokenomics-src-ai-usage-cost-sources | src/ai_usage_cost/sources | approved | ch-localtokenomics-src-ai-usage-cost | 22 | 4722 | 151013 | c4, dfd, sequence, flowchart, erd-conceptual | covered |
 | ch-localtokenomics-src-ai-usage-cost | src/ai_usage_cost | planned | ch-localtokenomics-src-ai-usage-cost-render, ch-localtokenomics-src-ai-usage-cost-sources | 13 | 5069 | 170076 | c4, erd, erd-conceptual, state, sequence, flowchart, dfd, bpmn | stale |
-| ch-localtokenomics-src-ai-usage-cost-render | src/ai_usage_cost/render | approved | ch-localtokenomics-src-ai-usage-cost | 3 | 187 | 62067 | c4 | none |
-| ch-localtokenomics-web-src-components | web/src/components | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components-ui | 18 | 3024 | 106324 | c4 | none |
-| ch-localtokenomics-web-src | web/src | approved | ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 20 | 7127 | 170331 | c4 | stale |
-| ch-localtokenomics-web-src-components-ui | web/src/components/ui | approved | ch-localtokenomics-web-src | 25 | 2083 | 91644 | c4 | none |
-| ch-localtokenomics-web-src-prototype | web/src/prototype | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 10 | 3215 | 109304 | c4 | stale |
+| ch-localtokenomics-src-ai-usage-cost-render | src/ai_usage_cost/render | approved | ch-localtokenomics-src-ai-usage-cost | 3 | 187 | 75717 | c4, sequence, flowchart, dfd | none |
+| ch-localtokenomics-web-src-components | web/src/components | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components-ui | 18 | 3024 | 119974 | c4, screen-flow, capability, flowchart | none |
+| ch-localtokenomics-web-src | web/src | approved | ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 20 | 7127 | 188531 | c4, sequence, flowchart, dfd, screen-flow | stale |
+| ch-localtokenomics-web-src-components-ui | web/src/components/ui | approved | ch-localtokenomics-web-src | 25 | 2083 | 96194 | c4, capability | none |
+| ch-localtokenomics-web-src-prototype | web/src/prototype | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 10 | 3215 | 113854 | c4, screen-flow | stale |
 %% generated:plan-table end %%
