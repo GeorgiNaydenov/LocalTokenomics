@@ -1,0 +1,469 @@
+{
+ "files": {
+  "scripts/demo_logs.py": {
+   "note": false,
+   "test": false
+  },
+  "scripts/rates_diff.py": {
+   "note": false,
+   "test": false
+  },
+  "src/ai_usage_cost/__init__.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/aggregate.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/api.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/cli.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/collect.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/demo.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/models.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/pipeline.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/pricing.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/privacy.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/render/__init__.py": {
+   "note": false,
+   "test": false
+  },
+  "src/ai_usage_cost/render/png.py": {
+   "note": false,
+   "test": false
+  },
+  "src/ai_usage_cost/render/terminal.py": {
+   "note": false,
+   "test": false
+  },
+  "src/ai_usage_cost/sources/__init__.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/antigravity.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/base.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/claude_code.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/cline.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/codex.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/copilot_chat.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/copilot_cli.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/cursor.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/dyad.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/gemini_cli.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/grok_build.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/jan.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/kilo_code.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/kilo_legacy.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/muse_code.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/ollama_app.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/openai_compat.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/opencode.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/qwen_code.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/roo_code.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/sources/windsurf.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/store.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/trace.py": {
+   "note": false,
+   "test": true
+  },
+  "src/ai_usage_cost/tui.py": {
+   "note": false,
+   "test": false
+  },
+  "web/eslint.config.js": {
+   "note": true,
+   "test": false
+  },
+  "web/src/App.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/ContextTab.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/EconomicsTab.tsx": {
+   "note": true,
+   "test": true
+  },
+  "web/src/FilterRail.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/Header.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/Overview.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/Pricing.tsx": {
+   "note": true,
+   "test": true
+  },
+  "web/src/SessionWorkspace.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/Sessions.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/Sources.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/TraceTab.tsx": {
+   "note": true,
+   "test": true
+  },
+  "web/src/api.ts": {
+   "note": true,
+   "test": true
+  },
+  "web/src/components/chart-hover.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/chart-time.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/columns.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/detail.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/filters.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/metric-info.tsx": {
+   "note": true,
+   "test": true
+  },
+  "web/src/components/panel.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/rank.ts": {
+   "note": true,
+   "test": true
+  },
+  "web/src/components/series.ts": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/session.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/source-card.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/sparkline.tsx": {
+   "note": true,
+   "test": true
+  },
+  "web/src/components/stat.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/states.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/status.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/trace.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/accordion.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/alert.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/badge.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/button.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/chart.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/checkbox.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/collapsible.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/dialog.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/dropdown-menu.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/input.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/label.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/popover.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/progress.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/select.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/separator.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/sheet.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/skeleton.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/sonner.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/switch.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/table.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/tabs.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/textarea.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/toggle-group.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/toggle.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/ui/tooltip.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/use-media-query.ts": {
+   "note": true,
+   "test": false
+  },
+  "web/src/components/workspace-panel.ts": {
+   "note": true,
+   "test": false
+  },
+  "web/src/design-system/cn.ts": {
+   "note": true,
+   "test": false
+  },
+  "web/src/format.ts": {
+   "note": true,
+   "test": true
+  },
+  "web/src/main.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/pricing-format.ts": {
+   "note": true,
+   "test": true
+  },
+  "web/src/pricing-notes.ts": {
+   "note": true,
+   "test": true
+  },
+  "web/src/prototype/Gallery.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/prototype/OverviewScreen.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/prototype/PricingScreen.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/prototype/Prototype.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/prototype/Rail.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/prototype/Screens.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/prototype/SessionsScreen.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/prototype/SourcesScreen.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/prototype/data.ts": {
+   "note": true,
+   "test": false
+  },
+  "web/src/prototype/main.tsx": {
+   "note": true,
+   "test": false
+  },
+  "web/src/test-setup.ts": {
+   "note": true,
+   "test": false
+  },
+  "web/src/theme.ts": {
+   "note": true,
+   "test": false
+  },
+  "web/src/turn-insights.ts": {
+   "note": true,
+   "test": true
+  },
+  "web/vite.config.ts": {
+   "note": true,
+   "test": false
+  }
+ },
+ "note_ratio": 0.6522,
+ "noted": 75,
+ "test_ratio": 0.3913,
+ "tested": 45,
+ "total": 115
+}

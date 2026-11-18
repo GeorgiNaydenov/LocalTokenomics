@@ -4,7 +4,7 @@ uri: C:\Users\gnayd\Downloads\Product Brain Workspace\scratch\localtokenomics
 title: Code of localtokenomics
 tags:
   - ba/source
-maturity: draft
+maturity: approved
 ---
 # Code of localtokenomics
 

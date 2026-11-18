@@ -1,0 +1,106 @@
+[
+ [
+  "actor",
+  "Maintainer"
+ ],
+ [
+  "actor",
+  "GitHub workflow runner"
+ ],
+ [
+  "glossary-term",
+  "Dashboard bundle"
+ ],
+ [
+  "glossary-term",
+  "Dev proxy"
+ ],
+ [
+  "glossary-term",
+  "API-equivalent cost"
+ ],
+ [
+  "rule",
+  "A type error stops the dashboard build"
+ ],
+ [
+  "rule",
+  "A production build replaces the committed bundle"
+ ],
+ [
+  "rule",
+  "Lint skips build output"
+ ],
+ [
+  "rule",
+  "Python code must keep a pylint score of 9.0"
+ ],
+ [
+  "rule",
+  "Web dependencies are installed from the lockfile"
+ ],
+ [
+  "nfr",
+  "Python version support"
+ ],
+ [
+  "risk",
+  "Mypy is a manual pre-commit stage, so type errors in the Pyt"
+ ],
+ [
+  "risk",
+  "Bandit security scanning skips the web folder, so dashboard "
+ ],
+ [
+  "open-question",
+  "Is Node 20 tested for the dashboard build"
+ ],
+ [
+  "use-case",
+  "Rebuild the dashboard bundle"
+ ],
+ [
+  "use-case",
+  "Develop the dashboard against live data"
+ ],
+ [
+  "use-case",
+  "Check a change before merge"
+ ],
+ [
+  "state-machine",
+  "RateState lifecycle"
+ ],
+ [
+  "state-machine",
+  "CostState lifecycle"
+ ],
+ [
+  "state-machine",
+  "SpanKind lifecycle"
+ ],
+ [
+  "state-machine",
+  "SpanStatus lifecycle"
+ ],
+ [
+  "state-machine",
+  "MatchKind lifecycle"
+ ],
+ [
+  "state-machine",
+  "TokenDataKind lifecycle"
+ ],
+ [
+  "state-machine",
+  "RateStatus lifecycle"
+ ],
+ [
+  "rule",
+  "getJson refuses when !response.ok"
+ ],
+ [
+  "rule",
+  "useChart refuses when !context"
+ ]
+]
