@@ -1,0 +1,105 @@
+{
+  "nodes": [
+    {
+      "id": "title",
+      "type": "text",
+      "text": "# Application map",
+      "x": 0,
+      "y": -140,
+      "width": 320,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "n-invariants-catalogue",
+      "type": "file",
+      "file": "docs/brain/Application/Invariants Catalogue.md",
+      "x": 0,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-route-and-api-index",
+      "type": "file",
+      "file": "docs/brain/Application/Route and API Index.md",
+      "x": 380,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-screens-and-ui-inventory",
+      "type": "file",
+      "file": "docs/brain/Application/Screens and UI Inventory.md",
+      "x": 760,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-systems-and-data-stores",
+      "type": "file",
+      "file": "docs/brain/Application/Systems and Data Stores.md",
+      "x": 0,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-test-coverage-matrix",
+      "type": "file",
+      "file": "docs/brain/Application/Test Coverage Matrix.md",
+      "x": 380,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-api",
+      "type": "file",
+      "file": "docs/brain/Application/Web prototype API.md",
+      "x": 760,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-overview",
+      "type": "file",
+      "file": "docs/brain/Application/Web prototype Overview.md",
+      "x": 0,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-specification",
+      "type": "file",
+      "file": "docs/brain/Application/Web prototype Specification.md",
+      "x": 380,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-tests",
+      "type": "file",
+      "file": "docs/brain/Application/Web prototype Tests.md",
+      "x": 760,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-workflows",
+      "type": "file",
+      "file": "docs/brain/Application/Web prototype Workflows.md",
+      "x": 0,
+      "y": 330,
+      "width": 320,
+      "height": 70
+    }
+  ],
+  "edges": []
+}

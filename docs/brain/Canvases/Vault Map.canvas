@@ -1,0 +1,96 @@
+{
+  "nodes": [
+    {
+      "id": "title",
+      "type": "text",
+      "text": "# Vault map",
+      "x": 0,
+      "y": -140,
+      "width": 320,
+      "height": 60,
+      "color": "1"
+    },
+    {
+      "id": "c-application-map",
+      "type": "file",
+      "file": "docs/brain/Canvases/Application Map.canvas",
+      "x": 0,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "c-architecture-map",
+      "type": "file",
+      "file": "docs/brain/Canvases/Architecture Map.canvas",
+      "x": 380,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "c-business-map",
+      "type": "file",
+      "file": "docs/brain/Canvases/Business Map.canvas",
+      "x": 760,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "c-catalogs-map",
+      "type": "file",
+      "file": "docs/brain/Canvases/Catalogs Map.canvas",
+      "x": 0,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "c-data-map",
+      "type": "file",
+      "file": "docs/brain/Canvases/Data Map.canvas",
+      "x": 380,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "c-decisions-map",
+      "type": "file",
+      "file": "docs/brain/Canvases/Decisions Map.canvas",
+      "x": 760,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "c-diagrams-map",
+      "type": "file",
+      "file": "docs/brain/Canvases/Diagrams Map.canvas",
+      "x": 0,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "c-operations-map",
+      "type": "file",
+      "file": "docs/brain/Canvases/Operations Map.canvas",
+      "x": 380,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "c-security-map",
+      "type": "file",
+      "file": "docs/brain/Canvases/Security Map.canvas",
+      "x": 760,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    }
+  ],
+  "edges": []
+}

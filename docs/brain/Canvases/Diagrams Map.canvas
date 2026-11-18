@@ -1,0 +1,124 @@
+{
+  "nodes": [
+    {
+      "id": "title",
+      "type": "text",
+      "text": "# Diagrams map",
+      "x": 0,
+      "y": -140,
+      "width": 320,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "n-architecture-diagram-hub",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Architecture Diagram Hub.md",
+      "x": 0,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-diagram-index",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Diagram Index.md",
+      "x": 380,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-diagram-notation-guide",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Diagram Notation Guide.md",
+      "x": 760,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-c4-components",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web prototype C4 components.md",
+      "x": 0,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web prototype Diagrams.md",
+      "x": 380,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0-n-architecture-diagram-hub-n-diagram-index",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-diagram-index",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e1-n-architecture-diagram-hub-n-diagram-notation-guide",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-diagram-notation-guide",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e2-n-architecture-diagram-hub-n-web-prototype-c4-components",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-prototype-c4-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e3-n-architecture-diagram-hub-n-web-prototype-diagrams",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-prototype-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e4-n-diagram-index-n-web-prototype-c4-components",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-prototype-c4-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e5-n-diagram-index-n-web-prototype-diagrams",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-prototype-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e6-n-diagram-notation-guide-n-diagram-index",
+      "fromNode": "n-diagram-notation-guide",
+      "toNode": "n-diagram-index",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e7-n-diagram-notation-guide-n-architecture-diagram-hub",
+      "fromNode": "n-diagram-notation-guide",
+      "toNode": "n-architecture-diagram-hub",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e8-n-web-prototype-c4-components-n-web-prototype-diagrams",
+      "fromNode": "n-web-prototype-c4-components",
+      "toNode": "n-web-prototype-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ]
+}

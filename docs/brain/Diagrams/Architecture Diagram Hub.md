@@ -16,5 +16,8 @@ generated: true
 The entry point to every diagram, grouped by the question each group answers. For the complete list see [[Diagram Index]]; notation is explained in [[Diagram Notation Guide]].
 
 %% generated:hub start (do not edit; run brain docs generate) %%
-No diagrams yet.
+## Architecture and structure
+
+- [[Web prototype C4 components]]
+- [[Web prototype Diagrams]]
 %% generated:hub end %%

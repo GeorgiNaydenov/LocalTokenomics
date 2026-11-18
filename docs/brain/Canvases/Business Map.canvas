@@ -1,0 +1,71 @@
+{
+  "nodes": [
+    {
+      "id": "title",
+      "type": "text",
+      "text": "# Business map",
+      "x": 0,
+      "y": -140,
+      "width": 320,
+      "height": 60,
+      "color": "5"
+    },
+    {
+      "id": "n-actors",
+      "type": "file",
+      "file": "docs/brain/Business/Actors.md",
+      "x": 0,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-general-rules",
+      "type": "file",
+      "file": "docs/brain/Business/General Rules.md",
+      "x": 380,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-01-compare-a-dashboard-screen-with-its-reference",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-01 Compare a dashboard screen with its reference.md",
+      "x": 760,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0-n-actors-n-uc-01-compare-a-dashboard-screen-with-its-reference",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-01-compare-a-dashboard-screen-with-its-reference",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e1-n-general-rules-n-uc-01-compare-a-dashboard-screen-with-its-reference",
+      "fromNode": "n-general-rules",
+      "toNode": "n-uc-01-compare-a-dashboard-screen-with-its-reference",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e2-n-uc-01-compare-a-dashboard-screen-with-its-reference-n-actors",
+      "fromNode": "n-uc-01-compare-a-dashboard-screen-with-its-reference",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e3-n-uc-01-compare-a-dashboard-screen-with-its-reference-n-general-rules",
+      "fromNode": "n-uc-01-compare-a-dashboard-screen-with-its-reference",
+      "toNode": "n-general-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ]
+}
