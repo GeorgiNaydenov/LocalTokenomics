@@ -1,0 +1,47 @@
+flowchart TD
+    root["(repository root)"]:::folder
+    pyproject["pyproject.toml<br/>package metadata"]:::file
+    readme["README.md<br/>product description"]:::file
+    src["src/"]:::folder
+    web["web/"]:::folder
+    tests["tests/"]:::folder
+    scripts["scripts/<br/>demo_logs.py, rates_diff.py"]:::folder
+    github[".github/"]:::folder
+    pkg["src/ai_usage_cost/"]:::folder
+    websrc["web/src/"]:::folder
+    wpublic["web/public/"]:::folder
+    workflows[".github/workflows/<br/>python, web, codeql"]:::folder
+    sources["sources/<br/>one module per reader"]:::folder
+    render["render/<br/>terminal.py, png.py"]:::folder
+    dist["web/dist/ inside the package<br/>built dashboard"]:::folder
+    cli(["cli.py<br/>ai-usage-cost command"]):::entry
+    main(["main.tsx<br/>dashboard entry"]):::entry
+    proto(["prototype/main.tsx<br/>prototype entry"]):::entry
+    root --> pyproject
+    root --> readme
+    root --> src
+    root --> web
+    root --> tests
+    root --> scripts
+    root --> github
+    src --> pkg
+    web --> websrc
+    web --> wpublic
+    github --> workflows
+    pkg --> sources
+    pkg --> render
+    pkg --> dist
+    pkg --> cli
+    websrc --> main
+    websrc --> proto
+    subgraph Legend
+        direction LR
+        zlegend_a["Folder: a directory, drawn as on disk"]:::folder
+        zlegend_b["File: a root file"]:::file
+        zlegend_c(["Entry point: where a run starts"]):::entry
+        zlegend_d["Arrow: parent contains child"]:::folder
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d
+    end
+    classDef folder fill:#dae8fc,stroke:#222222,color:#111111
+    classDef file fill:#ffffff,stroke:#222222,color:#111111
+    classDef entry fill:#ffe6cc,stroke:#222222,color:#111111

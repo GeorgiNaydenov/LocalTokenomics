@@ -2,7 +2,12 @@
  "chunk": "ch-localtokenomics-root",
  "repo": "localtokenomics",
  "routes": [],
- "screens": [],
+ "screens": [
+  {
+   "name": "Index",
+   "cite": "web/index.html:1"
+  }
+ ],
  "test_scenarios": [
   {
    "file": "web/src/EconomicsTab.test.ts",
@@ -333,5 +338,9 @@
  ],
  "external_calls": [],
  "entities": [],
- "existing": []
+ "existing": [
+  "candidates.json",
+  "deferred-2.json",
+  "ids.json"
+ ]
 }

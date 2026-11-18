@@ -44,6 +44,30 @@
    "findings": 0
   },
   {
+   "note": "docs/brain/Diagrams/Repository folder layout.md",
+   "claims": 14,
+   "supported": 14,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Repository root capabilities.md",
+   "claims": 23,
+   "supported": 23,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Repository root concepts.md",
+   "claims": 15,
+   "supported": 15,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Repository root configuration.md",
+   "claims": 20,
+   "supported": 20,
+   "findings": 0
+  },
+  {
    "note": "docs/brain/Ontology/localtokenomics root Ontology.md",
    "claims": 0,
    "supported": 0,
@@ -64,6 +88,6 @@
  ],
  "blocking": 0,
  "findings": [],
- "claims": 386,
- "supported": 386
+ "claims": 458,
+ "supported": 458
 }

@@ -1,0 +1,111 @@
+[
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A settings file that cannot be loaded is ignored as a whole",
+   "Statement": "When the optional settings file is missing, unreadable, not valid JSON or fails validation, every setting takes its default at once, not only the faulty one, and no warning is raised.",
+   "category": "privacy",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/privacy.py",
+     "quote": "except (OSError, ValueError):",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/privacy.py",
+     "quote": "except ValidationError:",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "A mistyped settings file silently drops the project exclusions",
+   "Risk": "One wrong value in the settings file, for example text where a number belongs, makes the whole file fall back to defaults. A project named in exclude_projects is then no longer excluded at ingest, and nothing tells the user.",
+   "Mitigation": "Raise a warning when the file exists but fails to load or validate, or validate each key on its own so one bad key cannot discard the others.",
+   "impact": "medium",
+   "likelihood": "low",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/privacy.py",
+     "quote": "except ValidationError:",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/pipeline.py",
+     "quote": "exclude_projects=config.exclude_projects,",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Bandit is configured but no workflow or hook runs it",
+   "Risk": "The package file holds a bandit section and the dev extras install bandit, but the Python workflow steps and the pre-commit hooks never call it. The security lint therefore never gates a change; only CodeQL does.",
+   "Mitigation": "Add a bandit step to the Python workflow, or remove the unused section and extra so the files do not suggest a check that does not run.",
+   "impact": "low",
+   "likelihood": "high",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "pyproject.toml",
+     "quote": "[tool.bandit]",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "pyproject.toml",
+     "quote": "\"bandit>=1.7\",",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": ".github/workflows/python.yml",
+     "quote": "run: uv run --no-sync pytest -q",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Should the README list content_retention_days",
+   "Question": "The settings model has a fifth setting, content_retention_days, that is accepted but inert and only produces a warning. The README lists four settings. Is the omission intended?",
+   "priority": "low",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Should local checks and the workflow lint the same folders",
+   "Question": "The README tells contributors to run ruff on src, tests and scripts, while the Python workflow runs ruff on the whole repository root. Which scope is the rule?",
+   "priority": "low",
+   "maturity": "draft"
+  }
+ }
+]

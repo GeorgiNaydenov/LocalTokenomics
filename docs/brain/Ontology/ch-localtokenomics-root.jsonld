@@ -10,12 +10,25 @@
   },
   "@graph": [
     {
-      "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer",
+      "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-reader",
+      "@type": [
+        "pb:actor"
+      ],
+      "schema:name": "Dashboard reader",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessActor",
+      "schema:maps_to": "schema:Person",
+      "pb:definedAt": [
+        "web/src/main.tsx"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:actor/actor:maintainer",
       "@type": [
         "pb:actor"
       ],
       "schema:name": "Maintainer",
-      "pb:maturity": "draft",
+      "pb:maturity": "approved",
       "archimate:maps_to": "archimate:BusinessActor",
       "schema:maps_to": "schema:Person",
       "pb:definedAt": [
@@ -23,12 +36,121 @@
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:rule/rule:a-production-build-replaces-the-committed-bundle",
+      "@id": "urn:product-brain:lt-top-root:nfr/nfr:keyboard-and-screen-reader-access-to-charts-and-timelines",
+      "@type": [
+        "pb:nfr"
+      ],
+      "schema:name": "Keyboard and screen reader access to charts and timelines",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Requirement",
+      "pb:definedAt": [
+        "web/src/components/chart-hover.tsx:61"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:nfr/nfr:reduced-motion-is-respected",
+      "@type": [
+        "pb:nfr"
+      ],
+      "schema:name": "Reduced motion is respected",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Requirement",
+      "pb:definedAt": [
+        "web/src/components/stat.tsx:10"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:open-question/open-question:question-3-does-the-delete-session-endpoint-remove-the",
+      "@type": [
+        "pb:open-question"
+      ],
+      "schema:name": "Question 3\ua789 Does the DELETE session endpoint remove the",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:Assessment",
+      "pb:definedAt": [
+        "web/src/api.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:open-question/open-question:question-4-is-deletesession-reachable-from-any-screen-in",
+      "@type": [
+        "pb:open-question"
+      ],
+      "schema:name": "Question 4\ua789 Is deleteSession reachable from any screen in",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:Assessment",
+      "pb:definedAt": [
+        "web/src/api.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:open-question/open-question:why-the-other-series-limit-is-twelve",
+      "@type": [
+        "pb:open-question"
+      ],
+      "schema:name": "Why the Other series limit is twelve",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Assessment",
+      "pb:definedAt": [
+        "web/src/components/series.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:risk/risk:most-shared-components-have-no-tests",
+      "@type": [
+        "pb:risk"
+      ],
+      "schema:name": "Most shared components have no tests",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Assessment",
+      "pb:definedAt": [
+        "web/src/components/rank.test.ts:4"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:risk/risk:popover-timing-depends-on-a-polling-interval",
+      "@type": [
+        "pb:risk"
+      ],
+      "schema:name": "Popover timing depends on a polling interval",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Assessment",
+      "pb:definedAt": [
+        "web/src/components/metric-info.tsx:11",
+        "web/src/components/metric-info.tsx:143"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:risk/risk:risk-1-the-dashboard-client-can-write-to-the",
+      "@type": [
+        "pb:risk"
+      ],
+      "schema:name": "Risk 1\ua789 The dashboard client can write to the",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:Assessment",
+      "pb:definedAt": [
+        "web/src/api.ts:593"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:risk/risk:risk-2-most-files-in-this-chunk-have-no",
+      "@type": [
+        "pb:risk"
+      ],
+      "schema:name": "Risk 2\ua789 Most files in this chunk have no",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:Assessment",
+      "pb:definedAt": [
+        "web/src/format.ts:20"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:rule/rule:a-production-build-replaces-the-committed-bundle",
       "@type": [
         "pb:rule"
       ],
       "schema:name": "A production build replaces the committed bundle",
-      "pb:maturity": "draft",
+      "pb:maturity": "approved",
       "archimate:maps_to": "archimate:Constraint",
       "ddd:maps_to": "ddd:Policy",
       "pb:definedAt": [
@@ -36,12 +158,12 @@
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:rule/rule:a-type-error-stops-the-dashboard-build",
+      "@id": "urn:product-brain:lt-top-root:rule/rule:a-type-error-stops-the-dashboard-build",
       "@type": [
         "pb:rule"
       ],
       "schema:name": "A type error stops the dashboard build",
-      "pb:maturity": "draft",
+      "pb:maturity": "approved",
       "archimate:maps_to": "archimate:Constraint",
       "ddd:maps_to": "ddd:Policy",
       "pb:definedAt": [
@@ -49,7 +171,33 @@
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:rule/rule:do-not-import-from-the-prototype-folder",
+      "@id": "urn:product-brain:lt-top-root:rule/rule:automatic-rescan-every-five-minutes",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Automatic rescan every five minutes",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/App.tsx"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:rule/rule:cache-price-derivation",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Cache price derivation",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/pricing-format.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:rule/rule:do-not-import-from-the-prototype-folder",
       "@type": [
         "pb:rule"
       ],
@@ -62,12 +210,12 @@
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:rule/rule:lint-skips-build-output",
+      "@id": "urn:product-brain:lt-top-root:rule/rule:lint-skips-build-output",
       "@type": [
         "pb:rule"
       ],
       "schema:name": "Lint skips build output",
-      "pb:maturity": "draft",
+      "pb:maturity": "approved",
       "archimate:maps_to": "archimate:Constraint",
       "ddd:maps_to": "ddd:Policy",
       "pb:definedAt": [
@@ -75,7 +223,20 @@
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-figures-are-invented",
+      "@id": "urn:product-brain:lt-top-root:rule/rule:outcome-notes-are-saved-only-when-changed",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Outcome notes are saved only when changed",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/SessionWorkspace.tsx"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:rule/rule:prototype-figures-are-invented",
       "@type": [
         "pb:rule"
       ],
@@ -88,7 +249,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-filters-do-not-filter-the-screens",
+      "@id": "urn:product-brain:lt-top-root:rule/rule:prototype-filters-do-not-filter-the-screens",
       "@type": [
         "pb:rule"
       ],
@@ -101,7 +262,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-rescan-is-staged",
+      "@id": "urn:product-brain:lt-top-root:rule/rule:prototype-rescan-is-staged",
       "@type": [
         "pb:rule"
       ],
@@ -114,7 +275,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-session-table-shows-at-most-120-rows",
+      "@id": "urn:product-brain:lt-top-root:rule/rule:prototype-session-table-shows-at-most-120-rows",
       "@type": [
         "pb:rule"
       ],
@@ -128,7 +289,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-splits-session-cost-across-token-buckets-by-fixed-weights",
+      "@id": "urn:product-brain:lt-top-root:rule/rule:prototype-splits-session-cost-across-token-buckets-by-fixed-weights",
       "@type": [
         "pb:rule"
       ],
@@ -141,7 +302,72 @@
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:rule/rule:the-prototype-is-excluded-from-the-production-build",
+      "@id": "urn:product-brain:lt-top-root:rule/rule:rate-age-notice-thresholds",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Rate age notice thresholds",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/pricing-notes.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:rule/rule:rate-row-state",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Rate row state",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/Pricing.tsx"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:rule/rule:reported-cost-divergence-threshold",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Reported cost divergence threshold",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/pricing-notes.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:rule/rule:session-table-row-limit",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Session table row limit",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/Sessions.tsx"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:rule/rule:sub-cent-money-keeps-four-decimals",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Sub cent money keeps four decimals",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/format.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:rule/rule:the-prototype-is-excluded-from-the-production-build",
       "@type": [
         "pb:rule"
       ],
@@ -155,7 +381,135 @@
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:system/system:web-prototype",
+      "@id": "urn:product-brain:lt-top-root:rule/rule:unattributed-turn-is-excluded-from-rankings",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Unattributed turn is excluded from rankings",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/turn-insights.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:rule/rule:unavailable-is-never-shown-as-zero",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Unavailable is never shown as zero",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/SessionWorkspace.tsx",
+        "web/src/Sources.tsx"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:rule/rule:unpriced-cost-stays-out-of-totals",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Unpriced cost stays out of totals",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/SessionWorkspace.tsx"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:state-machine/state-machine:coststate-lifecycle",
+      "@type": [
+        "pb:state-machine"
+      ],
+      "schema:name": "CostState lifecycle",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:Lifecycle",
+      "pb:definedAt": [
+        "web/src/api.ts::CostState",
+        "web/src/prototype/Gallery.tsx::Gallery",
+        "web/src/prototype/data.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:state-machine/state-machine:ratestate-lifecycle",
+      "@type": [
+        "pb:state-machine"
+      ],
+      "schema:name": "RateState lifecycle",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:Lifecycle",
+      "pb:definedAt": [
+        "web/src/Pricing.tsx::RateState",
+        "web/src/prototype/Gallery.tsx::Gallery",
+        "web/src/prototype/data.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:state-machine/state-machine:spankind-lifecycle",
+      "@type": [
+        "pb:state-machine"
+      ],
+      "schema:name": "SpanKind lifecycle",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:Lifecycle",
+      "pb:definedAt": [
+        "web/src/SessionWorkspace.tsx::useLazyResource",
+        "web/src/TraceTab.tsx::toggleContent",
+        "web/src/api.ts::SpanKind",
+        "web/src/prototype/data.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:state-machine/state-machine:spanstatus-lifecycle",
+      "@type": [
+        "pb:state-machine"
+      ],
+      "schema:name": "SpanStatus lifecycle",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:Lifecycle",
+      "pb:definedAt": [
+        "web/src/SessionWorkspace.tsx::useLazyResource",
+        "web/src/TraceTab.tsx::toggleContent",
+        "web/src/api.ts::SpanStatus",
+        "web/src/prototype/data.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:system/system:web",
+      "@type": [
+        "pb:system"
+      ],
+      "schema:name": "Web",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:ApplicationComponent",
+      "schema:maps_to": "schema:SoftwareApplication",
+      "pb:definedAt": [
+        "web/src/App.tsx:1-5"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:system/system:web-ui-components",
+      "@type": [
+        "pb:system"
+      ],
+      "schema:name": "Web UI components",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:ApplicationComponent",
+      "schema:maps_to": "schema:SoftwareApplication",
+      "pb:definedAt": [
+        "web/src/components/chart-hover.tsx:1-5"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:system/system:web-prototype",
       "@type": [
         "pb:system"
       ],
@@ -168,7 +522,39 @@
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:use-case/use-case:compare-a-dashboard-screen-with-its-reference",
+      "@id": "urn:product-brain:lt-top-root:system/system:web-ui-ui-components",
+      "@type": [
+        "pb:system"
+      ],
+      "schema:name": "Web ui UI components",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:ApplicationComponent",
+      "schema:maps_to": "schema:SoftwareApplication",
+      "pb:definedAt": [
+        "web/src/components/ui/accordion.tsx:1-5"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:use-case/use-case:check-list-prices",
+      "@type": [
+        "pb:use-case"
+      ],
+      "schema:name": "Check list prices",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:ApplicationService",
+      "schema:maps_to": "schema:Action",
+      "pb:definedAt": [
+        "web/src/Pricing.tsx"
+      ],
+      "pb:uses": [
+        {
+          "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-reader"
+        }
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:use-case/use-case:compare-a-dashboard-screen-with-its-reference",
       "@type": [
         "pb:use-case"
       ],
@@ -182,34 +568,34 @@
       ],
       "pb:uses": [
         {
-          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer"
+          "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-developer"
         },
         {
-          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer"
+          "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-developer"
         }
       ],
       "pb:mentions": [
         {
-          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer"
+          "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-developer"
         },
         {
-          "@id": "urn:product-brain:localtokenomics:glossary-term/glossary-term:prototype"
+          "@id": "urn:product-brain:lt-top-root:glossary-term/glossary-term:prototype"
         },
         {
-          "@id": "urn:product-brain:localtokenomics:glossary-term/glossary-term:mock-data"
+          "@id": "urn:product-brain:lt-top-root:glossary-term/glossary-term:mock-data"
         },
         {
-          "@id": "urn:product-brain:localtokenomics:glossary-term/glossary-term:reference-screen"
+          "@id": "urn:product-brain:lt-top-root:glossary-term/glossary-term:reference-screen"
         }
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:use-case/use-case:develop-the-dashboard-against-live-data",
+      "@id": "urn:product-brain:lt-top-root:use-case/use-case:develop-the-dashboard-against-live-data",
       "@type": [
         "pb:use-case"
       ],
       "schema:name": "Develop the dashboard against live data",
-      "pb:maturity": "draft",
+      "pb:maturity": "approved",
       "archimate:maps_to": "archimate:BusinessProcess",
       "ddd:maps_to": "ddd:ApplicationService",
       "schema:maps_to": "schema:Action",
@@ -218,20 +604,77 @@
       ],
       "pb:uses": [
         {
-          "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer"
+          "@id": "urn:product-brain:lt-top-root:actor/actor:maintainer"
         },
         {
-          "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer"
+          "@id": "urn:product-brain:lt-top-root:actor/actor:maintainer"
         }
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:use-case/use-case:rebuild-the-dashboard-bundle",
+      "@id": "urn:product-brain:lt-top-root:use-case/use-case:inspect-one-session",
+      "@type": [
+        "pb:use-case"
+      ],
+      "schema:name": "Inspect one session",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:ApplicationService",
+      "schema:maps_to": "schema:Action",
+      "pb:definedAt": [
+        "web/src/SessionWorkspace.tsx"
+      ],
+      "pb:uses": [
+        {
+          "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-reader"
+        }
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:use-case/use-case:rate-a-session-outcome",
+      "@type": [
+        "pb:use-case"
+      ],
+      "schema:name": "Rate a session outcome",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:ApplicationService",
+      "schema:maps_to": "schema:Action",
+      "pb:definedAt": [
+        "web/src/SessionWorkspace.tsx"
+      ],
+      "pb:uses": [
+        {
+          "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-reader"
+        }
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:use-case/use-case:read-usage-and-cost-for-a-period",
+      "@type": [
+        "pb:use-case"
+      ],
+      "schema:name": "Read usage and cost for a period",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:ApplicationService",
+      "schema:maps_to": "schema:Action",
+      "pb:definedAt": [
+        "web/src/App.tsx"
+      ],
+      "pb:uses": [
+        {
+          "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-reader"
+        }
+      ]
+    },
+    {
+      "@id": "urn:product-brain:lt-top-root:use-case/use-case:rebuild-the-dashboard-bundle",
       "@type": [
         "pb:use-case"
       ],
       "schema:name": "Rebuild the dashboard bundle",
-      "pb:maturity": "draft",
+      "pb:maturity": "approved",
       "archimate:maps_to": "archimate:BusinessProcess",
       "ddd:maps_to": "ddd:ApplicationService",
       "schema:maps_to": "schema:Action",
@@ -240,21 +683,21 @@
       ],
       "pb:uses": [
         {
-          "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer"
+          "@id": "urn:product-brain:lt-top-root:actor/actor:maintainer"
         },
         {
-          "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer"
+          "@id": "urn:product-brain:lt-top-root:actor/actor:maintainer"
         },
         {
-          "@id": "urn:product-brain:localtokenomics:rule/rule:a-type-error-stops-the-dashboard-build"
+          "@id": "urn:product-brain:lt-top-root:rule/rule:a-type-error-stops-the-dashboard-build"
         },
         {
-          "@id": "urn:product-brain:localtokenomics:rule/rule:a-production-build-replaces-the-committed-bundle"
+          "@id": "urn:product-brain:lt-top-root:rule/rule:a-production-build-replaces-the-committed-bundle"
         }
       ]
     },
     {
-      "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer",
+      "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-developer",
       "@type": [
         "pb:actor"
       ],
