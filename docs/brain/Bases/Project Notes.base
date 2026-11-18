@@ -1,0 +1,90 @@
+filters:
+  and:
+    - file.ext == "md"
+    - file.inFolder("docs/brain")
+    - not:
+        - file.inFolder("docs/brain/Templates")
+    - not:
+        - file.inFolder("docs/brain/Bases")
+    - not:
+        - file.inFolder("docs/brain/Canvases")
+properties:
+  area:
+    displayName: Area
+  status:
+    displayName: Status
+  audience:
+    displayName: Audience
+  verified-against:
+    displayName: Verified against
+views:
+  - type: table
+    name: All Notes
+    filters:
+      and:
+        - not:
+            - file.inFolder("docs/brain/Archive")
+    order:
+      - file.name
+      - area
+      - status
+      - audience
+      - verified-against
+  - type: table
+    name: By Area
+    filters:
+      and:
+        - not:
+            - file.inFolder("docs/brain/Archive")
+    groupBy:
+      property: area
+      direction: ASC
+    order:
+      - file.name
+      - status
+      - audience
+      - verified-against
+  - type: table
+    name: Needs Verification
+    filters:
+      and:
+        - not:
+            - file.inFolder("docs/brain/Archive")
+        - 'status == "active"'
+        - '!file.hasProperty("verified-against")'
+        - 'generated != true'
+    order:
+      - file.name
+      - area
+      - audience
+  - type: table
+    name: By Audience
+    filters:
+      and:
+        - not:
+            - file.inFolder("docs/brain/Archive")
+    groupBy:
+      property: audience
+      direction: ASC
+    order:
+      - file.name
+      - area
+      - status
+  - type: table
+    name: Generated
+    filters:
+      and:
+        - 'generated == true'
+    order:
+      - file.name
+      - area
+      - sources
+  - type: table
+    name: Archive
+    filters:
+      and:
+        - 'status == "archived"'
+    order:
+      - file.name
+      - area
+      - verified-against

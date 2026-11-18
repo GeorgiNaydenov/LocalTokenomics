@@ -18,3 +18,10 @@ tests/fixtures/.tmp/
 .claude/
 .audit/
 CLAUDE.md
+
+# product-brain:begin managed block
+.brain/runtime/
+.brain/tmp/
+.brain/comments/
+.brain/memory/
+# product-brain:end managed block

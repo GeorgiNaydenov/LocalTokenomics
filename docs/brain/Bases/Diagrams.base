@@ -1,0 +1,36 @@
+filters:
+  and:
+    - file.inFolder("docs/brain/Diagrams")
+    - file.ext == "md"
+    - 'file.name != "Diagram Index.md"'
+    - 'file.name != "Architecture Diagram Hub.md"'
+properties:
+  tags:
+    displayName: Tags
+  sources:
+    displayName: Sources
+views:
+  - type: table
+    name: Diagram Notes
+    order:
+      - file.name
+      - tags
+      - sources
+  - type: table
+    name: BPMN
+    filters:
+      and:
+        - 'file.hasTag("bpmn")'
+    order:
+      - file.name
+      - tags
+      - sources
+  - type: table
+    name: Mermaid
+    filters:
+      and:
+        - 'file.hasTag("mermaid")'
+    order:
+      - file.name
+      - tags
+      - sources

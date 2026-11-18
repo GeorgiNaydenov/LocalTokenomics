@@ -1,0 +1,54 @@
+{
+  "format": 1,
+  "id": "44504ecc10e84f67953669b317b06d5a",
+  "name": "localtokenomics",
+  "created_at": "2026-11-18T13:45:24Z",
+  "ba_approved": {
+    "approved": false
+  },
+  "arch_approved": {
+    "approved": false
+  },
+  "viewer": {
+    "colour_groups": {
+      "ba": [
+        "ov-ba",
+        "uc",
+        "actor",
+        "model",
+        "rule",
+        "subdomain",
+        "glossary",
+        "oq",
+        "risk",
+        "source",
+        "sm",
+        "nfr",
+        "event",
+        "capability",
+        "process"
+      ],
+      "arch": [
+        "ov-arch",
+        "diagram",
+        "system",
+        "datastore",
+        "decision",
+        "constraint",
+        "techstack",
+        "deployment",
+        "designsystem"
+      ],
+      "delivery": [
+        "brief"
+      ],
+      "qa": [
+        "testsuite",
+        "qareport"
+      ],
+      "impl": [
+        "impl"
+      ]
+    }
+  }
+}

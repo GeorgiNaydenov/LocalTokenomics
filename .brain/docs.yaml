@@ -1,0 +1,56 @@
+version: 1
+language: en
+vault_root: docs/brain
+repos:
+- id: localtokenomics
+  path: .
+  branch: ''
+  role: service
+stacks: []
+parallel: 3
+node_limit: 20
+geometry_blocking: false
+chunk:
+  files_min: 20
+  files_max: 40
+  lines_max: 8000
+cost:
+  cap_tokens_per_chunk: 400000
+  tiers:
+    draft: fast
+    verify: strong
+    diagram: strong
+toolchain:
+  drawio: ''
+  node: ''
+  java: ''
+  dotnet: ''
+readers:
+  java:
+    resolve_types: false
+  csharp:
+    resolve_types: false
+run_tests: false
+history:
+  git: true
+  prs_issues: {}
+ignore:
+- node_modules
+- .git
+- dist
+- build
+- __pycache__
+- .venv
+- venv
+- .next
+- coverage
+- .brain
+- docs
+- docs-site
+diagram_levels: true
+quality:
+  min_severity: major
+  sonarqube:
+    url: ''
+    token_env: SONAR_TOKEN
+    timeout: 20

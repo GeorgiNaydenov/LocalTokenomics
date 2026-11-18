@@ -1,0 +1,16 @@
+filters:
+  and:
+    - file.inFolder("docs/brain/Releases")
+    - file.ext == "md"
+properties:
+  audience:
+    displayName: Audience
+  status:
+    displayName: Status
+views:
+  - type: table
+    name: Releases
+    order:
+      - file.name
+      - audience
+      - status

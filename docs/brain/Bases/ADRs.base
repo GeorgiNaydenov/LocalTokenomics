@@ -1,0 +1,36 @@
+filters:
+  and:
+    - file.inFolder("docs/brain/adr")
+    - file.ext == "md"
+properties:
+  date:
+    displayName: Date
+  status:
+    displayName: Status
+  covers:
+    displayName: Covers
+  file.name:
+    displayName: Decision
+views:
+  - type: table
+    name: All ADRs
+    order:
+      - file.name
+      - date
+      - status
+      - covers
+    sort:
+      - property: date
+        direction: DESC
+  - type: table
+    name: By Status
+    groupBy:
+      property: status
+      direction: ASC
+    order:
+      - file.name
+      - date
+      - covers
+    sort:
+      - property: date
+        direction: DESC
