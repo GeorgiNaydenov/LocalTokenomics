@@ -3,24 +3,27 @@ title: Render layer components
 aliases: []
 tags: [c4, diagram, drawio]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/render/**]
+verified-against: ef290ff43851
 sources: [docs/brain/architecture/drawio/drawio-render-c4.drawio]
 chunk: ch-localtokenomics-src-ai-usage-cost-render
 authored: true
 node_citations:
   drawio-render-c4:
-    user: ["src/ai_usage_cost/cli.py:71-72", "src/ai_usage_cost/cli.py:175-176"]
-    cli: ["src/ai_usage_cost/cli.py:105-105", "src/ai_usage_cost/cli.py:189-192"]
-    render: ["src/ai_usage_cost/render/terminal.py:17-46"]
-    png: ["src/ai_usage_cost/render/png.py:18-33"]
-    report: ["src/ai_usage_cost/aggregate.py:462-482"]
-    console: ["src/ai_usage_cost/render/terminal.py:17-20"]
-    mpl: ["src/ai_usage_cost/render/png.py:7-11"]
-    file: ["src/ai_usage_cost/render/png.py:31-33"]
+    user: ['src/ai_usage_cost/cli.py:71-72', 'src/ai_usage_cost/cli.py:175-176']
+    cli: ['src/ai_usage_cost/cli.py:105-105', 'src/ai_usage_cost/cli.py:189-192']
+    render: ['src/ai_usage_cost/render/terminal.py:17-46']
+    png: ['src/ai_usage_cost/render/png.py:18-33']
+    report: ['src/ai_usage_cost/aggregate.py:462-482']
+    console: ['src/ai_usage_cost/render/terminal.py:17-20']
+    mpl: ['src/ai_usage_cost/render/png.py:7-11']
+    file: ['src/ai_usage_cost/render/png.py:31-33']
+approved-by: human
+approved-at: '2026-11-18T19:06:20+00:00'
 ---
 
 # Render layer components
