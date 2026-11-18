@@ -1,43 +1,61 @@
 flowchart LR
-    n0["AlertDecision<br/>class"]
-    n1["Analysis<br/>class"]
-    n2["Bucket<br/>class"]
-    n3["Capabilities<br/>class"]
-    n4["ClientInfo<br/>class"]
-    n5["Config<br/>class"]
-    n6["ContextSnapshot<br/>class"]
-    n7["CostBreakdown<br/>class"]
-    n8["EconRow<br/>class"]
-    n9["Economics<br/>class"]
-    n10["Facets<br/>class"]
-    n11["IngestSummary<br/>class"]
-    n12["Insight<br/>class"]
-    n13["Meta<br/>class"]
-    n14["ModelMatch<br/>class"]
-    n15["OutcomeSignals<br/>class"]
-    n16["OutcomeUpdate<br/>class"]
-    n17["PartialRules<br/>class"]
-    n18["Period<br/>class"]
-    n19["Prefix<br/>class"]
-    n20["PriceSet<br/>class"]
-    n21["PricedEvent<br/>class"]
-    n22["ProviderRules<br/>class"]
-    n23["RateTable<br/>class"]
-    n24["Report<br/>class"]
-    n25["Sample<br/>class"]
-    n26["SeriesPoint<br/>class"]
-    n27["SessionRow<br/>class"]
-    n28["Source<br/>class"]
-    n29["SourceInfo<br/>class"]
-    n30["Span<br/>class"]
-    n31["SpanContent<br/>class"]
-    n32["Spec<br/>class"]
-    n33["TokenUsage<br/>class"]
-    n34["Totals<br/>class"]
-    n35["Trace<br/>class"]
-    n36["UnknownModel<br/>class"]
-    n37["UnpricedModel<br/>class"]
-    n38["UsageEvent<br/>class"]
-    n39["WarningGroup<br/>class"]
+    n0["Usage collection<br/>subdomain"]
+    n1["Cost pricing<br/>subdomain"]
+    n2["GPU sampler command timeouts<br/>nfr"]
+    n3["Incremental ingest<br/>nfr"]
+    n4["Privacy and retention<br/>subdomain"]
+    n5["Rate lookup is cached<br/>nfr"]
+    n6["Released text size limit<br/>nfr"]
+    n7["Server binds to loopback by defaul<br/>nfr"]
+    n8["Spend reporting<br/>subdomain"]
+    n9["Store uses write ahead logging<br/>nfr"]
+    n10["A privacy typo silently resets the<br/>risk"]
+    n11["A reader is found by its SOURCE va<br/>rule"]
+    n12["Ai usage cost render<br/>system"]
+    n13["Ai usage cost sources<br/>system"]
+    n14["AlertDecision<br/>class"]
+    n15["Analysis<br/>class"]
+    n16["Bucket<br/>class"]
+    n17["Capabilities<br/>class"]
+    n18["ClientInfo<br/>class"]
+    n19["Config<br/>class"]
+    n20["Content retention is accepted but <br/>risk"]
+    n21["ContextSnapshot<br/>class"]
+    n22["CostBreakdown<br/>class"]
+    n23["Daily series uses the UTC date<br/>risk"]
+    n24["Discover AI tool usage from local <br/>use-case"]
+    n25["EconRow<br/>class"]
+    n26["Economics<br/>class"]
+    n27["Experimental readers carry a flag<br/>rule"]
+    n28["Facets<br/>class"]
+    n29["HTTP routes have no authentication<br/>risk"]
+    n30["IngestSummary<br/>class"]
+    n31["Insight<br/>class"]
+    n32["Meta<br/>class"]
+    n33["ModelMatch<br/>class"]
+    n34["Muse Code control folders are skip<br/>rule"]
+    n35["OutcomeSignals<br/>class"]
+    n36["OutcomeUpdate<br/>class"]
+    n37["PartialRules<br/>class"]
+    n38["Period<br/>class"]
+    n39["Prefix<br/>class"]
+    n2 -->|in_subdomain| n0
+    n3 -->|in_subdomain| n0
+    n5 -->|in_subdomain| n1
+    n6 -->|in_subdomain| n4
+    n7 -->|in_subdomain| n8
+    n9 -->|in_subdomain| n0
     classDef k_class fill:#dae8fc,stroke:#222222,color:#222222
-    class n0,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,n12,n13,n14,n15,n16,n17,n18,n19,n20,n21,n22,n23,n24,n25,n26,n27,n28,n29,n30,n31,n32,n33,n34,n35,n36,n37,n38,n39 k_class
+    class n14,n15,n16,n17,n18,n19,n21,n22,n25,n26,n28,n30,n31,n32,n33,n35,n36,n37,n38,n39 k_class
+    classDef k_nfr fill:#e1d5e7,stroke:#222222,color:#222222
+    class n2,n3,n5,n6,n7,n9 k_nfr
+    classDef k_risk fill:#f8cecc,stroke:#222222,color:#222222
+    class n10,n20,n23,n29 k_risk
+    classDef k_rule fill:#e1d5e7,stroke:#222222,color:#222222
+    class n11,n27,n34 k_rule
+    classDef k_subdomain fill:#f5f5f5,stroke:#222222,color:#222222
+    class n0,n1,n4,n8 k_subdomain
+    classDef k_system fill:#dae8fc,stroke:#222222,color:#222222
+    class n12,n13 k_system
+    classDef k_usecase fill:#fff2cc,stroke:#222222,color:#222222
+    class n24 k_usecase

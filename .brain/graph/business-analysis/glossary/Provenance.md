@@ -1,10 +1,10 @@
 ---
 tags:
   - ba/glossary-term
-maturity: approved
+maturity: draft
 ---
 # Provenance
 
 ## Definition
 
-How a number was obtained: measured, derived, estimated, inferred or unavailable. See `web/src/components/status.tsx:31`.
+How a value is known: measured, derived, estimated, inferred or unavailable. `src/ai_usage_cost/models.py:9`

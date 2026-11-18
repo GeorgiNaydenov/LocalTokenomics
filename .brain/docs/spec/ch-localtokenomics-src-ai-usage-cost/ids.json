@@ -1,0 +1,462 @@
+[
+ [
+  "subdomain",
+  "Usage collection"
+ ],
+ [
+  "subdomain",
+  "Cost pricing"
+ ],
+ [
+  "subdomain",
+  "Spend reporting"
+ ],
+ [
+  "subdomain",
+  "Privacy and retention"
+ ],
+ [
+  "actor",
+  "Person using the tool"
+ ],
+ [
+  "actor",
+  "AI coding tool logs"
+ ],
+ [
+  "actor",
+  "Notification target"
+ ],
+ [
+  "model",
+  "TokenUsage"
+ ],
+ [
+  "model",
+  "UsageEvent"
+ ],
+ [
+  "model",
+  "CostBreakdown"
+ ],
+ [
+  "model",
+  "PricedEvent"
+ ],
+ [
+  "model",
+  "Bucket"
+ ],
+ [
+  "model",
+  "RateTable"
+ ],
+ [
+  "model",
+  "ModelRate"
+ ],
+ [
+  "model",
+  "Report"
+ ],
+ [
+  "model",
+  "SessionRow"
+ ],
+ [
+  "model",
+  "Config"
+ ],
+ [
+  "model",
+  "Span"
+ ],
+ [
+  "model",
+  "Outcome"
+ ],
+ [
+  "data-store",
+  "Usage store"
+ ],
+ [
+  "data-store",
+  "Rate table file"
+ ],
+ [
+  "data-store",
+  "Privacy configuration file"
+ ],
+ [
+  "glossary-term",
+  "Request"
+ ],
+ [
+  "glossary-term",
+  "Session"
+ ],
+ [
+  "glossary-term",
+  "Source"
+ ],
+ [
+  "glossary-term",
+  "Service tier"
+ ],
+ [
+  "glossary-term",
+  "Cache read"
+ ],
+ [
+  "glossary-term",
+  "Cache write"
+ ],
+ [
+  "glossary-term",
+  "Sidechain"
+ ],
+ [
+  "glossary-term",
+  "Fingerprint"
+ ],
+ [
+  "glossary-term",
+  "Rate table"
+ ],
+ [
+  "glossary-term",
+  "Price band"
+ ],
+ [
+  "glossary-term",
+  "Price period"
+ ],
+ [
+  "glossary-term",
+  "Peak window"
+ ],
+ [
+  "glossary-term",
+  "Estimated price"
+ ],
+ [
+  "glossary-term",
+  "Unpriced model"
+ ],
+ [
+  "glossary-term",
+  "Cost state"
+ ],
+ [
+  "glossary-term",
+  "Provenance"
+ ],
+ [
+  "glossary-term",
+  "Bucket"
+ ],
+ [
+  "glossary-term",
+  "Outcome"
+ ],
+ [
+  "glossary-term",
+  "Span"
+ ],
+ [
+  "glossary-term",
+  "Metadata only"
+ ],
+ [
+  "glossary-term",
+  "Redaction"
+ ],
+ [
+  "glossary-term",
+  "Parser version"
+ ],
+ [
+  "glossary-term",
+  "Amplification"
+ ],
+ [
+  "rule",
+  "Missing token counts mean unavailable"
+ ],
+ [
+  "rule",
+  "A free provider costs zero"
+ ],
+ [
+  "rule",
+  "A model without a rate row is unpriced"
+ ],
+ [
+  "rule",
+  "A prefix match is an estimate"
+ ],
+ [
+  "rule",
+  "Only listed suffixes count as the same model"
+ ],
+ [
+  "rule",
+  "The longest matching row wins"
+ ],
+ [
+  "rule",
+  "A known unpriced model beats a guess"
+ ],
+ [
+  "rule",
+  "Duplicate rate keys are rejected"
+ ],
+ [
+  "rule",
+  "A row must name a defined provider"
+ ],
+ [
+  "rule",
+  "Price periods must not overlap"
+ ],
+ [
+  "rule",
+  "Peak windows must not wrap midnight"
+ ],
+ [
+  "rule",
+  "The first covering period replaces the row prices"
+ ],
+ [
+  "rule",
+  "The largest band at or under the request size applies"
+ ],
+ [
+  "rule",
+  "An unpriced tier is billed standard and flagged"
+ ],
+ [
+  "rule",
+  "Cache prices fall back in a fixed order"
+ ],
+ [
+  "rule",
+  "A request is stored once per fingerprint"
+ ],
+ [
+  "rule",
+  "Records that disagree on input tokens keep the first"
+ ],
+ [
+  "rule",
+  "An unchanged file is not parsed again"
+ ],
+ [
+  "rule",
+  "A grown file resumes only when its earlier bytes are unchanged"
+ ],
+ [
+  "rule",
+  "A forgotten session is not stored again"
+ ],
+ [
+  "rule",
+  "An excluded project drops its spans"
+ ],
+ [
+  "rule",
+  "Span text is refused in metadata only mode"
+ ],
+ [
+  "rule",
+  "Released text is cut and then redacted"
+ ],
+ [
+  "rule",
+  "A bad configuration file gives the defaults"
+ ],
+ [
+  "rule",
+  "The local calendar day decides the day of an event"
+ ],
+ [
+  "rule",
+  "A session shows its worst cost state"
+ ],
+ [
+  "rule",
+  "A session title prefers the tool, then the latest"
+ ],
+ [
+  "rule",
+  "A reported cost that differs is flagged"
+ ],
+ [
+  "rule",
+  "Old rates raise a warning"
+ ],
+ [
+  "rule",
+  "Content retention is inert"
+ ],
+ [
+  "rule",
+  "An alert needs exactly one threshold"
+ ],
+ [
+  "rule",
+  "An unknown session answers 404"
+ ],
+ [
+  "rule",
+  "Source databases are opened read only"
+ ],
+ [
+  "state-machine",
+  "Request cost state"
+ ],
+ [
+  "event",
+  "Unpriced model warning"
+ ],
+ [
+  "event",
+  "Estimated price warning"
+ ],
+ [
+  "event",
+  "Tier unpriced warning"
+ ],
+ [
+  "event",
+  "Reported cost divergence warning"
+ ],
+ [
+  "event",
+  "Stale rates warning"
+ ],
+ [
+  "event",
+  "Session rated"
+ ],
+ [
+  "event",
+  "Session forgotten"
+ ],
+ [
+  "event",
+  "Spend alert sent"
+ ],
+ [
+  "event",
+  "Conflicting records warning"
+ ],
+ [
+  "nfr",
+  "Incremental ingest"
+ ],
+ [
+  "nfr",
+  "Rate lookup is cached"
+ ],
+ [
+  "nfr",
+  "Released text size limit"
+ ],
+ [
+  "nfr",
+  "Store uses write ahead logging"
+ ],
+ [
+  "nfr",
+  "GPU sampler command timeouts"
+ ],
+ [
+  "nfr",
+  "Server binds to loopback by default"
+ ],
+ [
+  "risk",
+  "HTTP routes have no authentication"
+ ],
+ [
+  "risk",
+  "Daily series uses the UTC date"
+ ],
+ [
+  "risk",
+  "Secret patterns are a fixed list"
+ ],
+ [
+  "risk",
+  "A privacy typo silently resets the settings"
+ ],
+ [
+  "risk",
+  "Content retention is accepted but does nothing"
+ ],
+ [
+  "risk",
+  "Prices drift from the vendors"
+ ],
+ [
+  "open-question",
+  "Should the series use the local day"
+ ],
+ [
+  "open-question",
+  "Who may use the HTTP interface"
+ ],
+ [
+  "open-question",
+  "Will content capture be built"
+ ],
+ [
+  "open-question",
+  "Why 30 days for stale rates"
+ ],
+ [
+  "use-case",
+  "See what my AI usage would cost"
+ ],
+ [
+  "use-case",
+  "Explore spend in the dashboard"
+ ],
+ [
+  "use-case",
+  "Export a report as a file"
+ ],
+ [
+  "use-case",
+  "Be alerted when spend rises"
+ ],
+ [
+  "use-case",
+  "Inspect and rate one session"
+ ],
+ [
+  "use-case",
+  "Forget a session"
+ ],
+ [
+  "use-case",
+  "Read the text of one span"
+ ],
+ [
+  "use-case",
+  "Try the tool with demo data"
+ ],
+ [
+  "use-case",
+  "Sample GPU use for local models"
+ ],
+ [
+  "use-case",
+  "Query the store with SQL"
+ ],
+ [
+  "use-case",
+  "Browse sessions in the terminal"
+ ]
+]
