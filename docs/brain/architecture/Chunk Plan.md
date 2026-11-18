@@ -88,7 +88,7 @@ chunks:
   components: ['localtokenomics:web-src-components']
   globs: [web/src/components/*]
   depends_on: [ch-localtokenomics-web-src, ch-localtokenomics-web-src-components-ui]
-  state: planned
+  state: in-review
   display_name: Web UI components
   files: 18
   lines: 3024
@@ -170,8 +170,13 @@ The ordered plan for documenting this codebase one chunk at a time. Edit the `ch
 | ch-localtokenomics-src-ai-usage-cost-sources | src/ai_usage_cost/sources | planned | ch-localtokenomics-src-ai-usage-cost | 22 | 4722 | 137363 | c4, dfd | covered |
 | ch-localtokenomics-src-ai-usage-cost | src/ai_usage_cost | planned | ch-localtokenomics-src-ai-usage-cost-render, ch-localtokenomics-src-ai-usage-cost-sources | 13 | 5069 | 170076 | c4, erd, erd-conceptual, state, sequence, flowchart, dfd, bpmn | stale |
 | ch-localtokenomics-src-ai-usage-cost-render | src/ai_usage_cost/render | planned | ch-localtokenomics-src-ai-usage-cost | 3 | 187 | 62067 | c4 | none |
+<<<<<<< HEAD
 | ch-localtokenomics-web-src-components | web/src/components | planned | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components-ui | 18 | 3024 | 106324 | c4 | none |
 | ch-localtokenomics-web-src | web/src | approved | ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 20 | 7127 | 170331 | c4 | stale |
+=======
+| ch-localtokenomics-web-src-components | web/src/components | in-review | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components-ui | 18 | 3024 | 106324 | c4 | none |
+| ch-localtokenomics-web-src | web/src | planned | ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 20 | 7127 | 170331 | c4 | stale |
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components
 | ch-localtokenomics-web-src-components-ui | web/src/components/ui | planned | ch-localtokenomics-web-src | 25 | 2083 | 91644 | c4 | none |
 | ch-localtokenomics-web-src-prototype | web/src/prototype | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 10 | 3215 | 109304 | c4 | stale |
 %% generated:plan-table end %%

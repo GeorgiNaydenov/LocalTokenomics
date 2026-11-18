@@ -1,0 +1,455 @@
+[
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Cost state",
+   "Definition": "One of priced, free, unpriced or unavailable. It says whether a row has a cost and whether that cost is counted in totals. See `web/src/components/status.tsx:22`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Provenance",
+   "Definition": "How a number was obtained: measured, derived, estimated, inferred or unavailable. See `web/src/components/status.tsx:31`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Session outcome",
+   "Definition": "A label for how a session ended: successful, partial, failed, abandoned or unrated. Unrated is never guessed from signals alone. See `web/src/components/status.tsx:39`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Context occupancy",
+   "Definition": "The share of a model's context window filled by one call. It is unknown when the client logged no capacity. See `web/src/components/trace.tsx:34`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Unavailable marker",
+   "Definition": "The word unavailable, shown in place of a number the logs do not carry. It is never replaced by zero. See `web/src/components/status.tsx:77`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "actor",
+  "data": {
+   "name": "Dashboard reader",
+   "classification": "human",
+   "Description": "The person who opens the local dashboard to see what logged AI usage would cost at list prices. The components check no role.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A missing value is shown as unavailable, never as zero",
+   "Statement": "Meters, bucket bars, comparison bars, token cells and session cards show the unavailable marker when a value is null or a total is not positive, and draw no bar.",
+   "category": "display",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/components/status.tsx::Meter",
+     "quote": "  if (value === null) {",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/components/status.tsx::BucketBar",
+     "quote": "  if (total <= 0) {",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/components/session.tsx::TokenCell",
+     "quote": "  if (label === null) {",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A rollup shows its least trustworthy cost state and provenance",
+   "Statement": "When several rows are combined, the worst cost state (unavailable over unpriced over free over priced) and the worst provenance are shown. An empty list gives unavailable.",
+   "category": "calculation",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/components/rank.ts::worstState",
+     "quote": "  return [...states].sort((a, b) => STATE_RANK[b] - STATE_RANK[a])[0] ?? 'unavailable'",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/components/rank.ts::worstProvenance",
+     "quote": "  return [...values].sort((a, b) => PROVENANCE_RANK[b] - PROVENANCE_RANK[a])[0] ?? 'unavailable'",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "An estimated price is marked next to the cost state",
+   "Statement": "A priced row that used a sibling model's rate gets an Estimated badge in a purple hue, so it is not mistaken for an unpriced row, which is left out of totals.",
+   "category": "display",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/components/status.tsx::CostBadges",
+     "quote": "      {isEstimatedPriced(state, cost) ? <EstimatedBadge className={className} /> : null}",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "The daily chart names at most twelve series",
+   "Statement": "The stacked daily cost chart gives its twelve largest series their own colour and legend entry, and groups all others under Other with a count.",
+   "category": "display",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/components/chart-time.tsx::TimeChart",
+     "quote": "    const overflowKeys = keys.slice(LEGEND_LIMIT)",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/components/series.ts::SERIES_SLOTS",
+     "quote": "export const SERIES_SLOTS = 12",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A table always keeps at least one column",
+   "Statement": "If the reader hides every column, all columns are shown again.",
+   "category": "display",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/components/columns.tsx::visibleColumns",
+     "quote": "  return shown.length > 0 ? shown : columns",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "The date range cannot cross itself",
+   "Statement": "The from date cannot be later than the to date, and the to date cannot be earlier than the from date.",
+   "category": "validation",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/components/filters.tsx::DateRange",
+     "quote": "        max={until ?? max}",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/components/filters.tsx::DateRange",
+     "quote": "        min={since ?? min}",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "The side panel width is bounded",
+   "Statement": "The workspace side panel is at least 360 pixels wide and at most 900 pixels or 90 percent of the window, whichever is smaller.",
+   "category": "validation",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/components/workspace-panel.ts::clampWidth",
+     "quote": "  return Math.min(bound, Math.max(MIN_WIDTH, width))",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "An explanation popover does not take focus back on close",
+   "Statement": "Closing the metric explanation popover does not return focus to its trigger, because focusing the trigger opens the popover again.",
+   "category": "behaviour",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/components/metric-info.tsx::MetricInfo",
+     "quote": "        onCloseAutoFocus={(event) => event.preventDefault()}",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Read a figure and see how far to trust it",
+   "primary_actor": "Dashboard reader",
+   "Description": "The reader looks at a headline number, a session row or a source card and wants to know whether the figure is measured, estimated, unpriced or missing.",
+   "Preconditions": "The dashboard has received values and labels for the view.",
+   "Postconditions": "Each figure is shown with its cost state or provenance, or as unavailable. Nothing is invented.",
+   "Main flow": [
+    "The screen passes a value, label and cost state to a stat card, session card or source card. `web/src/components/stat.tsx:61`",
+    "The component draws the badge for the cost state, provenance or outcome. `web/src/components/status.tsx:149`",
+    "A priced row that used a sibling rate also gets an Estimated badge. `web/src/components/status.tsx:180`",
+    "The reader hovers, focuses or taps the badge or the info glyph to open the explanation. `web/src/components/metric-info.tsx:46`"
+   ],
+   "Alternative flows": [
+    "At step 2, when the value is null, the component shows the unavailable marker instead of a number or bar. `web/src/components/session.tsx:200`"
+   ],
+   "Acceptance criteria": [
+    "The explanation opens on click and shows the plain text. `web/src/components/metric-info.test.tsx:7`",
+    "The worst state of a mixed set is unavailable over unpriced, free and priced. `web/src/components/rank.test.ts:5`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/components/status.tsx::CostBadges",
+     "quote": "export function CostBadges({",
+     "confidence": "inferred"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/components/metric-info.tsx::MetricInfo",
+     "quote": "export function MetricInfo({",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Narrow a list and choose its columns",
+   "primary_actor": "Dashboard reader",
+   "Description": "The reader filters sessions by search text, facets, chips and dates, sorts them, and hides columns they do not need.",
+   "Preconditions": "A table or list view is on screen with options supplied by the screen.",
+   "Postconditions": "The filter chips list every active filter, and the hidden columns are remembered in the browser.",
+   "Main flow": [
+    "The reader types in the search box or ticks facet options. `web/src/components/filters.tsx:18`",
+    "The reader picks a sort order. `web/src/components/filters.tsx:195`",
+    "The reader sets a from and to date. `web/src/components/filters.tsx:156`",
+    "Active filters appear as removable chips with a Clear all link. `web/src/components/filters.tsx:231`",
+    "The reader opens the column menu and ticks columns, which are stored. `web/src/components/columns.tsx:41`"
+   ],
+   "Alternative flows": [
+    "At step 5, when every column is hidden, all columns are shown. `web/src/components/columns.tsx:59`"
+   ],
+   "Acceptance criteria": [
+    "No automated test covers this flow. Criterion from the code: hiding every column leaves all columns visible. `web/src/components/columns.tsx:59`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/components/filters.tsx::FilterChips",
+     "quote": "export function FilterChips({",
+     "confidence": "inferred"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/components/columns.tsx::ColumnChooser",
+     "quote": "export function ColumnChooser<T>({",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Inspect a chart point",
+   "primary_actor": "Dashboard reader",
+   "Description": "The reader moves the pointer or uses the keyboard over a chart to read the value behind one point or day.",
+   "Preconditions": "A sparkline with labels and a formatter, or a context occupancy chart, is on screen.",
+   "Postconditions": "A detail box shows the title and values of the chosen point, and a live region announces it.",
+   "Main flow": [
+    "The pointer position is turned into a point index. `web/src/components/chart-hover.tsx:43`",
+    "Arrow keys, Home and End move the index, and Escape clears it. `web/src/components/chart-hover.tsx:63`",
+    "The detail box is drawn above the chart at the point. `web/src/components/chart-hover.tsx:91`",
+    "A polite live region reads the point aloud. `web/src/components/chart-hover.tsx:114`"
+   ],
+   "Alternative flows": [
+    "At step 1, a sparkline given no labels or no formatter has no hover. `web/src/components/sparkline.tsx:129`"
+   ],
+   "Acceptance criteria": [
+    "A sparkline keeps every y coordinate inside the box height, even for a series with negative dips. `web/src/components/sparkline.test.ts:10`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/components/chart-hover.tsx::HoverFrame",
+     "quote": "export function HoverFrame({",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Review a session's spans and context use",
+   "primary_actor": "Dashboard reader",
+   "Description": "The reader opens a session and steps through its trace spans, insights and context window occupancy.",
+   "Preconditions": "Trace spans or occupancy points were supplied for the session.",
+   "Postconditions": "The reader has seen each span with its kind and status, and which calls came close to a full context window.",
+   "Main flow": [
+    "The span timeline lists spans with a glyph per kind and a colour per status. `web/src/components/trace.tsx:227`",
+    "Arrow keys, Home and End move between rows with one tab stop. `web/src/components/trace.tsx:247`",
+    "An insight that names a span is a button that selects it. `web/src/components/trace.tsx:389`",
+    "The occupancy chart shows a bar per call in the warning colour at 85 percent or more. `web/src/components/trace.tsx:157`"
+   ],
+   "Alternative flows": [
+    "At step 4, a call with unknown occupancy is a hatched bar with a note that it is not zero. `web/src/components/trace.tsx:206`"
+   ],
+   "Acceptance criteria": [
+    "No automated test covers this flow. Criterion from the code: unknown occupancy is shown as unknown, never as zero. `web/src/components/trace.tsx:206`"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/components/trace.tsx::SpanTimeline",
+     "quote": "export function SpanTimeline({",
+     "confidence": "inferred"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/components/trace.tsx::ContextOccupancy",
+     "quote": "export function ContextOccupancy({",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "nfr",
+  "data": {
+   "name": "Keyboard and screen reader access to charts and timelines",
+   "category": "accessibility",
+   "Statement": "Charts with hover detail and the span timeline can be operated with the keyboard, and the selected point is announced.",
+   "target": "Arrow, Home, End and Escape keys, and a polite live region. `web/src/components/chart-hover.tsx:61`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "nfr",
+  "data": {
+   "name": "Reduced motion is respected",
+   "category": "accessibility",
+   "Statement": "Animated numbers skip their animation when the reader prefers reduced motion.",
+   "target": "No animation under the reduced motion media query. `web/src/components/stat.tsx:10`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Most shared components have no tests",
+   "Risk": "Only the info popover, the ranking helpers and the sparkline geometry have tests. The stat cards, the daily chart, the filters, the column chooser and the session and trace views are untested, so a change can break a figure shown to the reader unnoticed. `web/src/components/rank.test.ts:4`",
+   "Mitigation": "Add tests for the display rules recorded in this chunk, starting with the unavailable marker and the twelve series limit.",
+   "impact": "medium",
+   "likelihood": "medium",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Popover timing depends on a polling interval",
+   "Risk": "The info popover decides to open and close from a 100 ms poll of the pointer position, so it can lag on a slow machine. `web/src/components/metric-info.tsx:11`",
+   "Mitigation": "The popover also opens on focus and click, so it is reachable without the poll. `web/src/components/metric-info.tsx:143`",
+   "impact": "low",
+   "likelihood": "low",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Why the Other series limit is twelve",
+   "Question": "Is twelve series a design choice or the number of colours defined in the theme? The code only shows the constant in web/src/components/series.ts.",
+   "priority": "low",
+   "maturity": "draft"
+  }
+ }
+]
