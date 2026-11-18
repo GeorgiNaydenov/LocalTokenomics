@@ -3,25 +3,29 @@ title: Web Dashboard Components
 aliases: []
 tags: [c4, diagram, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*]
+verified-against: 75f17de5a942
 sources: [docs/brain/architecture/diagrams/web-src-dashboard-c4.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   web-src-dashboard-c4:
-    '["Person': ["web/src/main.tsx:7-13"]
-    ai-usage-cost server: ["web/src/api.ts:489-500"]
-    App: ["web/src/App.tsx:129-145"]
-    api.ts: ["web/src/api.ts:489-512"]
-    Overview, Sessions, Sources, Pricing: ["web/src/App.tsx:330-339"]
-    SessionWorkspace: ["web/src/SessionWorkspace.tsx:433-474"]
-    format, pricing-notes, pricing-format, turn-insights: ["web/src/format.ts:19-27", "web/src/pricing-notes.ts:27-34", "web/src/pricing-format.ts:83-90", "web/src/turn-insights.ts:73-82"]
-    theme.ts: ["web/src/theme.ts:56-69"]
-    Browser local storage: ["web/src/theme.ts:12-33"]
+    '["Person': ['web/src/main.tsx:7-13']
+    ai-usage-cost server: ['web/src/api.ts:489-500']
+    App: ['web/src/App.tsx:129-145']
+    api.ts: ['web/src/api.ts:489-512']
+    Overview, Sessions, Sources, Pricing: ['web/src/App.tsx:330-339']
+    SessionWorkspace: ['web/src/SessionWorkspace.tsx:433-474']
+    format, pricing-notes, pricing-format, turn-insights: ['web/src/format.ts:19-27',
+      'web/src/pricing-notes.ts:27-34', 'web/src/pricing-format.ts:83-90', 'web/src/turn-insights.ts:73-82']
+    theme.ts: ['web/src/theme.ts:56-69']
+    Browser local storage: ['web/src/theme.ts:12-33']
+approved-by: human
+approved-at: '2026-11-18T19:02:12+00:00'
 ---
 
 # Web Dashboard Components

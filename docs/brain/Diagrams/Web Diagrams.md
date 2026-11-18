@@ -3,13 +3,16 @@ title: Web Diagrams
 aliases: []
 tags: [c4, diagram, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 75f17de5a942
 sources: [docs/brain/architecture/diagrams/module-ch-localtokenomics-web-src.mmd]
 chunk: ch-localtokenomics-web-src
+approved-by: human
+approved-at: '2026-11-18T19:02:12+00:00'
 ---
 
 # Web Diagrams
