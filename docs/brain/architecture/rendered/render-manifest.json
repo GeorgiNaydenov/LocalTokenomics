@@ -1,0 +1,9 @@
+{
+ "drawio-render-c4.svg": {
+  "bytes": 471182,
+  "output_sha256": "3298ff2cdfe83034ac04040da439eec562229d26c01917ffe34056c6c6d54481",
+  "source": "docs/brain/architecture/drawio/drawio-render-c4.drawio",
+  "source_sha256": "09f8e59017261ee43234aeb98e098eb81305a4cace9413e85a6720839f2a30a3",
+  "tool": "draw.io 28.1.2.0"
+ }
+}
