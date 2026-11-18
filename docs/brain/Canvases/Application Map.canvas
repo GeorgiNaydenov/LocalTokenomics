@@ -11,6 +11,7 @@
       "color": "4"
     },
     {
+<<<<<<< HEAD
       "id": "n-invariants-catalogue",
       "type": "file",
 <<<<<<< HEAD
@@ -26,8 +27,56 @@
 =======
       "file": "docs/brain/Operations/Invariants Catalogue.md",
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+      "id": "n-ai-usage-cost-api",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost API.md",
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "x": 0,
       "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+<<<<<<< HEAD
+      "id": "n-route-and-api-index",
+      "type": "file",
+      "file": "docs/brain/Application/Route and API Index.md",
+      "x": 380,
+      "y": 0,
+=======
+      "id": "n-ai-usage-cost-overview",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost Overview.md",
+      "x": 380,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ai-usage-cost-tests",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost Tests.md",
+      "x": 760,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ai-usage-cost-workflows",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost Workflows.md",
+      "x": 0,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-invariants-catalogue",
+      "type": "file",
+      "file": "docs/brain/Operations/Invariants Catalogue.md",
+      "x": 380,
+      "y": 110,
       "width": 320,
       "height": 70
     },
@@ -35,8 +84,9 @@
       "id": "n-route-and-api-index",
       "type": "file",
       "file": "docs/brain/Application/Route and API Index.md",
-      "x": 380,
-      "y": 0,
+      "x": 760,
+      "y": 110,
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "width": 320,
       "height": 70
     },
@@ -44,6 +94,7 @@
       "id": "n-screens-and-ui-inventory",
       "type": "file",
       "file": "docs/brain/Application/Screens and UI Inventory.md",
+<<<<<<< HEAD
       "x": 760,
       "y": 0,
       "width": 320,
@@ -58,12 +109,17 @@
       "file": "docs/brain/Application/Systems and Data Stores.md",
       "x": 0,
       "y": 110,
+=======
+      "x": 0,
+      "y": 220,
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "width": 320,
       "height": 70
     },
     {
       "id": "n-test-coverage-matrix",
       "type": "file",
+<<<<<<< HEAD
       "file": "docs/brain/Application/Test Coverage Matrix.md",
 =======
 =======
@@ -176,10 +232,14 @@
       "type": "file",
       "file": "docs/brain/Application/Web ui UI components Workflows.md",
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+      "file": "docs/brain/Operations/Test Coverage Matrix.md",
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "x": 380,
       "y": 220,
       "width": 320,
       "height": 70
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -210,4 +270,24 @@
     }
   ],
   "edges": []
+=======
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0-n-ai-usage-cost-overview-n-ai-usage-cost-api",
+      "fromNode": "n-ai-usage-cost-overview",
+      "toNode": "n-ai-usage-cost-api",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e1-n-ai-usage-cost-overview-n-ai-usage-cost-workflows",
+      "fromNode": "n-ai-usage-cost-overview",
+      "toNode": "n-ai-usage-cost-workflows",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ]
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 }

@@ -25,6 +25,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "file": "docs/brain/architecture/Module Atlas.md",
 =======
       "file": "docs/brain/Application/Module Atlas.md",
@@ -35,6 +36,9 @@
 =======
       "file": "docs/brain/Application/Module Atlas.md",
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+      "file": "docs/brain/Application/Module Atlas.md",
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "x": 380,
       "y": 0,
       "width": 320,

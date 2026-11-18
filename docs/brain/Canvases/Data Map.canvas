@@ -11,15 +11,22 @@
       "color": "4"
     },
     {
+<<<<<<< HEAD
       "id": "n-schema-erd",
       "type": "file",
       "file": "docs/brain/Data/Schema ERD.md",
+=======
+      "id": "n-ai-usage-cost-data-model",
+      "type": "file",
+      "file": "docs/brain/Data/Ai usage cost Data Model.md",
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "x": 0,
       "y": 0,
       "width": 320,
       "height": 70
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -41,6 +48,11 @@
       "type": "file",
       "file": "docs/brain/Data/Web ui UI components Data Model.md",
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+      "id": "n-schema-erd",
+      "type": "file",
+      "file": "docs/brain/Data/Schema ERD.md",
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "x": 380,
       "y": 0,
       "width": 320,

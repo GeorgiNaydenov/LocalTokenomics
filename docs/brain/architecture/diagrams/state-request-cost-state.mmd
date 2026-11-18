@@ -1,0 +1,26 @@
+stateDiagram-v2
+    direction LR
+    [*] --> Read: request loaded from the store
+    Read --> unavailable: tokens are None
+    Read --> free: provider rules say free
+    Read --> unpriced: no rate row matches the model
+    Read --> priced: a rate row matches
+    unavailable --> [*]
+    free --> [*]
+    unpriced --> [*]
+    priced --> [*]
+    note right of unavailable
+        Rank 3, the worst. No token counts, so cost is unknown, not zero.
+    end note
+    note right of free
+        Rank 1. Cost is a zero breakdown.
+    end note
+    note right of unpriced
+        Rank 2. Tokens count, cost is excluded, a warning is raised.
+    end note
+    note right of priced
+        Rank 0, the best. A match by a shorter prefix is flagged estimated and a warning is raised.
+    end note
+    note left of Read
+        Legend: a rounded box is a state, an arrow is a transition labelled with its trigger, the filled dot starts, the ringed dot ends, a note records a rule that holds in that state. A session shows the worst state of its requests.
+    end note

@@ -16,6 +16,7 @@ generated: true
 > [!info] What this is
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 > The front door to the documentation of localtokenomics-docs-ch-localtokenomics-root. Open the repository root as the Obsidian vault: every note, every diagram and every code file is then one click away, and each code link opens the real file.
 =======
 > The front door to the documentation of localtokenomics-docs-ch-localtokenomics-web-src. Open the repository root as the Obsidian vault: every note, every diagram and every code file is then one click away, and each code link opens the real file.
@@ -23,6 +24,9 @@ generated: true
 =======
 > The front door to the documentation of localtokenomics-docs-ch-localtokenomics-web-src-components-ui. Open the repository root as the Obsidian vault: every note, every diagram and every code file is then one click away, and each code link opens the real file.
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+> The front door to the documentation of localtokenomics-docs-ch-localtokenomics-src-ai-usage-cost. Open the repository root as the Obsidian vault: every note, every diagram and every code file is then one click away, and each code link opens the real file.
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 > [!tip] How to use it
 > Pick a layer below, or open [[Reading Paths by Role]] for a guided tour. Code stays authoritative: when a note and the code disagree, the code wins and the note has a bug. Notes tagged `generated` are rewritten by `brain docs generate`, so edit the specification, not the note.
@@ -32,6 +36,7 @@ generated: true
 %% generated:start-here start (do not edit; run brain docs generate) %%
 | Layer | Question it answers | Start with |
 |---|---|---|
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 | Application | How does the product behave and where does that live in code? | [[Module Atlas]], [[Route and API Index]], [[Screens and UI Inventory]], [[localtokenomics root API]], [[localtokenomics root Overview]], [[localtokenomics root Tests]] and 1 more |
@@ -51,12 +56,20 @@ generated: true
 | Operations | How is it built, run, checked and kept healthy? | [[Coverage Map]], [[Environment Variables]], [[Invariants Catalogue]], [[Project Facts]], [[Requirement Catalogue]], [[Test Coverage Matrix]] and 1 more |
 | Diagrams | What does it look like as a picture? | [[Architecture Diagram Hub]], [[CI and Delivery Diagrams]], [[Diagram Index]], [[Diagram Notation Guide]], [[ER Data Model]], [[Layered Viewpoints]] and 2 more |
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+| Application | How does the product behave and where does that live in code? | [[Ai usage cost API]], [[Ai usage cost Overview]], [[Ai usage cost Tests]], [[Ai usage cost Workflows]], [[Module Atlas]], [[Route and API Index]] and 1 more |
+| Data | What is stored and how does it flow? | [[Ai usage cost Data Model]], [[Schema ERD]] |
+| Security | Who can do what, and what keeps it safe? | [[Ai usage cost Security]] |
+| Operations | How is it built, run, checked and kept healthy? | [[Ai usage cost Operations]], [[Coverage Map]], [[Environment Variables]], [[Invariants Catalogue]], [[Project Facts]], [[Requirement Catalogue]] and 1 more |
+| Diagrams | What does it look like as a picture? | [[Ai usage cost Diagrams]], [[Architecture Diagram Hub]], [[CI and Delivery Diagrams]], [[Cost state of a request]], [[Diagram Index]], [[Diagram Notation Guide]] and 8 more |
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 | Decisions | Why is it this way? | [[ADR Index]] |
 | Releases | What shipped, and when? | [[Release Checklist]], [[Rollback Runbook]] |
 
 ## Generated references
 
 - **Catalogs**, catalogs and traceability matrices generated from the code: [[Application Catalog]], [[Data Entity Catalog]], [[Interface Catalog]], [[Technology Catalog]], [[Traceability Matrices]]
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 - **Ontology**, the knowledge graph of each chunk: [[localtokenomics root Ontology]]
@@ -66,6 +79,9 @@ generated: true
 =======
 - **Ontology**, the knowledge graph of each chunk: [[Web ui UI components Ontology]]
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+- **Ontology**, the knowledge graph of each chunk: [[Ai usage cost Ontology]]
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 The complete diagram list is [[Diagram Index]] and the diagram entry point is [[Architecture Diagram Hub]].
 %% generated:start-here end %%

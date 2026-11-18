@@ -423,6 +423,7 @@ erDiagram
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
@@ -454,6 +455,8 @@ erDiagram
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: src/ai_usage_cost (2)
 
@@ -695,6 +698,7 @@ erDiagram
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
@@ -726,6 +730,8 @@ erDiagram
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: src/ai_usage_cost (3)
 
@@ -819,6 +825,7 @@ erDiagram
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
@@ -839,6 +846,8 @@ erDiagram
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: src/ai_usage_cost/sources
 
@@ -871,6 +880,7 @@ erDiagram
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
@@ -884,6 +894,8 @@ erDiagram
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: tests
 
@@ -987,6 +999,7 @@ erDiagram
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
@@ -1004,6 +1017,8 @@ erDiagram
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: tests/fixtures/copilot_chat
 
@@ -1057,6 +1072,7 @@ erDiagram
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
@@ -1070,6 +1086,8 @@ erDiagram
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: tests/fixtures/cursor
 
@@ -1108,6 +1126,7 @@ erDiagram
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
@@ -1121,6 +1140,8 @@ erDiagram
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: tests/fixtures/dyad
 
@@ -1250,6 +1271,7 @@ erDiagram
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
@@ -1264,6 +1286,8 @@ erDiagram
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: tests/fixtures/ollama_app
 
@@ -1318,6 +1342,7 @@ erDiagram
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
@@ -1330,6 +1355,8 @@ erDiagram
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: tests/fixtures/windsurf
 
@@ -1359,6 +1386,7 @@ erDiagram
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
@@ -1371,3 +1399,5 @@ erDiagram
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost

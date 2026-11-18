@@ -21,6 +21,7 @@ Which component owns which entity and how many interfaces each exposes. Empty ce
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 | Entity | `(root)` | `src/ai_usage_cost` | `src/ai_usage_cost/render` | `src/ai_usage_cost/sources` | `(root)` | `web/src` | `web/src/components` | `web/src/components/ui` | [[Web prototype Overview|web/src/prototype]] |
 =======
 | Entity | `(root)` | `src/ai_usage_cost` | `src/ai_usage_cost/render` | `src/ai_usage_cost/sources` | [[localtokenomics root Overview|(root)]] | [[localtokenomics root Overview|web/src]] | [[localtokenomics root Overview|web/src/components]] | [[localtokenomics root Overview|web/src/components/ui]] | [[localtokenomics root Overview|web/src/prototype]] |
@@ -31,6 +32,9 @@ Which component owns which entity and how many interfaces each exposes. Empty ce
 =======
 | Entity | `(root)` | `src/ai_usage_cost` | `src/ai_usage_cost/render` | `src/ai_usage_cost/sources` | `(root)` | `web/src` | `web/src/components` | [[Web ui UI components Overview|web/src/components/ui]] | `web/src/prototype` |
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+| Entity | `(root)` | [[Ai usage cost Overview|src/ai_usage_cost]] | [[Ai usage cost Overview|src/ai_usage_cost/render]] | [[Ai usage cost Overview|src/ai_usage_cost/sources]] | `(root)` | `web/src` | `web/src/components` | `web/src/components/ui` | `web/src/prototype` |
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 |---|---|---|---|---|---|---|---|---|---|
 | `AlertDecision` |  | x |  |  |  |  |  |  |  |
 | `Analysis` |  | x |  |  |  |  |  |  |  |
@@ -99,16 +103,23 @@ Entities with no owning component: 8.
 | Component | Routes |
 |---|---|
 | `(root)` | 0 |
+<<<<<<< HEAD
 | `src/ai_usage_cost` | 12 |
 | `src/ai_usage_cost/render` | 0 |
 | `src/ai_usage_cost/sources` | 0 |
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+| [[Ai usage cost Overview\|src/ai_usage_cost]] | 12 |
+| [[Ai usage cost Overview\|src/ai_usage_cost/render]] | 0 |
+| [[Ai usage cost Overview\|src/ai_usage_cost/sources]] | 0 |
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 | `(root)` | 0 |
 | `web/src` | 0 |
 | `web/src/components` | 0 |
 | `web/src/components/ui` | 0 |
+<<<<<<< HEAD
 | [[Web prototype Overview\|web/src/prototype]] | 0 |
 =======
 | [[localtokenomics root Overview\|(root)]] | 0 |
@@ -131,6 +142,9 @@ Entities with no owning component: 8.
 | [[Web ui UI components Overview\|web/src/components/ui]] | 0 |
 | `web/src/prototype` | 0 |
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+=======
+| `web/src/prototype` | 0 |
+>>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 Components with no routes: 8.
 %% generated:matrices end %%

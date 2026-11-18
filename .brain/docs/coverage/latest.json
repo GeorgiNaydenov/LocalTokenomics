@@ -9,155 +9,155 @@
    "test": false
   },
   "src/ai_usage_cost/__init__.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/aggregate.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/api.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/cli.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/collect.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/demo.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/models.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/pipeline.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/pricing.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/privacy.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/render/__init__.py": {
-   "note": false,
+   "note": true,
    "test": false
   },
   "src/ai_usage_cost/render/png.py": {
-   "note": false,
+   "note": true,
    "test": false
   },
   "src/ai_usage_cost/render/terminal.py": {
-   "note": false,
+   "note": true,
    "test": false
   },
   "src/ai_usage_cost/sources/__init__.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/antigravity.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/base.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/claude_code.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/cline.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/codex.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/copilot_chat.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/copilot_cli.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/cursor.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/dyad.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/gemini_cli.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/grok_build.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/jan.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/kilo_code.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/kilo_legacy.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/muse_code.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/ollama_app.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/openai_compat.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/opencode.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/qwen_code.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/roo_code.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/sources/windsurf.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/store.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/trace.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/tui.py": {
-   "note": false,
+   "note": true,
    "test": false
   },
   "web/eslint.config.js": {
@@ -277,103 +277,103 @@
    "test": false
   },
   "web/src/components/ui/accordion.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/alert.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/badge.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/button.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/chart.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/checkbox.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/collapsible.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/dialog.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/dropdown-menu.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/input.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/label.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/popover.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/progress.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/select.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/separator.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/sheet.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/skeleton.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/sonner.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/switch.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/table.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/tabs.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/textarea.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/toggle-group.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/toggle.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/tooltip.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/use-media-query.ts": {
@@ -461,8 +461,8 @@
    "test": false
   }
  },
- "note_ratio": 0.2174,
- "noted": 25,
+ "note_ratio": 0.3304,
+ "noted": 38,
  "test_ratio": 0.3913,
  "tested": 45,
  "total": 115

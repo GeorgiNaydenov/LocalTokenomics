@@ -1,0 +1,99 @@
+{
+ "chunk": "ch-localtokenomics-src-ai-usage-cost",
+ "notes": [
+  {
+   "note": "docs/brain/Application/Ai usage cost API.md",
+   "claims": 19,
+   "supported": 19,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Ai usage cost Overview.md",
+   "claims": 127,
+   "supported": 127,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Ai usage cost Tests.md",
+   "claims": 305,
+   "supported": 305,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Ai usage cost Workflows.md",
+   "claims": 14,
+   "supported": 14,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Data/Ai usage cost Data Model.md",
+   "claims": 119,
+   "supported": 119,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Ai usage cost Diagrams.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Cost state of a request.md",
+   "claims": 11,
+   "supported": 11,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/How one request is priced.md",
+   "claims": 15,
+   "supported": 15,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Scan and report process.md",
+   "claims": 14,
+   "supported": 14,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Scan pipeline from logs to report.md",
+   "claims": 19,
+   "supported": 19,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Usage cost conceptual model.md",
+   "claims": 14,
+   "supported": 14,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Usage data flow.md",
+   "claims": 15,
+   "supported": 15,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Ontology/Ai usage cost Ontology.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Operations/Ai usage cost Operations.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Security/Ai usage cost Security.md",
+   "claims": 72,
+   "supported": 72,
+   "findings": 0
+  }
+ ],
+ "blocking": 0,
+ "findings": [],
+ "claims": 744,
+ "supported": 744
+}
