@@ -20,6 +20,7 @@ Every diagram wrapper and the sources it holds.
 |---|---|---|
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 | [[Web prototype C4 components]] | web-prototype-c4.mmd | web/src/prototype/** |
 | [[Web prototype Diagrams]] | module-ch-localtokenomics-web-src-prototype.mmd | web/src/prototype/** |
 =======
@@ -31,11 +32,17 @@ Every diagram wrapper and the sources it holds.
 | [[Module Map Diagrams]] | module-map.mmd | - |
 >>>>>>> docs/chunk-ch-localtokenomics-root
 =======
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 | [[CI and Delivery Diagrams]] | ci-cd-pipeline.mmd | - |
 | [[ER Data Model]] | er-src-ai-usage-cost-1.mmd, er-src-ai-usage-cost-2.mmd, er-src-ai-usage-cost-3.mmd, er-src-ai-usage-cost-sources.mmd, er-tests.mmd, er-tests-fixtures-copilot-chat.mmd, er-tests-fixtures-cursor.mmd, er-tests-fixtures-dyad.mmd, er-tests-fixtures-ollama-app.mmd, er-tests-fixtures-windsurf.mmd | - |
 | [[Layered Viewpoints]] | application-communication.mmd, technology-landscape.mmd | - |
 | [[Module Map Diagrams]] | module-map.mmd | - |
+<<<<<<< HEAD
 | [[Web Dashboard Components]] | web-src-dashboard-c4.mmd | web/src/* |
 | [[Web Diagrams]] | module-ch-localtokenomics-web-src.mmd | web/src/*, web/src/design-system/* |
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
+=======
+| [[Web ui UI components Diagrams]] | module-ch-localtokenomics-web-src-components-ui.mmd | web/src/components/ui/** |
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 %% generated:diagram-index end %%

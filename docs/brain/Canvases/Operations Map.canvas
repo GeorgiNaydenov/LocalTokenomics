@@ -42,6 +42,7 @@
       "type": "file",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "file": "docs/brain/Operations/Release Checklist.md",
 =======
       "file": "docs/brain/Releases/Release Checklist.md",
@@ -49,6 +50,9 @@
 =======
       "file": "docs/brain/Releases/Release Checklist.md",
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
+=======
+      "file": "docs/brain/Releases/Release Checklist.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
       "x": 0,
       "y": 110,
       "width": 320,
@@ -66,6 +70,7 @@
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "id": "n-risks-and-open-questions",
       "type": "file",
       "file": "docs/brain/Operations/Risks and Open Questions.md",
@@ -79,12 +84,18 @@
       "type": "file",
       "file": "docs/brain/Releases/Rollback Runbook.md",
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
+=======
+      "id": "n-rollback-runbook",
+      "type": "file",
+      "file": "docs/brain/Releases/Rollback Runbook.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
       "x": 760,
       "y": 110,
       "width": 320,
       "height": 70
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "id": "n-rollback-runbook",
@@ -100,10 +111,16 @@
       "type": "file",
       "file": "docs/brain/Operations/Web Operations.md",
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
+=======
+      "id": "n-web-ui-ui-components-operations",
+      "type": "file",
+      "file": "docs/brain/Operations/Web ui UI components Operations.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
       "x": 0,
       "y": 220,
       "width": 320,
       "height": 70
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     },
@@ -119,10 +136,13 @@
 >>>>>>> docs/chunk-ch-localtokenomics-root
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
     }
   ],
   "edges": [
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "id": "e0-n-coverage-map-n-web-prototype-operations",
@@ -138,6 +158,11 @@
       "fromNode": "n-coverage-map",
       "toNode": "n-web-operations",
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
+=======
+      "id": "e0-n-coverage-map-n-web-ui-ui-components-operations",
+      "fromNode": "n-coverage-map",
+      "toNode": "n-web-ui-ui-components-operations",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
       "fromSide": "bottom",
       "toSide": "top"
     }

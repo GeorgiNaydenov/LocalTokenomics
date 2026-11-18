@@ -165,115 +165,115 @@
    "test": false
   },
   "web/src/App.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/ContextTab.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/EconomicsTab.tsx": {
-   "note": true,
+   "note": false,
    "test": true
   },
   "web/src/FilterRail.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/Header.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/Overview.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/Pricing.tsx": {
-   "note": true,
+   "note": false,
    "test": true
   },
   "web/src/SessionWorkspace.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/Sessions.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/Sources.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/TraceTab.tsx": {
-   "note": true,
+   "note": false,
    "test": true
   },
   "web/src/api.ts": {
-   "note": true,
+   "note": false,
    "test": true
   },
   "web/src/components/chart-hover.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/chart-time.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/columns.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/detail.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/filters.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/metric-info.tsx": {
-   "note": true,
+   "note": false,
    "test": true
   },
   "web/src/components/panel.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/rank.ts": {
-   "note": true,
+   "note": false,
    "test": true
   },
   "web/src/components/series.ts": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/session.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/source-card.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/sparkline.tsx": {
-   "note": true,
+   "note": false,
    "test": true
   },
   "web/src/components/stat.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/states.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/status.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/trace.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/ui/accordion.tsx": {
@@ -377,83 +377,83 @@
    "test": false
   },
   "web/src/components/use-media-query.ts": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/components/workspace-panel.ts": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/design-system/cn.ts": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/format.ts": {
-   "note": true,
+   "note": false,
    "test": true
   },
   "web/src/main.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/pricing-format.ts": {
-   "note": true,
+   "note": false,
    "test": true
   },
   "web/src/pricing-notes.ts": {
-   "note": true,
+   "note": false,
    "test": true
   },
   "web/src/prototype/Gallery.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/prototype/OverviewScreen.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/prototype/PricingScreen.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/prototype/Prototype.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/prototype/Rail.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/prototype/Screens.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/prototype/SessionsScreen.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/prototype/SourcesScreen.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/prototype/data.ts": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/prototype/main.tsx": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/test-setup.ts": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/theme.ts": {
-   "note": true,
+   "note": false,
    "test": false
   },
   "web/src/turn-insights.ts": {
-   "note": true,
+   "note": false,
    "test": true
   },
   "web/vite.config.ts": {
@@ -461,8 +461,8 @@
    "test": false
   }
  },
- "note_ratio": 0.6348,
- "noted": 73,
+ "note_ratio": 0.2174,
+ "noted": 25,
  "test_ratio": 0.3913,
  "tested": 45,
  "total": 115

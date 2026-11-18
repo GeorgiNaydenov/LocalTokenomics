@@ -20,6 +20,7 @@ Which component owns which entity and how many interfaces each exposes. Empty ce
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 | Entity | `(root)` | `src/ai_usage_cost` | `src/ai_usage_cost/render` | `src/ai_usage_cost/sources` | `(root)` | `web/src` | `web/src/components` | `web/src/components/ui` | [[Web prototype Overview|web/src/prototype]] |
 =======
 | Entity | `(root)` | `src/ai_usage_cost` | `src/ai_usage_cost/render` | `src/ai_usage_cost/sources` | [[localtokenomics root Overview|(root)]] | [[localtokenomics root Overview|web/src]] | [[localtokenomics root Overview|web/src/components]] | [[localtokenomics root Overview|web/src/components/ui]] | [[localtokenomics root Overview|web/src/prototype]] |
@@ -27,6 +28,9 @@ Which component owns which entity and how many interfaces each exposes. Empty ce
 =======
 | Entity | `(root)` | `src/ai_usage_cost` | `src/ai_usage_cost/render` | `src/ai_usage_cost/sources` | `(root)` | [[Web Overview|web/src]] | [[Web Overview|web/src/components]] | [[Web Overview|web/src/components/ui]] | [[Web Overview|web/src/prototype]] |
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
+=======
+| Entity | `(root)` | `src/ai_usage_cost` | `src/ai_usage_cost/render` | `src/ai_usage_cost/sources` | `(root)` | `web/src` | `web/src/components` | [[Web ui UI components Overview|web/src/components/ui]] | `web/src/prototype` |
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 |---|---|---|---|---|---|---|---|---|---|
 | `AlertDecision` |  | x |  |  |  |  |  |  |  |
 | `Analysis` |  | x |  |  |  |  |  |  |  |
@@ -100,6 +104,7 @@ Entities with no owning component: 8.
 | `src/ai_usage_cost/sources` | 0 |
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 | `(root)` | 0 |
 | `web/src` | 0 |
 | `web/src/components` | 0 |
@@ -119,6 +124,13 @@ Entities with no owning component: 8.
 | [[Web Overview\|web/src/components/ui]] | 0 |
 | [[Web Overview\|web/src/prototype]] | 0 |
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
+=======
+| `(root)` | 0 |
+| `web/src` | 0 |
+| `web/src/components` | 0 |
+| [[Web ui UI components Overview\|web/src/components/ui]] | 0 |
+| `web/src/prototype` | 0 |
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 
 Components with no routes: 8.
 %% generated:matrices end %%

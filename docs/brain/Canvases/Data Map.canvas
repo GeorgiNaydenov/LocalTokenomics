@@ -22,6 +22,7 @@
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "id": "n-web-prototype-data-model",
       "type": "file",
       "file": "docs/brain/Data/Web prototype Data Model.md",
@@ -35,6 +36,11 @@
       "type": "file",
       "file": "docs/brain/Data/Web Data Model.md",
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
+=======
+      "id": "n-web-ui-ui-components-data-model",
+      "type": "file",
+      "file": "docs/brain/Data/Web ui UI components Data Model.md",
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
       "x": 380,
       "y": 0,
       "width": 320,

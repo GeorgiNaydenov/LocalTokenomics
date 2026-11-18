@@ -18,6 +18,7 @@ Which note owns each source file and which tests reach it. A row with none is a 
 %% generated:coverage-map start (do not edit; run brain docs generate) %%
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 115 source files; 10 have an owning note; 45 are imported by a test; 70 have no test that imports them.
 =======
 115 source files; 75 have an owning note; 45 are imported by a test; 70 have no test that imports them.
@@ -25,6 +26,9 @@ Which note owns each source file and which tests reach it. A row with none is a 
 =======
 115 source files; 73 have an owning note; 45 are imported by a test; 70 have no test that imports them.
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
+=======
+115 source files; 25 have an owning note; 45 are imported by a test; 70 have no test that imports them.
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 
 | Source file | Owning notes | Tests that import it |
 |---|---|---|
@@ -70,6 +74,9 @@ Which note owns each source file and which tests reach it. A row with none is a 
 | `src/ai_usage_cost/tui.py` | none | none |
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 | `web/eslint.config.js` | none | none |
 | `web/src/App.tsx` | none | none |
 | `web/src/ContextTab.tsx` | none | none |
@@ -99,6 +106,7 @@ Which note owns each source file and which tests reach it. A row with none is a 
 | `web/src/components/states.tsx` | none | none |
 | `web/src/components/status.tsx` | none | none |
 | `web/src/components/trace.tsx` | none | none |
+<<<<<<< HEAD
 | `web/src/components/ui/accordion.tsx` | none | none |
 | `web/src/components/ui/alert.tsx` | none | none |
 | `web/src/components/ui/badge.tsx` | none | none |
@@ -124,6 +132,33 @@ Which note owns each source file and which tests reach it. A row with none is a 
 | `web/src/components/ui/toggle-group.tsx` | none | none |
 | `web/src/components/ui/toggle.tsx` | none | none |
 | `web/src/components/ui/tooltip.tsx` | none | none |
+=======
+| `web/src/components/ui/accordion.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/alert.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/badge.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/button.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/chart.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/checkbox.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/collapsible.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/dialog.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/dropdown-menu.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/input.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/label.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/popover.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/progress.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/select.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/separator.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/sheet.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/skeleton.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/sonner.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/switch.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/table.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/tabs.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/textarea.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/toggle-group.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/toggle.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+| `web/src/components/ui/tooltip.tsx` | [[Web ui UI components API]], [[Web ui UI components Data Model]], [[Web ui UI components Diagrams]], [[Web ui UI components Operations]], [[Web ui UI components Overview]], [[Web ui UI components Security]], [[Web ui UI components Tests]], [[Web ui UI components Workflows]] | none |
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 | `web/src/components/use-media-query.ts` | none | none |
 | `web/src/components/workspace-panel.ts` | none | none |
 | `web/src/design-system/cn.ts` | none | none |
@@ -131,6 +166,7 @@ Which note owns each source file and which tests reach it. A row with none is a 
 | `web/src/main.tsx` | none | none |
 | `web/src/pricing-format.ts` | none | `web/src/pricing-format.test.ts` |
 | `web/src/pricing-notes.ts` | none | `web/src/pricing-notes.test.ts` |
+<<<<<<< HEAD
 | `web/src/prototype/Gallery.tsx` | [[Web prototype API]], [[Web prototype C4 components]], [[Web prototype Data Model]], [[Web prototype Diagrams]], [[Web prototype Operations]], [[Web prototype Overview]], [[Web prototype Security]], [[Web prototype Tests]], [[Web prototype Workflows]] | none |
 | `web/src/prototype/OverviewScreen.tsx` | [[Web prototype API]], [[Web prototype C4 components]], [[Web prototype Data Model]], [[Web prototype Diagrams]], [[Web prototype Operations]], [[Web prototype Overview]], [[Web prototype Security]], [[Web prototype Tests]], [[Web prototype Workflows]] | none |
 | `web/src/prototype/PricingScreen.tsx` | [[Web prototype API]], [[Web prototype C4 components]], [[Web prototype Data Model]], [[Web prototype Diagrams]], [[Web prototype Operations]], [[Web prototype Overview]], [[Web prototype Security]], [[Web prototype Tests]], [[Web prototype Workflows]] | none |
@@ -141,10 +177,23 @@ Which note owns each source file and which tests reach it. A row with none is a 
 | `web/src/prototype/SourcesScreen.tsx` | [[Web prototype API]], [[Web prototype C4 components]], [[Web prototype Data Model]], [[Web prototype Diagrams]], [[Web prototype Operations]], [[Web prototype Overview]], [[Web prototype Security]], [[Web prototype Tests]], [[Web prototype Workflows]] | none |
 | `web/src/prototype/data.ts` | [[Web prototype API]], [[Web prototype C4 components]], [[Web prototype Data Model]], [[Web prototype Diagrams]], [[Web prototype Operations]], [[Web prototype Overview]], [[Web prototype Security]], [[Web prototype Tests]], [[Web prototype Workflows]] | none |
 | `web/src/prototype/main.tsx` | [[Web prototype API]], [[Web prototype C4 components]], [[Web prototype Data Model]], [[Web prototype Diagrams]], [[Web prototype Operations]], [[Web prototype Overview]], [[Web prototype Security]], [[Web prototype Tests]], [[Web prototype Workflows]] | none |
+=======
+| `web/src/prototype/Gallery.tsx` | none | none |
+| `web/src/prototype/OverviewScreen.tsx` | none | none |
+| `web/src/prototype/PricingScreen.tsx` | none | none |
+| `web/src/prototype/Prototype.tsx` | none | none |
+| `web/src/prototype/Rail.tsx` | none | none |
+| `web/src/prototype/Screens.tsx` | none | none |
+| `web/src/prototype/SessionsScreen.tsx` | none | none |
+| `web/src/prototype/SourcesScreen.tsx` | none | none |
+| `web/src/prototype/data.ts` | none | none |
+| `web/src/prototype/main.tsx` | none | none |
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 | `web/src/test-setup.ts` | none | none |
 | `web/src/theme.ts` | none | none |
 | `web/src/turn-insights.ts` | none | `web/src/turn-insights.test.ts` |
 | `web/vite.config.ts` | none | none |
+<<<<<<< HEAD
 =======
 | `web/eslint.config.js` | [[LocalTokenomics root wiring]], [[localtokenomics root API]], [[localtokenomics root Data Model]], [[localtokenomics root Diagrams]], [[localtokenomics root Operations]], [[localtokenomics root Overview]], [[localtokenomics root Security]], [[localtokenomics root Tests]], [[localtokenomics root Workflows]] | none |
 | `web/src/App.tsx` | [[LocalTokenomics root wiring]], [[localtokenomics root API]], [[localtokenomics root Data Model]], [[localtokenomics root Diagrams]], [[localtokenomics root Operations]], [[localtokenomics root Overview]], [[localtokenomics root Security]], [[localtokenomics root Tests]], [[localtokenomics root Workflows]] | none |
@@ -299,4 +348,6 @@ Which note owns each source file and which tests reach it. A row with none is a 
 | `web/src/turn-insights.ts` | [[Web API]], [[Web Dashboard Components]], [[Web Data Model]], [[Web Diagrams]], [[Web Operations]], [[Web Overview]], [[Web Security]], [[Web Tests]], [[Web Workflows]] | `web/src/turn-insights.test.ts` |
 | `web/vite.config.ts` | none | none |
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
+=======
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 %% generated:coverage-map end %%

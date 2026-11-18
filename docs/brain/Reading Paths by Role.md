@@ -21,12 +21,17 @@ generated: true
 |---|---|
 | New engineer | Application: [[Module Atlas]], [[Route and API Index]], [[Screens and UI Inventory]] |
 <<<<<<< HEAD
+<<<<<<< HEAD
 | Architect | Application: [[Module Atlas]], [[Route and API Index]], [[Screens and UI Inventory]]; then Data: [[Schema ERD]], [[localtokenomics root Data Model]]; then Diagrams: [[Architecture Diagram Hub]], [[CI and Delivery Diagrams]], [[Diagram Index]]; then Decisions: [[ADR Index]] |
 | Security reviewer | Security: [[localtokenomics root Security]]; then Application: [[Module Atlas]], [[Route and API Index]], [[Screens and UI Inventory]]; then Operations: [[Coverage Map]], [[Environment Variables]], [[Invariants Catalogue]] |
 =======
 | Architect | Application: [[Module Atlas]], [[Route and API Index]], [[Screens and UI Inventory]]; then Data: [[Schema ERD]], [[Web Data Model]]; then Diagrams: [[Architecture Diagram Hub]], [[CI and Delivery Diagrams]], [[Diagram Index]]; then Decisions: [[ADR Index]] |
 | Security reviewer | Security: [[Web Security]]; then Application: [[Module Atlas]], [[Route and API Index]], [[Screens and UI Inventory]]; then Operations: [[Coverage Map]], [[Environment Variables]], [[Invariants Catalogue]] |
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
+=======
+| Architect | Application: [[Module Atlas]], [[Route and API Index]], [[Screens and UI Inventory]]; then Data: [[Schema ERD]], [[Web ui UI components Data Model]]; then Diagrams: [[Architecture Diagram Hub]], [[CI and Delivery Diagrams]], [[Diagram Index]]; then Decisions: [[ADR Index]] |
+| Security reviewer | Security: [[Web ui UI components Security]]; then Application: [[Module Atlas]], [[Route and API Index]], [[Screens and UI Inventory]]; then Operations: [[Coverage Map]], [[Environment Variables]], [[Invariants Catalogue]] |
+>>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 | Operator | Operations: [[Coverage Map]], [[Environment Variables]], [[Invariants Catalogue]]; then Releases: [[Release Checklist]], [[Rollback Runbook]] |
 | Tester | Operations: [[Coverage Map]], [[Environment Variables]], [[Invariants Catalogue]] |
 %% generated:reading-paths end %%
