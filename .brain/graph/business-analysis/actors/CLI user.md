@@ -1,0 +1,16 @@
+---
+classification: human
+tags:
+  - ba/actor
+maturity: approved
+---
+# CLI user
+
+## Description
+
+The person who runs the scan or export command in a terminal.
+
+## Sources
+
+- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/cli.py::scan | confirmed
+  > def scan(

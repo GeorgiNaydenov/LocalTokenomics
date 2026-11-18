@@ -7,4 +7,9 @@ maturity: approved
 
 ## Definition
 
-What logged usage would have cost at published API list prices, the figure LocalTokenomics reports. `pyproject.toml:4`
+What the recorded token usage would have cost at published list prices. Both renderers show it as the headline figure.
+
+## Sources
+
+- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/render/terminal.py::_headline | confirmed
+  > API-equivalent cost

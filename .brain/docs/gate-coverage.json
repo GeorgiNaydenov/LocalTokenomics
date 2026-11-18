@@ -22,5 +22,9 @@
  "ch-localtokenomics-src-ai-usage-cost-sources": {
   "maturity": "approved",
   "ok": true
+ },
+ "ch-localtokenomics-src-ai-usage-cost-render": {
+  "maturity": "approved",
+  "ok": true
  }
 }

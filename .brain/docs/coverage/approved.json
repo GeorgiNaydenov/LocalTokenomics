@@ -49,15 +49,15 @@
    "test": true
   },
   "src/ai_usage_cost/render/__init__.py": {
-   "note": false,
+   "note": true,
    "test": false
   },
   "src/ai_usage_cost/render/png.py": {
-   "note": false,
+   "note": true,
    "test": false
   },
   "src/ai_usage_cost/render/terminal.py": {
-   "note": false,
+   "note": true,
    "test": false
   },
   "src/ai_usage_cost/sources/__init__.py": {
@@ -461,8 +461,8 @@
    "test": false
   }
  },
- "note_ratio": 0.8435,
- "noted": 97,
+ "note_ratio": 0.8696,
+ "noted": 100,
  "test_ratio": 0.3913,
  "tested": 45,
  "total": 115
