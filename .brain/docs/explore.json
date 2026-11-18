@@ -2,8 +2,8 @@
  "existing_docs": [
   {
    "file": "AGENTS.md",
-   "last_modified": 0,
-   "lines": 22,
+   "last_modified": 1795029886,
+   "lines": 26,
    "mentions": [],
    "repo": "localtokenomics",
    "stale": false
@@ -324,6 +324,10 @@
       "scripts/rates_diff.py"
      ],
      "external": [],
+     "file_list": [
+      "scripts/demo_logs.py",
+      "scripts/rates_diff.py"
+     ],
      "files": 2,
      "globs": [
       "scripts/*"
@@ -350,6 +354,21 @@
       "src/ai_usage_cost/collect.py"
      ],
      "external": [],
+     "file_list": [
+      "src/ai_usage_cost/__init__.py",
+      "src/ai_usage_cost/aggregate.py",
+      "src/ai_usage_cost/api.py",
+      "src/ai_usage_cost/cli.py",
+      "src/ai_usage_cost/collect.py",
+      "src/ai_usage_cost/demo.py",
+      "src/ai_usage_cost/models.py",
+      "src/ai_usage_cost/pipeline.py",
+      "src/ai_usage_cost/pricing.py",
+      "src/ai_usage_cost/privacy.py",
+      "src/ai_usage_cost/store.py",
+      "src/ai_usage_cost/trace.py",
+      "src/ai_usage_cost/tui.py"
+     ],
      "files": 13,
      "globs": [
       "src/ai_usage_cost/*"
@@ -373,6 +392,11 @@
       "src/ai_usage_cost/render/terminal.py"
      ],
      "external": [],
+     "file_list": [
+      "src/ai_usage_cost/render/__init__.py",
+      "src/ai_usage_cost/render/png.py",
+      "src/ai_usage_cost/render/terminal.py"
+     ],
      "files": 3,
      "globs": [
       "src/ai_usage_cost/render/**"
@@ -398,6 +422,30 @@
       "src/ai_usage_cost/sources/cline.py"
      ],
      "external": [],
+     "file_list": [
+      "src/ai_usage_cost/sources/__init__.py",
+      "src/ai_usage_cost/sources/antigravity.py",
+      "src/ai_usage_cost/sources/base.py",
+      "src/ai_usage_cost/sources/claude_code.py",
+      "src/ai_usage_cost/sources/cline.py",
+      "src/ai_usage_cost/sources/codex.py",
+      "src/ai_usage_cost/sources/copilot_chat.py",
+      "src/ai_usage_cost/sources/copilot_cli.py",
+      "src/ai_usage_cost/sources/cursor.py",
+      "src/ai_usage_cost/sources/dyad.py",
+      "src/ai_usage_cost/sources/gemini_cli.py",
+      "src/ai_usage_cost/sources/grok_build.py",
+      "src/ai_usage_cost/sources/jan.py",
+      "src/ai_usage_cost/sources/kilo_code.py",
+      "src/ai_usage_cost/sources/kilo_legacy.py",
+      "src/ai_usage_cost/sources/muse_code.py",
+      "src/ai_usage_cost/sources/ollama_app.py",
+      "src/ai_usage_cost/sources/openai_compat.py",
+      "src/ai_usage_cost/sources/opencode.py",
+      "src/ai_usage_cost/sources/qwen_code.py",
+      "src/ai_usage_cost/sources/roo_code.py",
+      "src/ai_usage_cost/sources/windsurf.py"
+     ],
      "files": 22,
      "globs": [
       "src/ai_usage_cost/sources/**"
@@ -418,6 +466,10 @@
       "web/vite.config.ts"
      ],
      "external": [],
+     "file_list": [
+      "web/eslint.config.js",
+      "web/vite.config.ts"
+     ],
      "files": 2,
      "globs": [
       "web/*"
@@ -444,6 +496,28 @@
       "web/src/Header.tsx"
      ],
      "external": [],
+     "file_list": [
+      "web/src/App.tsx",
+      "web/src/ContextTab.tsx",
+      "web/src/EconomicsTab.tsx",
+      "web/src/FilterRail.tsx",
+      "web/src/Header.tsx",
+      "web/src/Overview.tsx",
+      "web/src/Pricing.tsx",
+      "web/src/SessionWorkspace.tsx",
+      "web/src/Sessions.tsx",
+      "web/src/Sources.tsx",
+      "web/src/TraceTab.tsx",
+      "web/src/api.ts",
+      "web/src/design-system/cn.ts",
+      "web/src/format.ts",
+      "web/src/main.tsx",
+      "web/src/pricing-format.ts",
+      "web/src/pricing-notes.ts",
+      "web/src/test-setup.ts",
+      "web/src/theme.ts",
+      "web/src/turn-insights.ts"
+     ],
      "files": 20,
      "globs": [
       "web/src/*",
@@ -471,6 +545,26 @@
       "web/src/components/filters.tsx"
      ],
      "external": [],
+     "file_list": [
+      "web/src/components/chart-hover.tsx",
+      "web/src/components/chart-time.tsx",
+      "web/src/components/columns.tsx",
+      "web/src/components/detail.tsx",
+      "web/src/components/filters.tsx",
+      "web/src/components/metric-info.tsx",
+      "web/src/components/panel.tsx",
+      "web/src/components/rank.ts",
+      "web/src/components/series.ts",
+      "web/src/components/session.tsx",
+      "web/src/components/source-card.tsx",
+      "web/src/components/sparkline.tsx",
+      "web/src/components/stat.tsx",
+      "web/src/components/states.tsx",
+      "web/src/components/status.tsx",
+      "web/src/components/trace.tsx",
+      "web/src/components/use-media-query.ts",
+      "web/src/components/workspace-panel.ts"
+     ],
      "files": 18,
      "globs": [
       "web/src/components/*"
@@ -496,6 +590,33 @@
       "web/src/components/ui/chart.tsx"
      ],
      "external": [],
+     "file_list": [
+      "web/src/components/ui/accordion.tsx",
+      "web/src/components/ui/alert.tsx",
+      "web/src/components/ui/badge.tsx",
+      "web/src/components/ui/button.tsx",
+      "web/src/components/ui/chart.tsx",
+      "web/src/components/ui/checkbox.tsx",
+      "web/src/components/ui/collapsible.tsx",
+      "web/src/components/ui/dialog.tsx",
+      "web/src/components/ui/dropdown-menu.tsx",
+      "web/src/components/ui/input.tsx",
+      "web/src/components/ui/label.tsx",
+      "web/src/components/ui/popover.tsx",
+      "web/src/components/ui/progress.tsx",
+      "web/src/components/ui/select.tsx",
+      "web/src/components/ui/separator.tsx",
+      "web/src/components/ui/sheet.tsx",
+      "web/src/components/ui/skeleton.tsx",
+      "web/src/components/ui/sonner.tsx",
+      "web/src/components/ui/switch.tsx",
+      "web/src/components/ui/table.tsx",
+      "web/src/components/ui/tabs.tsx",
+      "web/src/components/ui/textarea.tsx",
+      "web/src/components/ui/toggle-group.tsx",
+      "web/src/components/ui/toggle.tsx",
+      "web/src/components/ui/tooltip.tsx"
+     ],
      "files": 25,
      "globs": [
       "web/src/components/ui/**"
@@ -523,6 +644,18 @@
       "web/src/prototype/Rail.tsx"
      ],
      "external": [],
+     "file_list": [
+      "web/src/prototype/Gallery.tsx",
+      "web/src/prototype/OverviewScreen.tsx",
+      "web/src/prototype/PricingScreen.tsx",
+      "web/src/prototype/Prototype.tsx",
+      "web/src/prototype/Rail.tsx",
+      "web/src/prototype/Screens.tsx",
+      "web/src/prototype/SessionsScreen.tsx",
+      "web/src/prototype/SourcesScreen.tsx",
+      "web/src/prototype/data.ts",
+      "web/src/prototype/main.tsx"
+     ],
      "files": 10,
      "globs": [
       "web/src/prototype/**"
@@ -7228,6 +7361,7 @@
     "tests/test_warning_groups.py": 241,
     "tests/test_windsurf.py": 105,
     "web/eslint.config.js": 25,
+    "web/index.html": 28,
     "web/src/App.tsx": 357,
     "web/src/ContextTab.tsx": 227,
     "web/src/EconomicsTab.test.ts": 32,
@@ -21386,472 +21520,1526 @@
    "ui": {
     "components": [
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 263,
+        "expr": "loading",
+        "kind": "conditional",
+        "label": "",
+        "line": 263,
+        "region": "page",
+        "state": "loading",
+        "tag": ""
+       },
+       {
+        "depends": "",
+        "end": 271,
+        "expr": "error",
+        "kind": "conditional",
+        "label": "",
+        "line": 271,
+        "region": "page",
+        "state": "error",
+        "tag": ""
+       }
+      ],
       "file": "web/src/App.tsx",
       "line": 129,
       "name": "App",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 164,
+        "expr": "snapshots.length === 0",
+        "kind": "conditional",
+        "label": "",
+        "line": 164,
+        "region": "page",
+        "state": "empty",
+        "tag": ""
+       },
+       {
+        "depends": "",
+        "end": 221,
+        "handler": "inline: setRevealed",
+        "kind": "button",
+        "label": "",
+        "line": 216,
+        "region": "page",
+        "tag": "Button"
+       }
+      ],
       "file": "web/src/ContextTab.tsx",
       "line": 160,
       "name": "ContextTab",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/EconomicsTab.tsx",
       "line": 608,
       "name": "EconomicsTab",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 491,
+        "kind": "dialog",
+        "label": "Filters Narrow the slice by date, cost state, outcome, clien",
+        "line": 486,
+        "region": "page",
+        "tag": "Sheet"
+       }
+      ],
       "file": "web/src/FilterRail.tsx",
       "line": 474,
       "name": "FilterRail",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 91,
+        "handler": "inline: onSelectView",
+        "kind": "button",
+        "label": "",
+        "line": 79,
+        "region": "nav",
+        "tag": "button"
+       },
+       {
+        "depends": "",
+        "end": 98,
+        "handler": "onOpenRail",
+        "kind": "button",
+        "label": "Filters",
+        "line": 98,
+        "region": "header",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 114,
+        "handler": "inline: onSelectView",
+        "kind": "button",
+        "label": "stale.text",
+        "line": 105,
+        "region": "header",
+        "tag": "button"
+       },
+       {
+        "depends": "",
+        "end": 128,
+        "handler": "onRescan",
+        "kind": "button",
+        "label": "",
+        "line": 128,
+        "region": "header",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 131,
+        "handler": "onToggleTheme",
+        "kind": "button",
+        "label": "Switch theme",
+        "line": 131,
+        "region": "header",
+        "tag": "Button"
+       }
+      ],
       "file": "web/src/Header.tsx",
       "line": 41,
       "name": "Header",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/Overview.tsx",
       "line": 891,
       "name": "Overview",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/Pricing.tsx",
       "line": 619,
       "name": "Pricing",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 502,
+        "kind": "heading",
+        "label": "",
+        "line": 502,
+        "region": "page",
+        "tag": "h2"
+       },
+       {
+        "depends": "",
+        "end": 524,
+        "handler": "toggleFullscreen",
+        "kind": "button",
+        "label": "fullscreen ? 'Exit fullscreen' : 'Fullscreen'",
+        "line": 518,
+        "region": "page",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 527,
+        "handler": "onClose",
+        "kind": "button",
+        "label": "Close session",
+        "line": 527,
+        "region": "page",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 547,
+        "kind": "tab",
+        "label": "",
+        "line": 547,
+        "region": "page",
+        "tag": "TabsTrigger",
+        "target": "entry.id"
+       },
+       {
+        "depends": "",
+        "end": 620,
+        "kind": "dialog",
+        "label": "",
+        "line": 620,
+        "region": "page",
+        "tag": "Sheet"
+       }
+      ],
       "file": "web/src/SessionWorkspace.tsx",
       "line": 433,
       "name": "SessionWorkspace",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 298,
+        "expr": "sorted.length === 0",
+        "kind": "conditional",
+        "label": "",
+        "line": 298,
+        "region": "page",
+        "state": "empty",
+        "tag": ""
+       },
+       {
+        "depends": "not sorted.length === 0",
+        "end": 332,
+        "kind": "table",
+        "label": "",
+        "line": 329,
+        "region": "page",
+        "source": "shownColumns",
+        "tag": "Table"
+       },
+       {
+        "depends": "not sorted.length === 0",
+        "end": 345,
+        "handler": "inline: onHeaderSort",
+        "kind": "button",
+        "label": "",
+        "line": 338,
+        "region": "table",
+        "tag": "SortButton"
+       }
+      ],
       "file": "web/src/Sessions.tsx",
       "line": 235,
       "name": "Sessions",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/Sources.tsx",
       "line": 212,
       "name": "Sources",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 829,
+        "expr": "span.error",
+        "kind": "conditional",
+        "label": "",
+        "line": 829,
+        "region": "page",
+        "state": "error",
+        "tag": ""
+       },
+       {
+        "depends": "",
+        "end": 882,
+        "handler": "inline: toggleContent",
+        "kind": "button",
+        "label": "",
+        "line": 876,
+        "region": "page",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 978,
+        "expr": "turnRollups.length === 0",
+        "kind": "conditional",
+        "label": "",
+        "line": 978,
+        "region": "page",
+        "state": "empty",
+        "tag": ""
+       },
+       {
+        "depends": "",
+        "end": 998,
+        "expr": "shown.length === 0",
+        "kind": "conditional",
+        "label": "",
+        "line": 998,
+        "region": "page",
+        "state": "empty",
+        "tag": ""
+       },
+       {
+        "depends": "",
+        "end": 1017,
+        "handler": "inline: setRevealed",
+        "kind": "button",
+        "label": "",
+        "line": 1017,
+        "region": "page",
+        "tag": "Button"
+       }
+      ],
       "file": "web/src/TraceTab.tsx",
       "line": 751,
       "name": "TraceTab",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 95,
+        "kind": "list",
+        "label": "",
+        "line": 94,
+        "region": "page",
+        "source": "detail.entries",
+        "tag": "ul"
+       },
+       {
+        "depends": "",
+        "end": 108,
+        "expr": "detail.note",
+        "kind": "conditional",
+        "label": "",
+        "line": 108,
+        "region": "page",
+        "state": "empty",
+        "tag": ""
+       }
+      ],
       "file": "web/src/components/chart-hover.tsx",
       "line": 18,
       "name": "HoverFrame",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/chart-time.tsx",
       "line": 23,
       "name": "TimeChart",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 74,
+        "handler": "",
+        "kind": "button",
+        "label": "Columns",
+        "line": 74,
+        "region": "page",
+        "tag": "Button"
+       }
+      ],
       "file": "web/src/components/columns.tsx",
       "line": 62,
       "name": "ColumnChooser",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/detail.tsx",
       "line": 6,
       "name": "Section",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/detail.tsx",
       "line": 28,
       "name": "MetaGrid",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/detail.tsx",
       "line": 54,
       "name": "CodeBlock",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 70,
+        "kind": "list",
+        "label": "",
+        "line": 69,
+        "region": "page",
+        "source": "paths",
+        "tag": "ul"
+       }
+      ],
       "file": "web/src/components/detail.tsx",
       "line": 67,
       "name": "PathList",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "detail": "search",
+        "end": 41,
+        "handler": "inline: onChange",
+        "kind": "field",
+        "label": "placeholder",
+        "line": 35,
+        "region": "page",
+        "tag": "Input"
+       },
+       {
+        "depends": "",
+        "end": 48,
+        "handler": "inline: onChange",
+        "kind": "button",
+        "label": "Clear search",
+        "line": 43,
+        "region": "page",
+        "tag": "button"
+       }
+      ],
       "file": "web/src/components/filters.tsx",
       "line": 18,
       "name": "SearchField",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "detail": "checkbox",
+        "end": 95,
+        "handler": "",
+        "kind": "field",
+        "label": "",
+        "line": 91,
+        "region": "page",
+        "tag": "Checkbox"
+       }
+      ],
       "file": "web/src/components/filters.tsx",
       "line": 63,
       "name": "FacetGroup",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 147,
+        "handler": "inline: onSelect",
+        "kind": "button",
+        "label": "",
+        "line": 136,
+        "region": "page",
+        "tag": "button"
+       }
+      ],
       "file": "web/src/components/filters.tsx",
       "line": 120,
       "name": "ChipRow",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "detail": "date",
+        "end": 181,
+        "handler": "inline: onChange",
+        "kind": "field",
+        "label": "From",
+        "line": 173,
+        "region": "page",
+        "tag": "Input"
+       },
+       {
+        "depends": "",
+        "detail": "date",
+        "end": 190,
+        "handler": "inline: onChange",
+        "kind": "field",
+        "label": "To",
+        "line": 182,
+        "region": "page",
+        "tag": "Input"
+       }
+      ],
       "file": "web/src/components/filters.tsx",
       "line": 156,
       "name": "DateRange",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "detail": "select",
+        "end": 209,
+        "handler": "",
+        "kind": "field",
+        "label": "",
+        "line": 209,
+        "region": "page",
+        "tag": "Select"
+       }
+      ],
       "file": "web/src/components/filters.tsx",
       "line": 195,
       "name": "SortSelect",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 253,
+        "handler": "filter.onRemove",
+        "kind": "button",
+        "label": "`Remove ${filter.group} filter ${filter.label}`",
+        "line": 248,
+        "region": "page",
+        "tag": "button"
+       },
+       {
+        "depends": "",
+        "end": 263,
+        "handler": "onClear",
+        "kind": "button",
+        "label": "Clear all",
+        "line": 259,
+        "region": "page",
+        "tag": "button"
+       }
+      ],
       "file": "web/src/components/filters.tsx",
       "line": 231,
       "name": "FilterChips",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 125,
+        "kind": "dialog",
+        "label": "",
+        "line": 114,
+        "region": "page",
+        "tag": "Popover"
+       }
+      ],
       "file": "web/src/components/metric-info.tsx",
       "line": 46,
       "name": "MetricInfo",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/metric-info.tsx",
       "line": 193,
       "name": "InfoGlyph",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/panel.tsx",
       "line": 5,
       "name": "Panel",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 41,
+        "kind": "heading",
+        "label": "",
+        "line": 41,
+        "region": "header",
+        "tag": "h2"
+       }
+      ],
       "file": "web/src/components/panel.tsx",
       "line": 15,
       "name": "PanelHeader",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/panel.tsx",
       "line": 55,
       "name": "PanelBody",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/panel.tsx",
       "line": 59,
       "name": "PanelNote",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/session.tsx",
       "line": 7,
       "name": "TracedDot",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/session.tsx",
       "line": 30,
       "name": "ErrorCount",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/session.tsx",
       "line": 52,
       "name": "TokenCell",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 141,
+        "handler": "onOpen",
+        "kind": "button",
+        "label": "`Open session ${session.id}`",
+        "line": 136,
+        "region": "page",
+        "tag": "button"
+       },
+       {
+        "depends": "",
+        "end": 162,
+        "expr": "errorCount === undefined",
+        "kind": "conditional",
+        "label": "",
+        "line": 162,
+        "region": "page",
+        "state": "error",
+        "tag": ""
+       }
+      ],
       "file": "web/src/components/session.tsx",
       "line": 117,
       "name": "SessionCard",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/source-card.tsx",
       "line": 33,
       "name": "SourceCard",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/source-card.tsx",
       "line": 66,
       "name": "SourceDetail",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/sparkline.tsx",
       "line": 89,
       "name": "Sparkline",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/stat.tsx",
       "line": 14,
       "name": "NumberTicker",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/stat.tsx",
       "line": 49,
       "name": "StatLabel",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/stat.tsx",
       "line": 61,
       "name": "Stat",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/stat.tsx",
       "line": 157,
       "name": "StatGrid",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 56,
+        "handler": "onClick",
+        "kind": "button",
+        "label": "",
+        "line": 47,
+        "region": "page",
+        "tag": "button"
+       }
+      ],
       "file": "web/src/components/states.tsx",
       "line": 29,
       "name": "SortButton",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/states.tsx",
       "line": 68,
       "name": "EmptyState",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 114,
+        "handler": "onRetry",
+        "kind": "button",
+        "label": "Try again",
+        "line": 114,
+        "region": "page",
+        "tag": "Button"
+       }
+      ],
       "file": "web/src/components/states.tsx",
       "line": 98,
       "name": "ErrorState",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/states.tsx",
       "line": 123,
       "name": "PanelSkeleton",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/states.tsx",
       "line": 136,
       "name": "DisclosurePanel",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/states.tsx",
       "line": 247,
       "name": "WarningsList",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 310,
+        "kind": "heading",
+        "label": "The dashboard lost the local reader.",
+        "line": 310,
+        "region": "page",
+        "tag": "h1"
+       },
+       {
+        "depends": "",
+        "end": 319,
+        "handler": "onRetry",
+        "kind": "button",
+        "label": "Retry connection",
+        "line": 319,
+        "region": "page",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 320,
+        "handler": "copy",
+        "kind": "button",
+        "label": "",
+        "line": 320,
+        "region": "page",
+        "tag": "Button"
+       }
+      ],
       "file": "web/src/components/states.tsx",
       "line": 280,
       "name": "OfflineCard",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/states.tsx",
       "line": 330,
       "name": "StatSkeleton",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/status.tsx",
       "line": 77,
       "name": "Unavailable",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/status.tsx",
       "line": 96,
       "name": "PartialMarker",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/status.tsx",
       "line": 149,
       "name": "CostStateBadge",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/status.tsx",
       "line": 171,
       "name": "EstimatedBadge",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/status.tsx",
       "line": 175,
       "name": "ExperimentalBadge",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/status.tsx",
       "line": 180,
       "name": "CostBadges",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/status.tsx",
       "line": 197,
       "name": "ProvenanceBadge",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/status.tsx",
       "line": 220,
       "name": "OutcomeBadge",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/status.tsx",
       "line": 238,
       "name": "Meter",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/status.tsx",
       "line": 286,
       "name": "BucketBar",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 333,
+        "kind": "list",
+        "label": "",
+        "line": 332,
+        "region": "page",
+        "source": "items",
+        "tag": "ul"
+       }
+      ],
       "file": "web/src/components/status.tsx",
       "line": 324,
       "name": "Legend",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/status.tsx",
       "line": 346,
       "name": "MeterRow",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/status.tsx",
       "line": 406,
       "name": "ComparisonMeter",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/trace.tsx",
       "line": 11,
       "name": "SPAN_KIND_GLYPH",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/trace.tsx",
       "line": 25,
       "name": "SPAN_STATUS_COLOR",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/trace.tsx",
       "line": 45,
       "name": "ContextOccupancy",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 259,
+        "kind": "list",
+        "label": "",
+        "line": 258,
+        "region": "page",
+        "source": "spans",
+        "tag": "ul"
+       }
+      ],
       "file": "web/src/components/trace.tsx",
       "line": 227,
       "name": "SpanTimeline",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 343,
+        "kind": "list",
+        "label": "",
+        "line": 342,
+        "region": "page",
+        "source": "insights",
+        "tag": "ul"
+       },
+       {
+        "depends": "",
+        "end": 372,
+        "handler": "inline: onSelectSpan",
+        "kind": "button",
+        "label": "",
+        "line": 368,
+        "region": "page",
+        "tag": "button"
+       },
+       {
+        "depends": "",
+        "end": 394,
+        "handler": "inline: onSelectSpan",
+        "kind": "button",
+        "label": "",
+        "line": 387,
+        "region": "page",
+        "tag": "button"
+       }
+      ],
       "file": "web/src/components/trace.tsx",
       "line": 332,
       "name": "InsightList",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/components/trace.tsx",
       "line": 416,
       "name": "CapabilityGrid",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 252,
+        "handler": "",
+        "kind": "button",
+        "label": "Rescan logs",
+        "line": 252,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 253,
+        "handler": "",
+        "kind": "button",
+        "label": "Secondary",
+        "line": 253,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 254,
+        "handler": "",
+        "kind": "button",
+        "label": "Outline",
+        "line": 254,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 255,
+        "handler": "",
+        "kind": "button",
+        "label": "Ghost",
+        "line": 255,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 256,
+        "handler": "",
+        "kind": "button",
+        "label": "Rebuild store",
+        "line": 256,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 259,
+        "handler": "",
+        "kind": "button",
+        "label": "Link",
+        "line": 259,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 264,
+        "handler": "",
+        "kind": "button",
+        "label": "Small",
+        "line": 264,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 267,
+        "handler": "",
+        "kind": "button",
+        "label": "Default",
+        "line": 267,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 268,
+        "handler": "",
+        "kind": "button",
+        "label": "Large",
+        "line": 268,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 269,
+        "handler": "",
+        "kind": "button",
+        "label": "Export",
+        "line": 269,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 272,
+        "handler": "",
+        "kind": "button",
+        "label": "Disabled",
+        "line": 272,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 273,
+        "handler": "inline: toast.success",
+        "kind": "button",
+        "label": "Fire a toast",
+        "line": 273,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 292,
+        "kind": "dialog",
+        "label": "Open dialog Rebuild the local store? This discards ~/.ai-usa",
+        "line": 292,
+        "region": "section",
+        "tag": "Dialog"
+       },
+       {
+        "depends": "",
+        "end": 294,
+        "handler": "",
+        "kind": "button",
+        "label": "Open dialog",
+        "line": 294,
+        "region": "dialog",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 305,
+        "handler": "",
+        "kind": "button",
+        "label": "Cancel",
+        "line": 305,
+        "region": "dialog",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 306,
+        "handler": "",
+        "kind": "button",
+        "label": "Rebuild",
+        "line": 306,
+        "region": "dialog",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 311,
+        "kind": "dialog",
+        "label": "Popover Date range",
+        "line": 311,
+        "region": "section",
+        "tag": "Popover"
+       },
+       {
+        "depends": "",
+        "end": 313,
+        "handler": "",
+        "kind": "button",
+        "label": "Popover",
+        "line": 313,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "detail": "date",
+        "end": 318,
+        "handler": "",
+        "kind": "field",
+        "label": "",
+        "line": 318,
+        "region": "section",
+        "tag": "Input"
+       },
+       {
+        "depends": "",
+        "detail": "date",
+        "end": 319,
+        "handler": "",
+        "kind": "field",
+        "label": "",
+        "line": 319,
+        "region": "section",
+        "tag": "Input"
+       },
+       {
+        "depends": "",
+        "end": 326,
+        "handler": "",
+        "kind": "button",
+        "label": "Dropdown",
+        "line": 326,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 338,
+        "handler": "",
+        "kind": "button",
+        "label": "Tooltip",
+        "line": 338,
+        "region": "section",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "detail": "input",
+        "end": 351,
+        "handler": "",
+        "kind": "field",
+        "label": "claude-opus",
+        "line": 351,
+        "region": "section",
+        "tag": "Input"
+       },
+       {
+        "depends": "",
+        "detail": "select",
+        "end": 360,
+        "handler": "",
+        "kind": "field",
+        "label": "",
+        "line": 360,
+        "region": "section",
+        "tag": "Select"
+       },
+       {
+        "depends": "",
+        "detail": "checkbox",
+        "end": 378,
+        "handler": "",
+        "kind": "field",
+        "label": "",
+        "line": 374,
+        "region": "section",
+        "tag": "Checkbox"
+       },
+       {
+        "depends": "",
+        "detail": "switch",
+        "end": 384,
+        "handler": "",
+        "kind": "field",
+        "label": "",
+        "line": 384,
+        "region": "section",
+        "tag": "Switch"
+       },
+       {
+        "depends": "",
+        "end": 462,
+        "handler": "inline: setSortActive",
+        "kind": "button",
+        "label": "",
+        "line": 462,
+        "region": "section",
+        "tag": "SortButton"
+       },
+       {
+        "depends": "",
+        "end": 463,
+        "handler": "inline: setSortActive",
+        "kind": "button",
+        "label": "",
+        "line": 463,
+        "region": "section",
+        "tag": "SortButton"
+       },
+       {
+        "depends": "",
+        "end": 503,
+        "kind": "tab",
+        "label": "Overview",
+        "line": 503,
+        "region": "section",
+        "tag": "TabsTrigger",
+        "target": "overview"
+       },
+       {
+        "depends": "",
+        "end": 504,
+        "kind": "tab",
+        "label": "Sessions",
+        "line": 504,
+        "region": "section",
+        "tag": "TabsTrigger",
+        "target": "sessions"
+       },
+       {
+        "depends": "",
+        "end": 505,
+        "kind": "tab",
+        "label": "Sources",
+        "line": 505,
+        "region": "section",
+        "tag": "TabsTrigger",
+        "target": "sources"
+       }
+      ],
       "file": "web/src/prototype/Gallery.tsx",
       "line": 161,
       "name": "Gallery",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/prototype/OverviewScreen.tsx",
       "line": 370,
       "name": "OverviewScreen",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/prototype/PricingScreen.tsx",
       "line": 208,
       "name": "PricingScreen",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 63,
+        "handler": "inline: setTab",
+        "kind": "button",
+        "label": "",
+        "line": 51,
+        "region": "nav",
+        "tag": "button"
+       },
+       {
+        "depends": "",
+        "end": 76,
+        "handler": "inline: setRailOpen",
+        "kind": "button",
+        "label": "Filters",
+        "line": 71,
+        "region": "header",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 83,
+        "handler": "rescan",
+        "kind": "button",
+        "label": "",
+        "line": 83,
+        "region": "header",
+        "tag": "Button"
+       },
+       {
+        "depends": "",
+        "end": 92,
+        "handler": "toggleTheme",
+        "kind": "button",
+        "label": "mode === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'",
+        "line": 87,
+        "region": "header",
+        "tag": "Button"
+       }
+      ],
       "file": "web/src/prototype/Prototype.tsx",
       "line": 20,
       "name": "Prototype",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "detail": "switch",
+        "end": 208,
+        "handler": "",
+        "kind": "field",
+        "label": "",
+        "line": 204,
+        "region": "page",
+        "tag": "Switch"
+       },
+       {
+        "depends": "",
+        "end": 215,
+        "handler": "onReset",
+        "kind": "button",
+        "label": "Clear all filters",
+        "line": 215,
+        "region": "page",
+        "tag": "Button"
+       }
+      ],
       "file": "web/src/prototype/Rail.tsx",
       "line": 80,
       "name": "RailContent",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 264,
+        "kind": "dialog",
+        "label": "Filters",
+        "line": 264,
+        "region": "page",
+        "tag": "Sheet"
+       }
+      ],
       "file": "web/src/prototype/Rail.tsx",
       "line": 245,
       "name": "FilterRail",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/prototype/Screens.tsx",
       "line": 43,
       "name": "SCREEN_LABELS",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/prototype/Screens.tsx",
       "line": 266,
       "name": "Screens",
       "page": false
      },
      {
+      "elements": [
+       {
+        "depends": "",
+        "end": 153,
+        "kind": "table",
+        "label": "",
+        "line": 150,
+        "region": "page",
+        "source": "COLUMNS",
+        "tag": "Table"
+       },
+       {
+        "depends": "",
+        "end": 161,
+        "handler": "inline: onHeaderSort",
+        "kind": "button",
+        "label": "",
+        "line": 155,
+        "region": "table",
+        "tag": "SortButton"
+       },
+       {
+        "depends": "",
+        "end": 180,
+        "expr": "session.errorCount > 0",
+        "kind": "conditional",
+        "label": "",
+        "line": 180,
+        "region": "table",
+        "state": "error",
+        "tag": ""
+       }
+      ],
       "file": "web/src/prototype/SessionsScreen.tsx",
       "line": 82,
       "name": "SessionsScreen",
       "page": false
      },
      {
+      "elements": [],
       "file": "web/src/prototype/SourcesScreen.tsx",
       "line": 8,
       "name": "SourcesScreen",
       "page": false
+     },
+     {
+      "elements": [
+       {
+        "depends": "",
+        "detail": "",
+        "end": 6,
+        "expr": "",
+        "handler": "",
+        "kind": "link",
+        "label": "",
+        "line": 6,
+        "region": "page",
+        "source": "",
+        "state": "",
+        "tag": "link",
+        "target": "./favicon.png"
+       }
+      ],
+      "file": "web/index.html",
+      "line": 1,
+      "name": "Index",
+      "page": true
      }
     ],
     "tokens": [
@@ -22959,8 +24147,8 @@
   ],
   "components": 9,
   "entities": 82,
-  "files": 173,
-  "lines": 39749,
+  "files": 174,
+  "lines": 39777,
   "repos": 1,
   "routes": 12,
   "stacks": [
