@@ -1,0 +1,55 @@
+flowchart TD
+    subgraph outside["Outside the chunk"]
+        models["models.py<br/>UsageEvent, TokenUsage"]:::external
+        trace["trace.py<br/>Span, Capabilities"]:::external
+    end
+    subgraph shared["Registry and shared helpers"]
+        reg["sources/__init__.py<br/>registry, client_labels"]:::module
+        base["base.py<br/>Source, read helpers"]:::module
+    end
+    subgraph families["Readers built by a shared make_source"]
+        cline["cline.py<br/>Spec, make_source"]:::module
+        roo["roo_code.py"]:::module
+        kilol["kilo_legacy.py"]:::module
+        opencode["opencode.py<br/>make_source"]:::module
+        kilo["kilo_code.py"]:::module
+    end
+    subgraph direct["Readers that build Source directly"]
+        logs["Log file readers<br/>claude_code, codex, copilot_cli, gemini_cli, grok_build,<br/>jan, muse_code, openai_compat, qwen_code, antigravity"]:::module
+        dbs["Database readers<br/>copilot_chat, cursor, dyad, ollama_app, windsurf"]:::module
+    end
+    base --> models
+    base --> trace
+    reg --> base
+    reg -.->|imports each module by name| logs
+    reg -.->|imports each module by name| dbs
+    reg -.->|imports each module by name| cline
+    reg -.->|imports each module by name| opencode
+    logs --> base
+    dbs --> base
+    cline --> base
+    opencode --> base
+    roo --> cline
+    kilol --> cline
+    kilo --> opencode
+    logs --> models
+    dbs --> models
+    logs --> trace
+    dbs --> trace
+    cline --> models
+    cline --> trace
+    opencode --> models
+    opencode --> trace
+    subgraph Legend
+        direction LR
+        zlegend_a["Module or package in this chunk"]:::module
+        zlegend_b["Module outside this chunk"]:::external
+        zlegend_c["Layer: a group of modules"]:::module
+        zlegend_d["Solid arrow: A imports B"]:::module
+        zlegend_e["Dashed arrow: imported by name at run time"]:::module
+        zlegend_f["Red arrow would mark a cycle, none found"]:::cycle
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d ~~~ zlegend_e ~~~ zlegend_f
+    end
+    classDef module fill:#dae8fc,stroke:#222222,color:#111111
+    classDef external fill:#eeeeee,stroke:#222222,stroke-dasharray:5 3,color:#111111
+    classDef cycle fill:#f8cecc,stroke:#b85450,color:#111111

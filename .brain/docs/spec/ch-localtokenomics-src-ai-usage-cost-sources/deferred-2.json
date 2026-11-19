@@ -1,0 +1,155 @@
+[
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Usage event",
+   "Definition": "The record a reader yields for one request or one conversation turn: model, timestamp, session id, request id, project, title and, when the reader can see them, token counts.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Span",
+   "Definition": "One step inside a session, such as a model call or a tool call, with its own status, time and source record. Only some readers provide spans.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Capabilities",
+   "Definition": "The five labels a reader declares for trace, tokens, cost, context and latency, each saying how the value is known (measured, derived, estimated, inferred or unavailable).",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Resume hook",
+   "Definition": "An optional function of a reader, named parse_resume, that reads a log again only from the byte offset an earlier scan reached, so a log that only grew is not parsed from the start.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "A missing timestamp is stamped with the scan time",
+   "Risk": "Copilot Chat, Dyad and Ollama call parse_timestamp without a fallback file. When the stored time is missing or unreadable the helper returns the current time, so the event lands on the day of the scan and moves each time the file is rebuilt.",
+   "Mitigation": "Pass the file path as the fallback, as the other readers do, or skip the row and add a warning.",
+   "impact": "low",
+   "likelihood": "low",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/sources/base.py",
+     "quote": "return datetime.now(tz=UTC)",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/sources/copilot_chat.py",
+     "quote": "timestamp=parse_timestamp(timestamp),",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/sources/dyad.py",
+     "quote": "timestamp=parse_timestamp(created_at),",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/sources/ollama_app.py",
+     "quote": "timestamp=parse_timestamp(created_at),",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "One broken reader module stops the registry",
+   "Risk": "The registry imports every module of the package with no guard, so an import error in a single reader raises out of the registry call and no reader can be used until the module is fixed.",
+   "Mitigation": "Catch the import error per module, skip that reader and report a warning naming it.",
+   "impact": "medium",
+   "likelihood": "low",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/sources/__init__.py",
+     "quote": "module = importlib.import_module(f\"{__name__}.{info.name}\")",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Two readers import a private name from the Cline module",
+   "Risk": "Roo Code and Kilo Code legacy import _TOKENS_IN_INCLUSIVE, a name that starts with an underscore, from the Cline module, so a rename inside Cline breaks them without a public contract saying so.",
+   "Mitigation": "Expose the table under a public name or pass the flag through Spec.",
+   "impact": "low",
+   "likelihood": "low",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/sources/roo_code.py",
+     "quote": "from .cline import _TOKENS_IN_INCLUSIVE, Spec, make_source, task_roots",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/sources/kilo_legacy.py",
+     "quote": "from .cline import _TOKENS_IN_INCLUSIVE, Spec, make_source, task_roots",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Is the scan helper in the shared module still needed",
+   "Question": "The shared module has a scan function that loops over roots, files and parse, but the real ingest loop in the store does its own looping with skip and resume logic. Only a test file calls the helper. Should it be removed or reused by the store?",
+   "priority": "low",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/sources/base.py",
+     "quote": "def scan(",
+     "confidence": "inferred"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/store.py",
+     "quote": "for path in source.files(root):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ }
+]

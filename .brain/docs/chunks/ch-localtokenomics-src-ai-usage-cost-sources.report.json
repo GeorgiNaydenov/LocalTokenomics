@@ -38,15 +38,51 @@
    "findings": 0
   },
   {
+   "note": "docs/brain/Diagrams/Reader data lineage.md",
+   "claims": 13,
+   "supported": 13,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Reader glossary map.md",
+   "claims": 13,
+   "supported": 13,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Reader module imports.md",
+   "claims": 11,
+   "supported": 11,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Reader types.md",
+   "claims": 15,
+   "supported": 15,
+   "findings": 0
+  },
+  {
    "note": "docs/brain/Diagrams/Readers component view.md",
    "claims": 14,
    "supported": 14,
    "findings": 0
   },
   {
+   "note": "docs/brain/Diagrams/Readers concepts.md",
+   "claims": 17,
+   "supported": 17,
+   "findings": 0
+  },
+  {
    "note": "docs/brain/Diagrams/Readers data flow.md",
    "claims": 12,
    "supported": 12,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Ontology/Ai usage cost sources Ontology.md",
+   "claims": 0,
+   "supported": 0,
    "findings": 0
   },
   {
@@ -64,6 +100,6 @@
  ],
  "blocking": 0,
  "findings": [],
- "claims": 486,
- "supported": 486
+ "claims": 555,
+ "supported": 555
 }

@@ -1,0 +1,91 @@
+classDiagram
+    direction LR
+    class Source {
+        <<frozen dataclass>>
+        +str id
+        +str label
+        +dict clients
+        +default_roots() list~Path~
+        +files(Path) list~Path~
+        +parse(Path, warnings) Iterator~UsageEvent~
+        +TokenData token_data
+        +str display_path
+        +spans(Path, warnings) Iterator~Span~
+        +bool experimental
+        +parse_resume(Path, warnings, offset, state) Iterator~UsageEvent~
+        +root_hint str
+    }
+    class Spec {
+        <<frozen dataclass>>
+        +str source_id
+        +str client
+        +str ext_id
+        +bool tokens_in_inclusive
+        +bool sdk
+    }
+    class Capabilities {
+        +Provenance trace
+        +Provenance tokens
+        +Provenance cost
+        +Provenance context
+        +Provenance latency
+    }
+    class UsageEvent {
+        +str source
+        +str client
+        +str model
+        +datetime timestamp
+        +str session_id
+        +str request_id
+        +str project
+        +str title
+        +str title_source
+        +int record_offset
+        +float reported_cost
+    }
+    class TokenUsage {
+        +int uncached_input
+        +int cache_read
+        +int cache_write_5m
+        +int cache_write_1h
+        +int output
+        +int reasoning_output
+    }
+    class Span {
+        +str span_id
+        +SpanKind kind
+        +SpanStatus status
+        +datetime started_at
+        +str source_file
+        +int record_offset
+        +int record_length
+    }
+    class TokenData {
+        <<enumeration>>
+        full
+        session
+    }
+    class Provenance {
+        <<enumeration>>
+        measured
+        derived
+        estimated
+        inferred
+        unavailable
+    }
+    Source *-- "1" Capabilities : declares
+    Source --> "1" TokenData : token_data
+    Source ..> UsageEvent : parse yields
+    Source ..> Span : spans yields, optional
+    UsageEvent o-- "0..1" TokenUsage : tokens
+    Span o-- "0..1" TokenUsage : tokens
+    Capabilities --> Provenance : each field
+    Spec ..> Source : make_source builds
+    class Legend {
+        <<legend>>
+        Box is a type with its fields
+        Diamond line is composition
+        Open diamond line is a part that may be absent
+        Dashed arrow is a use, not ownership
+        0..1 means the value may be missing
+    }

@@ -1,0 +1,32 @@
+mindmap
+  root((Readers))
+    Reader contract
+      One SOURCE value per module
+      Source frozen dataclass
+      Registry finds modules by name
+      token_data full or session
+      Experimental flag
+    Finding files
+      Default roots per machine
+      Environment variable overrides
+      Root passed with the root option
+      Files listed under each root
+    Reading records
+      JSON lines with a bad line count
+      JSON records with byte offsets
+      SQLite opened read only
+      Warnings instead of crashes
+    Mapping to events
+      Model and timestamp
+      Session and request id
+      Project and title
+      Token counts or none
+    Reader families
+      Cline family
+      OpenCode family
+      VS Code state databases
+      JSONL session logs
+    Legend
+      Centre circle is the readers package
+      First level branch is one concern of a reader
+      Leaf is a concept named as in the code
