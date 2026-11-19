@@ -12,5 +12,5 @@ The person who runs the scan or export command in a terminal.
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/cli.py::scan | confirmed
+- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/cli.py::scan | inferred
   > def scan(

@@ -7,9 +7,9 @@ maturity: draft
 
 ## Definition
 
-A group of requests under one key in a report. `src/ai_usage_cost/models.py:123`
+One row of a breakdown: a key, a label, a cost, token counts and a request count. The terminal tables and the model and project charts are drawn from lists of buckets.
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/models.py::Bucket | confirmed
+- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/models.py::Bucket | inferred
   > class Bucket(BaseModel):
