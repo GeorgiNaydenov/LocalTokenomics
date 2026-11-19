@@ -18,7 +18,7 @@ The specification entities reverse-engineered from the localtokenomics root modu
 %% generated:spec-links start (do not edit; run brain docs generate) %%
 | Kind | Notes | Count |
 |---|---|---|
-| actor | [[GitHub workflow runner]], [[Maintainer]] | 2 |
+| actor | [[GitHub workflow runner]], [[Maintainer]], [[User of localtokenomics root]] | 3 |
 | glossary-term | [[API-equivalent cost]], [[Dashboard bundle]], [[Dev proxy]] | 3 |
 | nfr | [[Python version support]] | 1 |
 | open-question | [[Is Node 20 tested for the dashboard build]] | 1 |

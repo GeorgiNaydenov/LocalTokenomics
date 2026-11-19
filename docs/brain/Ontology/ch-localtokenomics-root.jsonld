@@ -10,7 +10,7 @@
   },
   "@graph": [
     {
-      "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-reader",
+      "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-reader",
       "@type": [
         "pb:actor"
       ],
@@ -23,12 +23,12 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:actor/actor:maintainer",
+      "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer",
       "@type": [
         "pb:actor"
       ],
       "schema:name": "Maintainer",
-      "pb:maturity": "approved",
+      "pb:maturity": "draft",
       "archimate:maps_to": "archimate:BusinessActor",
       "schema:maps_to": "schema:Person",
       "pb:definedAt": [
@@ -36,7 +36,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:nfr/nfr:keyboard-and-screen-reader-access-to-charts-and-timelines",
+      "@id": "urn:product-brain:localtokenomics:nfr/nfr:keyboard-and-screen-reader-access-to-charts-and-timelines",
       "@type": [
         "pb:nfr"
       ],
@@ -48,7 +48,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:nfr/nfr:reduced-motion-is-respected",
+      "@id": "urn:product-brain:localtokenomics:nfr/nfr:reduced-motion-is-respected",
       "@type": [
         "pb:nfr"
       ],
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:open-question/open-question:question-3-does-the-delete-session-endpoint-remove-the",
+      "@id": "urn:product-brain:localtokenomics:open-question/open-question:question-3-does-the-delete-session-endpoint-remove-the",
       "@type": [
         "pb:open-question"
       ],
@@ -72,7 +72,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:open-question/open-question:question-4-is-deletesession-reachable-from-any-screen-in",
+      "@id": "urn:product-brain:localtokenomics:open-question/open-question:question-4-is-deletesession-reachable-from-any-screen-in",
       "@type": [
         "pb:open-question"
       ],
@@ -84,7 +84,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:open-question/open-question:why-the-other-series-limit-is-twelve",
+      "@id": "urn:product-brain:localtokenomics:open-question/open-question:why-the-other-series-limit-is-twelve",
       "@type": [
         "pb:open-question"
       ],
@@ -96,7 +96,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:risk/risk:most-shared-components-have-no-tests",
+      "@id": "urn:product-brain:localtokenomics:risk/risk:most-shared-components-have-no-tests",
       "@type": [
         "pb:risk"
       ],
@@ -108,7 +108,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:risk/risk:popover-timing-depends-on-a-polling-interval",
+      "@id": "urn:product-brain:localtokenomics:risk/risk:popover-timing-depends-on-a-polling-interval",
       "@type": [
         "pb:risk"
       ],
@@ -121,7 +121,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:risk/risk:risk-1-the-dashboard-client-can-write-to-the",
+      "@id": "urn:product-brain:localtokenomics:risk/risk:risk-1-the-dashboard-client-can-write-to-the",
       "@type": [
         "pb:risk"
       ],
@@ -133,7 +133,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:risk/risk:risk-2-most-files-in-this-chunk-have-no",
+      "@id": "urn:product-brain:localtokenomics:risk/risk:risk-2-most-files-in-this-chunk-have-no",
       "@type": [
         "pb:risk"
       ],
@@ -145,7 +145,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:a-production-build-replaces-the-committed-bundle",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:a-production-build-replaces-the-committed-bundle",
       "@type": [
         "pb:rule"
       ],
@@ -158,7 +158,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:a-type-error-stops-the-dashboard-build",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:a-type-error-stops-the-dashboard-build",
       "@type": [
         "pb:rule"
       ],
@@ -171,7 +171,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:automatic-rescan-every-five-minutes",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:automatic-rescan-every-five-minutes",
       "@type": [
         "pb:rule"
       ],
@@ -184,7 +184,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:cache-price-derivation",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:cache-price-derivation",
       "@type": [
         "pb:rule"
       ],
@@ -197,7 +197,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:do-not-import-from-the-prototype-folder",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:do-not-import-from-the-prototype-folder",
       "@type": [
         "pb:rule"
       ],
@@ -210,7 +210,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:lint-skips-build-output",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:lint-skips-build-output",
       "@type": [
         "pb:rule"
       ],
@@ -223,7 +223,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:outcome-notes-are-saved-only-when-changed",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:outcome-notes-are-saved-only-when-changed",
       "@type": [
         "pb:rule"
       ],
@@ -236,7 +236,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:prototype-figures-are-invented",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-figures-are-invented",
       "@type": [
         "pb:rule"
       ],
@@ -249,7 +249,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:prototype-filters-do-not-filter-the-screens",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-filters-do-not-filter-the-screens",
       "@type": [
         "pb:rule"
       ],
@@ -262,7 +262,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:prototype-rescan-is-staged",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-rescan-is-staged",
       "@type": [
         "pb:rule"
       ],
@@ -275,7 +275,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:prototype-session-table-shows-at-most-120-rows",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-session-table-shows-at-most-120-rows",
       "@type": [
         "pb:rule"
       ],
@@ -289,7 +289,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:prototype-splits-session-cost-across-token-buckets-by-fixed-weights",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-splits-session-cost-across-token-buckets-by-fixed-weights",
       "@type": [
         "pb:rule"
       ],
@@ -302,7 +302,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:rate-age-notice-thresholds",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:rate-age-notice-thresholds",
       "@type": [
         "pb:rule"
       ],
@@ -315,7 +315,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:rate-row-state",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:rate-row-state",
       "@type": [
         "pb:rule"
       ],
@@ -328,7 +328,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:reported-cost-divergence-threshold",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:reported-cost-divergence-threshold",
       "@type": [
         "pb:rule"
       ],
@@ -341,7 +341,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:session-table-row-limit",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:session-table-row-limit",
       "@type": [
         "pb:rule"
       ],
@@ -354,7 +354,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:sub-cent-money-keeps-four-decimals",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:sub-cent-money-keeps-four-decimals",
       "@type": [
         "pb:rule"
       ],
@@ -367,7 +367,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:the-prototype-is-excluded-from-the-production-build",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:the-prototype-is-excluded-from-the-production-build",
       "@type": [
         "pb:rule"
       ],
@@ -381,7 +381,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:unattributed-turn-is-excluded-from-rankings",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:unattributed-turn-is-excluded-from-rankings",
       "@type": [
         "pb:rule"
       ],
@@ -394,7 +394,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:unavailable-is-never-shown-as-zero",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:unavailable-is-never-shown-as-zero",
       "@type": [
         "pb:rule"
       ],
@@ -408,7 +408,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:rule/rule:unpriced-cost-stays-out-of-totals",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:unpriced-cost-stays-out-of-totals",
       "@type": [
         "pb:rule"
       ],
@@ -421,7 +421,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:state-machine/state-machine:coststate-lifecycle",
+      "@id": "urn:product-brain:localtokenomics:state-machine/state-machine:coststate-lifecycle",
       "@type": [
         "pb:state-machine"
       ],
@@ -436,7 +436,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:state-machine/state-machine:ratestate-lifecycle",
+      "@id": "urn:product-brain:localtokenomics:state-machine/state-machine:ratestate-lifecycle",
       "@type": [
         "pb:state-machine"
       ],
@@ -451,7 +451,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:state-machine/state-machine:spankind-lifecycle",
+      "@id": "urn:product-brain:localtokenomics:state-machine/state-machine:spankind-lifecycle",
       "@type": [
         "pb:state-machine"
       ],
@@ -467,7 +467,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:state-machine/state-machine:spanstatus-lifecycle",
+      "@id": "urn:product-brain:localtokenomics:state-machine/state-machine:spanstatus-lifecycle",
       "@type": [
         "pb:state-machine"
       ],
@@ -483,7 +483,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:system/system:web",
+      "@id": "urn:product-brain:localtokenomics:system/system:web",
       "@type": [
         "pb:system"
       ],
@@ -496,7 +496,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:system/system:web-ui-components",
+      "@id": "urn:product-brain:localtokenomics:system/system:web-ui-components",
       "@type": [
         "pb:system"
       ],
@@ -509,7 +509,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:system/system:web-prototype",
+      "@id": "urn:product-brain:localtokenomics:system/system:web-prototype",
       "@type": [
         "pb:system"
       ],
@@ -522,7 +522,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:system/system:web-ui-ui-components",
+      "@id": "urn:product-brain:localtokenomics:system/system:web-ui-ui-components",
       "@type": [
         "pb:system"
       ],
@@ -535,7 +535,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:use-case/use-case:check-list-prices",
+      "@id": "urn:product-brain:localtokenomics:use-case/use-case:check-list-prices",
       "@type": [
         "pb:use-case"
       ],
@@ -549,12 +549,12 @@
       ],
       "pb:uses": [
         {
-          "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-reader"
+          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-reader"
         }
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:use-case/use-case:compare-a-dashboard-screen-with-its-reference",
+      "@id": "urn:product-brain:localtokenomics:use-case/use-case:compare-a-dashboard-screen-with-its-reference",
       "@type": [
         "pb:use-case"
       ],
@@ -568,29 +568,29 @@
       ],
       "pb:uses": [
         {
-          "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-developer"
+          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer"
         },
         {
-          "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-developer"
+          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer"
         }
       ],
       "pb:mentions": [
         {
-          "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-developer"
+          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer"
         },
         {
-          "@id": "urn:product-brain:lt-top-root:glossary-term/glossary-term:prototype"
+          "@id": "urn:product-brain:localtokenomics:glossary-term/glossary-term:prototype"
         },
         {
-          "@id": "urn:product-brain:lt-top-root:glossary-term/glossary-term:mock-data"
+          "@id": "urn:product-brain:localtokenomics:glossary-term/glossary-term:mock-data"
         },
         {
-          "@id": "urn:product-brain:lt-top-root:glossary-term/glossary-term:reference-screen"
+          "@id": "urn:product-brain:localtokenomics:glossary-term/glossary-term:reference-screen"
         }
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:use-case/use-case:develop-the-dashboard-against-live-data",
+      "@id": "urn:product-brain:localtokenomics:use-case/use-case:develop-the-dashboard-against-live-data",
       "@type": [
         "pb:use-case"
       ],
@@ -604,15 +604,15 @@
       ],
       "pb:uses": [
         {
-          "@id": "urn:product-brain:lt-top-root:actor/actor:maintainer"
+          "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer"
         },
         {
-          "@id": "urn:product-brain:lt-top-root:actor/actor:maintainer"
+          "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer"
         }
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:use-case/use-case:inspect-one-session",
+      "@id": "urn:product-brain:localtokenomics:use-case/use-case:inspect-one-session",
       "@type": [
         "pb:use-case"
       ],
@@ -626,12 +626,12 @@
       ],
       "pb:uses": [
         {
-          "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-reader"
+          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-reader"
         }
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:use-case/use-case:rate-a-session-outcome",
+      "@id": "urn:product-brain:localtokenomics:use-case/use-case:rate-a-session-outcome",
       "@type": [
         "pb:use-case"
       ],
@@ -645,12 +645,12 @@
       ],
       "pb:uses": [
         {
-          "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-reader"
+          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-reader"
         }
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:use-case/use-case:read-usage-and-cost-for-a-period",
+      "@id": "urn:product-brain:localtokenomics:use-case/use-case:read-usage-and-cost-for-a-period",
       "@type": [
         "pb:use-case"
       ],
@@ -664,12 +664,12 @@
       ],
       "pb:uses": [
         {
-          "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-reader"
+          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-reader"
         }
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:use-case/use-case:rebuild-the-dashboard-bundle",
+      "@id": "urn:product-brain:localtokenomics:use-case/use-case:rebuild-the-dashboard-bundle",
       "@type": [
         "pb:use-case"
       ],
@@ -683,21 +683,21 @@
       ],
       "pb:uses": [
         {
-          "@id": "urn:product-brain:lt-top-root:actor/actor:maintainer"
+          "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer"
         },
         {
-          "@id": "urn:product-brain:lt-top-root:actor/actor:maintainer"
+          "@id": "urn:product-brain:localtokenomics:actor/actor:maintainer"
         },
         {
-          "@id": "urn:product-brain:lt-top-root:rule/rule:a-type-error-stops-the-dashboard-build"
+          "@id": "urn:product-brain:localtokenomics:rule/rule:a-type-error-stops-the-dashboard-build"
         },
         {
-          "@id": "urn:product-brain:lt-top-root:rule/rule:a-production-build-replaces-the-committed-bundle"
+          "@id": "urn:product-brain:localtokenomics:rule/rule:a-production-build-replaces-the-committed-bundle"
         }
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-root:actor/actor:dashboard-developer",
+      "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer",
       "@type": [
         "pb:actor"
       ],

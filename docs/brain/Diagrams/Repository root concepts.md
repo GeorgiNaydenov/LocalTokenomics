@@ -3,14 +3,17 @@ title: Repository root concepts
 aliases: []
 tags: [diagram, mermaid, mind-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [pyproject.toml, README.md, web/*.ts, web/*.js, web/*.json]
+verified-against: cfd43f684f91
 sources: [docs/brain/architecture/diagrams/root-concepts.mmd]
 chunk: ch-localtokenomics-root
 authored: true
+approved-by: human
+approved-at: '2026-11-19T00:10:31+00:00'
 ---
 
 # Repository root concepts

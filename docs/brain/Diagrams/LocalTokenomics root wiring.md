@@ -8,7 +8,7 @@ audience: internal
 maturity: approved
 confidence: inferred
 covers: [web/*]
-verified-against: 696b7c3b3902
+verified-against: cfd43f684f91
 sources: [docs/brain/architecture/diagrams/c4-localtokenomics-root-wiring.mmd]
 chunk: ch-localtokenomics-root
 authored: true
@@ -22,7 +22,7 @@ node_citations:
     ci: ['pyproject.toml:1-4', '.github/workflows/python.yml:3-6', '.github/workflows/web.yml:3-6']
     api: ['web/vite.config.ts:18-26']
 approved-by: human
-approved-at: '2026-11-18T19:00:53+00:00'
+approved-at: '2026-11-19T00:10:31+00:00'
 ---
 
 # LocalTokenomics root wiring

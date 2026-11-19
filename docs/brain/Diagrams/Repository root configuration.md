@@ -3,11 +3,12 @@ title: Repository root configuration
 aliases: []
 tags: [config-map, diagram, drawio]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [pyproject.toml, .pre-commit-config.yaml, web/*.ts, web/*.js, web/*.json]
+verified-against: cfd43f684f91
 sources: [docs/brain/architecture/drawio/drawio-root-settings.drawio]
 chunk: ch-localtokenomics-root
 authored: true
@@ -37,6 +38,8 @@ node_citations:
     r10: ['.github/workflows/web.yml:33-46']
     r11: ['.pre-commit-config.yaml:1-33']
     r12: ['src/ai_usage_cost/privacy.py:60-69']
+approved-by: human
+approved-at: '2026-11-19T00:10:31+00:00'
 ---
 
 # Repository root configuration

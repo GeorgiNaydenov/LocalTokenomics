@@ -3,12 +3,13 @@ title: Repository root capabilities
 aliases: []
 tags: [capability, diagram, drawio]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [pyproject.toml, .pre-commit-config.yaml, .github/workflows/**, web/*.ts,
   web/*.js, web/*.json]
+verified-against: cfd43f684f91
 sources: [docs/brain/architecture/drawio/drawio-root-families.drawio]
 chunk: ch-localtokenomics-root
 authored: true
@@ -33,6 +34,8 @@ node_citations:
     f2: ['web/vite.config.ts:6-31']
     f3: ['pyproject.toml:39-49']
     f4: ['.github/workflows/python.yml:1-6']
+approved-by: human
+approved-at: '2026-11-19T00:10:31+00:00'
 ---
 
 # Repository root capabilities

@@ -3,11 +3,12 @@ title: Repository folder layout
 aliases: []
 tags: [diagram, mermaid, package-tree]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [pyproject.toml, README.md, web/index.html, web/prototype.html]
+verified-against: cfd43f684f91
 sources: [docs/brain/architecture/diagrams/root-folders.mmd]
 chunk: ch-localtokenomics-root
 authored: true
@@ -32,6 +33,8 @@ node_citations:
     cli: ['pyproject.toml:29-30', 'src/ai_usage_cost/cli.py:24']
     main: ['web/index.html:26']
     proto: ['web/prototype.html:25']
+approved-by: human
+approved-at: '2026-11-19T00:10:31+00:00'
 ---
 
 # Repository folder layout
