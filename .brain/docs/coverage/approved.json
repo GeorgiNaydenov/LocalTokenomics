@@ -9,43 +9,43 @@
    "test": false
   },
   "src/ai_usage_cost/__init__.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/aggregate.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/api.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/cli.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/collect.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/demo.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/models.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/pipeline.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/pricing.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/privacy.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/render/__init__.py": {
@@ -149,18 +149,22 @@
    "test": true
   },
   "src/ai_usage_cost/store.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/trace.py": {
-   "note": false,
+   "note": true,
    "test": true
   },
   "src/ai_usage_cost/tui.py": {
-   "note": false,
+   "note": true,
    "test": false
   },
   "web/eslint.config.js": {
+   "note": true,
+   "test": false
+  },
+  "web/index.html": {
    "note": true,
    "test": false
   },
@@ -461,9 +465,9 @@
    "test": false
   }
  },
- "note_ratio": 0.8696,
- "noted": 100,
- "test_ratio": 0.3913,
+ "note_ratio": 0.9828,
+ "noted": 114,
+ "test_ratio": 0.3879,
  "tested": 45,
- "total": 115
+ "total": 116
 }

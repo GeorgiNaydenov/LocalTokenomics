@@ -7,7 +7,7 @@ maturity: approved
 
 ## Definition
 
-What the recorded token usage would have cost at published list prices. Both renderers show it as the headline figure.
+What logged usage would have cost at published API list prices, the figure LocalTokenomics reports. `pyproject.toml:4`
 
 ## Sources
 
