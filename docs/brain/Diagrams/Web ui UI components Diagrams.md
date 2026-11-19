@@ -31,6 +31,10 @@ The left box is the folder of interface building blocks, and the right box is th
 
 The diagram realises the shared design system layer described in [[Web ui UI components Overview]]. The screens that consume it are covered by the notes of the neighbouring chunks.
 
+## More views of the primitives
+
+The primitives also have these views: [[UI primitives C4]] for the groups and the libraries they wrap, [[UI primitives concepts]] for the vocabulary, [[UI primitives imports]] for the file imports, and [[UI primitives failure flow]] for what happens when the chart parts are misused.
+
 ## Components around Web ui UI components
 
 %% generated:diagram-module-ch-localtokenomics-web-src-components-ui start (do not edit; run brain docs generate) %%
