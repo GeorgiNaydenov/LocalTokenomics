@@ -1,0 +1,84 @@
+flowchart TD
+    main["main.tsx"]:::page
+    proto["Prototype"]:::page
+    screens["Screens"]:::page
+    gallery["Gallery"]:::page
+    overview["OverviewScreen"]:::page
+    sessions["SessionsScreen"]:::page
+    sources["SourcesScreen"]:::page
+    pricing["PricingScreen"]:::page
+    rail["FilterRail, RailContent"]:::local
+    drawer["SessionDrawer"]:::local
+    ovparts["DetectedSources, KpiRow, TimeChartPanel, CostByModelPanel, TokenMixPanel, CacheSavingsPanel, ByProjectPanel"]:::local
+    prparts["RateTablePanel, MultipliersPanel, UnpricedPanel"]:::local
+    sharedpanel["Panel, PanelHeader, PanelBody, PanelNote"]:::shared
+    sharedfilter["FilterChips, SortSelect, SearchField, ChipRow, DateRange, FacetGroup"]:::shared
+    sharedsession["SessionCard, TokenCell, SourceCard, SourceDetail"]:::shared
+    sharedstatus["CostStateBadge, OutcomeBadge, BucketBar, MeterRow, ComparisonMeter, Legend"]:::shared
+    sharedstate["EmptyState, DisclosurePanel, WarningsList, SortButton"]:::shared
+    shareddetail["Section, MetaGrid, PathList, CodeBlock, ContextOccupancy, SpanTimeline, InsightList, CapabilityGrid"]:::shared
+    sharedchart["Stat, StatGrid, Sparkline, TimeChart"]:::shared
+    prim["Button, Sheet, Table, Tooltip, Badge, ToggleGroup, Switch, Separator, Toaster"]:::primitive
+
+    main --> proto
+    proto --> screens
+    proto --> gallery
+    proto --> prim
+    screens --> rail
+    screens --> sharedfilter
+    screens --> overview
+    screens --> sessions
+    screens --> sources
+    screens --> pricing
+    screens --> drawer
+    rail --> prim
+    rail --> sharedfilter
+    rail --> sharedstate
+    overview --> ovparts
+    ovparts --> sharedpanel
+    ovparts --> sharedchart
+    ovparts --> sharedsession
+    ovparts --> sharedstatus
+    ovparts --> prim
+    sessions --> sharedpanel
+    sessions --> sharedfilter
+    sessions --> sharedsession
+    sessions --> sharedstatus
+    sessions --> sharedstate
+    sessions --> prim
+    sources --> sharedpanel
+    sources --> sharedsession
+    sources --> sharedstate
+    pricing --> prparts
+    prparts --> sharedpanel
+    prparts --> shareddetail
+    prparts --> sharedstatus
+    prparts --> prim
+    drawer --> prim
+    drawer --> shareddetail
+    drawer --> sharedstatus
+    drawer --> sharedstate
+    gallery --> sharedpanel
+    gallery --> sharedfilter
+    gallery --> sharedsession
+    gallery --> sharedstatus
+    gallery --> sharedstate
+    gallery --> shareddetail
+    gallery --> sharedchart
+    gallery --> prim
+
+    subgraph Legend
+        direction LR
+        zl1["Page or screen component: thick border. An arrow reads as renders"]:::page
+        zl2["Component defined in web/src/prototype: blue box"]:::local
+        zl3["Shared component from web/src/components: green box"]:::shared
+        zl4["UI primitive from web/src/components/ui over a third party kit: grey dashed box"]:::primitive
+        zl1 ~~~ zl2
+        zl2 ~~~ zl3
+        zl3 ~~~ zl4
+    end
+
+    classDef page fill:#dae8fc,stroke:#222222,stroke-width:4px,color:#111111
+    classDef local fill:#dae8fc,stroke:#222222,color:#111111
+    classDef shared fill:#d5e8d4,stroke:#222222,color:#111111
+    classDef primitive fill:#e6e6e6,stroke:#222222,stroke-dasharray:5 3,color:#111111

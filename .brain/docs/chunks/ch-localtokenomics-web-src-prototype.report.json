@@ -2,6 +2,30 @@
  "chunk": "ch-localtokenomics-web-src-prototype",
  "notes": [
   {
+   "note": "docs/brain/Application/Overview Screen Screen.md",
+   "claims": 29,
+   "supported": 29,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Pricing Screen Screen.md",
+   "claims": 26,
+   "supported": 26,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Sessions Screen Screen.md",
+   "claims": 44,
+   "supported": 44,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Sources Screen Screen.md",
+   "claims": 18,
+   "supported": 18,
+   "findings": 0
+  },
+  {
    "note": "docs/brain/Application/Web prototype API.md",
    "claims": 0,
    "supported": 0,
@@ -32,13 +56,103 @@
    "findings": 0
   },
   {
+   "note": "docs/brain/Diagrams/Overview Screen Screen Map.md",
+   "claims": 40,
+   "supported": 40,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Pricing Screen Screen Map.md",
+   "claims": 28,
+   "supported": 28,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Sessions Screen Screen Map.md",
+   "claims": 52,
+   "supported": 52,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Sources Screen Screen Map.md",
+   "claims": 16,
+   "supported": 16,
+   "findings": 0
+  },
+  {
    "note": "docs/brain/Diagrams/Web prototype C4 components.md",
    "claims": 18,
    "supported": 18,
    "findings": 0
   },
   {
+   "note": "docs/brain/Diagrams/Web prototype component tree.md",
+   "claims": 34,
+   "supported": 34,
+   "findings": 0
+  },
+  {
    "note": "docs/brain/Diagrams/Web prototype Diagrams.md",
+   "claims": 0,
+   "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web prototype glossary map.md",
+   "claims": 28,
+   "supported": 28,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web prototype mind map.md",
+   "claims": 11,
+   "supported": 11,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web prototype module dependencies.md",
+   "claims": 20,
+   "supported": 20,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web prototype page wireframe.md",
+   "claims": 45,
+   "supported": 45,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web prototype screen flow.md",
+   "claims": 22,
+   "supported": 22,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web prototype session drawer states.md",
+   "claims": 9,
+   "supported": 9,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web prototype shell UI states.md",
+   "claims": 9,
+   "supported": 9,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web prototype sitemap.md",
+   "claims": 21,
+   "supported": 21,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web prototype user journey.md",
+   "claims": 11,
+   "supported": 11,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Ontology/Web prototype Ontology.md",
    "claims": 0,
    "supported": 0,
    "findings": 0
@@ -58,6 +172,6 @@
  ],
  "blocking": 0,
  "findings": [],
- "claims": 76,
- "supported": 76
+ "claims": 539,
+ "supported": 539
 }

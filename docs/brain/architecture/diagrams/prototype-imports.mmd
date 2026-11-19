@@ -1,0 +1,60 @@
+flowchart TD
+    subgraph entry["Entry"]
+        main["main.tsx"]:::mod
+    end
+    subgraph shell["Shell"]
+        proto["Prototype.tsx"]:::mod
+        screens["Screens.tsx"]:::mod
+        rail["Rail.tsx"]:::mod
+    end
+    subgraph pages["Pages"]
+        ov["OverviewScreen.tsx"]:::mod
+        se["SessionsScreen.tsx"]:::mod
+        so["SourcesScreen.tsx"]:::mod
+        pr["PricingScreen.tsx"]:::mod
+        ga["Gallery.tsx"]:::mod
+    end
+    subgraph dataLayer["Data"]
+        data["data.ts"]:::mod
+    end
+    ext["Outside the folder: components, ui, format, api, theme, design-system"]:::external
+
+    main --> proto
+    proto --> screens
+    proto --> ga
+    proto --> data
+    screens --> ov
+    screens --> se
+    screens --> so
+    screens --> pr
+    screens --> rail
+    screens --> data
+    rail --> data
+    ov --> data
+    se --> data
+    so --> data
+    pr --> data
+    ga --> data
+    proto --> ext
+    screens --> ext
+    rail --> ext
+    ov --> ext
+    se --> ext
+    so --> ext
+    pr --> ext
+    ga --> ext
+    data --> ext
+
+    subgraph Legend
+        direction LR
+        zl1["Box: a module, an arrow from A to B means A imports B"]:::mod
+        zl2["Subgraph: a layer, imports point down the layers"]:::mod
+        zl3["Grey dashed box: modules outside this folder, grouped in one box"]:::external
+        zl4["Red arrow: a cycle. None exists inside this folder"]:::mod
+        zl1 ~~~ zl2
+        zl2 ~~~ zl3
+        zl3 ~~~ zl4
+    end
+
+    classDef mod fill:#dae8fc,stroke:#222222,color:#111111
+    classDef external fill:#e6e6e6,stroke:#222222,stroke-dasharray:5 3,color:#111111

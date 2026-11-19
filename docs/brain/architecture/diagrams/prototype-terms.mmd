@@ -1,0 +1,40 @@
+flowchart LR
+    session("PrototypeSession"):::term
+    cost("CostState"):::term
+    outcome("OutcomeLabel"):::term
+    bucket("Token bucket"):::term
+    model("ModelInfo"):::term
+    rate("RateRow"):::term
+    rules("ProviderRules"):::term
+    client("Client"):::term
+    source("SourceRecord"):::term
+    project("Project"):::term
+    point("SeriesPoint"):::term
+    span("TraceSpanRecord"):::term
+    snap("OccupancySnapshot"):::term
+    cap("Capabilities"):::term
+    filt("FilterState"):::term
+
+    session -->|"has one"| cost
+    session -->|"has one"| outcome
+    session -->|"holds four"| bucket
+    session -->|"uses"| model
+    session -->|"belongs to"| project
+    session -->|"logged by"| client
+    source -->|"is read for"| client
+    model -->|"is priced by name"| rate
+    rate -->|"follows"| rules
+    point -->|"is one day of"| model
+    session -->|"shows sample"| span
+    session -->|"shows sample"| snap
+    session -->|"is described by"| cap
+    filt -->|"should narrow, does not"| session
+
+    subgraph Legend
+        direction LR
+        zl1("Rounded box: a term named as the code names it"):::term
+        zl2("Arrow label: the relation, such as has, uses or belongs to"):::term
+        zl1 ~~~ zl2
+    end
+
+    classDef term fill:#dae8fc,stroke:#222222,color:#111111

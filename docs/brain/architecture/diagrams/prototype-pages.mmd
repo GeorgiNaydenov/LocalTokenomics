@@ -1,0 +1,36 @@
+flowchart TD
+    root(["Prototype page: prototype.html"]):::section
+    dash(["Dashboard screens"]):::section
+    ds(["Design system"]):::section
+    ov["Overview"]:::page
+    se["Sessions"]:::page
+    so["Sources"]:::page
+    pr["Models and pricing"]:::page
+    sd["Session drawer"]:::page
+    ga["Gallery: eight sections"]:::page
+    rail["Filter rail on every dashboard screen"]:::page
+
+    root --> dash
+    root --> ds
+    dash --> ov
+    dash --> se
+    dash --> so
+    dash --> pr
+    dash --> rail
+    se --> sd
+    ds --> ga
+    ov -.-> so
+
+    subgraph Legend
+        direction LR
+        zl1(["Rounded box: a section of the application"]):::section
+        zl2["Rectangle: a page or panel named as the interface names it"]:::page
+        zl3["Solid line: parent and child. Dashed line: cross link between branches"]:::page
+        zl4["No page needs a sign in: the prototype has no accounts"]:::page
+        zl1 ~~~ zl2
+        zl2 ~~~ zl3
+        zl3 ~~~ zl4
+    end
+
+    classDef section fill:#dae8fc,stroke:#222222,color:#111111
+    classDef page fill:#ffffff,stroke:#222222,color:#111111
