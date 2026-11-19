@@ -32,6 +32,30 @@
    "findings": 0
   },
   {
+   "note": "docs/brain/Diagrams/UI primitives C4.md",
+   "claims": 14,
+   "supported": 14,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/UI primitives concepts.md",
+   "claims": 10,
+   "supported": 10,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/UI primitives failure flow.md",
+   "claims": 15,
+   "supported": 15,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/UI primitives imports.md",
+   "claims": 11,
+   "supported": 11,
+   "findings": 0
+  },
+  {
    "note": "docs/brain/Diagrams/Web ui UI components Diagrams.md",
    "claims": 0,
    "supported": 0,
@@ -58,6 +82,6 @@
  ],
  "blocking": 0,
  "findings": [],
- "claims": 41,
- "supported": 41
+ "claims": 91,
+ "supported": 91
 }

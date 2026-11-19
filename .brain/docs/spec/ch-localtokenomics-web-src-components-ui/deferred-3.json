@@ -1,0 +1,67 @@
+[
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Chart style text is built from config keys without escaping",
+   "Risk": "The chart style element is filled by putting each config key and colour into a template string and passing it as HTML. The time chart builds its config keys from row data, so a key that holds a closing brace or a closing style tag would change the style rules or end the element. The data comes from local logs, so the exposure is small, but nothing validates the key. `web/src/components/ui/chart.tsx:102` `web/src/components/ui/chart.tsx:92` `web/src/components/chart-time.tsx:65`",
+   "Mitigation": "Map keys to safe indexed names such as series-1 before they enter the style text, and keep the readable name only in the label.",
+   "impact": "medium",
+   "likelihood": "low",
+   "maturity": "draft",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/components/ui/chart.tsx::ChartStyle",
+     "quote": "    return color ? `  --color-${key}: ${color};` : null",
+     "confidence": "confirmed"
+    }
+   ]
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "A chart part outside its container throws with no error boundary above it",
+   "Risk": "The chart hook throws a plain error when no container is above it, and the app is mounted with one render call and no error boundary, so the error would leave the page blank. `web/src/components/ui/chart.tsx:33` `web/src/main.tsx:7`",
+   "Mitigation": "Add one error boundary around the app that shows the existing error card with a retry button.",
+   "impact": "medium",
+   "likelihood": "low",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "A chart legend label is empty for a series with no config entry",
+   "Risk": "The legend content prints only the config label, with no fallback to the series name, so a series missing from the config shows a colour square and no text, while the tooltip falls back to the raw name. `web/src/components/ui/chart.tsx:319` `web/src/components/ui/chart.tsx:249`",
+   "Mitigation": "Fall back to the series name in the legend as the tooltip does.",
+   "impact": "low",
+   "likelihood": "low",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Should the toast host ship in the main app",
+   "Question": "In the web source only the prototype page mounts the toast host, and the shipped dashboard entry mounts only the tooltip provider. Is the toast primitive meant for a later screen or is it dead code in the shipped app? `web/src/prototype/Prototype.tsx:109` `web/src/main.tsx:9`",
+   "priority": "low",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Are the chart legend parts still needed",
+   "Question": "The wrapper exports a legend and a legend content part, but the time chart draws its own key list instead. Does any screen plan to use these two, or can they go? `web/src/components/ui/chart.tsx:270` `web/src/components/chart-time.tsx:174`",
+   "priority": "low",
+   "maturity": "draft"
+  }
+ }
+]

@@ -1,0 +1,52 @@
+flowchart TD
+    subgraph Own["Files of this folder"]
+        dialog["dialog.tsx"]:::module
+        button["button.tsx"]:::module
+        toggleGroup["toggle-group.tsx"]:::module
+        toggle["toggle.tsx"]:::module
+        chart["chart.tsx"]:::module
+        sonnerFile["sonner.tsx"]:::module
+        others["Other 19 primitives"]:::module
+    end
+    cn["design-system/cn"]:::external
+    theme["theme"]:::external
+    radix["radix-ui"]:::external
+    cva["class-variance-authority"]:::external
+    lucide["lucide-react"]:::external
+    recharts["recharts"]:::external
+    sonnerLib["sonner"]:::external
+
+    dialog --> button
+    toggleGroup --> toggle
+    dialog --> cn
+    button --> cn
+    toggle --> cn
+    toggleGroup --> cn
+    chart --> cn
+    others --> cn
+    button --> radix
+    toggle --> radix
+    toggleGroup --> radix
+    dialog --> radix
+    others --> radix
+    button --> cva
+    toggle --> cva
+    others --> cva
+    dialog --> lucide
+    sonnerFile --> lucide
+    others --> lucide
+    chart --> recharts
+    sonnerFile --> sonnerLib
+    sonnerFile --> theme
+
+    subgraph Legend
+        direction LR
+        zlegend_a["Module: one file or a named group"]:::module
+        zlegend_b["Outside this folder"]:::external
+        zlegend_c["Red arrow: import cycle, none found here"]:::cycle
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c
+    end
+
+    classDef module fill:#dae8fc,stroke:#222222,color:#222222
+    classDef external fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:5 3
+    classDef cycle fill:#f8cecc,stroke:#b85450,color:#222222
