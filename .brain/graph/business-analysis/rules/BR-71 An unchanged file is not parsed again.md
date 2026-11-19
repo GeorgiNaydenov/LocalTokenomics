@@ -4,7 +4,7 @@ category: performance
 subdomain: Usage collection
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # An unchanged file is not parsed again
 

@@ -4,7 +4,7 @@ category: performance
 subdomain: Usage collection
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # A grown file resumes only when its earlier bytes are unchanged
 

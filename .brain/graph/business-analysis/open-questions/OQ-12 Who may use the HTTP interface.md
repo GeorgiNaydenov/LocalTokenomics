@@ -6,7 +6,7 @@ linked:
   - Person using the tool
 tags:
   - ba/open-question
-maturity: draft
+maturity: approved
 ---
 # Who may use the HTTP interface
 

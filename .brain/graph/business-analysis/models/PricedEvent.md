@@ -1,21 +1,31 @@
 ---
 archetype: entity
 subdomain: Cost pricing
+fields:
+  - 'event: UsageEvent'
+  - 'cost: CostBreakdown | None'
+  - 'state: CostState'
+entity_keys: []
+relations_to: []
 tags:
   - ba/model
-maturity: draft
+maturity: approved
 ---
 # PricedEvent
 
 ## Description
 
-A usage event with its cost breakdown (absent when not priced) and its cost state. `src/ai_usage_cost/models.py:117`
+The entity PricedEvent, declared in src/ai_usage_cost/models.py lines 117-120. It has 3 fields and 0 relations.
 
 ## Attributes
 
-- event: the usage event
-- cost: breakdown or None
-- state: priced, free, unpriced or unavailable
+- event: UsageEvent
+- cost: CostBreakdown | None
+- state: CostState
+
+## Lifecycle
+
+Lifecycle is described by [[CostState lifecycle]].
 
 ## Sources
 

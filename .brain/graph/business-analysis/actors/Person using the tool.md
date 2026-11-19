@@ -2,7 +2,7 @@
 classification: human
 tags:
   - ba/actor
-maturity: draft
+maturity: approved
 ---
 # Person using the tool
 

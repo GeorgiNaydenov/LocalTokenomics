@@ -4,7 +4,7 @@ impact: Cost figures can be wrong without any warning until the table is 30 days
 likelihood: medium
 tags:
   - ba/risk
-maturity: draft
+maturity: approved
 ---
 # Prices drift from the vendors
 

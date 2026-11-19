@@ -13,7 +13,7 @@ rules:
   - Released text is cut and then redacted
 tags:
   - ba/use-case
-maturity: draft
+maturity: approved
 ---
 # Read the text of one span
 

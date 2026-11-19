@@ -6,7 +6,7 @@ applies_to:
   - Spend reporting
 tags:
   - ba/nfr
-maturity: draft
+maturity: approved
 ---
 # Server binds to loopback by default
 

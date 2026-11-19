@@ -10,7 +10,7 @@ models:
 rules: []
 tags:
   - ba/use-case
-maturity: draft
+maturity: approved
 ---
 # Browse sessions in the terminal
 

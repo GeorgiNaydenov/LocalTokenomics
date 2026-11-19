@@ -6,7 +6,7 @@ applies_to:
   - Cost pricing
 tags:
   - ba/nfr
-maturity: draft
+maturity: approved
 ---
 # Rate lookup is cached
 

@@ -4,7 +4,7 @@ category: data integrity
 subdomain: Usage collection
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # Records that disagree on input tokens keep the first
 

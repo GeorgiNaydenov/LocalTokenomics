@@ -9,7 +9,7 @@ models: []
 rules: []
 tags:
   - ba/use-case
-maturity: draft
+maturity: approved
 ---
 # Sample GPU use for local models
 

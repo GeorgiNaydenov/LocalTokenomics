@@ -4,7 +4,7 @@ category: interface
 subdomain: Spend reporting
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # An unknown session answers 404
 

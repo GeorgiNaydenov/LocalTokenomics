@@ -458,5 +458,305 @@
  [
   "use-case",
   "Browse sessions in the terminal"
+ ],
+ [
+  "model",
+  "Totals"
+ ],
+ [
+  "model",
+  "SeriesPoint"
+ ],
+ [
+  "model",
+  "UnknownModel"
+ ],
+ [
+  "model",
+  "WarningInstance"
+ ],
+ [
+  "model",
+  "WarningGroup"
+ ],
+ [
+  "model",
+  "Facets"
+ ],
+ [
+  "model",
+  "ClientInfo"
+ ],
+ [
+  "model",
+  "WarningSummary"
+ ],
+ [
+  "model",
+  "Meta"
+ ],
+ [
+  "model",
+  "AlertDecision"
+ ],
+ [
+  "model",
+  "Sample"
+ ],
+ [
+  "model",
+  "samples"
+ ],
+ [
+  "model",
+  "apps"
+ ],
+ [
+  "model",
+  "chats"
+ ],
+ [
+  "model",
+  "messages"
+ ],
+ [
+  "model",
+  "SourceInfo"
+ ],
+ [
+  "model",
+  "Analysis"
+ ],
+ [
+  "model",
+  "PriceSet"
+ ],
+ [
+  "model",
+  "Period"
+ ],
+ [
+  "model",
+  "ProviderRules"
+ ],
+ [
+  "model",
+  "PartialRules"
+ ],
+ [
+  "model",
+  "Prefix"
+ ],
+ [
+  "model",
+  "ModelMatch"
+ ],
+ [
+  "model",
+  "UnpricedModel"
+ ],
+ [
+  "model",
+  "Source"
+ ],
+ [
+  "model",
+  "Spec"
+ ],
+ [
+  "model",
+  "IngestSummary"
+ ],
+ [
+  "model",
+  "requests"
+ ],
+ [
+  "model",
+  "files"
+ ],
+ [
+  "model",
+  "trace_events"
+ ],
+ [
+  "model",
+  "outcomes"
+ ],
+ [
+  "model",
+  "session_exclusions"
+ ],
+ [
+  "model",
+  "Capabilities"
+ ],
+ [
+  "model",
+  "ContextSnapshot"
+ ],
+ [
+  "model",
+  "OutcomeSignals"
+ ],
+ [
+  "model",
+  "OutcomeUpdate"
+ ],
+ [
+  "model",
+  "EconRow"
+ ],
+ [
+  "model",
+  "Economics"
+ ],
+ [
+  "model",
+  "Insight"
+ ],
+ [
+  "model",
+  "Trace"
+ ],
+ [
+  "model",
+  "SpanContent"
+ ],
+ [
+  "data-store",
+  "Data of Ai usage cost"
+ ],
+ [
+  "state-machine",
+  "CostState lifecycle"
+ ],
+ [
+  "state-machine",
+  "MatchKind lifecycle"
+ ],
+ [
+  "state-machine",
+  "RowStatus lifecycle"
+ ],
+ [
+  "state-machine",
+  "SpanKind lifecycle"
+ ],
+ [
+  "state-machine",
+  "SpanStatus lifecycle"
+ ],
+ [
+  "rule",
+  "create_app refuses when path is None"
+ ],
+ [
+  "rule",
+  "opened refuses when path is None"
+ ],
+ [
+  "rule",
+  "create_app refuses when not store.session_exists(conn, source, session_id)"
+ ],
+ [
+  "rule",
+  "session_spans refuses when not store.session_exists(conn, source, session_id)"
+ ],
+ [
+  "rule",
+  "create_app refuses when not store.session_exists(conn, source, session_id) (line 364)"
+ ],
+ [
+  "rule",
+  "forget_session refuses when not store.session_exists(conn, source, session_id)"
+ ],
+ [
+  "rule",
+  "create_app refuses when span is None"
+ ],
+ [
+  "rule",
+  "span_content refuses when span is None"
+ ],
+ [
+  "rule",
+  "_roots refuses when not path"
+ ],
+ [
+  "rule",
+  "alert refuses when days < 1"
+ ],
+ [
+  "rule",
+  "alert refuses when over is not None and rise_over is not None"
+ ],
+ [
+  "rule",
+  "alert refuses when threshold is None"
+ ],
+ [
+  "rule",
+  "_valid_window validates the model"
+ ],
+ [
+  "rule",
+  "_valid_window refuses when any((not 0 <= day <= 6 for day in self.weekdays))"
+ ],
+ [
+  "rule",
+  "_valid_window refuses when any((not 0 <= start < end <= 24 for start, end in self."
+ ],
+ [
+  "rule",
+  "_ordered validates the model"
+ ],
+ [
+  "rule",
+  "_ordered refuses when self.from_ is not None and self.until is not None and ("
+ ],
+ [
+  "rule",
+  "_sorted_bands validates bands"
+ ],
+ [
+  "rule",
+  "_disjoint_periods validates the model"
+ ],
+ [
+  "rule",
+  "_disjoint_periods refuses when earlier.until is None or (later.from_ or date.min) < ea"
+ ],
+ [
+  "rule",
+  "_consistent validates the model"
+ ],
+ [
+  "rule",
+  "_consistent refuses when duplicates"
+ ],
+ [
+  "rule",
+  "_consistent refuses when missing"
+ ],
+ [
+  "rule",
+  "read_content refuses when config.metadata_only or span.content_path is None"
+ ],
+ [
+  "rule",
+  "resolve_path refuses when index >= len(current)"
+ ],
+ [
+  "rule",
+  "_values_match_provenance validates the model"
+ ],
+ [
+  "rule",
+  "_values_match_provenance refuses when (value is None) != (provenance == 'unavailable')"
+ ],
+ [
+  "actor",
+  "User of Ai usage cost"
  ]
 ]

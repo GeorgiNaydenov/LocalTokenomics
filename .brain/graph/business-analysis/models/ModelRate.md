@@ -3,7 +3,7 @@ archetype: entity
 subdomain: Cost pricing
 tags:
   - ba/model
-maturity: draft
+maturity: approved
 ---
 # ModelRate
 

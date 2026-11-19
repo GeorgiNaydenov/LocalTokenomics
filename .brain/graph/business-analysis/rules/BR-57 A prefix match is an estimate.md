@@ -4,7 +4,7 @@ category: pricing
 subdomain: Cost pricing
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # A prefix match is an estimate
 

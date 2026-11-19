@@ -4,7 +4,7 @@ category: reporting
 subdomain: Spend reporting
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # An alert needs exactly one threshold
 

@@ -10,7 +10,7 @@ models:
 rules: []
 tags:
   - ba/use-case
-maturity: draft
+maturity: approved
 ---
 # Try the tool with demo data
 

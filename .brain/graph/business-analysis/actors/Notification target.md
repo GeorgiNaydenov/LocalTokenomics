@@ -2,7 +2,7 @@
 classification: external
 tags:
   - ba/actor
-maturity: draft
+maturity: approved
 ---
 # Notification target
 

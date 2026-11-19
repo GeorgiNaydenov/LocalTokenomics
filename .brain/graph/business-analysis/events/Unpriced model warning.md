@@ -1,7 +1,7 @@
 ---
 tags:
   - ba/event
-maturity: draft
+maturity: approved
 ---
 # Unpriced model warning
 

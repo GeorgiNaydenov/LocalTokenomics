@@ -4,7 +4,7 @@ category: pricing
 subdomain: Cost pricing
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # An unpriced tier is billed standard and flagged
 

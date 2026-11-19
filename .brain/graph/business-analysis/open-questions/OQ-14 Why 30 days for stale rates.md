@@ -6,7 +6,7 @@ linked:
   - RateTable
 tags:
   - ba/open-question
-maturity: draft
+maturity: approved
 ---
 # Why 30 days for stale rates
 

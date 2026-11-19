@@ -4,7 +4,7 @@ category: data integrity
 subdomain: Cost pricing
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # Peak windows must not wrap midnight
 

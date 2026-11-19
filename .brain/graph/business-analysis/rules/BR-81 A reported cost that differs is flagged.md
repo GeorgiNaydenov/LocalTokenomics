@@ -4,7 +4,7 @@ category: reporting
 subdomain: Spend reporting
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # A reported cost that differs is flagged
 

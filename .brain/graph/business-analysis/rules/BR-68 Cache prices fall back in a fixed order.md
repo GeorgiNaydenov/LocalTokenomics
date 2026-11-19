@@ -4,7 +4,7 @@ category: pricing
 subdomain: Cost pricing
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # Cache prices fall back in a fixed order
 

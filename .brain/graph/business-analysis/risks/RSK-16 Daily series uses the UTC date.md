@@ -4,7 +4,7 @@ impact: The by day buckets and the series can place the same event on different 
 likelihood: medium
 tags:
   - ba/risk
-maturity: draft
+maturity: approved
 ---
 # Daily series uses the UTC date
 

@@ -4,7 +4,7 @@ impact: Anyone who can reach the port can read costs and, with the content route
 likelihood: low while the host stays on loopback
 tags:
   - ba/risk
-maturity: draft
+maturity: approved
 ---
 # HTTP routes have no authentication
 

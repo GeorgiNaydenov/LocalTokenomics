@@ -10,7 +10,7 @@ models:
 rules: []
 tags:
   - ba/use-case
-maturity: draft
+maturity: approved
 ---
 # Export a report as a file
 

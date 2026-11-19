@@ -12,7 +12,7 @@ rules:
   - An unknown session answers 404
 tags:
   - ba/use-case
-maturity: draft
+maturity: approved
 ---
 # Inspect and rate one session
 

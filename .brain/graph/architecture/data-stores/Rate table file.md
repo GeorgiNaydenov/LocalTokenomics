@@ -4,7 +4,7 @@ persists_models:
   - ModelRate
 tags:
   - arch/data-store
-maturity: draft
+maturity: approved
 ---
 # Rate table file
 

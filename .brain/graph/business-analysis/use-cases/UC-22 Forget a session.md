@@ -11,7 +11,7 @@ rules:
   - A forgotten session is not stored again
 tags:
   - ba/use-case
-maturity: draft
+maturity: approved
 ---
 # Forget a session
 

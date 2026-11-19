@@ -4,7 +4,7 @@ impact: A person who mistypes config.json believes a project is excluded but the
 likelihood: medium
 tags:
   - ba/risk
-maturity: draft
+maturity: approved
 ---
 # A privacy typo silently resets the settings
 

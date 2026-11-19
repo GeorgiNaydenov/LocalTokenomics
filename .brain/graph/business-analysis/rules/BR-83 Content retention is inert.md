@@ -4,7 +4,7 @@ category: privacy
 subdomain: Privacy and retention
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # Content retention is inert
 

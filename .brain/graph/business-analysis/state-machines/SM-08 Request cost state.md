@@ -3,7 +3,7 @@ code: SM-08
 entity: PricedEvent
 tags:
   - ba/state-machine
-maturity: draft
+maturity: approved
 ---
 # Request cost state
 

@@ -6,7 +6,7 @@ linked:
   - SessionRow
 tags:
   - ba/open-question
-maturity: draft
+maturity: approved
 ---
 # Should the series use the local day
 

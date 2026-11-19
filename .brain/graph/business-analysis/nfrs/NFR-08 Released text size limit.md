@@ -6,7 +6,7 @@ applies_to:
   - Privacy and retention
 tags:
   - ba/nfr
-maturity: draft
+maturity: approved
 ---
 # Released text size limit
 

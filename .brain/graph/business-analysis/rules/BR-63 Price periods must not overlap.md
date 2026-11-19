@@ -4,7 +4,7 @@ category: data integrity
 subdomain: Cost pricing
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # Price periods must not overlap
 

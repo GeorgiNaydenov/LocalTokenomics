@@ -4,7 +4,7 @@ category: reporting
 subdomain: Spend reporting
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # The local calendar day decides the day of an event
 

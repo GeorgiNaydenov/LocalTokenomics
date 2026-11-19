@@ -6,7 +6,7 @@ linked:
   - Config
 tags:
   - ba/open-question
-maturity: draft
+maturity: approved
 ---
 # Will content capture be built
 

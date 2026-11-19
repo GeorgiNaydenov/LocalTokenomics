@@ -1,20 +1,37 @@
 ---
-archetype: value object
+archetype: entity
 subdomain: Cost pricing
+fields:
+  - 'uncached_input: int'
+  - 'cache_read: int'
+  - 'cache_write_5m: int'
+  - 'cache_write_1h: int'
+  - 'output: int'
+  - 'reasoning_output: int'
+entity_keys: []
+relations_to: []
 tags:
   - ba/model
-maturity: draft
+maturity: approved
 ---
 # TokenUsage
 
 ## Description
 
-The token counts of one request, split into uncached input, cache read, two cache write buckets, output and reasoning output. `src/ai_usage_cost/models.py:12`
+The entity TokenUsage, declared in src/ai_usage_cost/models.py lines 12-43. It has 6 fields and 0 relations.
 
 ## Attributes
 
-- uncached_input, cache_read, cache_write_5m, cache_write_1h, output, reasoning_output: whole numbers, default 0
-- cache_write, input_total, total: derived, never stored
+- uncached_input: int
+- cache_read: int
+- cache_write_5m: int
+- cache_write_1h: int
+- output: int
+- reasoning_output: int
+
+## Lifecycle
+
+No lifecycle field was found in the code.
 
 ## Sources
 

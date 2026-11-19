@@ -6,7 +6,7 @@ applies_to:
   - Usage collection
 tags:
   - ba/nfr
-maturity: draft
+maturity: approved
 ---
 # Store uses write ahead logging
 

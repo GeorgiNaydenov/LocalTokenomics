@@ -4,7 +4,7 @@ impact: A secret in a form the patterns do not match is returned in released tex
 likelihood: low, and only when metadata only is off
 tags:
   - ba/risk
-maturity: draft
+maturity: approved
 ---
 # Secret patterns are a fixed list
 

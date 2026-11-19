@@ -2,7 +2,7 @@
 type: supporting
 tags:
   - ba/subdomain
-maturity: draft
+maturity: approved
 ---
 # Usage collection
 

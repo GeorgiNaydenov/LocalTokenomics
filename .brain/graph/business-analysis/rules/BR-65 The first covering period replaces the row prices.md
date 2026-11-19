@@ -4,7 +4,7 @@ category: pricing
 subdomain: Cost pricing
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # The first covering period replaces the row prices
 

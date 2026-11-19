@@ -1,7 +1,7 @@
 ---
 tags:
   - ba/glossary-term
-maturity: draft
+maturity: approved
 ---
 # Peak window
 

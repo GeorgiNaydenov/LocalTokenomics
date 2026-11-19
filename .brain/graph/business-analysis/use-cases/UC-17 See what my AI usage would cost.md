@@ -16,7 +16,7 @@ rules:
   - The local calendar day decides the day of an event
 tags:
   - ba/use-case
-maturity: draft
+maturity: approved
 ---
 # See what my AI usage would cost
 

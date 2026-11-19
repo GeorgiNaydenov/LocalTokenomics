@@ -5,7 +5,7 @@ persists_models:
   - Outcome
 tags:
   - arch/data-store
-maturity: draft
+maturity: approved
 ---
 # Usage store
 

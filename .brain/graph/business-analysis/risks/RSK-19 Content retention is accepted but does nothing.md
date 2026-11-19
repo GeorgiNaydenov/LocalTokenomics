@@ -4,7 +4,7 @@ impact: A person may expect text to expire
 likelihood: low
 tags:
   - ba/risk
-maturity: draft
+maturity: approved
 ---
 # Content retention is accepted but does nothing
 

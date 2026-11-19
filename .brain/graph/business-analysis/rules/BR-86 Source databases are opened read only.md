@@ -4,7 +4,7 @@ category: privacy
 subdomain: Usage collection
 tags:
   - ba/rule
-maturity: draft
+maturity: approved
 ---
 # Source databases are opened read only
 

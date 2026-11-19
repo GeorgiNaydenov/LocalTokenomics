@@ -12,7 +12,7 @@ rules:
   - An alert needs exactly one threshold
 tags:
   - ba/use-case
-maturity: draft
+maturity: approved
 ---
 # Be alerted when spend rises
 
