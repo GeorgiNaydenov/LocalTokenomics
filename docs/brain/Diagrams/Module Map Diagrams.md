@@ -74,12 +74,6 @@ flowchart LR
 ```
 %% generated:diagram-module-map end %%
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 %% generated:node-citations-module-map start (do not edit; run brain docs generate) %%
 ### Node citations
 
@@ -92,9 +86,3 @@ flowchart LR
 - web/src/components/ui: `web/src/components/ui/accordion.tsx:1-65`, `web/src/components/ui/alert.tsx:1-65`, `web/src/components/ui/badge.tsx:1-47`
 - web/src/prototype: `web/src/prototype/Gallery.tsx:1-659`, `web/src/prototype/OverviewScreen.tsx:1-386`, `web/src/prototype/PricingScreen.tsx:1-218`
 %% generated:node-citations-module-map end %%
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost

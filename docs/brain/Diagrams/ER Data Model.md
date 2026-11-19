@@ -421,12 +421,6 @@ erDiagram
 ```
 %% generated:diagram-er-src-ai-usage-cost-1 end %%
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 %% generated:node-citations-er-src-ai-usage-cost-1 start (do not edit; run brain docs generate) %%
 ### Node citations
 
@@ -451,12 +445,6 @@ erDiagram
 - messages: `tests/fixtures/ollama_app/basic.sql:1-16`
 - samples: `src/ai_usage_cost/collect.py:19-23`
 %% generated:node-citations-er-src-ai-usage-cost-1 end %%
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: src/ai_usage_cost (2)
 
@@ -696,12 +684,6 @@ erDiagram
 ```
 %% generated:diagram-er-src-ai-usage-cost-2 end %%
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 %% generated:node-citations-er-src-ai-usage-cost-2 start (do not edit; run brain docs generate) %%
 ### Node citations
 
@@ -726,12 +708,6 @@ erDiagram
 - session_exclusions: `src/ai_usage_cost/store.py:69-72`
 - trace_events: `src/ai_usage_cost/store.py:43-60`
 %% generated:node-citations-er-src-ai-usage-cost-2 end %%
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: src/ai_usage_cost (3)
 
@@ -823,12 +799,6 @@ erDiagram
 ```
 %% generated:diagram-er-src-ai-usage-cost-3 end %%
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 %% generated:node-citations-er-src-ai-usage-cost-3 start (do not edit; run brain docs generate) %%
 ### Node citations
 
@@ -842,12 +812,6 @@ erDiagram
 - SpanContent: `src/ai_usage_cost/trace.py:201-205`
 - Trace: `src/ai_usage_cost/trace.py:192-198`
 %% generated:node-citations-er-src-ai-usage-cost-3 end %%
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: src/ai_usage_cost/sources
 
@@ -878,24 +842,12 @@ erDiagram
 ```
 %% generated:diagram-er-src-ai-usage-cost-sources end %%
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 %% generated:node-citations-er-src-ai-usage-cost-sources start (do not edit; run brain docs generate) %%
 ### Node citations
 
 - Source: `src/ai_usage_cost/sources/base.py:18-44`
 - Spec: `src/ai_usage_cost/sources/cline.py:82-87`
 %% generated:node-citations-er-src-ai-usage-cost-sources end %%
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: tests
 
@@ -997,12 +949,6 @@ erDiagram
 ```
 %% generated:diagram-er-tests end %%
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 %% generated:node-citations-er-tests start (do not edit; run brain docs generate) %%
 ### Node citations
 
@@ -1013,12 +959,6 @@ erDiagram
 - part: `tests/test_opencode.py:319`
 - session: `tests/test_opencode.py:317`
 %% generated:node-citations-er-tests end %%
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: tests/fixtures/copilot_chat
 
@@ -1070,24 +1010,12 @@ erDiagram
 ```
 %% generated:diagram-er-tests-fixtures-copilot-chat end %%
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 %% generated:node-citations-er-tests-fixtures-copilot-chat start (do not edit; run brain docs generate) %%
 ### Node citations
 
 - sessions: `tests/fixtures/copilot_chat/empty.sql:1-12`
 - turns: `tests/fixtures/copilot_chat/empty.sql:14-21`
 %% generated:node-citations-er-tests-fixtures-copilot-chat end %%
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: tests/fixtures/cursor
 
@@ -1124,24 +1052,12 @@ erDiagram
 ```
 %% generated:diagram-er-tests-fixtures-cursor end %%
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 %% generated:node-citations-er-tests-fixtures-cursor start (do not edit; run brain docs generate) %%
 ### Node citations
 
 - ItemTable: `tests/fixtures/windsurf/no_chat_key.sql:1`
 - cursorDiskKV: `tests/fixtures/cursor/empty.sql:1`
 %% generated:node-citations-er-tests-fixtures-cursor end %%
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: tests/fixtures/dyad
 
@@ -1269,12 +1185,6 @@ erDiagram
 ```
 %% generated:diagram-er-tests-fixtures-dyad end %%
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 %% generated:node-citations-er-tests-fixtures-dyad start (do not edit; run brain docs generate) %%
 ### Node citations
 
@@ -1282,12 +1192,6 @@ erDiagram
 - chats: `tests/fixtures/dyad/null_title.sql:20-26`
 - messages: `tests/fixtures/ollama_app/basic.sql:1-16`
 %% generated:node-citations-er-tests-fixtures-dyad end %%
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: tests/fixtures/ollama_app
 
@@ -1340,23 +1244,11 @@ erDiagram
 ```
 %% generated:diagram-er-tests-fixtures-ollama-app end %%
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 %% generated:node-citations-er-tests-fixtures-ollama-app start (do not edit; run brain docs generate) %%
 ### Node citations
 
 - messages: `tests/fixtures/ollama_app/basic.sql:1-16`
 %% generated:node-citations-er-tests-fixtures-ollama-app end %%
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 ## ER view: tests/fixtures/windsurf
 
@@ -1384,20 +1276,8 @@ erDiagram
 ```
 %% generated:diagram-er-tests-fixtures-windsurf end %%
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
 %% generated:node-citations-er-tests-fixtures-windsurf start (do not edit; run brain docs generate) %%
 ### Node citations
 
 - ItemTable: `tests/fixtures/windsurf/no_chat_key.sql:1`
 %% generated:node-citations-er-tests-fixtures-windsurf end %%
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost

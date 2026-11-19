@@ -14,19 +14,10 @@ generated: true
 # 00 Start Here
 
 > [!info] What this is
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 > The front door to the documentation of localtokenomics-docs-ch-localtokenomics-root. Open the repository root as the Obsidian vault: every note, every diagram and every code file is then one click away, and each code link opens the real file.
-=======
 > The front door to the documentation of localtokenomics-docs-ch-localtokenomics-web-src. Open the repository root as the Obsidian vault: every note, every diagram and every code file is then one click away, and each code link opens the real file.
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
 > The front door to the documentation of localtokenomics-docs-ch-localtokenomics-web-src-components-ui. Open the repository root as the Obsidian vault: every note, every diagram and every code file is then one click away, and each code link opens the real file.
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
 > The front door to the documentation of localtokenomics-docs-ch-localtokenomics-src-ai-usage-cost. Open the repository root as the Obsidian vault: every note, every diagram and every code file is then one click away, and each code link opens the real file.
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 > [!tip] How to use it
 > Pick a layer below, or open [[Reading Paths by Role]] for a guided tour. Code stays authoritative: when a note and the code disagree, the code wins and the note has a bug. Notes tagged `generated` are rewritten by `brain docs generate`, so edit the specification, not the note.

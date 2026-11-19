@@ -18,7 +18,6 @@ Which code each test file exercises through imports.
 %% generated:tests-matrix start (do not edit; run brain docs generate) %%
 | Test file | Tests | Code under test (imports) | Code |
 |---|---|---|---|
-<<<<<<< HEAD
 | `tests/test_antigravity.py` | 8 | `src/ai_usage_cost/models.py`, `src/ai_usage_cost/sources/antigravity.py` | [[tests/test_antigravity.py]] `tests/test_antigravity.py:19` |
 | `tests/test_api.py` | 41 | `src/ai_usage_cost/__init__.py`, `src/ai_usage_cost/aggregate.py`, `src/ai_usage_cost/api.py`, `src/ai_usage_cost/models.py`, `src/ai_usage_cost/pipeline.py`, `src/ai_usage_cost/privacy.py` | [[tests/test_api.py]] `tests/test_api.py:77` |
 | `tests/test_claude_code.py` | 23 | `src/ai_usage_cost/models.py`, `src/ai_usage_cost/sources/base.py`, `src/ai_usage_cost/sources/claude_code.py` | [[tests/test_claude_code.py]] `tests/test_claude_code.py:52` |
@@ -54,8 +53,6 @@ Which code each test file exercises through imports.
 | `tests/test_trace_codex.py` | 24 | `src/ai_usage_cost/pricing.py`, `src/ai_usage_cost/privacy.py`, `src/ai_usage_cost/sources/base.py`, `src/ai_usage_cost/sources/codex.py`, `src/ai_usage_cost/trace.py` | [[tests/test_trace_codex.py]] `tests/test_trace_codex.py:56` |
 | `tests/test_warning_groups.py` | 21 | `src/ai_usage_cost/aggregate.py` | [[tests/test_warning_groups.py]] `tests/test_warning_groups.py:8` |
 | `tests/test_windsurf.py` | 10 | `src/ai_usage_cost/models.py`, `src/ai_usage_cost/sources/windsurf.py` | [[tests/test_windsurf.py]] `tests/test_windsurf.py:28` |
-<<<<<<< HEAD
-<<<<<<< HEAD
 | `web/src/EconomicsTab.test.ts` | 5 | [[localtokenomics root Overview\|web/src/EconomicsTab.tsx]], [[localtokenomics root Overview\|web/src/api.ts]] | [[web/src/EconomicsTab.test.ts]] `web/src/EconomicsTab.test.ts:16` |
 | `web/src/Pricing.test.ts` | 22 | [[localtokenomics root Overview\|web/src/Pricing.tsx]], [[localtokenomics root Overview\|web/src/api.ts]] | [[web/src/Pricing.test.ts]] `web/src/Pricing.test.ts:96` |
 | `web/src/TraceTab.test.ts` | 32 | [[localtokenomics root Overview\|web/src/TraceTab.tsx]], [[localtokenomics root Overview\|web/src/api.ts]] | [[web/src/TraceTab.test.ts]] `web/src/TraceTab.test.ts:64` |
@@ -66,7 +63,6 @@ Which code each test file exercises through imports.
 | `web/src/pricing-format.test.ts` | 14 | [[localtokenomics root Overview\|web/src/pricing-format.ts]] | [[web/src/pricing-format.test.ts]] `web/src/pricing-format.test.ts:12` |
 | `web/src/pricing-notes.test.ts` | 13 | [[localtokenomics root Overview\|web/src/pricing-notes.ts]] | [[web/src/pricing-notes.test.ts]] `web/src/pricing-notes.test.ts:11` |
 | `web/src/turn-insights.test.ts` | 35 | [[localtokenomics root Overview\|web/src/api.ts]], [[localtokenomics root Overview\|web/src/turn-insights.ts]] | [[web/src/turn-insights.test.ts]] `web/src/turn-insights.test.ts:56` |
-=======
 | `web/src/EconomicsTab.test.ts` | 5 | [[Web Overview\|web/src/EconomicsTab.tsx]], [[Web Overview\|web/src/api.ts]] | [[web/src/EconomicsTab.test.ts]] `web/src/EconomicsTab.test.ts:16` |
 | `web/src/Pricing.test.ts` | 22 | [[Web Overview\|web/src/Pricing.tsx]], [[Web Overview\|web/src/api.ts]] | [[web/src/Pricing.test.ts]] `web/src/Pricing.test.ts:96` |
 | `web/src/TraceTab.test.ts` | 32 | [[Web Overview\|web/src/TraceTab.tsx]], [[Web Overview\|web/src/api.ts]] | [[web/src/TraceTab.test.ts]] `web/src/TraceTab.test.ts:64` |
@@ -77,9 +73,6 @@ Which code each test file exercises through imports.
 | `web/src/pricing-format.test.ts` | 14 | [[Web Overview\|web/src/pricing-format.ts]] | [[web/src/pricing-format.test.ts]] `web/src/pricing-format.test.ts:12` |
 | `web/src/pricing-notes.test.ts` | 13 | [[Web Overview\|web/src/pricing-notes.ts]] | [[web/src/pricing-notes.test.ts]] `web/src/pricing-notes.test.ts:11` |
 | `web/src/turn-insights.test.ts` | 35 | [[Web Overview\|web/src/api.ts]], [[Web Overview\|web/src/turn-insights.ts]] | [[web/src/turn-insights.test.ts]] `web/src/turn-insights.test.ts:56` |
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-=======
 | `tests/test_antigravity.py` | 8 | [[Ai usage cost Overview\|src/ai_usage_cost/models.py]], [[Ai usage cost Overview\|src/ai_usage_cost/sources/antigravity.py]] | [[tests/test_antigravity.py]] `tests/test_antigravity.py:19` |
 | `tests/test_api.py` | 41 | [[Ai usage cost Overview\|src/ai_usage_cost/__init__.py]], [[Ai usage cost Overview\|src/ai_usage_cost/aggregate.py]], [[Ai usage cost Overview\|src/ai_usage_cost/api.py]], [[Ai usage cost Overview\|src/ai_usage_cost/models.py]], [[Ai usage cost Overview\|src/ai_usage_cost/pipeline.py]], [[Ai usage cost Overview\|src/ai_usage_cost/privacy.py]] | [[tests/test_api.py]] `tests/test_api.py:77` |
 | `tests/test_claude_code.py` | 23 | [[Ai usage cost Overview\|src/ai_usage_cost/models.py]], [[Ai usage cost Overview\|src/ai_usage_cost/sources/base.py]], [[Ai usage cost Overview\|src/ai_usage_cost/sources/claude_code.py]] | [[tests/test_claude_code.py]] `tests/test_claude_code.py:52` |
@@ -115,7 +108,6 @@ Which code each test file exercises through imports.
 | `tests/test_trace_codex.py` | 24 | [[Ai usage cost Overview\|src/ai_usage_cost/pricing.py]], [[Ai usage cost Overview\|src/ai_usage_cost/privacy.py]], [[Ai usage cost Overview\|src/ai_usage_cost/sources/base.py]], [[Ai usage cost Overview\|src/ai_usage_cost/sources/codex.py]], [[Ai usage cost Overview\|src/ai_usage_cost/trace.py]] | [[tests/test_trace_codex.py]] `tests/test_trace_codex.py:56` |
 | `tests/test_warning_groups.py` | 21 | [[Ai usage cost Overview\|src/ai_usage_cost/aggregate.py]] | [[tests/test_warning_groups.py]] `tests/test_warning_groups.py:8` |
 | `tests/test_windsurf.py` | 10 | [[Ai usage cost Overview\|src/ai_usage_cost/models.py]], [[Ai usage cost Overview\|src/ai_usage_cost/sources/windsurf.py]] | [[tests/test_windsurf.py]] `tests/test_windsurf.py:28` |
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 | `web/src/EconomicsTab.test.ts` | 5 | `web/src/EconomicsTab.tsx`, `web/src/api.ts` | [[web/src/EconomicsTab.test.ts]] `web/src/EconomicsTab.test.ts:16` |
 | `web/src/Pricing.test.ts` | 22 | `web/src/Pricing.tsx`, `web/src/api.ts` | [[web/src/Pricing.test.ts]] `web/src/Pricing.test.ts:96` |
 | `web/src/TraceTab.test.ts` | 32 | `web/src/TraceTab.tsx`, `web/src/api.ts` | [[web/src/TraceTab.test.ts]] `web/src/TraceTab.test.ts:64` |
@@ -126,10 +118,6 @@ Which code each test file exercises through imports.
 | `web/src/pricing-format.test.ts` | 14 | `web/src/pricing-format.ts` | [[web/src/pricing-format.test.ts]] `web/src/pricing-format.test.ts:12` |
 | `web/src/pricing-notes.test.ts` | 13 | `web/src/pricing-notes.ts` | [[web/src/pricing-notes.test.ts]] `web/src/pricing-notes.test.ts:11` |
 | `web/src/turn-insights.test.ts` | 35 | `web/src/api.ts`, `web/src/turn-insights.ts` | [[web/src/turn-insights.test.ts]] `web/src/turn-insights.test.ts:56` |
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 
 Owned code files with no importing test: 70.
 
