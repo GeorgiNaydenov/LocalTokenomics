@@ -3,44 +3,33 @@ title: Usage cost goals
 aliases: []
 tags: [diagram, mermaid, use-case-diagram]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/*]
+verified-against: 1445ea834ab7
 sources: [docs/brain/architecture/diagrams/usage-cost-goals.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost
 authored: true
 node_citations:
   usage-cost-goals:
-    person:
-    - src/ai_usage_cost/cli.py:24-27
-    logs:
-    - src/ai_usage_cost/store.py:218-220
-    notify:
-    - src/ai_usage_cost/cli.py:344-354
-    uc1:
-    - src/ai_usage_cost/cli.py:71-105
-    uc2:
-    - src/ai_usage_cost/cli.py:108-137
-    uc3:
-    - src/ai_usage_cost/cli.py:175-196
-    uc4:
-    - src/ai_usage_cost/cli.py:298-354
-    uc5:
-    - src/ai_usage_cost/api.py:320-359
-    uc6:
-    - src/ai_usage_cost/api.py:361-368
-    uc7:
-    - src/ai_usage_cost/api.py:370-382
-    uc8:
-    - src/ai_usage_cost/cli.py:140-172
-    uc9:
-    - src/ai_usage_cost/cli.py:199-225
-    uc10:
-    - src/ai_usage_cost/cli.py:228-248
-    uc11:
-    - src/ai_usage_cost/cli.py:357-376
+    person: ['src/ai_usage_cost/cli.py:24-27']
+    logs: ['src/ai_usage_cost/store.py:218-220']
+    notify: ['src/ai_usage_cost/cli.py:344-354']
+    uc1: ['src/ai_usage_cost/cli.py:71-105']
+    uc2: ['src/ai_usage_cost/cli.py:108-137']
+    uc3: ['src/ai_usage_cost/cli.py:175-196']
+    uc4: ['src/ai_usage_cost/cli.py:298-354']
+    uc5: ['src/ai_usage_cost/api.py:320-359']
+    uc6: ['src/ai_usage_cost/api.py:361-368']
+    uc7: ['src/ai_usage_cost/api.py:370-382']
+    uc8: ['src/ai_usage_cost/cli.py:140-172']
+    uc9: ['src/ai_usage_cost/cli.py:199-225']
+    uc10: ['src/ai_usage_cost/cli.py:228-248']
+    uc11: ['src/ai_usage_cost/cli.py:357-376']
+approved-by: human
+approved-at: '2026-11-19T06:39:06+00:00'
 ---
 
 # Usage cost goals

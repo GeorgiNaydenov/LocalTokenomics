@@ -3,14 +3,17 @@ title: Ai usage cost Diagrams
 aliases: []
 tags: [c4, diagram, erd, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/*]
+verified-against: 1445ea834ab7
 sources: [docs/brain/architecture/diagrams/module-ch-localtokenomics-src-ai-usage-cost.mmd,
   docs/brain/architecture/diagrams/er-ch-localtokenomics-src-ai-usage-cost.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost
+approved-by: human
+approved-at: '2026-11-19T06:39:06+00:00'
 ---
 
 # Ai usage cost Diagrams

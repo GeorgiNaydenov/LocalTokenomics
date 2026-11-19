@@ -3,14 +3,17 @@ title: Usage cost concepts
 aliases: []
 tags: [diagram, mermaid, mind-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/*]
+verified-against: 1445ea834ab7
 sources: [docs/brain/architecture/diagrams/usage-cost-concepts.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost
 authored: true
+approved-by: human
+approved-at: '2026-11-19T06:39:06+00:00'
 ---
 
 # Usage cost concepts

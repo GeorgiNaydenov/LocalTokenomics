@@ -1,57 +1,39 @@
 ---
 title: Scan and report process
 aliases: []
-tags:
-- bpmn
-- diagram
+tags: [bpmn, diagram]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
-covers:
-- src/ai_usage_cost/*
-sources:
-- docs/brain/architecture/bpmn/bpmn-scan-and-report.bpmn
+covers: [src/ai_usage_cost/*]
+verified-against: 1445ea834ab7
+sources: [docs/brain/architecture/bpmn/bpmn-scan-and-report.bpmn]
 chunk: ch-localtokenomics-src-ai-usage-cost
 authored: true
 process-source: code-flow
 node_citations:
   bpmn-scan-and-report:
-    s1:
-    - src/ai_usage_cost/cli.py:72
-    u1:
-    - src/ai_usage_cost/cli.py:71-87
-    u2:
-    - src/ai_usage_cost/cli.py:105
-    e1:
-    - src/ai_usage_cost/cli.py:105
-    s2:
-    - src/ai_usage_cost/cli.py:87
-    t1:
-    - src/ai_usage_cost/pipeline.py:175-176
-    t2:
-    - src/ai_usage_cost/store.py:218-220
-    g1:
-    - src/ai_usage_cost/store.py:229-231
-    t3:
-    - src/ai_usage_cost/store.py:252-271
-    g2:
-    - src/ai_usage_cost/store.py:229-231
-    t4:
-    - src/ai_usage_cost/pipeline.py:186-199
-    t5:
-    - src/ai_usage_cost/pipeline.py:212-239
-    t6:
-    - src/ai_usage_cost/pipeline.py:305-349
-    g3:
-    - src/ai_usage_cost/cli.py:98
-    t7:
-    - src/ai_usage_cost/cli.py:105
-    e2:
-    - src/ai_usage_cost/cli.py:105
-    e3:
-    - src/ai_usage_cost/cli.py:98-104
+    s1: ['src/ai_usage_cost/cli.py:72']
+    u1: ['src/ai_usage_cost/cli.py:71-87']
+    u2: ['src/ai_usage_cost/cli.py:105']
+    e1: ['src/ai_usage_cost/cli.py:105']
+    s2: ['src/ai_usage_cost/cli.py:87']
+    t1: ['src/ai_usage_cost/pipeline.py:175-176']
+    t2: ['src/ai_usage_cost/store.py:218-220']
+    g1: ['src/ai_usage_cost/store.py:229-231']
+    t3: ['src/ai_usage_cost/store.py:252-271']
+    g2: ['src/ai_usage_cost/store.py:229-231']
+    t4: ['src/ai_usage_cost/pipeline.py:186-199']
+    t5: ['src/ai_usage_cost/pipeline.py:212-239']
+    t6: ['src/ai_usage_cost/pipeline.py:305-349']
+    g3: ['src/ai_usage_cost/cli.py:98']
+    t7: ['src/ai_usage_cost/cli.py:105']
+    e2: ['src/ai_usage_cost/cli.py:105']
+    e3: ['src/ai_usage_cost/cli.py:98-104']
+approved-by: human
+approved-at: '2026-11-19T06:39:06+00:00'
 ---
 
 # Scan and report process

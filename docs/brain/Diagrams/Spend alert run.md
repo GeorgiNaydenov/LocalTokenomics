@@ -3,56 +3,37 @@ title: Spend alert run
 aliases: []
 tags: [activity, diagram, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/*]
+verified-against: 1445ea834ab7
 sources: [docs/brain/architecture/diagrams/spend-alert-run.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost
 authored: true
 node_citations:
   spend-alert-run:
-    start:
-    - src/ai_usage_cost/cli.py:298-319
-    d_opts:
-    - src/ai_usage_cost/cli.py:320-326
-    d_extra:
-    - src/ai_usage_cost/cli.py:327
-    - src/ai_usage_cost/cli.py:48-56
-    win:
-    - src/ai_usage_cost/cli.py:329-330
-    analyse:
-    - src/ai_usage_cost/cli.py:331-332
-    d_rise:
-    - src/ai_usage_cost/cli.py:333-334
-    prev:
-    - src/ai_usage_cost/cli.py:335-337
-    decide:
-    - src/ai_usage_cost/cli.py:257-282
-    - src/ai_usage_cost/cli.py:339-340
-    d_fire:
-    - src/ai_usage_cost/cli.py:282
-    - src/ai_usage_cost/cli.py:341-342
-    add:
-    - src/ai_usage_cost/cli.py:344-346
-    d_add:
-    - src/ai_usage_cost/cli.py:346-348
-    send:
-    - src/ai_usage_cost/cli.py:349-352
-    d_sent:
-    - src/ai_usage_cost/cli.py:349-354
-    bad:
-    - src/ai_usage_cost/cli.py:320-326
-    noextra:
-    - src/ai_usage_cost/cli.py:52-56
-    quiet:
-    - src/ai_usage_cost/cli.py:341-342
-    failed:
-    - src/ai_usage_cost/cli.py:346-348
-    - src/ai_usage_cost/cli.py:353-354
-    done:
-    - src/ai_usage_cost/cli.py:349-352
+    start: ['src/ai_usage_cost/cli.py:298-319']
+    d_opts: ['src/ai_usage_cost/cli.py:320-326']
+    d_extra: ['src/ai_usage_cost/cli.py:327', 'src/ai_usage_cost/cli.py:48-56']
+    win: ['src/ai_usage_cost/cli.py:329-330']
+    analyse: ['src/ai_usage_cost/cli.py:331-332']
+    d_rise: ['src/ai_usage_cost/cli.py:333-334']
+    prev: ['src/ai_usage_cost/cli.py:335-337']
+    decide: ['src/ai_usage_cost/cli.py:257-282', 'src/ai_usage_cost/cli.py:339-340']
+    d_fire: ['src/ai_usage_cost/cli.py:282', 'src/ai_usage_cost/cli.py:341-342']
+    add: ['src/ai_usage_cost/cli.py:344-346']
+    d_add: ['src/ai_usage_cost/cli.py:346-348']
+    send: ['src/ai_usage_cost/cli.py:349-352']
+    d_sent: ['src/ai_usage_cost/cli.py:349-354']
+    bad: ['src/ai_usage_cost/cli.py:320-326']
+    noextra: ['src/ai_usage_cost/cli.py:52-56']
+    quiet: ['src/ai_usage_cost/cli.py:341-342']
+    failed: ['src/ai_usage_cost/cli.py:346-348', 'src/ai_usage_cost/cli.py:353-354']
+    done: ['src/ai_usage_cost/cli.py:349-352']
+approved-by: human
+approved-at: '2026-11-19T06:39:06+00:00'
 ---
 
 # Spend alert run

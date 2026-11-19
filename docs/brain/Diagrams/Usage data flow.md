@@ -1,47 +1,33 @@
 ---
 title: Usage data flow
 aliases: []
-tags:
-- dfd
-- diagram
-- mermaid
+tags: [dfd, diagram, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
-covers:
-- src/ai_usage_cost/*
-sources:
-- docs/brain/architecture/diagrams/dfd-usage-data-flow.mmd
+covers: [src/ai_usage_cost/*]
+verified-against: 1445ea834ab7
+sources: [docs/brain/architecture/diagrams/dfd-usage-data-flow.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost
 authored: true
 node_citations:
   dfd-usage-data-flow:
-    e1:
-    - src/ai_usage_cost/sources/base.py:117-129
-    e2:
-    - src/ai_usage_cost/cli.py:71-105
-    e3:
-    - src/ai_usage_cost/cli.py:344-354
-    p1:
-    - src/ai_usage_cost/store.py:190-305
-    p2:
-    - src/ai_usage_cost/pipeline.py:166-245
-    p3:
-    - src/ai_usage_cost/pipeline.py:305-349
-    p4:
-    - src/ai_usage_cost/cli.py:71-105
-    p5:
-    - src/ai_usage_cost/privacy.py:86-101
-    p6:
-    - src/ai_usage_cost/store.py:568-606
-    d1:
-    - src/ai_usage_cost/store.py:140-151
-    d2:
-    - src/ai_usage_cost/pricing.py:285-287
-    d3:
-    - src/ai_usage_cost/privacy.py:60-68
+    e1: ['src/ai_usage_cost/sources/base.py:117-129']
+    e2: ['src/ai_usage_cost/cli.py:71-105']
+    e3: ['src/ai_usage_cost/cli.py:344-354']
+    p1: ['src/ai_usage_cost/store.py:190-305']
+    p2: ['src/ai_usage_cost/pipeline.py:166-245']
+    p3: ['src/ai_usage_cost/pipeline.py:305-349']
+    p4: ['src/ai_usage_cost/cli.py:71-105']
+    p5: ['src/ai_usage_cost/privacy.py:86-101']
+    p6: ['src/ai_usage_cost/store.py:568-606']
+    d1: ['src/ai_usage_cost/store.py:140-151']
+    d2: ['src/ai_usage_cost/pricing.py:285-287']
+    d3: ['src/ai_usage_cost/privacy.py:60-68']
+approved-by: human
+approved-at: '2026-11-19T06:39:06+00:00'
 ---
 
 # Usage data flow

@@ -3,46 +3,34 @@ title: Usage cost terms
 aliases: []
 tags: [diagram, glossary-map, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/*]
+verified-against: 1445ea834ab7
 sources: [docs/brain/architecture/diagrams/usage-cost-terms.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost
 authored: true
 node_citations:
   usage-cost-terms:
-    source:
-    - src/ai_usage_cost/sources/base.py:18-21
-    client:
-    - src/ai_usage_cost/models.py:51
-    session:
-    - src/ai_usage_cost/models.py:55
-    request:
-    - src/ai_usage_cost/models.py:49-72
-    tokens:
-    - src/ai_usage_cost/models.py:12-33
-    tier:
-    - src/ai_usage_cost/models.py:59
-    sidechain:
-    - src/ai_usage_cost/models.py:58
-    rate:
-    - src/ai_usage_cost/pricing.py:126-129
-    state:
-    - src/ai_usage_cost/models.py:8
-    cost:
-    - src/ai_usage_cost/models.py:75-98
-    span:
-    - src/ai_usage_cost/trace.py:55-71
-    outcome:
-    - src/ai_usage_cost/trace.py:141-151
-    bucket:
-    - src/ai_usage_cost/models.py:123-130
-    warning:
-    - src/ai_usage_cost/aggregate.py:115-128
-    severity:
-    - src/ai_usage_cost/aggregate.py:83-90
+    source: ['src/ai_usage_cost/sources/base.py:18-21']
+    client: ['src/ai_usage_cost/models.py:51']
+    session: ['src/ai_usage_cost/models.py:55']
+    request: ['src/ai_usage_cost/models.py:49-72']
+    tokens: ['src/ai_usage_cost/models.py:12-33']
+    tier: ['src/ai_usage_cost/models.py:59']
+    sidechain: ['src/ai_usage_cost/models.py:58']
+    rate: ['src/ai_usage_cost/pricing.py:126-129']
+    state: ['src/ai_usage_cost/models.py:8']
+    cost: ['src/ai_usage_cost/models.py:75-98']
+    span: ['src/ai_usage_cost/trace.py:55-71']
+    outcome: ['src/ai_usage_cost/trace.py:141-151']
+    bucket: ['src/ai_usage_cost/models.py:123-130']
+    warning: ['src/ai_usage_cost/aggregate.py:115-128']
+    severity: ['src/ai_usage_cost/aggregate.py:83-90']
+approved-by: human
+approved-at: '2026-11-19T06:39:06+00:00'
 ---
 
 # Usage cost terms

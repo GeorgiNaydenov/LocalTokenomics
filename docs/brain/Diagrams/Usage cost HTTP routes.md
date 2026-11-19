@@ -3,74 +3,48 @@ title: Usage cost HTTP routes
 aliases: []
 tags: [api-map, diagram, drawio]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/*]
+verified-against: 1445ea834ab7
 sources: [docs/brain/architecture/drawio/drawio-usage-cost-http-routes.drawio]
 chunk: ch-localtokenomics-src-ai-usage-cost
 authored: true
 node_citations:
   drawio-usage-cost-http-routes:
-    analysis:
-    - src/ai_usage_cost/api.py:255-392
-    analysis_m0:
-    - src/ai_usage_cost/api.py:255-289
-    analysis_p0:
-    - src/ai_usage_cost/api.py:255-289
-    analysis_m1:
-    - src/ai_usage_cost/api.py:289-318
-    analysis_p1:
-    - src/ai_usage_cost/api.py:289-318
-    analysis_m2:
-    - src/ai_usage_cost/api.py:384-386
-    analysis_p2:
-    - src/ai_usage_cost/api.py:384-386
-    analysis_m3:
-    - src/ai_usage_cost/api.py:388-392
-    analysis_p3:
-    - src/ai_usage_cost/api.py:388-392
-    session:
-    - src/ai_usage_cost/api.py:230-242
-    session_m0:
-    - src/ai_usage_cost/api.py:320-331
-    session_p0:
-    - src/ai_usage_cost/api.py:320-331
-    session_m1:
-    - src/ai_usage_cost/api.py:333-343
-    session_p1:
-    - src/ai_usage_cost/api.py:333-343
-    session_m2:
-    - src/ai_usage_cost/api.py:345-348
-    session_p2:
-    - src/ai_usage_cost/api.py:345-348
-    session_m3:
-    - src/ai_usage_cost/api.py:350-353
-    session_p3:
-    - src/ai_usage_cost/api.py:350-353
-    session_m4:
-    - src/ai_usage_cost/api.py:355-359
-    session_p4:
-    - src/ai_usage_cost/api.py:355-359
-    session_m5:
-    - src/ai_usage_cost/api.py:361-368
-    session_p5:
-    - src/ai_usage_cost/api.py:361-368
-    session_m6:
-    - src/ai_usage_cost/api.py:370-382
-    session_p6:
-    - src/ai_usage_cost/api.py:370-382
-    dash:
-    - src/ai_usage_cost/api.py:394-402
-    dash_m0:
-    - src/ai_usage_cost/api.py:394-395
-    dash_p0:
-    - src/ai_usage_cost/api.py:394-395
-    dash_m1:
-    - src/ai_usage_cost/api.py:396-402
-    dash_p1:
-    - src/ai_usage_cost/api.py:396-402
+    analysis: ['src/ai_usage_cost/api.py:255-392']
+    analysis_m0: ['src/ai_usage_cost/api.py:255-289']
+    analysis_p0: ['src/ai_usage_cost/api.py:255-289']
+    analysis_m1: ['src/ai_usage_cost/api.py:289-318']
+    analysis_p1: ['src/ai_usage_cost/api.py:289-318']
+    analysis_m2: ['src/ai_usage_cost/api.py:384-386']
+    analysis_p2: ['src/ai_usage_cost/api.py:384-386']
+    analysis_m3: ['src/ai_usage_cost/api.py:388-392']
+    analysis_p3: ['src/ai_usage_cost/api.py:388-392']
+    session: ['src/ai_usage_cost/api.py:230-242']
+    session_m0: ['src/ai_usage_cost/api.py:320-331']
+    session_p0: ['src/ai_usage_cost/api.py:320-331']
+    session_m1: ['src/ai_usage_cost/api.py:333-343']
+    session_p1: ['src/ai_usage_cost/api.py:333-343']
+    session_m2: ['src/ai_usage_cost/api.py:345-348']
+    session_p2: ['src/ai_usage_cost/api.py:345-348']
+    session_m3: ['src/ai_usage_cost/api.py:350-353']
+    session_p3: ['src/ai_usage_cost/api.py:350-353']
+    session_m4: ['src/ai_usage_cost/api.py:355-359']
+    session_p4: ['src/ai_usage_cost/api.py:355-359']
+    session_m5: ['src/ai_usage_cost/api.py:361-368']
+    session_p5: ['src/ai_usage_cost/api.py:361-368']
+    session_m6: ['src/ai_usage_cost/api.py:370-382']
+    session_p6: ['src/ai_usage_cost/api.py:370-382']
+    dash: ['src/ai_usage_cost/api.py:394-402']
+    dash_m0: ['src/ai_usage_cost/api.py:394-395']
+    dash_p0: ['src/ai_usage_cost/api.py:394-395']
+    dash_m1: ['src/ai_usage_cost/api.py:396-402']
+    dash_p1: ['src/ai_usage_cost/api.py:396-402']
+approved-by: human
+approved-at: '2026-11-19T06:39:06+00:00'
 ---
 
 # Usage cost HTTP routes

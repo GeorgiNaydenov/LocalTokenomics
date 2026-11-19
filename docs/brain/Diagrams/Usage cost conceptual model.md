@@ -1,32 +1,25 @@
 ---
 title: Usage cost conceptual model
 aliases: []
-tags:
-- diagram
-- erd
-- erd-conceptual
-- mermaid
+tags: [diagram, erd, erd-conceptual, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
-covers:
-- src/ai_usage_cost/*
-sources:
-- docs/brain/architecture/diagrams/conceptual-usage-cost-model.mmd
+covers: [src/ai_usage_cost/*]
+verified-against: 1445ea834ab7
+sources: [docs/brain/architecture/diagrams/conceptual-usage-cost-model.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost
 authored: true
 node_citations:
   conceptual-usage-cost-model:
-    USAGE_EVENT:
-    - src/ai_usage_cost/models.py:49-72
-    PRICED_EVENT:
-    - src/ai_usage_cost/models.py:117-120
-    RATE_ROW:
-    - src/ai_usage_cost/pricing.py:126-145
-    BUCKET:
-    - src/ai_usage_cost/models.py:123-134
+    USAGE_EVENT: ['src/ai_usage_cost/models.py:49-72']
+    PRICED_EVENT: ['src/ai_usage_cost/models.py:117-120']
+    RATE_ROW: ['src/ai_usage_cost/pricing.py:126-145']
+    BUCKET: ['src/ai_usage_cost/models.py:123-134']
+approved-by: human
+approved-at: '2026-11-19T06:39:06+00:00'
 ---
 
 # Usage cost conceptual model

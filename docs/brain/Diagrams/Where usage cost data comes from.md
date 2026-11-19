@@ -3,56 +3,38 @@ title: Where usage cost data comes from
 aliases: []
 tags: [data-lineage, diagram, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/*]
+verified-against: 1445ea834ab7
 sources: [docs/brain/architecture/diagrams/usage-cost-data-origins.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost
 authored: true
 node_citations:
   usage-cost-data-origins:
-    logs:
-    - src/ai_usage_cost/store.py:218-220
-    ratesfile:
-    - src/ai_usage_cost/pricing.py:286-287
-    cfgfile:
-    - src/ai_usage_cost/privacy.py:12
-    - src/ai_usage_cost/privacy.py:60-68
-    gpu:
-    - src/ai_usage_cost/collect.py:211-244
-    viewer:
-    - src/ai_usage_cost/api.py:355-368
-    ingest:
-    - src/ai_usage_cost/store.py:190-305
-    collect:
-    - src/ai_usage_cost/collect.py:260-282
-    load:
-    - src/ai_usage_cost/store.py:668-699
-    price:
-    - src/ai_usage_cost/pipeline.py:192-199
-    report:
-    - src/ai_usage_cost/pipeline.py:305-349
-    rate:
-    - src/ai_usage_cost/store.py:568-606
-    sqlview:
-    - src/ai_usage_cost/cli.py:228-248
-    requests:
-    - src/ai_usage_cost/store.py:23-33
-    files:
-    - src/ai_usage_cost/store.py:36-40
-    traces:
-    - src/ai_usage_cost/store.py:43-60
-    outcomes:
-    - src/ai_usage_cost/store.py:63-68
-    exclusions:
-    - src/ai_usage_cost/store.py:69-72
-    samples:
-    - src/ai_usage_cost/collect.py:18-25
-    out_json:
-    - src/ai_usage_cost/cli.py:95-105
-    - src/ai_usage_cost/cli.py:186-196
+    logs: ['src/ai_usage_cost/store.py:218-220']
+    ratesfile: ['src/ai_usage_cost/pricing.py:286-287']
+    cfgfile: ['src/ai_usage_cost/privacy.py:12', 'src/ai_usage_cost/privacy.py:60-68']
+    gpu: ['src/ai_usage_cost/collect.py:211-244']
+    viewer: ['src/ai_usage_cost/api.py:355-368']
+    ingest: ['src/ai_usage_cost/store.py:190-305']
+    collect: ['src/ai_usage_cost/collect.py:260-282']
+    load: ['src/ai_usage_cost/store.py:668-699']
+    price: ['src/ai_usage_cost/pipeline.py:192-199']
+    report: ['src/ai_usage_cost/pipeline.py:305-349']
+    rate: ['src/ai_usage_cost/store.py:568-606']
+    sqlview: ['src/ai_usage_cost/cli.py:228-248']
+    requests: ['src/ai_usage_cost/store.py:23-33']
+    files: ['src/ai_usage_cost/store.py:36-40']
+    traces: ['src/ai_usage_cost/store.py:43-60']
+    outcomes: ['src/ai_usage_cost/store.py:63-68']
+    exclusions: ['src/ai_usage_cost/store.py:69-72']
+    samples: ['src/ai_usage_cost/collect.py:18-25']
+    out_json: ['src/ai_usage_cost/cli.py:95-105', 'src/ai_usage_cost/cli.py:186-196']
+approved-by: human
+approved-at: '2026-11-19T06:39:06+00:00'
 ---
 
 # Where usage cost data comes from

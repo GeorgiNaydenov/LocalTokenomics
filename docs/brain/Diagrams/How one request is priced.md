@@ -1,60 +1,39 @@
 ---
 title: How one request is priced
 aliases: []
-tags:
-- diagram
-- flowchart
-- mermaid
+tags: [diagram, flowchart, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
-covers:
-- src/ai_usage_cost/*
-sources:
-- docs/brain/architecture/diagrams/flow-price-one-request.mmd
+covers: [src/ai_usage_cost/*]
+verified-against: 1445ea834ab7
+sources: [docs/brain/architecture/diagrams/flow-price-one-request.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost
 authored: true
 node_citations:
   flow-price-one-request:
-    start:
-    - src/ai_usage_cost/pricing.py:429-432
-    d1:
-    - src/ai_usage_cost/pricing.py:420-421
-    x1:
-    - src/ai_usage_cost/pricing.py:420-421
-    d2:
-    - src/ai_usage_cost/pricing.py:422-423
-    x2:
-    - src/ai_usage_cost/pricing.py:433-434
-    d3:
-    - src/ai_usage_cost/pricing.py:424-425
-    x3:
-    - src/ai_usage_cost/pricing.py:424-425
-    s1:
-    - src/ai_usage_cost/pricing.py:446-475
-    - src/ai_usage_cost/pricing.py:507-515
-    d4:
-    - src/ai_usage_cost/pricing.py:519
-    d5:
-    - src/ai_usage_cost/pricing.py:520-522
-    s3:
-    - src/ai_usage_cost/pricing.py:522
-    d6:
-    - src/ai_usage_cost/pricing.py:523
-    s4:
-    - src/ai_usage_cost/pricing.py:523-524
-    s5:
-    - src/ai_usage_cost/pricing.py:525-526
-    d7:
-    - src/ai_usage_cost/pricing.py:528
-    s6:
-    - src/ai_usage_cost/pricing.py:528-529
-    s7:
-    - src/ai_usage_cost/pricing.py:533-551
-    x4:
-    - src/ai_usage_cost/pricing.py:554-562
+    start: ['src/ai_usage_cost/pricing.py:429-432']
+    d1: ['src/ai_usage_cost/pricing.py:420-421']
+    x1: ['src/ai_usage_cost/pricing.py:420-421']
+    d2: ['src/ai_usage_cost/pricing.py:422-423']
+    x2: ['src/ai_usage_cost/pricing.py:433-434']
+    d3: ['src/ai_usage_cost/pricing.py:424-425']
+    x3: ['src/ai_usage_cost/pricing.py:424-425']
+    s1: ['src/ai_usage_cost/pricing.py:446-475', 'src/ai_usage_cost/pricing.py:507-515']
+    d4: ['src/ai_usage_cost/pricing.py:519']
+    d5: ['src/ai_usage_cost/pricing.py:520-522']
+    s3: ['src/ai_usage_cost/pricing.py:522']
+    d6: ['src/ai_usage_cost/pricing.py:523']
+    s4: ['src/ai_usage_cost/pricing.py:523-524']
+    s5: ['src/ai_usage_cost/pricing.py:525-526']
+    d7: ['src/ai_usage_cost/pricing.py:528']
+    s6: ['src/ai_usage_cost/pricing.py:528-529']
+    s7: ['src/ai_usage_cost/pricing.py:533-551']
+    x4: ['src/ai_usage_cost/pricing.py:554-562']
+approved-by: human
+approved-at: '2026-11-19T06:39:06+00:00'
 ---
 
 # How one request is priced

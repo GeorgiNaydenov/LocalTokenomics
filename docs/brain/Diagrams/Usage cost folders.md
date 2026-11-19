@@ -3,45 +3,30 @@ title: Usage cost folders
 aliases: []
 tags: [diagram, mermaid, package-tree]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/*]
+verified-against: 1445ea834ab7
 sources: [docs/brain/architecture/diagrams/usage-cost-folders.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost
 authored: true
 node_citations:
   usage-cost-folders:
-    pkg:
-    - src/ai_usage_cost/__init__.py:1
-    cli:
-    - src/ai_usage_cost/cli.py:24-27
-    - pyproject.toml:29-30
-    api:
-    - src/ai_usage_cost/api.py:198-214
-    core:
-    - src/ai_usage_cost/pipeline.py:166-173
-    - src/ai_usage_cost/pricing.py:252-253
-    - src/ai_usage_cost/aggregate.py:462-463
-    - src/ai_usage_cost/models.py:49
-    data:
-    - src/ai_usage_cost/store.py:140
-    - src/ai_usage_cost/trace.py:55
-    - src/ai_usage_cost/privacy.py:52
-    - src/ai_usage_cost/collect.py:260
-    extra:
-    - src/ai_usage_cost/demo.py:350
-    - src/ai_usage_cost/tui.py:9
-    - src/ai_usage_cost/pricing.py:22
-    sources:
-    - src/ai_usage_cost/pipeline.py:22
-    render:
-    - src/ai_usage_cost/cli.py:22
-    - src/ai_usage_cost/cli.py:190
-    web:
-    - src/ai_usage_cost/api.py:41
-    - src/ai_usage_cost/api.py:394-395
+    pkg: ['src/ai_usage_cost/__init__.py:1']
+    cli: ['src/ai_usage_cost/cli.py:24-27', 'pyproject.toml:29-30']
+    api: ['src/ai_usage_cost/api.py:198-214']
+    core: ['src/ai_usage_cost/pipeline.py:166-173', 'src/ai_usage_cost/pricing.py:252-253',
+      'src/ai_usage_cost/aggregate.py:462-463', 'src/ai_usage_cost/models.py:49']
+    data: ['src/ai_usage_cost/store.py:140', 'src/ai_usage_cost/trace.py:55', 'src/ai_usage_cost/privacy.py:52',
+      'src/ai_usage_cost/collect.py:260']
+    extra: ['src/ai_usage_cost/demo.py:350', 'src/ai_usage_cost/tui.py:9', 'src/ai_usage_cost/pricing.py:22']
+    sources: ['src/ai_usage_cost/pipeline.py:22']
+    render: ['src/ai_usage_cost/cli.py:22', 'src/ai_usage_cost/cli.py:190']
+    web: ['src/ai_usage_cost/api.py:41', 'src/ai_usage_cost/api.py:394-395']
+approved-by: human
+approved-at: '2026-11-19T06:39:06+00:00'
 ---
 
 # Usage cost folders

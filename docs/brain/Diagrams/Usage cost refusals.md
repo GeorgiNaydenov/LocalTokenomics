@@ -3,76 +3,47 @@ title: Usage cost refusals
 aliases: []
 tags: [diagram, error-flow, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/*]
+verified-against: 1445ea834ab7
 sources: [docs/brain/architecture/diagrams/usage-cost-refusals.mmd, docs/brain/architecture/diagrams/command-refusals.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost
 authored: true
 node_citations:
   usage-cost-refusals:
-    req:
-    - src/ai_usage_cost/api.py:219-242
-    g_store:
-    - src/ai_usage_cost/api.py:221-223
-    g_sess:
-    - src/ai_usage_cost/api.py:235-236
-    g_span:
-    - src/ai_usage_cost/api.py:376-378
-    g_text:
-    - src/ai_usage_cost/api.py:379-382
-    ok_http:
-    - src/ai_usage_cost/api.py:320-386
-    e503:
-    - src/ai_usage_cost/api.py:223
-    e404s:
-    - src/ai_usage_cost/api.py:236
-    - src/ai_usage_cost/api.py:364-365
-    e404p:
-    - src/ai_usage_cost/api.py:378
-    e404c:
-    - src/ai_usage_cost/api.py:381-382
+    req: ['src/ai_usage_cost/api.py:219-242']
+    g_store: ['src/ai_usage_cost/api.py:221-223']
+    g_sess: ['src/ai_usage_cost/api.py:235-236']
+    g_span: ['src/ai_usage_cost/api.py:376-378']
+    g_text: ['src/ai_usage_cost/api.py:379-382']
+    ok_http: ['src/ai_usage_cost/api.py:320-386']
+    e503: ['src/ai_usage_cost/api.py:223']
+    e404s: ['src/ai_usage_cost/api.py:236', 'src/ai_usage_cost/api.py:364-365']
+    e404p: ['src/ai_usage_cost/api.py:378']
+    e404c: ['src/ai_usage_cost/api.py:381-382']
   command-refusals:
-    cli:
-    - src/ai_usage_cost/cli.py:24-27
-    g_param:
-    - src/ai_usage_cost/cli.py:44-45
-    - src/ai_usage_cost/cli.py:59-68
-    - src/ai_usage_cost/cli.py:320-326
-    g_extra:
-    - src/ai_usage_cost/cli.py:48-56
-    g_rates:
-    - src/ai_usage_cost/pricing.py:286-287
-    g_usage:
-    - src/ai_usage_cost/cli.py:98-104
-    - src/ai_usage_cost/cli.py:371-375
-    ok_cli:
-    - src/ai_usage_cost/cli.py:105
-    ebad:
-    - src/ai_usage_cost/cli.py:66
-    - src/ai_usage_cost/cli.py:321-326
-    eextra:
-    - src/ai_usage_cost/cli.py:52-56
-    etrace:
-    - src/ai_usage_cost/cli.py:44-45
-    - src/ai_usage_cost/pricing.py:286-287
-    enone:
-    - src/ai_usage_cost/cli.py:98-104
-    cfg:
-    - src/ai_usage_cost/privacy.py:60-68
-    read:
-    - src/ai_usage_cost/store.py:222-226
-    - src/ai_usage_cost/store.py:256-258
-    sample:
-    - src/ai_usage_cost/collect.py:152-161
-    cfg_out:
-    - src/ai_usage_cost/privacy.py:63-68
-    read_out:
-    - src/ai_usage_cost/store.py:225-226
-    sample_out:
-    - src/ai_usage_cost/collect.py:273-276
+    cli: ['src/ai_usage_cost/cli.py:24-27']
+    g_param: ['src/ai_usage_cost/cli.py:44-45', 'src/ai_usage_cost/cli.py:59-68',
+      'src/ai_usage_cost/cli.py:320-326']
+    g_extra: ['src/ai_usage_cost/cli.py:48-56']
+    g_rates: ['src/ai_usage_cost/pricing.py:286-287']
+    g_usage: ['src/ai_usage_cost/cli.py:98-104', 'src/ai_usage_cost/cli.py:371-375']
+    ok_cli: ['src/ai_usage_cost/cli.py:105']
+    ebad: ['src/ai_usage_cost/cli.py:66', 'src/ai_usage_cost/cli.py:321-326']
+    eextra: ['src/ai_usage_cost/cli.py:52-56']
+    etrace: ['src/ai_usage_cost/cli.py:44-45', 'src/ai_usage_cost/pricing.py:286-287']
+    enone: ['src/ai_usage_cost/cli.py:98-104']
+    cfg: ['src/ai_usage_cost/privacy.py:60-68']
+    read: ['src/ai_usage_cost/store.py:222-226', 'src/ai_usage_cost/store.py:256-258']
+    sample: ['src/ai_usage_cost/collect.py:152-161']
+    cfg_out: ['src/ai_usage_cost/privacy.py:63-68']
+    read_out: ['src/ai_usage_cost/store.py:225-226']
+    sample_out: ['src/ai_usage_cost/collect.py:273-276']
+approved-by: human
+approved-at: '2026-11-19T06:39:06+00:00'
 ---
 
 # Usage cost refusals
