@@ -1,6 +1,7 @@
 ---
 tags:
   - ba/event
+  - retired
 maturity: draft
 ---
 # Stale rates warning

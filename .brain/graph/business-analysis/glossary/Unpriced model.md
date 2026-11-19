@@ -1,4 +1,5 @@
 ---
+in_application: A model with no rate in the rates table (`render` at `src/ai_usage_cost/render/terminal.py:34`). The code declares it at `src/ai_usage_cost/render/terminal.py:34`, where the line reads `Unpriced models (excluded from totals)`.
 tags:
   - ba/glossary-term
 maturity: draft

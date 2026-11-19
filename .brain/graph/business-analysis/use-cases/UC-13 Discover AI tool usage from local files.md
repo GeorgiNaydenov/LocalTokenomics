@@ -1,5 +1,47 @@
 ---
 code: UC-13
+rules:
+  - A grown file resumes only when its earlier bytes are unchanged
+  - A reader is found by its SOURCE value
+  - A reported cost that differs is flagged
+  - A request is stored once per fingerprint
+  - A route without a store answers 503
+  - A session shows its worst cost state
+  - A session title prefers the tool, then the latest
+  - An excluded project drops its spans
+  - Content retention is inert
+  - Experimental readers carry a flag
+  - Muse Code control folders are skipped
+  - Old rates raise a warning
+  - Readers only read
+  - Records that disagree on input tokens keep the first
+  - Repeated Codex token totals are not counted twice
+  - Schema migrations only run forward
+  - Source databases are opened read only
+  - Synthetic Claude Code records are not usage
+  - Unparsable lines are skipped and counted
+  - Unreadable span text answers 404
+  - _values_match_provenance refuses when (value is None) != (provenance == 'unavailable')
+  - _values_match_provenance validates the model
+  - create_app refuses when not store.session_exists(conn, source, session_id)
+  - create_app refuses when not store.session_exists(conn, source, session_id) (line 364)
+  - create_app refuses when path is None
+  - create_app refuses when span is None
+  - forget_session refuses when not store.session_exists(conn, source, session_id)
+  - opened refuses when path is None
+  - session_spans refuses when not store.session_exists(conn, source, session_id)
+  - span_content refuses when span is None
+events:
+  - Analysis refreshed
+  - Conflicting records warning
+  - Estimated price warning
+  - GPU sample recorded
+  - Reported cost divergence warning
+  - Session forgotten
+  - Session rated
+  - Stale rates warning
+  - Tier unpriced warning
+  - Unpriced model warning
 tags:
   - ba/use-case
 maturity: approved

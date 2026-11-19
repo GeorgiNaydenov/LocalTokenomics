@@ -1,0 +1,12 @@
+flowchart LR
+    a1["Dashboard reader"]:::person
+    uc_12(["UC-12 Review a session's spans and context use"]):::system
+    a1 --> uc_12
+    subgraph Legend
+        direction LR
+        zlegend_a["Actor: a person or system that takes part"]:::person
+        zlegend_b(["Use case: a goal the application serves"]):::system
+        zlegend_a ~~~ zlegend_b
+    end
+    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233
+    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233

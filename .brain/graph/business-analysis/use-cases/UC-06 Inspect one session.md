@@ -1,6 +1,10 @@
 ---
 code: UC-06
 primary_actor: Dashboard reader
+rules:
+  - An explanation popover does not take focus back on close
+  - The side panel width is bounded
+  - Toggle group settings win over item settings
 tags:
   - ba/use-case
 maturity: approved

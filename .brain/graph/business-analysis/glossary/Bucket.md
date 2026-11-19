@@ -1,4 +1,5 @@
 ---
+in_application: 'One row of a breakdown: a key, a label, a cost, token counts and a request count (`Bucket` at `src/ai_usage_cost/models.py:123`). The code declares it at `src/ai_usage_cost/models.py:123`, where the line reads `class Bucket(BaseModel):`.'
 tags:
   - ba/glossary-term
 maturity: draft

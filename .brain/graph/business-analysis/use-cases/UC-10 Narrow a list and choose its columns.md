@@ -1,6 +1,8 @@
 ---
 code: UC-10
 primary_actor: Dashboard reader
+rules:
+  - A table always keeps at least one column
 tags:
   - ba/use-case
 maturity: approved

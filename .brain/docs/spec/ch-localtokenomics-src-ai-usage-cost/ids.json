@@ -161,10 +161,6 @@
  ],
  [
   "glossary-term",
-  "Span"
- ],
- [
-  "glossary-term",
   "Metadata only"
  ],
  [
@@ -557,14 +553,6 @@
  ],
  [
   "model",
-  "Source"
- ],
- [
-  "model",
-  "Spec"
- ],
- [
-  "model",
   "IngestSummary"
  ],
  [
@@ -629,23 +617,7 @@
  ],
  [
   "state-machine",
-  "CostState lifecycle"
- ],
- [
-  "state-machine",
-  "MatchKind lifecycle"
- ],
- [
-  "state-machine",
   "RowStatus lifecycle"
- ],
- [
-  "state-machine",
-  "SpanKind lifecycle"
- ],
- [
-  "state-machine",
-  "SpanStatus lifecycle"
  ],
  [
   "rule",

@@ -1,4 +1,5 @@
 ---
+in_application: The difference between the cost without caching and the cost with it, shown only when positive (`cache_savings` at `src/ai_usage_cost/models.py:103`). The code declares it at `src/ai_usage_cost/models.py:103`, where the line reads `return self.no_cache_equivalent - self.total`.
 tags:
   - ba/glossary-term
 maturity: draft

@@ -6,6 +6,7 @@ actors:
 rules:
   - A type error stops the dashboard build
   - A production build replaces the committed bundle
+  - The prototype is excluded from the production build
 tags:
   - ba/use-case
 maturity: approved

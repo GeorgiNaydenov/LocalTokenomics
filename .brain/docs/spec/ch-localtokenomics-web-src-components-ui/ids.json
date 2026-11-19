@@ -44,10 +44,6 @@
   "Which primitives are unused"
  ],
  [
-  "rule",
-  "useChart refuses when !context"
- ],
- [
   "risk",
   "Chart style text is built from config keys without escaping"
  ],

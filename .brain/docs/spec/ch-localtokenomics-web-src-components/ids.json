@@ -1,14 +1,6 @@
 [
  [
   "glossary-term",
-  "Cost state"
- ],
- [
-  "glossary-term",
-  "Provenance"
- ],
- [
-  "glossary-term",
   "Session outcome"
  ],
  [
@@ -90,10 +82,6 @@
  [
   "open-question",
   "Why the Other series limit is twelve"
- ],
- [
-  "rule",
-  "useChart refuses when !context"
  ],
  [
   "state-machine",

@@ -1,6 +1,25 @@
 ---
 code: UC-15
 primary_actor: CLI user
+rules:
+  - A rise is measured against the window just before
+  - An alert fires only above the threshold
+  - Chart colours follow position, not meaning
+  - Day breakdown is listed oldest first
+  - Empty project panel is left blank
+  - Export accepts only json and png
+  - PNG charts are limited to the top buckets
+  - Terminal table shows at most 30 rows
+  - The alert window ends today
+  - Unknown grouping falls back to model
+  - Unpriced models are shown but not totalled
+  - Warnings are summarised unless verbose
+  - _roots refuses when not path
+  - alert refuses when days ‹ 1
+  - alert refuses when over is not None and rise_over is not None
+  - alert refuses when threshold is None
+events:
+  - Spend alert sent
 tags:
   - ba/use-case
 maturity: approved

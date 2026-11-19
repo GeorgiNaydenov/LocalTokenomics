@@ -1,0 +1,17 @@
+[
+ {
+  "kind": "event",
+  "name": "Stale rates warning",
+  "reason": "duplicate of event Estimated price warning: it cites the same file and symbol, and one emit site is one event"
+ },
+ {
+  "kind": "event",
+  "name": "Tier unpriced warning",
+  "reason": "duplicate of event Estimated price warning: it cites the same file and symbol, and one emit site is one event"
+ },
+ {
+  "kind": "event",
+  "name": "Unpriced model warning",
+  "reason": "duplicate of event Estimated price warning: it cites the same file and symbol, and one emit site is one event"
+ }
+]

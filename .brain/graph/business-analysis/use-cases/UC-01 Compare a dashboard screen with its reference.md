@@ -3,6 +3,22 @@ code: UC-01
 primary_actor: Dashboard developer
 actors:
   - Dashboard developer
+rules:
+  - A missing value is shown as unavailable, never as zero
+  - An estimated price is marked next to the cost state
+  - Caller class names override primitive defaults
+  - Drawer trace blocks show the same sample data for every traced session
+  - Prototype figures are invented
+  - Prototype filters do not filter the screens
+  - Prototype rescan is staged
+  - Prototype session table shows at most 120 rows
+  - Prototype splits session cost across token buckets by fixed weights
+  - Screens stay mounted across the four screen tabs but not across the gallery
+  - Sheet opens from the right by default
+  - Sub cent money keeps four decimals
+  - The daily chart names at most twelve series
+  - The date range cannot cross itself
+  - Tooltip provider default delay is zero
 tags:
   - ba/use-case
 maturity: approved

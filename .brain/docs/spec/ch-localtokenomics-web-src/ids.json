@@ -1,17 +1,5 @@
 [
  [
-  "actor",
-  "Dashboard reader"
- ],
- [
-  "glossary-term",
-  "Cost state"
- ],
- [
-  "glossary-term",
-  "Provenance"
- ],
- [
   "glossary-term",
   "Estimated rate"
  ],
@@ -21,15 +9,7 @@
  ],
  [
   "glossary-term",
-  "Session outcome"
- ],
- [
-  "glossary-term",
   "Unattributed turn"
- ],
- [
-  "glossary-term",
-  "Sidechain"
  ],
  [
   "rule",
@@ -106,42 +86,6 @@
  [
   "open-question",
   "Question 4\ua789 Is deleteSession reachable from any screen in"
- ],
- [
-  "state-machine",
-  "RateState lifecycle"
- ],
- [
-  "state-machine",
-  "CostState lifecycle"
- ],
- [
-  "state-machine",
-  "SpanKind lifecycle"
- ],
- [
-  "state-machine",
-  "SpanStatus lifecycle"
- ],
- [
-  "state-machine",
-  "MatchKind lifecycle"
- ],
- [
-  "state-machine",
-  "TokenDataKind lifecycle"
- ],
- [
-  "state-machine",
-  "RateStatus lifecycle"
- ],
- [
-  "rule",
-  "getJson refuses when !response.ok"
- ],
- [
-  "rule",
-  "useChart refuses when !context"
  ],
  [
   "rule",

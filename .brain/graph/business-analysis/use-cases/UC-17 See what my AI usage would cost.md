@@ -14,6 +14,35 @@ rules:
   - An unchanged file is not parsed again
   - A model without a rate row is unpriced
   - The local calendar day decides the day of an event
+  - A bad configuration file gives the defaults
+  - A free provider costs zero
+  - A known unpriced model beats a guess
+  - A prefix match is an estimate
+  - A row must name a defined provider
+  - A settings file that cannot be loaded is ignored as a whole
+  - An unpriced tier is billed standard and flagged
+  - Cache prices fall back in a fixed order
+  - Duplicate rate keys are rejected
+  - Missing token counts mean unavailable
+  - Only listed suffixes count as the same model
+  - Peak windows must not wrap midnight
+  - Price periods must not overlap
+  - The first covering period replaces the row prices
+  - The largest band at or under the request size applies
+  - The longest matching row wins
+  - _consistent refuses when duplicates
+  - _consistent refuses when missing
+  - _consistent validates the model
+  - _disjoint_periods refuses when earlier.until is None or (later.from_ or date.min) ‹ ea
+  - _disjoint_periods validates the model
+  - _ordered refuses when self.from_ is not None and self.until is not None and (
+  - _ordered validates the model
+  - _sorted_bands validates bands
+  - _valid_window refuses when any((not 0 ‹= day ‹= 6 for day in self.weekdays))
+  - _valid_window refuses when any((not 0 ‹= start ‹ end ‹= 24 for start, end in self
+  - _valid_window validates the model
+  - read_content refuses when config.metadata_only or span.content_path is None
+  - resolve_path refuses when index ›= len(current)
 tags:
   - ba/use-case
 maturity: approved

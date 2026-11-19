@@ -1,6 +1,21 @@
 ---
 code: UC-05
 primary_actor: Dashboard reader
+rules:
+  - A rollup shows its least trustworthy cost state and provenance
+  - A workspace tab loads its data only when first opened
+  - Automatic rescan every five minutes
+  - Cache price derivation
+  - Outcome notes are saved only when changed
+  - Rate age notice thresholds
+  - Rate row state
+  - Reported cost divergence threshold
+  - Session table row limit
+  - Span text is fetched once per span
+  - Unattributed turn is excluded from rankings
+  - Unavailable is never shown as zero
+  - Unpriced cost stays out of totals
+  - getJson refuses when !response.ok
 tags:
   - ba/use-case
 maturity: approved

@@ -1,0 +1,14 @@
+flowchart LR
+    a1["Person using the tool"]:::person
+    a2["AI coding tool logs"]:::person
+    uc_17(["UC-17 See what my AI usage would cost"]):::system
+    a1 --> uc_17
+    a2 --> uc_17
+    subgraph Legend
+        direction LR
+        zlegend_a["Actor: a person or system that takes part"]:::person
+        zlegend_b(["Use case: a goal the application serves"]):::system
+        zlegend_a ~~~ zlegend_b
+    end
+    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233
+    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233
