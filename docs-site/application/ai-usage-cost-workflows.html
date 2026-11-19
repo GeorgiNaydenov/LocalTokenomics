@@ -1,0 +1,81 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Ai usage cost Workflows</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/ai-usage-cost-workflows.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Ai usage cost Workflows</h1>
+<p>How requests enter the Ai usage cost chunk and which files they reach.</p>
+<h2>How it works</h2>
+<p>Entry files are the files that declare routes. The table lists the files each entry file imports inside this chunk; runtime order is described in the sequence diagrams authored for this chunk.</p>
+<h3>The command line is the second entry point</h3>
+<p>The route scanner only sees the API module, but most runs start in the command line. Every command that shows costs calls <code>analyze</code> and then <code>report_of</code> (<code>src/ai_usage_cost/cli.py:87-94</code>, <code>src/ai_usage_cost/cli.py:184-185</code>, <code>src/ai_usage_cost/cli.py:331-332</code>, <code>src/ai_usage_cost/cli.py:369-370</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scan</code></td>
+<td>Prints a terminal report, or JSON with <code>--json</code>, and exits with code 1 when no usage is found</td>
+<td><code>src/ai_usage_cost/cli.py:71-105</code></td>
+</tr>
+<tr>
+<td><code>serve</code></td>
+<td>Scans, then starts the HTTP interface and optionally opens the browser</td>
+<td><code>src/ai_usage_cost/cli.py:108-137</code></td>
+</tr>
+<tr>
+<td><code>demo</code></td>
+<td>Generates synthetic logs, then serves them; <code>--off</code> deletes them and serves the real logs</td>
+<td><code>src/ai_usage_cost/cli.py:140-172</code></td>
+</tr>
+<tr>
+<td><code>export</code></td>
+<td>Writes the report as <code>.json</code> or <code>.png</code> and refuses other extensions with exit code 2</td>
+<td><code>src/ai_usage_cost/cli.py:175-196</code></td>
+</tr>
+<tr>
+<td><code>collect</code></td>
+<td>Samples GPU use into the store until the duration ends or the user interrupts</td>
+<td><code>src/ai_usage_cost/cli.py:199-225</code></td>
+</tr>
+<tr>
+<td><code>sql</code></td>
+<td>Opens the store in Datasette, which needs the <code>sql</code> extra</td>
+<td><code>src/ai_usage_cost/cli.py:228-248</code></td>
+</tr>
+<tr>
+<td><code>alert</code></td>
+<td>Sends a notification through Apprise when spend crosses a threshold</td>
+<td><code>src/ai_usage_cost/cli.py:298-354</code></td>
+</tr>
+<tr>
+<td><code>tui</code></td>
+<td>Shows the sessions in a terminal table</td>
+<td><code>src/ai_usage_cost/cli.py:357-376</code></td>
+</tr>
+</tbody>
+</table>
+<p>The optional features sql, alert and tui import their library only when the command runs. If the library is missing the command prints an install hint and exits with code 2 (<code>src/ai_usage_cost/cli.py:48-56</code>).</p>
+<h3>The main flow</h3>
+<p>A scan runs in this order. It loads the privacy configuration, opens or migrates the store, ingests changed log files, loads the stored requests, prices each one and attaches warnings (<code>src/ai_usage_cost/pipeline.py:174-245</code>). The report is then built by filtering the priced events and grouping them (<code>src/ai_usage_cost/pipeline.py:305-349</code>, <code>src/ai_usage_cost/aggregate.py:675-723</code>). The order is drawn in <a href="../diagrams/scan-pipeline-from-logs-to-report.html">Scan pipeline from logs to report</a>, the data movement in <a href="../diagrams/usage-data-flow.html">Usage data flow</a>, the same process as a business view in <a href="../diagrams/scan-and-report-process.html">Scan and report process</a> and the pricing decisions in <a href="../diagrams/how-one-request-is-priced.html">How one request is priced</a>.</p>
+<h3>Why ingest is incremental</h3>
+<p>A file whose modification time, size and parser version are unchanged is skipped (<code>src/ai_usage_cost/store.py:229-231</code>). A file that only grew, and whose earlier bytes still hash the same, can be read from where the last scan stopped if its source declares a resume hook (<code>src/ai_usage_cost/store.py:243-253</code>). Everything else is parsed again in full and its old rows are replaced (<code>src/ai_usage_cost/store.py:254-255</code>, <code>src/ai_usage_cost/store.py:267-269</code>).</p>
+<h3>Alerts</h3>
+<p>The alert command compares the window's own total with a threshold, or its rise over the window before. It refuses <code>--over</code> and <code>--rise-over</code> together, and it needs one of them (<code>src/ai_usage_cost/cli.py:322-326</code>). The message says what was left out of the cost, namely unpriced models and sessions without token counts, and calls that "unknown, not zero" (<code>src/ai_usage_cost/cli.py:285-295</code>).</p>
+<h2>Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Entry file</th>
+<th>Uses (imports in chunk)</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/api.py</code></td>
+<td><code>src/ai_usage_cost/__init__.py</code>, <code>src/ai_usage_cost/aggregate.py</code>, <code>src/ai_usage_cost/models.py</code>, <code>src/ai_usage_cost/pipeline.py</code>, <code>src/ai_usage_cost/pricing.py</code>, <code>src/ai_usage_cost/privacy.py</code>, <code>src/ai_usage_cost/sources/__init__.py</code>, <code>src/ai_usage_cost/store.py</code>, <code>src/ai_usage_cost/trace.py</code></td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:1-404</code></td>
+</tr>
+</tbody>
+</table></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

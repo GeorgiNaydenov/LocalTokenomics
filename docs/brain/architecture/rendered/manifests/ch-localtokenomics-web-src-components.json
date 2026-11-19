@@ -1,0 +1,23 @@
+{
+ "drawio-offline-card-screen.svg": {
+  "bytes": 274728,
+  "output_sha256": "c002549109e108dea2d2067cfacf6a1eb62487091b838303c35f83eb843f39b1",
+  "source": "docs/brain/architecture/drawio/drawio-offline-card-screen.drawio",
+  "source_sha256": "617bf5b09ab0b82ec05d07fa4de60dd38dc09f06e5bfe318771c03d8408ab737",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-session-card-layout.svg": {
+  "bytes": 343976,
+  "output_sha256": "3f5c5d448500faf151c8f806e7447bbf59fc3b24d8587f4e8831aea17f7f79ff",
+  "source": "docs/brain/architecture/drawio/drawio-session-card-layout.drawio",
+  "source_sha256": "ffa86d6a2d2ccb41100a74b83e540c0f2cb5be73006198a2de8cddcf41ae96bb",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-shared-components-c4.svg": {
+  "bytes": 965972,
+  "output_sha256": "33b6b4765ff0e26f113e43178ea8435ce33fffb8c87374e23479e75b4c72860f",
+  "source": "docs/brain/architecture/drawio/drawio-shared-components-c4.drawio",
+  "source_sha256": "a2bb609e83d7921eb7b3de1b24bc8c0bdd5976a5c2d6e5f4fb9043f7a31440ed",
+  "tool": "draw.io 28.1.2"
+ }
+}

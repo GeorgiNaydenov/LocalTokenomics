@@ -1,0 +1,104 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Ai usage cost sources Security</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="security/ai-usage-cost-sources-security.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Technology / Security · TOGAF: Phase D, Technology Architecture</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/sources/**</code></p><h1>Ai usage cost sources Security</h1>
+<p>Security-relevant code in the Ai usage cost sources chunk: authentication, tokens, validation and configuration names.</p>
+<h2>How it works</h2>
+<p>17 security-relevant lines were found. Configuration is listed by variable name only, never by value.</p>
+<p>Every reader here is read only. SQLite files are opened through a read only URI, and a database error becomes a warning, not a crash. <code>src/ai_usage_cost/sources/base.py:117-129</code> JSON Lines readers open files for reading only and replace undecodable bytes instead of failing. <code>src/ai_usage_cost/sources/base.py:69-84</code></p>
+<p>Readers avoid prompt and response text where the format allows it. The OpenCode reader pulls fields with <code>json_extract</code> and never selects message text. <code>src/ai_usage_cost/sources/opencode.py:19-22</code> The Cline reader drops the prompt text the moment it parses a usage string. <code>src/ai_usage_cost/sources/cline.py:5-8</code> The Muse Code reader never reads the <code>auth.json</code> file. <code>src/ai_usage_cost/sources/muse_code.py:12</code></p>
+<p>The environment variables a reader consults only move where it looks for files, for example the Gemini CLI home or the Copilot home. <code>src/ai_usage_cost/sources/gemini_cli.py:31-35</code> <code>src/ai_usage_cost/sources/copilot_cli.py:61-64</code></p>
+<h2>Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Matched</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>configuration read by name</td>
+<td><code>APPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:97</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>CLINE_SESSION_DATA_DIR</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:124</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>CLINE_DATA_DIR</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:127</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>CLINE_DIR</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:130</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>APPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/copilot_chat.py</a> <code>src/ai_usage_cost/sources/copilot_chat.py:18</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>COPILOT_HOME</code></td>
+<td><a href="#">src/ai_usage_cost/sources/copilot_cli.py</a> <code>src/ai_usage_cost/sources/copilot_cli.py:62</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>APPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cursor.py</a> <code>src/ai_usage_cost/sources/cursor.py:19</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>APPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/dyad.py</a> <code>src/ai_usage_cost/sources/dyad.py:16</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>GEMINI_CLI_HOME</code></td>
+<td><a href="#">src/ai_usage_cost/sources/gemini_cli.py</a> <code>src/ai_usage_cost/sources/gemini_cli.py:32</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>GROK_HOME</code></td>
+<td><a href="#">src/ai_usage_cost/sources/grok_build.py</a> <code>src/ai_usage_cost/sources/grok_build.py:15</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>APPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/jan.py</a> <code>src/ai_usage_cost/sources/jan.py:19</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>MUSE_DATA_DIR</code></td>
+<td><a href="#">src/ai_usage_cost/sources/muse_code.py</a> <code>src/ai_usage_cost/sources/muse_code.py:60</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>XDG_DATA_HOME</code></td>
+<td><a href="#">src/ai_usage_cost/sources/muse_code.py</a> <code>src/ai_usage_cost/sources/muse_code.py:63</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>LOCALAPPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/ollama_app.py</a> <code>src/ai_usage_cost/sources/ollama_app.py:16</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>XDG_DATA_HOME</code></td>
+<td><a href="#">src/ai_usage_cost/sources/opencode.py</a> <code>src/ai_usage_cost/sources/opencode.py:65</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>APPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/opencode.py</a> <code>src/ai_usage_cost/sources/opencode.py:76</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>APPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/windsurf.py</a> <code>src/ai_usage_cost/sources/windsurf.py:20</code></td>
+</tr>
+</tbody>
+</table></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

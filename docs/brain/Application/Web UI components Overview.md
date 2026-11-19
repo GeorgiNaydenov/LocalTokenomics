@@ -20,7 +20,7 @@ What Web UI components is made of and how it connects to the rest of the code.
 
 ## How it works
 
-Web UI components holds 43 source files and 5107 lines, with 18 tests that live in it or import its files. The most depended-on files are `web/src/components/status.tsx`, `web/src/components/stat.tsx`, `web/src/components/states.tsx`. It uses Web Overview, Web ui UI components Overview. It is used by Web Overview, Web prototype Overview.
+Web UI components holds 43 source files and 5107 lines, with 18 tests that live in it or import its files. The most depended-on files are `web/src/components/status.tsx`, `web/src/components/stat.tsx`, `web/src/components/states.tsx`. It uses [[Web Overview]], [[Web ui UI components Overview]]. It is used by [[Web Overview]], [[Web prototype Overview]].
 
 The purpose column quotes each file's own header comment where it has one. Every file is cited by its full line range, and every public name by the line that declares it.
 

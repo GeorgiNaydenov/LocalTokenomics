@@ -36,52 +36,21 @@ generated: true
 %% generated:start-here start (do not edit; run brain docs generate) %%
 | Layer | Question it answers | Start with |
 |---|---|---|
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-| Application | How does the product behave and where does that live in code? | [[Module Atlas]], [[Route and API Index]], [[Screens and UI Inventory]], [[localtokenomics root API]], [[localtokenomics root Overview]], [[localtokenomics root Tests]] and 1 more |
-| Data | What is stored and how does it flow? | [[Schema ERD]], [[localtokenomics root Data Model]] |
-| Security | Who can do what, and what keeps it safe? | [[localtokenomics root Security]] |
-=======
-| Application | How does the product behave and where does that live in code? | [[Module Atlas]], [[Route and API Index]], [[Screens and UI Inventory]], [[Web API]], [[Web Overview]], [[Web Tests]] and 1 more |
-| Data | What is stored and how does it flow? | [[Schema ERD]], [[Web Data Model]] |
-| Security | Who can do what, and what keeps it safe? | [[Web Security]] |
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-| Operations | How is it built, run, checked and kept healthy? | [[Coverage Map]], [[Environment Variables]], [[Invariants Catalogue]], [[Project Facts]], [[Requirement Catalogue]], [[Test Coverage Matrix]] and 1 more |
-| Diagrams | What does it look like as a picture? | [[Architecture Diagram Hub]], [[CI and Delivery Diagrams]], [[Diagram Index]], [[Diagram Notation Guide]], [[ER Data Model]], [[Layered Viewpoints]] and 3 more |
-=======
-| Application | How does the product behave and where does that live in code? | [[Module Atlas]], [[Route and API Index]], [[Screens and UI Inventory]], [[Web ui UI components API]], [[Web ui UI components Overview]], [[Web ui UI components Tests]] and 1 more |
-| Data | What is stored and how does it flow? | [[Schema ERD]], [[Web ui UI components Data Model]] |
-| Security | Who can do what, and what keeps it safe? | [[Web ui UI components Security]] |
-| Operations | How is it built, run, checked and kept healthy? | [[Coverage Map]], [[Environment Variables]], [[Invariants Catalogue]], [[Project Facts]], [[Requirement Catalogue]], [[Test Coverage Matrix]] and 1 more |
-| Diagrams | What does it look like as a picture? | [[Architecture Diagram Hub]], [[CI and Delivery Diagrams]], [[Diagram Index]], [[Diagram Notation Guide]], [[ER Data Model]], [[Layered Viewpoints]] and 2 more |
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-| Application | How does the product behave and where does that live in code? | [[Ai usage cost API]], [[Ai usage cost Overview]], [[Ai usage cost Tests]], [[Ai usage cost Workflows]], [[Module Atlas]], [[Route and API Index]] and 1 more |
-| Data | What is stored and how does it flow? | [[Ai usage cost Data Model]], [[Schema ERD]] |
-| Security | Who can do what, and what keeps it safe? | [[Ai usage cost Security]] |
-| Operations | How is it built, run, checked and kept healthy? | [[Ai usage cost Operations]], [[Coverage Map]], [[Environment Variables]], [[Invariants Catalogue]], [[Project Facts]], [[Requirement Catalogue]] and 1 more |
-| Diagrams | What does it look like as a picture? | [[Ai usage cost Diagrams]], [[Architecture Diagram Hub]], [[CI and Delivery Diagrams]], [[Cost state of a request]], [[Diagram Index]], [[Diagram Notation Guide]] and 8 more |
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+| Business | Who is this for and what does the business need? | [[Actors]], [[Business Events]], [[Cost pricing Rules]], [[General Rules]], [[Privacy and retention Rules]], [[Spend reporting Rules]] and 1 more |
+| Use Cases | What can a person do with it, step by step? | [[UC-01 Compare a dashboard screen with its reference]], [[UC-02 Rebuild the dashboard bundle]], [[UC-03 Develop the dashboard against live data]], [[UC-04 Check a change before merge]], [[UC-05 Read usage and cost for a period]], [[UC-06 Inspect one session]] and 22 more |
+| Subdomains | Which areas of the business does it serve? | [[Cost pricing]], [[Privacy and retention]], [[Spend reporting]], [[Usage collection]] |
+| Application | How does the product behave and where does that live in code? | [[Ai usage cost API]], [[Ai usage cost Overview]], [[Ai usage cost Specification]], [[Ai usage cost Tests]], [[Ai usage cost Workflows]], [[Ai usage cost render API]] and 55 more |
+| Data | What is stored and how does it flow? | [[Ai usage cost Data Model]], [[Ai usage cost render Data Model]], [[Ai usage cost sources Data Model]], [[Domain Models]], [[Schema ERD]], [[Web Data Model]] and 4 more |
+| Security | Who can do what, and what keeps it safe? | [[Ai usage cost Security]], [[Ai usage cost render Security]], [[Ai usage cost sources Security]], [[Web Security]], [[Web UI components Security]], [[Web prototype Security]] and 2 more |
+| Operations | How is it built, run, checked and kept healthy? | [[Ai usage cost Operations]], [[Ai usage cost render Operations]], [[Ai usage cost sources Operations]], [[Coverage Map]], [[Environment Variables]], [[Invariants Catalogue]] and 12 more |
+| Diagrams | What does it look like as a picture? | [[Ai usage cost Diagrams]], [[Ai usage cost render Diagrams]], [[Ai usage cost sources Diagrams]], [[Alert comparison windows]], [[App Screen Map]], [[Architecture Diagram Hub]] and 97 more |
 | Decisions | Why is it this way? | [[ADR Index]] |
 | Releases | What shipped, and when? | [[Release Checklist]], [[Rollback Runbook]] |
 
 ## Generated references
 
 - **Catalogs**, catalogs and traceability matrices generated from the code: [[Application Catalog]], [[Data Entity Catalog]], [[Interface Catalog]], [[Technology Catalog]], [[Traceability Matrices]]
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-- **Ontology**, the knowledge graph of each chunk: [[localtokenomics root Ontology]]
-=======
-- **Ontology**, the knowledge graph of each chunk: [[Web Ontology]]
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-- **Ontology**, the knowledge graph of each chunk: [[Web ui UI components Ontology]]
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-- **Ontology**, the knowledge graph of each chunk: [[Ai usage cost Ontology]]
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+- **Ontology**, the knowledge graph of each chunk: [[Ai usage cost Ontology]], [[Ai usage cost render Ontology]], [[Ai usage cost sources Ontology]], [[Web Ontology]], [[Web UI components Ontology]], [[Web prototype Ontology]], [[Web ui UI components Ontology]], [[localtokenomics root Ontology]]
 
 The complete diagram list is [[Diagram Index]] and the diagram entry point is [[Architecture Diagram Hub]].
 %% generated:start-here end %%

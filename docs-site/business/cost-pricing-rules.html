@@ -1,0 +1,110 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Cost pricing Rules</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="business/cost-pricing-rules.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/pricing.py</code></p><h1>Cost pricing Rules</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>The business rules of the <a href="../subdomains/cost-pricing.html">Cost pricing</a> subdomain, as the code enforces them. Each rule is a heading, so a use case links straight to it, and each names the line of code that enforces it.</p>
+</details>
+<h2>BR-54 Missing token counts mean unavailable</h2>
+<p>A request whose log carries no token counts has the cost state unavailable. It is never priced as zero and never called free. <a href="#">src/ai_usage_cost/pricing.py:420</a></p>
+<ul>
+<li><strong>Category:</strong> pricing</li>
+</ul>
+<p>Source:
+- <code>cost_state_of</code>: <code>if tokens is None:</code></p>
+<h2>BR-55 A free provider costs zero</h2>
+<p>A request from a provider marked free gets the state free and a zero cost breakdown, provided its tokens are known. <a href="#">src/ai_usage_cost/pricing.py:434</a></p>
+<ul>
+<li><strong>Category:</strong> pricing</li>
+</ul>
+<p>Source:
+- <code>price_event</code>: <code>return CostBreakdown(), "free"</code></p>
+<h2>BR-56 A model without a rate row is unpriced</h2>
+<p>A request whose model matches no rate row has the state unpriced. Its tokens are counted and its cost is excluded from totals. <a href="#">src/ai_usage_cost/pricing.py:425</a></p>
+<ul>
+<li><strong>Category:</strong> pricing</li>
+</ul>
+<p>Source:
+- <code>cost_state_of</code>: <code>return "unpriced"</code></p>
+<h2>BR-57 A prefix match is an estimate</h2>
+<p>When a model id matches a row only through a shorter prefix and a remainder that is not a known suffix, the price is flagged estimated and the pipeline raises a warning. <a href="#">src/ai_usage_cost/pricing.py:313</a></p>
+<ul>
+<li><strong>Category:</strong> pricing</li>
+</ul>
+<p>Source:
+- <code>RateTable.lookup</code>: <code>kind = "estimated"</code></p>
+<h2>BR-58 Only listed suffixes count as the same model</h2>
+<p>A remainder after a row's match key counts as the same model only when it is a dated snapshot, a context window tag, a version or latest. <a href="#">src/ai_usage_cost/pricing.py:221</a></p>
+<ul>
+<li><strong>Category:</strong> pricing</li>
+</ul>
+<p>Source:
+- <code>_BENIGN_SUFFIX</code>: <code>_BENIGN_SUFFIX = re.compile(</code></p>
+<h2>BR-59 The longest matching row wins</h2>
+<p>When several rows match a model id, the row with the longest match key is used. <a href="#">src/ai_usage_cost/pricing.py:302</a></p>
+<ul>
+<li><strong>Category:</strong> pricing</li>
+</ul>
+<p>Source:
+- <code>RateTable.lookup</code>: <code>len(rate.match) &gt; len(best.match)</code></p>
+<h2>BR-60 A known unpriced model beats a guess</h2>
+<p>An unpriced entry at least as specific as the matching row stops a prefix estimate, so a variant of a priced model is not guessed from its parent. <a href="#">src/ai_usage_cost/pricing.py:314</a></p>
+<ul>
+<li><strong>Category:</strong> pricing</li>
+</ul>
+<p>Source:
+- <code>RateTable.lookup</code>: <code>An unpriced entry at least as specific as the row</code></p>
+<h2>BR-61 Duplicate rate keys are rejected</h2>
+<p>A rate table with two rows that share a match key fails to load. <a href="#">src/ai_usage_cost/pricing.py:276</a></p>
+<ul>
+<li><strong>Category:</strong> data integrity</li>
+</ul>
+<p>Source:
+- <code>RateTable._consistent</code>: <code>duplicate model match keys</code></p>
+<h2>BR-62 A row must name a defined provider</h2>
+<p>When a rate table defines provider blocks, every row must name one of them, so no row is priced silently with default cache rules. <a href="#">src/ai_usage_cost/pricing.py:282</a></p>
+<ul>
+<li><strong>Category:</strong> data integrity</li>
+</ul>
+<p>Source:
+- <code>RateTable._consistent</code>: <code>models reference undefined providers</code></p>
+<h2>BR-63 Price periods must not overlap</h2>
+<p>A row whose dated periods overlap is rejected at load, because the first matching period would otherwise decide by file order. <a href="#">src/ai_usage_cost/pricing.py:159</a></p>
+<ul>
+<li><strong>Category:</strong> data integrity</li>
+</ul>
+<p>Source:
+- <code>ModelRate._disjoint_periods</code>: <code>overlapping periods</code></p>
+<h2>BR-64 Peak windows must not wrap midnight</h2>
+<p>A peak window uses weekdays 0 to 6 and hour ranges with start below end and end at most 24, so a window across midnight must be split in the file. <a href="#">src/ai_usage_cost/pricing.py:59</a></p>
+<ul>
+<li><strong>Category:</strong> data integrity</li>
+</ul>
+<p>Source:
+- <code>Peak._valid_window</code>: <code>peak utc_hours ranges must satisfy</code></p>
+<h2>BR-65 The first covering period replaces the row prices</h2>
+<p>The first period that covers the request's UTC date replaces the row's own price fields, and only the fields the file wrote. <a href="#">src/ai_usage_cost/pricing.py:449</a></p>
+<ul>
+<li><strong>Category:</strong> pricing</li>
+</ul>
+<p>Source:
+- <code>_period_applied</code>: <code>The row's price fields after the first period covering</code></p>
+<h2>BR-66 The largest band at or under the request size applies</h2>
+<p>Bands are sorted by minimum input and the last band whose minimum is at or under the request's total input prices the whole request. <a href="#">src/ai_usage_cost/pricing.py:511</a></p>
+<ul>
+<li><strong>Category:</strong> pricing</li>
+</ul>
+<p>Source:
+- <code>cost_of</code>: <code>sorted ascending: the last band at or under the request size wins</code></p>
+<h2>BR-67 An unpriced tier is billed standard and flagged</h2>
+<p>A service tier other than standard and batch that the row has no price for is billed at the standard price and flagged tier unpriced, which raises a warning. <a href="#">src/ai_usage_cost/pricing.py:526</a></p>
+<ul>
+<li><strong>Category:</strong> pricing</li>
+</ul>
+<p>Source:
+- <code>cost_of</code>: <code>tier_unpriced = True</code></p>
+<h2>BR-68 Cache prices fall back in a fixed order</h2>
+<p>A cache price is the price set's own figure, else the row's published cache to input ratio times the set's input price, else the provider multiplier times it. <a href="#">src/ai_usage_cost/pricing.py:486</a></p>
+<ul>
+<li><strong>Category:</strong> pricing</li>
+</ul>
+<p>Source:
+- <code>_cache_price</code>: <code>the set's own absolute figure</code></p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

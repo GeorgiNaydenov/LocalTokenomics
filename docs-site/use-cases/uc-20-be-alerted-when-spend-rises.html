@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UC-20 Be alerted when spend rises</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="use-cases/uc-20-be-alerted-when-spend-rises.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/cli.py</code>, <code>tests/test_cli.py</code></p><h1>UC-20 Be alerted when spend rises</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>A use case of the <a href="../subdomains/spend-reporting.html">Spend reporting</a> subdomain, written from the code. Every step cites the line that does it, so a reader can check the claim in one click.</p>
+</details>
+<details class="callout callout-tip">
+<summary>How to use it</summary>
+<p>Read the main flow first, then the alternative flows. The rules, terms and diagrams at the end are the ones this use case relies on.</p>
+</details>
+<ul>
+<li><strong>Subdomain:</strong> <a href="../subdomains/spend-reporting.html">Spend reporting</a></li>
+<li><strong>Actors:</strong> <a href="../business/actors.html">An alert needs exactly one threshold</a>, <a href="../business/actors.html">Notification target</a>, <a href="../business/actors.html">Person using the tool</a>, <a href="../business/actors.html">Report</a></li>
+<li><strong>Maturity:</strong> approved</li>
+</ul>
+<h2>Description</h2>
+<p>The person is notified through a service of their choice when the spend of a window, or its rise over the window before, passes a threshold.</p>
+<h2>Preconditions</h2>
+<p>The alert extra is installed and one threshold is given.</p>
+<h2>Main flow</h2>
+<ol>
+<li>The person runs the alert command with a target and a threshold. <a href="#">src/ai_usage_cost/cli.py:299</a></li>
+<li>The command checks the window and the threshold options. <a href="#">src/ai_usage_cost/cli.py:323</a></li>
+<li>It builds the report for the window, and for the window before when the rise is asked for. <a href="#">src/ai_usage_cost/cli.py:335</a></li>
+<li>It decides whether to fire. <a href="#">src/ai_usage_cost/cli.py:282</a></li>
+<li>It sends the message to every target. <a href="#">src/ai_usage_cost/cli.py:349</a></li>
+</ol>
+<h2>Alternative flows</h2>
+<ul>
+<li>A rejected target exits with code 1. <a href="#">src/ai_usage_cost/cli.py:347</a></li>
+<li>A failed delivery exits with code 1. <a href="#">src/ai_usage_cost/cli.py:353</a></li>
+<li>A missing extra prints how to install it and exits with code 2. <a href="#">src/ai_usage_cost/cli.py:53</a></li>
+</ul>
+<h2>Postconditions</h2>
+<p>A notification is delivered when the threshold is crossed, and nothing is sent otherwise.</p>
+<h2>Acceptance criteria</h2>
+<ul>
+<li>Spend over the threshold fires and exactly at it does not. <a href="#">tests/test_cli.py:73</a> <a href="#">tests/test_cli.py:77</a></li>
+<li>A drop never fires in rise mode. <a href="#">tests/test_cli.py:90</a></li>
+<li>The message lists unpriced and unavailable usage as excluded. <a href="#">tests/test_cli.py:94</a></li>
+<li>The command needs exactly one threshold. <a href="#">tests/test_cli.py:150</a></li>
+</ul>
+<h2>Business rules</h2>
+<ul>
+<li><a href="../business/spend-reporting-rules.html">BR-116 The alert window ends today</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-117 A rise is measured against the window just before</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-118 An alert fires only above the threshold</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-84 An alert needs exactly one threshold</a></li>
+</ul>
+<h2>Code</h2>
+<ul>
+<li><a href="#">src/ai_usage_cost/cli.py</a></li>
+<li><a href="#">tests/test_cli.py</a></li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

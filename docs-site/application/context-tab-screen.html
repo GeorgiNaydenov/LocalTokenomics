@@ -1,0 +1,105 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Context Tab Screen</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/context-tab-screen.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Context Tab Screen</h1>
+<p>The Context tab of the session workspace (web/src/ContextTab.tsx): occupancy over the session and one card per model call. Its map is <a href="../diagrams/context-tab-screen-map.html">Context Tab Screen Map</a>; each numbered badge in the image is one row below.</p>
+<h2>Screen map</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Element</th>
+<th>What it does</th>
+<th>Handler or target</th>
+<th>State it depends on</th>
+<th>Citation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>snapshots.length === 0</code> empty section</td>
+<td>Empty state when the session has no call with an input count.</td>
+<td>-</td>
+<td>empty: <code>snapshots.length === 0</code></td>
+<td><a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:164-164</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;ContextOccupancy</code> occupancy chart</td>
+<td>Occupancy of every call over the session.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:192-192</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>props.source === 'claude-code'</code> info section</td>
+<td>Note that capacity is estimated for this reader.</td>
+<td>-</td>
+<td>info: <code>props.source === 'claude-code'</code></td>
+<td><a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:199-199</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>snapshot.compacted_before</code> info section</td>
+<td>Marker that the context was compacted before this call.</td>
+<td>-</td>
+<td>info: <code>snapshot.compacted_before</code></td>
+<td><a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:74-74</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>snapshot.occupancy === null</code> empty section</td>
+<td>Unavailable marker instead of a bar when a size is unknown.</td>
+<td>-</td>
+<td>empty: <code>snapshot.occupancy === null</code></td>
+<td><a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:42-42</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;ProvenanceBadge</code> capacity, occupancy, tokens</td>
+<td>Provenance badges of the three figures.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:115-115</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;Button</code> added span</td>
+<td>Jumps to a span that added to the context, in the trace tab.</td>
+<td><code>onFocusSpan</code></td>
+<td>-</td>
+<td><a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:135-139</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>snapshot.added_span_ids.length === 0</code> empty section</td>
+<td>Says no records were added since the previous call.</td>
+<td>-</td>
+<td>empty: <code>snapshot.added_span_ids.length === 0</code></td>
+<td><a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:149-149</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>&lt;Button</code> Show more calls</td>
+<td>Reveals the next batch of call cards.</td>
+<td><code>setRevealed</code></td>
+<td>shown only while cards are hidden</td>
+<td><a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:216-220</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Conditional sections</h3>
+<ul>
+<li>empty: <code>snapshots.length === 0</code>, callout 1, <a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:164-164</code></li>
+<li>info: <code>props.source === 'claude-code'</code>, callout 3, <a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:199-199</code></li>
+<li>info: <code>snapshot.compacted_before</code>, callout 4, <a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:74-74</code></li>
+<li>empty: <code>snapshot.occupancy === null</code>, callout 5, <a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:42-42</code></li>
+<li>empty: <code>snapshot.added_span_ids.length === 0</code>, callout 8, <a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:149-149</code></li>
+</ul>
+<h2>Diagnosis</h2>
+<p>The reader scans occupancy and jumps to contributing spans. A jump selects the trace tab and focuses the span <code>web/src/SessionWorkspace.tsx:481-484</code>.</p>
+<p>What can go wrong:</p>
+<ul>
+<li>Only the first six contributors get a button; the rest are a count the reader cannot open <code>web/src/ContextTab.tsx:69-70</code> <code>web/src/ContextTab.tsx:146-148</code>.</li>
+<li>A jump to a span hidden by a trace filter lands on an unhighlighted list <code>web/src/TraceTab.tsx:765-768</code>.</li>
+</ul>
+<p>States not handled: the high occupancy colour is the only signal of a near full window; there is no text label for it <code>web/src/ContextTab.tsx:57</code>.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

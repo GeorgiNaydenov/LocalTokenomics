@@ -73,11 +73,103 @@ This view collects every way the core can say no, and what the person sees each 
 ## Usage cost refusals
 
 %% generated:diagram-usage-cost-refusals start (do not edit; run brain docs generate) %%
+```mermaid
+flowchart TD
+    subgraph http["HTTP routes"]
+        req["Route call"]:::step
+        g_store{{"Analysis has a store?"}}:::guard
+        g_sess{{"Session stored and not forgotten?"}}:::guard
+        g_span{{"Span in the session?"}}:::guard
+        g_text{{"Text released and readable?"}}:::guard
+        ok_http["Answer the route"]:::step
+        e503(["503 built without a store"]):::fail
+        e404s(["404 no session"]):::fail
+        e404p(["404 no span"]):::fail
+        e404c(["404 no readable content"]):::fail
+    end
+    req --> g_store
+    g_store -->|no| e503
+    g_store -->|yes| g_sess
+    g_sess -->|no| e404s
+    g_sess -->|yes, content route| g_span
+    g_sess -->|yes, other routes| ok_http
+    g_span -->|no| e404p
+    g_span -->|yes| g_text
+    g_text -->|ContentUnavailable| e404c
+    g_text -->|yes| ok_http
+
+    subgraph Legend
+        direction LR
+        zlegend_a["Step"]:::step
+        zlegend_b{{"Guard or validator"}}:::guard
+        zlegend_c(["Failure the caller sees"]):::fail
+        zlegend_e["An arrow is labelled with the error it carries"]:::step
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_e
+    end
+
+    classDef step fill:#dae8fc,stroke:#222222,color:#222222
+    classDef guard fill:#e1d5e7,stroke:#222222,color:#222222
+    classDef fail fill:#f8cecc,stroke:#222222,color:#222222
+    classDef hidden fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:4 3
+```
 %% generated:diagram-usage-cost-refusals end %%
 
 The routes are drawn above; the commands and the problems absorbed without a message are drawn below.
 
 %% generated:diagram-command-refusals start (do not edit; run brain docs generate) %%
+```mermaid
+flowchart TD
+    subgraph cmd["Commands"]
+        cli["Command call"]:::step
+        g_param{{"Options valid?"}}:::guard
+        g_extra{{"Optional extra installed?"}}:::guard
+        g_rates["RateTable.load"]:::step
+        g_usage{{"Any usage found?"}}:::guard
+        ok_cli["Print, write or serve"]:::step
+        ebad(["Usage error: bad parameter"]):::fail
+        eextra(["Exit 2: install hint"]):::fail
+        etrace(["Traceback, exit 1: unhandled error"]):::fail
+        enone(["Exit 1: no usage found"]):::fail
+    end
+    subgraph quiet["Handled without telling the caller"]
+        cfg["load_config: unreadable or invalid file"]:::step
+        read["ingest: file cannot be read"]:::step
+        sample["sample_once: tool fails or times out"]:::step
+        cfg_out(["Defaults used, no message"]):::hidden
+        read_out(["Warning added, file skipped"]):::hidden
+        sample_out(["Sample skipped"]):::hidden
+    end
+
+    cli --> g_param
+    g_param -->|BadParameter| ebad
+    g_param -->|ValueError: bad --since or --until| etrace
+    g_param -->|yes| g_extra
+    g_extra -->|ImportError| eextra
+    g_extra -->|yes| g_rates
+    g_rates -->|ValidationError: invalid rates.json| etrace
+    g_rates -->|loaded| g_usage
+    g_usage -->|no| enone
+    g_usage -->|yes| ok_cli
+
+    cfg -->|OSError, ValueError, ValidationError| cfg_out
+    read -->|OSError| read_out
+    sample -->|OSError, SubprocessError, timeout| sample_out
+
+    subgraph Legend
+        direction LR
+        zlegend_a["Step"]:::step
+        zlegend_b{{"Guard or validator"}}:::guard
+        zlegend_c(["Failure the caller sees"]):::fail
+        zlegend_d(["Failure hidden from the caller"]):::hidden
+        zlegend_e["An arrow is labelled with the error it carries"]:::step
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d ~~~ zlegend_e
+    end
+
+    classDef step fill:#dae8fc,stroke:#222222,color:#222222
+    classDef guard fill:#e1d5e7,stroke:#222222,color:#222222
+    classDef fail fill:#f8cecc,stroke:#222222,color:#222222
+    classDef hidden fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:4 3
+```
 %% generated:diagram-command-refusals end %%
 
 > [!example]- Code references

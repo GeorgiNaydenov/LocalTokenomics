@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UI primitives C4</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/ui-primitives-c4.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> covers <code>web/src/components/ui/*</code></p><h1>UI primitives C4</h1>
+<p>This view shows how the basic interface parts are grouped and what they are built on. It helps a developer see that almost nothing here is custom: each part wraps a library part and adds the project style. Knowing that tells them where a behaviour really comes from.</p>
+<h2>What the diagram shows</h2>
+<p>The dashboard components import the primitives: the column chooser takes the button and the dropdown menu, and the page states take the button, collapsible, skeleton and toggle group. <code>web/src/components/columns.tsx:4-12</code> <code>web/src/components/states.tsx:4-12</code></p>
+<p>Buttons and inputs are thin wrappers that add variants and a class name merge over Radix parts and plain elements. <code>web/src/components/ui/button.tsx:40-61</code> <code>web/src/components/ui/button.tsx:2-4</code></p>
+<p>Overlays wrap the Radix dialog, popover, tooltip and menu parts and add icons from lucide-react. <code>web/src/components/ui/dialog.tsx:10-14</code> <code>web/src/components/ui/dialog.tsx:5-6</code></p>
+<p>Display primitives add styles to tables, tabs, accordion rows, alerts, badges, skeletons and progress bars. <code>web/src/components/ui/table.tsx:4-17</code> <code>web/src/components/ui/tabs.tsx:8-25</code> <code>web/src/components/ui/badge.tsx:28-45</code></p>
+<p>The chart wrapper hands a config of labels and colours to its children through a context and draws with recharts. <code>web/src/components/ui/chart.tsx:39-79</code> <code>web/src/components/ui/chart.tsx:3-3</code></p>
+<p>The toast host reads the theme from the rest of the web source folder and renders the sonner library with its own icons. <code>web/src/components/ui/sonner.tsx:10-10</code> <code>web/src/components/ui/sonner.tsx:8-8</code></p>
+<p>In the web source the prototype page mounts the toast host. <code>web/src/prototype/Prototype.tsx:6-6</code></p>
+<h2>Capability and related functionality</h2>
+<p>The diagram realises the lowest layer of the dashboard interface. The vocabulary is in <a href="../diagrams/ui-primitives-concepts.html">UI primitives concepts</a>, the file imports are in <a href="../diagrams/ui-primitives-imports.html">UI primitives imports</a>, and the failure paths are in <a href="../diagrams/ui-primitives-failure-flow.html">UI primitives failure flow</a>. The parts built from these primitives are drawn in <a href="../diagrams/shared-components-c4.html">Shared components C4</a> and explained in <a href="../application/web-ui-ui-components-overview.html">Web ui UI components Overview</a>.</p>
+<h2>UI primitives C4</h2>
+<p><img alt="drawio-ui-primitives-c4" src="../assets/drawio-ui-primitives-c4.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/components/columns.tsx:4-12</code></td>
+<td>Column chooser imports</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:4-12</code></td>
+<td>Page states imports</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Prototype.tsx:6-6</code></td>
+<td>Toast host import in the prototype</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/button.tsx:2-4</code></td>
+<td>Button libraries</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/chart.tsx:39-79</code></td>
+<td>Chart container</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/sonner.tsx:10-10</code></td>
+<td>Toast theme hook</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/sonner.tsx:8-8</code></td>
+<td>sonner import</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

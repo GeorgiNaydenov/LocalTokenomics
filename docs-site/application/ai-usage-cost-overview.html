@@ -1,0 +1,837 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Ai usage cost Overview</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/ai-usage-cost-overview.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Ai usage cost Overview</h1>
+<p>What Ai usage cost is made of and how it connects to the rest of the code.</p>
+<h2>How it works</h2>
+<p>Ai usage cost holds 38 source files and 9978 lines, with 12 routes declared in 1 files, 51 entities, 719 tests that live in it or import its files. The most depended-on files are <code>src/ai_usage_cost/models.py</code>, <code>src/ai_usage_cost/trace.py</code>, <code>src/ai_usage_cost/sources/base.py</code>. It uses <a href="../application/ai-usage-cost-render-overview.html">Ai usage cost render Overview</a>, <a href="../application/ai-usage-cost-sources-overview.html">Ai usage cost sources Overview</a>. It is used by <a href="../application/ai-usage-cost-sources-overview.html">Ai usage cost sources Overview</a>, <a href="../application/ai-usage-cost-render-overview.html">Ai usage cost render Overview</a>.</p>
+<p>The purpose column quotes each file's own header comment where it has one. Every file is cited by its full line range, and every public name by the line that declares it.</p>
+<h3>What the package is for</h3>
+<p>The package reads usage records that AI coding tools already write on the machine, turns each record into a priced request, and reports spend by client, provider, model and project. The tool is read only toward the logs: it opens source databases in read only mode (<code>src/ai_usage_cost/sources/base.py:117-129</code>) and keeps its own results in a separate SQLite store (<code>src/ai_usage_cost/store.py:140-151</code>).</p>
+<p>The default store lives under the home folder in <code>.ai-usage-cost/usage.db</code> (<code>src/ai_usage_cost/pipeline.py:28</code>). The version string is <code>0.2.0</code> (<code>src/ai_usage_cost/__init__.py:1</code>).</p>
+<h3>Four layers</h3>
+<p>The core files fall into four layers, from the entry points down to the data models.</p>
+<ol>
+<li>Entry points. The command line has the commands <code>scan</code>, <code>serve</code>, <code>demo</code>, <code>export</code>, <code>collect</code>, <code>sql</code>, <code>alert</code> and <code>tui</code> (<code>src/ai_usage_cost/cli.py:71-376</code>), and the HTTP interface is built by <code>create_app</code> (<code>src/ai_usage_cost/api.py:198-404</code>).</li>
+<li>Pipeline. <code>analyze</code> reads the store and prices every event, and <code>report_of</code> filters and summarises the result (<code>src/ai_usage_cost/pipeline.py:166-245</code>, <code>src/ai_usage_cost/pipeline.py:305-349</code>).</li>
+<li>Cost model. <code>RateTable</code>, <code>price_event</code> and <code>cost_of</code> turn tokens into dollars (<code>src/ai_usage_cost/pricing.py:252-372</code>, <code>src/ai_usage_cost/pricing.py:429-437</code>, <code>src/ai_usage_cost/pricing.py:495-562</code>).</li>
+<li>Data. Pydantic models describe tokens, events, costs and buckets (<code>src/ai_usage_cost/models.py:12-134</code>), and the SQLite store persists requests, files, spans, outcomes and exclusions (<code>src/ai_usage_cost/store.py:21-87</code>).</li>
+</ol>
+<h3>Why the cost is "what it would have cost"</h3>
+<p>Cost is computed from token counts and a published rate table, not read from a bill. Where a tool also logs its own cost, that figure is kept beside the computed one and never replaces it (<code>src/ai_usage_cost/models.py:70-72</code>). The pipeline raises a warning when the two disagree by more than five percent of the reported figure or one cent (<code>src/ai_usage_cost/pipeline.py:118-138</code>).</p>
+<h3>What a reader must know</h3>
+<p>A request whose log has no token counts is not treated as free. Its cost state is <code>unavailable</code>, which is different from <code>unpriced</code> (known tokens, no rate) and <code>free</code> (a local provider priced at zero) (<code>src/ai_usage_cost/pricing.py:417-426</code>). The four states are drawn in <a href="../diagrams/cost-state-of-a-request.html">Cost state of a request</a>.</p>
+<p>The pipeline never silently guesses a price. A model priced from a shorter id prefix is marked <code>estimated</code> and produces a warning (<code>src/ai_usage_cost/pipeline.py:221-227</code>), and a model with no rate is excluded from totals but its tokens are still counted (<code>src/ai_usage_cost/pipeline.py:212-220</code>).</p>
+<p>Days are the machine's local calendar days. Logs carry different offsets, so one function resolves the day and both bucketing and since and until filtering use it (<code>src/ai_usage_cost/models.py:137-146</code>).</p>
+<p>Related notes: <a href="../application/ai-usage-cost-api.html">Ai usage cost API</a>, <a href="../data/ai-usage-cost-data-model.html">Ai usage cost Data Model</a>, <a href="../application/ai-usage-cost-workflows.html">Ai usage cost Workflows</a>, <a href="../security/ai-usage-cost-security.html">Ai usage cost Security</a>, <a href="../diagrams/ai-usage-cost-diagrams.html">Ai usage cost Diagrams</a>.</p>
+<h2>Reference</h2>
+<h3>Files</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+<th>Lines</th>
+<th>Imports</th>
+<th>Imported by</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/__init__.py</code></td>
+<td>-</td>
+<td>1</td>
+<td>0</td>
+<td>17</td>
+<td><a href="#">src/ai_usage_cost/<strong>init</strong>.py</a> <code>src/ai_usage_cost/__init__.py:1</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/aggregate.py</code></td>
+<td>-</td>
+<td>723</td>
+<td>4</td>
+<td>11</td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:1-723</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/api.py</code></td>
+<td>-</td>
+<td>404</td>
+<td>9</td>
+<td>2</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:1-404</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/cli.py</code></td>
+<td>-</td>
+<td>380</td>
+<td>8</td>
+<td>2</td>
+<td><a href="#">src/ai_usage_cost/cli.py</a> <code>src/ai_usage_cost/cli.py:1-380</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/collect.py</code></td>
+<td>-</td>
+<td>282</td>
+<td>2</td>
+<td>2</td>
+<td><a href="#">src/ai_usage_cost/collect.py</a> <code>src/ai_usage_cost/collect.py:1-282</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/demo.py</code></td>
+<td>-</td>
+<td>369</td>
+<td>3</td>
+<td>3</td>
+<td><a href="#">src/ai_usage_cost/demo.py</a> <code>src/ai_usage_cost/demo.py:1-369</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/models.py</code></td>
+<td>-</td>
+<td>146</td>
+<td>0</td>
+<td>51</td>
+<td><a href="#">src/ai_usage_cost/models.py</a> <code>src/ai_usage_cost/models.py:1-146</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pipeline.py</code></td>
+<td>-</td>
+<td>349</td>
+<td>9</td>
+<td>15</td>
+<td><a href="#">src/ai_usage_cost/pipeline.py</a> <code>src/ai_usage_cost/pipeline.py:1-349</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pricing.py</code></td>
+<td>-</td>
+<td>562</td>
+<td>1</td>
+<td>15</td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:1-562</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/privacy.py</code></td>
+<td>-</td>
+<td>116</td>
+<td>1</td>
+<td>6</td>
+<td><a href="#">src/ai_usage_cost/privacy.py</a> <code>src/ai_usage_cost/privacy.py:1-116</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/render/__init__.py</code></td>
+<td>-</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>empty file</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/render/png.py</code></td>
+<td>-</td>
+<td>101</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/render/png.py</a> <code>src/ai_usage_cost/render/png.py:1-101</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/render/terminal.py</code></td>
+<td>-</td>
+<td>86</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/render/terminal.py</a> <code>src/ai_usage_cost/render/terminal.py:1-86</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/__init__.py</code></td>
+<td>-</td>
+<td>27</td>
+<td>1</td>
+<td>13</td>
+<td><a href="#">src/ai_usage_cost/sources/<strong>init</strong>.py</a> <code>src/ai_usage_cost/sources/__init__.py:1-27</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/antigravity.py</code></td>
+<td>-</td>
+<td>314</td>
+<td>3</td>
+<td>2</td>
+<td><a href="#">src/ai_usage_cost/sources/antigravity.py</a> <code>src/ai_usage_cost/sources/antigravity.py:1-314</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td>-</td>
+<td>176</td>
+<td>2</td>
+<td>28</td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:1-176</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/claude_code.py</code></td>
+<td>-</td>
+<td>690</td>
+<td>3</td>
+<td>3</td>
+<td><a href="#">src/ai_usage_cost/sources/claude_code.py</a> <code>src/ai_usage_cost/sources/claude_code.py:1-690</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/cline.py</code></td>
+<td>-</td>
+<td>442</td>
+<td>3</td>
+<td>3</td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:1-442</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/codex.py</code></td>
+<td>-</td>
+<td>962</td>
+<td>3</td>
+<td>2</td>
+<td><a href="#">src/ai_usage_cost/sources/codex.py</a> <code>src/ai_usage_cost/sources/codex.py:1-962</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/copilot_chat.py</code></td>
+<td>-</td>
+<td>72</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/copilot_chat.py</a> <code>src/ai_usage_cost/sources/copilot_chat.py:1-72</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/copilot_cli.py</code></td>
+<td>-</td>
+<td>275</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/copilot_cli.py</a> <code>src/ai_usage_cost/sources/copilot_cli.py:1-275</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/cursor.py</code></td>
+<td>-</td>
+<td>97</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/cursor.py</a> <code>src/ai_usage_cost/sources/cursor.py:1-97</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/dyad.py</code></td>
+<td>-</td>
+<td>64</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/dyad.py</a> <code>src/ai_usage_cost/sources/dyad.py:1-64</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/gemini_cli.py</code></td>
+<td>Gemini CLI (google-gemini/gemini-cli) session logs.</td>
+<td>225</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/gemini_cli.py</a> <code>src/ai_usage_cost/sources/gemini_cli.py:1-225</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/grok_build.py</code></td>
+<td>-</td>
+<td>123</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/grok_build.py</a> <code>src/ai_usage_cost/sources/grok_build.py:1-123</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/jan.py</code></td>
+<td>-</td>
+<td>110</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/jan.py</a> <code>src/ai_usage_cost/sources/jan.py:1-110</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/kilo_code.py</code></td>
+<td>Kilo Code v7 -- an OpenCode fork storing kilo.db; same parser, different roots.</td>
+<td>17</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/kilo_code.py</a> <code>src/ai_usage_cost/sources/kilo_code.py:1-17</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/kilo_legacy.py</code></td>
+<td>Kilo Code legacy v5 task dirs: see cline.py for the format.</td>
+<td>33</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/kilo_legacy.py</a> <code>src/ai_usage_cost/sources/kilo_legacy.py:1-33</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/muse_code.py</code></td>
+<td>-</td>
+<td>295</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/muse_code.py</a> <code>src/ai_usage_cost/sources/muse_code.py:1-295</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/ollama_app.py</code></td>
+<td>-</td>
+<td>56</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/ollama_app.py</a> <code>src/ai_usage_cost/sources/ollama_app.py:1-56</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/openai_compat.py</code></td>
+<td>-</td>
+<td>96</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/openai_compat.py</a> <code>src/ai_usage_cost/sources/openai_compat.py:1-96</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/opencode.py</code></td>
+<td>OpenCode (anomalyco/opencode, formerly sst/opencode) -- SQLite opencode.db.</td>
+<td>352</td>
+<td>3</td>
+<td>2</td>
+<td><a href="#">src/ai_usage_cost/sources/opencode.py</a> <code>src/ai_usage_cost/sources/opencode.py:1-352</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/qwen_code.py</code></td>
+<td>Qwen Code (QwenLM/qwen-code, a Gemini CLI fork) session logs.</td>
+<td>175</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/qwen_code.py</a> <code>src/ai_usage_cost/sources/qwen_code.py:1-175</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/roo_code.py</code></td>
+<td>Roo Code (final release 3.53.0, archived 2026-05-15): see cline.py for the format.</td>
+<td>29</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/roo_code.py</a> <code>src/ai_usage_cost/sources/roo_code.py:1-29</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/windsurf.py</code></td>
+<td>-</td>
+<td>92</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/windsurf.py</a> <code>src/ai_usage_cost/sources/windsurf.py:1-92</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/store.py</code></td>
+<td>-</td>
+<td>727</td>
+<td>3</td>
+<td>12</td>
+<td><a href="#">src/ai_usage_cost/store.py</a> <code>src/ai_usage_cost/store.py:1-727</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/trace.py</code></td>
+<td>-</td>
+<td>877</td>
+<td>2</td>
+<td>30</td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:1-877</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/tui.py</code></td>
+<td>-</td>
+<td>133</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/tui.py</a> <code>src/ai_usage_cost/tui.py:1-133</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Public interface</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Kind</th>
+<th>File</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TokenUsage</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/models.py</code></td>
+<td><a href="#">src/ai_usage_cost/models.py</a> <code>src/ai_usage_cost/models.py:12</code></td>
+</tr>
+<tr>
+<td><code>UsageEvent</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/models.py</code></td>
+<td><a href="#">src/ai_usage_cost/models.py</a> <code>src/ai_usage_cost/models.py:49</code></td>
+</tr>
+<tr>
+<td><code>CostBreakdown</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/models.py</code></td>
+<td><a href="#">src/ai_usage_cost/models.py</a> <code>src/ai_usage_cost/models.py:75</code></td>
+</tr>
+<tr>
+<td><code>PricedEvent</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/models.py</code></td>
+<td><a href="#">src/ai_usage_cost/models.py</a> <code>src/ai_usage_cost/models.py:117</code></td>
+</tr>
+<tr>
+<td><code>Bucket</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/models.py</code></td>
+<td><a href="#">src/ai_usage_cost/models.py</a> <code>src/ai_usage_cost/models.py:123</code></td>
+</tr>
+<tr>
+<td><code>local_day</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/models.py</code></td>
+<td><a href="#">src/ai_usage_cost/models.py</a> <code>src/ai_usage_cost/models.py:137</code></td>
+</tr>
+<tr>
+<td><code>Span</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/trace.py</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:55</code></td>
+</tr>
+<tr>
+<td><code>Capabilities</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/trace.py</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:104</code></td>
+</tr>
+<tr>
+<td><code>ContextSnapshot</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/trace.py</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:112</code></td>
+</tr>
+<tr>
+<td><code>OutcomeSignals</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/trace.py</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:134</code></td>
+</tr>
+<tr>
+<td><code>OutcomeUpdate</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/trace.py</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:141</code></td>
+</tr>
+<tr>
+<td><code>Outcome</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/trace.py</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:147</code></td>
+</tr>
+<tr>
+<td><code>EconRow</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/trace.py</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:154</code></td>
+</tr>
+<tr>
+<td><code>Economics</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/trace.py</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:177</code></td>
+</tr>
+<tr>
+<td><code>Insight</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/trace.py</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:184</code></td>
+</tr>
+<tr>
+<td><code>Trace</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/trace.py</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:192</code></td>
+</tr>
+<tr>
+<td><code>SpanContent</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/trace.py</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:201</code></td>
+</tr>
+<tr>
+<td><code>amplification</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/trace.py</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:208</code></td>
+</tr>
+<tr>
+<td><code>Source</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:18</code></td>
+</tr>
+<tr>
+<td><code>present_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:47</code></td>
+</tr>
+<tr>
+<td><code>scan</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:52</code></td>
+</tr>
+<tr>
+<td><code>read_json_lines</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:69</code></td>
+</tr>
+<tr>
+<td><code>read_json_records</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:87</code></td>
+</tr>
+<tr>
+<td><code>read_sqlite</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:117</code></td>
+</tr>
+<tr>
+<td><code>jsonl_files</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:132</code></td>
+</tr>
+<tr>
+<td><code>single_file</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:136</code></td>
+</tr>
+<tr>
+<td><code>parse_timestamp</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:140</code></td>
+</tr>
+<tr>
+<td><code>project_of</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:159</code></td>
+</tr>
+<tr>
+<td><code>as_int</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:165</code></td>
+</tr>
+<tr>
+<td><code>title_of</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:169</code></td>
+</tr>
+<tr>
+<td><code>SourceInfo</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/pipeline.py</code></td>
+<td><a href="#">src/ai_usage_cost/pipeline.py</a> <code>src/ai_usage_cost/pipeline.py:31</code></td>
+</tr>
+<tr>
+<td><code>Analysis</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/pipeline.py</code></td>
+<td><a href="#">src/ai_usage_cost/pipeline.py</a> <code>src/ai_usage_cost/pipeline.py:45</code></td>
+</tr>
+<tr>
+<td><code>unknown_models</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/pipeline.py</code></td>
+<td><a href="#">src/ai_usage_cost/pipeline.py</a> <code>src/ai_usage_cost/pipeline.py:66</code></td>
+</tr>
+<tr>
+<td><code>estimated_models</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/pipeline.py</code></td>
+<td><a href="#">src/ai_usage_cost/pipeline.py</a> <code>src/ai_usage_cost/pipeline.py:100</code></td>
+</tr>
+<tr>
+<td><code>tier_unpriced_models</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/pipeline.py</code></td>
+<td><a href="#">src/ai_usage_cost/pipeline.py</a> <code>src/ai_usage_cost/pipeline.py:107</code></td>
+</tr>
+<tr>
+<td><code>reported_cost_divergences</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/pipeline.py</code></td>
+<td><a href="#">src/ai_usage_cost/pipeline.py</a> <code>src/ai_usage_cost/pipeline.py:118</code></td>
+</tr>
+<tr>
+<td><code>analyze</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/pipeline.py</code></td>
+<td><a href="#">src/ai_usage_cost/pipeline.py</a> <code>src/ai_usage_cost/pipeline.py:166</code></td>
+</tr>
+<tr>
+<td><code>filter_events</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/pipeline.py</code></td>
+<td><a href="#">src/ai_usage_cost/pipeline.py</a> <code>src/ai_usage_cost/pipeline.py:248</code></td>
+</tr>
+<tr>
+<td><code>report_of</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/pipeline.py</code></td>
+<td><a href="#">src/ai_usage_cost/pipeline.py</a> <code>src/ai_usage_cost/pipeline.py:305</code></td>
+</tr>
+<tr>
+<td><code>PriceSet</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/pricing.py</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:29</code></td>
+</tr>
+<tr>
+<td><code>Band</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/pricing.py</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:40</code></td>
+</tr>
+<tr>
+<td><code>Peak</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/pricing.py</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:47</code></td>
+</tr>
+<tr>
+<td><code>Period</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/pricing.py</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:68</code></td>
+</tr>
+<tr>
+<td><code>ProviderRules</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/pricing.py</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:101</code></td>
+</tr>
+<tr>
+<td><code>PartialRules</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/pricing.py</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:109</code></td>
+</tr>
+<tr>
+<td><code>merge_rules</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/pricing.py</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:120</code></td>
+</tr>
+<tr>
+<td><code>ModelRate</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/pricing.py</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:126</code></td>
+</tr>
+<tr>
+<td><code>Prefix</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/pricing.py</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:169</code></td>
+</tr>
+<tr>
+<td><code>ModelMatch</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/pricing.py</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:224</code></td>
+</tr>
+<tr>
+<td><code>UnpricedModel</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/pricing.py</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:232</code></td>
+</tr>
+<tr>
+<td><code>effective_prefixes</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/pricing.py</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:245</code></td>
+</tr>
+<tr>
+<td><code>registry</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/__init__.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/<strong>init</strong>.py</a> <code>src/ai_usage_cost/sources/__init__.py:11</code></td>
+</tr>
+<tr>
+<td><code>client_labels</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/__init__.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/<strong>init</strong>.py</a> <code>src/ai_usage_cost/sources/__init__.py:23</code></td>
+</tr>
+<tr>
+<td><code>IngestSummary</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/store.py</code></td>
+<td><a href="#">src/ai_usage_cost/store.py</a> <code>src/ai_usage_cost/store.py:134</code></td>
+</tr>
+<tr>
+<td><code>open_store</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/store.py</code></td>
+<td><a href="#">src/ai_usage_cost/store.py</a> <code>src/ai_usage_cost/store.py:140</code></td>
+</tr>
+<tr>
+<td><code>fingerprint_of</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/store.py</code></td>
+<td><a href="#">src/ai_usage_cost/store.py</a> <code>src/ai_usage_cost/store.py:154</code></td>
+</tr>
+<tr>
+<td><code>ingest</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/store.py</code></td>
+<td><a href="#">src/ai_usage_cost/store.py</a> <code>src/ai_usage_cost/store.py:190</code></td>
+</tr>
+<tr>
+<td><code>load_spans</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/store.py</code></td>
+<td><a href="#">src/ai_usage_cost/store.py</a> <code>src/ai_usage_cost/store.py:531</code></td>
+</tr>
+<tr>
+<td><code>get_outcome</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/store.py</code></td>
+<td><a href="#">src/ai_usage_cost/store.py</a> <code>src/ai_usage_cost/store.py:551</code></td>
+</tr>
+<tr>
+<td><code>put_outcome</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/store.py</code></td>
+<td><a href="#">src/ai_usage_cost/store.py</a> <code>src/ai_usage_cost/store.py:568</code></td>
+</tr>
+<tr>
+<td><code>delete_session</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/store.py</code></td>
+<td><a href="#">src/ai_usage_cost/store.py</a> <code>src/ai_usage_cost/store.py:595</code></td>
+</tr>
+<tr>
+<td><code>session_exists</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/store.py</code></td>
+<td><a href="#">src/ai_usage_cost/store.py</a> <code>src/ai_usage_cost/store.py:609</code></td>
+</tr>
+<tr>
+<td><code>session_flags</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/store.py</code></td>
+<td><a href="#">src/ai_usage_cost/store.py</a> <code>src/ai_usage_cost/store.py:628</code></td>
+</tr>
+<tr>
+<td><code>file_counts</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/store.py</code></td>
+<td><a href="#">src/ai_usage_cost/store.py</a> <code>src/ai_usage_cost/store.py:664</code></td>
+</tr>
+<tr>
+<td><code>load</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/store.py</code></td>
+<td><a href="#">src/ai_usage_cost/store.py</a> <code>src/ai_usage_cost/store.py:668</code></td>
+</tr>
+<tr>
+<td><code>Totals</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/aggregate.py</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:26</code></td>
+</tr>
+<tr>
+<td><code>SeriesPoint</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/aggregate.py</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:37</code></td>
+</tr>
+<tr>
+<td><code>SessionRow</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/aggregate.py</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:48</code></td>
+</tr>
+<tr>
+<td><code>UnknownModel</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/aggregate.py</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:77</code></td>
+</tr>
+<tr>
+<td><code>WarningSeverity</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/aggregate.py</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:83</code></td>
+</tr>
+<tr>
+<td><code>WarningInstance</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/aggregate.py</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:100</code></td>
+</tr>
+<tr>
+<td><code>WarningGroup</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/aggregate.py</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:115</code></td>
+</tr>
+<tr>
+<td><code>warning_groups_of</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/aggregate.py</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:385</code></td>
+</tr>
+<tr>
+<td><code>Facets</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/aggregate.py</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:454</code></td>
+</tr>
+<tr>
+<td><code>Report</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/aggregate.py</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:462</code></td>
+</tr>
+<tr>
+<td><code>totals_of</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/aggregate.py</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:491</code></td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/aggregate.py</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:512</code></td>
+</tr>
+<tr>
+<td><code>ContentUnavailable</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/privacy.py</code></td>
+<td><a href="#">src/ai_usage_cost/privacy.py</a> <code>src/ai_usage_cost/privacy.py:48</code></td>
+</tr>
+<tr>
+<td><code>Config</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/privacy.py</code></td>
+<td><a href="#">src/ai_usage_cost/privacy.py</a> <code>src/ai_usage_cost/privacy.py:52</code></td>
+</tr>
+<tr>
+<td><code>load_config</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/privacy.py</code></td>
+<td><a href="#">src/ai_usage_cost/privacy.py</a> <code>src/ai_usage_cost/privacy.py:60</code></td>
+</tr>
+</tbody>
+</table>
+<p>100 more public names are omitted; see the cited files.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

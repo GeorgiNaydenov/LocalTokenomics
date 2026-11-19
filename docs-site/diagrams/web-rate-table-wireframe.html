@@ -1,0 +1,47 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web Rate Table Wireframe</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-rate-table-wireframe.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Web Rate Table Wireframe</h1>
+<p>This wireframe shows the table of list prices the dashboard uses. It names every column and shows where a row opens its details. It helps a reader find why a model is priced the way it is.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The header names the date of the rates and shows an age badge when they are old <code>web/src/Pricing.tsx:337-350</code>.</li>
+<li>The columns run from model to spend here <code>web/src/Pricing.tsx:42-42</code>.</li>
+<li>The model cell holds the details chevron, the name, the tags, the match string and any estimated lines <code>web/src/Pricing.tsx:272-304</code>.</li>
+<li>An open row adds a detail row across all columns <code>web/src/Pricing.tsx:397-399</code>.</li>
+<li>Unused rates are hidden behind a show more button <code>web/src/Pricing.tsx:411-420</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The table sits on <a href="../application/pricing-screen.html">Pricing Screen</a>. The rate row state and cache price rules are in <a href="../application/web-specification.html">Web Specification</a>, and the estimated rate term is in <a href="../diagrams/web-glossary-map.html">Web Glossary Map</a>.</p>
+<h2>Web Rate Table Wireframe</h2>
+<p><img alt="drawio-web-rate-table" src="../assets/drawio-web-rate-table.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/Pricing.tsx:337-350</code></td>
+<td>The header names the date of the rates and shows an age badge when they are old</td>
+</tr>
+<tr>
+<td><code>web/src/Pricing.tsx:42-42</code></td>
+<td>The columns run from model to spend here</td>
+</tr>
+<tr>
+<td><code>web/src/Pricing.tsx:272-304</code></td>
+<td>The model cell holds the details chevron, the name, the tags, the match string and any estimated lines</td>
+</tr>
+<tr>
+<td><code>web/src/Pricing.tsx:397-399</code></td>
+<td>An open row adds a detail row across all columns</td>
+</tr>
+<tr>
+<td><code>web/src/Pricing.tsx:411-420</code></td>
+<td>Unused rates are hidden behind a show more button</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

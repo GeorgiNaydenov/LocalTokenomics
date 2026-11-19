@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>CI and Delivery Diagrams</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/ci-and-delivery-diagrams.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Technology / Infrastructure · TOGAF: Phase D, Technology Architecture</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> </p><h1>CI and Delivery Diagrams</h1>
+<p>The workflows of the repository and the order of their jobs, read from the workflow files.</p>
+<h2>CI and delivery pipeline</h2>
+<pre class="mermaid">flowchart LR
+    subgraph localtokenomics__github_workflows_codeql_yml[&quot;CodeQL&quot;]
+        localtokenomics__github_workflows_codeql_yml_on([&quot;push, pull_request, schedule&quot;]):::admin
+        localtokenomics__github_workflows_codeql_yml_analyze[&quot;analyze (${{ matrix.language }})&lt;br/&gt;4 steps&quot;]:::system
+    end
+    localtokenomics__github_workflows_codeql_yml_on --&gt; localtokenomics__github_workflows_codeql_yml_analyze
+    subgraph localtokenomics__github_workflows_python_yml[&quot;Python&quot;]
+        localtokenomics__github_workflows_python_yml_on([&quot;push, pull_request&quot;]):::admin
+        localtokenomics__github_workflows_python_yml_test[&quot;test (${{ matrix.os }}, py${{ matrix.python-version }})&lt;br/&gt;9 steps&quot;]:::system
+    end
+    localtokenomics__github_workflows_python_yml_on --&gt; localtokenomics__github_workflows_python_yml_test
+    subgraph localtokenomics__github_workflows_web_yml[&quot;Web&quot;]
+        localtokenomics__github_workflows_web_yml_on([&quot;push, pull_request&quot;]):::admin
+        localtokenomics__github_workflows_web_yml_build[&quot;lint, typecheck, test, build&lt;br/&gt;7 steps&quot;]:::system
+    end
+    localtokenomics__github_workflows_web_yml_on --&gt; localtokenomics__github_workflows_web_yml_build
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Trigger of a workflow&quot;]:::admin
+        zlegend_b[&quot;Job&quot;]:::system
+        zlegend_c[&quot;Arrow: runs after&quot;]:::system
+    end
+    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233
+    classDef admin fill:#ffe6cc,stroke:#d79b00,color:#142233
+</pre></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

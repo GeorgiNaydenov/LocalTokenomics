@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Cost pricing</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="subdomains/cost-pricing.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/pricing.py</code></p><h1>Cost pricing</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>A subdomain: one area of the business that the application serves. This note lists its use cases, the rules it enforces and the terms it uses.</p>
+</details>
+<ul>
+<li><strong>Type:</strong> core</li>
+</ul>
+<h2>Description</h2>
+<p>Turns token counts into the cost the same usage would have had at published API list prices, using a rate table with periods, bands, tiers and peak windows. Main code: <a href="#">src/ai_usage_cost/pricing.py:495</a> and <a href="#">src/ai_usage_cost/pricing.py:252</a>.</p>
+<h2>Business rules (15)</h2>
+<p>All of them, with the code that enforces each one: <a href="../business/cost-pricing-rules.html">Cost pricing Rules</a>.</p>
+<ul>
+<li><a href="../business/cost-pricing-rules.html">BR-54 Missing token counts mean unavailable</a></li>
+<li><a href="../business/cost-pricing-rules.html">BR-55 A free provider costs zero</a></li>
+<li><a href="../business/cost-pricing-rules.html">BR-56 A model without a rate row is unpriced</a></li>
+<li><a href="../business/cost-pricing-rules.html">BR-57 A prefix match is an estimate</a></li>
+<li><a href="../business/cost-pricing-rules.html">BR-58 Only listed suffixes count as the same model</a></li>
+<li><a href="../business/cost-pricing-rules.html">BR-59 The longest matching row wins</a></li>
+<li><a href="../business/cost-pricing-rules.html">BR-60 A known unpriced model beats a guess</a></li>
+<li><a href="../business/cost-pricing-rules.html">BR-61 Duplicate rate keys are rejected</a></li>
+<li><a href="../business/cost-pricing-rules.html">BR-62 A row must name a defined provider</a></li>
+<li><a href="../business/cost-pricing-rules.html">BR-63 Price periods must not overlap</a></li>
+<li><a href="../business/cost-pricing-rules.html">BR-64 Peak windows must not wrap midnight</a></li>
+<li><a href="../business/cost-pricing-rules.html">BR-65 The first covering period replaces the row prices</a></li>
+<li><a href="../business/cost-pricing-rules.html">BR-66 The largest band at or under the request size applies</a></li>
+<li><a href="../business/cost-pricing-rules.html">BR-67 An unpriced tier is billed standard and flagged</a></li>
+<li><a href="../business/cost-pricing-rules.html">BR-68 Cache prices fall back in a fixed order</a></li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

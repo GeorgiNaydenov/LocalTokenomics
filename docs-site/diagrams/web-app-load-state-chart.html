@@ -1,0 +1,88 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web App Load State Chart</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-app-load-state-chart.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Web App Load State Chart</h1>
+<p>This chart shows what the reader sees while the dashboard starts, refreshes and fails. It explains why the whole page can turn into an error card and how it comes back. It matters because every view depends on these states.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The page starts in a loading state that ends when the first report has settled <code>web/src/App.tsx:139-139</code> <code>web/src/App.tsx:195-198</code>.</li>
+<li>A failure whose text says the server cannot be reached shows the offline card, and its retry reloads the metadata <code>web/src/App.tsx:251-259</code> <code>web/src/api.ts:493-494</code>.</li>
+<li>Any other error shows the error card <code>web/src/App.tsx:271-271</code>.</li>
+<li>A query change starts a new report request, and the count line dims while it runs <code>web/src/App.tsx:186-201</code> <code>web/src/App.tsx:203-203</code>.</li>
+<li>A rescan runs on the button and every five minutes while the page is visible, and a successful one reloads the metadata and clears the error <code>web/src/App.tsx:211-222</code> <code>web/src/App.tsx:226-243</code> <code>web/src/App.tsx:172-172</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The states belong to <a href="../application/app-screen.html">App Screen</a>. The failures are traced further in <a href="../diagrams/web-error-flow.html">Web Error Flow</a>, and the session level states are in <a href="../diagrams/web-workspace-state-chart.html">Web Workspace State Chart</a>.</p>
+<h2>Web App Load State Chart</h2>
+<pre class="mermaid">stateDiagram-v2
+    direction LR
+    [*] --&gt; Loading: page opens
+    Loading --&gt; Offline: meta or rates cannot reach the server
+    Loading --&gt; ErrorCard: meta or rates fail otherwise
+    Loading --&gt; Ready: first report settles
+    Ready --&gt; Refetching: query changes
+    Refetching --&gt; Ready: report settles
+    Refetching --&gt; ErrorCard: report request fails
+    Ready --&gt; Rescanning: Rescan logs or five minute timer
+    Rescanning --&gt; Ready: refresh done, meta reloaded
+    Rescanning --&gt; Offline: refresh cannot reach the server
+    Offline --&gt; Ready: Retry and meta loads
+    ErrorCard --&gt; Ready: next timed rescan succeeds
+    note right of ErrorCard
+        Not handled: the card has no retry button, and one failed refetch hides the whole dashboard.
+    end note
+    note left of Loading
+        Legend: the filled dot starts, a rounded box is a UI state, an arrow is labelled with the event or condition in the code, a note marks a gap.
+    end note
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/App.tsx:139-139</code></td>
+<td>The page starts in a loading state that ends when the first report has settled</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:195-198</code></td>
+<td>The page starts in a loading state that ends when the first report has settled</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:251-259</code></td>
+<td>A failure whose text says the server cannot be reached shows the offline card, and its retry reloads the metadata</td>
+</tr>
+<tr>
+<td><code>web/src/api.ts:493-494</code></td>
+<td>A failure whose text says the server cannot be reached shows the offline card, and its retry reloads the metadata</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:271-271</code></td>
+<td>Any other error shows the error card</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:186-201</code></td>
+<td>A query change starts a new report request, and the count line dims while it runs</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:203-203</code></td>
+<td>A query change starts a new report request, and the count line dims while it runs</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:211-222</code></td>
+<td>A rescan runs on the button and every five minutes while the page is visible, and a successful one reloads the metadata and clears the error</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:226-243</code></td>
+<td>A rescan runs on the button and every five minutes while the page is visible, and a successful one reloads the metadata and clears the error</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:172-172</code></td>
+<td>A rescan runs on the button and every five minutes while the page is visible, and a successful one reloads the metadata and clears the error</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

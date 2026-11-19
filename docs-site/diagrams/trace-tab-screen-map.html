@@ -1,0 +1,102 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Trace Tab Screen Map</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/trace-tab-screen-map.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Trace Tab Screen Map</h1>
+<p>This map shows how a reader walks through every step of one session. It lets them switch between a timeline, an agent tree and a list of turns, filter by kind or errors, and open the text of a step. It also shows the places where the list can come up empty.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The header toggles three modes, and the filter row offers span kinds and an errors only switch <code>web/src/TraceTab.tsx:907-963</code>.</li>
+<li>The insights panel lists findings that focus their span <code>web/src/TraceTab.tsx:257-299</code> <code>web/src/TraceTab.tsx:974</code>.</li>
+<li>By turn mode shows a sortable turn table whose rows jump back to the timeline <code>web/src/TraceTab.tsx:977-997</code> <code>web/src/TraceTab.tsx:813-821</code>.</li>
+<li>The other modes show the span rows, each with a status badge and a text button when the span has content <code>web/src/TraceTab.tsx:861-886</code> <code>web/src/TraceTab.tsx:1006-1013</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The tab lives inside <a href="../application/session-workspace-screen.html">Session Workspace Screen</a> and is focused from <a href="../application/context-tab-screen.html">Context Tab Screen</a>. Its states are drawn in <a href="../diagrams/web-trace-state-chart.html">Web Trace State Chart</a>. The terms span, turn and provenance are in <a href="../diagrams/web-glossary-map.html">Web Glossary Map</a>.</p>
+<h2>Trace Tab Screen screen map</h2>
+<p><img alt="drawio-screen-trace-tab" src="../assets/drawio-screen-trace-tab.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Badge</th>
+<th>Element</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&lt;ToggleGroup</code> Timeline, Agent tree, By turn</td>
+<td><code>web/src/TraceTab.tsx:908-913</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;ProvenanceBadge</code> capabilities</td>
+<td><code>web/src/TraceTab.tsx:924-924</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>&lt;ToggleGroup</code> span kinds</td>
+<td><code>web/src/TraceTab.tsx:933-939</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&lt;Toggle</code> Errors only</td>
+<td><code>web/src/TraceTab.tsx:951-956</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>insights.length === 0</code> empty section</td>
+<td><code>web/src/TraceTab.tsx:266-266</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;InsightList</code> insights</td>
+<td><code>web/src/TraceTab.tsx:278-290</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>turnRollups.length === 0</code> empty section</td>
+<td><code>web/src/TraceTab.tsx:978-978</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>&lt;SortSelect</code> turn sort</td>
+<td><code>web/src/TraceTab.tsx:665-665</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>&lt;TableRow</code> turn row</td>
+<td><code>web/src/TraceTab.tsx:683-689</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>&lt;Button</code> Show all turns</td>
+<td><code>web/src/TraceTab.tsx:742-742</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>shown.length === 0</code> empty section</td>
+<td><code>web/src/TraceTab.tsx:998-998</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>&lt;SpanTimeline</code> span rows</td>
+<td><code>web/src/TraceTab.tsx:1007-1011</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>if (span.error) {</code> error section</td>
+<td><code>web/src/TraceTab.tsx:829-829</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>&lt;Button</code> Text, Hide</td>
+<td><code>web/src/TraceTab.tsx:876-881</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>&lt;Button</code> Show more spans</td>
+<td><code>web/src/TraceTab.tsx:1017-1017</code></td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

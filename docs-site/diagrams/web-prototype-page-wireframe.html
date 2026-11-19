@@ -1,0 +1,80 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web prototype page wireframe</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-prototype-page-wireframe.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Web prototype page wireframe</h1>
+<p>This wireframe shows the layout of the prototype page on a wide window: the header, the filter column, the main area and the drawer that slides in. It lets a designer check proportions and placement without opening the app. Parts that appear only in some states are drawn dashed.</p>
+<h2>What the diagram shows</h2>
+<p>The header is sticky and holds the product name, five tab buttons, a Filters button, a rescan button and a theme button <code>web/src/prototype/Prototype.tsx:34-96</code>. The Filters button is hidden on wide windows and absent on the gallery <code>web/src/prototype/Prototype.tsx:70-79</code>.</p>
+<p>The filter rail is a fixed column of 276 pixels on wide windows <code>web/src/prototype/Rail.tsx:260-262</code>. It holds a search field, chip rows, facet groups, a switch, a clear button and a folded list of unused readers <code>web/src/prototype/Rail.tsx:93-240</code>. The clear button appears only when a filter is set <code>web/src/prototype/Rail.tsx:214-218</code>.</p>
+<p>The main area starts with a count line and the active filter chips, then the active screen, then a footer text <code>web/src/prototype/Screens.tsx:352-373</code>. The sessions table has ten sortable columns <code>web/src/prototype/SessionsScreen.tsx:148-240</code>. On a phone width cards replace the table <code>web/src/prototype/SessionsScreen.tsx:127-147</code>.</p>
+<p>The session drawer is a sheet over the page with cost, token buckets, context window, trace, provenance and log files <code>web/src/prototype/Screens.tsx:84-264</code>.</p>
+<h2>Capability and related functionality</h2>
+<p>The capability is the page frame that every screen sits in. The detailed screens are in the screen maps, for example <a href="../diagrams/sessions-screen-screen-map.html">Sessions Screen Screen Map</a>, and the component structure is in <a href="../diagrams/web-prototype-component-tree.html">Web prototype component tree</a>.</p>
+<h2>Web prototype page wireframe</h2>
+<p><img alt="drawio-prototype-page-layout" src="../assets/drawio-prototype-page-layout.svg"></p>
+<h3>Node citations</h3>
+<ul>
+<li>header: <code>web/src/prototype/Prototype.tsx:34-96</code></li>
+<li>logo: <code>web/src/prototype/Prototype.tsx:35-45</code></li>
+<li>tab0: <code>web/src/prototype/Prototype.tsx:49-67</code></li>
+<li>tab1: <code>web/src/prototype/Prototype.tsx:49-67</code></li>
+<li>tab2: <code>web/src/prototype/Prototype.tsx:49-67</code></li>
+<li>tab3: <code>web/src/prototype/Prototype.tsx:49-67</code></li>
+<li>tab4: <code>web/src/prototype/Prototype.tsx:49-67</code></li>
+<li>filters: <code>web/src/prototype/Prototype.tsx:70-79</code></li>
+<li>rescan: <code>web/src/prototype/Prototype.tsx:83-86</code></li>
+<li>theme: <code>web/src/prototype/Prototype.tsx:87-94</code></li>
+<li>rail: <code>web/src/prototype/Rail.tsx:260-262</code></li>
+<li>search: <code>web/src/prototype/Rail.tsx:93-97</code></li>
+<li>saved: <code>web/src/prototype/Rail.tsx:99-106</code></li>
+<li>range: <code>web/src/prototype/Rail.tsx:108-121</code></li>
+<li>coststate: <code>web/src/prototype/Rail.tsx:125-135</code></li>
+<li>outcome: <code>web/src/prototype/Rail.tsx:137-147</code></li>
+<li>trace: <code>web/src/prototype/Rail.tsx:149-163</code></li>
+<li>clients: <code>web/src/prototype/Rail.tsx:165-175</code></li>
+<li>models: <code>web/src/prototype/Rail.tsx:177-188</code></li>
+<li>projects: <code>web/src/prototype/Rail.tsx:190-201</code></li>
+<li>switch: <code>web/src/prototype/Rail.tsx:203-212</code></li>
+<li>clear: <code>web/src/prototype/Rail.tsx:214-218</code></li>
+<li>undetected: <code>web/src/prototype/Rail.tsx:220-240</code></li>
+<li>main: <code>web/src/prototype/Screens.tsx:352-373</code></li>
+<li>counts: <code>web/src/prototype/Screens.tsx:353-358</code></li>
+<li>screen: <code>web/src/prototype/Screens.tsx:360-368</code></li>
+<li>table: <code>web/src/prototype/SessionsScreen.tsx:148-240</code></li>
+<li>panels: <code>web/src/prototype/OverviewScreen.tsx:370-386</code></li>
+<li>phone: <code>web/src/prototype/SessionsScreen.tsx:127-147</code></li>
+<li>footer: <code>web/src/prototype/Screens.tsx:370-372</code></li>
+<li>drawer: <code>web/src/prototype/Screens.tsx:84-264</code></li>
+<li>d-cost: <code>web/src/prototype/Screens.tsx:110-123</code></li>
+<li>d-buckets: <code>web/src/prototype/Screens.tsx:125-169</code></li>
+<li>d-context: <code>web/src/prototype/Screens.tsx:171-192</code></li>
+<li>d-trace: <code>web/src/prototype/Screens.tsx:194-210</code></li>
+<li>d-meta: <code>web/src/prototype/Screens.tsx:226-247</code></li>
+<li>d-files: <code>web/src/prototype/Screens.tsx:249-257</code></li>
+</ul>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/prototype/Prototype.tsx:34-96</code></td>
+<td>Header</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Rail.tsx:245-276</code></td>
+<td>Filter rail</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:342-377</code></td>
+<td>Main area and drawer</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/SessionsScreen.tsx:127-240</code></td>
+<td>Cards and table</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

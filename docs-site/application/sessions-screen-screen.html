@@ -1,0 +1,252 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Sessions Screen Screen</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/sessions-screen-screen.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Sessions Screen Screen</h1>
+<p>The Sessions screen (<code>web/src/prototype/SessionsScreen.tsx:82-249</code>) and the session drawer it opens (<code>web/src/prototype/Screens.tsx:84-264</code>). The map is <a href="../diagrams/sessions-screen-screen-map.html">Sessions Screen Screen Map</a>; each numbered badge in the image is one row below. Rows 1 to 12 belong to the screen, rows 13 to 26 to the drawer. The numbering follows the markup of each file, so it is not strictly the order on screen.</p>
+<h2>Screen map</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Element</th>
+<th>What it does</th>
+<th>Handler or target</th>
+<th>State it depends on</th>
+<th>Citation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&lt;SortSelect</code> sort menu</td>
+<td>Drop down that picks a sort key and direction from the shared option list; it works on both the table and the phone cards.</td>
+<td><code>onChange</code> (inline): splits the value into key and direction</td>
+<td><code>sortKey</code>, <code>sortDir</code>, <code>SORT_OPTIONS</code></td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:115-123</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>isPhone</code> phone layout section</td>
+<td>Switch between the phone card list and the desktop table at 639 px.</td>
+<td>-</td>
+<td>phone layout: <code>isPhone</code></td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:127-147</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>&lt;SessionCard</code> one card per session</td>
+<td>Card for one session on narrow screens. It carries state, model, client, project, start, requests, tokens and cost, but not the outcome or error count.</td>
+<td><code>onOpen(session)</code></td>
+<td><code>shown</code></td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:130-145</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&lt;Table</code> sessions table</td>
+<td>Desktop table with ten columns declared once in the column list.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:150</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;SortButton</code> column header</td>
+<td>Header button that sorts by its column; a second press on the same column flips the direction.</td>
+<td><code>onHeaderSort</code></td>
+<td><code>sortKey</code>, <code>sortDir</code></td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:155-161</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;TableRow</code> session row</td>
+<td>The whole row is clickable and opens the session drawer. The row has no keyboard handler and no tab stop.</td>
+<td><code>onOpen(session)</code></td>
+<td><code>shown</code></td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:168-172</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;CostStateBadge</code> cost state</td>
+<td>Badge that names how the cost was derived: priced, free, unpriced or unavailable.</td>
+<td>-</td>
+<td><code>session.state</code></td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:175</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>&lt;OutcomeBadge</code> outcome</td>
+<td>Badge with how the session ended.</td>
+<td>-</td>
+<td><code>session.outcome</code></td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:179</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>session.errorCount &gt; 0</code> error section</td>
+<td>Red count with an exclamation mark, drawn only for sessions that logged errors.</td>
+<td>-</td>
+<td>error: <code>session.errorCount &gt; 0</code></td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:180-196</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>&lt;Tooltip</code> error count tooltip</td>
+<td>Tooltip on the error count, reachable by hover or by keyboard focus on the count itself.</td>
+<td>-</td>
+<td><code>session.errorCount</code></td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:181-195</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>&lt;TokenCell</code> token total and bar</td>
+<td>Token total plus a bar scaled to the largest session on screen, coloured by cost state.</td>
+<td>-</td>
+<td><code>tokenTotal(session)</code>, <code>maxTokens</code></td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:220-224</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>&lt;PanelNote</code> footer note</td>
+<td>Note that says how many rows are shown and, when the list is cut, tells the user to narrow the filters.</td>
+<td>-</td>
+<td><code>shown</code>, <code>sorted</code></td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:242-246</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>&lt;Sheet</code> session drawer</td>
+<td>Side sheet that opens when a session is chosen and closes through its own close control.</td>
+<td><code>onClose</code> through <code>onOpenChange</code></td>
+<td><code>session</code> (the active session)</td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:94</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>&lt;CostStateBadge</code> cost state in the drawer</td>
+<td>Same cost state badge as the table, next to the big cost figure.</td>
+<td>-</td>
+<td><code>session.state</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:114</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>&lt;OutcomeBadge</code> outcome in the drawer</td>
+<td>Outcome badge beside the cost state.</td>
+<td>-</td>
+<td><code>session.outcome</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:115</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>session.tokens ?</code> conditional section</td>
+<td>Token buckets section, drawn only when the client logged token counts.</td>
+<td>-</td>
+<td>conditional: <code>session.tokens ?</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:125-163</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td><code>&lt;BucketBar</code> token bucket bar</td>
+<td>Stacked bar of the four token buckets.</td>
+<td>-</td>
+<td><code>TOKEN_BUCKETS</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:127-135</code></td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>&lt;EmptyState</code> empty section</td>
+<td>Empty state that explains why a client without token counts shows no tokens and no cost.</td>
+<td>-</td>
+<td>empty: <code>&lt;EmptyState</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:165-168</code></td>
+</tr>
+<tr>
+<td>19</td>
+<td><code>session.traced ?</code> conditional section</td>
+<td>Context window, trace, insights and capability blocks, drawn only for traced sessions; other sessions get a short explanation instead.</td>
+<td>-</td>
+<td>conditional: <code>session.traced ?</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:171-215</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td><code>&lt;ContextOccupancy</code> context window bars</td>
+<td>One bar per model call, amber above 85 percent of the window.</td>
+<td>-</td>
+<td><code>CONTEXT_SNAPSHOTS</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:181-186</code></td>
+</tr>
+<tr>
+<td>21</td>
+<td><code>&lt;SpanTimeline</code> trace timeline</td>
+<td>Indented list of the spans of a turn.</td>
+<td>-</td>
+<td><code>TRACE_SPANS</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:195-205</code></td>
+</tr>
+<tr>
+<td>22</td>
+<td><code>&lt;InsightList</code> insights</td>
+<td>Three sample insights about context pressure, a retry and cache use.</td>
+<td>-</td>
+<td><code>TRACE_INSIGHTS</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:209</code></td>
+</tr>
+<tr>
+<td>23</td>
+<td><code>&lt;CapabilityGrid</code> what can be known here</td>
+<td>Grid of what the source can tell: trace, tokens, cost, context and latency, each with its provenance.</td>
+<td>-</td>
+<td><code>CAPABILITIES</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:213</code></td>
+</tr>
+<tr>
+<td>24</td>
+<td><code>&lt;MetaGrid</code> where it came from</td>
+<td>Thirteen facts about the session: client, provider, models, project, directory, repository, branch and more.</td>
+<td>-</td>
+<td><code>session</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:227-246</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td><code>&lt;PathList</code> raw log files</td>
+<td>Paths of the log files the session was read from.</td>
+<td>-</td>
+<td><code>session.rawSource</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:250</code></td>
+</tr>
+<tr>
+<td>26</td>
+<td><code>&lt;CodeBlock</code> reprice this model</td>
+<td>A rate override line with zero prices, built from the first model name of the session.</td>
+<td>-</td>
+<td><code>session.models</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:254-256</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Conditional sections</h3>
+<ul>
+<li>phone layout: <code>isPhone</code>, callout 2, <a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:127-147</code></li>
+<li>error: <code>session.errorCount &gt; 0</code>, callout 9, <a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:180-196</code></li>
+<li>conditional: <code>session.tokens ?</code>, callout 16, <a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:125-163</code></li>
+<li>empty: <code>&lt;EmptyState</code>, callout 18, <a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:165-168</code></li>
+<li>conditional: <code>session.traced ?</code>, callout 19, <a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:171-215</code></li>
+</ul>
+<h2>Diagnosis</h2>
+<p><strong>What the user can do.</strong> Sort the list from the menu or, on a wide window, from any column header; the first press on a header sorts high to low and a second press on the same header flips the direction <code>web/src/prototype/SessionsScreen.tsx:99-105</code>. On a phone width the table is replaced by cards <code>web/src/prototype/SessionsScreen.tsx:127-147</code>. A click on a row or a card opens the drawer <code>web/src/prototype/SessionsScreen.tsx:168-172</code>, where the user reads the cost, the token buckets, the context window, the trace and the raw log paths <code>web/src/prototype/Screens.tsx:110-257</code>.</p>
+<p><strong>What can go wrong.</strong></p>
+<ul>
+<li>The footer note tells the user to narrow the filters when the list is cut <code>web/src/prototype/SessionsScreen.tsx:243-244</code>, but the screen takes no filter value; its only prop is <code>onOpen</code> <code>web/src/prototype/SessionsScreen.tsx:82-82</code>, and the parent renders it without any filter <code>web/src/prototype/Screens.tsx:363-363</code>. The advice cannot be followed in the prototype. A port to real data must pass the filters in.</li>
+<li>The title counts all sessions while only the first rows are shown <code>web/src/prototype/SessionsScreen.tsx:96-96</code> <code>web/src/prototype/SessionsScreen.tsx:111-111</code>; the footer note is the only place that says the list is cut.</li>
+<li>The row is a click target with no key handler and no tab stop <code>web/src/prototype/SessionsScreen.tsx:168-172</code>. A keyboard user can reach only the error count, which has <code>tabIndex</code> set <code>web/src/prototype/SessionsScreen.tsx:183-184</code>. This is a gap for a screen that is meant to be the reference.</li>
+<li>The phone card receives no outcome and no error count <code>web/src/prototype/SessionsScreen.tsx:132-143</code>, so those two facts exist only in the table layout.</li>
+<li>A session without token counts gets a total of minus one for sorting <code>web/src/prototype/SessionsScreen.tsx:47-50</code>, and the same total is divided by the largest total to give the bar fraction <code>web/src/prototype/SessionsScreen.tsx:222-222</code>. That passes a negative fraction to the token cell for such sessions. Open question: does the shared token cell clamp it? The prototype code does not.</li>
+<li>A header click on a column such as client sets a sort value that has no entry in the option list <code>web/src/prototype/SessionsScreen.tsx:117-117</code> <code>web/src/prototype/data.ts:659-668</code>. How the menu then looks depends on the shared component and is not shown here.</li>
+<li>In the drawer, the context window, trace, insights and capabilities are fixed sample data, the same for every traced session <code>web/src/prototype/Screens.tsx:181-213</code>, and the split of cost across buckets uses fixed weights <code>web/src/prototype/Screens.tsx:50-55</code>. A reader must not take them as real numbers.</li>
+</ul>
+<p><strong>States the code does not handle.</strong></p>
+<ul>
+<li>No loading state and no error state exist; the data is a literal list <code>web/src/prototype/SessionsScreen.tsx:20-20</code>.</li>
+<li>An empty list draws a table with headers and no rows and no empty message <code>web/src/prototype/SessionsScreen.tsx:166-237</code>.</li>
+<li>A failed trace is not a state: a session is either traced or it gets a text that it was recorded before span capture <code>web/src/prototype/Screens.tsx:216-224</code>.</li>
+<li>The drawer has an empty state only for a session with no token counts <code>web/src/prototype/Screens.tsx:164-169</code>.</li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

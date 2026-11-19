@@ -1,0 +1,94 @@
+/* Hallmark · checked: 2026-11-17 · genre: modern-minimal, warm paper (owner) · scope: app · redesign: restyle · built: the project · v2.0.0 */
+/* Design tokens of the legacy views: the single place to re-skin them (UI-019). They carry the same warm paper language as the React
+   workbench (packages/ui/web/src/styles/tokens.css, docs/ui/VISUAL-LANGUAGE-PROPOSAL.md) until milestone 6 ports these views.
+   Fonts (UI-122, changed 2026-11-17): the same local OFL woff2 files as the React views, served once from the app folder. */
+@font-face { font-family: "Newsreader"; font-style: normal; font-weight: 200 800; font-display: swap; src: url("../../fonts/newsreader-latin-wght-normal.woff2") format("woff2"); }
+@font-face { font-family: "Hanken Grotesk"; font-style: normal; font-weight: 100 900; font-display: swap; src: url("../../fonts/hanken-grotesk-latin-wght-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2"); }
+
+:root {
+  color-scheme: light;
+  --font-sans: "Hanken Grotesk", system-ui, "Segoe UI", sans-serif;
+  --font-serif: "Newsreader", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --fs-0: 0.8125rem; --fs-1: 1rem; --fs-2: 1.1875rem; --fs-3: 1.4375rem; --fs-4: 1.75rem;
+  --sp-1: 0.25rem; --sp-2: 0.5rem; --sp-3: 0.75rem; --sp-4: 1rem; --sp-5: 1.5rem; --sp-6: 2.25rem;
+  --radius: 10px; --radius-sm: 6px;
+  --bp-narrow: 900px;
+  --dur-micro: 120ms; --dur-short: 200ms; --ease-out: cubic-bezier(0.2, 0, 0, 1);
+
+  --bg: #faf8f4;
+  --surface: #fffdf9;
+  --surface-2: #f1ede5;
+  --border: #e0d9cc;
+  --input: #8c8377;
+  --text: #1f1b16;
+  --text-2: #3d362d;
+  --muted: #5c5447;
+  --accent: #2d4682;
+  --accent-ink: #fffdf9;
+  --accent-soft: #e4e8f2;
+  --focus: #2d4682;
+  --danger: #a8321f;
+  --danger-soft: #f8e6e1;
+  --warn: #80560a;
+  --warn-soft: #f6ecd6;
+  --ok: #2e6537;
+  --ok-soft: #e3efe3;
+  --scrim: rgba(31, 27, 22, .32);
+  --shadow: 0 8px 24px rgba(31, 27, 22, .10), 0 0 0 1px var(--border);
+
+  /* maturity */
+  --mat-raw: #5c5447; --mat-raw-bg: #ebe6dc;
+  --mat-draft: #80560a; --mat-draft-bg: #f6ecd6;
+  --mat-approved: #2e6537; --mat-approved-bg: #e3efe3;
+
+  /* board status, by family: planned neutral, active accent, attention warning, finished success */
+  --st-todo: #5c5447; --st-clarifying: #80560a; --st-planning: #5c5447; --st-coding: #2d4682;
+  --st-in-review: #2d4682; --st-adjusting: #80560a; --st-merging: #2d4682; --st-done: #2e6537; --st-cancelled: #5c5447; --st-demo: #7a3e6c;
+
+  /* diagram card is always light (UI-066) */
+  --diagram-bg: #ffffff;
+  --diagram-text: #1f1b16;
+  /* nodes of the dependency drawing (on the light diagram card in every theme) */
+  --dn-bg: #f1ede5; --dn-line: #5c5447;
+  --dn-done-bg: #e3efe3; --dn-done-line: #2e6537;
+  --dn-a-bg: #e4e8f2; --dn-a-line: #2d4682;
+  --dn-b-bg: #f6ecd6; --dn-b-line: #80560a;
+  --dn-ready: #1f3366; --dn-cycle: #a8321f;
+
+  /* the knowledge graph: a warm charcoal canvas in every theme */
+  --gv-bg: #161411; --gv-raised: #1f1c18; --gv-raised-2: #2a2621; --gv-hover: #34302a;
+  --gv-line: #36312a; --gv-line-2: #433d34;
+  --gv-text: #ede7dc; --gv-text-2: #cfc7b9; --gv-muted: #a39a8b; --gv-strong: #fffdf9;
+  --gv-accent: #3d5aa6; --gv-accent-line: #5b76c0; --gv-link: #a3b4e3; --gv-link-hover: #c5d0ee;
+  --gv-ok: #8fc79a; --gv-warn: #e0b25e; --gv-danger: #ee8a7c;
+  --gv-overlay: rgba(31, 28, 24, .97);
+  --gv-shadow-color: #000000;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #1b1916; --surface: #23201c; --surface-2: #2b2823; --border: #3b362f; --input: #7a7166;
+    --text: #ede7dc; --text-2: #d6cfc2; --muted: #b2a898;
+    --accent: #a3b4e3; --accent-ink: #161a24; --accent-soft: #2c3249; --focus: #a3b4e3;
+    --danger: #ee8a7c; --danger-soft: #3a2420; --warn: #e0b25e; --warn-soft: #352b1a; --ok: #8fc79a; --ok-soft: #213024;
+    --scrim: rgba(0, 0, 0, .5);
+    --shadow: 0 0 0 1px var(--border);
+    --mat-raw: #b2a898; --mat-raw-bg: #322e28; --mat-draft: #e0b25e; --mat-draft-bg: #352b1a; --mat-approved: #8fc79a; --mat-approved-bg: #213024;
+    --st-todo: #b2a898; --st-clarifying: #e0b25e; --st-planning: #b2a898; --st-coding: #a3b4e3; --st-in-review: #a3b4e3; --st-adjusting: #e0b25e;
+    --st-merging: #a3b4e3; --st-done: #8fc79a; --st-cancelled: #b2a898; --st-demo: #e0a8d0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #1b1916; --surface: #23201c; --surface-2: #2b2823; --border: #3b362f; --input: #7a7166;
+  --text: #ede7dc; --text-2: #d6cfc2; --muted: #b2a898;
+  --accent: #a3b4e3; --accent-ink: #161a24; --accent-soft: #2c3249; --focus: #a3b4e3;
+  --danger: #ee8a7c; --danger-soft: #3a2420; --warn: #e0b25e; --warn-soft: #352b1a; --ok: #8fc79a; --ok-soft: #213024;
+  --scrim: rgba(0, 0, 0, .5);
+  --shadow: 0 0 0 1px var(--border);
+  --mat-raw: #b2a898; --mat-raw-bg: #322e28; --mat-draft: #e0b25e; --mat-draft-bg: #352b1a; --mat-approved: #8fc79a; --mat-approved-bg: #213024;
+  --st-todo: #b2a898; --st-clarifying: #e0b25e; --st-planning: #b2a898; --st-coding: #a3b4e3; --st-in-review: #a3b4e3; --st-adjusting: #e0b25e;
+  --st-merging: #a3b4e3; --st-done: #8fc79a; --st-cancelled: #b2a898; --st-demo: #e0a8d0;
+}

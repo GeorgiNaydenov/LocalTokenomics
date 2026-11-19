@@ -1,0 +1,16 @@
+{
+ "drawio-root-families.svg": {
+  "bytes": 711394,
+  "output_sha256": "6b4f3e3438b0af1e0b753afb9011feb97cda5b9f601d1a784c57973df5498148",
+  "source": "docs/brain/architecture/drawio/drawio-root-families.drawio",
+  "source_sha256": "f121dd1935fdd9d700b18ff21bc6589d00b5362d313b7d07a14f48c55777af0a",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-root-settings.svg": {
+  "bytes": 822221,
+  "output_sha256": "a9adcfe3c9dad537f8a75ffb7813c4ee21430f2f8dcc869799101e3da2b9b0d2",
+  "source": "docs/brain/architecture/drawio/drawio-root-settings.drawio",
+  "source_sha256": "6c0f721a3e5dbc8ce46adbe699efd7c30f049b11ff58b5813b6039a40bf37536",
+  "tool": "draw.io 28.1.2"
+ }
+}

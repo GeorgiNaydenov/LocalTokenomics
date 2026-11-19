@@ -1,0 +1,163 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web prototype component tree</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-prototype-component-tree.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Web prototype component tree</h1>
+<p>This view shows how the prototype page is built from smaller parts, from the entry script down to the shared building blocks. A developer can see which parts belong only to the prototype and which come from the shared component folders. It answers where to change a given panel.</p>
+<h2>What the diagram shows</h2>
+<p>The entry script mounts the shell component in strict mode <code>web/src/prototype/main.tsx:1-11</code>.</p>
+<p>The shell renders its header buttons, a separator and the toaster, then either the gallery or the screens component <code>web/src/prototype/Prototype.tsx:31-110</code> <code>web/src/prototype/Prototype.tsx:98-107</code>.</p>
+<p>The screens component renders the filter rail, the filter chips, one of four screens and the session drawer <code>web/src/prototype/Screens.tsx:342-377</code>.</p>
+<p>The filter rail renders the same filter content twice, once in a fixed column and once in a sheet <code>web/src/prototype/Rail.tsx:260-273</code>. The content uses the shared search, chip, date range and facet components <code>web/src/prototype/Rail.tsx:93-175</code>.</p>
+<p>The overview screen is a stack of seven small panel components <code>web/src/prototype/OverviewScreen.tsx:370-386</code>. Each panel uses the shared panel parts <code>web/src/prototype/OverviewScreen.tsx:47-85</code>.</p>
+<p>The sessions screen renders cards or a table, depending on the window width <code>web/src/prototype/SessionsScreen.tsx:127-240</code>. The sources screen renders reader blocks, a folded list and a warnings list <code>web/src/prototype/SourcesScreen.tsx:15-92</code>. The pricing screen renders three panels <code>web/src/prototype/PricingScreen.tsx:208-218</code>.</p>
+<p>The session drawer renders sections from the shared detail and trace components <code>web/src/prototype/Screens.tsx:84-264</code>. The gallery imports the same shared parts to show them side by side <code>web/src/prototype/Gallery.tsx:48-80</code>.</p>
+<h2>Capability and related functionality</h2>
+<p>The capability is a map of reuse: which parts a screen owns and which it borrows. It belongs with <a href="../application/web-prototype-overview.html">Web prototype Overview</a>, the module view in <a href="../diagrams/web-prototype-diagrams.html">Web prototype Diagrams</a>, and the shared parts described in the notes on the components chunks.</p>
+<h2>Web prototype component tree</h2>
+<pre class="mermaid">flowchart TD
+    main[&quot;main.tsx&quot;]:::page
+    proto[&quot;Prototype&quot;]:::page
+    screens[&quot;Screens&quot;]:::page
+    gallery[&quot;Gallery&quot;]:::page
+    overview[&quot;OverviewScreen&quot;]:::page
+    sessions[&quot;SessionsScreen&quot;]:::page
+    sources[&quot;SourcesScreen&quot;]:::page
+    pricing[&quot;PricingScreen&quot;]:::page
+    rail[&quot;FilterRail, RailContent&quot;]:::local
+    drawer[&quot;SessionDrawer&quot;]:::local
+    ovparts[&quot;DetectedSources, KpiRow, TimeChartPanel, CostByModelPanel, TokenMixPanel, CacheSavingsPanel, ByProjectPanel&quot;]:::local
+    prparts[&quot;RateTablePanel, MultipliersPanel, UnpricedPanel&quot;]:::local
+    sharedpanel[&quot;Panel, PanelHeader, PanelBody, PanelNote&quot;]:::shared
+    sharedfilter[&quot;FilterChips, SortSelect, SearchField, ChipRow, DateRange, FacetGroup&quot;]:::shared
+    sharedsession[&quot;SessionCard, TokenCell, SourceCard, SourceDetail&quot;]:::shared
+    sharedstatus[&quot;CostStateBadge, OutcomeBadge, BucketBar, MeterRow, ComparisonMeter, Legend&quot;]:::shared
+    sharedstate[&quot;EmptyState, DisclosurePanel, WarningsList, SortButton&quot;]:::shared
+    shareddetail[&quot;Section, MetaGrid, PathList, CodeBlock, ContextOccupancy, SpanTimeline, InsightList, CapabilityGrid&quot;]:::shared
+    sharedchart[&quot;Stat, StatGrid, Sparkline, TimeChart&quot;]:::shared
+    prim[&quot;Button, Sheet, Table, Tooltip, Badge, ToggleGroup, Switch, Separator, Toaster&quot;]:::primitive
+
+    main --&gt; proto
+    proto --&gt; screens
+    proto --&gt; gallery
+    proto --&gt; prim
+    screens --&gt; rail
+    screens --&gt; sharedfilter
+    screens --&gt; overview
+    screens --&gt; sessions
+    screens --&gt; sources
+    screens --&gt; pricing
+    screens --&gt; drawer
+    rail --&gt; prim
+    rail --&gt; sharedfilter
+    rail --&gt; sharedstate
+    overview --&gt; ovparts
+    ovparts --&gt; sharedpanel
+    ovparts --&gt; sharedchart
+    ovparts --&gt; sharedsession
+    ovparts --&gt; sharedstatus
+    ovparts --&gt; prim
+    sessions --&gt; sharedpanel
+    sessions --&gt; sharedfilter
+    sessions --&gt; sharedsession
+    sessions --&gt; sharedstatus
+    sessions --&gt; sharedstate
+    sessions --&gt; prim
+    sources --&gt; sharedpanel
+    sources --&gt; sharedsession
+    sources --&gt; sharedstate
+    pricing --&gt; prparts
+    prparts --&gt; sharedpanel
+    prparts --&gt; shareddetail
+    prparts --&gt; sharedstatus
+    prparts --&gt; prim
+    drawer --&gt; prim
+    drawer --&gt; shareddetail
+    drawer --&gt; sharedstatus
+    drawer --&gt; sharedstate
+    gallery --&gt; sharedpanel
+    gallery --&gt; sharedfilter
+    gallery --&gt; sharedsession
+    gallery --&gt; sharedstatus
+    gallery --&gt; sharedstate
+    gallery --&gt; shareddetail
+    gallery --&gt; sharedchart
+    gallery --&gt; prim
+
+    subgraph Legend
+        direction LR
+        zl1[&quot;Page or screen component: thick border. An arrow reads as renders&quot;]:::page
+        zl2[&quot;Component defined in web/src/prototype: blue box&quot;]:::local
+        zl3[&quot;Shared component from web/src/components: green box&quot;]:::shared
+        zl4[&quot;UI primitive from web/src/components/ui over a third party kit: grey dashed box&quot;]:::primitive
+        zl1 ~~~ zl2
+        zl2 ~~~ zl3
+        zl3 ~~~ zl4
+    end
+
+    classDef page fill:#dae8fc,stroke:#222222,stroke-width:4px,color:#111111
+    classDef local fill:#dae8fc,stroke:#222222,color:#111111
+    classDef shared fill:#d5e8d4,stroke:#222222,color:#111111
+    classDef primitive fill:#e6e6e6,stroke:#222222,stroke-dasharray:5 3,color:#111111
+</pre>
+
+<h3>Node citations</h3>
+<ul>
+<li>main: <code>web/src/prototype/main.tsx:1-11</code></li>
+<li>proto: <code>web/src/prototype/Prototype.tsx:20-112</code></li>
+<li>screens: <code>web/src/prototype/Screens.tsx:266-378</code></li>
+<li>gallery: <code>web/src/prototype/Gallery.tsx:161-173</code></li>
+<li>overview: <code>web/src/prototype/OverviewScreen.tsx:370-386</code></li>
+<li>sessions: <code>web/src/prototype/SessionsScreen.tsx:82-249</code></li>
+<li>sources: <code>web/src/prototype/SourcesScreen.tsx:8-95</code></li>
+<li>pricing: <code>web/src/prototype/PricingScreen.tsx:208-218</code></li>
+<li>rail: <code>web/src/prototype/Rail.tsx:80-80</code>, <code>web/src/prototype/Rail.tsx:245-276</code></li>
+<li>drawer: <code>web/src/prototype/Screens.tsx:84-264</code></li>
+<li>ovparts: <code>web/src/prototype/OverviewScreen.tsx:42-42</code>, <code>web/src/prototype/OverviewScreen.tsx:88-88</code>, <code>web/src/prototype/OverviewScreen.tsx:151-151</code>, <code>web/src/prototype/OverviewScreen.tsx:218-218</code>, <code>web/src/prototype/OverviewScreen.tsx:257-257</code>, <code>web/src/prototype/OverviewScreen.tsx:309-309</code>, <code>web/src/prototype/OverviewScreen.tsx:343-343</code></li>
+<li>prparts: <code>web/src/prototype/PricingScreen.tsx:46-46</code>, <code>web/src/prototype/PricingScreen.tsx:130-130</code>, <code>web/src/prototype/PricingScreen.tsx:172-172</code></li>
+<li>sharedpanel: <code>web/src/prototype/OverviewScreen.tsx:5-5</code></li>
+<li>sharedfilter: <code>web/src/prototype/Rail.tsx:6-6</code>, <code>web/src/prototype/SessionsScreen.tsx:12-12</code>, <code>web/src/prototype/Screens.tsx:12-12</code></li>
+<li>sharedsession: <code>web/src/prototype/SessionsScreen.tsx:13-13</code>, <code>web/src/prototype/OverviewScreen.tsx:16-16</code>, <code>web/src/prototype/SourcesScreen.tsx:3-3</code></li>
+<li>sharedstatus: <code>web/src/prototype/OverviewScreen.tsx:9-15</code></li>
+<li>sharedstate: <code>web/src/prototype/SourcesScreen.tsx:4-4</code>, <code>web/src/prototype/SessionsScreen.tsx:14-14</code>, <code>web/src/prototype/Rail.tsx:9-9</code></li>
+<li>shareddetail: <code>web/src/prototype/Screens.tsx:11-11</code>, <code>web/src/prototype/Screens.tsx:16-16</code></li>
+<li>sharedchart: <code>web/src/prototype/OverviewScreen.tsx:4-8</code></li>
+<li>prim: <code>web/src/prototype/Prototype.tsx:4-7</code>, <code>web/src/prototype/Screens.tsx:3-10</code>, <code>web/src/prototype/SessionsScreen.tsx:3-10</code></li>
+</ul>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/prototype/main.tsx:1-11</code></td>
+<td>Entry script that mounts the shell</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Prototype.tsx:98-107</code></td>
+<td>Gallery or screens</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:342-377</code></td>
+<td>Rail, chips, screens and drawer</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Rail.tsx:260-273</code></td>
+<td>Rail in a column and in a sheet</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/OverviewScreen.tsx:370-386</code></td>
+<td>Seven panels</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/PricingScreen.tsx:208-218</code></td>
+<td>Three panels</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Gallery.tsx:48-80</code></td>
+<td>Shared parts the gallery imports</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

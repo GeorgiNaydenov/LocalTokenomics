@@ -1,0 +1,239 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Requirement Catalogue</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="operations/requirement-catalogue.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Motivation / Requirements · TOGAF: Requirements Management</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> </p><h1>Requirement Catalogue</h1>
+<p>Measures and thresholds the repository already states or enforces, each with its source and what checks it.</p>
+<h3>Quality gates</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Measure</th>
+<th>Threshold</th>
+<th>Source</th>
+<th>Checked by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QUAL-1</td>
+<td>Supported Python versions</td>
+<td>version range</td>
+<td>&gt;=3.11</td>
+<td><a href="#">pyproject.toml</a> <code>pyproject.toml:6</code></td>
+<td>installer</td>
+</tr>
+<tr>
+<td>QUAL-2</td>
+<td>Strict type checking</td>
+<td>compiler mode</td>
+<td>strict</td>
+<td><a href="#">web/tsconfig.json</a> <code>web/tsconfig.json:19</code></td>
+<td>tsc</td>
+</tr>
+</tbody>
+</table>
+<h3>Time and performance limits</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Measure</th>
+<th>Threshold</th>
+<th>Source</th>
+<th>Checked by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PERF-1</td>
+<td>Fetch timeout s</td>
+<td>constant in code</td>
+<td>30</td>
+<td><a href="#">scripts/rates_diff.py</a> <code>scripts/rates_diff.py:33</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>PERF-2</td>
+<td>Low cache hit ratio</td>
+<td>constant in code</td>
+<td>0.2</td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:36</code></td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h3>Capacity and size limits</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Measure</th>
+<th>Threshold</th>
+<th>Source</th>
+<th>Checked by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAP-1</td>
+<td>Max content bytes</td>
+<td>constant in code</td>
+<td>65_536</td>
+<td><a href="#">src/ai_usage_cost/privacy.py</a> <code>src/ai_usage_cost/privacy.py:11</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-2</td>
+<td>Long context capacity</td>
+<td>constant in code</td>
+<td>1_000_000</td>
+<td><a href="#">src/ai_usage_cost/sources/claude_code.py</a> <code>src/ai_usage_cost/sources/claude_code.py:25</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-3</td>
+<td>Max error chars</td>
+<td>constant in code</td>
+<td>500</td>
+<td><a href="#">src/ai_usage_cost/sources/claude_code.py</a> <code>src/ai_usage_cost/sources/claude_code.py:26</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-4</td>
+<td>Reconcile min tokens</td>
+<td>constant in code</td>
+<td>1000</td>
+<td><a href="#">src/ai_usage_cost/sources/codex.py</a> <code>src/ai_usage_cost/sources/codex.py:22</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-5</td>
+<td>Amplification limit</td>
+<td>constant in code</td>
+<td>20.0</td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:31</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-6</td>
+<td>Repeated tool limit</td>
+<td>constant in code</td>
+<td>3</td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:32</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-7</td>
+<td>Turn error limit</td>
+<td>constant in code</td>
+<td>3</td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:33</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-8</td>
+<td>Reveal batch</td>
+<td>constant in code</td>
+<td>60</td>
+<td><a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:14</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-9</td>
+<td>Max contributors</td>
+<td>constant in code</td>
+<td>6</td>
+<td><a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:15</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-10</td>
+<td>Reveal batch</td>
+<td>constant in code</td>
+<td>40</td>
+<td><a href="#">web/src/EconomicsTab.tsx</a> <code>web/src/EconomicsTab.tsx:43</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-11</td>
+<td>Reveal batch</td>
+<td>constant in code</td>
+<td>20</td>
+<td><a href="#">web/src/Pricing.tsx</a> <code>web/src/Pricing.tsx:40</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-12</td>
+<td>Resize step</td>
+<td>constant in code</td>
+<td>24</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:396</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-13</td>
+<td>Shown limit</td>
+<td>constant in code</td>
+<td>120</td>
+<td><a href="#">web/src/Sessions.tsx</a> <code>web/src/Sessions.tsx:48</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-14</td>
+<td>Row batch</td>
+<td>constant in code</td>
+<td>400</td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:25</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-15</td>
+<td>Min width</td>
+<td>constant in code</td>
+<td>360</td>
+<td><a href="#">web/src/components/workspace-panel.ts</a> <code>web/src/components/workspace-panel.ts:6</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-16</td>
+<td>Max width</td>
+<td>constant in code</td>
+<td>900</td>
+<td><a href="#">web/src/components/workspace-panel.ts</a> <code>web/src/components/workspace-panel.ts:8</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>CAP-17</td>
+<td>Reveal batch</td>
+<td>constant in code</td>
+<td>4</td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:20</code></td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h3>Security and abuse limits</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Measure</th>
+<th>Threshold</th>
+<th>Source</th>
+<th>Checked by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SEC-1</td>
+<td>Session limit</td>
+<td>constant in code</td>
+<td>120</td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:744</code></td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<p>22 requirements were read from CI files, configuration and constants; 20 have no test that mentions them.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

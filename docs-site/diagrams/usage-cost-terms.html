@@ -1,0 +1,92 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Usage cost terms</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/usage-cost-terms.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business · TOGAF: Phase B, Business Architecture</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Usage cost terms</h1>
+<p>This view places the words the tool uses next to each other and names how they relate. It helps a new reader, and anyone writing a report or a story, use the same words the code uses. The terms are defined one by one in the glossary of this chunk.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>A request records the source it came from, the client, the session it belongs to, its token counts and its service tier, which is standard unless the log says otherwise. <code>src/ai_usage_cost/models.py:49-59</code></li>
+<li>A sidechain is a request made by a subagent, kept as a flag on the request so reports can leave it out. <code>src/ai_usage_cost/models.py:58</code> <code>src/ai_usage_cost/cli.py:79</code> <code>src/ai_usage_cost/pipeline.py:277</code></li>
+<li>A source is one supported AI coding tool reader, and it maps the client names it writes for. <code>src/ai_usage_cost/sources/base.py:18-21</code></li>
+<li>Token usage has six counted fields and derives the cache write, input and overall totals. <code>src/ai_usage_cost/models.py:12-33</code></li>
+<li>A rate row matches a model id prefix for one provider. <code>src/ai_usage_cost/pricing.py:126-129</code></li>
+<li>Every priced request ends in one of four cost states, and only some states carry a cost breakdown. <code>src/ai_usage_cost/models.py:8</code> <code>src/ai_usage_cost/models.py:117-120</code></li>
+<li>A span is one step of a session trace, and an outcome is the rating a person gives a session. <code>src/ai_usage_cost/trace.py:55-71</code> <code>src/ai_usage_cost/trace.py:141-151</code></li>
+<li>A bucket sums the tokens and the cost breakdown of the requests that share one key. <code>src/ai_usage_cost/models.py:123-130</code></li>
+<li>A warning group gathers warnings of one kind and carries the worst severity among them: info, caution or critical. <code>src/ai_usage_cost/aggregate.py:83-90</code> <code>src/ai_usage_cost/aggregate.py:115-128</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The glossary entries, with one cited definition each, are in <a href="../application/ai-usage-cost-specification.html">Ai usage cost Specification</a>.</li>
+<li>The same terms as stored records are in <a href="../diagrams/usage-cost-conceptual-model.html">Usage cost conceptual model</a> and as in memory types in <a href="../diagrams/usage-cost-types.html">Usage cost types</a>.</li>
+<li>The cost state is drawn as a lifecycle in <a href="../diagrams/cost-state-of-a-request.html">Cost state of a request</a>.</li>
+</ul>
+<h2>Usage cost terms</h2>
+<pre class="mermaid">flowchart LR
+    source(&quot;Source&quot;):::term
+    client(&quot;Client&quot;):::term
+    session(&quot;Session&quot;):::term
+    request(&quot;Request (UsageEvent)&quot;):::term
+    tokens(&quot;Token usage&quot;):::term
+    tier(&quot;Service tier&quot;):::term
+    sidechain(&quot;Sidechain&quot;):::term
+    rate(&quot;Rate row (ModelRate)&quot;):::term
+    state(&quot;Cost state&quot;):::term
+    cost(&quot;Cost breakdown&quot;):::term
+    span(&quot;Span&quot;):::term
+    outcome(&quot;Outcome&quot;):::term
+    bucket(&quot;Bucket&quot;):::term
+    warning(&quot;Warning group&quot;):::term
+    severity(&quot;Warning severity&quot;):::term
+
+    source --&gt;|writes logs for| client
+    request --&gt;|belongs to| session
+    request --&gt;|comes from| source
+    request --&gt;|has| tokens
+    request --&gt;|runs on| tier
+    sidechain --&gt;|is a| request
+    request --&gt;|is priced by| rate
+    request --&gt;|ends in| state
+    state --&gt;|decides| cost
+    span --&gt;|belongs to| session
+    outcome --&gt;|rates| session
+    bucket --&gt;|sums| cost
+    warning --&gt;|has| severity
+
+    subgraph Legend
+        direction LR
+        zlegend_a(&quot;Term, named as the code names it&quot;):::term
+        zlegend_b[&quot;Relations: has, is a, belongs to, comes from, rates, sums&quot;]:::key
+        zlegend_a ~~~ zlegend_b
+    end
+
+    classDef term fill:#dae8fc,stroke:#222222,color:#222222
+    classDef key fill:#ffffff,stroke:#222222,color:#222222
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/models.py:8-130</code></td>
+<td>Request, tokens, cost state, cost breakdown, bucket</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pricing.py:126-145</code></td>
+<td>Rate row</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/trace.py:55-151</code></td>
+<td>Span and outcome</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/aggregate.py:83-128</code></td>
+<td>Warning severity and group</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

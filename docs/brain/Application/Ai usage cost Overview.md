@@ -20,7 +20,7 @@ What Ai usage cost is made of and how it connects to the rest of the code.
 
 ## How it works
 
-Ai usage cost holds 38 source files and 9978 lines, with 12 routes declared in 1 files, 51 entities, 719 tests that live in it or import its files. The most depended-on files are `src/ai_usage_cost/models.py`, `src/ai_usage_cost/trace.py`, `src/ai_usage_cost/sources/base.py`. It uses Ai usage cost render Overview, Ai usage cost sources Overview. It is used by Ai usage cost sources Overview, Ai usage cost render Overview.
+Ai usage cost holds 38 source files and 9978 lines, with 12 routes declared in 1 files, 51 entities, 719 tests that live in it or import its files. The most depended-on files are `src/ai_usage_cost/models.py`, `src/ai_usage_cost/trace.py`, `src/ai_usage_cost/sources/base.py`. It uses [[Ai usage cost render Overview]], [[Ai usage cost sources Overview]]. It is used by [[Ai usage cost sources Overview]], [[Ai usage cost render Overview]].
 
 The purpose column quotes each file's own header comment where it has one. Every file is cited by its full line range, and every public name by the line that declares it.
 

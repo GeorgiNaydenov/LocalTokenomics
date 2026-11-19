@@ -1,0 +1,99 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UI primitives failure flow</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/ui-primitives-failure-flow.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> covers <code>web/src/components/ui/*</code></p><h1>UI primitives failure flow</h1>
+<p>This view shows what happens when the chart parts are misused or fed odd data. Most cases end quietly, with no tooltip or a plain name. Two cases are worth a decision: a thrown error that nothing catches, and style text that is built without escaping.</p>
+<h2>What the diagram shows</h2>
+<p>A chart part used outside the chart container throws an error with a fixed message, because the hook that reads the config finds no context. <code>web/src/components/ui/chart.tsx:29-37</code> <code>web/src/components/ui/chart.tsx:33-33</code></p>
+<p>The app mounts the whole dashboard under one render call with no error boundary around it, so that error is not caught by any component of this repository. <code>web/src/main.tsx:7-12</code></p>
+<p>The tooltip content returns nothing when it is inactive or has no payload, and the legend content returns nothing when it has no payload. <code>web/src/components/ui/chart.tsx:182-183</code> <code>web/src/components/ui/chart.tsx:284-285</code></p>
+<p>When a series has no config entry, the lookup returns undefined, so the tooltip falls back to the raw series name and the legend draws an empty label. <code>web/src/components/ui/chart.tsx:328-362</code> <code>web/src/components/ui/chart.tsx:249-249</code> <code>web/src/components/ui/chart.tsx:319-319</code></p>
+<p>The style element is skipped when no config entry carries a colour or a theme. <code>web/src/components/ui/chart.tsx:86-87</code></p>
+<p>The style text is built by putting each config key and colour into a template string and handing it to the browser as HTML, with no escaping. <code>web/src/components/ui/chart.tsx:102-102</code> <code>web/src/components/ui/chart.tsx:92-108</code></p>
+<p>The time chart fills that config with keys that come from its rows, so a key holding a closing brace or a closing style tag would reach the style text. <code>web/src/components/chart-time.tsx:65-65</code></p>
+<h2>Capability and related functionality</h2>
+<p>The flow covers the chart wrapper, which is the only primitive with its own failure behaviour. The chart is drawn in <a href="../diagrams/ui-primitives-c4.html">UI primitives C4</a> and used by <a href="../diagrams/dashboard-component-composition.html">Dashboard component composition</a>. The wider failure paths of the shared components are in <a href="../diagrams/offline-and-error-handling-flow.html">Offline and error handling flow</a>. The written explanation is in <a href="../application/web-ui-ui-components-overview.html">Web ui UI components Overview</a>.</p>
+<h2>UI primitives failure flow</h2>
+<pre class="mermaid">flowchart TD
+    fCtx[&quot;A chart part is rendered outside the chart container&quot;]:::step
+    gCtx[&quot;useChart throws an Error&quot;]:::guard
+    oCtx([&quot;Reader sees the page fail to render: no error boundary is mounted&quot;]):::fail
+    fNone[&quot;A tooltip or legend has no payload&quot;]:::step
+    gNone[&quot;Early return of nothing&quot;]:::guard
+    oNone([&quot;Reader sees no tooltip and no legend&quot;]):::fail
+    fCfg[&quot;A series has no entry in the chart config&quot;]:::step
+    gCfg[&quot;Config lookup returns undefined&quot;]:::guard
+    oFall([&quot;Reader sees the raw series name in the tooltip and an empty legend label&quot;]):::fail
+    fStyle[&quot;The config holds no colour and no theme&quot;]:::step
+    gStyle[&quot;ChartStyle returns nothing&quot;]:::guard
+    oStyle([&quot;Reader sees no colour variables written for that chart&quot;]):::fail
+    fKey[&quot;A series key holds CSS or markup characters&quot;]:::step
+    gKey[&quot;No escaping before the key enters the style text&quot;]:::guard
+    oInj([&quot;Reader can see broken styles, and markup can end the style element&quot;]):::fail
+
+    fCtx --&gt;|&quot;Error: useChart must be used within a ChartContainer&quot;| gCtx
+    gCtx --&gt;|&quot;exception reaches React&quot;| oCtx
+    fNone --&gt;|&quot;inactive or empty payload&quot;| gNone
+    gNone --&gt;|&quot;null&quot;| oNone
+    fCfg --&gt;|&quot;key not in config&quot;| gCfg
+    gCfg --&gt;|&quot;undefined label&quot;| oFall
+    fStyle --&gt;|&quot;no entry with colour or theme&quot;| gStyle
+    gStyle --&gt;|&quot;null&quot;| oStyle
+    fKey --&gt;|&quot;key text&quot;| gKey
+    gKey --&gt;|&quot;interpolated as is&quot;| oInj
+
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Step: where a failure starts&quot;]:::step
+        zlegend_b[&quot;Guard or missing guard&quot;]:::guard
+        zlegend_c([&quot;Failure the reader sees, arrow label is the error carried&quot;]):::fail
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c
+    end
+
+    classDef step fill:#dae8fc,stroke:#222222,color:#222222
+    classDef guard fill:#e1d5e7,stroke:#222222,color:#222222
+    classDef fail fill:#f8cecc,stroke:#222222,color:#222222
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/components/ui/chart.tsx:33-33</code></td>
+<td>Context guard</td>
+</tr>
+<tr>
+<td><code>web/src/main.tsx:7-12</code></td>
+<td>Single render call without an error boundary</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/chart.tsx:182-183</code></td>
+<td>Tooltip early return</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/chart.tsx:284-285</code></td>
+<td>Legend early return</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/chart.tsx:328-362</code></td>
+<td>Config lookup</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/chart.tsx:86-87</code></td>
+<td>Style element skipped</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/chart.tsx:92-108</code></td>
+<td>Style element filled from the config</td>
+</tr>
+<tr>
+<td><code>web/src/components/chart-time.tsx:65-65</code></td>
+<td>Keys come from rows</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

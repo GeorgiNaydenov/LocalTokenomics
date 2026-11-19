@@ -1,0 +1,195 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Overview Screen Screen</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/overview-screen-screen.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Overview Screen Screen</h1>
+<p>The Overview screen (<code>web/src/prototype/OverviewScreen.tsx:370-386</code>). The map is <a href="../diagrams/overview-screen-screen-map.html">Overview Screen Screen Map</a>; each numbered badge in the image is one row below. The panels are separate small components in one file, so the rows follow the order on screen, not the order of the file.</p>
+<h2>Screen map</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Element</th>
+<th>What it does</th>
+<th>Handler or target</th>
+<th>State it depends on</th>
+<th>Citation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&lt;PanelHeader</code> detected readers</td>
+<td>Title that counts the readers that found logs out of all readers, with a hint that cost is never invented.</td>
+<td>-</td>
+<td><code>SOURCES</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:48-52</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;SourceCard</code> one card per detected reader</td>
+<td>Card with the reader name, path, headline cost or request count, and a daily trend.</td>
+<td>-</td>
+<td><code>detected</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:55-72</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>missing &gt; 0</code> conditional section</td>
+<td>Link style row, drawn only when some readers found nothing.</td>
+<td>-</td>
+<td>conditional: <code>missing &gt; 0</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:75-83</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&lt;button</code> more readers ship with the tool</td>
+<td>Row button that moves the user to the Sources screen.</td>
+<td><code>onSeeAll</code> (the Sources tab)</td>
+<td><code>missing</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:76-82</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;StatGrid</code> KPI row</td>
+<td>Six column grid that holds the five KPI tiles.</td>
+<td>-</td>
+<td><code>PROTOTYPE_SLICE</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:93</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;Stat</code> API equivalent cost</td>
+<td>Hero tile with the total cost and a cost sparkline.</td>
+<td>-</td>
+<td><code>TOTALS.cost</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:94-101</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;Stat</code> tokens</td>
+<td>Tile with total tokens and a cache read sparkline.</td>
+<td>-</td>
+<td><code>TOTALS.tokens</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:115-120</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>&lt;Stat</code> requests</td>
+<td>Tile with total requests and a daily sparkline.</td>
+<td>-</td>
+<td><code>TOTALS.requests</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:123-128</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>&lt;Stat</code> sessions</td>
+<td>Tile with total sessions and the average cost of one.</td>
+<td>-</td>
+<td><code>TOTALS.sessions</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:131-136</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>&lt;Stat</code> cache saved</td>
+<td>Tile with the money saved by caching and its share of the no cache price.</td>
+<td>-</td>
+<td><code>TOTALS.cacheSavings</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:139-144</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>&lt;ToggleGroup</code> stack by</td>
+<td>Segmented control that stacks the chart by client, provider or model.</td>
+<td><code>setStackBy</code></td>
+<td><code>stackBy</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:178-188</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>&lt;ToggleGroup</code> metric</td>
+<td>Segmented control that switches the chart between cost and tokens.</td>
+<td><code>setMetric</code></td>
+<td><code>metric</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:189-198</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>&lt;TimeChart</code> daily stacked bars</td>
+<td>Stacked daily chart built from the sample series.</td>
+<td>-</td>
+<td><code>days</code>, <code>rows</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:203-209</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>&lt;PanelNote</code> chart reading note</td>
+<td>Note that explains the bars, the dashed mean line and the gaps.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:211-213</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>&lt;MeterRow</code> one row per model</td>
+<td>Ranked cost bar for each model; free and unpriced models keep a row with their state.</td>
+<td>-</td>
+<td><code>ranked</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:233-246</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>&lt;Legend</code> token buckets</td>
+<td>Legend with the four token buckets and their price multipliers.</td>
+<td>-</td>
+<td><code>TOKEN_BUCKETS</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:270-277</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td><code>&lt;BucketBar</code> bar per model</td>
+<td>Stacked token bar for each model that logged tokens.</td>
+<td>-</td>
+<td><code>model.tokens</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:287-294</code></td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>&lt;ComparisonMeter</code> billed with no cache discount</td>
+<td>Full length meter for the same tokens at full input price.</td>
+<td>-</td>
+<td><code>TOTALS.noCacheEquivalent</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:319-324</code></td>
+</tr>
+<tr>
+<td>19</td>
+<td><code>&lt;ComparisonMeter</code> actually billed</td>
+<td>Shorter meter for the cost at cache rates.</td>
+<td>-</td>
+<td><code>TOTALS.cost</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:325-329</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td><code>&lt;MeterRow</code> one row per project</td>
+<td>Cost bar for each project, led by the biggest.</td>
+<td>-</td>
+<td><code>PROJECTS</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:352-359</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Conditional sections</h3>
+<ul>
+<li>conditional: <code>missing &gt; 0</code>, callout 3, <a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:75-83</code></li>
+</ul>
+<h2>Diagnosis</h2>
+<p><strong>What the user can do.</strong> Read the detected readers, the five KPI tiles, the daily chart and the four breakdown panels <code>web/src/prototype/OverviewScreen.tsx:373-383</code>. Two segmented controls change the chart: one stacks it by client, provider or model and one switches between cost and tokens <code>web/src/prototype/OverviewScreen.tsx:178-198</code>. A row button under the reader cards moves the user to the Sources screen <code>web/src/prototype/OverviewScreen.tsx:76-82</code>.</p>
+<p><strong>What can go wrong.</strong></p>
+<ul>
+<li>The screen has one prop, a callback to the Sources tab <code>web/src/prototype/OverviewScreen.tsx:370-370</code>. It reads its numbers from constants, so the filter rail beside it changes the chips but not one figure on this screen <code>web/src/prototype/Screens.tsx:360-361</code>.</li>
+<li>The cost by model panel reads the first model of the ranked list without a check <code>web/src/prototype/OverviewScreen.tsx:219-227</code>, and the project panel reads the first project the same way <code>web/src/prototype/OverviewScreen.tsx:348-348</code>. With real data and no models or no projects, both panels would fail. The prototype never meets that case because the lists are literal.</li>
+<li>Averages and shares divide by totals without a guard against zero <code>web/src/prototype/OverviewScreen.tsx:90-90</code> <code>web/src/prototype/OverviewScreen.tsx:261-261</code>. An empty machine would show values that are not numbers.</li>
+<li>The two segmented controls ignore a click on the active option, so a choice can never be cleared <code>web/src/prototype/OverviewScreen.tsx:183-183</code> <code>web/src/prototype/OverviewScreen.tsx:194-194</code>. That is intended, but it means the chart always has one stack and one metric.</li>
+</ul>
+<p><strong>States the code does not handle.</strong></p>
+<ul>
+<li>No loading state: the sample series is available at once <code>web/src/prototype/OverviewScreen.tsx:25-35</code>. The gallery shows skeleton shapes, but this screen never uses them.</li>
+<li>No error state for a failed scan, and no empty state for a machine where no reader found logs: the detected reader grid would simply be empty under a title that says zero readers <code>web/src/prototype/OverviewScreen.tsx:48-74</code>.</li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

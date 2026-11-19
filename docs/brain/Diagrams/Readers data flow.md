@@ -38,7 +38,7 @@ Realises the reading and ingest steps described in [[Ai usage cost sources Overv
 
 ## Readers data flow
 
-`![[docs/brain/architecture/rendered/drawio-src-sources-dfd.svg]]`
+![[docs/brain/architecture/rendered/drawio-src-sources-dfd.svg]]
 
 > [!example]- Code references
 > | Code | What it shows |

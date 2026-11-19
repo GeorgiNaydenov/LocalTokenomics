@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UC-18 Explore spend in the dashboard</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="use-cases/uc-18-explore-spend-in-the-dashboard.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/cli.py</code>, <code>src/ai_usage_cost/api.py</code>, <code>tests/test_api.py</code></p><h1>UC-18 Explore spend in the dashboard</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>A use case of the <a href="../subdomains/spend-reporting.html">Spend reporting</a> subdomain, written from the code. Every step cites the line that does it, so a reader can check the claim in one click.</p>
+</details>
+<details class="callout callout-tip">
+<summary>How to use it</summary>
+<p>Read the main flow first, then the alternative flows. The rules, terms and diagrams at the end are the ones this use case relies on.</p>
+</details>
+<ul>
+<li><strong>Subdomain:</strong> <a href="../subdomains/spend-reporting.html">Spend reporting</a></li>
+<li><strong>Actors:</strong> <a href="../business/actors.html">An unknown session answers 404</a>, <a href="../business/actors.html">Person using the tool</a>, <a href="../business/actors.html">Report</a>, <a href="../business/actors.html">SessionRow</a></li>
+<li><strong>Maturity:</strong> approved</li>
+</ul>
+<h2>Description</h2>
+<p>The person opens a local web dashboard to filter and compare cost by client, model, project and session.</p>
+<h2>Preconditions</h2>
+<p>The dashboard bundle is built, otherwise the root page says how to build it.</p>
+<h2>Main flow</h2>
+<ol>
+<li>The person runs the serve command, which scans the logs first. <a href="#">src/ai_usage_cost/cli.py:109</a></li>
+<li>The command builds the application from the analysis. <a href="#">src/ai_usage_cost/cli.py:133</a></li>
+<li>The browser asks for the meta data and the report. <a href="#">src/ai_usage_cost/api.py:255</a></li>
+<li>The report route passes its filters to the same function the command line uses. <a href="#">src/ai_usage_cost/api.py:304</a></li>
+<li>A refresh route analyses again and clears the span cache. <a href="#">src/ai_usage_cost/api.py:390</a></li>
+</ol>
+<h2>Alternative flows</h2>
+<ul>
+<li>Without the built bundle the root page returns a message to build it. <a href="#">src/ai_usage_cost/api.py:401</a></li>
+</ul>
+<h2>Postconditions</h2>
+<p>The browser shows the report; the interface answers the same filters as the command line.</p>
+<h2>Acceptance criteria</h2>
+<ul>
+<li>The report has the expected shape. <a href="#">tests/test_api.py:133</a></li>
+<li>Each filter narrows the report. <a href="#">tests/test_api.py:233</a></li>
+<li>A filter that matches nothing returns an empty report. <a href="#">tests/test_api.py:284</a></li>
+<li>Refresh invalidates the span cache. <a href="#">tests/test_api.py:392</a></li>
+</ul>
+<h2>Business rules</h2>
+<ul>
+<li><a href="../business/spend-reporting-rules.html">BR-116 The alert window ends today</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-117 A rise is measured against the window just before</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-118 An alert fires only above the threshold</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-120 A route without a store answers 503</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-84 An alert needs exactly one threshold</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-85 An unknown session answers 404</a></li>
+</ul>
+<h2>Code</h2>
+<ul>
+<li><a href="#">src/ai_usage_cost/cli.py</a></li>
+<li><a href="#">src/ai_usage_cost/api.py</a></li>
+<li><a href="#">tests/test_api.py</a></li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

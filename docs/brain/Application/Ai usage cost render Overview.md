@@ -20,7 +20,7 @@ What Ai usage cost render is made of and how it connects to the rest of the code
 
 ## How it works
 
-Ai usage cost render holds 3 source files and 187 lines. The most depended-on files are `src/ai_usage_cost/render/png.py`, `src/ai_usage_cost/render/terminal.py`, `src/ai_usage_cost/render/__init__.py`. It uses Ai usage cost Overview. It is used by Ai usage cost Overview.
+Ai usage cost render holds 3 source files and 187 lines. The most depended-on files are `src/ai_usage_cost/render/png.py`, `src/ai_usage_cost/render/terminal.py`, `src/ai_usage_cost/render/__init__.py`. It uses [[Ai usage cost Overview]]. It is used by [[Ai usage cost Overview]].
 
 The purpose column quotes each file's own header comment where it has one. Every file is cited by its full line range, and every public name by the line that declares it.
 

@@ -1,0 +1,50 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>localtokenomics root Operations</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="operations/localtokenomics-root-operations.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Technology / Operations · TOGAF: Phase D, Technology Architecture</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/*</code></p><h1>localtokenomics root Operations</h1>
+<p>Build, packaging, CI and configuration files that belong to the localtokenomics root chunk.</p>
+<h2>How it works</h2>
+<p>5 operational files were found.</p>
+<h2>Continuous checks</h2>
+<p>Three workflows run on every pull request and on pushes to <code>main</code>. <code>.github/workflows/python.yml:3-6</code> <code>.github/workflows/web.yml:3-6</code> <code>.github/workflows/codeql.yml:3-6</code> A newer run cancels an older one on the same branch, and each workflow asks only for read access to the repository contents. <code>.github/workflows/python.yml:8-13</code></p>
+<p>The Python workflow tests on Ubuntu and Windows with Python 3.11, 3.12 and 3.13, and a failure in one combination does not stop the others. <code>.github/workflows/python.yml:16-23</code> Each run installs the dev extras with uv, then runs ruff check, ruff format check, pylint with a floor of 9.0, mypy on <code>src</code>, and pytest. <code>.github/workflows/python.yml:36-54</code></p>
+<p>The web workflow runs inside the <code>web</code> folder on Node 22. It installs with <code>npm ci</code> from the lockfile, then lints, type checks, tests and builds. <code>.github/workflows/web.yml:15-46</code></p>
+<p>The CodeQL workflow scans Python and JavaScript or TypeScript on the same triggers and also once a week on Monday. <code>.github/workflows/codeql.yml:7-8</code> <code>.github/workflows/codeql.yml:22-25</code> It is the only workflow with permission to write security events. <code>.github/workflows/codeql.yml:14-16</code></p>
+<h2>Packaging and local scripts</h2>
+<p><code>pyproject.toml</code> declares the build backend, the single console script <code>ai-usage-cost</code>, the dependency list and the tool settings. <code>pyproject.toml:29-37</code> <code>web/package.json</code> declares the dashboard scripts and pins exact versions. <code>web/package.json:6-45</code> The local pre-commit hooks mirror the same checks, so most failures show up before a push. <code>.pre-commit-config.yaml:1-33</code></p>
+<h2>What a reader must know</h2>
+<p>The Python and web workflows run the same commands a developer runs locally: <code>npm run lint</code>, <code>npm run typecheck</code>, <code>npm test</code> and <code>npm run build</code> map to scripts in <code>web/package.json</code>. <code>.github/workflows/web.yml:36-46</code> <code>web/package.json:6-13</code> Node 22 runs in the workflow and the README asks for Node 20 or newer, so both are supported. <code>README.md:138-140</code></p>
+<h2>Reference</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Lines</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.github/workflows/codeql.yml</code></td>
+<td>40</td>
+<td><code>.github/workflows/codeql.yml</code> <code>.github/workflows/codeql.yml:1-40</code></td>
+</tr>
+<tr>
+<td><code>.github/workflows/python.yml</code></td>
+<td>54</td>
+<td><code>.github/workflows/python.yml</code> <code>.github/workflows/python.yml:1-54</code></td>
+</tr>
+<tr>
+<td><code>.github/workflows/web.yml</code></td>
+<td>46</td>
+<td><code>.github/workflows/web.yml</code> <code>.github/workflows/web.yml:1-46</code></td>
+</tr>
+<tr>
+<td><code>pyproject.toml</code></td>
+<td>120</td>
+<td><a href="#">pyproject.toml</a> <code>pyproject.toml:1-120</code></td>
+</tr>
+<tr>
+<td><code>web/package.json</code></td>
+<td>46</td>
+<td><a href="#">web/package.json</a> <code>web/package.json:1-46</code></td>
+</tr>
+</tbody>
+</table></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

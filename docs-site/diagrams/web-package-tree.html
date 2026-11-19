@@ -1,0 +1,62 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web Package Tree</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-package-tree.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Web Package Tree</h1>
+<p>This tree shows how the dashboard's files are laid out on disk. It helps a developer see which folder belongs to this part of the documentation and which belong to its neighbours. The two entry points show where the page and the prototype start.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The page starts at the entry file, which mounts App with the theme stylesheet <code>web/src/main.tsx:3-7</code>.</li>
+<li>App imports the screen components and the helpers that sit beside it in the same folder <code>web/src/App.tsx:3-12</code>.</li>
+<li>Shared components and the design system are imported through the at sign alias <code>web/src/App.tsx:14-18</code>.</li>
+<li>The theme is applied before the page loads by a script in the HTML file <code>web/index.html:11-11</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>This chunk owns the files directly in web/src and in the design system. The folders web/src/components, web/src/components/ui and web/src/prototype belong to their own chunks, described in <a href="../application/web-ui-components-overview.html">Web UI components Overview</a>, <a href="../application/web-ui-ui-components-overview.html">Web ui UI components Overview</a> and <a href="../application/web-prototype-overview.html">Web prototype Overview</a>. The composition of the screens is <a href="../diagrams/web-component-composition.html">Web Component Composition</a>.</p>
+<h2>Web Package Tree</h2>
+<pre class="mermaid">flowchart TD
+    web[&quot;web&quot;]:::folder --&gt; src[&quot;web/src&quot;]:::folder
+    web --&gt; idx([&quot;index.html&quot;]):::entry
+    src --&gt; main([&quot;main.tsx&quot;]):::entry
+    src --&gt; screens[&quot;screen components: App, Header, FilterRail, Overview, Sessions, Sources, Pricing, SessionWorkspace and three tabs&quot;]:::folder
+    src --&gt; helpers[&quot;helpers: api, format, pricing-format, pricing-notes, turn-insights, theme&quot;]:::folder
+    src --&gt; comps[&quot;web/src/components&quot;]:::folder
+    comps --&gt; ui[&quot;web/src/components/ui&quot;]:::folder
+    src --&gt; ds[&quot;web/src/design-system&quot;]:::folder
+    src --&gt; proto[&quot;web/src/prototype&quot;]:::folder
+    proto --&gt; pmain([&quot;prototype main.tsx&quot;]):::entry
+    subgraph Legend
+        direction LR
+        zl1[&quot;Box: a folder or a group of files&quot;]:::folder
+        zl2([&quot;Stadium: an entry point&quot;]):::entry
+        zl3[&quot;Arrow reads: contains&quot;]:::folder
+    end
+    classDef folder fill:#dae8fc,stroke:#222222,color:#142233
+    classDef entry fill:#fff2cc,stroke:#222222,color:#222222
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/main.tsx:3-7</code></td>
+<td>The page starts at the entry file, which mounts App with the theme stylesheet</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:3-12</code></td>
+<td>App imports the screen components and the helpers that sit beside it in the same folder</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:14-18</code></td>
+<td>Shared components and the design system are imported through the at sign alias</td>
+</tr>
+<tr>
+<td><code>web/index.html:11-11</code></td>
+<td>The theme is applied before the page loads by a script in the HTML file</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

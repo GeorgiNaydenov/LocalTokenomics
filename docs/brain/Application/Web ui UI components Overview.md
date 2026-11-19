@@ -20,7 +20,7 @@ What Web ui UI components is made of and how it connects to the rest of the code
 
 ## How it works
 
-Web ui UI components holds 25 source files and 2083 lines. The most depended-on files are `web/src/components/ui/button.tsx`, `web/src/components/ui/tooltip.tsx`, `web/src/components/ui/table.tsx`. It uses Web Overview. It is used by Web UI components Overview, Web Overview, Web prototype Overview.
+Web ui UI components holds 25 source files and 2083 lines. The most depended-on files are `web/src/components/ui/button.tsx`, `web/src/components/ui/tooltip.tsx`, `web/src/components/ui/table.tsx`. It uses [[Web Overview]]. It is used by [[Web UI components Overview]], [[Web Overview]], [[Web prototype Overview]].
 
 The purpose column quotes each file's own header comment where it has one. Every file is cited by its full line range, and every public name by the line that declares it.
 

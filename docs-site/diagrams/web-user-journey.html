@@ -1,0 +1,92 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web User Journey</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-user-journey.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business · TOGAF: Phase B, Business Architecture</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Web User Journey</h1>
+<p>This journey follows a developer who wants to find one expensive session and judge it. It shows where the dashboard makes the work easy and where it gets in the way. The low scores point at gaps the code leaves open.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The overview shows the slice cost and the readers found, but its heaviest sessions rows cannot be opened <code>web/src/Overview.tsx:194-194</code> <code>web/src/Overview.tsx:424-424</code> <code>web/src/Overview.tsx:437-437</code>.</li>
+<li>The filter rail narrows the date range and the models <code>web/src/FilterRail.tsx:320-329</code> <code>web/src/FilterRail.tsx:381-381</code>.</li>
+<li>The sessions table sorts by cost and opens a row, and stops at the row limit <code>web/src/Sessions.tsx:51-51</code> <code>web/src/Sessions.tsx:48-48</code>.</li>
+<li>Summary shows cost and token buckets without a request of its own <code>web/src/SessionWorkspace.tsx:202-224</code>.</li>
+<li>Trace loads span text on demand <code>web/src/TraceTab.tsx:793-793</code>.</li>
+<li>A failed tab shows its error with no retry <code>web/src/SessionWorkspace.tsx:389-390</code>.</li>
+<li>The outcome is rated and notes are saved from the workspace header <code>web/src/SessionWorkspace.tsx:533-533</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The screens on the way are <a href="../application/overview-screen.html">Overview Screen</a>, <a href="../application/app-screen.html">App Screen</a>, <a href="../application/sessions-screen.html">Sessions Screen</a> and <a href="../application/session-workspace-screen.html">Session Workspace Screen</a>. The underlying use cases, such as inspecting and rating a session, are in <a href="../application/web-specification.html">Web Specification</a>.</p>
+<h2>Web User Journey</h2>
+<pre class="mermaid">journey
+    title Developer finds a costly session and rates it
+    section Overview
+      Read the slice cost and readers found: 5: Developer
+      Spot the costliest session, cannot open it here: 2: Developer
+    section Filter rail
+      Narrow the date range and models: 4: Developer
+    section Sessions
+      Sort by cost and open a row: 4: Developer
+      Find sessions past the row limit: 2: Developer
+    section Session workspace
+      Read cost and token buckets on Summary: 5: Developer
+      Open Trace and read span text: 4: Developer
+      Retry a failed tab: 1: Developer
+      Rate the outcome and add notes: 4: Developer
+    section Legend
+      Score 5 is easy and score 1 is painful: 3: Developer
+      The actor is the developer reading the dashboard: 3: Developer
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/Overview.tsx:194-194</code></td>
+<td>The overview shows the slice cost and the readers found, but its heaviest sessions rows cannot be opened</td>
+</tr>
+<tr>
+<td><code>web/src/Overview.tsx:424-424</code></td>
+<td>The overview shows the slice cost and the readers found, but its heaviest sessions rows cannot be opened</td>
+</tr>
+<tr>
+<td><code>web/src/Overview.tsx:437-437</code></td>
+<td>The overview shows the slice cost and the readers found, but its heaviest sessions rows cannot be opened</td>
+</tr>
+<tr>
+<td><code>web/src/FilterRail.tsx:320-329</code></td>
+<td>The filter rail narrows the date range and the models</td>
+</tr>
+<tr>
+<td><code>web/src/FilterRail.tsx:381-381</code></td>
+<td>The filter rail narrows the date range and the models</td>
+</tr>
+<tr>
+<td><code>web/src/Sessions.tsx:51-51</code></td>
+<td>The sessions table sorts by cost and opens a row, and stops at the row limit</td>
+</tr>
+<tr>
+<td><code>web/src/Sessions.tsx:48-48</code></td>
+<td>The sessions table sorts by cost and opens a row, and stops at the row limit</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:202-224</code></td>
+<td>Summary shows cost and token buckets without a request of its own</td>
+</tr>
+<tr>
+<td><code>web/src/TraceTab.tsx:793-793</code></td>
+<td>Trace loads span text on demand</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:389-390</code></td>
+<td>A failed tab shows its error with no retry</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:533-533</code></td>
+<td>The outcome is rated and notes are saved from the workspace header</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

@@ -1,0 +1,80 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Usage cost folders</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/usage-cost-folders.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Usage cost folders</h1>
+<p>This view shows how the core package is laid out on disk and where a person or another program enters it. The core files sit in one folder, and three sub folders hold the log readers, the output renderers and the built dashboard. It tells a developer where to look before opening any file.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The installed command is the command line application in the package root. <code>pyproject.toml:29-30</code> <code>src/ai_usage_cost/cli.py:24-27</code></li>
+<li>The HTTP application is built by one function in the package root and started by the serve command. <code>src/ai_usage_cost/api.py:198-214</code> <code>src/ai_usage_cost/cli.py:118-137</code></li>
+<li>The pipeline, pricing, aggregation and model files hold the cost logic. <code>src/ai_usage_cost/pipeline.py:166-173</code> <code>src/ai_usage_cost/pricing.py:252-253</code> <code>src/ai_usage_cost/aggregate.py:462-463</code></li>
+<li>The store, trace, privacy and GPU sampler files hold persistence, traces and their controls. <code>src/ai_usage_cost/store.py:140</code> <code>src/ai_usage_cost/trace.py:55</code> <code>src/ai_usage_cost/privacy.py:52</code> <code>src/ai_usage_cost/collect.py:260</code></li>
+<li>The rate table ships as a file next to the code and is read when no other file is given. <code>src/ai_usage_cost/pricing.py:22</code> <code>src/ai_usage_cost/pricing.py:286-287</code></li>
+<li>The log readers live in the sources folder and are reached through one registry. <code>src/ai_usage_cost/pipeline.py:22</code></li>
+<li>The terminal and image renderers live in the render folder. <code>src/ai_usage_cost/cli.py:22</code> <code>src/ai_usage_cost/cli.py:190</code></li>
+<li>The dashboard bundle is served from web/dist next to the code when it has been built. <code>src/ai_usage_cost/api.py:41</code> <code>src/ai_usage_cost/api.py:394-395</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The sub folders are documented as their own chunks: <a href="../application/ai-usage-cost-sources-overview.html">Ai usage cost sources Overview</a> and <a href="../application/ai-usage-cost-render-overview.html">Ai usage cost render Overview</a>.</li>
+<li>The dependencies between the files are drawn in <a href="../diagrams/ai-usage-cost-diagrams.html">Ai usage cost Diagrams</a>, and the concepts in <a href="../diagrams/usage-cost-concepts.html">Usage cost concepts</a>.</li>
+</ul>
+<h2>Usage cost folders</h2>
+<pre class="mermaid">flowchart TD
+    pkg[&quot;src/ai_usage_cost/&quot;]:::folder
+    cli([&quot;cli.py: ai-usage-cost commands&quot;]):::entry
+    api([&quot;api.py: create_app&quot;]):::entry
+    core[&quot;pipeline.py, pricing.py, aggregate.py, models.py&quot;]:::folder
+    data[&quot;store.py, trace.py, privacy.py, collect.py&quot;]:::folder
+    extra[&quot;demo.py, tui.py, rates.json, __init__.py&quot;]:::folder
+    sources[&quot;sources/: one reader per AI tool&quot;]:::folder
+    render[&quot;render/: terminal.py, png.py&quot;]:::folder
+    web[&quot;web/dist: built dashboard bundle&quot;]:::folder
+
+    pkg --&gt; cli
+    pkg --&gt; api
+    pkg --&gt; core
+    pkg --&gt; data
+    pkg --&gt; extra
+    pkg --&gt; sources
+    pkg --&gt; render
+    pkg --&gt; web
+
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Folder or group of files&quot;]:::folder
+        zlegend_b([&quot;Entry point&quot;]):::entry
+        zlegend_c[&quot;An arrow from parent to child means contains&quot;]:::folder
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c
+    end
+
+    classDef folder fill:#dae8fc,stroke:#222222,color:#222222
+    classDef entry fill:#fff2cc,stroke:#222222,color:#222222
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pyproject.toml:29-30</code></td>
+<td>The installed command</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/api.py:41</code></td>
+<td>The dashboard bundle folder</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pipeline.py:22</code></td>
+<td>The source registry import</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:22</code></td>
+<td>The render import</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

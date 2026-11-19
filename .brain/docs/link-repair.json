@@ -1,10 +1,162 @@
 {
  "alias": [],
  "heading": [],
- "dropped heading": [],
+ "dropped heading": [
+  {
+   "note": "docs/brain/Use Cases/UC-02 Rebuild the dashboard bundle.md",
+   "from": "[[Actors#A production build replaces the committed bundle|A production build replaces the committed bundle]]",
+   "to": "[[Actors|A production build replaces the committed bundle]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-02 Rebuild the dashboard bundle.md",
+   "from": "[[Actors#A type error stops the dashboard build|A type error stops the dashboard build]]",
+   "to": "[[Actors|A type error stops the dashboard build]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-04 Check a change before merge.md",
+   "from": "[[Actors#Python code must keep a pylint score of 9.0|Python code must keep a pylint score of 9.0]]",
+   "to": "[[Actors|Python code must keep a pylint score of 9.0]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-04 Check a change before merge.md",
+   "from": "[[Actors#Web dependencies are installed from the lockfile|Web dependencies are installed from the lockfile]]",
+   "to": "[[Actors|Web dependencies are installed from the lockfile]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-17 See what my AI usage would cost.md",
+   "from": "[[Actors#A model without a rate row is unpriced|A model without a rate row is unpriced]]",
+   "to": "[[Actors|A model without a rate row is unpriced]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-17 See what my AI usage would cost.md",
+   "from": "[[Actors#An unchanged file is not parsed again|An unchanged file is not parsed again]]",
+   "to": "[[Actors|An unchanged file is not parsed again]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-17 See what my AI usage would cost.md",
+   "from": "[[Actors#PricedEvent|PricedEvent]]",
+   "to": "[[Actors|PricedEvent]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-17 See what my AI usage would cost.md",
+   "from": "[[Actors#Report|Report]]",
+   "to": "[[Actors|Report]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-17 See what my AI usage would cost.md",
+   "from": "[[Actors#The local calendar day decides the day of an event|The local calendar day decides the day of an event]]",
+   "to": "[[Actors|The local calendar day decides the day of an event]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-17 See what my AI usage would cost.md",
+   "from": "[[Actors#UsageEvent|UsageEvent]]",
+   "to": "[[Actors|UsageEvent]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-18 Explore spend in the dashboard.md",
+   "from": "[[Actors#An unknown session answers 404|An unknown session answers 404]]",
+   "to": "[[Actors|An unknown session answers 404]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-18 Explore spend in the dashboard.md",
+   "from": "[[Actors#Report|Report]]",
+   "to": "[[Actors|Report]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-18 Explore spend in the dashboard.md",
+   "from": "[[Actors#SessionRow|SessionRow]]",
+   "to": "[[Actors|SessionRow]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-19 Export a report as a file.md",
+   "from": "[[Actors#Report|Report]]",
+   "to": "[[Actors|Report]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-20 Be alerted when spend rises.md",
+   "from": "[[Actors#An alert needs exactly one threshold|An alert needs exactly one threshold]]",
+   "to": "[[Actors|An alert needs exactly one threshold]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-20 Be alerted when spend rises.md",
+   "from": "[[Actors#Report|Report]]",
+   "to": "[[Actors|Report]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-21 Inspect and rate one session.md",
+   "from": "[[Actors#An unknown session answers 404|An unknown session answers 404]]",
+   "to": "[[Actors|An unknown session answers 404]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-21 Inspect and rate one session.md",
+   "from": "[[Actors#Outcome|Outcome]]",
+   "to": "[[Actors|Outcome]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-21 Inspect and rate one session.md",
+   "from": "[[Actors#Span|Span]]",
+   "to": "[[Actors|Span]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-22 Forget a session.md",
+   "from": "[[Actors#A forgotten session is not stored again|A forgotten session is not stored again]]",
+   "to": "[[Actors|A forgotten session is not stored again]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-22 Forget a session.md",
+   "from": "[[Actors#Span|Span]]",
+   "to": "[[Actors|Span]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-23 Read the text of one span.md",
+   "from": "[[Actors#Config|Config]]",
+   "to": "[[Actors|Config]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-23 Read the text of one span.md",
+   "from": "[[Actors#Released text is cut and then redacted|Released text is cut and then redacted]]",
+   "to": "[[Actors|Released text is cut and then redacted]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-23 Read the text of one span.md",
+   "from": "[[Actors#Span|Span]]",
+   "to": "[[Actors|Span]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-23 Read the text of one span.md",
+   "from": "[[Actors#Span text is refused in metadata only mode|Span text is refused in metadata only mode]]",
+   "to": "[[Actors|Span text is refused in metadata only mode]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-24 Try the tool with demo data.md",
+   "from": "[[Actors#UsageEvent|UsageEvent]]",
+   "to": "[[Actors|UsageEvent]]"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-27 Browse sessions in the terminal.md",
+   "from": "[[Actors#SessionRow|SessionRow]]",
+   "to": "[[Actors|SessionRow]]"
+  }
+ ],
  "renamed": [],
  "moved": [],
  "hub": [],
- "unlinked": [],
+ "unlinked": [
+  {
+   "note": "docs/brain/Use Cases/UC-01 Compare a dashboard screen with its reference.md",
+   "from": "[[Prototype]]",
+   "to": "Prototype"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-01 Compare a dashboard screen with its reference.md",
+   "from": "[[Mock data]]",
+   "to": "Mock data"
+  },
+  {
+   "note": "docs/brain/Use Cases/UC-01 Compare a dashboard screen with its reference.md",
+   "from": "[[Reference screen]]",
+   "to": "Reference screen"
+  }
+ ],
  "code": []
 }

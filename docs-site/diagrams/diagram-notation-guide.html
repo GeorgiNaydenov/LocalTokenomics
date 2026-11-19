@@ -1,0 +1,114 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Diagram Notation Guide</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/diagram-notation-guide.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Diagrams</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">confirmed</span> </p><h1>Diagram Notation Guide</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>How to read every diagram in the vault: the shapes, the line styles, and the one color vocabulary all of them share. Each diagram also carries its own legend inside the image, so this note is the long form of those legends. The list of diagrams is <a href="../diagrams/diagram-index.html">Diagram Index</a> and the entry point is <a href="../diagrams/architecture-diagram-hub.html">Architecture Diagram Hub</a>.</p>
+</details>
+<h2>One color vocabulary</h2>
+<p>A color means the same thing in every diagram. Color is never the only carrier of meaning: the shape, the border style, or a text line says the same thing, so the diagrams still read in grayscale.</p>
+<table>
+<thead>
+<tr>
+<th>Color</th>
+<th>Meaning</th>
+<th>Also marked by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blue</td>
+<td>A part of this system, or something open to every visitor</td>
+<td>Rounded box; "Access: anyone" line on the capability map</td>
+</tr>
+<tr>
+<td>Purple</td>
+<td>A security control, or something that needs an account for some or all of it</td>
+<td>Rounded box; an "Access" line that names an account</td>
+</tr>
+<tr>
+<td>Orange</td>
+<td>Run by the administrator, the maintainer, or a schedule</td>
+<td>The word "run by" or "Starts" in the box text; a clock or plain start circle</td>
+</tr>
+<tr>
+<td>Green</td>
+<td>A data store</td>
+<td>Cylinder shape</td>
+</tr>
+<tr>
+<td>Yellow</td>
+<td>A person or role</td>
+<td>Stick figure, or a stadium (pill) shape in flowcharts</td>
+</tr>
+<tr>
+<td>Grey with a dashed border</td>
+<td>A system the project does not control</td>
+<td>Dashed border</td>
+</tr>
+<tr>
+<td>Grey band</td>
+<td>A family of capabilities or a group of processes</td>
+<td>Header strip with a label</td>
+</tr>
+</tbody>
+</table>
+<p>BPMN renders are black and white on a white card on purpose: BPMN carries its meaning in the shape. The white card keeps them legible in a dark theme.</p>
+<h2>Flowcharts and C4</h2>
+<ul>
+<li>Rectangle: a component or a step. Stadium (pill): a person, a bot, or an external party. Cylinder: a data store. Diamond: a decision.</li>
+<li>Solid arrow: a flow or a required call. Dashed arrow: optional, asynchronous, consent-gated, or best effort.</li>
+<li>C4 views use the C4 shapes: a person, the system in focus, an external system, a container, a database container, and a component. Each box shows its name, its type, and its technology. A legend box in each C4 view repeats this.</li>
+</ul>
+<h2>Decision flowcharts</h2>
+<p>A pill with a yellow fill is the start, a pill with a green fill is an exit that succeeds, and a pill with a red fill is an exit that refuses or fails. A rounded blue box is a step, a purple box is a guard (a security check), and a white diamond is a decision whose outgoing arrows are all labelled. Each exit names what the caller sees, such as an HTTP status. Read them from the top. See Decision Logic Flowcharts.</p>
+<h2>Data flow diagrams</h2>
+<p>Gane-Sarson style. A rounded box with a number such as 2.0 is a process, and a purple one is a security control. A box open on its right side and labelled D1, D2 and so on is a data store. A plain rectangle is an external entity: yellow for a person, grey and dashed for a system the project does not control. Every arrow carries the data that moves, not the action. A dashed purple rectangle is a trust boundary, and an arrow that crosses it is a crossing worth reviewing. See Data Flow Diagrams and Trust Boundary Views.</p>
+<h2>Sequence diagrams</h2>
+<p>Boxes and stick figures along the top are participants. Time runs downward. A solid arrow is a request or call, numbered in order, and a dashed arrow is a reply. A thin bar on a lifeline is an activation, the time that participant is working. A framed block labelled alt, else or opt is a branch, and a note is a rule that applies to the span it covers.</p>
+<h2>State diagrams</h2>
+<p>A rounded box is a state. An arrow is a transition labelled with its trigger, and a condition in brackets is a guard. The filled dot is the start and the ringed dot is the end. A note beside a state records a rule that holds in that state.</p>
+<h2>Entity relationship diagrams</h2>
+<p>One box is one table or entity, coloured by domain role. A line is a relationship with crow foot ends: three prongs mean many, a bar means one, and a ring means optional. <code>PK</code>, <code>FK</code>, <code>UK</code> and <code>LK</code> mark primary, foreign, unique and logical keys. A logical link (<code>LK</code>) is drawn dashed: the value points at another row but the database does not enforce it. A slim dashed grey box is an entity owned by another diagram or by an external auth provider. The domain views are in <code>ER Data Model</code>; the complete schema is the generated <code>Schema ERD</code>.</p>
+<h2>BPMN</h2>
+<ul>
+<li>Circles are events: a thin circle starts a process, a thick circle ends it. A clock inside a start circle means a schedule starts it. An envelope means a message starts it.</li>
+<li>A rounded box is a task. A small person marker is a user task, done by a person. A small double circle on a task border is a boundary event, here an error.</li>
+<li>A diamond is a gateway. A cross inside means exactly one outgoing branch is taken, and every outgoing branch is labelled. A plus means the branches run in parallel.</li>
+<li>A pool or lane is a person or a system. A pool with no steps is an external participant.</li>
+<li>A solid arrow is sequence flow inside a pool. A dashed arrow with an open circle at its start is a message flow between participants. A dotted line is an association with a data store.</li>
+<li>A rounded box with a plus marker at the bottom is a collapsed sub-process, used on the landscape views.</li>
+</ul>
+<h2>Draw.io views</h2>
+<p>The views under <code>docs/architecture/drawio/</code> use nested boxes for capability maps, stick figures and cylinders for the landscape, collapsed sub-process boxes for the process landscape, and the notations described above for flowcharts, data flows, entities, sequences and states. They are ordinary draw.io files: edit them in the draw.io desktop application, then render them with <code>brain docs diagram render</code>. The landscape views are described in Capability and Landscape Views. The render pipeline and the opaque light background are the same as for BPMN.</p>
+<h2>Layout rules for every diagram</h2>
+<ul>
+<li>A label sits where nothing else is: not over a shape, a flow, another label, and never on the title strip of a pool or lane. The title strip is 30 px wide, so start shapes at least 36 px to its right.</li>
+<li>Give every gateway and event label explicit bounds, on the side its flows do not use. Leaving it to the renderer puts it on a flow.</li>
+<li>A flow never passes through a shape it does not connect: route around it. Two shapes never overlap.</li>
+<li>Text fits its shape: about 6.4 px per character and 14 px per line. Enlarge the shape or shorten the name.</li>
+<li>Keep the number of links in an automatically laid out diagram (Mermaid ER, flowchart) low and the labels short, so two labels cannot stack. If two collide in the render, remove a link or shorten a label; do not accept the collision.</li>
+<li><code>brain docs diagram check</code> enforces these (B8 to B15 for BPMN). Fix the source, never the rule.</li>
+</ul>
+<h2>Mermaid grammar traps</h2>
+<ul>
+<li>ER: the only key markers are <code>PK</code>, <code>FK</code> and <code>UK</code>, and Mermaid reads those words as markers wherever they stand, so no attribute may be named <code>PK</code>, <code>FK</code> or <code>UK</code>. A logical link is a comment, <code>TEXT source_file "LK"</code>, drawn with a dashed line (<code>..</code>); a solid line (<code>--</code>) is an enforced foreign key.</li>
+<li>Sequence: a semicolon ends the statement, in messages, notes and frame labels. A note over one participant is only that participant wide: span two or more.</li>
+<li>This Mermaid build cannot colour single ER entities (<code>classDef</code> and <code>style</code> fail). Set one colour for the whole diagram with an init directive, or author the ER in draw.io when colour per entity carries meaning.</li>
+<li><code>brain docs diagram check</code> runs Mermaid's own parser (rule M0), so a source that draws nothing is reported before anyone looks for it.</li>
+</ul>
+<h2>Colour and contrast</h2>
+<ul>
+<li>The fill carries the meaning, from the palette above. The outline is dark (<code>#222222</code>).</li>
+<li>Text must reach a contrast of 4.5 against its fill (rules B16, D8 and M8). bpmn-js draws a task's text in its stroke colour, so a pastel stroke makes text unreadable: never use one.</li>
+<li>BPMN: set <code>bioc:fill</code> and <code>bioc:stroke="#222222"</code> on the shape; the rendered legend names every colour used. Mermaid flowchart: <code>classDef</code>. Mermaid sequence: <code>box rgb(...)</code> per group (yellow person, blue system, green data). Mermaid ER: one init theme for the whole diagram.</li>
+</ul>
+<h2>Wrapper notes</h2>
+<p>Every authored diagram or process gets a wrapper note with this shape, in this order. <code>brain docs check</code> enforces it (D21 to D23).</p>
+<ol>
+<li>Title, then straight after it an introduction of two to four sentences in plain B2 business English: what this makes possible for the stakeholder and why it matters. No code, paths, identifiers or backticks. Sentences average under 22 words and none runs past 32. There is no "What this unlocks" heading and no "who does what" opening.</li>
+<li><code>## What the diagram shows</code>: the mechanics step by step, each sentence ending with the code it came from as a backticked path:start-end.</li>
+<li><code>## Capability and related functionality</code>: the capability the diagram realises and how it relates to the routes, screens, use cases, rules and sibling diagrams around it, as wiki-links.</li>
+<li>Frontmatter <code>use-cases: [UC-01]</code> (or <code>brain docs diagram new ... --use-case UC-01</code>) lists the use cases the diagram relates to. The workbench shows the diagram beside each of those use cases, expandable, with a link to its page. A use case with no related diagram shows nothing.</li>
+<li>The code behind the diagram, as a table inside a folded callout (<code>&gt; [!example]- Code references</code>). It is collapsed by default and the reader opens it on purpose.</li>
+</ol>
+<h2>Adding a diagram</h2>
+<p>Pick the notation that matches the content: a capability map is nested boxes, a process with several actors is BPMN, a request across services is a sequence diagram, a lifecycle is a state diagram. Give it a legend that explains each shape, line style, and color it uses, then add it to a wrapper note and run <code>brain docs generate</code>; the entry point is <a href="../diagrams/architecture-diagram-hub.html">Architecture Diagram Hub</a>. Names of capabilities and actors come from the Capability Glossary.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

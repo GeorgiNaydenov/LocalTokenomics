@@ -1,0 +1,575 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>General Rules</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="business/general-rules.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> covers <code>pyproject.toml</code>, <code>src/ai_usage_cost/privacy.py</code>, <code>src/ai_usage_cost/render/png.py</code>, <code>src/ai_usage_cost/sources/__init__.py</code>, <code>src/ai_usage_cost/sources/base.py</code>, <code>src/ai_usage_cost/sources/claude_code.py</code>, <code>src/ai_usage_cost/sources/codex.py</code>, <code>src/ai_usage_cost/sources/muse_code.py</code>, <code>web/eslint.config.js</code>, <code>web/package.json</code>, <code>web/src/App.tsx</code>, <code>web/src/Pricing.tsx</code>, <code>web/src/SessionWorkspace.tsx</code>, <code>web/src/Sessions.tsx</code>, <code>web/src/Sources.tsx</code>, <code>web/src/TraceTab.tsx</code>, <code>web/src/design-system/MIGRATION.md</code>, <code>web/src/format.ts</code>, <code>web/src/pricing-format.ts</code>, <code>web/src/pricing-notes.ts</code>, <code>web/src/prototype/Prototype.tsx</code>, <code>web/src/prototype/Screens.tsx</code>, <code>web/src/prototype/SessionsScreen.tsx</code>, <code>web/src/prototype/data.ts</code>, <code>web/src/turn-insights.ts</code>, <code>web/vite.config.ts</code></p><h1>General Rules</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>Business rules that belong to no single subdomain. Each rule is a heading, so a use case links straight to it, and each names the line of code that enforces it.</p>
+</details>
+<h2>BR-01 The prototype is excluded from the production build</h2>
+<p>The production build writes to the Python package folder from a single page, and the repository guide states the prototype page is deliberately left out of it.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-02-rebuild-the-dashboard-bundle.html">UC-02 Rebuild the dashboard bundle</a>, <a href="../use-cases/uc-03-develop-the-dashboard-against-live-data.html">UC-03 Develop the dashboard against live data</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/vite.config.ts</a>: <code>outDir: '../src/ai_usage_cost/web/dist',</code>
+- <a href="#">web/src/design-system/MIGRATION.md</a></p>
+<h2>BR-02 Prototype filters do not filter the screens</h2>
+<p>The filter rail in the prototype changes its own state and chips, but the screens are rendered without any filter value, so the figures on screen never change.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-01-compare-a-dashboard-screen-with-its-reference.html">UC-01 Compare a dashboard screen with its reference</a>, <a href="../use-cases/uc-28-sort-the-session-list-and-open-one-session-in-the-prototype.html">UC-28 Sort the session list and open one session in the prototype</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/src/prototype/Screens.tsx</a>: <code>const [filters, setFilters] = useState&lt;FilterState&gt;(INITIAL_FILTERS)</code>
+- <a href="#">web/src/prototype/Screens.tsx</a>: <code>&lt;SessionsScreen /&gt;</code></p>
+<h2>BR-03 Prototype session table shows at most 120 rows</h2>
+<p>The prototype sorts all sessions and then displays only the first 120.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-28-sort-the-session-list-and-open-one-session-in-the-prototype.html">UC-28 Sort the session list and open one session in the prototype</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/src/prototype/data.ts</a>: <code>export const SESSION_LIMIT = 120</code>
+- <a href="#">web/src/prototype/SessionsScreen.tsx</a>: <code>const shown = sorted.slice(0, SESSION_LIMIT)</code></p>
+<h2>BR-04 Prototype splits session cost across token buckets by fixed weights</h2>
+<p>The session drawer apportions a session's cost across the four token buckets with constant weights, not with real rates.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-01-compare-a-dashboard-screen-with-its-reference.html">UC-01 Compare a dashboard screen with its reference</a>, <a href="../use-cases/uc-28-sort-the-session-list-and-open-one-session-in-the-prototype.html">UC-28 Sort the session list and open one session in the prototype</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/src/prototype/Screens.tsx</a>: <code>const BUCKET_WEIGHT: Record&lt;string, number&gt; = {</code>
+- <a href="#">web/src/prototype/Screens.tsx</a>: <code>total &gt; 0 ? (weighted[index] / total) * session.cost! : 0,</code></p>
+<h2>BR-05 Prototype rescan is staged</h2>
+<p>The Rescan logs button only shows a scanning state for 900 milliseconds and reads no logs.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-01-compare-a-dashboard-screen-with-its-reference.html">UC-01 Compare a dashboard screen with its reference</a>, <a href="../use-cases/uc-28-sort-the-session-list-and-open-one-session-in-the-prototype.html">UC-28 Sort the session list and open one session in the prototype</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/src/prototype/Prototype.tsx</a>: <code>setTimeout(() =&gt; setScanning(false), 900)</code></p>
+<h2>BR-06 Prototype figures are invented</h2>
+<p>The headline totals are literal numbers and the session list is generated from a few seed sessions.</p>
+<p>Source:
+- <a href="#">web/src/prototype/data.ts</a>: <code>cost: 3_431.96,</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>for (let index = 0; generated.length + seeded.length &lt; 184; index++) {</code></p>
+<h2>BR-07 Do not import from the prototype folder</h2>
+<p>The migration guide tells porters to copy the composition of a prototype screen and never to import from the prototype folder.</p>
+<p>Source:
+- <a href="#">web/src/design-system/MIGRATION.md</a></p>
+<h2>BR-08 A type error stops the dashboard build</h2>
+<p>The web build script runs the TypeScript check before Vite, so a type error prevents a bundle from being written.</p>
+<ul>
+<li><strong>Category:</strong> quality</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-02-rebuild-the-dashboard-bundle.html">UC-02 Rebuild the dashboard bundle</a>, <a href="../use-cases/uc-03-develop-the-dashboard-against-live-data.html">UC-03 Develop the dashboard against live data</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/package.json</a>: <code>"build": "tsc --noEmit &amp;&amp; vite build",</code></p>
+<h2>BR-09 A production build replaces the committed bundle</h2>
+<p>Every production build empties the output folder inside the Python package before writing the new bundle.</p>
+<ul>
+<li><strong>Category:</strong> build</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-02-rebuild-the-dashboard-bundle.html">UC-02 Rebuild the dashboard bundle</a>, <a href="../use-cases/uc-03-develop-the-dashboard-against-live-data.html">UC-03 Develop the dashboard against live data</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/vite.config.ts</a>: <code>emptyOutDir: true,</code></p>
+<h2>BR-10 Lint skips build output</h2>
+<p>ESLint ignores the local dist folder and the bundle inside the Python package.</p>
+<ul>
+<li><strong>Category:</strong> quality</li>
+</ul>
+<p>Source:
+- <a href="#">web/eslint.config.js</a>: <code>{ ignores: ['dist', '../src/ai_usage_cost/web/dist'] },</code></p>
+<h2>BR-100 _valid_window refuses when any((not 0 ‹= day ‹= 6 for day in self.weekdays))</h2>
+<p>In _valid_window, when any((not 0 &lt;= day &lt;= 6 for day in self.weekdays)): the code raises ValueError, message "peak weekdays must be 0 (Monday) to 6 (Sunday)". Located at src/ai_usage_cost/pricing.py lines 55-56.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>_valid_window</code>: <code>if any(not 0 &lt;= day &lt;= 6 for day in self.weekdays):</code></p>
+<h2>BR-101 _valid_window refuses when any((not 0 ‹= start ‹ end ‹= 24 for start, end in self</h2>
+<p>In _valid_window, when any((not 0 &lt;= start &lt; end &lt;= 24 for start, end in self.utc_hours)): the code raises ValueError, message "peak utc_hours ranges must satisfy 0 &lt;= start &lt; end &lt;= 24". Located at src/ai_usage_cost/pricing.py lines 58-59.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>_valid_window</code>: <code>if any(not 0 &lt;= start &lt; end &lt;= 24 for start, end in self.utc_hours):</code></p>
+<h2>BR-102 _ordered validates the model</h2>
+<p>In _ordered, the model: the code validates before accepting the value. Located at src/ai_usage_cost/pricing.py lines 90-93.</p>
+<ul>
+<li><strong>Category:</strong> validator</li>
+</ul>
+<p>Source:
+- <code>_ordered</code>: <code>def _ordered(self) -&gt; Period:</code></p>
+<h2>BR-103 <em>ordered refuses when self.from</em> is not None and self.until is not None and (</h2>
+<p>In <em>ordered, when self.from</em> is not None and self.until is not None and (self.from_ &gt;= self.until): the code raises ValueError, message "period <code>from</code> must be earlier than <code>until</code>". Located at src/ai_usage_cost/pricing.py lines 91-92.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>_ordered</code>: <code>if self.from_ is not None and self.until is not None and self.from_ &gt;= self.until:</code></p>
+<h2>BR-104 _sorted_bands validates bands</h2>
+<p>In _sorted_bands, bands: the code validates before accepting the value. Located at src/ai_usage_cost/pricing.py lines 149-150.</p>
+<ul>
+<li><strong>Category:</strong> validator</li>
+</ul>
+<p>Source:
+- <code>_sorted_bands</code>: <code>def _sorted_bands(cls, bands: list[Band]) -&gt; list[Band]:</code></p>
+<h2>BR-105 _disjoint_periods validates the model</h2>
+<p>In _disjoint_periods, the model: the code validates before accepting the value. Located at src/ai_usage_cost/pricing.py lines 153-160.</p>
+<ul>
+<li><strong>Category:</strong> validator</li>
+</ul>
+<p>Source:
+- <code>_disjoint_periods</code>: <code>def _disjoint_periods(self) -&gt; ModelRate:</code></p>
+<h2>BR-106 <em>disjoint_periods refuses when earlier.until is None or (later.from</em> or date.min) ‹ ea</h2>
+<p>In <em>disjoint_periods, when earlier.until is None or (later.from</em> or date.min) &lt; earlier.until: the code raises ValueError. Located at src/ai_usage_cost/pricing.py lines 158-159.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>_disjoint_periods</code>: <code>if earlier.until is None or (later.from_ or date.min) &lt; earlier.until:</code></p>
+<h2>BR-107 _consistent validates the model</h2>
+<p>In _consistent, the model: the code validates before accepting the value. Located at src/ai_usage_cost/pricing.py lines 272-283.</p>
+<ul>
+<li><strong>Category:</strong> validator</li>
+</ul>
+<p>Source:
+- <code>_consistent</code>: <code>def _consistent(self) -&gt; RateTable:</code></p>
+<h2>BR-108 _consistent refuses when duplicates</h2>
+<p>In _consistent, when duplicates: the code raises ValueError. Located at src/ai_usage_cost/pricing.py lines 275-276.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>_consistent</code>: <code>if duplicates:</code></p>
+<h2>BR-109 _consistent refuses when missing</h2>
+<p>In _consistent, when missing: the code raises ValueError. Located at src/ai_usage_cost/pricing.py lines 281-282.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>_consistent</code>: <code>if missing:</code></p>
+<h2>BR-11 Python code must keep a pylint score of 9.0</h2>
+<p>Both the Python workflow and the pre-commit hook fail when pylint scores below 9.0.</p>
+<ul>
+<li><strong>Category:</strong> quality</li>
+</ul>
+<p>Source:
+- <a href="#">pyproject.toml</a>: <code>fail-under = 9.0</code>
+- <code>.github/workflows/python.yml</code>: <code>run: uv run --no-sync pylint src tests --fail-under=9.0</code></p>
+<h2>BR-110 read_content refuses when config.metadata_only or span.content_path is None</h2>
+<p>In read_content, when config.metadata_only or span.content_path is None: the code raises ContentUnavailable. Located at src/ai_usage_cost/privacy.py lines 87-88.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>read_content</code>: <code>if config.metadata_only or span.content_path is None:</code></p>
+<h2>BR-111 resolve_path refuses when index ›= len(current)</h2>
+<p>In resolve_path, when index &gt;= len(current): the code raises ContentUnavailable. Located at src/ai_usage_cost/privacy.py lines 109-110.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>resolve_path</code>: <code>if index &gt;= len(current):</code></p>
+<h2>BR-112 _values_match_provenance validates the model</h2>
+<p>In _values_match_provenance, the model: the code validates before accepting the value. Located at src/ai_usage_cost/trace.py lines 89-101.</p>
+<ul>
+<li><strong>Category:</strong> validator</li>
+</ul>
+<p>Source:
+- <code>_values_match_provenance</code>: <code>def _values_match_provenance(self) -&gt; Span:</code></p>
+<h2>BR-113 _values_match_provenance refuses when (value is None) != (provenance == 'unavailable')</h2>
+<p>In _values_match_provenance, when (value is None) != (provenance == 'unavailable'): the code raises ValueError. Located at src/ai_usage_cost/trace.py lines 96-100.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>_values_match_provenance</code>: <code>if (value is None) != (provenance == "unavailable"):</code></p>
+<h2>BR-114 A settings file that cannot be loaded is ignored as a whole</h2>
+<p>When the optional settings file is missing, unreadable, not valid JSON or fails validation, every setting takes its default at once, not only the faulty one, and no warning is raised.</p>
+<ul>
+<li><strong>Category:</strong> privacy</li>
+</ul>
+<p>Source:
+- <a href="#">src/ai_usage_cost/privacy.py</a>: <code>except (OSError, ValueError):</code>
+- <a href="#">src/ai_usage_cost/privacy.py</a>: <code>except ValidationError:</code></p>
+<h2>BR-115 Chart colours follow position, not meaning</h2>
+<p>The picture writer takes colours from one seven colour list by position. In the cost per day chart a colour is a client, in the model chart a rank, and in the token mix chart a token bucket, so the same colour means a different thing in each panel.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-16-export-a-usage-and-cost-chart-as-a-png-image.html">UC-16 Export a usage and cost chart as a PNG image</a></li>
+</ul>
+<p>Source:
+- <a href="#">src/ai_usage_cost/render/png.py</a>: <code>color=PALETTE[index % len(PALETTE)],</code>
+- <a href="#">src/ai_usage_cost/render/png.py</a>: <code>color=[PALETTE[i % len(PALETTE)] for i in range(len(buckets))],</code>
+- <a href="#">src/ai_usage_cost/render/png.py</a>: <code>ax.barh(labels, values, left=left, label=name, color=PALETTE[index % len(PALETTE)])</code></p>
+<h2>BR-12 Web dependencies are installed from the lockfile</h2>
+<p>The web workflow installs with npm ci, which installs exactly what package-lock.json records.</p>
+<ul>
+<li><strong>Category:</strong> build</li>
+</ul>
+<p>Source:
+- <code>.github/workflows/web.yml</code>: <code>run: npm ci</code></p>
+<h2>BR-122 Drawer trace blocks show the same sample data for every traced session</h2>
+<p>The context window, trace, insights and capability blocks of the session drawer are read from fixed sample arrays and are not derived from the chosen session, so they are identical for every session whose traced flag is true.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-01-compare-a-dashboard-screen-with-its-reference.html">UC-01 Compare a dashboard screen with its reference</a>, <a href="../use-cases/uc-28-sort-the-session-list-and-open-one-session-in-the-prototype.html">UC-28 Sort the session list and open one session in the prototype</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/src/prototype/Screens.tsx</a>: <code>spans={TRACE_SPANS.map((span) =&gt; ({</code>
+- <a href="#">web/src/prototype/Screens.tsx</a>: <code>points={CONTEXT_SNAPSHOTS}</code></p>
+<h2>BR-123 Screens stay mounted across the four screen tabs but not across the gallery</h2>
+<p>The Screens component owns the filter state and the active session. It stays mounted while the tab moves between the four screens, and it is replaced by the gallery for the design system tab, so a visit to the gallery resets the filters.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-01-compare-a-dashboard-screen-with-its-reference.html">UC-01 Compare a dashboard screen with its reference</a>, <a href="../use-cases/uc-28-sort-the-session-list-and-open-one-session-in-the-prototype.html">UC-28 Sort the session list and open one session in the prototype</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/src/prototype/Prototype.tsx</a>: <code>{tab === 'gallery' ? (</code>
+- <a href="#">web/src/prototype/Screens.tsx</a>: <code>const [filters, setFilters] = useState&lt;FilterState&gt;(INITIAL_FILTERS)</code></p>
+<h2>BR-124 A workspace tab loads its data only when first opened</h2>
+<p>The Trace, Economics and Context tabs of a session fetch from the server only after the reader has selected them once; the Summary tab needs no request. <a href="#">web/src/SessionWorkspace.tsx:472</a></p>
+<ul>
+<li><strong>Category:</strong> behaviour</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-06-inspect-one-session.html">UC-06 Inspect one session</a>, <a href="../use-cases/uc-07-rate-a-session-outcome.html">UC-07 Rate a session outcome</a></li>
+</ul>
+<p>Source:
+- <code>useLazyResource</code>: <code>if (!enabled) return</code></p>
+<h2>BR-125 Span text is fetched once per span</h2>
+<p>The text of a trace span is requested the first time the reader opens it and the stored result, content or error, is reused afterwards. <a href="#">web/src/TraceTab.tsx:791</a></p>
+<ul>
+<li><strong>Category:</strong> behaviour</li>
+</ul>
+<p>Source:
+- <code>toggleContent</code>: <code>if (alreadyOpen || contents[span.span_id]) return</code></p>
+<h2>BR-13 getJson refuses when !response.ok</h2>
+<p>In getJson, when !response.ok: the code throws ApiError, message "${path} responded ${response.status} ${response.statusText}". Located at web/src/api.ts lines 496-497.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>getJson</code>: <code>if (!response.ok) {</code></p>
+<h2>BR-14 useChart refuses when !context</h2>
+<p>In useChart, when !context: the code throws Error, message "useChart must be used within a <ChartContainer />". Located at web/src/components/ui/chart.tsx lines 32-33.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>useChart</code>: <code>if (!context) {</code></p>
+<h2>BR-15 Unavailable is never shown as zero</h2>
+<p>When a log does not carry a value, the dashboard shows it as unavailable instead of a zero or a guess.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-06-inspect-one-session.html">UC-06 Inspect one session</a>, <a href="../use-cases/uc-07-rate-a-session-outcome.html">UC-07 Rate a session outcome</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/src/Sources.tsx</a>: <code>unavailable: 'the log does not carry it',</code>
+- <a href="#">web/src/SessionWorkspace.tsx</a>: <code>return 'This client logs no token counts, so cost is left blank instead of guessed.'</code></p>
+<h2>BR-16 Unpriced cost stays out of totals</h2>
+<p>A session whose model matches no rate entry shows its tokens but its cost is kept out of totals.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-06-inspect-one-session.html">UC-06 Inspect one session</a>, <a href="../use-cases/uc-07-rate-a-session-outcome.html">UC-07 Rate a session outcome</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/src/SessionWorkspace.tsx</a>: <code>return 'Tokens are counted, no rate entry matches this model, so cost stays out of totals.'</code></p>
+<h2>BR-17 Reported cost divergence threshold</h2>
+<p>The tool's own cost is flagged as different when it differs from the computed cost by more than five percent or one cent, whichever is larger.</p>
+<p>Source:
+- <a href="#">web/src/pricing-notes.ts</a>: <code>return Math.abs(computed - reported) &gt; Math.max(0.05 * Math.abs(computed), 0.01)</code></p>
+<h2>BR-18 Rate age notice thresholds</h2>
+<p>A notice about old prices appears from 30 days and becomes a caution from 90 days. Unknown age shows nothing.</p>
+<p>Source:
+- <a href="#">web/src/pricing-notes.ts</a>: <code>if (days &lt; STALE_INFO_DAYS) return null</code>
+- <a href="#">web/src/pricing-notes.ts</a>: <code>severity: days &gt;= STALE_CAUTION_DAYS ? 'caution' : 'info',</code></p>
+<h2>BR-19 Cache price derivation</h2>
+<p>A cache price is the published figure when present, otherwise the input price times the provider ratio, otherwise it is not shown.</p>
+<p>Source:
+- <a href="#">web/src/pricing-format.ts</a>: <code>return rate.input * rules[field]</code></p>
+<h2>BR-20 Rate row state</h2>
+<p>A rate row is free when its rules say free, priced when matched buckets carry spend, and unused otherwise.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-08-check-list-prices.html">UC-08 Check list prices</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/src/Pricing.tsx</a>: <code>const state: RateState = isFree ? 'free' : spendValue &gt; 0 ? 'priced' : 'unused'</code></p>
+<h2>BR-21 Sub cent money keeps four decimals</h2>
+<p>A nonzero amount under one cent is shown with up to four decimals so it never reads as zero dollars.</p>
+<p>Source:
+- <a href="#">web/src/format.ts</a>: <code>return value !== 0 &amp;&amp; Math.abs(value) &lt; 0.01 ? moneyPrecise.format(value) : money.format(value)</code></p>
+<h2>BR-22 Unattributed turn is excluded from rankings</h2>
+<p>Turn rankings and insights ignore the row for spend outside any turn.</p>
+<p>Source:
+- <a href="#">web/src/turn-insights.ts</a>: <code>return rows.filter((row) =&gt; row.key !== UNATTRIBUTED_TURN_KEY)</code></p>
+<h2>BR-23 Session table row limit</h2>
+<p>The sessions table shows at most 120 rows of the sorted list.</p>
+<p>Source:
+- <a href="#">web/src/Sessions.tsx</a>: <code>const SHOWN_LIMIT = 120</code></p>
+<h2>BR-24 Outcome notes are saved only when changed</h2>
+<p>Notes and tags are sent to the server on blur only when the text differs from the saved value.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-06-inspect-one-session.html">UC-06 Inspect one session</a>, <a href="../use-cases/uc-07-rate-a-session-outcome.html">UC-07 Rate a session outcome</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/src/SessionWorkspace.tsx</a>: <code>if (current.notes === persisted.notes &amp;&amp; current.tagsText === persisted.tagsText) return</code></p>
+<h2>BR-25 Automatic rescan every five minutes</h2>
+<p>While the tab is visible the dashboard asks the server to rescan logs every five minutes.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-05-read-usage-and-cost-for-a-period.html">UC-05 Read usage and cost for a period</a>, <a href="../use-cases/uc-06-inspect-one-session.html">UC-06 Inspect one session</a>, <a href="../use-cases/uc-08-check-list-prices.html">UC-08 Check list prices</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/src/App.tsx</a>: <code>const FIVE_MINUTES = 5 * 60 * 1000</code>
+- <a href="#">web/src/App.tsx</a>: <code>if (interval === null) interval = setInterval(doRefresh, FIVE_MINUTES)</code></p>
+<h2>BR-26 A missing value is shown as unavailable, never as zero</h2>
+<p>Meters, bucket bars, comparison bars, token cells and session cards show the unavailable marker when a value is null or a total is not positive, and draw no bar.</p>
+<ul>
+<li><strong>Category:</strong> display</li>
+</ul>
+<p>Source:
+- <code>Meter</code>: <code>if (value === null) {</code>
+- <code>BucketBar</code>: <code>if (total &lt;= 0) {</code>
+- <code>TokenCell</code>: <code>if (label === null) {</code></p>
+<h2>BR-27 A rollup shows its least trustworthy cost state and provenance</h2>
+<p>When several rows are combined, the worst cost state (unavailable over unpriced over free over priced) and the worst provenance are shown. An empty list gives unavailable.</p>
+<ul>
+<li><strong>Category:</strong> calculation</li>
+</ul>
+<p>Source:
+- <code>worstState</code>: <code>return [...states].sort((a, b) =&gt; STATE_RANK[b] - STATE_RANK[a])[0] ?? 'unavailable'</code>
+- <code>worstProvenance</code>: <code>return [...values].sort((a, b) =&gt; PROVENANCE_RANK[b] - PROVENANCE_RANK[a])[0] ?? 'unavailable'</code></p>
+<h2>BR-28 An estimated price is marked next to the cost state</h2>
+<p>A priced row that used a sibling model's rate gets an Estimated badge in a purple hue, so it is not mistaken for an unpriced row, which is left out of totals.</p>
+<ul>
+<li><strong>Category:</strong> display</li>
+</ul>
+<p>Source:
+- <code>CostBadges</code>: <code>{isEstimatedPriced(state, cost) ? &lt;EstimatedBadge className={className} /&gt; : null}</code></p>
+<h2>BR-29 The daily chart names at most twelve series</h2>
+<p>The stacked daily cost chart gives its twelve largest series their own colour and legend entry, and groups all others under Other with a count.</p>
+<ul>
+<li><strong>Category:</strong> display</li>
+</ul>
+<p>Source:
+- <code>TimeChart</code>: <code>const overflowKeys = keys.slice(LEGEND_LIMIT)</code>
+- <code>SERIES_SLOTS</code>: <code>export const SERIES_SLOTS = 12</code></p>
+<h2>BR-30 A table always keeps at least one column</h2>
+<p>If the reader hides every column, all columns are shown again.</p>
+<ul>
+<li><strong>Category:</strong> display</li>
+</ul>
+<p>Source:
+- <code>visibleColumns</code>: <code>return shown.length &gt; 0 ? shown : columns</code></p>
+<h2>BR-31 The date range cannot cross itself</h2>
+<p>The from date cannot be later than the to date, and the to date cannot be earlier than the from date.</p>
+<ul>
+<li><strong>Category:</strong> validation</li>
+</ul>
+<p>Source:
+- <code>DateRange</code>: <code>max={until ?? max}</code>
+- <code>DateRange</code>: <code>min={since ?? min}</code></p>
+<h2>BR-32 The side panel width is bounded</h2>
+<p>The workspace side panel is at least 360 pixels wide and at most 900 pixels or 90 percent of the window, whichever is smaller.</p>
+<ul>
+<li><strong>Category:</strong> validation</li>
+</ul>
+<p>Source:
+- <code>clampWidth</code>: <code>return Math.min(bound, Math.max(MIN_WIDTH, width))</code></p>
+<h2>BR-33 An explanation popover does not take focus back on close</h2>
+<p>Closing the metric explanation popover does not return focus to its trigger, because focusing the trigger opens the popover again.</p>
+<ul>
+<li><strong>Category:</strong> behaviour</li>
+</ul>
+<p>Source:
+- <code>MetricInfo</code>: <code>onCloseAutoFocus={(event) =&gt; event.preventDefault()}</code></p>
+<h2>BR-34 Caller class names override primitive defaults</h2>
+<p>Every primitive merges its default Tailwind classes with the caller className through cn, so a caller override replaces a conflicting default instead of stacking with it.</p>
+<ul>
+<li><strong>Category:</strong> design system</li>
+</ul>
+<p>Source:
+- <code>cn</code>: <code>return twMerge(clsx(inputs))</code></p>
+<h2>BR-35 Toggle group settings win over item settings</h2>
+<p>A toggle group passes its variant, size and spacing to its items through a context, and an item uses its own variant or size only when the group sets none.</p>
+<ul>
+<li><strong>Category:</strong> design system</li>
+</ul>
+<p>Source:
+- <code>ToggleGroupItem</code>: <code>data-variant={context.variant || variant}</code></p>
+<h2>BR-36 Chart parts require a chart container</h2>
+<p>The chart tooltip and legend content read the chart config through a context, and using them outside a chart container throws an error.</p>
+<ul>
+<li><strong>Category:</strong> design system</li>
+</ul>
+<p>Source:
+- <code>useChart</code>: <code>throw new Error("useChart must be used within a &lt;ChartContainer /&gt;")</code></p>
+<h2>BR-37 Sheet opens from the right by default</h2>
+<p>A sheet slides in from the right unless a side of top, bottom or left is given, and both sheet and dialog show a close button unless showCloseButton is false.</p>
+<ul>
+<li><strong>Category:</strong> design system</li>
+</ul>
+<p>Source:
+- <code>SheetContent</code>: <code>side = "right",</code>
+- <code>DialogContent</code>: <code>showCloseButton = true,</code></p>
+<h2>BR-38 Tooltip provider default delay is zero</h2>
+<p>The tooltip provider shows tooltips without a hover delay unless the app gives a delayDuration, and the dashboard roots give 200 milliseconds.</p>
+<ul>
+<li><strong>Category:</strong> design system</li>
+</ul>
+<p>Source:
+- <code>TooltipProvider</code>: <code>delayDuration = 0,</code></p>
+<h2>BR-39 Readers only read</h2>
+<p>A SQLite store is opened through a read only URI and a database error becomes a warning, so a reader never changes the file it measures.</p>
+<ul>
+<li><strong>Category:</strong> privacy</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-13-discover-ai-tool-usage-from-local-files.html">UC-13 Discover AI tool usage from local files</a></li>
+</ul>
+<p>Source:
+- <a href="#">src/ai_usage_cost/sources/base.py</a>: <code>uri = f"file:{path.as_posix()}?mode=ro"</code></p>
+<h2>BR-40 A reader is found by its SOURCE value</h2>
+<p>The registry keeps the SOURCE of every module in the readers package except the base module, so adding a reader needs no list edit.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-13-discover-ai-tool-usage-from-local-files.html">UC-13 Discover AI tool usage from local files</a></li>
+</ul>
+<p>Source:
+- <a href="#">src/ai_usage_cost/sources/<strong>init</strong>.py</a>: <code>source = getattr(module, "SOURCE", None)</code></p>
+<h2>BR-41 Unparsable lines are skipped and counted</h2>
+<p>A JSON Lines reader skips lines that are not valid JSON and adds one warning per file with the count.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-13-discover-ai-tool-usage-from-local-files.html">UC-13 Discover AI tool usage from local files</a></li>
+</ul>
+<p>Source:
+- <a href="#">src/ai_usage_cost/sources/base.py</a>: <code>warnings.append(f"{path.name}: skipped {bad} unparsable lines")</code></p>
+<h2>BR-42 Synthetic Claude Code records are not usage</h2>
+<p>A Claude Code assistant record with no model or a synthetic model is skipped.</p>
+<p>Source:
+- <a href="#">src/ai_usage_cost/sources/claude_code.py</a>: <code>if not model or model in SYNTHETIC_MODELS:</code></p>
+<h2>BR-43 Repeated Codex token totals are not counted twice</h2>
+<p>A Codex token_count record whose total is unchanged is skipped, because Codex repeats it on rate limit updates.</p>
+<p>Source:
+- <a href="#">src/ai_usage_cost/sources/codex.py</a>: <code>if total == previous_total_snapshot:</code></p>
+<h2>BR-44 Muse Code control folders are skipped</h2>
+<p>The Muse Code reader skips the view and model catalog folders when it lists session files.</p>
+<p>Source:
+- <a href="#">src/ai_usage_cost/sources/muse_code.py</a>: <code>_SKIP_DIRS = frozenset({".msp-view-v1", "model-catalog"})</code></p>
+<h2>BR-45 Experimental readers carry a flag</h2>
+<p>A reader whose parser has not been checked against a real session sets experimental to true.</p>
+<ul>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-13-discover-ai-tool-usage-from-local-files.html">UC-13 Discover AI tool usage from local files</a></li>
+</ul>
+<p>Source:
+- <a href="#">src/ai_usage_cost/sources/base.py</a>: <code>experimental: bool = False</code></p>
+<h2>BR-46 Terminal table shows at most 30 rows</h2>
+<p>The terminal breakdown table prints only the first 30 buckets, with no notice that rows were cut.</p>
+<p>Source:
+- <code>_bucket_table</code>: <code>for bucket in rows[:30]:</code></p>
+<h2>BR-47 Day breakdown is listed oldest first</h2>
+<p>Only the day grouping is sorted ascending by key; every other grouping keeps the order of the report.</p>
+<p>Source:
+- <code>render</code>: <code>ascending=group_by == "day"</code></p>
+<h2>BR-48 Unknown grouping falls back to model</h2>
+<p>A grouping name that is not model, client, provider, project or day is treated as model.</p>
+<p>Source:
+- <code>render</code>: <code>tables.get(group_by, tables["model"])</code></p>
+<h2>BR-49 Warnings are summarised unless verbose</h2>
+<p>Without the verbose flag the terminal shows only the number of warnings.</p>
+<p>Source:
+- <code>render</code>: <code>elif report.warnings:</code></p>
+<h2>BR-50 Unpriced models are shown but not totalled</h2>
+<p>Models without a rate appear in their own table and are described as excluded from totals.</p>
+<p>Source:
+- <code>render</code>: <code>Unpriced models (excluded from totals)</code></p>
+<h2>BR-51 PNG charts are limited to the top buckets</h2>
+<p>The model cost chart and project cost chart show at most 10 buckets and the token mix chart at most 8 models.</p>
+<p>Source:
+- <code>_cost_by_model</code>: <code>buckets = report.by_model[:10][::-1]</code>
+- <code>_token_mix</code>: <code>buckets = report.by_model[:8][::-1]</code></p>
+<h2>BR-52 Empty project panel is left blank</h2>
+<p>When the report has no project buckets the project chart panel is switched off instead of drawn.</p>
+<p>Source:
+- <code>_cost_by_project</code>: <code>ax.set_axis_off()</code></p>
+<h2>BR-53 Export accepts only json and png</h2>
+<p>The export command refuses any other extension with exit code 2.</p>
+<p>Source:
+- <code>export</code>: <code>raise typer.Exit(code=2)</code></p>
+<h2>BR-87 create_app refuses when path is None</h2>
+<p>In create_app, when path is None: the code raises HTTPException with status 503, message "this analysis was built without a store". Located at src/ai_usage_cost/api.py lines 222-223.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>create_app</code>: <code>if path is None:</code></p>
+<h2>BR-88 opened refuses when path is None</h2>
+<p>In opened, when path is None: the code raises HTTPException with status 503, message "this analysis was built without a store". Located at src/ai_usage_cost/api.py lines 222-223.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>opened</code>: <code>if path is None:</code></p>
+<h2>BR-89 create_app refuses when not store.session_exists(conn, source, session_id)</h2>
+<p>In create_app, when not store.session_exists(conn, source, session_id): the code raises HTTPException with status 404. Located at src/ai_usage_cost/api.py lines 235-236.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>create_app</code>: <code>if not store.session_exists(conn, source, session_id):</code></p>
+<h2>BR-90 session_spans refuses when not store.session_exists(conn, source, session_id)</h2>
+<p>In session_spans, when not store.session_exists(conn, source, session_id): the code raises HTTPException with status 404. Located at src/ai_usage_cost/api.py lines 235-236.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>session_spans</code>: <code>if not store.session_exists(conn, source, session_id):</code></p>
+<h2>BR-91 create_app refuses when not store.session_exists(conn, source, session_id) (line 364)</h2>
+<p>In create_app, when not store.session_exists(conn, source, session_id): the code raises HTTPException with status 404. Located at src/ai_usage_cost/api.py lines 364-365.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>create_app</code>: <code>if not store.session_exists(conn, source, session_id):</code></p>
+<h2>BR-92 forget_session refuses when not store.session_exists(conn, source, session_id)</h2>
+<p>In forget_session, when not store.session_exists(conn, source, session_id): the code raises HTTPException with status 404. Located at src/ai_usage_cost/api.py lines 364-365.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>forget_session</code>: <code>if not store.session_exists(conn, source, session_id):</code></p>
+<h2>BR-93 create_app refuses when span is None</h2>
+<p>In create_app, when span is None: the code raises HTTPException with status 404. Located at src/ai_usage_cost/api.py lines 377-378.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>create_app</code>: <code>if span is None:</code></p>
+<h2>BR-94 span_content refuses when span is None</h2>
+<p>In span_content, when span is None: the code raises HTTPException with status 404. Located at src/ai_usage_cost/api.py lines 377-378.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>span_content</code>: <code>if span is None:</code></p>
+<h2>BR-95 _roots refuses when not path</h2>
+<p>In _roots, when not path: the code raises typer.BadParameter. Located at src/ai_usage_cost/cli.py lines 65-66.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>_roots</code>: <code>if not path:</code></p>
+<h2>BR-96 alert refuses when days ‹ 1</h2>
+<p>In alert, when days &lt; 1: the code raises typer.BadParameter, message "--days must be at least 1". Located at src/ai_usage_cost/cli.py lines 320-321.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>alert</code>: <code>if days &lt; 1:</code></p>
+<h2>BR-97 alert refuses when over is not None and rise_over is not None</h2>
+<p>In alert, when over is not None and rise_over is not None: the code raises typer.BadParameter, message "pass --over or --rise-over, not both". Located at src/ai_usage_cost/cli.py lines 322-323.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>alert</code>: <code>if over is not None and rise_over is not None:</code></p>
+<h2>BR-98 alert refuses when threshold is None</h2>
+<p>In alert, when threshold is None: the code raises typer.BadParameter, message "pass --over (window total) or --rise-over (rise vs before)". Located at src/ai_usage_cost/cli.py lines 325-326.</p>
+<ul>
+<li><strong>Category:</strong> guard</li>
+</ul>
+<p>Source:
+- <code>alert</code>: <code>if threshold is None:</code></p>
+<h2>BR-99 _valid_window validates the model</h2>
+<p>In _valid_window, the model: the code validates before accepting the value. Located at src/ai_usage_cost/pricing.py lines 54-60.</p>
+<ul>
+<li><strong>Category:</strong> validator</li>
+</ul>
+<p>Source:
+- <code>_valid_window</code>: <code>def _valid_window(self) -&gt; Peak:</code></p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

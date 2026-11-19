@@ -1,0 +1,1508 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>ER Data Model</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/er-data-model.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Data · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> </p><h1>ER Data Model</h1>
+<p>The data model drawn as entity relationship diagrams. Each entity is drawn in full in exactly one view.</p>
+<h2>ER view: src/ai_usage_cost (1)</h2>
+<pre class="mermaid">erDiagram
+    Totals {
+        TokenUsage tokens
+        CostBreakdown cost
+        float reported_cost
+        int events
+        int priced_events
+        int sessions
+        datetime first_event
+        datetime last_event
+    }
+    SeriesPoint {
+        date day
+        str client
+        str provider
+        str model
+        str source
+        float cost
+        int tokens
+        int events
+    }
+    SessionRow {
+        str session_id
+        str source
+        str client
+        str provider
+        list models
+        datetime start_time
+        datetime end_time
+        int request_count
+        TokenUsage tokens
+        CostBreakdown cost
+        float reported_cost
+        CostState cost_state
+        list cost_states
+        bool is_sidechain
+        bool has_sidechain
+        str currency
+        str project
+        str working_directory
+        str repository
+        str branch
+        str machine
+        list raw_source
+        OutcomeLabel outcome
+        bool traced
+        int error_count
+        str title
+    }
+    UnknownModel {
+        str model
+        int tokens
+        int events
+    }
+    WarningInstance {
+        str kind
+        str message
+        str source
+        str file
+        str session_id
+        WarningSeverity severity
+        int delta_tokens
+        float delta_cost
+        str likely_cause
+        bool auto_corrected
+    }
+    WarningGroup {
+        str kind
+        str label
+        int count
+        str summary
+        WarningSeverity severity
+        int total_delta_tokens
+        float total_delta_cost
+        WarningInstance worst_example
+        int affected_sessions
+        list instances
+        list warnings
+    }
+    Facets {
+        dict states
+        dict clients
+        dict models
+        dict projects
+        dict outcomes
+    }
+    Report {
+        datetime generated_at
+        str rates_as_of
+        int rates_age_days
+        str currency
+        int files_scanned
+        int files_in_slice
+        Totals totals
+        list by_client
+        list by_provider
+        list by_model
+        list by_project
+        list by_day
+        list series
+        list sessions
+        list unknown_models
+        list warnings
+        list scan_warnings
+        list warning_groups
+        Facets facets
+        dict model_matches
+    }
+    ClientInfo {
+        str id
+        str label
+    }
+    WarningSummary {
+        int critical
+        int caution
+        int info
+        float total_delta_cost
+    }
+    Meta {
+        list clients
+        list providers
+        list models
+        list projects
+        date first_day
+        date last_day
+        str rates_as_of
+        int rates_age_days
+        str currency
+        int files_scanned
+        int events
+        list warnings
+        WarningSummary warning_summary
+        dict session_warnings
+        list sources
+        dict client_last_seen
+        dict model_last_seen
+        dict project_last_seen
+    }
+    AlertDecision {
+        bool fire
+        str message
+    }
+    Sample {
+        str machine
+        datetime sampled_at
+        float gpu_util
+        int vram_used
+        int vram_total
+        float power_w
+        str source
+    }
+    samples {
+        TEXT machine
+        TEXT sampled_at
+        REAL gpu_util
+        INTEGER vram_used
+        INTEGER vram_total
+        REAL power_w
+        TEXT source
+    }
+    apps {
+        INTEGER id PK
+        TEXT name
+        TEXT path
+        INTEGER created_at
+        INTEGER updated_at
+        TEXT github_org
+        TEXT github_repo
+        TEXT chat_context
+        TEXT github_branch
+        TEXT vercel_project_id
+        TEXT vercel_project_name
+        TEXT vercel_team_id
+        TEXT vercel_deployment_url
+        TEXT neon_project_id
+        TEXT neon_development_branch_id
+        TEXT neon_preview_branch_id
+    }
+    chats {
+        INTEGER id PK
+        INTEGER app_id
+        TEXT title
+        INTEGER created_at
+        TEXT initial_commit_hash
+    }
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    TokenUsage {
+        int uncached_input
+        int cache_read
+        int cache_write_5m
+        int cache_write_1h
+        int output
+        int reasoning_output
+    }
+    UsageEvent {
+        str source
+        str client
+        str provider
+        str model
+        datetime timestamp
+        str session_id
+        str request_id
+        TokenUsage tokens
+        bool is_sidechain
+        str tier
+        str project
+        str working_directory
+        str repository
+        str branch
+        str title
+        Literal title_source
+        str machine
+        str source_file
+        int record_offset
+        dict raw
+        float reported_cost
+    }
+    CostBreakdown {
+        float uncached_input
+        float cache_read
+        float cache_write
+        float output
+        float no_cache_equivalent
+        bool estimated
+        bool tier_unpriced
+    }
+    apps {
+        INTEGER id PK
+        TEXT name
+        TEXT path
+        INTEGER created_at
+        INTEGER updated_at
+        TEXT github_org
+        TEXT github_repo
+        TEXT chat_context
+        TEXT github_branch
+        TEXT vercel_project_id
+        TEXT vercel_project_name
+        TEXT vercel_team_id
+        TEXT vercel_deployment_url
+        TEXT neon_project_id
+        TEXT neon_development_branch_id
+        TEXT neon_preview_branch_id
+    }
+    chats {
+        INTEGER id PK
+        INTEGER app_id
+        TEXT title
+        INTEGER created_at
+        TEXT initial_commit_hash
+    }
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    apps {
+        INTEGER id PK
+        TEXT name
+        TEXT path
+        INTEGER created_at
+        INTEGER updated_at
+        TEXT github_org
+        TEXT github_repo
+        TEXT chat_context
+        TEXT github_branch
+        TEXT vercel_project_id
+        TEXT vercel_project_name
+        TEXT vercel_team_id
+        TEXT vercel_deployment_url
+        TEXT neon_project_id
+        TEXT neon_development_branch_id
+        TEXT neon_preview_branch_id
+    }
+    chats {
+        INTEGER id PK
+        INTEGER app_id
+        TEXT title
+        INTEGER created_at
+        TEXT initial_commit_hash
+    }
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    messages {
+        INTEGER id PK
+        TEXT chat_id
+        TEXT role
+        TEXT content
+        TEXT thinking
+        INTEGER stream
+        TEXT model_name
+        INTEGER model_cloud
+        TEXT model_ollama_host
+        TEXT created_at
+        TEXT updated_at
+        TEXT thinking_time_start
+        TEXT thinking_time_end
+        TEXT tool_result
+    }
+</pre>
+
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+=======
+=======</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-web-src-components-ui</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3>Node citations</h3>
+<ul>
+<li>AlertDecision: <code>src/ai_usage_cost/cli.py:252-254</code></li>
+<li>ClientInfo: <code>src/ai_usage_cost/api.py:86-88</code></li>
+<li>CostBreakdown: <code>src/ai_usage_cost/models.py:75-114</code></li>
+<li>Facets: <code>src/ai_usage_cost/aggregate.py:454-459</code></li>
+<li>Meta: <code>src/ai_usage_cost/api.py:105-128</code></li>
+<li>Report: <code>src/ai_usage_cost/aggregate.py:462-482</code></li>
+<li>Sample: <code>src/ai_usage_cost/collect.py:49-56</code></li>
+<li>SeriesPoint: <code>src/ai_usage_cost/aggregate.py:37-45</code></li>
+<li>SessionRow: <code>src/ai_usage_cost/aggregate.py:48-74</code></li>
+<li>TokenUsage: <code>src/ai_usage_cost/models.py:12-43</code></li>
+<li>Totals: <code>src/ai_usage_cost/aggregate.py:26-34</code></li>
+<li>UnknownModel: <code>src/ai_usage_cost/aggregate.py:77-80</code></li>
+<li>UsageEvent: <code>src/ai_usage_cost/models.py:49-72</code></li>
+<li>WarningGroup: <code>src/ai_usage_cost/aggregate.py:115-127</code></li>
+<li>WarningInstance: <code>src/ai_usage_cost/aggregate.py:100-111</code></li>
+<li>WarningSummary: <code>src/ai_usage_cost/api.py:91-102</code></li>
+<li>apps: <code>tests/fixtures/dyad/null_title.sql:1-18</code></li>
+<li>chats: <code>tests/fixtures/dyad/null_title.sql:20-26</code></li>
+<li>messages: <code>tests/fixtures/ollama_app/basic.sql:1-16</code></li>
+<li>samples: <code>src/ai_usage_cost/collect.py:19-23</code></li>
+</ul>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<blockquote>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src</h1>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src-components-ui</h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-src-ai-usage-cost</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>ER view: src/ai_usage_cost (2)</h2>
+<pre class="mermaid">erDiagram
+    PricedEvent {
+        UsageEvent event
+        CostBreakdown cost
+        CostState state
+    }
+    Bucket {
+        str key
+        str label
+        TokenUsage tokens
+        CostBreakdown cost
+        int events
+        int sessions
+        float reported_cost
+    }
+    SourceInfo {
+        str id
+        str label
+        list clients
+        TokenData token_data
+        str path
+        str root_hint
+        bool detected
+        int files
+        Capabilities capabilities
+        bool experimental
+    }
+    Analysis {
+        list events
+        RateTable table
+        int files
+        list warnings
+        list scan_warnings
+        list sources
+        dict session_flags
+        Path db_path
+        date today
+    }
+    PriceSet {
+        float input
+        float output
+        float cache_read
+        float cache_write_5m
+        float cache_write_1h
+    }
+    Period {
+        ConfigDict model_config
+        date from_
+        date until
+        float input
+        float output
+        float cache_read
+        float cache_write_5m
+        float cache_write_1h
+        dict variants
+        list bands
+        Peak peak
+    }
+    ProviderRules {
+        float cache_read
+        float cache_write_5m
+        float cache_write_1h
+        float batch
+        bool free
+    }
+    PartialRules {
+        float cache_read
+        float cache_write_5m
+        float cache_write_1h
+        float batch
+        bool free
+    }
+    Prefix {
+        str prefix
+        str provider
+    }
+    ModelMatch {
+        str match
+        Literal kind
+    }
+    UnpricedModel {
+        str match
+        str note
+        Literal status
+    }
+    RateTable {
+        str as_of
+        str currency
+        str units
+        list notes
+        list prefixes
+        dict providers
+        list models
+        list unpriced_models
+        dict _lookup_cache
+        dict _rules_cache
+        list _prefix_cache
+    }
+    Config {
+        bool metadata_only
+        list exclude_projects
+        int max_content_bytes
+        int metadata_retention_days
+        int content_retention_days
+    }
+    IngestSummary {
+        int files_parsed
+        int files_skipped
+        list warnings
+    }
+    requests {
+        TEXT fingerprint PK
+        TEXT source
+        TEXT client
+        TEXT provider
+        TEXT model
+        TEXT session_id
+        TEXT timestamp
+        TEXT request_id
+        INTEGER uncached_input
+        INTEGER cache_read
+        INTEGER cache_write_5m
+        INTEGER cache_write_1h
+        INTEGER output
+        INTEGER reasoning_output
+        INTEGER is_sidechain
+        TEXT tier
+        TEXT project
+        TEXT working_directory
+        TEXT repository
+        TEXT branch
+        TEXT machine
+        TEXT source_file
+        TEXT raw
+        TEXT title
+        TEXT title_source
+        REAL reported_cost
+    }
+    files {
+        TEXT path PK
+        TEXT source
+        REAL mtime
+        INTEGER size
+        TEXT ingested_at
+        TEXT warnings
+        INTEGER parser_version
+        INTEGER ingested_offset
+        TEXT boundary_hash
+        TEXT title_seed
+    }
+    trace_events {
+        TEXT span_id PK
+        TEXT parent_id
+        TEXT record_parent
+        TEXT source
+        TEXT session_id
+        TEXT turn_id
+        TEXT agent_id
+        INTEGER is_sidechain
+        INTEGER seq
+        TEXT kind
+        TEXT name
+        TEXT model
+        TEXT status
+        TEXT started_at
+        TEXT ended_at
+        INTEGER duration_ms
+        TEXT duration_provenance
+        INTEGER ttft_ms
+        INTEGER uncached_input
+        INTEGER cache_read
+        INTEGER cache_write_5m
+        INTEGER cache_write_1h
+        INTEGER output
+        INTEGER reasoning_output
+        TEXT tokens_provenance
+        INTEGER context_capacity
+        TEXT capacity_provenance
+        INTEGER retry_attempt
+        TEXT error
+        TEXT source_file
+        INTEGER record_offset
+        INTEGER record_length
+        TEXT content_path
+        TEXT detail
+    }
+    outcomes {
+        TEXT source PK
+        TEXT session_id PK
+        TEXT outcome
+        TEXT notes
+        TEXT tags
+        TEXT updated_at
+    }
+    session_exclusions {
+        TEXT source PK
+        TEXT session_id PK
+        TEXT excluded_at
+    }
+    Span {
+        ConfigDict model_config
+        str span_id
+        str parent_id
+        str record_parent
+        str source
+        str session_id
+        str turn_id
+        str agent_id
+        bool is_sidechain
+        int seq
+        SpanKind kind
+        str name
+        str model
+        SpanStatus status
+        datetime started_at
+        datetime ended_at
+        int duration_ms
+        Provenance duration_provenance
+        int ttft_ms
+        TokenUsage tokens
+        Provenance tokens_provenance
+        int context_capacity
+        Provenance capacity_provenance
+        int retry_attempt
+        str error
+        str source_file
+        int record_offset
+        int record_length
+        str content_path
+        dict detail
+    }
+</pre>
+
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+=======
+=======</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-web-src-components-ui</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3>Node citations</h3>
+<ul>
+<li>Analysis: <code>src/ai_usage_cost/pipeline.py:45-63</code></li>
+<li>Bucket: <code>src/ai_usage_cost/models.py:123-134</code></li>
+<li>Config: <code>src/ai_usage_cost/privacy.py:52-57</code></li>
+<li>IngestSummary: <code>src/ai_usage_cost/store.py:134-137</code></li>
+<li>ModelMatch: <code>src/ai_usage_cost/pricing.py:224-229</code></li>
+<li>PartialRules: <code>src/ai_usage_cost/pricing.py:109-117</code></li>
+<li>Period: <code>src/ai_usage_cost/pricing.py:68-98</code></li>
+<li>Prefix: <code>src/ai_usage_cost/pricing.py:169-171</code></li>
+<li>PriceSet: <code>src/ai_usage_cost/pricing.py:29-37</code></li>
+<li>PricedEvent: <code>src/ai_usage_cost/models.py:117-120</code></li>
+<li>ProviderRules: <code>src/ai_usage_cost/pricing.py:101-106</code></li>
+<li>RateTable: <code>src/ai_usage_cost/pricing.py:252-372</code></li>
+<li>SourceInfo: <code>src/ai_usage_cost/pipeline.py:31-41</code></li>
+<li>Span: <code>src/ai_usage_cost/trace.py:55-101</code></li>
+<li>UnpricedModel: <code>src/ai_usage_cost/pricing.py:232-242</code></li>
+<li>files: <code>src/ai_usage_cost/store.py:36-82</code></li>
+<li>outcomes: <code>src/ai_usage_cost/store.py:63-68</code></li>
+<li>requests: <code>src/ai_usage_cost/store.py:23-85</code></li>
+<li>session_exclusions: <code>src/ai_usage_cost/store.py:69-72</code></li>
+<li>trace_events: <code>src/ai_usage_cost/store.py:43-60</code></li>
+</ul>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<blockquote>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src</h1>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src-components-ui</h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-src-ai-usage-cost</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>ER view: src/ai_usage_cost (3)</h2>
+<pre class="mermaid">erDiagram
+    Capabilities {
+        Provenance trace
+        Provenance tokens
+        Provenance cost
+        Provenance context
+        Provenance latency
+    }
+    ContextSnapshot {
+        str span_id
+        str model
+        datetime started_at
+        int input_total
+        Provenance tokens_provenance
+        int capacity
+        Provenance capacity_provenance
+        float occupancy
+        Provenance occupancy_provenance
+        int delta_input
+        list added_span_ids
+        bool compacted_before
+        dict composition
+        ConfigDict model_config
+    }
+    OutcomeSignals {
+        int aborted_turns
+        int interrupted_tools
+        int errors
+        SpanStatus last_turn_status
+    }
+    OutcomeUpdate {
+        OutcomeLabel outcome
+        str notes
+        list tags
+    }
+    EconRow {
+        str key
+        str label
+        int ordinal
+        datetime started_at
+        bool is_sidechain
+        int model_calls
+        int tool_calls
+        TokenUsage tokens
+        Provenance tokens_provenance
+        CostBreakdown cost
+        CostState cost_state
+        int duration_ms
+        Provenance duration_provenance
+        int errors
+        int retries
+        float amplification
+        float cache_hit_ratio
+        float tokens_per_second
+        ConfigDict model_config
+    }
+    Economics {
+        EconRow totals
+        list by_turn
+        list by_model
+        list by_tool
+    }
+    Insight {
+        str kind
+        Literal severity
+        str span_id
+        str message
+        int count
+    }
+    Trace {
+        str source
+        str session_id
+        Capabilities capabilities
+        list spans
+        Outcome outcome
+        list insights
+    }
+    SpanContent {
+        str span_id
+        str content
+        bool truncated
+        int redactions
+    }
+</pre>
+
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+=======
+=======</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-web-src-components-ui</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3>Node citations</h3>
+<ul>
+<li>Capabilities: <code>src/ai_usage_cost/trace.py:104-109</code></li>
+<li>ContextSnapshot: <code>src/ai_usage_cost/trace.py:112-131</code></li>
+<li>EconRow: <code>src/ai_usage_cost/trace.py:154-174</code></li>
+<li>Economics: <code>src/ai_usage_cost/trace.py:177-181</code></li>
+<li>Insight: <code>src/ai_usage_cost/trace.py:184-189</code></li>
+<li>OutcomeSignals: <code>src/ai_usage_cost/trace.py:134-138</code></li>
+<li>OutcomeUpdate: <code>src/ai_usage_cost/trace.py:141-144</code></li>
+<li>SpanContent: <code>src/ai_usage_cost/trace.py:201-205</code></li>
+<li>Trace: <code>src/ai_usage_cost/trace.py:192-198</code></li>
+</ul>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<blockquote>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src</h1>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src-components-ui</h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-src-ai-usage-cost</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>ER view: src/ai_usage_cost/sources</h2>
+<pre class="mermaid">erDiagram
+    Source {
+        str id
+        str label
+        dict clients
+        Callable default_roots
+        Callable files
+        Callable parse
+        TokenData token_data
+        str display_path
+        Callable spans
+        Capabilities capabilities
+        bool experimental
+        Callable parse_resume
+    }
+    Spec {
+        str source_id
+        str client
+        str ext_id
+        bool tokens_in_inclusive
+        bool sdk
+    }
+</pre>
+
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+=======
+=======</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-web-src-components-ui</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3>Node citations</h3>
+<ul>
+<li>Source: <code>src/ai_usage_cost/sources/base.py:18-44</code></li>
+<li>Spec: <code>src/ai_usage_cost/sources/cline.py:82-87</code></li>
+</ul>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<blockquote>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src</h1>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src-components-ui</h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-src-ai-usage-cost</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>ER view: tests</h2>
+<pre class="mermaid">erDiagram
+    Scanned {
+        list events
+        list warnings
+    }
+    Scanned {
+        list events
+        list warnings
+    }
+    cursorDiskKV {
+        BLOB value
+    }
+    Scanned {
+        list events
+        list warnings
+    }
+    Scanned {
+        list events
+        list warnings
+    }
+    session {
+        TEXT id PK
+        TEXT project_id
+        TEXT parent_id
+        TEXT slug
+        TEXT directory
+        TEXT title
+        TEXT version
+        REAL cost
+        INTEGER tokens_input
+        INTEGER tokens_output
+        INTEGER tokens_reasoning
+        INTEGER tokens_cache_read
+        INTEGER tokens_cache_write
+        INTEGER time_created
+        INTEGER time_updated
+    }
+    message {
+        TEXT id PK
+        TEXT session_id
+        INTEGER time_created
+        INTEGER time_updated
+        TEXT data
+    }
+    part {
+        TEXT id PK
+        TEXT message_id
+        TEXT session_id
+        INTEGER time_created
+        INTEGER time_updated
+        TEXT data
+    }
+    session {
+        TEXT id PK
+    }
+    message {
+        TEXT id PK
+        TEXT session_id
+        TEXT data
+    }
+    part {
+        TEXT id PK
+        TEXT message_id
+        TEXT data
+    }
+    Scanned {
+        list spans
+        list warnings
+    }
+    ItemTable {
+        TEXT value
+    }
+    cursorDiskKV {
+        BLOB value
+    }
+    cursorDiskKV {
+        BLOB value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+</pre>
+
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+=======
+=======</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-web-src-components-ui</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3>Node citations</h3>
+<ul>
+<li>ItemTable: <code>tests/fixtures/windsurf/no_chat_key.sql:1</code></li>
+<li>Scanned: <code>tests/test_trace_codex.py:28-36</code></li>
+<li>cursorDiskKV: <code>tests/fixtures/cursor/empty.sql:1</code></li>
+<li>message: <code>tests/test_opencode.py:318</code></li>
+<li>part: <code>tests/test_opencode.py:319</code></li>
+<li>session: <code>tests/test_opencode.py:317</code></li>
+</ul>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<blockquote>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src</h1>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src-components-ui</h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-src-ai-usage-cost</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>ER view: tests/fixtures/copilot_chat</h2>
+<pre class="mermaid">erDiagram
+    turns }o--|o sessions : &quot;session_id&quot;
+    turns }o--|o sessions : &quot;session_id&quot;
+    sessions {
+        TEXT id PK
+        TEXT cwd
+        TEXT repository
+        TEXT host_type
+        TEXT branch
+        TEXT summary
+        TEXT agent_name
+        TEXT agent_description
+        TEXT created_at
+        TEXT updated_at
+    }
+    turns {
+        INTEGER id PK
+        TEXT session_id FK
+        INTEGER turn_index
+        TEXT user_message
+        TEXT assistant_response
+        TEXT timestamp
+    }
+    sessions {
+        TEXT id PK
+        TEXT cwd
+        TEXT repository
+        TEXT host_type
+        TEXT branch
+        TEXT summary
+        TEXT agent_name
+        TEXT agent_description
+        TEXT created_at
+        TEXT updated_at
+    }
+    turns {
+        INTEGER id PK
+        TEXT session_id FK
+        INTEGER turn_index
+        TEXT user_message
+        TEXT assistant_response
+        TEXT timestamp
+    }
+</pre>
+
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+=======
+=======</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-web-src-components-ui</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3>Node citations</h3>
+<ul>
+<li>sessions: <code>tests/fixtures/copilot_chat/empty.sql:1-12</code></li>
+<li>turns: <code>tests/fixtures/copilot_chat/empty.sql:14-21</code></li>
+</ul>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<blockquote>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src</h1>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src-components-ui</h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-src-ai-usage-cost</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>ER view: tests/fixtures/cursor</h2>
+<pre class="mermaid">erDiagram
+    cursorDiskKV {
+        BLOB value
+    }
+    ItemTable {
+        TEXT value
+    }
+    cursorDiskKV {
+        BLOB value
+    }
+    cursorDiskKV {
+        BLOB value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+</pre>
+
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+=======
+=======</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-web-src-components-ui</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3>Node citations</h3>
+<ul>
+<li>ItemTable: <code>tests/fixtures/windsurf/no_chat_key.sql:1</code></li>
+<li>cursorDiskKV: <code>tests/fixtures/cursor/empty.sql:1</code></li>
+</ul>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<blockquote>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src</h1>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src-components-ui</h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-src-ai-usage-cost</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>ER view: tests/fixtures/dyad</h2>
+<pre class="mermaid">erDiagram
+    apps {
+        INTEGER id PK
+        TEXT name
+        TEXT path
+        INTEGER created_at
+        INTEGER updated_at
+        TEXT github_org
+        TEXT github_repo
+        TEXT chat_context
+        TEXT github_branch
+        TEXT vercel_project_id
+        TEXT vercel_project_name
+        TEXT vercel_team_id
+        TEXT vercel_deployment_url
+        TEXT neon_project_id
+        TEXT neon_development_branch_id
+        TEXT neon_preview_branch_id
+    }
+    chats {
+        INTEGER id PK
+        INTEGER app_id
+        TEXT title
+        INTEGER created_at
+        TEXT initial_commit_hash
+    }
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    apps {
+        INTEGER id PK
+        TEXT name
+        TEXT path
+        INTEGER created_at
+        INTEGER updated_at
+        TEXT github_org
+        TEXT github_repo
+        TEXT chat_context
+        TEXT github_branch
+        TEXT vercel_project_id
+        TEXT vercel_project_name
+        TEXT vercel_team_id
+        TEXT vercel_deployment_url
+        TEXT neon_project_id
+        TEXT neon_development_branch_id
+        TEXT neon_preview_branch_id
+    }
+    chats {
+        INTEGER id PK
+        INTEGER app_id
+        TEXT title
+        INTEGER created_at
+        TEXT initial_commit_hash
+    }
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    apps {
+        INTEGER id PK
+        TEXT name
+        TEXT path
+        INTEGER created_at
+        INTEGER updated_at
+        TEXT github_org
+        TEXT github_repo
+        TEXT chat_context
+        TEXT github_branch
+        TEXT vercel_project_id
+        TEXT vercel_project_name
+        TEXT vercel_team_id
+        TEXT vercel_deployment_url
+        TEXT neon_project_id
+        TEXT neon_development_branch_id
+        TEXT neon_preview_branch_id
+    }
+    chats {
+        INTEGER id PK
+        INTEGER app_id
+        TEXT title
+        INTEGER created_at
+        TEXT initial_commit_hash
+    }
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    messages {
+        INTEGER id PK
+        TEXT chat_id
+        TEXT role
+        TEXT content
+        TEXT thinking
+        INTEGER stream
+        TEXT model_name
+        INTEGER model_cloud
+        TEXT model_ollama_host
+        TEXT created_at
+        TEXT updated_at
+        TEXT thinking_time_start
+        TEXT thinking_time_end
+        TEXT tool_result
+    }
+</pre>
+
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+=======
+=======</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-web-src-components-ui</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3>Node citations</h3>
+<ul>
+<li>apps: <code>tests/fixtures/dyad/null_title.sql:1-18</code></li>
+<li>chats: <code>tests/fixtures/dyad/null_title.sql:20-26</code></li>
+<li>messages: <code>tests/fixtures/ollama_app/basic.sql:1-16</code></li>
+</ul>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<blockquote>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src</h1>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src-components-ui</h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-src-ai-usage-cost</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>ER view: tests/fixtures/ollama_app</h2>
+<pre class="mermaid">erDiagram
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    messages {
+        INTEGER id PK
+        INTEGER chat_id
+        TEXT role
+        TEXT content
+        INTEGER created_at
+        TEXT approval_state
+        TEXT commit_hash
+    }
+    messages {
+        INTEGER id PK
+        TEXT chat_id
+        TEXT role
+        TEXT content
+        TEXT thinking
+        INTEGER stream
+        TEXT model_name
+        INTEGER model_cloud
+        TEXT model_ollama_host
+        TEXT created_at
+        TEXT updated_at
+        TEXT thinking_time_start
+        TEXT thinking_time_end
+        TEXT tool_result
+    }
+</pre>
+
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+=======
+=======</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-web-src-components-ui</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3>Node citations</h3>
+<ul>
+<li>messages: <code>tests/fixtures/ollama_app/basic.sql:1-16</code></li>
+</ul>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<blockquote>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src</h1>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src-components-ui</h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-src-ai-usage-cost</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>ER view: tests/fixtures/windsurf</h2>
+<pre class="mermaid">erDiagram
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+    ItemTable {
+        TEXT value
+    }
+</pre>
+
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+=======
+=======</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-web-src-components-ui</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3>Node citations</h3>
+<ul>
+<li>ItemTable: <code>tests/fixtures/windsurf/no_chat_key.sql:1</code></li>
+</ul>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<blockquote>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src</h1>
+<h1>&gt;&gt;&gt;&gt;&gt;&gt; docs/chunk-ch-localtokenomics-web-src-components-ui</h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>docs/chunk-ch-localtokenomics-src-ai-usage-cost</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

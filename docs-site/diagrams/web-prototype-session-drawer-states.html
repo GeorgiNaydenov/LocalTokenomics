@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web prototype session drawer states</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-prototype-session-drawer-states.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Web prototype session drawer states</h1>
+<p>This chart follows the session drawer from closed to open and through its sections. It shows which parts appear only when the tool logged token counts or span data. It also shows which cases get a sentence of explanation instead of an empty box.</p>
+<h2>What the diagram shows</h2>
+<p>The drawer is closed while no session is active <code>web/src/prototype/Screens.tsx:278-278</code> <code>web/src/prototype/Screens.tsx:94-94</code>. A click on a row or card opens it <code>web/src/prototype/Screens.tsx:363-363</code>, and its close control clears the session <code>web/src/prototype/Screens.tsx:375-375</code>.</p>
+<p>The cost section is always drawn, with the cost state, the outcome and a sentence that explains how the cost came about <code>web/src/prototype/Screens.tsx:110-123</code> <code>web/src/prototype/Screens.tsx:71-82</code>.</p>
+<p>Token buckets are drawn when the session has token counts. Without them the drawer shows an empty state that says the tool logs no token counts <code>web/src/prototype/Screens.tsx:125-169</code>.</p>
+<p>A traced session gets the context window, the trace, the insights and the capability grid. Any other session gets a text that says it was recorded before span capture <code>web/src/prototype/Screens.tsx:171-224</code>. The traced blocks read fixed sample arrays, the same for every session <code>web/src/prototype/Screens.tsx:181-213</code>.</p>
+<p>The provenance, log file and reprice sections are always drawn <code>web/src/prototype/Screens.tsx:226-257</code>.</p>
+<h2>Capability and related functionality</h2>
+<p>The capability is the detail view of one session. It is opened from <a href="../application/sessions-screen-screen.html">Sessions Screen Screen</a>, and the shell around it is charted in <a href="../diagrams/web-prototype-shell-ui-states.html">Web prototype shell UI states</a>.</p>
+<h2>Web prototype session drawer states</h2>
+<pre class="mermaid">stateDiagram-v2
+    direction TB
+    [*] --&gt; Closed: active is null
+    Closed --&gt; Open: row or card click calls onOpen
+    Open --&gt; Closed: sheet close calls onClose
+    state Open {
+        [*] --&gt; Cost
+        Cost --&gt; Tokens
+        Tokens --&gt; NoTokens: tokens is null
+        Tokens --&gt; TokenBuckets: tokens present
+        NoTokens --&gt; Trace
+        TokenBuckets --&gt; Trace
+        Trace --&gt; Traced: traced is true
+        Trace --&gt; Untraced: traced is false
+        Traced --&gt; Provenance
+        Untraced --&gt; Provenance
+        Provenance --&gt; [*]
+    }
+    note right of NoTokens
+        Empty state: the client logs no token counts, so cost shows not available and no bucket split is drawn.
+    end note
+    note right of Untraced
+        Shows a text that the session predates span capture. The code has no error state for a failed trace.
+    end note
+    note right of Traced
+        Context window, trace, insights and capabilities come from fixed sample data, the same for every traced session.
+    end note
+    note left of Closed
+        Legend, a rounded box is a state of the drawer, an arrow label is the trigger or the data condition, the filled dot is the start and the ringed dot is the end, a note records a rule that holds in that state.
+    end note
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:84-264</code></td>
+<td>The drawer component</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:125-169</code></td>
+<td>Tokens or empty state</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:171-224</code></td>
+<td>Traced or untraced</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:266-281</code></td>
+<td>Active session state</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

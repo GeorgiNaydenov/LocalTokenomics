@@ -1,0 +1,40 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UC-11 Inspect a chart point</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="use-cases/uc-11-inspect-a-chart-point.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> covers <code>web/src/components/chart-hover.tsx</code>, <code>web/src/components/sparkline.tsx</code>, <code>web/src/components/sparkline.test.ts</code></p><h1>UC-11 Inspect a chart point</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>A use case of the subdomain, written from the code. Every step cites the line that does it, so a reader can check the claim in one click.</p>
+</details>
+<details class="callout callout-tip">
+<summary>How to use it</summary>
+<p>Read the main flow first, then the alternative flows. The rules, terms and diagrams at the end are the ones this use case relies on.</p>
+</details>
+<ul>
+<li><strong>Actors:</strong> <a href="../business/actors.html">Dashboard reader</a></li>
+<li><strong>Maturity:</strong> approved</li>
+</ul>
+<h2>Description</h2>
+<p>The reader moves the pointer or uses the keyboard over a chart to read the value behind one point or day.</p>
+<h2>Preconditions</h2>
+<p>A sparkline with labels and a formatter, or a context occupancy chart, is on screen.</p>
+<h2>Main flow</h2>
+<ol>
+<li>The pointer position is turned into a point index. <a href="#">web/src/components/chart-hover.tsx:43</a></li>
+<li>Arrow keys, Home and End move the index, and Escape clears it. <a href="#">web/src/components/chart-hover.tsx:63</a></li>
+<li>The detail box is drawn above the chart at the point. <a href="#">web/src/components/chart-hover.tsx:91</a></li>
+<li>A polite live region reads the point aloud. <a href="#">web/src/components/chart-hover.tsx:114</a></li>
+</ol>
+<h2>Alternative flows</h2>
+<ul>
+<li>At step 1, a sparkline given no labels or no formatter has no hover. <a href="#">web/src/components/sparkline.tsx:129</a></li>
+</ul>
+<h2>Postconditions</h2>
+<p>A detail box shows the title and values of the chosen point, and a live region announces it.</p>
+<h2>Acceptance criteria</h2>
+<ul>
+<li>A sparkline keeps every y coordinate inside the box height, even for a series with negative dips. <a href="#">web/src/components/sparkline.test.ts:10</a></li>
+</ul>
+<h2>Code</h2>
+<ul>
+<li><a href="#">web/src/components/chart-hover.tsx</a></li>
+<li><a href="#">web/src/components/sparkline.tsx</a></li>
+<li><a href="#">web/src/components/sparkline.test.ts</a></li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

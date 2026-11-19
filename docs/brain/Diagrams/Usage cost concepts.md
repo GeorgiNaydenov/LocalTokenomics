@@ -40,6 +40,43 @@ This picture gives a newcomer the whole core of the tool on one page. It names t
 ## Usage cost concepts
 
 %% generated:diagram-usage-cost-concepts start (do not edit; run brain docs generate) %%
+```mermaid
+mindmap
+  root((ai usage cost core))
+    Entry points
+      cli commands
+        scan, serve, demo, export
+        collect, sql, alert, tui
+      HTTP routes under /api
+    Pipeline
+      analyze
+        ingest changed logs
+        price every request
+        collect warnings
+      report_of
+        filter by day, client, model
+        build_report
+    Cost model
+      RateTable from rates.json
+      price_event
+      Cost state
+        priced, free
+        unpriced, unavailable
+    Store and data
+      SQLite usage.db
+        requests, files
+        trace_events, outcomes
+        session_exclusions, samples
+      UsageEvent and PricedEvent
+      Report with buckets
+    Privacy
+      Config metadata_only
+      redact before release
+      forget a session
+    Legend
+      First level: a main concern of the chunk
+      Second level and deeper: the concepts inside it, named as in the code
+```
 %% generated:diagram-usage-cost-concepts end %%
 
 > [!example]- Code references

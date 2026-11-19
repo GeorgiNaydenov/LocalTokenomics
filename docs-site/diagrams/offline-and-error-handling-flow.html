@@ -1,0 +1,117 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Offline and error handling flow</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/offline-and-error-handling-flow.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> covers <code>web/src/components/*</code></p><h1>Offline and error handling flow</h1>
+<p>This view shows what the reader sees when something goes wrong in the shared dashboard parts. Most failures turn into plain text, but three of them end in a silent or confusing result. Knowing this helps a developer decide where a message is still missing.</p>
+<h2>What the diagram shows</h2>
+<p>When the app has an error message that is not the offline one, it draws the error card with no retry function, so the card shows the title and the message and no button. <code>web/src/App.tsx:274-274</code> <code>web/src/components/states.tsx:98-121</code></p>
+<p>The error card shows a retry button only when a retry function is passed in. <code>web/src/components/states.tsx:114-114</code></p>
+<p>The app decides that the reader is offline by looking for a fixed sentence inside the error text, and then draws the offline card in place of the page. <code>web/src/App.tsx:251-251</code></p>
+<p>The offline card says that the dashboard lost the local reader and offers Retry connection, which calls the retry function of the page. <code>web/src/components/states.tsx:311-311</code> <code>web/src/components/states.tsx:319-319</code></p>
+<p>Copy command writes the start command to the clipboard and swallows a rejection, so a failed copy leaves the button label unchanged. <code>web/src/components/states.tsx:294-300</code> <code>web/src/components/states.tsx:321-321</code></p>
+<p>Every display part that can receive a missing value checks for null and draws the word unavailable instead: the token cell, the meters, the bucket bar, the meter row and the comparison meter. <code>web/src/components/session.tsx:63-66</code> <code>web/src/components/status.tsx:253-256</code> <code>web/src/components/status.tsx:296-299</code> <code>web/src/components/status.tsx:383-385</code> <code>web/src/components/status.tsx:422-427</code></p>
+<p>A context bar with unknown occupancy is drawn as a hatched full height bar, and a note says that the client logged no capacity. <code>web/src/components/trace.tsx:136-144</code> <code>web/src/components/trace.tsx:106-106</code></p>
+<p>The time chart, the sparkline and the occupancy bars return nothing when they have no data, so the page shows an empty area unless it adds its own empty card. <code>web/src/components/chart-time.tsx:95-95</code> <code>web/src/components/sparkline.tsx:114-114</code> <code>web/src/components/trace.tsx:60-60</code></p>
+<p>Reads of the saved panel width and the hidden columns fall back to a default when the browser storage throws or holds a bad value, and the writes ignore a failure. <code>web/src/components/workspace-panel.ts:15-23</code> <code>web/src/components/workspace-panel.ts:25-31</code> <code>web/src/components/columns.tsx:22-31</code> <code>web/src/components/columns.tsx:33-39</code></p>
+<p>When every column is hidden, the table shows all of them, while the chooser still draws each box as unchecked. <code>web/src/components/columns.tsx:59-59</code> <code>web/src/components/columns.tsx:85-85</code></p>
+<h2>Capability and related functionality</h2>
+<p>The flow covers the failure behaviour of the shared display layer. The offline and error cards are drawn in <a href="../diagrams/shared-components-c4.html">Shared components C4</a> and <a href="../diagrams/offline-card-screen-map.html">Offline card screen map</a>. The warnings list has its own states in <a href="../diagrams/warnings-list-states.html">Warnings list states</a>. The written explanation is in <a href="../application/web-ui-components-overview.html">Web UI components Overview</a>. The pages that supply the messages are in <a href="../application/web-overview.html">Web Overview</a>.</p>
+<h2>Offline and error handling flow</h2>
+<pre class="mermaid">flowchart TD
+    fReq[&quot;A data request fails in a page&quot;]:::step
+    oErr([&quot;Reader sees: Something went wrong card, retry only when the page passes one&quot;]):::fail
+    fOff[&quot;The local reader does not answer&quot;]:::step
+    oOff([&quot;Reader sees: card saying the dashboard lost the local reader&quot;]):::fail
+    fCopy[&quot;Clipboard write is rejected&quot;]:::step
+    gCatch[&quot;Rejection is swallowed&quot;]:::guard
+    oSilent([&quot;Reader sees no change on the Copy command button&quot;]):::fail
+    fNull[&quot;A number or ratio is null&quot;]:::step
+    gNull[&quot;Null checks in each display part&quot;]:::guard
+    oUnav([&quot;Reader sees the word unavailable, or a hatched bar for unknown occupancy&quot;]):::fail
+    fEmpty[&quot;A series or list is empty&quot;]:::step
+    gEmpty[&quot;Early return of nothing&quot;]:::guard
+    oBlank([&quot;Reader sees an empty area and no message&quot;]):::fail
+    fStore[&quot;Browser storage is unreadable, corrupt or full&quot;]:::step
+    gStore[&quot;try and catch around every read and write&quot;]:::guard
+    oDef([&quot;Reader gets the default width and all columns, a failed save is not reported&quot;]):::fail
+    fCols[&quot;Every column is hidden&quot;]:::step
+    gCols[&quot;visibleColumns guard&quot;]:::guard
+    oAll([&quot;Reader sees all columns while the chooser shows every box unchecked&quot;]):::fail
+
+    fReq --&gt;|&quot;error message from the caller&quot;| oErr
+    fOff --&gt;|&quot;offline card is shown instead of the page&quot;| oOff
+    oOff --&gt;|&quot;Copy command pressed&quot;| fCopy
+    fCopy --&gt;|&quot;promise rejection&quot;| gCatch
+    gCatch --&gt;|&quot;nothing thrown, nothing shown&quot;| oSilent
+    fNull --&gt;|&quot;null value&quot;| gNull
+    gNull --&gt;|&quot;unavailable text&quot;| oUnav
+    fEmpty --&gt;|&quot;no rows&quot;| gEmpty
+    gEmpty --&gt;|&quot;null return&quot;| oBlank
+    fStore --&gt;|&quot;exception&quot;| gStore
+    gStore --&gt;|&quot;default value&quot;| oDef
+    fCols --&gt;|&quot;empty visible list&quot;| gCols
+    gCols --&gt;|&quot;full column list&quot;| oAll
+
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Step: where a failure starts&quot;]:::step
+        zlegend_b[&quot;Guard or validator&quot;]:::guard
+        zlegend_c([&quot;Failure the reader sees, arrow label is the error carried&quot;]):::fail
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c
+    end
+
+    classDef step fill:#dae8fc,stroke:#222222,color:#222222
+    classDef guard fill:#e1d5e7,stroke:#222222,color:#222222
+    classDef fail fill:#f8cecc,stroke:#222222,color:#222222
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/components/states.tsx:98-121</code></td>
+<td>Error card</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:274-274</code></td>
+<td>App draws the error card</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:251-251</code></td>
+<td>Offline detection by message text</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:311-311</code></td>
+<td>Offline card text</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:294-300</code></td>
+<td>Clipboard write</td>
+</tr>
+<tr>
+<td><code>web/src/components/status.tsx:296-299</code></td>
+<td>Bucket bar without counts</td>
+</tr>
+<tr>
+<td><code>web/src/components/trace.tsx:106-106</code></td>
+<td>Unknown occupancy note</td>
+</tr>
+<tr>
+<td><code>web/src/components/chart-time.tsx:95-95</code></td>
+<td>Empty time chart</td>
+</tr>
+<tr>
+<td><code>web/src/components/columns.tsx:33-39</code></td>
+<td>Hidden column write</td>
+</tr>
+<tr>
+<td><code>web/src/components/columns.tsx:59-59</code></td>
+<td>All columns hidden</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

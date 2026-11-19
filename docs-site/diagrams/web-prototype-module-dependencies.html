@@ -1,0 +1,116 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web prototype module dependencies</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-prototype-module-dependencies.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Web prototype module dependencies</h1>
+<p>This view shows which files of the prototype import which, as layers from the entry script down to the sample data. Imports run in one direction and no cycle exists inside the folder. A developer can change a screen without worrying about hidden loops.</p>
+<h2>What the diagram shows</h2>
+<p>The entry script imports the shell <code>web/src/prototype/main.tsx:5-5</code>. The shell imports the gallery, the screens component and the sample data <code>web/src/prototype/Prototype.tsx:10-12</code>.</p>
+<p>The screens component imports the four screens, the filter rail and the sample data <code>web/src/prototype/Screens.tsx:25-39</code>.</p>
+<p>Each screen imports only the sample data from its own folder <code>web/src/prototype/OverviewScreen.tsx:25-35</code> <code>web/src/prototype/SessionsScreen.tsx:20-20</code> <code>web/src/prototype/SourcesScreen.tsx:6-6</code> <code>web/src/prototype/PricingScreen.tsx:18-18</code>. The rail and the gallery do the same <code>web/src/prototype/Rail.tsx:12-24</code> <code>web/src/prototype/Gallery.tsx:82-90</code>.</p>
+<p>The sample data file imports only type names from the shared API module <code>web/src/prototype/data.ts:1-1</code>.</p>
+<p>Everything else comes from outside the folder: shared components, UI primitives, formatting, the theme and the design system <code>web/src/prototype/Prototype.tsx:4-9</code> <code>web/src/prototype/Screens.tsx:3-24</code>. The diagram groups them in one box. The folder level graph is in <a href="../diagrams/web-prototype-diagrams.html">Web prototype Diagrams</a>.</p>
+<h2>Capability and related functionality</h2>
+<p>The capability is a clear boundary: the prototype depends on the shared code, and <a href="../application/web-prototype-overview.html">Web prototype Overview</a> states that no other chunk depends on it. The component view is <a href="../diagrams/web-prototype-component-tree.html">Web prototype component tree</a>.</p>
+<h2>Web prototype module dependencies</h2>
+<pre class="mermaid">flowchart TD
+    subgraph entry[&quot;Entry&quot;]
+        main[&quot;main.tsx&quot;]:::mod
+    end
+    subgraph shell[&quot;Shell&quot;]
+        proto[&quot;Prototype.tsx&quot;]:::mod
+        screens[&quot;Screens.tsx&quot;]:::mod
+        rail[&quot;Rail.tsx&quot;]:::mod
+    end
+    subgraph pages[&quot;Pages&quot;]
+        ov[&quot;OverviewScreen.tsx&quot;]:::mod
+        se[&quot;SessionsScreen.tsx&quot;]:::mod
+        so[&quot;SourcesScreen.tsx&quot;]:::mod
+        pr[&quot;PricingScreen.tsx&quot;]:::mod
+        ga[&quot;Gallery.tsx&quot;]:::mod
+    end
+    subgraph dataLayer[&quot;Data&quot;]
+        data[&quot;data.ts&quot;]:::mod
+    end
+    ext[&quot;Outside the folder: components, ui, format, api, theme, design-system&quot;]:::external
+
+    main --&gt; proto
+    proto --&gt; screens
+    proto --&gt; ga
+    proto --&gt; data
+    screens --&gt; ov
+    screens --&gt; se
+    screens --&gt; so
+    screens --&gt; pr
+    screens --&gt; rail
+    screens --&gt; data
+    rail --&gt; data
+    ov --&gt; data
+    se --&gt; data
+    so --&gt; data
+    pr --&gt; data
+    ga --&gt; data
+    proto --&gt; ext
+    screens --&gt; ext
+    rail --&gt; ext
+    ov --&gt; ext
+    se --&gt; ext
+    so --&gt; ext
+    pr --&gt; ext
+    ga --&gt; ext
+    data --&gt; ext
+
+    subgraph Legend
+        direction LR
+        zl1[&quot;Box: a module, an arrow from A to B means A imports B&quot;]:::mod
+        zl2[&quot;Subgraph: a layer, imports point down the layers&quot;]:::mod
+        zl3[&quot;Grey dashed box: modules outside this folder, grouped in one box&quot;]:::external
+        zl4[&quot;Red arrow: a cycle. None exists inside this folder&quot;]:::mod
+        zl1 ~~~ zl2
+        zl2 ~~~ zl3
+        zl3 ~~~ zl4
+    end
+
+    classDef mod fill:#dae8fc,stroke:#222222,color:#111111
+    classDef external fill:#e6e6e6,stroke:#222222,stroke-dasharray:5 3,color:#111111
+</pre>
+
+<h3>Node citations</h3>
+<ul>
+<li>main: <code>web/src/prototype/main.tsx:1-11</code></li>
+<li>proto: <code>web/src/prototype/Prototype.tsx:10-12</code></li>
+<li>screens: <code>web/src/prototype/Screens.tsx:25-39</code></li>
+<li>rail: <code>web/src/prototype/Rail.tsx:12-24</code></li>
+<li>ov: <code>web/src/prototype/OverviewScreen.tsx:25-35</code></li>
+<li>se: <code>web/src/prototype/SessionsScreen.tsx:20-20</code></li>
+<li>so: <code>web/src/prototype/SourcesScreen.tsx:6-6</code></li>
+<li>pr: <code>web/src/prototype/PricingScreen.tsx:18-18</code></li>
+<li>ga: <code>web/src/prototype/Gallery.tsx:82-90</code></li>
+<li>data: <code>web/src/prototype/data.ts:1-1</code></li>
+<li>ext: <code>web/src/prototype/Prototype.tsx:4-9</code></li>
+</ul>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/prototype/main.tsx:4-5</code></td>
+<td>Entry imports</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Prototype.tsx:4-12</code></td>
+<td>Shell imports</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:25-39</code></td>
+<td>Screens imports</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/data.ts:1-1</code></td>
+<td>Type only import</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

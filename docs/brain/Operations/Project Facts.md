@@ -18,7 +18,7 @@ Counts and dates read from the code and its history.
 %% generated:project-facts start (do not edit; run brain docs generate) %%
 | Repo | Role | Languages | Files | Lines | Components | Routes | Entities | Tests | Head | Commits | Tags | History |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| `localtokenomics` | service | python+sql+typescript | 173 | 39749 | 9 | 12 | 82 | 925 | `e5313fbd7062` | 8 | 0 | 2026-11-18 to 2026-11-18 |
+| `localtokenomics` | service | python+sql+typescript | 174 | 39777 | 9 | 12 | 82 | 925 | `3b1d0322b488` | 73 | 0 | 2026-11-19 to 2026-11-19 |
 
 ### Build and delivery files
 

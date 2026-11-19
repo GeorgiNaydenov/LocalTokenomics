@@ -1,0 +1,85 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Reader glossary map</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/reader-glossary-map.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business · TOGAF: Phase B, Business Architecture</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/sources/**</code></p><h1>Reader glossary map</h1>
+<p>This map shows the words used for readers and how they relate to each other. It helps a new person and a business reader mean the same thing when they say source, root, event or span. Each term is named exactly as the code names it.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>A Source is the record that describes one reader. It names the files it scans through its default roots and a files function. <code>src/ai_usage_cost/sources/base.py:18</code> <code>src/ai_usage_cost/sources/base.py:22</code></li>
+<li>A Source names its clients, which are the tool names shown to people. <code>src/ai_usage_cost/sources/base.py:21</code></li>
+<li>A Source declares token data, which is full or session. <code>src/ai_usage_cost/sources/base.py:14</code></li>
+<li>A Source yields many usage events and may also yield spans. <code>src/ai_usage_cost/sources/base.py:24</code> <code>src/ai_usage_cost/sources/base.py:27</code></li>
+<li>A Source declares capabilities, and each capability is labelled with a provenance. <code>src/ai_usage_cost/sources/base.py:28</code> <code>src/ai_usage_cost/trace.py:105</code></li>
+<li>A Source may be flagged experimental when its parser was built from the tool's source and synthetic fixtures. <code>src/ai_usage_cost/sources/base.py:29</code> <code>src/ai_usage_cost/sources/base.py:31</code></li>
+<li>A Source may declare parse_resume, which reads a grown log again from a byte offset. <code>src/ai_usage_cost/sources/base.py:40</code></li>
+<li>A usage event has token usage only when the reader can see tokens, belongs to a session id and carries a title source. <code>src/ai_usage_cost/models.py:57</code> <code>src/ai_usage_cost/models.py:55</code> <code>src/ai_usage_cost/models.py:65</code></li>
+<li>A span has token usage only when the log reports it. <code>src/ai_usage_cost/trace.py:76</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The map supports the shared language of the readers package. The glossary entries for reader, root, token data and experimental reader are listed in <a href="../ontology/ai-usage-cost-sources-ontology.html">Ai usage cost sources Ontology</a>. <a href="../application/ai-usage-cost-sources-overview.html">Ai usage cost sources Overview</a> explains the readers in prose, and <a href="../application/ai-usage-cost-sources-workflows.html">Ai usage cost sources Workflows</a> walks through a scan. The sibling views are <a href="../diagrams/readers-concepts.html">Readers concepts</a>, <a href="../diagrams/reader-types.html">Reader types</a>, <a href="../diagrams/reader-data-lineage.html">Reader data lineage</a>, <a href="../diagrams/reader-module-imports.html">Reader module imports</a>, <a href="../diagrams/reader-glossary-map.html">Reader glossary map</a>, <a href="../diagrams/readers-component-view.html">Readers component view</a> and <a href="../diagrams/readers-data-flow.html">Readers data flow</a>.</li>
+<li>Terms for the cost side of the product, such as priced and unpriced, belong to the pricing chunk, not to this map.</li>
+</ul>
+<h2>The diagram</h2>
+<pre class="mermaid">flowchart LR
+    source(&quot;Source&lt;br/&gt;one reader for one tool&quot;):::term
+    root(&quot;Root&lt;br/&gt;a folder or file a reader scans&quot;):::term
+    client(&quot;Client&lt;br/&gt;the tool name shown to people&quot;):::term
+    tokendata(&quot;Token data&lt;br/&gt;full or session&quot;):::term
+    event(&quot;Usage event&lt;br/&gt;one request or one turn&quot;):::term
+    tokens(&quot;Token usage&lt;br/&gt;counts by bucket&quot;):::term
+    span(&quot;Span&lt;br/&gt;one step inside a session&quot;):::term
+    caps(&quot;Capabilities&lt;br/&gt;what a reader can see&quot;):::term
+    prov(&quot;Provenance&lt;br/&gt;where a value came from&quot;):::term
+    exp(&quot;Experimental&lt;br/&gt;not checked on a real session&quot;):::term
+    resume(&quot;parse_resume&lt;br/&gt;re-read a grown log from an offset&quot;):::term
+    session(&quot;Session id&lt;br/&gt;groups events of one chat&quot;):::term
+    tsource(&quot;Title source&lt;br/&gt;tool, summary, prompt or folder&quot;):::term
+    source --&gt;|scans| root
+    source --&gt;|names| client
+    source --&gt;|declares| tokendata
+    source --&gt;|yields many| event
+    source --&gt;|may yield| span
+    source --&gt;|declares| caps
+    source --&gt;|may be flagged| exp
+    source --&gt;|may declare| resume
+    caps --&gt;|labels each value with| prov
+    event --&gt;|has none when session only| tokens
+    span --&gt;|has none when unknown| tokens
+    event --&gt;|belongs to| session
+    event --&gt;|has| tsource
+    subgraph Legend
+        direction LR
+        zlegend_a(&quot;Term: named as the code names it&quot;):::term
+        zlegend_b[&quot;Arrow label: the relation, such as has, yields, belongs to&quot;]:::term
+        zlegend_a ~~~ zlegend_b
+    end
+    classDef term fill:#dae8fc,stroke:#222222,color:#111111
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/sources/base.py:18</code></td>
+<td>Source, root, client, token data, capabilities, experimental and resume</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/models.py:49</code></td>
+<td>Usage event, session id and title source</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/trace.py:55</code></td>
+<td>Span</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/models.py:9</code></td>
+<td>Provenance values</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

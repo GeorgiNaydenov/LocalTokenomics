@@ -1,0 +1,20 @@
+{
+ "approved_at": "2026-11-19T00:12:16+00:00",
+ "approved_by": "human",
+ "diagrams": [
+  "c4",
+  "mind-map",
+  "class",
+  "data-lineage",
+  "dfd",
+  "module-dependency",
+  "glossary-map"
+ ],
+ "diagrams_confirmed": true,
+ "estimate": {
+  "minutes": 18,
+  "note": "rough estimate; tune after the first runs",
+  "tokens": 160113
+ },
+ "state": "approved"
+}

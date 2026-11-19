@@ -1,0 +1,94 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web Error Flow</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-error-flow.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Web Error Flow</h1>
+<p>This flow shows how a failed request reaches the reader and where it is caught. Every request goes through one helper, so all failures start in the same two shapes. The flow also shows where a failure hides the whole dashboard and where it only touches one panel.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>Every request goes through one helper that turns a thrown fetch into an unreachable error and a non 2xx answer into a status error <code>web/src/api.ts:489-499</code>.</li>
+<li>An aborted request also throws inside fetch, and every caller checks the abort signal before showing anything <code>web/src/App.tsx:176-176</code> <code>web/src/SessionWorkspace.tsx:104-104</code>.</li>
+<li>The shell shows the offline card when the error text names the unreachable server, and the error card otherwise <code>web/src/App.tsx:251-259</code> <code>web/src/App.tsx:271-271</code>.</li>
+<li>A workspace tab shows the error text in its placeholder <code>web/src/SessionWorkspace.tsx:389-390</code>.</li>
+<li>A failed outcome save shows its error in the status line <code>web/src/SessionWorkspace.tsx:287-287</code> <code>web/src/SessionWorkspace.tsx:298-298</code>.</li>
+<li>A 404 on span text marks the text off instead of failed <code>web/src/TraceTab.tsx:59-61</code> <code>web/src/TraceTab.tsx:796-796</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The shell states are in <a href="../diagrams/web-app-load-state-chart.html">Web App Load State Chart</a>, the tab states in <a href="../diagrams/web-workspace-state-chart.html">Web Workspace State Chart</a> and the span text states in <a href="../diagrams/web-trace-state-chart.html">Web Trace State Chart</a>. The risks these gaps create are recorded in <a href="../application/web-specification.html">Web Specification</a>.</p>
+<h2>Web Error Flow</h2>
+<pre class="mermaid">flowchart TD
+    req[&quot;Request through getJson&quot;]:::step --&gt; net{&quot;fetch throws?&quot;}:::guard
+    net --&gt;|network error or abort| unreach[&quot;ApiError: could not reach the server&quot;]:::step
+    net --&gt;|response| ok{&quot;response ok?&quot;}:::guard
+    ok --&gt;|status not 2xx| status[&quot;ApiError: path responded status&quot;]:::step
+    ok --&gt;|2xx| json[&quot;JSON parsed&quot;]:::step
+    unreach --&gt; abort{&quot;signal aborted?&quot;}:::guard
+    status --&gt; abort
+    abort --&gt;|yes| drop[&quot;Ignored silently&quot;]:::step
+    abort --&gt;|no, shell request| shell{&quot;text says could not reach?&quot;}:::guard
+    shell --&gt;|yes| offline([&quot;Offline card with retry&quot;]):::fail
+    shell --&gt;|no| errcard([&quot;Full page error card, no retry&quot;]):::fail
+    abort --&gt;|no, workspace tab| tab([&quot;Tab placeholder with error text&quot;]):::fail
+    abort --&gt;|no, outcome save| save([&quot;Status line shows save error&quot;]):::fail
+    status --&gt;|404 on span text| off([&quot;Span text marked off&quot;]):::fail
+    subgraph Legend
+        direction LR
+        zl1[&quot;Step&quot;]:::step
+        zl2{&quot;Guard or check&quot;}:::guard
+        zl3([&quot;Failure the reader sees&quot;]):::fail
+        zl4[&quot;Arrow label: the error it carries&quot;]:::step
+    end
+    classDef step fill:#dae8fc,stroke:#222222,color:#142233
+    classDef guard fill:#e1d5e7,stroke:#222222,color:#222222
+    classDef fail fill:#f8cecc,stroke:#222222,color:#222222
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/api.ts:489-499</code></td>
+<td>Every request goes through one helper that turns a thrown fetch into an unreachable error and a non 2xx answer into a status error</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:176-176</code></td>
+<td>An aborted request also throws inside fetch, and every caller checks the abort signal before showing anything</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:104-104</code></td>
+<td>An aborted request also throws inside fetch, and every caller checks the abort signal before showing anything</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:251-259</code></td>
+<td>The shell shows the offline card when the error text names the unreachable server, and the error card otherwise</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:271-271</code></td>
+<td>The shell shows the offline card when the error text names the unreachable server, and the error card otherwise</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:389-390</code></td>
+<td>A workspace tab shows the error text in its placeholder</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:287-287</code></td>
+<td>A failed outcome save shows its error in the status line</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:298-298</code></td>
+<td>A failed outcome save shows its error in the status line</td>
+</tr>
+<tr>
+<td><code>web/src/TraceTab.tsx:59-61</code></td>
+<td>A 404 on span text marks the text off instead of failed</td>
+</tr>
+<tr>
+<td><code>web/src/TraceTab.tsx:796-796</code></td>
+<td>A 404 on span text marks the text off instead of failed</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

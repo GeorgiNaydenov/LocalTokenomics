@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Usage cost types</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/usage-cost-types.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Data · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Usage cost types</h1>
+<p>This view shows the record types the tool passes around in memory, as opposed to the tables it stores. It explains how one logged request gains a price, how priced requests are summed into a report and how a session rating is shaped. A developer can see at a glance which types to change when a new figure must reach the report.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>A usage event is one logged request with its client, model, time, session, service tier and the cost the tool itself logged, if any. <code>src/ai_usage_cost/models.py:49-72</code></li>
+<li>Its token counts are optional, and the totals are computed from the six counted fields. <code>src/ai_usage_cost/models.py:12-33</code> <code>src/ai_usage_cost/models.py:57</code></li>
+<li>A priced event wraps one usage event with an optional cost breakdown and a cost state. <code>src/ai_usage_cost/models.py:117-120</code></li>
+<li>A cost breakdown holds the price of each token kind, a no cache baseline and the estimated flag, and its total is the sum of the four prices. <code>src/ai_usage_cost/models.py:75-98</code></li>
+<li>A bucket sums tokens, cost, requests and sessions under one key. <code>src/ai_usage_cost/models.py:123-130</code></li>
+<li>The analysis holds every priced event, the rate table, the file count, the warnings and the store path. <code>src/ai_usage_cost/pipeline.py:44-55</code></li>
+<li>A rate table holds its as of date, currency and model rows, and each row names the model prefix it matches, its provider and display name. <code>src/ai_usage_cost/pricing.py:252-260</code> <code>src/ai_usage_cost/pricing.py:126-129</code></li>
+<li>A report carries totals, buckets by client, provider, model, project and day, session rows and the warnings. <code>src/ai_usage_cost/aggregate.py:462-482</code> <code>src/ai_usage_cost/aggregate.py:26-34</code></li>
+<li>A session row carries the worst cost state of its requests and the session rating. <code>src/ai_usage_cost/aggregate.py:48-75</code></li>
+<li>A span is one step of a session trace with its kind, status and the provenance of its token counts. <code>src/ai_usage_cost/trace.py:55-86</code></li>
+<li>An outcome extends the rating update with the source and session it belongs to. <code>src/ai_usage_cost/trace.py:141-151</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The stored form of these types is the entity diagram in <a href="../data/ai-usage-cost-data-model.html">Ai usage cost Data Model</a>; the business view is <a href="../diagrams/usage-cost-conceptual-model.html">Usage cost conceptual model</a>.</li>
+<li>The cost state field is drawn as a lifecycle in <a href="../diagrams/cost-state-of-a-request.html">Cost state of a request</a>.</li>
+<li>The report type is what the routes in <a href="../diagrams/usage-cost-http-routes.html">Usage cost HTTP routes</a> return.</li>
+</ul>
+<h2>Usage cost types</h2>
+<pre class="mermaid">classDiagram
+    direction LR
+    class UsageEvent {
+        +str source
+        +str client
+        +str model
+        +datetime timestamp
+        +str session_id
+        +str tier
+        +bool is_sidechain
+        +float reported_cost
+    }
+    class TokenUsage {
+        +int uncached_input
+        +int cache_read
+        +int cache_write_5m
+        +int cache_write_1h
+        +int output
+        +int reasoning_output
+        +total() int
+    }
+    class PricedEvent {
+        +CostState state
+    }
+    class CostBreakdown {
+        +float uncached_input
+        +float cache_read
+        +float cache_write
+        +float output
+        +float no_cache_equivalent
+        +bool estimated
+        +total() float
+    }
+    class Bucket {
+        +str key
+        +int events
+        +int sessions
+    }
+    class Report {
+        +datetime generated_at
+        +str rates_as_of
+        +list warnings
+    }
+    class Totals {
+        +int events
+        +int sessions
+    }
+    class SessionRow {
+        +str session_id
+        +CostState cost_state
+        +OutcomeLabel outcome
+    }
+    class Analysis {
+        +int files
+        +list warnings
+        +Path db_path
+    }
+    class RateTable {
+        +str as_of
+        +str currency
+    }
+    class ModelRate {
+        +str match
+        +str provider
+        +str display
+    }
+    class Span {
+        +str span_id
+        +SpanKind kind
+        +SpanStatus status
+        +Provenance tokens_provenance
+    }
+    class OutcomeUpdate {
+        +OutcomeLabel outcome
+        +str notes
+        +list tags
+    }
+    class Outcome {
+        +str source
+        +str session_id
+    }
+    UsageEvent &quot;1&quot; *-- &quot;0..1&quot; TokenUsage : tokens
+    PricedEvent &quot;1&quot; *-- &quot;1&quot; UsageEvent : event
+    PricedEvent &quot;1&quot; *-- &quot;0..1&quot; CostBreakdown : cost
+    Analysis &quot;1&quot; o-- &quot;*&quot; PricedEvent : events
+    Analysis &quot;1&quot; --&gt; &quot;1&quot; RateTable : table
+    RateTable &quot;1&quot; *-- &quot;*&quot; ModelRate : models
+    Report &quot;1&quot; *-- &quot;1&quot; Totals : totals
+    Report &quot;1&quot; *-- &quot;*&quot; Bucket : by_client, by_model, by_day
+    Report &quot;1&quot; *-- &quot;*&quot; SessionRow : sessions
+    Bucket &quot;1&quot; *-- &quot;1&quot; CostBreakdown : cost
+    Span &quot;1&quot; *-- &quot;0..1&quot; TokenUsage : tokens
+    OutcomeUpdate &lt;|-- Outcome
+    class Legend {
+        &lt;&lt;legend&gt;&gt;
+        +field type
+    }
+    note for Legend &quot;Legend: a box is a type with the fields that carry meaning. A line with a filled diamond is composition, an open diamond is aggregation, an open triangle is inheritance, a plain arrow is a reference. Numbers at each end are multiplicities: 1 one, 0..1 optional, * many.&quot;
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/models.py:12-134</code></td>
+<td>Token, event, cost, priced event and bucket types</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pipeline.py:44-63</code></td>
+<td>The analysis type</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pricing.py:126-145</code></td>
+<td>A rate row</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/aggregate.py:26-75</code></td>
+<td>Totals and session row</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/aggregate.py:462-482</code></td>
+<td>The report type</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/trace.py:55-151</code></td>
+<td>Span and outcome types</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

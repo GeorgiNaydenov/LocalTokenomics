@@ -1,0 +1,107 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Spend alert run</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/spend-alert-run.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Spend alert run</h1>
+<p>This view walks through one run of the spend alert, from the options the person types to the message that reaches their phone or chat. It shows which mistakes stop the run early and when the run ends quietly because spend stayed under the limit. It helps anyone who schedules the alert understand why it did or did not fire.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The window length must be at least one day, and exactly one of the two thresholds must be given, or the command stops with a parameter error. <code>src/ai_usage_cost/cli.py:320-326</code></li>
+<li>The notification library is an optional extra; without it the command prints the install hint and exits with code 2. <code>src/ai_usage_cost/cli.py:327</code> <code>src/ai_usage_cost/cli.py:48-56</code></li>
+<li>The window ends today and starts the given number of days back, counting today. <code>src/ai_usage_cost/cli.py:329-330</code></li>
+<li>The run analyses the store and builds the report of that window. <code>src/ai_usage_cost/cli.py:331-332</code></li>
+<li>With the rise threshold, a second report covers the window of the same length just before. <code>src/ai_usage_cost/cli.py:333-337</code></li>
+<li>The decision compares the window total with the total threshold, or the rise over the earlier window with the rise threshold, and fires only when the amount is strictly above it. <code>src/ai_usage_cost/cli.py:257-282</code></li>
+<li>The message also names the tokens, requests and sessions, and says which cost is unknown rather than zero: unpriced models and sessions without token counts. <code>src/ai_usage_cost/cli.py:273-295</code></li>
+<li>The message is always printed; when the decision does not fire, nothing is sent. <code>src/ai_usage_cost/cli.py:340-342</code></li>
+<li>Each target address is added in turn, and a rejected address or a failed delivery ends the run with code 1. <code>src/ai_usage_cost/cli.py:344-354</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>Realises the use case be alerted when spend rises, one of the goals in <a href="../diagrams/usage-cost-goals.html">Usage cost goals</a>.</li>
+<li>The two windows are drawn on a calendar in <a href="../diagrams/alert-comparison-windows.html">Alert comparison windows</a>, and the refusals beside the other commands in <a href="../diagrams/usage-cost-refusals.html">Usage cost refusals</a>.</li>
+<li>The analysis step is drawn in <a href="../diagrams/scan-pipeline-from-logs-to-report.html">Scan pipeline from logs to report</a>, and the commands are described in <a href="../application/ai-usage-cost-workflows.html">Ai usage cost Workflows</a>.</li>
+</ul>
+<h2>Spend alert run</h2>
+<pre class="mermaid">flowchart TD
+    subgraph lane_person[&quot;Person&quot;]
+        start((&quot;Start: runs alert with --to, a threshold and --days&quot;)):::startNode
+    end
+    subgraph lane_cli[&quot;alert command&quot;]
+        d_opts{&quot;days at least 1 and exactly one of over, rise-over?&quot;}:::decision
+        d_extra{&quot;apprise installed?&quot;}:::decision
+        win(&quot;Window: today and the days before it&quot;):::action
+        d_rise{&quot;rise-over given?&quot;}:::decision
+        prev(&quot;Report the window of the same length before it&quot;):::action
+        decide(&quot;alert_decision, then print its message&quot;):::action
+        d_fire{&quot;amount above the threshold?&quot;}:::decision
+        add(&quot;Add every --to target&quot;):::action
+        d_add{&quot;every target accepted?&quot;}:::decision
+        d_sent{&quot;notify delivered?&quot;}:::decision
+    end
+    subgraph lane_pipe[&quot;pipeline&quot;]
+        analyse(&quot;analyze, then report_of for the window&quot;):::action
+    end
+    subgraph lane_apprise[&quot;Apprise&quot;]
+        send(&quot;Send title and message&quot;):::action
+    end
+    bad((&quot;Exit: bad parameter&quot;)):::fail
+    noextra((&quot;Exit code 2: extra missing&quot;)):::fail
+    quiet((&quot;End: nothing sent&quot;)):::endNode
+    failed((&quot;Exit code 1: target rejected or not delivered&quot;)):::fail
+    done((&quot;End: alert sent&quot;)):::endNode
+
+    start --&gt; d_opts
+    d_opts --&gt;|no| bad
+    d_opts --&gt;|yes| d_extra
+    d_extra --&gt;|no| noextra
+    d_extra --&gt;|yes| win --&gt; analyse --&gt; d_rise
+    d_rise --&gt;|yes| prev --&gt; decide
+    d_rise --&gt;|no| decide
+    decide --&gt; d_fire
+    d_fire --&gt;|no| quiet
+    d_fire --&gt;|yes| add --&gt; d_add
+    d_add --&gt;|no| failed
+    d_add --&gt;|yes| send --&gt; d_sent
+    d_sent --&gt;|no| failed
+    d_sent --&gt;|yes| done
+
+    subgraph Legend
+        direction LR
+        zlegend_a((&quot;Start or end&quot;)):::startNode
+        zlegend_b(&quot;Action&quot;):::action
+        zlegend_c{&quot;Decision, every arrow labelled&quot;}:::decision
+        zlegend_d((&quot;Exit that fails&quot;)):::fail
+        zlegend_e[&quot;Lane: a titled box names who does the step. No fork or join: the run has no parallel branch&quot;]:::lanekey
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d ~~~ zlegend_e
+    end
+
+    classDef startNode fill:#fff2cc,stroke:#222222,color:#222222
+    classDef endNode fill:#d5e8d4,stroke:#222222,color:#222222
+    classDef action fill:#dae8fc,stroke:#222222,color:#222222
+    classDef decision fill:#ffffff,stroke:#222222,color:#222222
+    classDef fail fill:#f8cecc,stroke:#222222,color:#222222
+    classDef lanekey fill:#f5f5f5,stroke:#222222,color:#222222
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:298-354</code></td>
+<td>The alert command</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:251-295</code></td>
+<td>The decision and the excluded cost line</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:48-56</code></td>
+<td>The optional extra check</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

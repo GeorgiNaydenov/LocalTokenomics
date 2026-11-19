@@ -1,0 +1,103 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UI primitives imports</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/ui-primitives-imports.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> covers <code>web/src/components/ui/*</code></p><h1>UI primitives imports</h1>
+<p>This graph shows what the basic interface parts import. It makes clear that they depend only on a few libraries and one class name helper, never on the dashboard components built from them. A developer can therefore change a primitive without a risk of a circular dependency.</p>
+<h2>What the diagram shows</h2>
+<p>The dialog imports the button for its footer close action, and the toggle group imports the toggle variants. These are the only two imports between files of this folder. <code>web/src/components/ui/dialog.tsx:8-8</code> <code>web/src/components/ui/toggle-group.tsx:6-6</code></p>
+<p>Nearly every file imports the class name helper from the design system folder. <code>web/src/components/ui/button.tsx:3-3</code> <code>web/src/components/ui/chart.tsx:2-2</code> <code>web/src/components/ui/skeleton.tsx:1-1</code></p>
+<p>Most files build on one Radix part, and the button, badge and alert declare their variants with class-variance-authority. <code>web/src/components/ui/button.tsx:4-4</code> <code>web/src/components/ui/dialog.tsx:6-6</code> <code>web/src/components/ui/tabs.tsx:6-6</code> <code>web/src/components/ui/button.tsx:2-2</code> <code>web/src/components/ui/badge.tsx:2-2</code> <code>web/src/components/ui/alert.tsx:2-2</code></p>
+<p>The dialog and the toast host import icons from lucide-react. <code>web/src/components/ui/dialog.tsx:5-5</code> <code>web/src/components/ui/sonner.tsx:7-7</code></p>
+<p>The chart file imports recharts, and the toast host imports the sonner library and the theme hook of the web source. <code>web/src/components/ui/chart.tsx:3-3</code> <code>web/src/components/ui/sonner.tsx:8-8</code> <code>web/src/components/ui/sonner.tsx:10-10</code></p>
+<p>No file of this folder imports a file of the shared components folder, so there is no cycle between the two.</p>
+<h2>Capability and related functionality</h2>
+<p>The graph realises the file level view of the primitives layer. The folder level view is <a href="../diagrams/web-ui-ui-components-diagrams.html">Web ui UI components Diagrams</a>, and the grouped view is <a href="../diagrams/ui-primitives-c4.html">UI primitives C4</a>. The components above this layer have their own import graph in <a href="../diagrams/shared-components-imports.html">Shared components imports</a>.</p>
+<h2>UI primitives imports</h2>
+<pre class="mermaid">flowchart TD
+    subgraph Own[&quot;Files of this folder&quot;]
+        dialog[&quot;dialog.tsx&quot;]:::module
+        button[&quot;button.tsx&quot;]:::module
+        toggleGroup[&quot;toggle-group.tsx&quot;]:::module
+        toggle[&quot;toggle.tsx&quot;]:::module
+        chart[&quot;chart.tsx&quot;]:::module
+        sonnerFile[&quot;sonner.tsx&quot;]:::module
+        others[&quot;Other 19 primitives&quot;]:::module
+    end
+    cn[&quot;design-system/cn&quot;]:::external
+    theme[&quot;theme&quot;]:::external
+    radix[&quot;radix-ui&quot;]:::external
+    cva[&quot;class-variance-authority&quot;]:::external
+    lucide[&quot;lucide-react&quot;]:::external
+    recharts[&quot;recharts&quot;]:::external
+    sonnerLib[&quot;sonner&quot;]:::external
+
+    dialog --&gt; button
+    toggleGroup --&gt; toggle
+    dialog --&gt; cn
+    button --&gt; cn
+    toggle --&gt; cn
+    toggleGroup --&gt; cn
+    chart --&gt; cn
+    others --&gt; cn
+    button --&gt; radix
+    toggle --&gt; radix
+    toggleGroup --&gt; radix
+    dialog --&gt; radix
+    others --&gt; radix
+    button --&gt; cva
+    toggle --&gt; cva
+    others --&gt; cva
+    dialog --&gt; lucide
+    sonnerFile --&gt; lucide
+    others --&gt; lucide
+    chart --&gt; recharts
+    sonnerFile --&gt; sonnerLib
+    sonnerFile --&gt; theme
+
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Module: one file or a named group&quot;]:::module
+        zlegend_b[&quot;Outside this folder&quot;]:::external
+        zlegend_c[&quot;Red arrow: import cycle, none found here&quot;]:::cycle
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c
+    end
+
+    classDef module fill:#dae8fc,stroke:#222222,color:#222222
+    classDef external fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:5 3
+    classDef cycle fill:#f8cecc,stroke:#b85450,color:#222222
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/components/ui/dialog.tsx:8-8</code></td>
+<td>Dialog imports the button</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/toggle-group.tsx:6-6</code></td>
+<td>Toggle group imports the toggle variants</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/button.tsx:3-3</code></td>
+<td>Class name helper</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/button.tsx:2-2</code></td>
+<td>Variants</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/chart.tsx:3-3</code></td>
+<td>recharts import</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/sonner.tsx:10-10</code></td>
+<td>Theme hook import</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

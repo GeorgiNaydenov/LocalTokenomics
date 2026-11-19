@@ -11,44 +11,56 @@
       "color": "3"
     },
     {
-<<<<<<< HEAD
-      "id": "n-architecture-diagram-hub",
-      "type": "file",
-      "file": "docs/brain/Diagrams/Architecture Diagram Hub.md",
-=======
       "id": "n-ai-usage-cost-diagrams",
       "type": "file",
       "file": "docs/brain/Diagrams/Ai usage cost Diagrams.md",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "x": 0,
       "y": 0,
       "width": 320,
       "height": 70
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "n-diagram-index",
+      "id": "n-ai-usage-cost-render-diagrams",
       "type": "file",
-      "file": "docs/brain/Diagrams/Diagram Index.md",
+      "file": "docs/brain/Diagrams/Ai usage cost render Diagrams.md",
       "x": 380,
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-      "id": "n-ci-and-delivery-diagrams",
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ai-usage-cost-sources-diagrams",
       "type": "file",
-      "file": "docs/brain/Diagrams/CI and Delivery Diagrams.md",
+      "file": "docs/brain/Diagrams/Ai usage cost sources Diagrams.md",
+      "x": 760,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-alert-comparison-windows",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Alert comparison windows.md",
+      "x": 0,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-app-screen-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/App Screen Map.md",
       "x": 380,
-=======
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
       "id": "n-architecture-diagram-hub",
       "type": "file",
       "file": "docs/brain/Diagrams/Architecture Diagram Hub.md",
-      "x": 380,
-      "y": 0,
+      "x": 760,
+      "y": 110,
       "width": 320,
       "height": 70
     },
@@ -56,32 +68,35 @@
       "id": "n-ci-and-delivery-diagrams",
       "type": "file",
       "file": "docs/brain/Diagrams/CI and Delivery Diagrams.md",
-      "x": 760,
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
-      "y": 0,
+      "x": 0,
+      "y": 220,
       "width": 320,
       "height": 70
     },
     {
-<<<<<<< HEAD
-      "id": "n-diagram-index",
+      "id": "n-context-tab-screen-map",
       "type": "file",
-      "file": "docs/brain/Diagrams/Diagram Index.md",
-      "x": 760,
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-      "y": 0,
-=======
+      "file": "docs/brain/Diagrams/Context Tab Screen Map.md",
+      "x": 380,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
       "id": "n-cost-state-of-a-request",
       "type": "file",
       "file": "docs/brain/Diagrams/Cost state of a request.md",
+      "x": 760,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-dashboard-component-composition",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Dashboard component composition.md",
       "x": 0,
-      "y": 110,
+      "y": 330,
       "width": 320,
       "height": 70
     },
@@ -90,8 +105,7 @@
       "type": "file",
       "file": "docs/brain/Diagrams/Diagram Index.md",
       "x": 380,
-      "y": 110,
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "y": 330,
       "width": 320,
       "height": 70
     },
@@ -99,178 +113,260 @@
       "id": "n-diagram-notation-guide",
       "type": "file",
       "file": "docs/brain/Diagrams/Diagram Notation Guide.md",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       "x": 760,
-      "y": 0,
-=======
-      "x": 760,
-      "y": 110,
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "y": 330,
       "width": 320,
       "height": 70
     },
     {
-<<<<<<< HEAD
-      "id": "n-web-prototype-c4-components",
-      "type": "file",
-      "file": "docs/brain/Diagrams/Web prototype C4 components.md",
-=======
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-      "x": 0,
-      "y": 110,
-=======
       "id": "n-er-data-model",
       "type": "file",
       "file": "docs/brain/Diagrams/ER Data Model.md",
       "x": 0,
-      "y": 220,
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "y": 440,
       "width": 320,
       "height": 70
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "n-web-prototype-diagrams",
+      "id": "n-economics-tab-screen-map",
       "type": "file",
-      "file": "docs/brain/Diagrams/Web prototype Diagrams.md",
-=======
-      "id": "n-er-data-model",
-      "type": "file",
-      "file": "docs/brain/Diagrams/ER Data Model.md",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
-      "id": "n-er-data-model",
-      "type": "file",
-      "file": "docs/brain/Diagrams/ER Data Model.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "n-er-data-model",
-      "type": "file",
-      "file": "docs/brain/Diagrams/ER Data Model.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+      "file": "docs/brain/Diagrams/Economics Tab Screen Map.md",
       "x": 380,
-      "y": 110,
+      "y": 440,
       "width": 320,
       "height": 70
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
+    },
+    {
       "id": "n-how-one-request-is-priced",
       "type": "file",
       "file": "docs/brain/Diagrams/How one request is priced.md",
-      "x": 380,
-      "y": 220,
+      "x": 760,
+      "y": 440,
       "width": 320,
       "height": 70
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
     },
     {
       "id": "n-layered-viewpoints",
       "type": "file",
       "file": "docs/brain/Diagrams/Layered Viewpoints.md",
-      "x": 760,
-<<<<<<< HEAD
-      "y": 110,
-=======
-      "y": 220,
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "x": 0,
+      "y": 550,
       "width": 320,
       "height": 70
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       "id": "n-localtokenomics-root-wiring",
       "type": "file",
       "file": "docs/brain/Diagrams/LocalTokenomics root wiring.md",
-=======
-      "id": "n-module-map-diagrams",
-      "type": "file",
-      "file": "docs/brain/Diagrams/Module Map Diagrams.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "n-module-map-diagrams",
-      "type": "file",
-      "file": "docs/brain/Diagrams/Module Map Diagrams.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-      "x": 0,
-      "y": 220,
-=======
-      "id": "n-module-map-diagrams",
-      "type": "file",
-      "file": "docs/brain/Diagrams/Module Map Diagrams.md",
-      "x": 0,
-      "y": 330,
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
-      "width": 320,
-      "height": 70
-    },
-    {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "n-module-map-diagrams",
-      "type": "file",
-      "file": "docs/brain/Diagrams/Module Map Diagrams.md",
-=======
-      "id": "n-web-dashboard-components",
-      "type": "file",
-      "file": "docs/brain/Diagrams/Web Dashboard Components.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "n-web-ui-ui-components-diagrams",
-      "type": "file",
-      "file": "docs/brain/Diagrams/Web ui UI components Diagrams.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
       "x": 380,
-      "y": 220,
+      "y": 550,
       "width": 320,
       "height": 70
-<<<<<<< HEAD
     },
     {
-<<<<<<< HEAD
-      "id": "n-localtokenomics-root-diagrams",
+      "id": "n-metric-info-interaction-flow",
       "type": "file",
-      "file": "docs/brain/Diagrams/localtokenomics root Diagrams.md",
-=======
-      "id": "n-web-diagrams",
-      "type": "file",
-      "file": "docs/brain/Diagrams/Web Diagrams.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
+      "file": "docs/brain/Diagrams/Metric info interaction flow.md",
       "x": 760,
-      "y": 220,
+      "y": 550,
       "width": 320,
       "height": 70
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
+    },
+    {
+      "id": "n-module-map-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Module Map Diagrams.md",
+      "x": 0,
+      "y": 660,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-offline-and-error-handling-flow",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Offline and error handling flow.md",
+      "x": 380,
+      "y": 660,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-offline-card-screen-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Offline card screen map.md",
+      "x": 760,
+      "y": 660,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-overview-screen-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Overview Screen Map.md",
+      "x": 0,
+      "y": 770,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-overview-screen-screen-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Overview Screen Screen Map.md",
+      "x": 380,
+      "y": 770,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-pricing-screen-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Pricing Screen Map.md",
+      "x": 760,
+      "y": 770,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-pricing-screen-screen-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Pricing Screen Screen Map.md",
+      "x": 0,
+      "y": 880,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-reader-data-lineage",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Reader data lineage.md",
+      "x": 380,
+      "y": 880,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-reader-glossary-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Reader glossary map.md",
+      "x": 760,
+      "y": 880,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-reader-module-imports",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Reader module imports.md",
+      "x": 0,
+      "y": 990,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-reader-types",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Reader types.md",
+      "x": 380,
+      "y": 990,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-readers-component-view",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Readers component view.md",
+      "x": 760,
+      "y": 990,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-readers-concepts",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Readers concepts.md",
+      "x": 0,
+      "y": 1100,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-readers-data-flow",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Readers data flow.md",
+      "x": 380,
+      "y": 1100,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-render-layer-components",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Render layer components.md",
+      "x": 760,
+      "y": 1100,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-render-layer-mind-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Render layer mind map.md",
+      "x": 0,
+      "y": 1210,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-render-layer-module-dependencies",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Render layer module dependencies.md",
+      "x": 380,
+      "y": 1210,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-repository-folder-layout",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Repository folder layout.md",
+      "x": 760,
+      "y": 1210,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-repository-root-capabilities",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Repository root capabilities.md",
+      "x": 0,
+      "y": 1320,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-repository-root-concepts",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Repository root concepts.md",
+      "x": 380,
+      "y": 1320,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-repository-root-configuration",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Repository root configuration.md",
+      "x": 760,
+      "y": 1320,
+      "width": 320,
+      "height": 70
+    },
+    {
       "id": "n-scan-and-report-process",
       "type": "file",
       "file": "docs/brain/Diagrams/Scan and report process.md",
-      "x": 380,
-      "y": 330,
+      "x": 0,
+      "y": 1430,
       "width": 320,
       "height": 70
     },
@@ -278,8 +374,170 @@
       "id": "n-scan-pipeline-from-logs-to-report",
       "type": "file",
       "file": "docs/brain/Diagrams/Scan pipeline from logs to report.md",
+      "x": 380,
+      "y": 1430,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-session-workspace-screen-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Session Workspace Screen Map.md",
       "x": 760,
-      "y": 330,
+      "y": 1430,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-session-card-wireframe",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Session card wireframe.md",
+      "x": 0,
+      "y": 1540,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-sessions-screen-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Sessions Screen Map.md",
+      "x": 380,
+      "y": 1540,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-sessions-screen-screen-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Sessions Screen Screen Map.md",
+      "x": 760,
+      "y": 1540,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-shared-components-c4",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Shared components C4.md",
+      "x": 0,
+      "y": 1650,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-shared-components-concepts",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Shared components concepts.md",
+      "x": 380,
+      "y": 1650,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-shared-components-imports",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Shared components imports.md",
+      "x": 760,
+      "y": 1650,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-sources-screen-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Sources Screen Map.md",
+      "x": 0,
+      "y": 1760,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-sources-screen-screen-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Sources Screen Screen Map.md",
+      "x": 380,
+      "y": 1760,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-spend-alert-run",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Spend alert run.md",
+      "x": 760,
+      "y": 1760,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-store-schema-versions",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Store schema versions.md",
+      "x": 0,
+      "y": 1870,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-trace-tab-screen-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Trace Tab Screen Map.md",
+      "x": 380,
+      "y": 1870,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ui-primitives-c4",
+      "type": "file",
+      "file": "docs/brain/Diagrams/UI primitives C4.md",
+      "x": 760,
+      "y": 1870,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ui-primitives-concepts",
+      "type": "file",
+      "file": "docs/brain/Diagrams/UI primitives concepts.md",
+      "x": 0,
+      "y": 1980,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ui-primitives-failure-flow",
+      "type": "file",
+      "file": "docs/brain/Diagrams/UI primitives failure flow.md",
+      "x": 380,
+      "y": 1980,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ui-primitives-imports",
+      "type": "file",
+      "file": "docs/brain/Diagrams/UI primitives imports.md",
+      "x": 760,
+      "y": 1980,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-usage-cost-http-routes",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Usage cost HTTP routes.md",
+      "x": 0,
+      "y": 2090,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-usage-cost-concepts",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Usage cost concepts.md",
+      "x": 380,
+      "y": 2090,
       "width": 320,
       "height": 70
     },
@@ -287,8 +545,53 @@
       "id": "n-usage-cost-conceptual-model",
       "type": "file",
       "file": "docs/brain/Diagrams/Usage cost conceptual model.md",
+      "x": 760,
+      "y": 2090,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-usage-cost-folders",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Usage cost folders.md",
       "x": 0,
-      "y": 440,
+      "y": 2200,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-usage-cost-goals",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Usage cost goals.md",
+      "x": 380,
+      "y": 2200,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-usage-cost-refusals",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Usage cost refusals.md",
+      "x": 760,
+      "y": 2200,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-usage-cost-terms",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Usage cost terms.md",
+      "x": 0,
+      "y": 2310,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-usage-cost-types",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Usage cost types.md",
+      "x": 380,
+      "y": 2310,
       "width": 320,
       "height": 70
     },
@@ -296,18 +599,347 @@
       "id": "n-usage-data-flow",
       "type": "file",
       "file": "docs/brain/Diagrams/Usage data flow.md",
-      "x": 380,
-      "y": 440,
+      "x": 760,
+      "y": 2310,
       "width": 320,
       "height": 70
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+    },
+    {
+      "id": "n-warnings-list-states",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Warnings list states.md",
+      "x": 0,
+      "y": 2420,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-app-load-state-chart",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web App Load State Chart.md",
+      "x": 380,
+      "y": 2420,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-component-composition",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Component Composition.md",
+      "x": 760,
+      "y": 2420,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-concept-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Concept Map.md",
+      "x": 0,
+      "y": 2530,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-dashboard-components",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Dashboard Components.md",
+      "x": 380,
+      "y": 2530,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Diagrams.md",
+      "x": 760,
+      "y": 2530,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-error-flow",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Error Flow.md",
+      "x": 0,
+      "y": 2640,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-filter-rail-wireframe",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Filter Rail Wireframe.md",
+      "x": 380,
+      "y": 2640,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-glossary-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Glossary Map.md",
+      "x": 760,
+      "y": 2640,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-outcome-form-wireframe",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Outcome Form Wireframe.md",
+      "x": 0,
+      "y": 2750,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-outcome-save-state-chart",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Outcome Save State Chart.md",
+      "x": 380,
+      "y": 2750,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-package-tree",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Package Tree.md",
+      "x": 760,
+      "y": 2750,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-rate-table-wireframe",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Rate Table Wireframe.md",
+      "x": 0,
+      "y": 2860,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-screen-flow",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Screen Flow.md",
+      "x": 380,
+      "y": 2860,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-sessions-table-state-chart",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Sessions Table State Chart.md",
+      "x": 760,
+      "y": 2860,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-sessions-table-wireframe",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Sessions Table Wireframe.md",
+      "x": 0,
+      "y": 2970,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-sitemap",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Sitemap.md",
+      "x": 380,
+      "y": 2970,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-trace-state-chart",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Trace State Chart.md",
+      "x": 760,
+      "y": 2970,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-components-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web UI components Diagrams.md",
+      "x": 0,
+      "y": 3080,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-user-journey",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web User Journey.md",
+      "x": 380,
+      "y": 3080,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-workspace-panel-wireframe",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Workspace Panel Wireframe.md",
+      "x": 760,
+      "y": 3080,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-workspace-state-chart",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web Workspace State Chart.md",
+      "x": 0,
+      "y": 3190,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-c4-components",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web prototype C4 components.md",
+      "x": 380,
+      "y": 3190,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web prototype Diagrams.md",
+      "x": 760,
+      "y": 3190,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-component-tree",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web prototype component tree.md",
+      "x": 0,
+      "y": 3300,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-glossary-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web prototype glossary map.md",
+      "x": 380,
+      "y": 3300,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-mind-map",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web prototype mind map.md",
+      "x": 760,
+      "y": 3300,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-module-dependencies",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web prototype module dependencies.md",
+      "x": 0,
+      "y": 3410,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-page-wireframe",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web prototype page wireframe.md",
+      "x": 380,
+      "y": 3410,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-screen-flow",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web prototype screen flow.md",
+      "x": 760,
+      "y": 3410,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-session-drawer-states",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web prototype session drawer states.md",
+      "x": 0,
+      "y": 3520,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-shell-ui-states",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web prototype shell UI states.md",
+      "x": 380,
+      "y": 3520,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-sitemap",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web prototype sitemap.md",
+      "x": 760,
+      "y": 3520,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-user-journey",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web prototype user journey.md",
+      "x": 0,
+      "y": 3630,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-ui-components-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Web ui UI components Diagrams.md",
+      "x": 380,
+      "y": 3630,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-where-usage-cost-data-comes-from",
+      "type": "file",
+      "file": "docs/brain/Diagrams/Where usage cost data comes from.md",
+      "x": 760,
+      "y": 3630,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-localtokenomics-root-diagrams",
+      "type": "file",
+      "file": "docs/brain/Diagrams/localtokenomics root Diagrams.md",
+      "x": 0,
+      "y": 3740,
+      "width": 320,
+      "height": 70
     }
   ],
   "edges": [
     {
-<<<<<<< HEAD
-      "id": "e0-n-architecture-diagram-hub-n-diagram-index",
-=======
       "id": "e0-n-ai-usage-cost-diagrams-n-usage-cost-conceptual-model",
       "fromNode": "n-ai-usage-cost-diagrams",
       "toNode": "n-usage-cost-conceptual-model",
@@ -350,544 +982,3021 @@
       "toSide": "top"
     },
     {
-      "id": "e6-n-architecture-diagram-hub-n-diagram-index",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "id": "e6-n-ai-usage-cost-diagrams-n-usage-cost-concepts",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-usage-cost-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e7-n-ai-usage-cost-diagrams-n-usage-cost-http-routes",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-usage-cost-http-routes",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e8-n-ai-usage-cost-diagrams-n-usage-cost-goals",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-usage-cost-goals",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e9-n-ai-usage-cost-diagrams-n-usage-cost-types",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-usage-cost-types",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e10-n-ai-usage-cost-diagrams-n-where-usage-cost-data-comes-from",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-where-usage-cost-data-comes-from",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e11-n-ai-usage-cost-diagrams-n-spend-alert-run",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-spend-alert-run",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e12-n-ai-usage-cost-diagrams-n-store-schema-versions",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-store-schema-versions",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e13-n-ai-usage-cost-diagrams-n-alert-comparison-windows",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-alert-comparison-windows",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e14-n-ai-usage-cost-diagrams-n-usage-cost-refusals",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-usage-cost-refusals",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e15-n-ai-usage-cost-diagrams-n-usage-cost-terms",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-usage-cost-terms",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e16-n-ai-usage-cost-diagrams-n-usage-cost-folders",
+      "fromNode": "n-ai-usage-cost-diagrams",
+      "toNode": "n-usage-cost-folders",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e17-n-alert-comparison-windows-n-spend-alert-run",
+      "fromNode": "n-alert-comparison-windows",
+      "toNode": "n-spend-alert-run",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e18-n-app-screen-map-n-web-screen-flow",
+      "fromNode": "n-app-screen-map",
+      "toNode": "n-web-screen-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e19-n-app-screen-map-n-web-sitemap",
+      "fromNode": "n-app-screen-map",
+      "toNode": "n-web-sitemap",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e20-n-architecture-diagram-hub-n-diagram-index",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-diagram-index",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-      "id": "e1-n-architecture-diagram-hub-n-diagram-notation-guide",
-=======
-      "id": "e7-n-architecture-diagram-hub-n-diagram-notation-guide",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "id": "e21-n-architecture-diagram-hub-n-diagram-notation-guide",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-diagram-notation-guide",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "e2-n-architecture-diagram-hub-n-web-prototype-c4-components",
-      "fromNode": "n-architecture-diagram-hub",
-      "toNode": "n-web-prototype-c4-components",
-=======
-      "id": "e2-n-architecture-diagram-hub-n-er-data-model",
-      "fromNode": "n-architecture-diagram-hub",
-      "toNode": "n-er-data-model",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
-      "id": "e2-n-architecture-diagram-hub-n-er-data-model",
-      "fromNode": "n-architecture-diagram-hub",
-      "toNode": "n-er-data-model",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "e2-n-architecture-diagram-hub-n-er-data-model",
-      "fromNode": "n-architecture-diagram-hub",
-      "toNode": "n-er-data-model",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-      "id": "e8-n-architecture-diagram-hub-n-ai-usage-cost-diagrams",
+      "id": "e22-n-architecture-diagram-hub-n-ai-usage-cost-diagrams",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-ai-usage-cost-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "e3-n-architecture-diagram-hub-n-web-prototype-diagrams",
+      "id": "e23-n-architecture-diagram-hub-n-ai-usage-cost-render-diagrams",
       "fromNode": "n-architecture-diagram-hub",
-      "toNode": "n-web-prototype-diagrams",
-=======
-      "id": "e3-n-architecture-diagram-hub-n-layered-viewpoints",
+      "toNode": "n-ai-usage-cost-render-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e24-n-architecture-diagram-hub-n-ai-usage-cost-sources-diagrams",
       "fromNode": "n-architecture-diagram-hub",
-      "toNode": "n-layered-viewpoints",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
-      "id": "e3-n-architecture-diagram-hub-n-layered-viewpoints",
-      "fromNode": "n-architecture-diagram-hub",
-      "toNode": "n-layered-viewpoints",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "e3-n-architecture-diagram-hub-n-layered-viewpoints",
-      "fromNode": "n-architecture-diagram-hub",
-      "toNode": "n-layered-viewpoints",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-      "id": "e9-n-architecture-diagram-hub-n-er-data-model",
+      "toNode": "n-ai-usage-cost-sources-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e25-n-architecture-diagram-hub-n-er-data-model",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-er-data-model",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "e4-n-diagram-index-n-web-prototype-c4-components",
-      "fromNode": "n-diagram-index",
-      "toNode": "n-web-prototype-c4-components",
-=======
-      "id": "e4-n-architecture-diagram-hub-n-localtokenomics-root-wiring",
-      "fromNode": "n-architecture-diagram-hub",
-      "toNode": "n-localtokenomics-root-wiring",
-=======
-      "id": "e10-n-architecture-diagram-hub-n-layered-viewpoints",
+      "id": "e26-n-architecture-diagram-hub-n-layered-viewpoints",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-layered-viewpoints",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-      "id": "e5-n-architecture-diagram-hub-n-module-map-diagrams",
-=======
-      "id": "e4-n-architecture-diagram-hub-n-module-map-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "e4-n-architecture-diagram-hub-n-module-map-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-      "id": "e11-n-architecture-diagram-hub-n-module-map-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "id": "e27-n-architecture-diagram-hub-n-localtokenomics-root-wiring",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-localtokenomics-root-wiring",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e28-n-architecture-diagram-hub-n-module-map-diagrams",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-module-map-diagrams",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "e6-n-architecture-diagram-hub-n-localtokenomics-root-diagrams",
+      "id": "e29-n-architecture-diagram-hub-n-readers-component-view",
       "fromNode": "n-architecture-diagram-hub",
-      "toNode": "n-localtokenomics-root-diagrams",
-=======
-      "id": "e5-n-architecture-diagram-hub-n-web-dashboard-components",
+      "toNode": "n-readers-component-view",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e30-n-architecture-diagram-hub-n-render-layer-components",
       "fromNode": "n-architecture-diagram-hub",
-      "toNode": "n-web-dashboard-components",
-=======
-      "id": "e5-n-architecture-diagram-hub-n-web-ui-ui-components-diagrams",
+      "toNode": "n-render-layer-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e31-n-architecture-diagram-hub-n-repository-root-capabilities",
       "fromNode": "n-architecture-diagram-hub",
-      "toNode": "n-web-ui-ui-components-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-      "id": "e12-n-architecture-diagram-hub-n-usage-cost-conceptual-model",
+      "toNode": "n-repository-root-capabilities",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e32-n-architecture-diagram-hub-n-shared-components-c4",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-shared-components-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e33-n-architecture-diagram-hub-n-ui-primitives-c4",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-ui-primitives-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e34-n-architecture-diagram-hub-n-usage-cost-conceptual-model",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-usage-cost-conceptual-model",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "e6-n-architecture-diagram-hub-n-web-diagrams",
+      "id": "e35-n-architecture-diagram-hub-n-web-dashboard-components",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-dashboard-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e36-n-architecture-diagram-hub-n-web-diagrams",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-web-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "e13-n-architecture-diagram-hub-n-usage-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e37-n-architecture-diagram-hub-n-web-ui-components-diagrams",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-ui-components-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e38-n-architecture-diagram-hub-n-web-prototype-c4-components",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-prototype-c4-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e39-n-architecture-diagram-hub-n-web-prototype-diagrams",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-prototype-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e40-n-architecture-diagram-hub-n-web-ui-ui-components-diagrams",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-ui-ui-components-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e41-n-architecture-diagram-hub-n-localtokenomics-root-diagrams",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-localtokenomics-root-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e42-n-architecture-diagram-hub-n-readers-data-flow",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-readers-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e43-n-architecture-diagram-hub-n-usage-data-flow",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-usage-data-flow",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-      "id": "e7-n-architecture-diagram-hub-n-ci-and-delivery-diagrams",
-=======
-      "id": "e6-n-architecture-diagram-hub-n-ci-and-delivery-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-      "id": "e14-n-architecture-diagram-hub-n-ci-and-delivery-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "id": "e44-n-architecture-diagram-hub-n-ci-and-delivery-diagrams",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-ci-and-delivery-diagrams",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "e8-n-diagram-index-n-ci-and-delivery-diagrams",
-      "fromNode": "n-diagram-index",
-      "toNode": "n-ci-and-delivery-diagrams",
-<<<<<<< HEAD
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "e7-n-diagram-index-n-ci-and-delivery-diagrams",
-      "fromNode": "n-diagram-index",
-      "toNode": "n-ci-and-delivery-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-      "id": "e15-n-architecture-diagram-hub-n-cost-state-of-a-request",
+      "id": "e45-n-architecture-diagram-hub-n-cost-state-of-a-request",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-cost-state-of-a-request",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "e5-n-diagram-index-n-web-prototype-diagrams",
-      "fromNode": "n-diagram-index",
-      "toNode": "n-web-prototype-diagrams",
-=======
-      "id": "e9-n-diagram-index-n-er-data-model",
-      "fromNode": "n-diagram-index",
-      "toNode": "n-er-data-model",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
-      "id": "e9-n-diagram-index-n-er-data-model",
-      "fromNode": "n-diagram-index",
-      "toNode": "n-er-data-model",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "e8-n-diagram-index-n-er-data-model",
-      "fromNode": "n-diagram-index",
-      "toNode": "n-er-data-model",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-      "id": "e16-n-architecture-diagram-hub-n-how-one-request-is-priced",
+      "id": "e46-n-architecture-diagram-hub-n-how-one-request-is-priced",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-how-one-request-is-priced",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "e6-n-diagram-notation-guide-n-diagram-index",
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-      "id": "e10-n-diagram-index-n-layered-viewpoints",
-=======
-      "id": "e9-n-diagram-index-n-layered-viewpoints",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-      "id": "e17-n-architecture-diagram-hub-n-scan-pipeline-from-logs-to-report",
+      "id": "e47-n-architecture-diagram-hub-n-scan-pipeline-from-logs-to-report",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-scan-pipeline-from-logs-to-report",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e18-n-architecture-diagram-hub-n-scan-and-report-process",
+      "id": "e48-n-architecture-diagram-hub-n-scan-and-report-process",
       "fromNode": "n-architecture-diagram-hub",
       "toNode": "n-scan-and-report-process",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e19-n-cost-state-of-a-request-n-how-one-request-is-priced",
+      "id": "e49-n-architecture-diagram-hub-n-alert-comparison-windows",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-alert-comparison-windows",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e50-n-architecture-diagram-hub-n-app-screen-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-app-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e51-n-architecture-diagram-hub-n-context-tab-screen-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-context-tab-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e52-n-architecture-diagram-hub-n-dashboard-component-composition",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-dashboard-component-composition",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e53-n-architecture-diagram-hub-n-economics-tab-screen-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-economics-tab-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e54-n-architecture-diagram-hub-n-metric-info-interaction-flow",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-metric-info-interaction-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e55-n-architecture-diagram-hub-n-offline-and-error-handling-flow",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-offline-and-error-handling-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e56-n-architecture-diagram-hub-n-offline-card-screen-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-offline-card-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e57-n-architecture-diagram-hub-n-overview-screen-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-overview-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e58-n-architecture-diagram-hub-n-overview-screen-screen-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-overview-screen-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e59-n-architecture-diagram-hub-n-pricing-screen-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-pricing-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e60-n-architecture-diagram-hub-n-pricing-screen-screen-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-pricing-screen-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e61-n-architecture-diagram-hub-n-reader-data-lineage",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-reader-data-lineage",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e62-n-architecture-diagram-hub-n-reader-glossary-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-reader-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e63-n-architecture-diagram-hub-n-reader-module-imports",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-reader-module-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e64-n-architecture-diagram-hub-n-reader-types",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-reader-types",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e65-n-architecture-diagram-hub-n-readers-concepts",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-readers-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e66-n-architecture-diagram-hub-n-render-layer-mind-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-render-layer-mind-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e67-n-architecture-diagram-hub-n-render-layer-module-dependencies",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-render-layer-module-dependencies",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e68-n-architecture-diagram-hub-n-repository-folder-layout",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-repository-folder-layout",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e69-n-architecture-diagram-hub-n-repository-root-concepts",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-repository-root-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e70-n-architecture-diagram-hub-n-repository-root-configuration",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-repository-root-configuration",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e71-n-architecture-diagram-hub-n-session-workspace-screen-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-session-workspace-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e72-n-architecture-diagram-hub-n-session-card-wireframe",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-session-card-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e73-n-architecture-diagram-hub-n-sessions-screen-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-sessions-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e74-n-architecture-diagram-hub-n-sessions-screen-screen-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-sessions-screen-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e75-n-architecture-diagram-hub-n-shared-components-concepts",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-shared-components-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e76-n-architecture-diagram-hub-n-shared-components-imports",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-shared-components-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e77-n-architecture-diagram-hub-n-sources-screen-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-sources-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e78-n-architecture-diagram-hub-n-sources-screen-screen-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-sources-screen-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e79-n-architecture-diagram-hub-n-spend-alert-run",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-spend-alert-run",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e80-n-architecture-diagram-hub-n-store-schema-versions",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-store-schema-versions",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e81-n-architecture-diagram-hub-n-trace-tab-screen-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-trace-tab-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e82-n-architecture-diagram-hub-n-ui-primitives-concepts",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-ui-primitives-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e83-n-architecture-diagram-hub-n-ui-primitives-failure-flow",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-ui-primitives-failure-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e84-n-architecture-diagram-hub-n-ui-primitives-imports",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-ui-primitives-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e85-n-architecture-diagram-hub-n-usage-cost-http-routes",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-usage-cost-http-routes",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e86-n-architecture-diagram-hub-n-usage-cost-concepts",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-usage-cost-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e87-n-architecture-diagram-hub-n-usage-cost-folders",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-usage-cost-folders",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e88-n-architecture-diagram-hub-n-usage-cost-goals",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-usage-cost-goals",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e89-n-architecture-diagram-hub-n-usage-cost-refusals",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-usage-cost-refusals",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e90-n-architecture-diagram-hub-n-usage-cost-terms",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-usage-cost-terms",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e91-n-architecture-diagram-hub-n-usage-cost-types",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-usage-cost-types",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e92-n-architecture-diagram-hub-n-warnings-list-states",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-warnings-list-states",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e93-n-architecture-diagram-hub-n-web-app-load-state-chart",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-app-load-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e94-n-architecture-diagram-hub-n-web-component-composition",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-component-composition",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e95-n-architecture-diagram-hub-n-web-concept-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-concept-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e96-n-architecture-diagram-hub-n-web-error-flow",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-error-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e97-n-architecture-diagram-hub-n-web-filter-rail-wireframe",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-filter-rail-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e98-n-architecture-diagram-hub-n-web-glossary-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e99-n-architecture-diagram-hub-n-web-outcome-form-wireframe",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-outcome-form-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e100-n-architecture-diagram-hub-n-web-outcome-save-state-chart",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-outcome-save-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e101-n-architecture-diagram-hub-n-web-package-tree",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-package-tree",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e102-n-architecture-diagram-hub-n-web-rate-table-wireframe",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-rate-table-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e103-n-architecture-diagram-hub-n-web-screen-flow",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-screen-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e104-n-architecture-diagram-hub-n-web-sessions-table-state-chart",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-sessions-table-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e105-n-architecture-diagram-hub-n-web-sessions-table-wireframe",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-sessions-table-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e106-n-architecture-diagram-hub-n-web-sitemap",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-sitemap",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e107-n-architecture-diagram-hub-n-web-trace-state-chart",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-trace-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e108-n-architecture-diagram-hub-n-web-user-journey",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-user-journey",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e109-n-architecture-diagram-hub-n-web-workspace-panel-wireframe",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-workspace-panel-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e110-n-architecture-diagram-hub-n-web-workspace-state-chart",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-workspace-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e111-n-architecture-diagram-hub-n-web-prototype-component-tree",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-prototype-component-tree",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e112-n-architecture-diagram-hub-n-web-prototype-glossary-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-prototype-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e113-n-architecture-diagram-hub-n-web-prototype-mind-map",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-prototype-mind-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e114-n-architecture-diagram-hub-n-web-prototype-module-dependencies",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-prototype-module-dependencies",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e115-n-architecture-diagram-hub-n-web-prototype-page-wireframe",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-prototype-page-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e116-n-architecture-diagram-hub-n-web-prototype-screen-flow",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-prototype-screen-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e117-n-architecture-diagram-hub-n-web-prototype-session-drawer-states",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-prototype-session-drawer-states",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e118-n-architecture-diagram-hub-n-web-prototype-shell-ui-states",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-prototype-shell-ui-states",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e119-n-architecture-diagram-hub-n-web-prototype-sitemap",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-prototype-sitemap",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e120-n-architecture-diagram-hub-n-web-prototype-user-journey",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-web-prototype-user-journey",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e121-n-architecture-diagram-hub-n-where-usage-cost-data-comes-from",
+      "fromNode": "n-architecture-diagram-hub",
+      "toNode": "n-where-usage-cost-data-comes-from",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e122-n-context-tab-screen-map-n-web-glossary-map",
+      "fromNode": "n-context-tab-screen-map",
+      "toNode": "n-web-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e123-n-cost-state-of-a-request-n-how-one-request-is-priced",
       "fromNode": "n-cost-state-of-a-request",
       "toNode": "n-how-one-request-is-priced",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e20-n-diagram-index-n-ai-usage-cost-diagrams",
+      "id": "e124-n-dashboard-component-composition-n-shared-components-imports",
+      "fromNode": "n-dashboard-component-composition",
+      "toNode": "n-shared-components-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e125-n-dashboard-component-composition-n-shared-components-c4",
+      "fromNode": "n-dashboard-component-composition",
+      "toNode": "n-shared-components-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e126-n-dashboard-component-composition-n-shared-components-concepts",
+      "fromNode": "n-dashboard-component-composition",
+      "toNode": "n-shared-components-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e127-n-diagram-index-n-ai-usage-cost-diagrams",
       "fromNode": "n-diagram-index",
       "toNode": "n-ai-usage-cost-diagrams",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e21-n-diagram-index-n-ci-and-delivery-diagrams",
+      "id": "e128-n-diagram-index-n-ai-usage-cost-render-diagrams",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-ai-usage-cost-render-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e129-n-diagram-index-n-ai-usage-cost-sources-diagrams",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-ai-usage-cost-sources-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e130-n-diagram-index-n-alert-comparison-windows",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-alert-comparison-windows",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e131-n-diagram-index-n-app-screen-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-app-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e132-n-diagram-index-n-ci-and-delivery-diagrams",
       "fromNode": "n-diagram-index",
       "toNode": "n-ci-and-delivery-diagrams",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e22-n-diagram-index-n-cost-state-of-a-request",
+      "id": "e133-n-diagram-index-n-context-tab-screen-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-context-tab-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e134-n-diagram-index-n-cost-state-of-a-request",
       "fromNode": "n-diagram-index",
       "toNode": "n-cost-state-of-a-request",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e23-n-diagram-index-n-er-data-model",
+      "id": "e135-n-diagram-index-n-dashboard-component-composition",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-dashboard-component-composition",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e136-n-diagram-index-n-economics-tab-screen-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-economics-tab-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e137-n-diagram-index-n-er-data-model",
       "fromNode": "n-diagram-index",
       "toNode": "n-er-data-model",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e24-n-diagram-index-n-how-one-request-is-priced",
+      "id": "e138-n-diagram-index-n-how-one-request-is-priced",
       "fromNode": "n-diagram-index",
       "toNode": "n-how-one-request-is-priced",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e25-n-diagram-index-n-layered-viewpoints",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "id": "e139-n-diagram-index-n-layered-viewpoints",
       "fromNode": "n-diagram-index",
       "toNode": "n-layered-viewpoints",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "e11-n-diagram-index-n-localtokenomics-root-diagrams",
+      "id": "e140-n-diagram-index-n-localtokenomics-root-diagrams",
       "fromNode": "n-diagram-index",
       "toNode": "n-localtokenomics-root-diagrams",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e12-n-diagram-index-n-localtokenomics-root-wiring",
+      "id": "e141-n-diagram-index-n-localtokenomics-root-wiring",
       "fromNode": "n-diagram-index",
       "toNode": "n-localtokenomics-root-wiring",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e13-n-diagram-index-n-module-map-diagrams",
-=======
-      "id": "e11-n-diagram-index-n-module-map-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "e10-n-diagram-index-n-module-map-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-      "id": "e26-n-diagram-index-n-module-map-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "id": "e142-n-diagram-index-n-metric-info-interaction-flow",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-metric-info-interaction-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e143-n-diagram-index-n-module-map-diagrams",
       "fromNode": "n-diagram-index",
       "toNode": "n-module-map-diagrams",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "e14-n-diagram-notation-guide-n-diagram-index",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
-      "id": "e12-n-diagram-index-n-web-dashboard-components",
+      "id": "e144-n-diagram-index-n-offline-and-error-handling-flow",
       "fromNode": "n-diagram-index",
-      "toNode": "n-web-dashboard-components",
-=======
-      "id": "e11-n-diagram-index-n-web-ui-ui-components-diagrams",
+      "toNode": "n-offline-and-error-handling-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e145-n-diagram-index-n-offline-card-screen-map",
       "fromNode": "n-diagram-index",
-      "toNode": "n-web-ui-ui-components-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-      "id": "e27-n-diagram-index-n-scan-and-report-process",
+      "toNode": "n-offline-card-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e146-n-diagram-index-n-overview-screen-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-overview-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e147-n-diagram-index-n-overview-screen-screen-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-overview-screen-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e148-n-diagram-index-n-pricing-screen-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-pricing-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e149-n-diagram-index-n-pricing-screen-screen-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-pricing-screen-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e150-n-diagram-index-n-reader-data-lineage",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-reader-data-lineage",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e151-n-diagram-index-n-reader-glossary-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-reader-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e152-n-diagram-index-n-reader-module-imports",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-reader-module-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e153-n-diagram-index-n-reader-types",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-reader-types",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e154-n-diagram-index-n-readers-component-view",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-readers-component-view",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e155-n-diagram-index-n-readers-concepts",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-readers-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e156-n-diagram-index-n-readers-data-flow",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-readers-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e157-n-diagram-index-n-render-layer-components",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-render-layer-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e158-n-diagram-index-n-render-layer-mind-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-render-layer-mind-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e159-n-diagram-index-n-render-layer-module-dependencies",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-render-layer-module-dependencies",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e160-n-diagram-index-n-repository-folder-layout",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-repository-folder-layout",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e161-n-diagram-index-n-repository-root-capabilities",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-repository-root-capabilities",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e162-n-diagram-index-n-repository-root-concepts",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-repository-root-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e163-n-diagram-index-n-repository-root-configuration",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-repository-root-configuration",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e164-n-diagram-index-n-scan-and-report-process",
       "fromNode": "n-diagram-index",
       "toNode": "n-scan-and-report-process",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "e13-n-diagram-index-n-web-diagrams",
-      "fromNode": "n-diagram-index",
-      "toNode": "n-web-diagrams",
-=======
-      "id": "e28-n-diagram-index-n-scan-pipeline-from-logs-to-report",
+      "id": "e165-n-diagram-index-n-scan-pipeline-from-logs-to-report",
       "fromNode": "n-diagram-index",
       "toNode": "n-scan-pipeline-from-logs-to-report",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-      "id": "e14-n-diagram-notation-guide-n-diagram-index",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "e12-n-diagram-notation-guide-n-diagram-index",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-      "id": "e29-n-diagram-index-n-usage-cost-conceptual-model",
+      "id": "e166-n-diagram-index-n-session-card-wireframe",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-session-card-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e167-n-diagram-index-n-session-workspace-screen-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-session-workspace-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e168-n-diagram-index-n-sessions-screen-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-sessions-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e169-n-diagram-index-n-sessions-screen-screen-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-sessions-screen-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e170-n-diagram-index-n-shared-components-c4",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-shared-components-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e171-n-diagram-index-n-shared-components-concepts",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-shared-components-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e172-n-diagram-index-n-shared-components-imports",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-shared-components-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e173-n-diagram-index-n-sources-screen-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-sources-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e174-n-diagram-index-n-sources-screen-screen-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-sources-screen-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e175-n-diagram-index-n-spend-alert-run",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-spend-alert-run",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e176-n-diagram-index-n-store-schema-versions",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-store-schema-versions",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e177-n-diagram-index-n-trace-tab-screen-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-trace-tab-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e178-n-diagram-index-n-ui-primitives-c4",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-ui-primitives-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e179-n-diagram-index-n-ui-primitives-concepts",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-ui-primitives-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e180-n-diagram-index-n-ui-primitives-failure-flow",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-ui-primitives-failure-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e181-n-diagram-index-n-ui-primitives-imports",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-ui-primitives-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e182-n-diagram-index-n-usage-cost-concepts",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-usage-cost-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e183-n-diagram-index-n-usage-cost-conceptual-model",
       "fromNode": "n-diagram-index",
       "toNode": "n-usage-cost-conceptual-model",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e30-n-diagram-index-n-usage-data-flow",
+      "id": "e184-n-diagram-index-n-usage-cost-folders",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-usage-cost-folders",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e185-n-diagram-index-n-usage-cost-goals",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-usage-cost-goals",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e186-n-diagram-index-n-usage-cost-http-routes",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-usage-cost-http-routes",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e187-n-diagram-index-n-usage-cost-refusals",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-usage-cost-refusals",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e188-n-diagram-index-n-usage-cost-terms",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-usage-cost-terms",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e189-n-diagram-index-n-usage-cost-types",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-usage-cost-types",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e190-n-diagram-index-n-usage-data-flow",
       "fromNode": "n-diagram-index",
       "toNode": "n-usage-data-flow",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e31-n-diagram-notation-guide-n-diagram-index",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "id": "e191-n-diagram-index-n-warnings-list-states",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-warnings-list-states",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e192-n-diagram-index-n-web-app-load-state-chart",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-app-load-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e193-n-diagram-index-n-web-component-composition",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-component-composition",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e194-n-diagram-index-n-web-concept-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-concept-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e195-n-diagram-index-n-web-dashboard-components",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-dashboard-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e196-n-diagram-index-n-web-diagrams",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e197-n-diagram-index-n-web-error-flow",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-error-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e198-n-diagram-index-n-web-filter-rail-wireframe",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-filter-rail-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e199-n-diagram-index-n-web-glossary-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e200-n-diagram-index-n-web-outcome-form-wireframe",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-outcome-form-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e201-n-diagram-index-n-web-outcome-save-state-chart",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-outcome-save-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e202-n-diagram-index-n-web-package-tree",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-package-tree",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e203-n-diagram-index-n-web-prototype-c4-components",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-prototype-c4-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e204-n-diagram-index-n-web-prototype-component-tree",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-prototype-component-tree",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e205-n-diagram-index-n-web-prototype-diagrams",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-prototype-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e206-n-diagram-index-n-web-prototype-glossary-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-prototype-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e207-n-diagram-index-n-web-prototype-mind-map",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-prototype-mind-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e208-n-diagram-index-n-web-prototype-module-dependencies",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-prototype-module-dependencies",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e209-n-diagram-index-n-web-prototype-page-wireframe",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-prototype-page-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e210-n-diagram-index-n-web-prototype-screen-flow",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-prototype-screen-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e211-n-diagram-index-n-web-prototype-session-drawer-states",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-prototype-session-drawer-states",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e212-n-diagram-index-n-web-prototype-shell-ui-states",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-prototype-shell-ui-states",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e213-n-diagram-index-n-web-prototype-sitemap",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-prototype-sitemap",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e214-n-diagram-index-n-web-prototype-user-journey",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-prototype-user-journey",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e215-n-diagram-index-n-web-rate-table-wireframe",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-rate-table-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e216-n-diagram-index-n-web-screen-flow",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-screen-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e217-n-diagram-index-n-web-sessions-table-state-chart",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-sessions-table-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e218-n-diagram-index-n-web-sessions-table-wireframe",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-sessions-table-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e219-n-diagram-index-n-web-sitemap",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-sitemap",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e220-n-diagram-index-n-web-trace-state-chart",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-trace-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e221-n-diagram-index-n-web-ui-components-diagrams",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-ui-components-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e222-n-diagram-index-n-web-ui-ui-components-diagrams",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-ui-ui-components-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e223-n-diagram-index-n-web-user-journey",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-user-journey",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e224-n-diagram-index-n-web-workspace-panel-wireframe",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-workspace-panel-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e225-n-diagram-index-n-web-workspace-state-chart",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-web-workspace-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e226-n-diagram-index-n-where-usage-cost-data-comes-from",
+      "fromNode": "n-diagram-index",
+      "toNode": "n-where-usage-cost-data-comes-from",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e227-n-diagram-notation-guide-n-diagram-index",
       "fromNode": "n-diagram-notation-guide",
       "toNode": "n-diagram-index",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "e7-n-diagram-notation-guide-n-architecture-diagram-hub",
-=======
-      "id": "e15-n-diagram-notation-guide-n-architecture-diagram-hub",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
-      "id": "e15-n-diagram-notation-guide-n-architecture-diagram-hub",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "e13-n-diagram-notation-guide-n-architecture-diagram-hub",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-      "id": "e32-n-diagram-notation-guide-n-architecture-diagram-hub",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "id": "e228-n-diagram-notation-guide-n-architecture-diagram-hub",
       "fromNode": "n-diagram-notation-guide",
       "toNode": "n-architecture-diagram-hub",
       "fromSide": "bottom",
       "toSide": "top"
-<<<<<<< HEAD
-<<<<<<< HEAD
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "e8-n-web-prototype-c4-components-n-web-prototype-diagrams",
-      "fromNode": "n-web-prototype-c4-components",
-      "toNode": "n-web-prototype-diagrams",
-=======
-      "id": "e16-n-localtokenomics-root-wiring-n-localtokenomics-root-diagrams",
-      "fromNode": "n-localtokenomics-root-wiring",
-      "toNode": "n-localtokenomics-root-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
-      "id": "e16-n-web-dashboard-components-n-web-diagrams",
-      "fromNode": "n-web-dashboard-components",
-      "toNode": "n-web-diagrams",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-      "fromSide": "bottom",
-      "toSide": "top"
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-    },
-    {
-      "id": "e33-n-how-one-request-is-priced-n-cost-state-of-a-request",
+      "id": "e229-n-how-one-request-is-priced-n-cost-state-of-a-request",
       "fromNode": "n-how-one-request-is-priced",
       "toNode": "n-cost-state-of-a-request",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e34-n-how-one-request-is-priced-n-scan-pipeline-from-logs-to-report",
+      "id": "e230-n-how-one-request-is-priced-n-scan-pipeline-from-logs-to-report",
       "fromNode": "n-how-one-request-is-priced",
       "toNode": "n-scan-pipeline-from-logs-to-report",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e35-n-scan-and-report-process-n-scan-pipeline-from-logs-to-report",
+      "id": "e231-n-localtokenomics-root-wiring-n-localtokenomics-root-diagrams",
+      "fromNode": "n-localtokenomics-root-wiring",
+      "toNode": "n-localtokenomics-root-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e232-n-metric-info-interaction-flow-n-shared-components-c4",
+      "fromNode": "n-metric-info-interaction-flow",
+      "toNode": "n-shared-components-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e233-n-metric-info-interaction-flow-n-dashboard-component-composition",
+      "fromNode": "n-metric-info-interaction-flow",
+      "toNode": "n-dashboard-component-composition",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e234-n-offline-and-error-handling-flow-n-shared-components-c4",
+      "fromNode": "n-offline-and-error-handling-flow",
+      "toNode": "n-shared-components-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e235-n-offline-and-error-handling-flow-n-offline-card-screen-map",
+      "fromNode": "n-offline-and-error-handling-flow",
+      "toNode": "n-offline-card-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e236-n-offline-and-error-handling-flow-n-warnings-list-states",
+      "fromNode": "n-offline-and-error-handling-flow",
+      "toNode": "n-warnings-list-states",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e237-n-offline-card-screen-map-n-offline-and-error-handling-flow",
+      "fromNode": "n-offline-card-screen-map",
+      "toNode": "n-offline-and-error-handling-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e238-n-offline-card-screen-map-n-dashboard-component-composition",
+      "fromNode": "n-offline-card-screen-map",
+      "toNode": "n-dashboard-component-composition",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e239-n-pricing-screen-map-n-web-glossary-map",
+      "fromNode": "n-pricing-screen-map",
+      "toNode": "n-web-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e240-n-reader-data-lineage-n-readers-concepts",
+      "fromNode": "n-reader-data-lineage",
+      "toNode": "n-readers-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e241-n-reader-data-lineage-n-reader-types",
+      "fromNode": "n-reader-data-lineage",
+      "toNode": "n-reader-types",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e242-n-reader-data-lineage-n-reader-module-imports",
+      "fromNode": "n-reader-data-lineage",
+      "toNode": "n-reader-module-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e243-n-reader-data-lineage-n-reader-glossary-map",
+      "fromNode": "n-reader-data-lineage",
+      "toNode": "n-reader-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e244-n-reader-data-lineage-n-readers-component-view",
+      "fromNode": "n-reader-data-lineage",
+      "toNode": "n-readers-component-view",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e245-n-reader-data-lineage-n-readers-data-flow",
+      "fromNode": "n-reader-data-lineage",
+      "toNode": "n-readers-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e246-n-reader-glossary-map-n-readers-concepts",
+      "fromNode": "n-reader-glossary-map",
+      "toNode": "n-readers-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e247-n-reader-glossary-map-n-reader-types",
+      "fromNode": "n-reader-glossary-map",
+      "toNode": "n-reader-types",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e248-n-reader-glossary-map-n-reader-data-lineage",
+      "fromNode": "n-reader-glossary-map",
+      "toNode": "n-reader-data-lineage",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e249-n-reader-glossary-map-n-reader-module-imports",
+      "fromNode": "n-reader-glossary-map",
+      "toNode": "n-reader-module-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e250-n-reader-glossary-map-n-readers-component-view",
+      "fromNode": "n-reader-glossary-map",
+      "toNode": "n-readers-component-view",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e251-n-reader-glossary-map-n-readers-data-flow",
+      "fromNode": "n-reader-glossary-map",
+      "toNode": "n-readers-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e252-n-reader-module-imports-n-readers-concepts",
+      "fromNode": "n-reader-module-imports",
+      "toNode": "n-readers-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e253-n-reader-module-imports-n-reader-types",
+      "fromNode": "n-reader-module-imports",
+      "toNode": "n-reader-types",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e254-n-reader-module-imports-n-reader-data-lineage",
+      "fromNode": "n-reader-module-imports",
+      "toNode": "n-reader-data-lineage",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e255-n-reader-module-imports-n-reader-glossary-map",
+      "fromNode": "n-reader-module-imports",
+      "toNode": "n-reader-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e256-n-reader-module-imports-n-readers-component-view",
+      "fromNode": "n-reader-module-imports",
+      "toNode": "n-readers-component-view",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e257-n-reader-module-imports-n-readers-data-flow",
+      "fromNode": "n-reader-module-imports",
+      "toNode": "n-readers-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e258-n-reader-module-imports-n-ai-usage-cost-sources-diagrams",
+      "fromNode": "n-reader-module-imports",
+      "toNode": "n-ai-usage-cost-sources-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e259-n-reader-types-n-readers-concepts",
+      "fromNode": "n-reader-types",
+      "toNode": "n-readers-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e260-n-reader-types-n-reader-data-lineage",
+      "fromNode": "n-reader-types",
+      "toNode": "n-reader-data-lineage",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e261-n-reader-types-n-reader-module-imports",
+      "fromNode": "n-reader-types",
+      "toNode": "n-reader-module-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e262-n-reader-types-n-reader-glossary-map",
+      "fromNode": "n-reader-types",
+      "toNode": "n-reader-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e263-n-reader-types-n-readers-component-view",
+      "fromNode": "n-reader-types",
+      "toNode": "n-readers-component-view",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e264-n-reader-types-n-readers-data-flow",
+      "fromNode": "n-reader-types",
+      "toNode": "n-readers-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e265-n-readers-component-view-n-ai-usage-cost-sources-diagrams",
+      "fromNode": "n-readers-component-view",
+      "toNode": "n-ai-usage-cost-sources-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e266-n-readers-component-view-n-readers-data-flow",
+      "fromNode": "n-readers-component-view",
+      "toNode": "n-readers-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e267-n-readers-concepts-n-reader-types",
+      "fromNode": "n-readers-concepts",
+      "toNode": "n-reader-types",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e268-n-readers-concepts-n-reader-data-lineage",
+      "fromNode": "n-readers-concepts",
+      "toNode": "n-reader-data-lineage",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e269-n-readers-concepts-n-reader-module-imports",
+      "fromNode": "n-readers-concepts",
+      "toNode": "n-reader-module-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e270-n-readers-concepts-n-reader-glossary-map",
+      "fromNode": "n-readers-concepts",
+      "toNode": "n-reader-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e271-n-readers-concepts-n-readers-component-view",
+      "fromNode": "n-readers-concepts",
+      "toNode": "n-readers-component-view",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e272-n-readers-concepts-n-readers-data-flow",
+      "fromNode": "n-readers-concepts",
+      "toNode": "n-readers-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e273-n-readers-data-flow-n-readers-component-view",
+      "fromNode": "n-readers-data-flow",
+      "toNode": "n-readers-component-view",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e274-n-render-layer-mind-map-n-render-layer-components",
+      "fromNode": "n-render-layer-mind-map",
+      "toNode": "n-render-layer-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e275-n-render-layer-mind-map-n-render-layer-module-dependencies",
+      "fromNode": "n-render-layer-mind-map",
+      "toNode": "n-render-layer-module-dependencies",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e276-n-render-layer-module-dependencies-n-ai-usage-cost-render-diagrams",
+      "fromNode": "n-render-layer-module-dependencies",
+      "toNode": "n-ai-usage-cost-render-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e277-n-render-layer-module-dependencies-n-render-layer-components",
+      "fromNode": "n-render-layer-module-dependencies",
+      "toNode": "n-render-layer-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e278-n-render-layer-module-dependencies-n-render-layer-mind-map",
+      "fromNode": "n-render-layer-module-dependencies",
+      "toNode": "n-render-layer-mind-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e279-n-repository-folder-layout-n-repository-root-concepts",
+      "fromNode": "n-repository-folder-layout",
+      "toNode": "n-repository-root-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e280-n-repository-folder-layout-n-repository-root-capabilities",
+      "fromNode": "n-repository-folder-layout",
+      "toNode": "n-repository-root-capabilities",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e281-n-repository-folder-layout-n-repository-root-configuration",
+      "fromNode": "n-repository-folder-layout",
+      "toNode": "n-repository-root-configuration",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e282-n-repository-folder-layout-n-localtokenomics-root-wiring",
+      "fromNode": "n-repository-folder-layout",
+      "toNode": "n-localtokenomics-root-wiring",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e283-n-repository-root-capabilities-n-localtokenomics-root-wiring",
+      "fromNode": "n-repository-root-capabilities",
+      "toNode": "n-localtokenomics-root-wiring",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e284-n-repository-root-capabilities-n-repository-root-configuration",
+      "fromNode": "n-repository-root-capabilities",
+      "toNode": "n-repository-root-configuration",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e285-n-repository-root-capabilities-n-repository-root-concepts",
+      "fromNode": "n-repository-root-capabilities",
+      "toNode": "n-repository-root-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e286-n-repository-root-capabilities-n-repository-folder-layout",
+      "fromNode": "n-repository-root-capabilities",
+      "toNode": "n-repository-folder-layout",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e287-n-repository-root-concepts-n-repository-folder-layout",
+      "fromNode": "n-repository-root-concepts",
+      "toNode": "n-repository-folder-layout",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e288-n-repository-root-concepts-n-repository-root-configuration",
+      "fromNode": "n-repository-root-concepts",
+      "toNode": "n-repository-root-configuration",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e289-n-repository-root-concepts-n-repository-root-capabilities",
+      "fromNode": "n-repository-root-concepts",
+      "toNode": "n-repository-root-capabilities",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e290-n-repository-root-concepts-n-localtokenomics-root-wiring",
+      "fromNode": "n-repository-root-concepts",
+      "toNode": "n-localtokenomics-root-wiring",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e291-n-repository-root-configuration-n-localtokenomics-root-wiring",
+      "fromNode": "n-repository-root-configuration",
+      "toNode": "n-localtokenomics-root-wiring",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e292-n-repository-root-configuration-n-repository-root-capabilities",
+      "fromNode": "n-repository-root-configuration",
+      "toNode": "n-repository-root-capabilities",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e293-n-repository-root-configuration-n-repository-folder-layout",
+      "fromNode": "n-repository-root-configuration",
+      "toNode": "n-repository-folder-layout",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e294-n-repository-root-configuration-n-repository-root-concepts",
+      "fromNode": "n-repository-root-configuration",
+      "toNode": "n-repository-root-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e295-n-scan-and-report-process-n-scan-pipeline-from-logs-to-report",
       "fromNode": "n-scan-and-report-process",
       "toNode": "n-scan-pipeline-from-logs-to-report",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e36-n-scan-and-report-process-n-usage-data-flow",
+      "id": "e296-n-scan-and-report-process-n-usage-data-flow",
       "fromNode": "n-scan-and-report-process",
       "toNode": "n-usage-data-flow",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e37-n-scan-and-report-process-n-how-one-request-is-priced",
+      "id": "e297-n-scan-and-report-process-n-how-one-request-is-priced",
       "fromNode": "n-scan-and-report-process",
       "toNode": "n-how-one-request-is-priced",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e38-n-scan-pipeline-from-logs-to-report-n-usage-data-flow",
+      "id": "e298-n-scan-pipeline-from-logs-to-report-n-usage-data-flow",
       "fromNode": "n-scan-pipeline-from-logs-to-report",
       "toNode": "n-usage-data-flow",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e39-n-scan-pipeline-from-logs-to-report-n-scan-and-report-process",
+      "id": "e299-n-scan-pipeline-from-logs-to-report-n-scan-and-report-process",
       "fromNode": "n-scan-pipeline-from-logs-to-report",
       "toNode": "n-scan-and-report-process",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e40-n-scan-pipeline-from-logs-to-report-n-how-one-request-is-priced",
+      "id": "e300-n-scan-pipeline-from-logs-to-report-n-how-one-request-is-priced",
       "fromNode": "n-scan-pipeline-from-logs-to-report",
       "toNode": "n-how-one-request-is-priced",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e41-n-scan-pipeline-from-logs-to-report-n-cost-state-of-a-request",
+      "id": "e301-n-scan-pipeline-from-logs-to-report-n-cost-state-of-a-request",
       "fromNode": "n-scan-pipeline-from-logs-to-report",
       "toNode": "n-cost-state-of-a-request",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e42-n-usage-cost-conceptual-model-n-ai-usage-cost-diagrams",
+      "id": "e302-n-session-workspace-screen-map-n-web-workspace-state-chart",
+      "fromNode": "n-session-workspace-screen-map",
+      "toNode": "n-web-workspace-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e303-n-session-workspace-screen-map-n-web-outcome-form-wireframe",
+      "fromNode": "n-session-workspace-screen-map",
+      "toNode": "n-web-outcome-form-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e304-n-session-card-wireframe-n-offline-and-error-handling-flow",
+      "fromNode": "n-session-card-wireframe",
+      "toNode": "n-offline-and-error-handling-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e305-n-session-card-wireframe-n-dashboard-component-composition",
+      "fromNode": "n-session-card-wireframe",
+      "toNode": "n-dashboard-component-composition",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e306-n-sessions-screen-map-n-web-user-journey",
+      "fromNode": "n-sessions-screen-map",
+      "toNode": "n-web-user-journey",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e307-n-shared-components-c4-n-shared-components-imports",
+      "fromNode": "n-shared-components-c4",
+      "toNode": "n-shared-components-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e308-n-shared-components-c4-n-web-ui-components-diagrams",
+      "fromNode": "n-shared-components-c4",
+      "toNode": "n-web-ui-components-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e309-n-shared-components-c4-n-metric-info-interaction-flow",
+      "fromNode": "n-shared-components-c4",
+      "toNode": "n-metric-info-interaction-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e310-n-shared-components-concepts-n-shared-components-c4",
+      "fromNode": "n-shared-components-concepts",
+      "toNode": "n-shared-components-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e311-n-shared-components-concepts-n-dashboard-component-composition",
+      "fromNode": "n-shared-components-concepts",
+      "toNode": "n-dashboard-component-composition",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e312-n-shared-components-imports-n-web-ui-components-diagrams",
+      "fromNode": "n-shared-components-imports",
+      "toNode": "n-web-ui-components-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e313-n-shared-components-imports-n-shared-components-c4",
+      "fromNode": "n-shared-components-imports",
+      "toNode": "n-shared-components-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e314-n-shared-components-imports-n-dashboard-component-composition",
+      "fromNode": "n-shared-components-imports",
+      "toNode": "n-dashboard-component-composition",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e315-n-sources-screen-map-n-web-glossary-map",
+      "fromNode": "n-sources-screen-map",
+      "toNode": "n-web-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e316-n-spend-alert-run-n-usage-cost-goals",
+      "fromNode": "n-spend-alert-run",
+      "toNode": "n-usage-cost-goals",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e317-n-spend-alert-run-n-alert-comparison-windows",
+      "fromNode": "n-spend-alert-run",
+      "toNode": "n-alert-comparison-windows",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e318-n-spend-alert-run-n-usage-cost-refusals",
+      "fromNode": "n-spend-alert-run",
+      "toNode": "n-usage-cost-refusals",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e319-n-spend-alert-run-n-scan-pipeline-from-logs-to-report",
+      "fromNode": "n-spend-alert-run",
+      "toNode": "n-scan-pipeline-from-logs-to-report",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e320-n-store-schema-versions-n-where-usage-cost-data-comes-from",
+      "fromNode": "n-store-schema-versions",
+      "toNode": "n-where-usage-cost-data-comes-from",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e321-n-store-schema-versions-n-scan-and-report-process",
+      "fromNode": "n-store-schema-versions",
+      "toNode": "n-scan-and-report-process",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e322-n-trace-tab-screen-map-n-web-trace-state-chart",
+      "fromNode": "n-trace-tab-screen-map",
+      "toNode": "n-web-trace-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e323-n-trace-tab-screen-map-n-web-glossary-map",
+      "fromNode": "n-trace-tab-screen-map",
+      "toNode": "n-web-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e324-n-ui-primitives-c4-n-ui-primitives-concepts",
+      "fromNode": "n-ui-primitives-c4",
+      "toNode": "n-ui-primitives-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e325-n-ui-primitives-c4-n-ui-primitives-imports",
+      "fromNode": "n-ui-primitives-c4",
+      "toNode": "n-ui-primitives-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e326-n-ui-primitives-c4-n-ui-primitives-failure-flow",
+      "fromNode": "n-ui-primitives-c4",
+      "toNode": "n-ui-primitives-failure-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e327-n-ui-primitives-c4-n-shared-components-c4",
+      "fromNode": "n-ui-primitives-c4",
+      "toNode": "n-shared-components-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e328-n-ui-primitives-concepts-n-ui-primitives-c4",
+      "fromNode": "n-ui-primitives-concepts",
+      "toNode": "n-ui-primitives-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e329-n-ui-primitives-concepts-n-ui-primitives-imports",
+      "fromNode": "n-ui-primitives-concepts",
+      "toNode": "n-ui-primitives-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e330-n-ui-primitives-concepts-n-ui-primitives-failure-flow",
+      "fromNode": "n-ui-primitives-concepts",
+      "toNode": "n-ui-primitives-failure-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e331-n-ui-primitives-failure-flow-n-ui-primitives-c4",
+      "fromNode": "n-ui-primitives-failure-flow",
+      "toNode": "n-ui-primitives-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e332-n-ui-primitives-failure-flow-n-dashboard-component-composition",
+      "fromNode": "n-ui-primitives-failure-flow",
+      "toNode": "n-dashboard-component-composition",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e333-n-ui-primitives-failure-flow-n-offline-and-error-handling-flow",
+      "fromNode": "n-ui-primitives-failure-flow",
+      "toNode": "n-offline-and-error-handling-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e334-n-ui-primitives-imports-n-web-ui-ui-components-diagrams",
+      "fromNode": "n-ui-primitives-imports",
+      "toNode": "n-web-ui-ui-components-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e335-n-ui-primitives-imports-n-ui-primitives-c4",
+      "fromNode": "n-ui-primitives-imports",
+      "toNode": "n-ui-primitives-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e336-n-ui-primitives-imports-n-shared-components-imports",
+      "fromNode": "n-ui-primitives-imports",
+      "toNode": "n-shared-components-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e337-n-usage-cost-http-routes-n-usage-cost-goals",
+      "fromNode": "n-usage-cost-http-routes",
+      "toNode": "n-usage-cost-goals",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e338-n-usage-cost-http-routes-n-usage-cost-refusals",
+      "fromNode": "n-usage-cost-http-routes",
+      "toNode": "n-usage-cost-refusals",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e339-n-usage-cost-concepts-n-usage-cost-terms",
+      "fromNode": "n-usage-cost-concepts",
+      "toNode": "n-usage-cost-terms",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e340-n-usage-cost-concepts-n-scan-pipeline-from-logs-to-report",
+      "fromNode": "n-usage-cost-concepts",
+      "toNode": "n-scan-pipeline-from-logs-to-report",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e341-n-usage-cost-concepts-n-how-one-request-is-priced",
+      "fromNode": "n-usage-cost-concepts",
+      "toNode": "n-how-one-request-is-priced",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e342-n-usage-cost-concepts-n-usage-cost-http-routes",
+      "fromNode": "n-usage-cost-concepts",
+      "toNode": "n-usage-cost-http-routes",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e343-n-usage-cost-conceptual-model-n-ai-usage-cost-diagrams",
       "fromNode": "n-usage-cost-conceptual-model",
       "toNode": "n-ai-usage-cost-diagrams",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e43-n-usage-cost-conceptual-model-n-how-one-request-is-priced",
+      "id": "e344-n-usage-cost-conceptual-model-n-how-one-request-is-priced",
       "fromNode": "n-usage-cost-conceptual-model",
       "toNode": "n-how-one-request-is-priced",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e44-n-usage-cost-conceptual-model-n-cost-state-of-a-request",
+      "id": "e345-n-usage-cost-conceptual-model-n-cost-state-of-a-request",
       "fromNode": "n-usage-cost-conceptual-model",
       "toNode": "n-cost-state-of-a-request",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e45-n-usage-data-flow-n-scan-pipeline-from-logs-to-report",
+      "id": "e346-n-usage-cost-folders-n-ai-usage-cost-diagrams",
+      "fromNode": "n-usage-cost-folders",
+      "toNode": "n-ai-usage-cost-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e347-n-usage-cost-folders-n-usage-cost-concepts",
+      "fromNode": "n-usage-cost-folders",
+      "toNode": "n-usage-cost-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e348-n-usage-cost-goals-n-usage-cost-http-routes",
+      "fromNode": "n-usage-cost-goals",
+      "toNode": "n-usage-cost-http-routes",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e349-n-usage-cost-goals-n-spend-alert-run",
+      "fromNode": "n-usage-cost-goals",
+      "toNode": "n-spend-alert-run",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e350-n-usage-cost-goals-n-scan-pipeline-from-logs-to-report",
+      "fromNode": "n-usage-cost-goals",
+      "toNode": "n-scan-pipeline-from-logs-to-report",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e351-n-usage-cost-refusals-n-usage-cost-http-routes",
+      "fromNode": "n-usage-cost-refusals",
+      "toNode": "n-usage-cost-http-routes",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e352-n-usage-cost-refusals-n-spend-alert-run",
+      "fromNode": "n-usage-cost-refusals",
+      "toNode": "n-spend-alert-run",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e353-n-usage-cost-terms-n-usage-cost-conceptual-model",
+      "fromNode": "n-usage-cost-terms",
+      "toNode": "n-usage-cost-conceptual-model",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e354-n-usage-cost-terms-n-usage-cost-types",
+      "fromNode": "n-usage-cost-terms",
+      "toNode": "n-usage-cost-types",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e355-n-usage-cost-terms-n-cost-state-of-a-request",
+      "fromNode": "n-usage-cost-terms",
+      "toNode": "n-cost-state-of-a-request",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e356-n-usage-cost-types-n-usage-cost-conceptual-model",
+      "fromNode": "n-usage-cost-types",
+      "toNode": "n-usage-cost-conceptual-model",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e357-n-usage-cost-types-n-cost-state-of-a-request",
+      "fromNode": "n-usage-cost-types",
+      "toNode": "n-cost-state-of-a-request",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e358-n-usage-cost-types-n-usage-cost-http-routes",
+      "fromNode": "n-usage-cost-types",
+      "toNode": "n-usage-cost-http-routes",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e359-n-usage-data-flow-n-scan-pipeline-from-logs-to-report",
       "fromNode": "n-usage-data-flow",
       "toNode": "n-scan-pipeline-from-logs-to-report",
       "fromSide": "bottom",
       "toSide": "top"
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+    },
+    {
+      "id": "e360-n-warnings-list-states-n-offline-and-error-handling-flow",
+      "fromNode": "n-warnings-list-states",
+      "toNode": "n-offline-and-error-handling-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e361-n-web-app-load-state-chart-n-web-error-flow",
+      "fromNode": "n-web-app-load-state-chart",
+      "toNode": "n-web-error-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e362-n-web-app-load-state-chart-n-web-workspace-state-chart",
+      "fromNode": "n-web-app-load-state-chart",
+      "toNode": "n-web-workspace-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e363-n-web-component-composition-n-web-dashboard-components",
+      "fromNode": "n-web-component-composition",
+      "toNode": "n-web-dashboard-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e364-n-web-component-composition-n-web-package-tree",
+      "fromNode": "n-web-component-composition",
+      "toNode": "n-web-package-tree",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e365-n-web-concept-map-n-web-glossary-map",
+      "fromNode": "n-web-concept-map",
+      "toNode": "n-web-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e366-n-web-concept-map-n-web-sitemap",
+      "fromNode": "n-web-concept-map",
+      "toNode": "n-web-sitemap",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e367-n-web-concept-map-n-web-package-tree",
+      "fromNode": "n-web-concept-map",
+      "toNode": "n-web-package-tree",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e368-n-web-dashboard-components-n-web-diagrams",
+      "fromNode": "n-web-dashboard-components",
+      "toNode": "n-web-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e369-n-web-diagrams-n-web-dashboard-components",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-dashboard-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e370-n-web-diagrams-n-web-component-composition",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-component-composition",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e371-n-web-diagrams-n-web-package-tree",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-package-tree",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e372-n-web-diagrams-n-web-sitemap",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-sitemap",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e373-n-web-diagrams-n-web-screen-flow",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-screen-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e374-n-web-diagrams-n-web-user-journey",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-user-journey",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e375-n-web-diagrams-n-web-concept-map",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-concept-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e376-n-web-diagrams-n-web-glossary-map",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e377-n-web-diagrams-n-web-outcome-form-wireframe",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-outcome-form-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e378-n-web-diagrams-n-web-filter-rail-wireframe",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-filter-rail-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e379-n-web-diagrams-n-web-sessions-table-wireframe",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-sessions-table-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e380-n-web-diagrams-n-web-rate-table-wireframe",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-rate-table-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e381-n-web-diagrams-n-web-workspace-panel-wireframe",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-workspace-panel-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e382-n-web-diagrams-n-web-app-load-state-chart",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-app-load-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e383-n-web-diagrams-n-web-workspace-state-chart",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-workspace-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e384-n-web-diagrams-n-web-outcome-save-state-chart",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-outcome-save-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e385-n-web-diagrams-n-web-trace-state-chart",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-trace-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e386-n-web-diagrams-n-web-sessions-table-state-chart",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-sessions-table-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e387-n-web-diagrams-n-web-error-flow",
+      "fromNode": "n-web-diagrams",
+      "toNode": "n-web-error-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e388-n-web-error-flow-n-web-app-load-state-chart",
+      "fromNode": "n-web-error-flow",
+      "toNode": "n-web-app-load-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e389-n-web-error-flow-n-web-workspace-state-chart",
+      "fromNode": "n-web-error-flow",
+      "toNode": "n-web-workspace-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e390-n-web-error-flow-n-web-trace-state-chart",
+      "fromNode": "n-web-error-flow",
+      "toNode": "n-web-trace-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e391-n-web-filter-rail-wireframe-n-web-concept-map",
+      "fromNode": "n-web-filter-rail-wireframe",
+      "toNode": "n-web-concept-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e392-n-web-glossary-map-n-web-concept-map",
+      "fromNode": "n-web-glossary-map",
+      "toNode": "n-web-concept-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e393-n-web-outcome-form-wireframe-n-web-outcome-save-state-chart",
+      "fromNode": "n-web-outcome-form-wireframe",
+      "toNode": "n-web-outcome-save-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e394-n-web-outcome-save-state-chart-n-web-outcome-form-wireframe",
+      "fromNode": "n-web-outcome-save-state-chart",
+      "toNode": "n-web-outcome-form-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e395-n-web-package-tree-n-web-component-composition",
+      "fromNode": "n-web-package-tree",
+      "toNode": "n-web-component-composition",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e396-n-web-rate-table-wireframe-n-web-glossary-map",
+      "fromNode": "n-web-rate-table-wireframe",
+      "toNode": "n-web-glossary-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e397-n-web-screen-flow-n-web-sitemap",
+      "fromNode": "n-web-screen-flow",
+      "toNode": "n-web-sitemap",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e398-n-web-screen-flow-n-web-user-journey",
+      "fromNode": "n-web-screen-flow",
+      "toNode": "n-web-user-journey",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e399-n-web-sessions-table-state-chart-n-web-sessions-table-wireframe",
+      "fromNode": "n-web-sessions-table-state-chart",
+      "toNode": "n-web-sessions-table-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e400-n-web-sessions-table-wireframe-n-web-sessions-table-state-chart",
+      "fromNode": "n-web-sessions-table-wireframe",
+      "toNode": "n-web-sessions-table-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e401-n-web-sitemap-n-web-screen-flow",
+      "fromNode": "n-web-sitemap",
+      "toNode": "n-web-screen-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e402-n-web-trace-state-chart-n-web-workspace-state-chart",
+      "fromNode": "n-web-trace-state-chart",
+      "toNode": "n-web-workspace-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e403-n-web-trace-state-chart-n-web-error-flow",
+      "fromNode": "n-web-trace-state-chart",
+      "toNode": "n-web-error-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e404-n-web-ui-components-diagrams-n-shared-components-c4",
+      "fromNode": "n-web-ui-components-diagrams",
+      "toNode": "n-shared-components-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e405-n-web-ui-components-diagrams-n-shared-components-concepts",
+      "fromNode": "n-web-ui-components-diagrams",
+      "toNode": "n-shared-components-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e406-n-web-ui-components-diagrams-n-dashboard-component-composition",
+      "fromNode": "n-web-ui-components-diagrams",
+      "toNode": "n-dashboard-component-composition",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e407-n-web-ui-components-diagrams-n-shared-components-imports",
+      "fromNode": "n-web-ui-components-diagrams",
+      "toNode": "n-shared-components-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e408-n-web-ui-components-diagrams-n-warnings-list-states",
+      "fromNode": "n-web-ui-components-diagrams",
+      "toNode": "n-warnings-list-states",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e409-n-web-ui-components-diagrams-n-metric-info-interaction-flow",
+      "fromNode": "n-web-ui-components-diagrams",
+      "toNode": "n-metric-info-interaction-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e410-n-web-ui-components-diagrams-n-offline-and-error-handling-flow",
+      "fromNode": "n-web-ui-components-diagrams",
+      "toNode": "n-offline-and-error-handling-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e411-n-web-ui-components-diagrams-n-offline-card-screen-map",
+      "fromNode": "n-web-ui-components-diagrams",
+      "toNode": "n-offline-card-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e412-n-web-ui-components-diagrams-n-session-card-wireframe",
+      "fromNode": "n-web-ui-components-diagrams",
+      "toNode": "n-session-card-wireframe",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e413-n-web-workspace-panel-wireframe-n-web-workspace-state-chart",
+      "fromNode": "n-web-workspace-panel-wireframe",
+      "toNode": "n-web-workspace-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e414-n-web-workspace-state-chart-n-web-app-load-state-chart",
+      "fromNode": "n-web-workspace-state-chart",
+      "toNode": "n-web-app-load-state-chart",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e415-n-web-prototype-c4-components-n-web-prototype-diagrams",
+      "fromNode": "n-web-prototype-c4-components",
+      "toNode": "n-web-prototype-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e416-n-web-prototype-component-tree-n-web-prototype-diagrams",
+      "fromNode": "n-web-prototype-component-tree",
+      "toNode": "n-web-prototype-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e417-n-web-prototype-mind-map-n-web-prototype-c4-components",
+      "fromNode": "n-web-prototype-mind-map",
+      "toNode": "n-web-prototype-c4-components",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e418-n-web-prototype-mind-map-n-web-prototype-component-tree",
+      "fromNode": "n-web-prototype-mind-map",
+      "toNode": "n-web-prototype-component-tree",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e419-n-web-prototype-module-dependencies-n-web-prototype-diagrams",
+      "fromNode": "n-web-prototype-module-dependencies",
+      "toNode": "n-web-prototype-diagrams",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e420-n-web-prototype-module-dependencies-n-web-prototype-component-tree",
+      "fromNode": "n-web-prototype-module-dependencies",
+      "toNode": "n-web-prototype-component-tree",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e421-n-web-prototype-page-wireframe-n-sessions-screen-screen-map",
+      "fromNode": "n-web-prototype-page-wireframe",
+      "toNode": "n-sessions-screen-screen-map",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e422-n-web-prototype-page-wireframe-n-web-prototype-component-tree",
+      "fromNode": "n-web-prototype-page-wireframe",
+      "toNode": "n-web-prototype-component-tree",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e423-n-web-prototype-screen-flow-n-web-prototype-sitemap",
+      "fromNode": "n-web-prototype-screen-flow",
+      "toNode": "n-web-prototype-sitemap",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e424-n-web-prototype-screen-flow-n-web-prototype-shell-ui-states",
+      "fromNode": "n-web-prototype-screen-flow",
+      "toNode": "n-web-prototype-shell-ui-states",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e425-n-web-prototype-screen-flow-n-web-prototype-user-journey",
+      "fromNode": "n-web-prototype-screen-flow",
+      "toNode": "n-web-prototype-user-journey",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e426-n-web-prototype-session-drawer-states-n-web-prototype-shell-ui-states",
+      "fromNode": "n-web-prototype-session-drawer-states",
+      "toNode": "n-web-prototype-shell-ui-states",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e427-n-web-prototype-shell-ui-states-n-web-prototype-screen-flow",
+      "fromNode": "n-web-prototype-shell-ui-states",
+      "toNode": "n-web-prototype-screen-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e428-n-web-prototype-shell-ui-states-n-web-prototype-session-drawer-states",
+      "fromNode": "n-web-prototype-shell-ui-states",
+      "toNode": "n-web-prototype-session-drawer-states",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e429-n-web-prototype-sitemap-n-web-prototype-screen-flow",
+      "fromNode": "n-web-prototype-sitemap",
+      "toNode": "n-web-prototype-screen-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e430-n-web-prototype-user-journey-n-web-prototype-screen-flow",
+      "fromNode": "n-web-prototype-user-journey",
+      "toNode": "n-web-prototype-screen-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e431-n-web-prototype-user-journey-n-web-prototype-sitemap",
+      "fromNode": "n-web-prototype-user-journey",
+      "toNode": "n-web-prototype-sitemap",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e432-n-web-ui-ui-components-diagrams-n-ui-primitives-c4",
+      "fromNode": "n-web-ui-ui-components-diagrams",
+      "toNode": "n-ui-primitives-c4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e433-n-web-ui-ui-components-diagrams-n-ui-primitives-concepts",
+      "fromNode": "n-web-ui-ui-components-diagrams",
+      "toNode": "n-ui-primitives-concepts",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e434-n-web-ui-ui-components-diagrams-n-ui-primitives-imports",
+      "fromNode": "n-web-ui-ui-components-diagrams",
+      "toNode": "n-ui-primitives-imports",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e435-n-web-ui-ui-components-diagrams-n-ui-primitives-failure-flow",
+      "fromNode": "n-web-ui-ui-components-diagrams",
+      "toNode": "n-ui-primitives-failure-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e436-n-where-usage-cost-data-comes-from-n-usage-data-flow",
+      "fromNode": "n-where-usage-cost-data-comes-from",
+      "toNode": "n-usage-data-flow",
+      "fromSide": "bottom",
+      "toSide": "top"
     }
   ]
 }

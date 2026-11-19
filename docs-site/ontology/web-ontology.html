@@ -1,0 +1,132 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web Ontology</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="ontology/web-ontology.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Ontology</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> </p><h1>Web Ontology</h1>
+<p>This is the part of the project's knowledge graph that the code in Web defines. It shows what the code knows about, and how those things are linked to each other and to the rest of the project.</p>
+<h2>What it contains</h2>
+<p>42 terms, of which 1 belong to other chunks and appear only so that links have somewhere to land.</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>actor</td>
+<td>1</td>
+</tr>
+<tr>
+<td>nfr</td>
+<td>2</td>
+</tr>
+<tr>
+<td>open-question</td>
+<td>3</td>
+</tr>
+<tr>
+<td>risk</td>
+<td>4</td>
+</tr>
+<tr>
+<td>rule</td>
+<td>18</td>
+</tr>
+<tr>
+<td>state-machine</td>
+<td>4</td>
+</tr>
+<tr>
+<td>system</td>
+<td>4</td>
+</tr>
+<tr>
+<td>use-case</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<h2>Relations</h2>
+<table>
+<thead>
+<tr>
+<th>Relation</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uses</td>
+<td>6</td>
+</tr>
+<tr>
+<td>mentions</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<h2>The graph</h2>
+<pre class="mermaid">flowchart LR
+    n0[&quot;Dashboard reader&lt;br/&gt;actor&quot;]
+    n1[&quot;Compare a dashboard screen with it&lt;br/&gt;use-case&quot;]
+    n2[&quot;Dashboard developer&lt;br/&gt;actor&quot;]
+    n3[&quot;Check list prices&lt;br/&gt;use-case&quot;]
+    n4[&quot;Inspect one session&lt;br/&gt;use-case&quot;]
+    n5[&quot;Rate a session outcome&lt;br/&gt;use-case&quot;]
+    n6[&quot;Read usage and cost for a period&lt;br/&gt;use-case&quot;]
+    n7[&quot;Automatic rescan every five minute&lt;br/&gt;rule&quot;]
+    n8[&quot;Cache price derivation&lt;br/&gt;rule&quot;]
+    n9[&quot;CostState lifecycle&lt;br/&gt;state-machine&quot;]
+    n10[&quot;Do not import from the prototype f&lt;br/&gt;rule&quot;]
+    n11[&quot;Keyboard and screen reader access &lt;br/&gt;nfr&quot;]
+    n12[&quot;Most shared components have no tes&lt;br/&gt;risk&quot;]
+    n13[&quot;Outcome notes are saved only when &lt;br/&gt;rule&quot;]
+    n14[&quot;Popover timing depends on a pollin&lt;br/&gt;risk&quot;]
+    n15[&quot;Prototype figures are invented&lt;br/&gt;rule&quot;]
+    n16[&quot;Prototype filters do not filter th&lt;br/&gt;rule&quot;]
+    n17[&quot;Prototype rescan is staged&lt;br/&gt;rule&quot;]
+    n18[&quot;Prototype session table shows at m&lt;br/&gt;rule&quot;]
+    n19[&quot;Prototype splits session cost acro&lt;br/&gt;rule&quot;]
+    n20[&quot;Question 3꞉ Does the DELETE sessio&lt;br/&gt;open-question&quot;]
+    n21[&quot;Question 4꞉ Is deleteSession reach&lt;br/&gt;open-question&quot;]
+    n22[&quot;Rate age notice thresholds&lt;br/&gt;rule&quot;]
+    n23[&quot;Rate row state&lt;br/&gt;rule&quot;]
+    n24[&quot;RateState lifecycle&lt;br/&gt;state-machine&quot;]
+    n25[&quot;Reduced motion is respected&lt;br/&gt;nfr&quot;]
+    n26[&quot;Reported cost divergence threshold&lt;br/&gt;rule&quot;]
+    n27[&quot;Risk 1꞉ The dashboard client can w&lt;br/&gt;risk&quot;]
+    n28[&quot;Risk 2꞉ Most files in this chunk h&lt;br/&gt;risk&quot;]
+    n29[&quot;Session table row limit&lt;br/&gt;rule&quot;]
+    n30[&quot;SpanKind lifecycle&lt;br/&gt;state-machine&quot;]
+    n31[&quot;SpanStatus lifecycle&lt;br/&gt;state-machine&quot;]
+    n32[&quot;Sub cent money keeps four decimals&lt;br/&gt;rule&quot;]
+    n33[&quot;The prototype is excluded from the&lt;br/&gt;rule&quot;]
+    n34[&quot;Unattributed turn is excluded from&lt;br/&gt;rule&quot;]
+    n35[&quot;Unavailable is never shown as zero&lt;br/&gt;rule&quot;]
+    n36[&quot;Unpriced cost stays out of totals&lt;br/&gt;rule&quot;]
+    n37[&quot;Web&lt;br/&gt;system&quot;]
+    n38[&quot;Web UI components&lt;br/&gt;system&quot;]
+    n39[&quot;Web prototype&lt;br/&gt;system&quot;]
+    n3 --&gt;|uses| n0
+    n1 --&gt;|uses| n2
+    n1 --&gt;|mentions| n2
+    n4 --&gt;|uses| n0
+    n5 --&gt;|uses| n0
+    n6 --&gt;|uses| n0
+    classDef k_actor fill:#fff2cc,stroke:#222222,color:#222222
+    class n0,n2 k_actor
+    classDef k_nfr fill:#e1d5e7,stroke:#222222,color:#222222
+    class n11,n25 k_nfr
+    classDef k_openquestion fill:#f5f5f5,stroke:#222222,color:#222222
+    class n20,n21 k_openquestion
+    classDef k_risk fill:#f8cecc,stroke:#222222,color:#222222
+    class n12,n14,n27,n28 k_risk
+    classDef k_rule fill:#e1d5e7,stroke:#222222,color:#222222
+    class n7,n8,n10,n13,n15,n16,n17,n18,n19,n22,n23,n26,n29,n32,n33,n34,n35,n36 k_rule
+    classDef k_statemachine fill:#ffe6cc,stroke:#222222,color:#222222
+    class n9,n24,n30,n31 k_statemachine
+    classDef k_system fill:#dae8fc,stroke:#222222,color:#222222
+    class n37,n38,n39 k_system
+    classDef k_usecase fill:#fff2cc,stroke:#222222,color:#222222
+    class n1,n3,n4,n5,n6 k_usecase
+</pre>
+
+<p>The full slice is in <code>ch-localtokenomics-web-src.jsonld</code> beside this note. Project terms are the primary labels; ArchiMate, DDD, schema.org and Dublin Core terms annotate them.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

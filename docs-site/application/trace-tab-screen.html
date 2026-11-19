@@ -1,0 +1,153 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Trace Tab Screen</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/trace-tab-screen.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Trace Tab Screen</h1>
+<p>The Trace tab of the session workspace (web/src/TraceTab.tsx): timeline, agent tree and by turn modes, filters, insights and the span rows. Its map is <a href="../diagrams/trace-tab-screen-map.html">Trace Tab Screen Map</a>; each numbered badge in the image is one row below.</p>
+<h2>Screen map</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Element</th>
+<th>What it does</th>
+<th>Handler or target</th>
+<th>State it depends on</th>
+<th>Citation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&lt;ToggleGroup</code> Timeline, Agent tree, By turn</td>
+<td>Chooses the trace mode.</td>
+<td><code>setMode</code></td>
+<td>-</td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:908-913</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;ProvenanceBadge</code> capabilities</td>
+<td>Badges saying what this reader reports for each capability.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:924-924</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>&lt;ToggleGroup</code> span kinds</td>
+<td>Multi select of span kinds with counts.</td>
+<td><code>onKindsChange</code></td>
+<td>-</td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:933-939</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&lt;Toggle</code> Errors only</td>
+<td>Keeps only error spans.</td>
+<td><code>setErrorsOnly</code></td>
+<td>-</td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:951-956</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>insights.length === 0</code> empty section</td>
+<td>Hides the insights panel when there are none.</td>
+<td>-</td>
+<td>empty: <code>insights.length === 0</code></td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:266-266</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;InsightList</code> insights</td>
+<td>Findings that jump to their worst span.</td>
+<td><code>onSelectSpan</code></td>
+<td>-</td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:278-290</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>turnRollups.length === 0</code> empty section</td>
+<td>Empty state in By turn mode when no span has a turn.</td>
+<td>-</td>
+<td>empty: <code>turnRollups.length === 0</code></td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:978-978</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>&lt;SortSelect</code> turn sort</td>
+<td>Sorts the turn table.</td>
+<td><code>onSortChange</code></td>
+<td>-</td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:665-665</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>&lt;TableRow</code> turn row</td>
+<td>Jumps to the turn in the timeline, by click or Enter.</td>
+<td><code>onJump</code></td>
+<td>-</td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:683-689</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>&lt;Button</code> Show all turns</td>
+<td>Shows every turn.</td>
+<td><code>onShowAll</code></td>
+<td>-</td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:742-742</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>shown.length === 0</code> empty section</td>
+<td>Empty state when no span matches the filters.</td>
+<td>-</td>
+<td>empty: <code>shown.length === 0</code></td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:998-998</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>&lt;SpanTimeline</code> span rows</td>
+<td>Span rows with tokens, duration and status.</td>
+<td><code>selectSpan</code></td>
+<td>-</td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:1007-1011</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>if (span.error) {</code> error section</td>
+<td>A span with an error shows its error text.</td>
+<td>-</td>
+<td>error: <code>if (span.error) {</code></td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:829-829</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>&lt;Button</code> Text, Hide</td>
+<td>Loads and shows the text of a span.</td>
+<td><code>toggleContent</code></td>
+<td>-</td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:876-881</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>&lt;Button</code> Show more spans</td>
+<td>Reveals the next batch of rows.</td>
+<td><code>setRevealed</code></td>
+<td>shown only while rows are hidden</td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:1017-1017</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Conditional sections</h3>
+<ul>
+<li>empty: <code>insights.length === 0</code>, callout 5, <a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:266-266</code></li>
+<li>empty: <code>turnRollups.length === 0</code>, callout 7, <a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:978-978</code></li>
+<li>empty: <code>shown.length === 0</code>, callout 11, <a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:998-998</code></li>
+<li>error: <code>if (span.error) {</code>, callout 13, <a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:829-829</code></li>
+</ul>
+<h2>Diagnosis</h2>
+<p>The reader filters spans, focuses one from an insight or from the context tab, and opens span text. Focusing a span past the shown rows widens the row budget so it is drawn <code>web/src/TraceTab.tsx:768-771</code> <code>web/src/TraceTab.tsx:801-805</code>.</p>
+<p>What can go wrong:</p>
+<ul>
+<li>A span text request that failed is stored as an error, and pressing Text again does not fetch it again because a stored state already exists <code>web/src/TraceTab.tsx:791</code> <code>web/src/TraceTab.tsx:795-797</code>.</li>
+<li>A 404 is detected by looking for the text 404 in the error message, which depends on the wording of the API helper <code>web/src/TraceTab.tsx:59-61</code> <code>web/src/api.ts:497</code>.</li>
+<li>A span focused from the context tab that the kind filter or errors only hides is not found in the rows, and nothing tells the reader why no row is highlighted <code>web/src/TraceTab.tsx:765-768</code>.</li>
+</ul>
+<p>States not handled: there is no loading indicator per span text request beyond the stored loading state inside the content block <code>web/src/TraceTab.tsx:792</code> <code>web/src/TraceTab.tsx:836-838</code>.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

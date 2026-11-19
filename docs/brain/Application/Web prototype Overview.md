@@ -20,7 +20,7 @@ What Web prototype is made of and how it connects to the rest of the code.
 
 ## How it works
 
-Web prototype holds 10 source files and 3215 lines. The most depended-on files are `web/src/prototype/data.ts`, `web/src/prototype/Gallery.tsx`, `web/src/prototype/OverviewScreen.tsx`. It uses Web Overview, Web UI components Overview, Web ui UI components Overview. No other chunk depends on it.
+Web prototype holds 10 source files and 3215 lines. The most depended-on files are `web/src/prototype/data.ts`, `web/src/prototype/Gallery.tsx`, `web/src/prototype/OverviewScreen.tsx`. It uses [[Web Overview]], [[Web UI components Overview]], [[Web ui UI components Overview]]. No other chunk depends on it.
 
 The purpose column quotes each file's own header comment where it has one. Every file is cited by its full line range, and every public name by the line that declares it.
 

@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Alert comparison windows</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/alert-comparison-windows.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Implementation and Migration / Change · TOGAF: Phases E to H: solutions, migration, governance and change</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Alert comparison windows</h1>
+<p>This view puts the two periods the spend alert compares on a calendar. It makes clear that the current period always includes today and that the earlier period has the same length and ends the day before. Anyone setting a rise limit can see exactly which days are being compared.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The dates are an example: a run on 10 August 2026 with a rise limit and a three day window. The code computes the same shape for any run date and length. <code>src/ai_usage_cost/cli.py:314</code> <code>src/ai_usage_cost/cli.py:329-330</code></li>
+<li>The current window ends today and starts the window length minus one day before, so today is one of its days. <code>src/ai_usage_cost/cli.py:329-330</code></li>
+<li>Only with the rise limit, the previous window starts the window length before the current start and ends the day before it. <code>src/ai_usage_cost/cli.py:333-337</code></li>
+<li>Both ends of a window are included, because the report keeps every request whose local day is on or after the start and on or before the end. <code>src/ai_usage_cost/pipeline.py:269-270</code></li>
+<li>The day of a request is its local calendar day on this machine, whatever offset the log wrote. <code>src/ai_usage_cost/models.py:137-146</code></li>
+<li>With the total limit only the current window is reported and compared. <code>src/ai_usage_cost/cli.py:261-264</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>Part of the use case be alerted when spend rises; the whole run is drawn in <a href="../diagrams/spend-alert-run.html">Spend alert run</a>.</li>
+<li>The local day rule is shared with every day filter of the dashboard, described in <a href="../application/ai-usage-cost-overview.html">Ai usage cost Overview</a>.</li>
+<li>No schedule is in the code: the alert runs only when the person or their own scheduler starts it (<code>src/ai_usage_cost/cli.py:298-299</code>).</li>
+</ul>
+<h2>Alert comparison windows</h2>
+<pre class="mermaid">gantt
+    title Alert windows for one example run: alert --rise-over 5 --days 3 on 2026-08-10
+    dateFormat YYYY-MM-DD
+    axisFormat %m-%d
+    section Legend
+    A bar is one window of local days, both ends included :l1, 2026-08-01, 1d
+    section rise-over only
+    previous window, since - days to since - 1 :p1, 2026-08-05, 3d
+    section Always
+    current window, since to until (today) :c1, 2026-08-08, 3d
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:329-337</code></td>
+<td>The two windows</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pipeline.py:248-279</code></td>
+<td>The inclusive day filter</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/models.py:137-146</code></td>
+<td>The local day of a request</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

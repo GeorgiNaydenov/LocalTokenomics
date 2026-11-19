@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Environment Variables</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="operations/environment-variables.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Technology / Operations · TOGAF: Phase D, Technology Architecture</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> </p><h1>Environment Variables</h1>
+<p>Every environment variable the code reads, with where it is read and where it is declared.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Needed</th>
+<th>Read at</th>
+<th>Declared in an example file</th>
+<th>Set in CI or compose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>APPDATA</code></td>
+<td>optional (a fallback exists)</td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:97</code>, <a href="#">src/ai_usage_cost/sources/copilot_chat.py</a> <code>src/ai_usage_cost/sources/copilot_chat.py:18</code>, <a href="#">src/ai_usage_cost/sources/cursor.py</a> <code>src/ai_usage_cost/sources/cursor.py:19</code> and 4 more</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>CLINE_DATA_DIR</code></td>
+<td>optional (a fallback exists)</td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:127</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>CLINE_DIR</code></td>
+<td>optional (a fallback exists)</td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:130</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>CLINE_SESSION_DATA_DIR</code></td>
+<td>optional (a fallback exists)</td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:124</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>COPILOT_HOME</code></td>
+<td>optional (a fallback exists)</td>
+<td><a href="#">src/ai_usage_cost/sources/copilot_cli.py</a> <code>src/ai_usage_cost/sources/copilot_cli.py:62</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>GEMINI_CLI_HOME</code></td>
+<td>optional (a fallback exists)</td>
+<td><a href="#">src/ai_usage_cost/sources/gemini_cli.py</a> <code>src/ai_usage_cost/sources/gemini_cli.py:32</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>GROK_HOME</code></td>
+<td>optional (a fallback exists)</td>
+<td><a href="#">src/ai_usage_cost/sources/grok_build.py</a> <code>src/ai_usage_cost/sources/grok_build.py:15</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>LOCALAPPDATA</code></td>
+<td>required</td>
+<td><a href="#">src/ai_usage_cost/sources/ollama_app.py</a> <code>src/ai_usage_cost/sources/ollama_app.py:16</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>MUSE_DATA_DIR</code></td>
+<td>optional (a fallback exists)</td>
+<td><a href="#">src/ai_usage_cost/sources/muse_code.py</a> <code>src/ai_usage_cost/sources/muse_code.py:60</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>XDG_DATA_HOME</code></td>
+<td>optional (a fallback exists)</td>
+<td><a href="#">src/ai_usage_cost/sources/muse_code.py</a> <code>src/ai_usage_cost/sources/muse_code.py:63</code>, <a href="#">src/ai_usage_cost/sources/opencode.py</a> <code>src/ai_usage_cost/sources/opencode.py:65</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>Names and locations only. Values never appear in this note, in logs or in commits.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

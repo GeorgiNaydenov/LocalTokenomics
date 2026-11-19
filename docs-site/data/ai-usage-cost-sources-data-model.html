@@ -1,0 +1,228 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Ai usage cost sources Data Model</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="data/ai-usage-cost-sources-data-model.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Data · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/sources/**</code></p><h1>Ai usage cost sources Data Model</h1>
+<p>The entities owned by the Ai usage cost sources chunk.</p>
+<h2>How it works</h2>
+<p>2 entities were found with their columns, defaults, keys, relations and enumerated values. This is the data dictionary of the chunk; tables created only by demo, fixture or seed files are listed here and kept out of the diagrams; the conceptual, logical and physical diagrams are listed in <a href="../diagrams/ai-usage-cost-sources-diagrams.html">Ai usage cost sources Diagrams</a>.</p>
+<p>Both entities are plain frozen dataclasses, not stored tables. <code>Source</code> is the description of one reader. <code>src/ai_usage_cost/sources/base.py:17-40</code> <code>Spec</code> holds the per tool settings the Cline family shares: the source id, the client name, the extension id, whether the input token count already includes cache buckets, and whether the SDK store is read. <code>src/ai_usage_cost/sources/cline.py:81-87</code></p>
+<p><code>TokenData</code> is a two value literal, <code>full</code> or <code>session</code>, which says whether a reader yields token counts or only session presence. <code>src/ai_usage_cost/sources/base.py:14</code> The events a reader yields are the <code>UsageEvent</code> model of another module, which this chunk only fills. <code>src/ai_usage_cost/sources/base.py:11</code></p>
+<h2>Reference</h2>
+<h3>Entity summary</h3>
+<table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Table</th>
+<th>Columns</th>
+<th>Key</th>
+<th>Relations</th>
+<th>Referenced by</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source</td>
+<td>-</td>
+<td>12</td>
+<td>-</td>
+<td>0</td>
+<td>-</td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:18-44</code></td>
+</tr>
+<tr>
+<td>Spec</td>
+<td>-</td>
+<td>5</td>
+<td>-</td>
+<td>0</td>
+<td>-</td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:82-87</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Source</h3>
+<p>Defined at <a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:18-44</code>. Specification note: Source.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Null</th>
+<th>Key</th>
+<th>Default</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>str</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td><code>str</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>clients</code></td>
+<td><code>dict[str, str]</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td><code>Callable[[], list[Path]]</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>files</code></td>
+<td><code>Callable[[Path], list[Path]]</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td><code>Callable&lt;a href="#"&gt;Path, list[str&lt;/a&gt;, Iterator[UsageEvent]]</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>token_data</code></td>
+<td><code>TokenData</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>values of <code>TokenData</code></td>
+</tr>
+<tr>
+<td><code>display_path</code></td>
+<td><code>str</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>spans</code></td>
+<td><code>Callable&lt;a href="#"&gt;Path, list[str&lt;/a&gt;, Iterator[Span]] \| None</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>capabilities</code></td>
+<td><code>Capabilities</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>experimental</code></td>
+<td><code>bool</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>parse_resume</code></td>
+<td><code>Callable[[Path, list[str], int, str \| None], Iterator[UsageEvent]] \| None</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>No relations were extracted.</p>
+<h3>Spec</h3>
+<p>Defined at <a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:82-87</code>. Specification note: Spec.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Null</th>
+<th>Key</th>
+<th>Default</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>source_id</code></td>
+<td><code>str</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>client</code></td>
+<td><code>str</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>ext_id</code></td>
+<td><code>str</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>tokens_in_inclusive</code></td>
+<td><code>bool</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>sdk</code></td>
+<td><code>bool</code></td>
+<td>yes</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>No relations were extracted.</p>
+<h3>Enumerated values</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Values</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TokenData</code></td>
+<td><code>full</code>, <code>session</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:14</code></td>
+</tr>
+</tbody>
+</table></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

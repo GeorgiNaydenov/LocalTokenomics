@@ -1,0 +1,83 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Warnings list states</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/warnings-list-states.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> covers <code>web/src/components/*</code></p><h1>Warnings list states</h1>
+<p>This chart shows what a reader sees on the sources screen when the scan reports warnings. It makes clear which views exist and what moves between them. It also marks three views where the code draws nothing and gives no hint why.</p>
+<h2>What the diagram shows</h2>
+<p>A warnings list starts with no kind picked, and while that list is empty it shows every group. <code>web/src/components/states.tsx:248-249</code> <code>web/src/components/states.tsx:249-249</code></p>
+<p>The row of kind toggles is drawn only when there is more than one group, and each toggle carries the number of instances of its kind. <code>web/src/components/states.tsx:253-269</code></p>
+<p>Picking one or more kinds keeps only the groups whose kind is in the picked list, and clearing the last pick brings every group back. <code>web/src/components/states.tsx:249-249</code></p>
+<p>The groups are drawn through a plain map over the shown groups, so an empty result draws an empty area and no message. <code>web/src/components/states.tsx:272-274</code></p>
+<p>A group row starts collapsed, and its Show files button exists only when the group counts more than one instance. <code>web/src/components/states.tsx:203-203</code> <code>web/src/components/states.tsx:224-225</code></p>
+<p>The instance list is drawn when the row is expanded or when the count is exactly one, so a row with a count of zero can never open. <code>web/src/components/states.tsx:230-230</code></p>
+<h2>Capability and related functionality</h2>
+<p>The chart belongs to the warnings list of the shared page states, used by the sources screen. The explanation of the parts is in <a href="../application/web-ui-components-overview.html">Web UI components Overview</a>, and the failure paths are in <a href="../diagrams/offline-and-error-handling-flow.html">Offline and error handling flow</a>. The tests of this folder are listed in <a href="../application/web-ui-components-tests.html">Web UI components Tests</a>, and none of them covers the warnings list.</p>
+<h2>Warnings list states</h2>
+<pre class="mermaid">stateDiagram-v2
+    direction TB
+    state &quot;Showing every group&quot; as ShowingAll
+    state &quot;Filtered to picked kinds&quot; as Filtered
+    state &quot;Nothing shown&quot; as NothingShown
+    state &quot;No groups at all&quot; as NoGroups
+    state &quot;Row collapsed&quot; as Collapsed
+    state &quot;Row expanded&quot; as Expanded
+    state &quot;Row always open&quot; as AlwaysOpen
+    state &quot;Row cannot open&quot; as Stuck
+
+    [*] --&gt; ShowingAll: mounted, no kind picked
+    ShowingAll --&gt; Filtered: reader picks a kind
+    Filtered --&gt; Filtered: reader toggles another kind
+    Filtered --&gt; ShowingAll: reader clears the last kind
+    Filtered --&gt; NothingShown: picked kinds match no group
+    NothingShown --&gt; ShowingAll: reader clears every kind
+    [*] --&gt; NoGroups: groups is an empty list
+
+    [*] --&gt; Collapsed: row with more than one file
+    Collapsed --&gt; Expanded: reader presses Show files
+    Expanded --&gt; Collapsed: reader presses Hide files
+    [*] --&gt; AlwaysOpen: row with exactly one file
+    [*] --&gt; Stuck: row with a count of zero
+
+    note right of ShowingAll
+        Legend: a rounded box is a UI state. An arrow label is the trigger.
+        The filled dot is where a list or a row starts.
+    end note
+    note left of NothingShown
+        Not handled by the code: NothingShown, NoGroups and Stuck draw an empty area with no message.
+    end note
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/components/states.tsx:248-249</code></td>
+<td>Initial kind list</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:253-269</code></td>
+<td>Kind toggles</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:249-249</code></td>
+<td>Filter by kind</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:272-274</code></td>
+<td>Rows drawn from the shown groups</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:224-225</code></td>
+<td>Show files button</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:230-230</code></td>
+<td>Instance list condition</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

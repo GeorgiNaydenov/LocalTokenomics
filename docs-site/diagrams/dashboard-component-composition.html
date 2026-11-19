@@ -1,0 +1,117 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Dashboard component composition</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/dashboard-component-composition.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> covers <code>web/src/components/*</code></p><h1>Dashboard component composition</h1>
+<p>This tree shows which shared component draws which other component. It helps a developer see that one hover frame and one info box serve many parts, so a fix there reaches every screen. It also marks where the tree ends at the basic interface parts.</p>
+<h2>What the diagram shows</h2>
+<p>The dashboard pages place the shared components: the overview page uses the stat card, the source card and the time chart, the sessions page uses the session card, the sources page uses the warnings list, the context tab uses the occupancy bars and the app shell uses the offline and error cards. <code>web/src/Overview.tsx:20-20</code> <code>web/src/Sessions.tsx:17-17</code> <code>web/src/Sources.tsx:7-7</code> <code>web/src/App.tsx:17-17</code> <code>web/src/ContextTab.tsx:9-9</code></p>
+<p>A stat card renders the info box next to its label and a number ticker for a numeric value. <code>web/src/components/stat.tsx:101-101</code> <code>web/src/components/stat.tsx:114-114</code></p>
+<p>A source card renders a sparkline, and both the sparkline and the context occupancy bars render the hover frame, so pointer and keyboard inspection is written once. <code>web/src/components/source-card.tsx:49-49</code> <code>web/src/components/sparkline.tsx:132-132</code> <code>web/src/components/trace.tsx:75-75</code></p>
+<p>A session card renders the outcome badge, and every signal badge that has a hint is wrapped by the info box. <code>web/src/components/session.tsx:161-161</code> <code>web/src/components/status.tsx:139-139</code></p>
+<p>The time chart renders the chart container and the key list of series. <code>web/src/components/chart-time.tsx:174-174</code> <code>web/src/components/chart-time.tsx:99-99</code></p>
+<p>The warnings list renders one row per group, and each row puts the info box on its severity dot. <code>web/src/components/states.tsx:273-273</code> <code>web/src/components/states.tsx:211-211</code></p>
+<p>The offline card renders a code block with the start command inside a panel, and the error card renders a panel with a title, a message and an optional retry button. <code>web/src/components/states.tsx:317-317</code> <code>web/src/components/states.tsx:305-305</code> <code>web/src/components/states.tsx:110-110</code></p>
+<p>The info box opens its content in a popover from the UI primitives. <code>web/src/components/metric-info.tsx:114-114</code></p>
+<h2>Capability and related functionality</h2>
+<p>The tree realises how the shared display layer composes cards, charts and badges. Imports between files are in <a href="../diagrams/shared-components-imports.html">Shared components imports</a>, the grouping is in <a href="../diagrams/shared-components-c4.html">Shared components C4</a>, and the vocabulary is in <a href="../diagrams/shared-components-concepts.html">Shared components concepts</a>. The primitives are described in <a href="../application/web-ui-ui-components-overview.html">Web ui UI components Overview</a> and the tests in <a href="../application/web-ui-components-tests.html">Web UI components Tests</a>.</p>
+<h2>Dashboard component composition</h2>
+<pre class="mermaid">flowchart TD
+    pages[&quot;Dashboard pages&quot;]:::page
+    stat[&quot;Stat&quot;]:::shared
+    source[&quot;SourceCard&quot;]:::shared
+    session[&quot;SessionCard&quot;]:::shared
+    timechart[&quot;TimeChart&quot;]:::shared
+    warnings[&quot;WarningsList&quot;]:::shared
+    offline[&quot;OfflineCard&quot;]:::shared
+    errorstate[&quot;ErrorState&quot;]:::shared
+    occupancy[&quot;ContextOccupancy&quot;]:::shared
+    info[&quot;MetricInfo&quot;]:::shared
+    ticker[&quot;NumberTicker&quot;]:::shared
+    spark[&quot;Sparkline&quot;]:::shared
+    hover[&quot;HoverFrame&quot;]:::shared
+    outcome[&quot;OutcomeBadge&quot;]:::shared
+    keylist[&quot;Legend list&quot;]:::shared
+    row[&quot;WarningGroupRow&quot;]:::shared
+    code[&quot;CodeBlock&quot;]:::shared
+    panel[&quot;Panel&quot;]:::shared
+    chartbox[&quot;ChartContainer&quot;]:::third
+    popover[&quot;Popover&quot;]:::third
+
+    pages --&gt; stat
+    pages --&gt; source
+    pages --&gt; session
+    pages --&gt; timechart
+    pages --&gt; warnings
+    pages --&gt; offline
+    pages --&gt; errorstate
+    pages --&gt; occupancy
+    stat --&gt; info
+    stat --&gt; ticker
+    source --&gt; spark
+    spark --&gt; hover
+    occupancy --&gt; hover
+    session --&gt; outcome
+    outcome --&gt; info
+    timechart --&gt; keylist
+    timechart --&gt; chartbox
+    warnings --&gt; row
+    row --&gt; info
+    offline --&gt; code
+    offline --&gt; panel
+    errorstate --&gt; panel
+    info --&gt; popover
+
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Page: thick border&quot;]:::page
+        zlegend_b[&quot;Shared component&quot;]:::shared
+        zlegend_c[&quot;Primitive from components/ui&quot;]:::third
+    end
+
+    classDef page fill:#dae8fc,stroke:#222222,color:#222222,stroke-width:4px
+    classDef shared fill:#dae8fc,stroke:#222222,color:#222222
+    classDef third fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:5 3
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/Overview.tsx:20-20</code></td>
+<td>Overview page imports</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:17-17</code></td>
+<td>App shell imports of the offline and error cards</td>
+</tr>
+<tr>
+<td><code>web/src/components/stat.tsx:61-155</code></td>
+<td>Stat card</td>
+</tr>
+<tr>
+<td><code>web/src/components/sparkline.tsx:132-132</code></td>
+<td>Sparkline using the hover frame</td>
+</tr>
+<tr>
+<td><code>web/src/components/status.tsx:139-139</code></td>
+<td>Signal badge wrapped by the info box</td>
+</tr>
+<tr>
+<td><code>web/src/components/chart-time.tsx:99-99</code></td>
+<td>Chart container in the time chart</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:202-245</code></td>
+<td>Warning group row</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:317-317</code></td>
+<td>Offline card code block</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

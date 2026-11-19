@@ -38,6 +38,18 @@ This view puts the two periods the spend alert compares on a calendar. It makes 
 ## Alert comparison windows
 
 %% generated:diagram-alert-windows start (do not edit; run brain docs generate) %%
+```mermaid
+gantt
+    title Alert windows for one example run: alert --rise-over 5 --days 3 on 2026-08-10
+    dateFormat YYYY-MM-DD
+    axisFormat %m-%d
+    section Legend
+    A bar is one window of local days, both ends included :l1, 2026-08-01, 1d
+    section rise-over only
+    previous window, since - days to since - 1 :p1, 2026-08-05, 3d
+    section Always
+    current window, since to until (today) :c1, 2026-08-08, 3d
+```
 %% generated:diagram-alert-windows end %%
 
 > [!example]- Code references

@@ -15,7 +15,6 @@ chunks:
   components: ['localtokenomics:root']
   globs: [web/*]
   depends_on: []
-  state: approved
   display_name: localtokenomics root
   files: 2
   lines: 56
@@ -30,20 +29,13 @@ chunks:
       who reads them, error-flow: '2 located refusals, assertions or validators; how
       failures are handled', glossary-map: 0 entities and 28 enums name domain terms,
     package-tree: 86 files in 6 folders; the structure of this module}
-  diagrams: [c4, mind-map, capability, config-map, package-tree]
-  diagrams_confirmed: true
-  estimate: {tokens: 78223, minutes: 9, note: rough estimate; tune after the first
-      runs}
   existing_docs: stale
-  approved_by: human
-  approved_at: '2026-11-19T00:10:32+00:00'
 - id: ch-localtokenomics-src-ai-usage-cost-sources
   title: src/ai_usage_cost/sources
   repo: localtokenomics
   components: ['localtokenomics:src-ai-usage-cost-sources']
   globs: [src/ai_usage_cost/sources/**]
   depends_on: [ch-localtokenomics-src-ai-usage-cost]
-  state: approved
   display_name: Ai usage cost sources
   files: 22
   lines: 4722
@@ -63,20 +55,13 @@ chunks:
       entities; where their data comes from and where it goes, dfd: 'data moves between
       routes, stores and callers', module-dependency: 36 imports cross this module's
       border, glossary-map: 2 entities and 1 enums name domain terms}
-  diagrams: [c4, mind-map, class, data-lineage, dfd, module-dependency, glossary-map]
-  diagrams_confirmed: true
-  estimate: {tokens: 160113, minutes: 18, note: rough estimate; tune after the first
-      runs}
   existing_docs: covered
-  approved_by: human
-  approved_at: '2026-11-19T00:12:16+00:00'
 - id: ch-localtokenomics-src-ai-usage-cost
   title: src/ai_usage_cost
   repo: localtokenomics
   components: ['localtokenomics:src-ai-usage-cost']
   globs: [src/ai_usage_cost/*]
   depends_on: [ch-localtokenomics-src-ai-usage-cost-render, ch-localtokenomics-src-ai-usage-cost-sources]
-  state: approved
   display_name: Ai usage cost
   files: 13
   lines: 5069
@@ -102,22 +87,13 @@ chunks:
       located refusals, assertions or validators; how failures are handled', glossary-map: 51
       entities and 9 enums name domain terms, package-tree: 38 files in 3 folders;
       the structure of this module}
-  diagrams: [c4, mind-map, api-map, sequence, use-case-diagram, flowchart, erd, erd-conceptual,
-    class, data-lineage, state, dfd, activity, timeline, gantt, bpmn, error-flow,
-    glossary-map, package-tree]
-  diagrams_confirmed: true
-  estimate: {tokens: 220126, minutes: 24, note: rough estimate; tune after the first
-      runs}
   existing_docs: stale
-  approved_by: human
-  approved_at: '2026-11-19T06:39:10+00:00'
 - id: ch-localtokenomics-src-ai-usage-cost-render
   title: src/ai_usage_cost/render
   repo: localtokenomics
   components: ['localtokenomics:src-ai-usage-cost-render']
   globs: [src/ai_usage_cost/render/**]
   depends_on: [ch-localtokenomics-src-ai-usage-cost]
-  state: approved
   display_name: Ai usage cost render
   files: 3
   lines: 187
@@ -125,20 +101,13 @@ chunks:
   recommended: {c4: 3 files form this module; shows what it contains and depends on,
     mind-map: 3 files; the concepts of this module in one picture for a newcomer,
     module-dependency: 2 imports cross this module's border}
-  diagrams: [c4, mind-map, module-dependency]
-  diagrams_confirmed: true
-  estimate: {tokens: 71167, minutes: 8, note: rough estimate; tune after the first
-      runs}
   existing_docs: none
-  approved_by: human
-  approved_at: '2026-11-19T06:47:09+00:00'
 - id: ch-localtokenomics-web-src-components
   title: web/src/components
   repo: localtokenomics
   components: ['localtokenomics:web-src-components']
   globs: [web/src/components/*]
   depends_on: [ch-localtokenomics-web-src, ch-localtokenomics-web-src-components-ui]
-  state: approved
   display_name: Web UI components
   files: 18
   lines: 3024
@@ -157,21 +126,13 @@ chunks:
       components, none named like a screen; how the user moves between them', module-dependency: 44
       imports cross this module's border, error-flow: '1 located refusals, assertions
       or validators; how failures are handled'}
-  diagrams: [c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow,
-    module-dependency, error-flow]
-  diagrams_confirmed: true
-  estimate: {tokens: 142724, minutes: 16, note: rough estimate; tune after the first
-      runs}
   existing_docs: none
-  approved_by: human
-  approved_at: '2026-11-18T19:03:01+00:00'
 - id: ch-localtokenomics-web-src
   title: web/src
   repo: localtokenomics
   components: ['localtokenomics:web-src']
   globs: [web/src/*, web/src/design-system/*]
   depends_on: [ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui]
-  state: approved
   display_name: Web
   files: 20
   lines: 7127
@@ -191,21 +152,13 @@ chunks:
       located refusals, assertions or validators; how failures are handled', glossary-map: 0
       entities and 28 enums name domain terms, package-tree: 83 files in 5 folders;
       the structure of this module}
-  diagrams: [c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow,
-    sitemap, user-journey, error-flow, glossary-map, package-tree]
-  diagrams_confirmed: true
-  estimate: {tokens: 220381, minutes: 24, note: rough estimate; tune after the first
-      runs}
   existing_docs: stale
-  approved_by: human
-  approved_at: '2026-11-19T07:31:41+00:00'
 - id: ch-localtokenomics-web-src-components-ui
   title: web/src/components/ui
   repo: localtokenomics
   components: ['localtokenomics:web-src-components-ui']
   globs: [web/src/components/ui/**]
   depends_on: [ch-localtokenomics-web-src]
-  state: approved
   display_name: Web ui UI components
   files: 25
   lines: 2083
@@ -222,13 +175,7 @@ chunks:
       on, mind-map: 25 files; the concepts of this module in one picture for a newcomer,
     module-dependency: 24 imports cross this module's border, error-flow: '1 located
       refusals, assertions or validators; how failures are handled'}
-  diagrams: [c4, mind-map, module-dependency, error-flow]
-  diagrams_confirmed: true
-  estimate: {tokens: 105294, minutes: 12, note: rough estimate; tune after the first
-      runs}
   existing_docs: none
-  approved_by: human
-  approved_at: '2026-11-18T19:04:28+00:00'
 - id: ch-localtokenomics-web-src-prototype
   title: web/src/prototype
   repo: localtokenomics
@@ -236,7 +183,6 @@ chunks:
   globs: [web/src/prototype/**]
   depends_on: [ch-localtokenomics-web-src, ch-localtokenomics-web-src-components,
     ch-localtokenomics-web-src-components-ui]
-  state: approved
   display_name: Web prototype
   files: 10
   lines: 3215
@@ -253,14 +199,7 @@ chunks:
       moves between them, sitemap: 4 screens; how they are grouped and nested, user-journey: 4
       screens; the steps a user takes across them, module-dependency: 88 imports cross
       this module's border, glossary-map: 0 entities and 4 enums name domain terms}
-  diagrams: [c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow,
-    sitemap, user-journey, module-dependency, glossary-map]
-  diagrams_confirmed: true
-  estimate: {tokens: 154804, minutes: 17, note: rough estimate; tune after the first
-      runs}
   existing_docs: stale
-  approved_by: human
-  approved_at: '2026-11-19T06:43:13+00:00'
 plan_approved_by: human
 plan_approved_at: '2026-11-18T22:51:39+00:00'
 ---

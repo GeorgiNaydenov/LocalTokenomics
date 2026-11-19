@@ -1,0 +1,94 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Usage cost concepts</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/usage-cost-concepts.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Strategy · TOGAF: Phase A, Architecture Vision</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Usage cost concepts</h1>
+<p>This picture gives a newcomer the whole core of the tool on one page. It names the five things the core is made of: the ways in, the run that prices usage, the price model, the stored data and the privacy controls. Reading it first makes every other page about the core easier to place.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The command line offers eight commands: scan, serve, demo, export, collect, sql, alert and tui. <code>src/ai_usage_cost/cli.py:71-72</code> <code>src/ai_usage_cost/cli.py:108-109</code> <code>src/ai_usage_cost/cli.py:140-141</code> <code>src/ai_usage_cost/cli.py:175-176</code> <code>src/ai_usage_cost/cli.py:199-200</code> <code>src/ai_usage_cost/cli.py:228-229</code> <code>src/ai_usage_cost/cli.py:298-299</code> <code>src/ai_usage_cost/cli.py:357-358</code></li>
+<li>The HTTP interface is one application whose data routes all start with /api. <code>src/ai_usage_cost/api.py:198-214</code> <code>src/ai_usage_cost/api.py:255</code></li>
+<li>The run called analyze ingests changed logs into the store, prices every loaded request and then adds the warnings. <code>src/ai_usage_cost/pipeline.py:166-199</code> <code>src/ai_usage_cost/pipeline.py:212-245</code></li>
+<li>A report is a filtered slice of that analysis summarised by build_report. <code>src/ai_usage_cost/pipeline.py:305-349</code></li>
+<li>Prices come from a rate table loaded from rates.json, and price_event returns a cost and one of four cost states. <code>src/ai_usage_cost/pricing.py:252-287</code> <code>src/ai_usage_cost/models.py:8</code></li>
+<li>The store is a SQLite file under the home folder that holds requests, files, trace events, outcomes and session exclusions, and the GPU sampler adds a samples table. <code>src/ai_usage_cost/pipeline.py:28</code> <code>src/ai_usage_cost/store.py:21-87</code> <code>src/ai_usage_cost/collect.py:18-25</code></li>
+<li>Privacy rests on a configuration that starts in metadata only mode, on redaction of any text that is released and on forgetting a session. <code>src/ai_usage_cost/privacy.py:52-57</code> <code>src/ai_usage_cost/privacy.py:78-101</code> <code>src/ai_usage_cost/store.py:595-606</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The concepts are explained in prose in <a href="../application/ai-usage-cost-overview.html">Ai usage cost Overview</a>, and the terms are drawn with their relations in <a href="../diagrams/usage-cost-terms.html">Usage cost terms</a>.</li>
+<li>The run from logs to report is drawn step by step in <a href="../diagrams/scan-pipeline-from-logs-to-report.html">Scan pipeline from logs to report</a>, and the price decision in <a href="../diagrams/how-one-request-is-priced.html">How one request is priced</a>.</li>
+<li>The stored data is in <a href="../data/ai-usage-cost-data-model.html">Ai usage cost Data Model</a> and the routes in <a href="../diagrams/usage-cost-http-routes.html">Usage cost HTTP routes</a>.</li>
+<li>The privacy controls are explained in <a href="../security/ai-usage-cost-security.html">Ai usage cost Security</a>.</li>
+</ul>
+<h2>Usage cost concepts</h2>
+<pre class="mermaid">mindmap
+  root((ai usage cost core))
+    Entry points
+      cli commands
+        scan, serve, demo, export
+        collect, sql, alert, tui
+      HTTP routes under /api
+    Pipeline
+      analyze
+        ingest changed logs
+        price every request
+        collect warnings
+      report_of
+        filter by day, client, model
+        build_report
+    Cost model
+      RateTable from rates.json
+      price_event
+      Cost state
+        priced, free
+        unpriced, unavailable
+    Store and data
+      SQLite usage.db
+        requests, files
+        trace_events, outcomes
+        session_exclusions, samples
+      UsageEvent and PricedEvent
+      Report with buckets
+    Privacy
+      Config metadata_only
+      redact before release
+      forget a session
+    Legend
+      First level: a main concern of the chunk
+      Second level and deeper: the concepts inside it, named as in the code
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:24-27</code></td>
+<td>The command line application</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/api.py:198-214</code></td>
+<td>The HTTP application</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pipeline.py:166-245</code></td>
+<td>The analyze run</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pricing.py:252-287</code></td>
+<td>The rate table and its loader</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/store.py:21-87</code></td>
+<td>The store tables</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/privacy.py:52-57</code></td>
+<td>The privacy configuration</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

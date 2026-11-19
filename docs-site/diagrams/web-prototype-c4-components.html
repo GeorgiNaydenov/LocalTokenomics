@@ -1,0 +1,123 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web prototype C4 components</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-prototype-c4-components.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Web prototype C4 components</h1>
+<p>This view shows the experimental copy of the dashboard that lives beside the real one. It lets a designer or developer try the four screens and the design system against made up numbers, with no usage logs needed. It also shows that the real dashboard is a separate program, so nobody mistakes the mock screens for the product.</p>
+<h2>What the diagram shows</h2>
+<p>A developer opens the prototype page on the development server, and that page loads the prototype entry script <code>web/prototype.html:25-25</code> <code>web/src/prototype/main.tsx:1-11</code>. The entry script mounts the <code>Prototype</code> shell, which holds the tabs, the theme toggle and the header buttons <code>web/src/prototype/Prototype.tsx:20-112</code>.</p>
+<p>The shell shows either the design system page or the <code>Screens</code> component <code>web/src/prototype/Prototype.tsx:98-107</code>. <code>Screens</code> keeps the filter form state and the open session drawer, and draws the filter rail <code>web/src/prototype/Screens.tsx:266-378</code>. The rail is a fixed column on wide windows and a slide-in sheet on narrow ones <code>web/src/prototype/Rail.tsx:245-276</code>. <code>Screens</code> then renders one of the four reference screens <code>web/src/prototype/Screens.tsx:360-368</code>.</p>
+<p>The screens and the rail read only from the mock data file. It holds literal totals and a generated list of sessions <code>web/src/prototype/data.ts:617-632</code> <code>web/src/prototype/data.ts:698-742</code>. No call to the local usage API appears in the prototype folder, so the API is drawn as an external system that the prototype never reaches.</p>
+<p>Both the prototype and the shipped dashboard import the same shared components and design system <code>web/src/prototype/Screens.tsx:3-24</code> <code>web/src/App.tsx:14-18</code>. The shipped dashboard has its own entry script and its own page <code>web/src/main.tsx:3-13</code> <code>web/index.html:26-26</code>, and it does fetch real data from the API <code>web/src/App.tsx:168-169</code> <code>web/src/App.tsx:186-186</code>.</p>
+<p>A developer porting a screen reads the matching prototype file and copies its layout into the real file. The migration guide says to copy the composition, not the module <code>web/src/design-system/MIGRATION.md:38-40</code>. That is the dashed arrow in the diagram.</p>
+<h2>Capability and related functionality</h2>
+<p>The prototype realises one capability: a clickable, data free reference for how the dashboard screens and the design system should look. It serves the people who build the dashboard, not the people who read their costs. The notes around it are <a href="../application/web-prototype-overview.html">Web prototype Overview</a> for the file by file explanation, <a href="../diagrams/web-prototype-diagrams.html">Web prototype Diagrams</a> for the generated import view, and Web Overview and Web UI components Overview for the shipped dashboard and the shared parts it uses.</p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/prototype.html:25-25</code></td>
+<td>The prototype page loads its own entry script</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/main.tsx:1-11</code></td>
+<td>The entry script mounts the shell</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Prototype.tsx:20-112</code></td>
+<td>The shell, with tabs, theme toggle and staged header buttons</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:266-378</code></td>
+<td>Filter state, chips, rail, active screen and session drawer</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:360-368</code></td>
+<td>The choice of one of the four screens</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Rail.tsx:245-276</code></td>
+<td>The filter rail in its two layouts</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Gallery.tsx:161-173</code></td>
+<td>The design system page</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/data.ts:617-632</code></td>
+<td>Literal mock totals</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/data.ts:698-742</code></td>
+<td>Generated mock sessions</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:14-18</code></td>
+<td>The shipped app imports the same shared parts</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:168-169</code></td>
+<td>The shipped app fetches metadata and rates</td>
+</tr>
+<tr>
+<td><code>web/src/main.tsx:3-13</code></td>
+<td>The shipped entry script</td>
+</tr>
+<tr>
+<td><code>web/src/design-system/MIGRATION.md:38-40</code></td>
+<td>Copy the layout, not the module</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2>Web prototype C4 components</h2>
+<pre class="mermaid">flowchart LR
+    dev([&quot;Developer&lt;br/&gt;Person&lt;br/&gt;porting a screen&quot;]):::person
+    subgraph proto[&quot;Web prototype: web/src/prototype (dev server only, not in the build)&quot;]
+        page[&quot;prototype.html + main.tsx&lt;br/&gt;Container: entry page&lt;br/&gt;React&quot;]:::system
+        shell[&quot;Prototype&lt;br/&gt;Component: header, tabs, theme&lt;br/&gt;React&quot;]:::system
+        screens[&quot;Screens&lt;br/&gt;Component: filters, chips, session drawer&lt;br/&gt;React&quot;]:::system
+        rail[&quot;FilterRail&lt;br/&gt;Component: filter form&lt;br/&gt;React&quot;]:::system
+        four[&quot;Overview, Sessions, Sources, Pricing&lt;br/&gt;Component: four reference screens&lt;br/&gt;React&quot;]:::system
+        gallery[&quot;Gallery&lt;br/&gt;Component: design system page&lt;br/&gt;React&quot;]:::system
+        mock[(&quot;data.ts&lt;br/&gt;Mock data: invented sessions,&lt;br/&gt;rates and totals&lt;br/&gt;TypeScript&quot;)]:::data
+    end
+    shared[&quot;Shared components and design system&lt;br/&gt;web/src/components, web/src/design-system&lt;br/&gt;Used by the prototype and the shipped app&quot;]:::system
+    shipped[&quot;Shipped dashboard&lt;br/&gt;web/index.html, web/src/main.tsx, App.tsx&lt;br/&gt;Container: real screens&quot;]:::system
+    api[&quot;Local usage API&lt;br/&gt;External system: never called by the prototype&quot;]:::external
+
+    dev --&gt;|opens /prototype.html| page
+    page --&gt; shell
+    shell --&gt; screens
+    shell --&gt; gallery
+    screens --&gt; rail
+    screens --&gt; four
+    four --&gt; mock
+    rail --&gt; mock
+    screens --&gt; shared
+    gallery --&gt; shared
+    shipped --&gt; shared
+    shipped --&gt;|fetches reports| api
+    dev -.-&gt;|copies the layout, not the module| shipped
+
+    subgraph Legend
+        direction LR
+        zl1([&quot;Person: yellow stadium&quot;]):::person
+        zl2[&quot;Component or container: blue box, part of this system&quot;]:::system
+        zl3[(&quot;Data store: green cylinder, mock data only&quot;)]:::data
+        zl4[&quot;External system: grey box, dashed border&quot;]:::external
+        zl5[&quot;Solid arrow: import or call. Dashed arrow: manual copy by a person&quot;]:::system
+        zl1 ~~~ zl2
+        zl2 ~~~ zl3
+        zl3 ~~~ zl4
+        zl4 ~~~ zl5
+    end
+
+    classDef person fill:#fff2cc,stroke:#222222,color:#111111
+    classDef system fill:#dae8fc,stroke:#222222,color:#111111
+    classDef data fill:#d5e8d4,stroke:#222222,color:#111111
+    classDef external fill:#e6e6e6,stroke:#222222,stroke-dasharray:5 3,color:#111111
+</pre></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

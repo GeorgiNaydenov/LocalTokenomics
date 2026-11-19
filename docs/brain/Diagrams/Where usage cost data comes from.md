@@ -63,6 +63,66 @@ This view follows each piece of stored data from where it starts to where it end
 ## Where usage cost data comes from
 
 %% generated:diagram-usage-cost-data-origins start (do not edit; run brain docs generate) %%
+```mermaid
+flowchart LR
+    logs(["AI coding tool logs"]):::outside
+    ratesfile(["rates.json"]):::outside
+    cfgfile(["config.json"]):::outside
+    gpu(["GPU tools and Ollama"]):::outside
+    viewer(["Person in the dashboard"]):::outside
+
+    ingest["ingest"]:::process
+    collect["collect"]:::process
+    load["load"]:::process
+    price["price_event"]:::process
+    report["report_of"]:::process
+    rate["rate_session and forget_session"]:::process
+    sqlview["sql (Datasette)"]:::process
+
+    requests[("requests")]:::store
+    files[("files")]:::store
+    traces[("trace_events")]:::store
+    outcomes[("outcomes")]:::store
+    exclusions[("session_exclusions")]:::store
+    samples[("samples")]:::store
+
+    out_json(["JSON, PNG, terminal, alert"]):::outside
+
+    logs -->|usage records| ingest
+    logs -->|trace records| ingest
+    cfgfile -->|exclude_projects, retention| ingest
+    ingest -->|one row per fingerprint| requests
+    ingest -->|mtime, size, offset, warnings| files
+    ingest -->|spans| traces
+    exclusions -->|excluded sessions| ingest
+    requests -->|stored requests| load
+    files -->|scan warnings| load
+    load -->|usage events| price
+    ratesfile -->|rate rows| price
+    price -->|priced events| report
+    traces -->|span and error counts| report
+    outcomes -->|ratings| report
+    report -->|Report| out_json
+    viewer -->|rating, notes, tags| rate
+    rate -->|outcome row| outcomes
+    rate -->|exclusion row| exclusions
+    gpu -->|utilisation, memory, power| collect
+    collect -->|sample rows| samples
+    samples -->|sample rows| sqlview
+
+    subgraph Legend
+        direction LR
+        zlegend_a[("Data store: a table of usage.db")]:::store
+        zlegend_b["Process that reads or writes it"]:::process
+        zlegend_c(["Outside source or sink"]):::outside
+        zlegend_d["An arrow is named after the data that moves, not the action"]:::process
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d
+    end
+
+    classDef store fill:#d5e8d4,stroke:#222222,color:#222222
+    classDef process fill:#dae8fc,stroke:#222222,color:#222222
+    classDef outside fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:4 3
+```
 %% generated:diagram-usage-cost-data-origins end %%
 
 > [!example]- Code references

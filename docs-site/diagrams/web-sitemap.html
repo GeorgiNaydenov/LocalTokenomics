@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web Sitemap</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-sitemap.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Web Sitemap</h1>
+<p>This map shows every page of the dashboard and how the pages are grouped. A reader sees that there are four views and one session panel with four tabs. None of them needs a sign in, because the dashboard runs on the reader's own machine.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The four views are named in the header tab strip <code>web/src/Header.tsx:24-24</code>.</li>
+<li>The workspace has four tabs, Summary, Trace, Economics and Context <code>web/src/SessionWorkspace.tsx:72-72</code>.</li>
+<li>The dashboard has no routes: the view and the open session are component state in App <code>web/src/App.tsx:136-137</code>.</li>
+<li>All requests go to relative paths under api on the same server <code>web/src/api.ts:503-503</code> <code>web/src/api.ts:539-540</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The transitions between these pages are in <a href="../diagrams/web-screen-flow.html">Web Screen Flow</a> and the layout of each page in its screen note, starting at <a href="../application/app-screen.html">App Screen</a>. The server side of the paths belongs to <a href="../application/web-api.html">Web API</a>.</p>
+<h2>Web Sitemap</h2>
+<pre class="mermaid">flowchart TD
+    app(&quot;LocalTokenomics dashboard&quot;):::section --&gt; views(&quot;Views in the header&quot;):::section
+    app --&gt; wsp(&quot;Session workspace&quot;):::section
+    views --&gt; ov[&quot;Overview&quot;]:::page
+    views --&gt; se[&quot;Sessions&quot;]:::page
+    views --&gt; so[&quot;Sources&quot;]:::page
+    views --&gt; pr[&quot;Models and pricing&quot;]:::page
+    wsp --&gt; su[&quot;Summary&quot;]:::page
+    wsp --&gt; tr[&quot;Trace&quot;]:::page
+    wsp --&gt; ec[&quot;Economics&quot;]:::page
+    wsp --&gt; cx[&quot;Context&quot;]:::page
+    se -.-&gt;|opens| wsp
+    ov -.-&gt;|links to| so
+    subgraph Legend
+        direction LR
+        zl1(&quot;Rounded box: a section&quot;):::section
+        zl2[&quot;Rectangle: a page or tab&quot;]:::page
+        zl3[&quot;Dashed line: a cross link. No page needs sign in.&quot;]:::page
+    end
+    classDef section fill:#eeeeee,stroke:#222222,color:#222222
+    classDef page fill:#dae8fc,stroke:#222222,color:#142233
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/Header.tsx:24-24</code></td>
+<td>The four views are named in the header tab strip</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:72-72</code></td>
+<td>The workspace has four tabs, Summary, Trace, Economics and Context</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:136-137</code></td>
+<td>The dashboard has no routes: the view and the open session are component state in App</td>
+</tr>
+<tr>
+<td><code>web/src/api.ts:503-503</code></td>
+<td>All requests go to relative paths under api on the same server</td>
+</tr>
+<tr>
+<td><code>web/src/api.ts:539-540</code></td>
+<td>All requests go to relative paths under api on the same server</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

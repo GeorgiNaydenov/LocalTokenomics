@@ -1,0 +1,123 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Ai usage cost API</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/ai-usage-cost-api.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Ai usage cost API</h1>
+<p>The routes and interfaces exposed by the Ai usage cost chunk.</p>
+<h2>How it works</h2>
+<p>12 routes were found. Each row names the HTTP method, the path, the handler and where the route is declared.</p>
+<h3>How the interface is built</h3>
+<p><code>create_app</code> builds one FastAPI application per analysis. It keeps the current <code>Analysis</code> in a small state dictionary, and the post route <code>/api/refresh</code> is the only place that replaces it (<code>src/ai_usage_cost/api.py:198-216</code>, <code>src/ai_usage_cost/api.py:388-392</code>). The application title is <code>ai-usage-cost</code> and the interactive docs sit at <code>/api/docs</code> (<code>src/ai_usage_cost/api.py:214</code>).</p>
+<p>The summary routes read the in memory analysis. The report route <code>/api/report</code> passes its query parameters straight to <code>report_of</code>, so the HTTP filters are the same filters the command line uses (<code>src/ai_usage_cost/api.py:289-318</code>). The meta route <code>/api/meta</code> lists the clients, providers, models and projects found, the first and last day, the rate table age and the warning counts (<code>src/ai_usage_cost/api.py:255-287</code>). The rates route <code>/api/rates</code> returns the loaded rate table (<code>src/ai_usage_cost/api.py:384-386</code>).</p>
+<p>The session routes read the store. A request for a trace, the economics, the context or the outcome of a session opens the store, checks that the session exists and answers 404 when it does not (<code>src/ai_usage_cost/api.py:230-242</code>). Reconstructed spans are cached per source and session for the life of one analysis, and a refresh or a delete clears the entry (<code>src/ai_usage_cost/api.py:207-213</code>, <code>src/ai_usage_cost/api.py:367</code>, <code>src/ai_usage_cost/api.py:391</code>). A server started without a store answers 503 on those routes (<code>src/ai_usage_cost/api.py:219-223</code>).</p>
+<p>The only write routes are the put route <code>/api/sessions/{source}/{session_id}/outcome</code>, which stores the human rating, and the delete route <code>/api/sessions/{source}/{session_id}</code>, which removes the session's spans and records an exclusion (<code>src/ai_usage_cost/api.py:355-368</code>, <code>src/ai_usage_cost/store.py:595-606</code>). Neither writes to the AI tools' own logs.</p>
+<p>The content route <code>/api/sessions/{source}/{session_id}/spans/{span_id}/content</code> returns the text of one span only when the configuration allows it, redacts secrets and answers 404 otherwise (<code>src/ai_usage_cost/api.py:370-382</code>, <code>src/ai_usage_cost/privacy.py:86-101</code>). See <a href="../security/ai-usage-cost-security.html">Ai usage cost Security</a>.</p>
+<p>When the built dashboard bundle exists the application serves it at <code>/</code>. When it does not, <code>/</code> returns a message telling the maintainer to build the web bundle (<code>src/ai_usage_cost/api.py:394-402</code>).</p>
+<p>The routes carry no authentication. The command line binds the server to <code>127.0.0.1</code> by default (<code>src/ai_usage_cost/cli.py:109-111</code>), which is the only access control in the code.</p>
+<h2>Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Handler</th>
+<th>Framework</th>
+<th>Auth</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/</code></td>
+<td><code>missing_build</code></td>
+<td>fastapi</td>
+<td>none detected</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:399</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/meta</code></td>
+<td><code>meta</code></td>
+<td>fastapi</td>
+<td>none detected</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:256</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/rates</code></td>
+<td><code>rates</code></td>
+<td>fastapi</td>
+<td>none detected</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:385</code></td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/refresh</code></td>
+<td><code>refresh</code></td>
+<td>fastapi</td>
+<td>none detected</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:389</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/report</code></td>
+<td><code>report</code></td>
+<td>fastapi</td>
+<td>none detected</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:290</code></td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/sessions/{source}/{session_id}</code></td>
+<td><code>forget_session</code></td>
+<td>fastapi</td>
+<td>none detected</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:362</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/sessions/{source}/{session_id}/context</code></td>
+<td><code>context</code></td>
+<td>fastapi</td>
+<td>none detected</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:346</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/sessions/{source}/{session_id}/economics</code></td>
+<td><code>economics</code></td>
+<td>fastapi</td>
+<td>none detected</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:334</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/sessions/{source}/{session_id}/outcome</code></td>
+<td><code>outcome</code></td>
+<td>fastapi</td>
+<td>none detected</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:351</code></td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/api/sessions/{source}/{session_id}/outcome</code></td>
+<td><code>rate_session</code></td>
+<td>fastapi</td>
+<td>none detected</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:356</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/sessions/{source}/{session_id}/spans/{span_id}/content</code></td>
+<td><code>span_content</code></td>
+<td>fastapi</td>
+<td>none detected</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:374</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/sessions/{source}/{session_id}/trace</code></td>
+<td><code>trace</code></td>
+<td>fastapi</td>
+<td>none detected</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:321</code></td>
+</tr>
+</tbody>
+</table></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

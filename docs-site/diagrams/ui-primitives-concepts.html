@@ -1,0 +1,81 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UI primitives concepts</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/ui-primitives-concepts.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Strategy · TOGAF: Phase A, Architecture Vision</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> covers <code>web/src/components/ui/*</code></p><h1>UI primitives concepts</h1>
+<p>This map lists the basic interface parts that every dashboard screen is built from, grouped by what they are for. A newcomer can see at once which part to reach for: a button, a pop-up, a table or a chart. It saves a search through two dozen small files.</p>
+<h2>What the diagram shows</h2>
+<p>Buttons and inputs is the first branch: the button with its variants and sizes, the text inputs, the checkbox and switch, the toggles and the select. <code>web/src/components/ui/button.tsx:40-61</code> <code>web/src/components/ui/input.tsx:4-18</code> <code>web/src/components/ui/checkbox.tsx:8-29</code> <code>web/src/components/ui/toggle-group.tsx:18-47</code> <code>web/src/components/ui/select.tsx:6-10</code></p>
+<p>Overlays is the second branch: the dialog, the sheet, the popover, the tooltip and its provider, and the dropdown menu. <code>web/src/components/ui/dialog.tsx:10-14</code> <code>web/src/components/ui/sheet.tsx:6-8</code> <code>web/src/components/ui/popover.tsx:5-9</code> <code>web/src/components/ui/tooltip.tsx:20-24</code> <code>web/src/components/ui/dropdown-menu.tsx:6-10</code></p>
+<p>Display is the third branch: the table, tabs, accordion, alert, badge, skeleton and progress bar. <code>web/src/components/ui/table.tsx:4-17</code> <code>web/src/components/ui/tabs.tsx:8-25</code> <code>web/src/components/ui/accordion.tsx:8-12</code> <code>web/src/components/ui/alert.tsx:21-34</code> <code>web/src/components/ui/badge.tsx:28-45</code> <code>web/src/components/ui/skeleton.tsx:3-11</code> <code>web/src/components/ui/progress.tsx:5-26</code></p>
+<p>Charts is the fourth branch: the container that carries a config of labels and colours, the tooltip content and the legend content, and the style element that writes the colour variables. <code>web/src/components/ui/chart.tsx:39-79</code> <code>web/src/components/ui/chart.tsx:12-20</code> <code>web/src/components/ui/chart.tsx:116-268</code> <code>web/src/components/ui/chart.tsx:272-325</code></p>
+<p>Toasts is the fifth branch: one toast host that picks an icon per toast kind and follows the theme of the app. <code>web/src/components/ui/sonner.tsx:12-37</code></p>
+<p>The Legend branch says that a first level branch is a family of primitives and a second level box is one primitive. The names follow the exported names in the files.</p>
+<h2>Capability and related functionality</h2>
+<p>The map realises the lowest layer of the dashboard interface. The explanation of each file is in <a href="../application/web-ui-ui-components-overview.html">Web ui UI components Overview</a>, and the structure is in <a href="../diagrams/ui-primitives-c4.html">UI primitives C4</a> and <a href="../diagrams/ui-primitives-imports.html">UI primitives imports</a>. The failure behaviour is in <a href="../diagrams/ui-primitives-failure-flow.html">UI primitives failure flow</a>. The components built on top are in <a href="../application/web-ui-components-overview.html">Web UI components Overview</a>.</p>
+<h2>UI primitives concepts</h2>
+<pre class="mermaid">mindmap
+  root((UI primitives))
+    Buttons and inputs
+      Button with variants and sizes
+      Input and textarea
+      Label
+      Checkbox and switch
+      Toggle and toggle group
+      Select
+    Overlays
+      Dialog
+      Sheet
+      Popover
+      Tooltip and its provider
+      Dropdown menu
+    Display
+      Table
+      Tabs
+      Accordion and collapsible
+      Alert and badge
+      Separator, skeleton and progress
+    Charts
+      Chart container
+      Chart config
+      Chart tooltip content
+      Chart legend content
+      Theme colour variables
+    Toasts
+      Toast host
+      Icons per toast kind
+      Theme follows the app
+    Legend
+      First level branch is a family of primitives
+      Second level box is one primitive
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/components/ui/button.tsx:40-61</code></td>
+<td>Button</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/dialog.tsx:10-14</code></td>
+<td>Dialog</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/table.tsx:4-17</code></td>
+<td>Table</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/chart.tsx:39-79</code></td>
+<td>Chart container</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/sonner.tsx:12-37</code></td>
+<td>Toast host</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

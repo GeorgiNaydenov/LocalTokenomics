@@ -1,0 +1,104 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Reader module imports</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/reader-module-imports.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/sources/**</code></p><h1>Reader module imports</h1>
+<p>This diagram shows which reader modules depend on which, so a change can be made in the right place. Almost everything depends on one shared helper module, and a few readers are thin wrappers over a family builder. There are no circular imports, which keeps each reader easy to test on its own.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The shared module imports the usage event model and the trace types, and nothing else from the application. <code>src/ai_usage_cost/sources/base.py:11</code> <code>src/ai_usage_cost/sources/base.py:12</code></li>
+<li>The package module imports the shared module for the Source type, and finds the reader modules at run time by name instead of importing them. <code>src/ai_usage_cost/sources/__init__.py:6</code> <code>src/ai_usage_cost/sources/__init__.py:16</code></li>
+<li>Log file readers import the shared helpers, the models and the trace types. Claude Code is an example. <code>src/ai_usage_cost/sources/claude_code.py:8</code> <code>src/ai_usage_cost/sources/claude_code.py:9</code> <code>src/ai_usage_cost/sources/claude_code.py:10</code></li>
+<li>Database readers import the same three modules. Cursor is an example. <code>src/ai_usage_cost/sources/cursor.py:10</code> <code>src/ai_usage_cost/sources/cursor.py:11</code> <code>src/ai_usage_cost/sources/cursor.py:12</code></li>
+<li>The Cline module is the builder of its family, and Roo Code and Kilo Code legacy import its Spec, its builder, its root finder and a private table of cache rules. <code>src/ai_usage_cost/sources/cline.py:66</code> <code>src/ai_usage_cost/sources/roo_code.py:12</code> <code>src/ai_usage_cost/sources/kilo_legacy.py:12</code></li>
+<li>The OpenCode module is the builder of the second family, and Kilo Code imports its builder. <code>src/ai_usage_cost/sources/opencode.py:32</code> <code>src/ai_usage_cost/sources/kilo_code.py:9</code></li>
+<li>The models and trace modules that the shared module imports do not import the readers back, so the graph has no cycle. <code>src/ai_usage_cost/trace.py:10</code> <code>src/ai_usage_cost/sources/base.py:12</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The diagram realises the extension point capability: a new reader is one module that imports the shared helpers, the models and the trace types. <a href="../application/ai-usage-cost-sources-overview.html">Ai usage cost sources Overview</a> explains the readers in prose, and <a href="../application/ai-usage-cost-sources-workflows.html">Ai usage cost sources Workflows</a> walks through a scan. The sibling views are <a href="../diagrams/readers-concepts.html">Readers concepts</a>, <a href="../diagrams/reader-types.html">Reader types</a>, <a href="../diagrams/reader-data-lineage.html">Reader data lineage</a>, <a href="../diagrams/reader-module-imports.html">Reader module imports</a>, <a href="../diagrams/reader-glossary-map.html">Reader glossary map</a>, <a href="../diagrams/readers-component-view.html">Readers component view</a> and <a href="../diagrams/readers-data-flow.html">Readers data flow</a>.</li>
+<li>The module map generated for the whole package is in <a href="../diagrams/ai-usage-cost-sources-diagrams.html">Ai usage cost sources Diagrams</a>. One smell is recorded in the specification: Roo Code and Kilo Code legacy import a name that starts with an underscore from the Cline module.</li>
+</ul>
+<h2>The diagram</h2>
+<pre class="mermaid">flowchart TD
+    subgraph outside[&quot;Outside the chunk&quot;]
+        models[&quot;models.py&lt;br/&gt;UsageEvent, TokenUsage&quot;]:::external
+        trace[&quot;trace.py&lt;br/&gt;Span, Capabilities&quot;]:::external
+    end
+    subgraph shared[&quot;Registry and shared helpers&quot;]
+        reg[&quot;sources/__init__.py&lt;br/&gt;registry, client_labels&quot;]:::module
+        base[&quot;base.py&lt;br/&gt;Source, read helpers&quot;]:::module
+    end
+    subgraph families[&quot;Readers built by a shared make_source&quot;]
+        cline[&quot;cline.py&lt;br/&gt;Spec, make_source&quot;]:::module
+        roo[&quot;roo_code.py&quot;]:::module
+        kilol[&quot;kilo_legacy.py&quot;]:::module
+        opencode[&quot;opencode.py&lt;br/&gt;make_source&quot;]:::module
+        kilo[&quot;kilo_code.py&quot;]:::module
+    end
+    subgraph direct[&quot;Readers that build Source directly&quot;]
+        logs[&quot;Log file readers&lt;br/&gt;claude_code, codex, copilot_cli, gemini_cli, grok_build,&lt;br/&gt;jan, muse_code, openai_compat, qwen_code, antigravity&quot;]:::module
+        dbs[&quot;Database readers&lt;br/&gt;copilot_chat, cursor, dyad, ollama_app, windsurf&quot;]:::module
+    end
+    base --&gt; models
+    base --&gt; trace
+    reg --&gt; base
+    reg -.-&gt;|imports each module by name| logs
+    reg -.-&gt;|imports each module by name| dbs
+    reg -.-&gt;|imports each module by name| cline
+    reg -.-&gt;|imports each module by name| opencode
+    logs --&gt; base
+    dbs --&gt; base
+    cline --&gt; base
+    opencode --&gt; base
+    roo --&gt; cline
+    kilol --&gt; cline
+    kilo --&gt; opencode
+    logs --&gt; models
+    dbs --&gt; models
+    logs --&gt; trace
+    dbs --&gt; trace
+    cline --&gt; models
+    cline --&gt; trace
+    opencode --&gt; models
+    opencode --&gt; trace
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Module or package in this chunk&quot;]:::module
+        zlegend_b[&quot;Module outside this chunk&quot;]:::external
+        zlegend_c[&quot;Layer: a group of modules&quot;]:::module
+        zlegend_d[&quot;Solid arrow: A imports B&quot;]:::module
+        zlegend_e[&quot;Dashed arrow: imported by name at run time&quot;]:::module
+        zlegend_f[&quot;Red arrow would mark a cycle, none found&quot;]:::cycle
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d ~~~ zlegend_e ~~~ zlegend_f
+    end
+    classDef module fill:#dae8fc,stroke:#222222,color:#111111
+    classDef external fill:#eeeeee,stroke:#222222,stroke-dasharray:5 3,color:#111111
+    classDef cycle fill:#f8cecc,stroke:#b85450,color:#111111
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/sources/base.py:11</code></td>
+<td>Shared module imports</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/__init__.py:6</code></td>
+<td>Package module import</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/roo_code.py:12</code></td>
+<td>Family import by a thin reader</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/kilo_code.py:9</code></td>
+<td>Second family import</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

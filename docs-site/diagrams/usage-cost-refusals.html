@@ -1,0 +1,153 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Usage cost refusals</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/usage-cost-refusals.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Usage cost refusals</h1>
+<p>This view collects every way the core can say no, and what the person sees each time. It separates refusals the person is told about from problems the tool absorbs quietly. That second group matters most: a quiet fallback can make the numbers or the privacy settings differ from what the person expects.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>A route that needs the store answers 503 when the analysis was built without one. <code>src/ai_usage_cost/api.py:219-223</code></li>
+<li>A session route answers 404 when the source and session are not stored or the session was forgotten. <code>src/ai_usage_cost/api.py:234-236</code> <code>src/ai_usage_cost/store.py:609-625</code></li>
+<li>The content route also answers 404 when the span is not in the session, and when its text is not released or cannot be read. <code>src/ai_usage_cost/api.py:376-382</code> <code>src/ai_usage_cost/privacy.py:86-94</code></li>
+<li>A root override without an equals sign and wrong alert options stop the command with a parameter error. <code>src/ai_usage_cost/cli.py:59-68</code> <code>src/ai_usage_cost/cli.py:320-326</code></li>
+<li>A badly written since or until date is parsed without a guard, so the person sees a raw error instead of a usage message. <code>src/ai_usage_cost/cli.py:44-45</code></li>
+<li>The sql, tui and alert commands need an optional extra; without it they print the install command and exit with code 2. <code>src/ai_usage_cost/cli.py:48-56</code> <code>src/ai_usage_cost/cli.py:235</code> <code>src/ai_usage_cost/cli.py:327</code> <code>src/ai_usage_cost/cli.py:366</code></li>
+<li>A rate file that fails validation stops the analysis with the validation error, because loading has no handler. <code>src/ai_usage_cost/pricing.py:286-287</code> <code>src/ai_usage_cost/pipeline.py:192</code></li>
+<li>Scan and tui exit with code 1 and a hint when no usage is found; export, sql and collect have their own exits for an unknown file type, a missing store and a missing GPU sampler. <code>src/ai_usage_cost/cli.py:98-104</code> <code>src/ai_usage_cost/cli.py:371-375</code> <code>src/ai_usage_cost/cli.py:193-195</code> <code>src/ai_usage_cost/cli.py:239-244</code> <code>src/ai_usage_cost/cli.py:212-217</code></li>
+<li>An unreadable or invalid privacy file silently gives the default settings. <code>src/ai_usage_cost/privacy.py:60-68</code></li>
+<li>A log file that cannot be read adds a warning and is skipped, so the scan goes on. <code>src/ai_usage_cost/store.py:222-226</code> <code>src/ai_usage_cost/store.py:256-258</code></li>
+<li>A GPU tool that fails, times out or prints something unexpected gives no sample for that tick. <code>src/ai_usage_cost/collect.py:152-161</code> <code>src/ai_usage_cost/collect.py:273-276</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The routes refused here are mapped in <a href="../diagrams/usage-cost-http-routes.html">Usage cost HTTP routes</a>, and the alert refusals are drawn in order in <a href="../diagrams/spend-alert-run.html">Spend alert run</a>.</li>
+<li>The quiet privacy fallback and the missing caller check are explained in <a href="../security/ai-usage-cost-security.html">Ai usage cost Security</a>.</li>
+<li>The raw date error and the unhandled rate file error are recorded as risks in <a href="../application/ai-usage-cost-specification.html">Ai usage cost Specification</a>.</li>
+</ul>
+<h2>Usage cost refusals</h2>
+<pre class="mermaid">flowchart TD
+    subgraph http[&quot;HTTP routes&quot;]
+        req[&quot;Route call&quot;]:::step
+        g_store{{&quot;Analysis has a store?&quot;}}:::guard
+        g_sess{{&quot;Session stored and not forgotten?&quot;}}:::guard
+        g_span{{&quot;Span in the session?&quot;}}:::guard
+        g_text{{&quot;Text released and readable?&quot;}}:::guard
+        ok_http[&quot;Answer the route&quot;]:::step
+        e503([&quot;503 built without a store&quot;]):::fail
+        e404s([&quot;404 no session&quot;]):::fail
+        e404p([&quot;404 no span&quot;]):::fail
+        e404c([&quot;404 no readable content&quot;]):::fail
+    end
+    req --&gt; g_store
+    g_store --&gt;|no| e503
+    g_store --&gt;|yes| g_sess
+    g_sess --&gt;|no| e404s
+    g_sess --&gt;|yes, content route| g_span
+    g_sess --&gt;|yes, other routes| ok_http
+    g_span --&gt;|no| e404p
+    g_span --&gt;|yes| g_text
+    g_text --&gt;|ContentUnavailable| e404c
+    g_text --&gt;|yes| ok_http
+
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Step&quot;]:::step
+        zlegend_b{{&quot;Guard or validator&quot;}}:::guard
+        zlegend_c([&quot;Failure the caller sees&quot;]):::fail
+        zlegend_e[&quot;An arrow is labelled with the error it carries&quot;]:::step
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_e
+    end
+
+    classDef step fill:#dae8fc,stroke:#222222,color:#222222
+    classDef guard fill:#e1d5e7,stroke:#222222,color:#222222
+    classDef fail fill:#f8cecc,stroke:#222222,color:#222222
+    classDef hidden fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:4 3
+</pre>
+
+<p>The routes are drawn above; the commands and the problems absorbed without a message are drawn below.</p>
+<pre class="mermaid">flowchart TD
+    subgraph cmd[&quot;Commands&quot;]
+        cli[&quot;Command call&quot;]:::step
+        g_param{{&quot;Options valid?&quot;}}:::guard
+        g_extra{{&quot;Optional extra installed?&quot;}}:::guard
+        g_rates[&quot;RateTable.load&quot;]:::step
+        g_usage{{&quot;Any usage found?&quot;}}:::guard
+        ok_cli[&quot;Print, write or serve&quot;]:::step
+        ebad([&quot;Usage error: bad parameter&quot;]):::fail
+        eextra([&quot;Exit 2: install hint&quot;]):::fail
+        etrace([&quot;Traceback, exit 1: unhandled error&quot;]):::fail
+        enone([&quot;Exit 1: no usage found&quot;]):::fail
+    end
+    subgraph quiet[&quot;Handled without telling the caller&quot;]
+        cfg[&quot;load_config: unreadable or invalid file&quot;]:::step
+        read[&quot;ingest: file cannot be read&quot;]:::step
+        sample[&quot;sample_once: tool fails or times out&quot;]:::step
+        cfg_out([&quot;Defaults used, no message&quot;]):::hidden
+        read_out([&quot;Warning added, file skipped&quot;]):::hidden
+        sample_out([&quot;Sample skipped&quot;]):::hidden
+    end
+
+    cli --&gt; g_param
+    g_param --&gt;|BadParameter| ebad
+    g_param --&gt;|ValueError: bad --since or --until| etrace
+    g_param --&gt;|yes| g_extra
+    g_extra --&gt;|ImportError| eextra
+    g_extra --&gt;|yes| g_rates
+    g_rates --&gt;|ValidationError: invalid rates.json| etrace
+    g_rates --&gt;|loaded| g_usage
+    g_usage --&gt;|no| enone
+    g_usage --&gt;|yes| ok_cli
+
+    cfg --&gt;|OSError, ValueError, ValidationError| cfg_out
+    read --&gt;|OSError| read_out
+    sample --&gt;|OSError, SubprocessError, timeout| sample_out
+
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Step&quot;]:::step
+        zlegend_b{{&quot;Guard or validator&quot;}}:::guard
+        zlegend_c([&quot;Failure the caller sees&quot;]):::fail
+        zlegend_d([&quot;Failure hidden from the caller&quot;]):::hidden
+        zlegend_e[&quot;An arrow is labelled with the error it carries&quot;]:::step
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d ~~~ zlegend_e
+    end
+
+    classDef step fill:#dae8fc,stroke:#222222,color:#222222
+    classDef guard fill:#e1d5e7,stroke:#222222,color:#222222
+    classDef fail fill:#f8cecc,stroke:#222222,color:#222222
+    classDef hidden fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:4 3
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/api.py:219-242</code></td>
+<td>Store and session guards</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/api.py:370-382</code></td>
+<td>Span and content guards</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:44-68</code></td>
+<td>Date parsing, extras and root overrides</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/privacy.py:60-68</code></td>
+<td>Silent privacy defaults</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/store.py:218-258</code></td>
+<td>Unreadable log files</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/collect.py:152-161</code></td>
+<td>GPU tool failures</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

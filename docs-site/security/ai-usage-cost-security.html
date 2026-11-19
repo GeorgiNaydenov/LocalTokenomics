@@ -1,0 +1,354 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Ai usage cost Security</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="security/ai-usage-cost-security.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Technology / Security · TOGAF: Phase D, Technology Architecture</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Ai usage cost Security</h1>
+<p>Security-relevant code in the Ai usage cost chunk: authentication, tokens, validation and configuration names.</p>
+<h2>How it works</h2>
+<p>64 security-relevant lines were found. Configuration is listed by variable name only, never by value.</p>
+<h3>What protects the user</h3>
+<p>The package works on the owner's own logs, so the risks are leaking prompt text or credentials, not attacks from outside. The code answers them in four ways.</p>
+<ol>
+<li>Metadata only by default. The privacy configuration starts with <code>metadata_only</code> true, and reading a span's text raises <code>ContentUnavailable</code> while it is on (<code>src/ai_usage_cost/privacy.py:52-57</code>, <code>src/ai_usage_cost/privacy.py:86-88</code>). The interface turns that into a 404 (<code>src/ai_usage_cost/api.py:379-382</code>).</li>
+<li>Redaction. Text that is released is cut to at most 65,536 bytes by default and then passed through nine patterns that replace private keys, cloud keys, GitHub tokens, vendor API keys, JWTs, bearer tokens and generic key or password assignments with a redaction marker that names the kind. The count of redactions is returned with the text (<code>src/ai_usage_cost/privacy.py:11</code>, <code>src/ai_usage_cost/privacy.py:14-45</code>, <code>src/ai_usage_cost/privacy.py:78-101</code>).</li>
+<li>Exclusion. A project listed in <code>exclude_projects</code> has its spans dropped at ingest, and a session the user forgets is remembered in <code>session_exclusions</code> so the next scan does not bring its spans back (<code>src/ai_usage_cost/store.py:213-216</code>, <code>src/ai_usage_cost/store.py:273-277</code>, <code>src/ai_usage_cost/store.py:595-606</code>). Both controls act on spans only, see below.</li>
+<li>Local only. The server host defaults to <code>127.0.0.1</code> (<code>src/ai_usage_cost/cli.py:109-111</code>), and source databases are opened read only (<code>src/ai_usage_cost/sources/base.py:123-124</code>).</li>
+</ol>
+<h3>Things a reader should not assume</h3>
+<ul>
+<li>A missing or invalid configuration file silently gives the defaults, so a typo in <code>config.json</code> turns every privacy setting back on rather than off (<code>src/ai_usage_cost/privacy.py:60-68</code>).</li>
+<li><code>content_retention_days</code> is accepted but inert. The pipeline says so in a warning (<code>src/ai_usage_cost/pipeline.py:240-244</code>). Only <code>metadata_retention_days</code> deletes anything, and it deletes trace rows older than the window (<code>src/ai_usage_cost/store.py:300-303</code>).</li>
+<li>Forgetting a session deletes its spans and rating but not its requests, so its cost stays in every total and its stored raw records remain (<code>src/ai_usage_cost/store.py:595-606</code>). Requests are inserted without the exclusion or project test, which only guards spans (<code>src/ai_usage_cost/store.py:270-277</code>).</li>
+<li>Released text is cut to the byte limit before it is redacted, so a secret split at the limit may be too short for its pattern to match (<code>src/ai_usage_cost/privacy.py:97-98</code>).</li>
+<li>The HTTP routes have no authentication and the content route does not check a caller (<code>src/ai_usage_cost/api.py:370-382</code>).</li>
+<li>Two outbound network paths exist in the core files. The GPU sampler asks a local Ollama endpoint which models are loaded, and <code>alert</code> sends a notification to the targets the user passes (<code>src/ai_usage_cost/collect.py:27</code>, <code>src/ai_usage_cost/collect.py:197-208</code>, <code>src/ai_usage_cost/cli.py:344-354</code>).</li>
+<li>Configuration names read by the source parsers, such as <code>APPDATA</code> and <code>XDG_DATA_HOME</code>, only locate log folders. They are listed in the table below by name.</li>
+</ul>
+<h2>Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Matched</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>input validation</td>
+<td><code>pydantic</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:9</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:26</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:37</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:48</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:77</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:100</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:115</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:454</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/aggregate.py</a> <code>src/ai_usage_cost/aggregate.py:462</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>pydantic</code></td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:13</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:86</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:91</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:105</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>pydantic</code></td>
+<td><a href="#">src/ai_usage_cost/collect.py</a> <code>src/ai_usage_cost/collect.py:14</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/collect.py</a> <code>src/ai_usage_cost/collect.py:49</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>pydantic</code></td>
+<td><a href="#">src/ai_usage_cost/models.py</a> <code>src/ai_usage_cost/models.py:6</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/models.py</a> <code>src/ai_usage_cost/models.py:12</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/models.py</a> <code>src/ai_usage_cost/models.py:49</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/models.py</a> <code>src/ai_usage_cost/models.py:75</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/models.py</a> <code>src/ai_usage_cost/models.py:117</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/models.py</a> <code>src/ai_usage_cost/models.py:123</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>pydantic</code></td>
+<td><a href="#">src/ai_usage_cost/pipeline.py</a> <code>src/ai_usage_cost/pipeline.py:9</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/pipeline.py</a> <code>src/ai_usage_cost/pipeline.py:31</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>pydantic</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:9</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:11</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:29</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:68</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:101</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:109</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:169</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:224</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:232</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:252</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>pydantic</code></td>
+<td><a href="#">src/ai_usage_cost/privacy.py</a> <code>src/ai_usage_cost/privacy.py:7</code></td>
+</tr>
+<tr>
+<td>credentials and tokens</td>
+<td><code>jwt</code></td>
+<td><a href="#">src/ai_usage_cost/privacy.py</a> <code>src/ai_usage_cost/privacy.py:36</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/privacy.py</a> <code>src/ai_usage_cost/privacy.py:52</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>APPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:97</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>CLINE_SESSION_DATA_DIR</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:124</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>CLINE_DATA_DIR</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:127</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>CLINE_DIR</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:130</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>APPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/copilot_chat.py</a> <code>src/ai_usage_cost/sources/copilot_chat.py:18</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>COPILOT_HOME</code></td>
+<td><a href="#">src/ai_usage_cost/sources/copilot_cli.py</a> <code>src/ai_usage_cost/sources/copilot_cli.py:62</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>APPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cursor.py</a> <code>src/ai_usage_cost/sources/cursor.py:19</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>APPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/dyad.py</a> <code>src/ai_usage_cost/sources/dyad.py:16</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>GEMINI_CLI_HOME</code></td>
+<td><a href="#">src/ai_usage_cost/sources/gemini_cli.py</a> <code>src/ai_usage_cost/sources/gemini_cli.py:32</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>GROK_HOME</code></td>
+<td><a href="#">src/ai_usage_cost/sources/grok_build.py</a> <code>src/ai_usage_cost/sources/grok_build.py:15</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>APPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/jan.py</a> <code>src/ai_usage_cost/sources/jan.py:19</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>MUSE_DATA_DIR</code></td>
+<td><a href="#">src/ai_usage_cost/sources/muse_code.py</a> <code>src/ai_usage_cost/sources/muse_code.py:60</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>XDG_DATA_HOME</code></td>
+<td><a href="#">src/ai_usage_cost/sources/muse_code.py</a> <code>src/ai_usage_cost/sources/muse_code.py:63</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>LOCALAPPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/ollama_app.py</a> <code>src/ai_usage_cost/sources/ollama_app.py:16</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>XDG_DATA_HOME</code></td>
+<td><a href="#">src/ai_usage_cost/sources/opencode.py</a> <code>src/ai_usage_cost/sources/opencode.py:65</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>APPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/opencode.py</a> <code>src/ai_usage_cost/sources/opencode.py:76</code></td>
+</tr>
+<tr>
+<td>configuration read by name</td>
+<td><code>APPDATA</code></td>
+<td><a href="#">src/ai_usage_cost/sources/windsurf.py</a> <code>src/ai_usage_cost/sources/windsurf.py:20</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>pydantic</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:7</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:55</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:104</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:112</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:134</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:141</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:154</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:177</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:184</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:192</code></td>
+</tr>
+<tr>
+<td>input validation</td>
+<td><code>BaseModel</code></td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:201</code></td>
+</tr>
+</tbody>
+</table></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

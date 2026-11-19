@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Privacy and retention Rules</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="business/privacy-and-retention-rules.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/api.py</code>, <code>src/ai_usage_cost/pipeline.py</code>, <code>src/ai_usage_cost/privacy.py</code>, <code>src/ai_usage_cost/store.py</code></p><h1>Privacy and retention Rules</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>The business rules of the <a href="../subdomains/privacy-and-retention.html">Privacy and retention</a> subdomain, as the code enforces them. Each rule is a heading, so a use case links straight to it, and each names the line of code that enforces it.</p>
+</details>
+<h2>BR-121 Unreadable span text answers 404</h2>
+<p>The content route answers 404 when the span is not in the session, and also when its text is not released or cannot be read. <a href="#">src/ai_usage_cost/api.py:382</a></p>
+<ul>
+<li><strong>Category:</strong> interface</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-22-forget-a-session.html">UC-22 Forget a session</a>, <a href="../use-cases/uc-23-read-the-text-of-one-span.html">UC-23 Read the text of one span</a></li>
+</ul>
+<p>Source:
+- <code>create_app.span_content</code>: <code>raise HTTPException(404, f"no readable content for span {span_id!r}") from exc</code></p>
+<h2>BR-73 A forgotten session is not stored again</h2>
+<p>After a person forgets a session its spans and rating are deleted and an exclusion row keeps its spans out of later scans. Its requests stay. <a href="#">src/ai_usage_cost/store.py:273</a></p>
+<ul>
+<li><strong>Category:</strong> privacy</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-22-forget-a-session.html">UC-22 Forget a session</a></li>
+</ul>
+<p>Source:
+- <code>ingest</code>: <code>if (span.source, span.session_id) in excluded_sessions:</code></p>
+<h2>BR-74 An excluded project drops its spans</h2>
+<p>A span whose project equals an excluded entry, or whose working directory starts with it, is not stored. <a href="#">src/ai_usage_cost/store.py:314</a></p>
+<ul>
+<li><strong>Category:</strong> privacy</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-22-forget-a-session.html">UC-22 Forget a session</a></li>
+</ul>
+<p>Source:
+- <code>_in_excluded_project</code>: <code>directory.startswith(entry)</code></p>
+<h2>BR-75 Span text is refused in metadata only mode</h2>
+<p>While metadata only is on, or when a span has no content path, reading its text raises content unavailable and the API answers 404. <a href="#">src/ai_usage_cost/privacy.py:87</a></p>
+<ul>
+<li><strong>Category:</strong> privacy</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-23-read-the-text-of-one-span.html">UC-23 Read the text of one span</a></li>
+</ul>
+<p>Source:
+- <code>read_content</code>: <code>if config.metadata_only or span.content_path is None:</code></p>
+<h2>BR-76 Released text is cut and then redacted</h2>
+<p>Text that is released is truncated to the configured byte limit and then has secrets replaced by a marker that names the kind. <a href="#">src/ai_usage_cost/privacy.py:97</a></p>
+<ul>
+<li><strong>Category:</strong> privacy</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-23-read-the-text-of-one-span.html">UC-23 Read the text of one span</a></li>
+</ul>
+<p>Source:
+- <code>read_content</code>: <code>text, truncated = truncate(text, config.max_content_bytes)</code></p>
+<h2>BR-77 A bad configuration file gives the defaults</h2>
+<p>A missing, unreadable or invalid config.json is replaced by the defaults, which keep metadata only on. <a href="#">src/ai_usage_cost/privacy.py:63</a></p>
+<ul>
+<li><strong>Category:</strong> privacy</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-23-read-the-text-of-one-span.html">UC-23 Read the text of one span</a></li>
+</ul>
+<p>Source:
+- <code>load_config</code>: <code>except (OSError, ValueError):</code></p>
+<h2>BR-83 Content retention is inert</h2>
+<p>Setting content retention days only adds a warning, because no content is stored. <a href="#">src/ai_usage_cost/pipeline.py:242</a></p>
+<ul>
+<li><strong>Category:</strong> privacy</li>
+</ul>
+<p>Source:
+- <code>analyze</code>: <code>content_retention_days is set but inert</code></p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

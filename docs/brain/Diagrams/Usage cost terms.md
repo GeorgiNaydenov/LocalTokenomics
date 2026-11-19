@@ -58,6 +58,48 @@ This view places the words the tool uses next to each other and names how they r
 ## Usage cost terms
 
 %% generated:diagram-usage-cost-terms start (do not edit; run brain docs generate) %%
+```mermaid
+flowchart LR
+    source("Source"):::term
+    client("Client"):::term
+    session("Session"):::term
+    request("Request (UsageEvent)"):::term
+    tokens("Token usage"):::term
+    tier("Service tier"):::term
+    sidechain("Sidechain"):::term
+    rate("Rate row (ModelRate)"):::term
+    state("Cost state"):::term
+    cost("Cost breakdown"):::term
+    span("Span"):::term
+    outcome("Outcome"):::term
+    bucket("Bucket"):::term
+    warning("Warning group"):::term
+    severity("Warning severity"):::term
+
+    source -->|writes logs for| client
+    request -->|belongs to| session
+    request -->|comes from| source
+    request -->|has| tokens
+    request -->|runs on| tier
+    sidechain -->|is a| request
+    request -->|is priced by| rate
+    request -->|ends in| state
+    state -->|decides| cost
+    span -->|belongs to| session
+    outcome -->|rates| session
+    bucket -->|sums| cost
+    warning -->|has| severity
+
+    subgraph Legend
+        direction LR
+        zlegend_a("Term, named as the code names it"):::term
+        zlegend_b["Relations: has, is a, belongs to, comes from, rates, sums"]:::key
+        zlegend_a ~~~ zlegend_b
+    end
+
+    classDef term fill:#dae8fc,stroke:#222222,color:#222222
+    classDef key fill:#ffffff,stroke:#222222,color:#222222
+```
 %% generated:diagram-usage-cost-terms end %%
 
 > [!example]- Code references

@@ -1,0 +1,161 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Session Workspace Screen</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/session-workspace-screen.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Session Workspace Screen</h1>
+<p>The session workspace (web/src/SessionWorkspace.tsx): the session header with the outcome control, and the Summary, Trace, Economics and Context tabs. Its map is <a href="../diagrams/session-workspace-screen-map.html">Session Workspace Screen Map</a>; each numbered badge in the image is one row below.</p>
+<h2>Screen map</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Element</th>
+<th>What it does</th>
+<th>Handler or target</th>
+<th>State it depends on</th>
+<th>Citation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&lt;h2</code> session name</td>
+<td>Session name, or the sheet title when not docked.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:502-502</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;Button</code> Fullscreen</td>
+<td>Toggles the docked panel to full screen.</td>
+<td><code>toggleFullscreen</code></td>
+<td>docked only</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:518-523</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>&lt;Button</code> Close session</td>
+<td>Closes the workspace.</td>
+<td><code>onClose</code></td>
+<td>docked only</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:527-527</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&lt;ToggleGroup</code> successful, partial, failed, abandoned, unrated</td>
+<td>Picks the outcome and saves it at once.</td>
+<td><code>save</code></td>
+<td>-</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:306-312</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;MetricInfo</code> rating meanings</td>
+<td>Explains each outcome rating.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:321-321</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;Button</code> Notes and tags</td>
+<td>Opens the notes and tags fields.</td>
+<td><code>setOpen</code></td>
+<td>-</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:330-330</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;span</code> status</td>
+<td>Saving, error, rated time or not rated yet, with the signals.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:333-333</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>&lt;Textarea</code> Notes</td>
+<td>Notes saved when the field loses focus.</td>
+<td><code>saveEdited</code></td>
+<td>-</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:342-346</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>&lt;Input</code> Tags, comma separated</td>
+<td>Tags saved when the field loses focus.</td>
+<td><code>saveEdited</code></td>
+<td>-</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:352-356</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>&lt;TabsTrigger</code> Summary, Trace, Economics, Context</td>
+<td>Switches the tab; the Tabs value change marks it requested so its data loads.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:547-547</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>&lt;SummaryTab</code> Summary</td>
+<td>Cost, token buckets, origin and raw log files.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:555-555</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>if (!tokens) {</code> empty section</td>
+<td>Summary shows an empty state when the client logs no tokens.</td>
+<td>-</td>
+<td>empty: <code>if (!tokens) {</code></td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:134-134</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>case 'loading':</code> loading section</td>
+<td>A requested tab shows Loading until its data arrives.</td>
+<td>-</td>
+<td>loading: <code>case 'loading':</code></td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:387-387</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>case 'error':</code> error section</td>
+<td>A failed tab shows the endpoint note and the error text.</td>
+<td>-</td>
+<td>error: <code>case 'error':</code></td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:389-389</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>&lt;ResizeHandle</code> resize</td>
+<td>Drag or arrow keys change the docked width.</td>
+<td><code>setWidth</code></td>
+<td>docked and not fullscreen</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:613-613</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>&lt;Sheet</code> workspace sheet</td>
+<td>The workspace as a sheet from the right when not docked.</td>
+<td><code>onClose</code></td>
+<td>-</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:620-620</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Conditional sections</h3>
+<ul>
+<li>empty: <code>if (!tokens) {</code>, callout 12, <a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:134-134</code></li>
+<li>loading: <code>case 'loading':</code>, callout 13, <a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:387-387</code></li>
+<li>error: <code>case 'error':</code>, callout 14, <a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:389-389</code></li>
+</ul>
+<h2>Diagnosis</h2>
+<p>The reader rates the session, writes notes and tags, and switches tabs. A rating is saved the moment it is picked; notes and tags are saved on blur and only when changed <code>web/src/SessionWorkspace.tsx:312</code> <code>web/src/SessionWorkspace.tsx:291-294</code>.</p>
+<p>What can go wrong:</p>
+<ul>
+<li>Saves are not sequenced: the toggle group stays enabled while saving, and a rating change and a notes blur can send two requests whose answers arrive in either order <code>web/src/SessionWorkspace.tsx:274-289</code> <code>web/src/SessionWorkspace.tsx:306-312</code>.</li>
+<li>A failed save keeps the draft and shows the error, but offers no retry other than editing again <code>web/src/SessionWorkspace.tsx:287</code> <code>web/src/SessionWorkspace.tsx:298</code>.</li>
+<li>A tab whose endpoint failed shows the error text with no retry; the load runs again only when the session changes <code>web/src/SessionWorkspace.tsx:389-390</code> <code>web/src/SessionWorkspace.tsx:95-108</code>.</li>
+<li>Escape closes the workspace only when docked; in the sheet the sheet handles closing <code>web/src/SessionWorkspace.tsx:486-493</code> <code>web/src/SessionWorkspace.tsx:620</code>.</li>
+</ul>
+<p>States not handled: the status line shows a load error of the stored outcome, but the toggle still shows the fallback rating from the report as if it were stored <code>web/src/SessionWorkspace.tsx:270-272</code> <code>web/src/SessionWorkspace.tsx:299</code>.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Release Checklist</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="releases/release-checklist.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Implementation and Migration / Releases · TOGAF: Phases E to H: solutions, migration, governance and change</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> </p><h1>Release Checklist</h1>
+<p>The ordered release steps the repository itself shows, each with its source.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Raise the version</td>
+<td><a href="#">pyproject.toml</a> <code>pyproject.toml:3</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Raise the version</td>
+<td><a href="#">web/package.json</a> <code>web/package.json:4</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Add the release to the changelog</td>
+<td><a href="#">CHANGELOG.md</a> <code>CHANGELOG.md:1</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Run the checks workflows before tagging: <code>codeql.yml</code>, <code>python.yml</code>, <code>web.yml</code></td>
+<td><code>.github/workflows/codeql.yml:1</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Run the script <code>build</code></td>
+<td><a href="#">web/package.json</a> <code>web/package.json:8</code></td>
+</tr>
+</tbody>
+</table>
+<p>A step is listed only when a file shows it. Missing steps are not guessed.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

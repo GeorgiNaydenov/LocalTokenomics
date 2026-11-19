@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Sources Screen</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/sources-screen.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Sources Screen</h1>
+<p>The Sources view (web/src/Sources.tsx): the capability matrix, the readers with data, the readers not detected and the scan warnings. Its map is <a href="../diagrams/sources-screen-map.html">Sources Screen Map</a>; each numbered badge in the image is one row below.</p>
+<h2>Screen map</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Element</th>
+<th>What it does</th>
+<th>Handler or target</th>
+<th>State it depends on</th>
+<th>Citation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&lt;Table</code> capability matrix</td>
+<td>One row per reader and one provenance badge per capability.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/Sources.tsx</a> <code>web/src/Sources.tsx:55-55</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;ProvenanceBadge</code> provenance</td>
+<td>Badge naming where a capability value comes from, with a title that explains it.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/Sources.tsx</a> <code>web/src/Sources.tsx:82-82</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>&lt;DetectedSource</code> reader detail</td>
+<td>One detail block per detected reader with files, sessions, requests and last event.</td>
+<td><code>detected</code></td>
+<td>-</td>
+<td><a href="#">web/src/Sources.tsx</a> <code>web/src/Sources.tsx:229-234</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>undetected.length &gt; 0</code> empty section</td>
+<td>Shows the folded list of readers not found here only when there are some.</td>
+<td>-</td>
+<td>empty: <code>undetected.length &gt; 0</code></td>
+<td><a href="#">web/src/Sources.tsx</a> <code>web/src/Sources.tsx:234-234</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;DisclosurePanel</code> Available, not detected here</td>
+<td>Folded list with the expected path and a hint per reader.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/Sources.tsx</a> <code>web/src/Sources.tsx:180-180</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>report.warning_groups.length &gt; 0</code> error section</td>
+<td>Shows the warnings panel only when the report carries warning groups.</td>
+<td>-</td>
+<td>error: <code>report.warning_groups.length &gt; 0</code></td>
+<td><a href="#">web/src/Sources.tsx</a> <code>web/src/Sources.tsx:236-236</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;WarningsList</code> warning groups</td>
+<td>Grouped scan warnings with severity.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/Sources.tsx</a> <code>web/src/Sources.tsx:243-243</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Conditional sections</h3>
+<ul>
+<li>empty: <code>undetected.length &gt; 0</code>, callout 4, <a href="#">web/src/Sources.tsx</a> <code>web/src/Sources.tsx:234-234</code></li>
+<li>error: <code>report.warning_groups.length &gt; 0</code>, callout 6, <a href="#">web/src/Sources.tsx</a> <code>web/src/Sources.tsx:236-236</code></li>
+</ul>
+<h2>Diagnosis</h2>
+<p>The reader reads only; nothing on this view changes data. The undetected list tells them how to bring a reader in by giving it a path <code>web/src/Sources.tsx:202-206</code>.</p>
+<p>What can go wrong:</p>
+<ul>
+<li>When no reader is detected the Readers with data panel renders an empty list with no empty state <code>web/src/Sources.tsx:222-232</code>.</li>
+<li>Warnings show only from the current report, so a warning counted by the Flagged figure of the overview may not appear here <code>web/src/Sources.tsx:236</code> <code>web/src/Overview.tsx:322-323</code>.</li>
+</ul>
+<p>States not handled: no loading or error state of its own; the shell renders this view only once the report and the metadata exist <code>web/src/App.tsx:336</code>.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

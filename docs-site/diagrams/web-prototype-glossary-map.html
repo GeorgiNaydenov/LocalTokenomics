@@ -1,0 +1,107 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web prototype glossary map</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-prototype-glossary-map.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business · TOGAF: Phase B, Business Architecture</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Web prototype glossary map</h1>
+<p>This map lists the words the prototype uses for its sample data and how they relate. A session belongs to a project, uses a model and is logged by a client. Knowing these terms makes every screen easier to read.</p>
+<h2>What the diagram shows</h2>
+<p>A session record holds a project, a client, a list of models, token counts, a cost state, an outcome, a traced flag and an error count <code>web/src/prototype/data.ts:170-196</code>.</p>
+<p>The cost state is one of four values: priced, free, unpriced and unavailable <code>web/src/prototype/Screens.tsx:71-82</code> <code>web/src/prototype/Rail.tsx:26-26</code>. The outcome is one of five: successful, partial, failed, abandoned and unrated <code>web/src/prototype/Rail.tsx:28-28</code>.</p>
+<p>A session holds four token buckets: uncached input, cache read, cache write and output <code>web/src/prototype/data.ts:170-196</code>.</p>
+<p>A model carries a provider, a client and a state <code>web/src/prototype/data.ts:15-27</code>. A rate row is matched to a model by the same name string, not by a link <code>web/src/prototype/data.ts:29-31</code> <code>web/src/prototype/data.ts:572-580</code> <code>web/src/prototype/data.ts:583-583</code>.</p>
+<p>A rate follows the rules of its provider, and the pricing screen falls back to a default when the provider has no rule <code>web/src/prototype/PricingScreen.tsx:33-44</code>.</p>
+<p>A series point is one model on one day <code>web/src/prototype/data.ts:125-134</code>. A reader record lists the clients it can read <code>web/src/prototype/data.ts:419-433</code>.</p>
+<p>Trace spans and context snapshots are fixed sample lists, shown for any traced session <code>web/src/prototype/data.ts:765-772</code> <code>web/src/prototype/data.ts:791-799</code> <code>web/src/prototype/Screens.tsx:171-215</code>. Capabilities say what a source can know <code>web/src/prototype/data.ts:757-763</code>.</p>
+<p>The filter state is meant to narrow sessions but is never passed to a screen <code>web/src/prototype/Rail.tsx:30-44</code> <code>web/src/prototype/Screens.tsx:360-368</code>.</p>
+<h2>Capability and related functionality</h2>
+<p>The capability is a shared vocabulary for the screens. Business meaning of these words in the real product is described in the glossary of the specification, see <a href="../application/web-prototype-specification.html">Web prototype Specification</a>, and the data shapes in <a href="../data/web-prototype-data-model.html">Web prototype Data Model</a>.</p>
+<h2>Web prototype glossary map</h2>
+<pre class="mermaid">flowchart LR
+    session(&quot;PrototypeSession&quot;):::term
+    cost(&quot;CostState&quot;):::term
+    outcome(&quot;OutcomeLabel&quot;):::term
+    bucket(&quot;Token bucket&quot;):::term
+    model(&quot;ModelInfo&quot;):::term
+    rate(&quot;RateRow&quot;):::term
+    rules(&quot;ProviderRules&quot;):::term
+    client(&quot;Client&quot;):::term
+    source(&quot;SourceRecord&quot;):::term
+    project(&quot;Project&quot;):::term
+    point(&quot;SeriesPoint&quot;):::term
+    span(&quot;TraceSpanRecord&quot;):::term
+    snap(&quot;OccupancySnapshot&quot;):::term
+    cap(&quot;Capabilities&quot;):::term
+    filt(&quot;FilterState&quot;):::term
+
+    session --&gt;|&quot;has one&quot;| cost
+    session --&gt;|&quot;has one&quot;| outcome
+    session --&gt;|&quot;holds four&quot;| bucket
+    session --&gt;|&quot;uses&quot;| model
+    session --&gt;|&quot;belongs to&quot;| project
+    session --&gt;|&quot;logged by&quot;| client
+    source --&gt;|&quot;is read for&quot;| client
+    model --&gt;|&quot;is priced by name&quot;| rate
+    rate --&gt;|&quot;follows&quot;| rules
+    point --&gt;|&quot;is one day of&quot;| model
+    session --&gt;|&quot;shows sample&quot;| span
+    session --&gt;|&quot;shows sample&quot;| snap
+    session --&gt;|&quot;is described by&quot;| cap
+    filt --&gt;|&quot;should narrow, does not&quot;| session
+
+    subgraph Legend
+        direction LR
+        zl1(&quot;Rounded box: a term named as the code names it&quot;):::term
+        zl2(&quot;Arrow label: the relation, such as has, uses or belongs to&quot;):::term
+        zl1 ~~~ zl2
+    end
+
+    classDef term fill:#dae8fc,stroke:#222222,color:#111111
+</pre>
+
+<h3>Node citations</h3>
+<ul>
+<li>session: <code>web/src/prototype/data.ts:170-196</code></li>
+<li>cost: <code>web/src/prototype/Screens.tsx:71-82</code></li>
+<li>outcome: <code>web/src/prototype/Rail.tsx:28-28</code></li>
+<li>bucket: <code>web/src/prototype/data.ts:170-196</code></li>
+<li>model: <code>web/src/prototype/data.ts:15-27</code></li>
+<li>rate: <code>web/src/prototype/data.ts:572-580</code></li>
+<li>rules: <code>web/src/prototype/data.ts:597-608</code></li>
+<li>client: <code>web/src/prototype/data.ts:152-159</code></li>
+<li>source: <code>web/src/prototype/data.ts:419-433</code></li>
+<li>project: <code>web/src/prototype/data.ts:161-168</code></li>
+<li>point: <code>web/src/prototype/data.ts:125-134</code></li>
+<li>span: <code>web/src/prototype/data.ts:791-799</code></li>
+<li>snap: <code>web/src/prototype/data.ts:765-772</code></li>
+<li>cap: <code>web/src/prototype/data.ts:757-763</code></li>
+<li>filt: <code>web/src/prototype/Rail.tsx:30-44</code></li>
+</ul>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/prototype/data.ts:170-196</code></td>
+<td>The session record</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/data.ts:15-27</code></td>
+<td>The model record</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/data.ts:572-608</code></td>
+<td>Rates and provider rules</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/data.ts:765-799</code></td>
+<td>Context snapshots and trace spans</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Rail.tsx:26-44</code></td>
+<td>Cost states, outcomes and filter state</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

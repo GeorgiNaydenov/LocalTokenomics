@@ -1,0 +1,1130 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web Overview</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/web-overview.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Web Overview</h1>
+<p>What Web is made of and how it connects to the rest of the code.</p>
+<h2>How it works</h2>
+<p>Web holds 73 source files and 15449 lines, with 188 tests that live in it or import its files. The most depended-on files are <code>web/src/design-system/cn.ts</code>, <code>web/src/api.ts</code>, <code>web/src/format.ts</code>. It uses <a href="../application/web-ui-components-overview.html">Web UI components Overview</a>, <a href="../application/web-ui-ui-components-overview.html">Web ui UI components Overview</a>. It is used by <a href="../application/web-ui-components-overview.html">Web UI components Overview</a>, <a href="../application/web-ui-ui-components-overview.html">Web ui UI components Overview</a>, <a href="../application/web-prototype-overview.html">Web prototype Overview</a>.</p>
+<p>The purpose column quotes each file's own header comment where it has one. Every file is cited by its full line range, and every public name by the line that declares it.</p>
+<h2>Reference</h2>
+<h3>Files</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+<th>Lines</th>
+<th>Imports</th>
+<th>Imported by</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/App.tsx</code></td>
+<td>-</td>
+<td>357</td>
+<td>15</td>
+<td>1</td>
+<td><a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:1-357</code></td>
+</tr>
+<tr>
+<td><code>web/src/ContextTab.tsx</code></td>
+<td>-</td>
+<td>227</td>
+<td>9</td>
+<td>1</td>
+<td><a href="#">web/src/ContextTab.tsx</a> <code>web/src/ContextTab.tsx:1-227</code></td>
+</tr>
+<tr>
+<td><code>web/src/EconomicsTab.tsx</code></td>
+<td>-</td>
+<td>770</td>
+<td>15</td>
+<td>2</td>
+<td><a href="#">web/src/EconomicsTab.tsx</a> <code>web/src/EconomicsTab.tsx:1-770</code></td>
+</tr>
+<tr>
+<td><code>web/src/FilterRail.tsx</code></td>
+<td>-</td>
+<td>506</td>
+<td>13</td>
+<td>1</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:1-506</code></td>
+</tr>
+<tr>
+<td><code>web/src/Header.tsx</code></td>
+<td>-</td>
+<td>137</td>
+<td>6</td>
+<td>1</td>
+<td><a href="#">web/src/Header.tsx</a> <code>web/src/Header.tsx:1-137</code></td>
+</tr>
+<tr>
+<td><code>web/src/Overview.tsx</code></td>
+<td>-</td>
+<td>917</td>
+<td>13</td>
+<td>1</td>
+<td><a href="#">web/src/Overview.tsx</a> <code>web/src/Overview.tsx:1-917</code></td>
+</tr>
+<tr>
+<td><code>web/src/Pricing.tsx</code></td>
+<td>-</td>
+<td>632</td>
+<td>13</td>
+<td>2</td>
+<td><a href="#">web/src/Pricing.tsx</a> <code>web/src/Pricing.tsx:1-632</code></td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx</code></td>
+<td>-</td>
+<td>626</td>
+<td>20</td>
+<td>4</td>
+<td><a href="#">web/src/SessionWorkspace.tsx</a> <code>web/src/SessionWorkspace.tsx:1-626</code></td>
+</tr>
+<tr>
+<td><code>web/src/Sessions.tsx</code></td>
+<td>-</td>
+<td>382</td>
+<td>14</td>
+<td>1</td>
+<td><a href="#">web/src/Sessions.tsx</a> <code>web/src/Sessions.tsx:1-382</code></td>
+</tr>
+<tr>
+<td><code>web/src/Sources.tsx</code></td>
+<td>-</td>
+<td>249</td>
+<td>10</td>
+<td>1</td>
+<td><a href="#">web/src/Sources.tsx</a> <code>web/src/Sources.tsx:1-249</code></td>
+</tr>
+<tr>
+<td><code>web/src/TraceTab.tsx</code></td>
+<td>-</td>
+<td>1025</td>
+<td>16</td>
+<td>2</td>
+<td><a href="#">web/src/TraceTab.tsx</a> <code>web/src/TraceTab.tsx:1-1025</code></td>
+</tr>
+<tr>
+<td><code>web/src/api.ts</code></td>
+<td>-</td>
+<td>595</td>
+<td>0</td>
+<td>27</td>
+<td><a href="#">web/src/api.ts</a> <code>web/src/api.ts:1-595</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/chart-hover.tsx</code></td>
+<td>-</td>
+<td>121</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/chart-hover.tsx</a> <code>web/src/components/chart-hover.tsx:1-121</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/chart-time.tsx</code></td>
+<td>-</td>
+<td>184</td>
+<td>3</td>
+<td>2</td>
+<td><a href="#">web/src/components/chart-time.tsx</a> <code>web/src/components/chart-time.tsx:1-184</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/columns.tsx</code></td>
+<td>-</td>
+<td>95</td>
+<td>2</td>
+<td>2</td>
+<td><a href="#">web/src/components/columns.tsx</a> <code>web/src/components/columns.tsx:1-95</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/detail.tsx</code></td>
+<td>-</td>
+<td>80</td>
+<td>2</td>
+<td>7</td>
+<td><a href="#">web/src/components/detail.tsx</a> <code>web/src/components/detail.tsx:1-80</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/filters.tsx</code></td>
+<td>-</td>
+<td>269</td>
+<td>7</td>
+<td>9</td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:1-269</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/metric-info.tsx</code></td>
+<td>-</td>
+<td>205</td>
+<td>2</td>
+<td>7</td>
+<td><a href="#">web/src/components/metric-info.tsx</a> <code>web/src/components/metric-info.tsx:1-205</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/panel.tsx</code></td>
+<td>-</td>
+<td>69</td>
+<td>1</td>
+<td>13</td>
+<td><a href="#">web/src/components/panel.tsx</a> <code>web/src/components/panel.tsx:1-69</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/rank.ts</code></td>
+<td>-</td>
+<td>19</td>
+<td>1</td>
+<td>3</td>
+<td><a href="#">web/src/components/rank.ts</a> <code>web/src/components/rank.ts:1-19</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/series.ts</code></td>
+<td>-</td>
+<td>29</td>
+<td>0</td>
+<td>10</td>
+<td><a href="#">web/src/components/series.ts</a> <code>web/src/components/series.ts:1-29</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/session.tsx</code></td>
+<td>-</td>
+<td>205</td>
+<td>5</td>
+<td>3</td>
+<td><a href="#">web/src/components/session.tsx</a> <code>web/src/components/session.tsx:1-205</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/source-card.tsx</code></td>
+<td>-</td>
+<td>121</td>
+<td>5</td>
+<td>5</td>
+<td><a href="#">web/src/components/source-card.tsx</a> <code>web/src/components/source-card.tsx:1-121</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/sparkline.tsx</code></td>
+<td>-</td>
+<td>145</td>
+<td>2</td>
+<td>5</td>
+<td><a href="#">web/src/components/sparkline.tsx</a> <code>web/src/components/sparkline.tsx:1-145</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/stat.tsx</code></td>
+<td>-</td>
+<td>164</td>
+<td>2</td>
+<td>15</td>
+<td><a href="#">web/src/components/stat.tsx</a> <code>web/src/components/stat.tsx:1-164</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx</code></td>
+<td>-</td>
+<td>338</td>
+<td>10</td>
+<td>15</td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:1-338</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/status.tsx</code></td>
+<td>-</td>
+<td>454</td>
+<td>4</td>
+<td>19</td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:1-454</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/trace.tsx</code></td>
+<td>-</td>
+<td>435</td>
+<td>6</td>
+<td>4</td>
+<td><a href="#">web/src/components/trace.tsx</a> <code>web/src/components/trace.tsx:1-435</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/accordion.tsx</code></td>
+<td>-</td>
+<td>65</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/accordion.tsx</a> <code>web/src/components/ui/accordion.tsx:1-65</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/alert.tsx</code></td>
+<td>-</td>
+<td>65</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/alert.tsx</a> <code>web/src/components/ui/alert.tsx:1-65</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/badge.tsx</code></td>
+<td>-</td>
+<td>47</td>
+<td>1</td>
+<td>6</td>
+<td><a href="#">web/src/components/ui/badge.tsx</a> <code>web/src/components/ui/badge.tsx:1-47</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/button.tsx</code></td>
+<td>-</td>
+<td>63</td>
+<td>1</td>
+<td>14</td>
+<td><a href="#">web/src/components/ui/button.tsx</a> <code>web/src/components/ui/button.tsx:1-63</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/chart.tsx</code></td>
+<td>-</td>
+<td>371</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/chart.tsx</a> <code>web/src/components/ui/chart.tsx:1-371</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/checkbox.tsx</code></td>
+<td>-</td>
+<td>31</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/checkbox.tsx</a> <code>web/src/components/ui/checkbox.tsx:1-31</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/collapsible.tsx</code></td>
+<td>-</td>
+<td>31</td>
+<td>0</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/collapsible.tsx</a> <code>web/src/components/ui/collapsible.tsx:1-31</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/dialog.tsx</code></td>
+<td>-</td>
+<td>158</td>
+<td>2</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/dialog.tsx</a> <code>web/src/components/ui/dialog.tsx:1-158</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/dropdown-menu.tsx</code></td>
+<td>-</td>
+<td>254</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/dropdown-menu.tsx</a> <code>web/src/components/ui/dropdown-menu.tsx:1-254</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/input.tsx</code></td>
+<td>-</td>
+<td>20</td>
+<td>1</td>
+<td>3</td>
+<td><a href="#">web/src/components/ui/input.tsx</a> <code>web/src/components/ui/input.tsx:1-20</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/label.tsx</code></td>
+<td>-</td>
+<td>21</td>
+<td>1</td>
+<td>5</td>
+<td><a href="#">web/src/components/ui/label.tsx</a> <code>web/src/components/ui/label.tsx:1-21</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/popover.tsx</code></td>
+<td>-</td>
+<td>86</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/popover.tsx</a> <code>web/src/components/ui/popover.tsx:1-86</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/progress.tsx</code></td>
+<td>-</td>
+<td>28</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/progress.tsx</a> <code>web/src/components/ui/progress.tsx:1-28</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/select.tsx</code></td>
+<td>-</td>
+<td>187</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/select.tsx</a> <code>web/src/components/ui/select.tsx:1-187</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/separator.tsx</code></td>
+<td>-</td>
+<td>25</td>
+<td>1</td>
+<td>5</td>
+<td><a href="#">web/src/components/ui/separator.tsx</a> <code>web/src/components/ui/separator.tsx:1-25</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/sheet.tsx</code></td>
+<td>-</td>
+<td>140</td>
+<td>1</td>
+<td>4</td>
+<td><a href="#">web/src/components/ui/sheet.tsx</a> <code>web/src/components/ui/sheet.tsx:1-140</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/skeleton.tsx</code></td>
+<td>-</td>
+<td>13</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/skeleton.tsx</a> <code>web/src/components/ui/skeleton.tsx:1-13</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/sonner.tsx</code></td>
+<td>-</td>
+<td>39</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/sonner.tsx</a> <code>web/src/components/ui/sonner.tsx:1-39</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/switch.tsx</code></td>
+<td>-</td>
+<td>34</td>
+<td>1</td>
+<td>3</td>
+<td><a href="#">web/src/components/ui/switch.tsx</a> <code>web/src/components/ui/switch.tsx:1-34</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/table.tsx</code></td>
+<td>-</td>
+<td>113</td>
+<td>1</td>
+<td>7</td>
+<td><a href="#">web/src/components/ui/table.tsx</a> <code>web/src/components/ui/table.tsx:1-113</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/tabs.tsx</code></td>
+<td>-</td>
+<td>90</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/tabs.tsx</a> <code>web/src/components/ui/tabs.tsx:1-90</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/textarea.tsx</code></td>
+<td>-</td>
+<td>19</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/textarea.tsx</a> <code>web/src/components/ui/textarea.tsx:1-19</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/toggle-group.tsx</code></td>
+<td>-</td>
+<td>81</td>
+<td>2</td>
+<td>6</td>
+<td><a href="#">web/src/components/ui/toggle-group.tsx</a> <code>web/src/components/ui/toggle-group.tsx:1-81</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/toggle.tsx</code></td>
+<td>-</td>
+<td>46</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/toggle.tsx</a> <code>web/src/components/ui/toggle.tsx:1-46</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/tooltip.tsx</code></td>
+<td>-</td>
+<td>56</td>
+<td>1</td>
+<td>10</td>
+<td><a href="#">web/src/components/ui/tooltip.tsx</a> <code>web/src/components/ui/tooltip.tsx:1-56</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/use-media-query.ts</code></td>
+<td>-</td>
+<td>18</td>
+<td>0</td>
+<td>4</td>
+<td><a href="#">web/src/components/use-media-query.ts</a> <code>web/src/components/use-media-query.ts:1-18</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/workspace-panel.ts</code></td>
+<td>-</td>
+<td>73</td>
+<td>0</td>
+<td>1</td>
+<td><a href="#">web/src/components/workspace-panel.ts</a> <code>web/src/components/workspace-panel.ts:1-73</code></td>
+</tr>
+<tr>
+<td><code>web/src/design-system/cn.ts</code></td>
+<td>-</td>
+<td>6</td>
+<td>0</td>
+<td>45</td>
+<td><a href="#">web/src/design-system/cn.ts</a> <code>web/src/design-system/cn.ts:1-6</code></td>
+</tr>
+<tr>
+<td><code>web/src/format.ts</code></td>
+<td>-</td>
+<td>197</td>
+<td>1</td>
+<td>21</td>
+<td><a href="#">web/src/format.ts</a> <code>web/src/format.ts:1-197</code></td>
+</tr>
+<tr>
+<td><code>web/src/main.tsx</code></td>
+<td>-</td>
+<td>13</td>
+<td>2</td>
+<td>0</td>
+<td><a href="#">web/src/main.tsx</a> <code>web/src/main.tsx:1-13</code></td>
+</tr>
+<tr>
+<td><code>web/src/pricing-format.ts</code></td>
+<td>-</td>
+<td>181</td>
+<td>2</td>
+<td>2</td>
+<td><a href="#">web/src/pricing-format.ts</a> <code>web/src/pricing-format.ts:1-181</code></td>
+</tr>
+<tr>
+<td><code>web/src/pricing-notes.ts</code></td>
+<td>-</td>
+<td>68</td>
+<td>2</td>
+<td>5</td>
+<td><a href="#">web/src/pricing-notes.ts</a> <code>web/src/pricing-notes.ts:1-68</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Gallery.tsx</code></td>
+<td>-</td>
+<td>659</td>
+<td>30</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/Gallery.tsx</a> <code>web/src/prototype/Gallery.tsx:1-659</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/OverviewScreen.tsx</code></td>
+<td>-</td>
+<td>386</td>
+<td>10</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:1-386</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/PricingScreen.tsx</code></td>
+<td>-</td>
+<td>218</td>
+<td>9</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:1-218</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Prototype.tsx</code></td>
+<td>-</td>
+<td>112</td>
+<td>9</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/Prototype.tsx</a> <code>web/src/prototype/Prototype.tsx:1-112</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Rail.tsx</code></td>
+<td>-</td>
+<td>276</td>
+<td>12</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/Rail.tsx</a> <code>web/src/prototype/Rail.tsx:1-276</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx</code></td>
+<td>-</td>
+<td>378</td>
+<td>15</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:1-378</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/SessionsScreen.tsx</code></td>
+<td>-</td>
+<td>249</td>
+<td>11</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:1-249</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/SourcesScreen.tsx</code></td>
+<td>-</td>
+<td>95</td>
+<td>6</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/SourcesScreen.tsx</a> <code>web/src/prototype/SourcesScreen.tsx:1-95</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/data.ts</code></td>
+<td>-</td>
+<td>831</td>
+<td>1</td>
+<td>8</td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:1-831</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/main.tsx</code></td>
+<td>-</td>
+<td>11</td>
+<td>1</td>
+<td>0</td>
+<td><a href="#">web/src/prototype/main.tsx</a> <code>web/src/prototype/main.tsx:1-11</code></td>
+</tr>
+<tr>
+<td><code>web/src/test-setup.ts</code></td>
+<td>-</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td><a href="#">web/src/test-setup.ts</a> <code>web/src/test-setup.ts:1-8</code></td>
+</tr>
+<tr>
+<td><code>web/src/theme.ts</code></td>
+<td>-</td>
+<td>69</td>
+<td>0</td>
+<td>4</td>
+<td><a href="#">web/src/theme.ts</a> <code>web/src/theme.ts:1-69</code></td>
+</tr>
+<tr>
+<td><code>web/src/turn-insights.ts</code></td>
+<td>-</td>
+<td>162</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/turn-insights.ts</a> <code>web/src/turn-insights.ts:1-162</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Public interface</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Kind</th>
+<th>File</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cn</code></td>
+<td>function</td>
+<td><code>web/src/design-system/cn.ts</code></td>
+<td><a href="#">web/src/design-system/cn.ts</a> <code>web/src/design-system/cn.ts:4</code></td>
+</tr>
+<tr>
+<td><code>TokenUsage</code></td>
+<td>interface</td>
+<td><code>web/src/api.ts</code></td>
+<td><a href="#">web/src/api.ts</a> <code>web/src/api.ts:1</code></td>
+</tr>
+<tr>
+<td><code>CostBreakdown</code></td>
+<td>interface</td>
+<td><code>web/src/api.ts</code></td>
+<td><a href="#">web/src/api.ts</a> <code>web/src/api.ts:13</code></td>
+</tr>
+<tr>
+<td><code>Bucket</code></td>
+<td>interface</td>
+<td><code>web/src/api.ts</code></td>
+<td><a href="#">web/src/api.ts</a> <code>web/src/api.ts:27</code></td>
+</tr>
+<tr>
+<td><code>Totals</code></td>
+<td>interface</td>
+<td><code>web/src/api.ts</code></td>
+<td><a href="#">web/src/api.ts</a> <code>web/src/api.ts:39</code></td>
+</tr>
+<tr>
+<td><code>SeriesPoint</code></td>
+<td>interface</td>
+<td><code>web/src/api.ts</code></td>
+<td><a href="#">web/src/api.ts</a> <code>web/src/api.ts:50</code></td>
+</tr>
+<tr>
+<td><code>CostState</code></td>
+<td>type</td>
+<td><code>web/src/api.ts</code></td>
+<td><a href="#">web/src/api.ts</a> <code>web/src/api.ts:61</code></td>
+</tr>
+<tr>
+<td><code>Provenance</code></td>
+<td>type</td>
+<td><code>web/src/api.ts</code></td>
+<td><a href="#">web/src/api.ts</a> <code>web/src/api.ts:63</code></td>
+</tr>
+<tr>
+<td><code>RawScalar</code></td>
+<td>type</td>
+<td><code>web/src/api.ts</code></td>
+<td><a href="#">web/src/api.ts</a> <code>web/src/api.ts:65</code></td>
+</tr>
+<tr>
+<td><code>SpanKind</code></td>
+<td>type</td>
+<td><code>web/src/api.ts</code></td>
+<td><a href="#">web/src/api.ts</a> <code>web/src/api.ts:67</code></td>
+</tr>
+<tr>
+<td><code>SpanStatus</code></td>
+<td>type</td>
+<td><code>web/src/api.ts</code></td>
+<td><a href="#">web/src/api.ts</a> <code>web/src/api.ts:80</code></td>
+</tr>
+<tr>
+<td><code>OutcomeLabel</code></td>
+<td>type</td>
+<td><code>web/src/api.ts</code></td>
+<td><a href="#">web/src/api.ts</a> <code>web/src/api.ts:82</code></td>
+</tr>
+<tr>
+<td><code>Span</code></td>
+<td>interface</td>
+<td><code>web/src/api.ts</code></td>
+<td><a href="#">web/src/api.ts</a> <code>web/src/api.ts:84</code></td>
+</tr>
+<tr>
+<td><code>formatMoney</code></td>
+<td>function</td>
+<td><code>web/src/format.ts</code></td>
+<td><a href="#">web/src/format.ts</a> <code>web/src/format.ts:20</code></td>
+</tr>
+<tr>
+<td><code>formatMoneyExact</code></td>
+<td>function</td>
+<td><code>web/src/format.ts</code></td>
+<td><a href="#">web/src/format.ts</a> <code>web/src/format.ts:25</code></td>
+</tr>
+<tr>
+<td><code>formatMoneyShort</code></td>
+<td>function</td>
+<td><code>web/src/format.ts</code></td>
+<td><a href="#">web/src/format.ts</a> <code>web/src/format.ts:37</code></td>
+</tr>
+<tr>
+<td><code>formatTokens</code></td>
+<td>function</td>
+<td><code>web/src/format.ts</code></td>
+<td><a href="#">web/src/format.ts</a> <code>web/src/format.ts:56</code></td>
+</tr>
+<tr>
+<td><code>plural</code></td>
+<td>function</td>
+<td><code>web/src/format.ts</code></td>
+<td><a href="#">web/src/format.ts</a> <code>web/src/format.ts:71</code></td>
+</tr>
+<tr>
+<td><code>formatCount</code></td>
+<td>function</td>
+<td><code>web/src/format.ts</code></td>
+<td><a href="#">web/src/format.ts</a> <code>web/src/format.ts:75</code></td>
+</tr>
+<tr>
+<td><code>sessionDisplayName</code></td>
+<td>function</td>
+<td><code>web/src/format.ts</code></td>
+<td><a href="#">web/src/format.ts</a> <code>web/src/format.ts:80</code></td>
+</tr>
+<tr>
+<td><code>formatExact</code></td>
+<td>function</td>
+<td><code>web/src/format.ts</code></td>
+<td><a href="#">web/src/format.ts</a> <code>web/src/format.ts:85</code></td>
+</tr>
+<tr>
+<td><code>formatDuration</code></td>
+<td>function</td>
+<td><code>web/src/format.ts</code></td>
+<td><a href="#">web/src/format.ts</a> <code>web/src/format.ts:89</code></td>
+</tr>
+<tr>
+<td><code>formatPercent</code></td>
+<td>function</td>
+<td><code>web/src/format.ts</code></td>
+<td><a href="#">web/src/format.ts</a> <code>web/src/format.ts:101</code></td>
+</tr>
+<tr>
+<td><code>formatDay</code></td>
+<td>function</td>
+<td><code>web/src/format.ts</code></td>
+<td><a href="#">web/src/format.ts</a> <code>web/src/format.ts:106</code></td>
+</tr>
+<tr>
+<td><code>formatDayShort</code></td>
+<td>function</td>
+<td><code>web/src/format.ts</code></td>
+<td><a href="#">web/src/format.ts</a> <code>web/src/format.ts:119</code></td>
+</tr>
+<tr>
+<td><code>Unavailable</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:77</code></td>
+</tr>
+<tr>
+<td><code>PartialMarker</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:96</code></td>
+</tr>
+<tr>
+<td><code>CostStateBadge</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:149</code></td>
+</tr>
+<tr>
+<td><code>EstimatedBadge</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:171</code></td>
+</tr>
+<tr>
+<td><code>ExperimentalBadge</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:175</code></td>
+</tr>
+<tr>
+<td><code>CostBadges</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:180</code></td>
+</tr>
+<tr>
+<td><code>ProvenanceBadge</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:197</code></td>
+</tr>
+<tr>
+<td><code>OutcomeBadge</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:220</code></td>
+</tr>
+<tr>
+<td><code>Meter</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:238</code></td>
+</tr>
+<tr>
+<td><code>BucketSegment</code></td>
+<td>interface</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:279</code></td>
+</tr>
+<tr>
+<td><code>BucketBar</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:286</code></td>
+</tr>
+<tr>
+<td><code>Legend</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:324</code></td>
+</tr>
+<tr>
+<td><code>NumberTicker</code></td>
+<td>function</td>
+<td><code>web/src/components/stat.tsx</code></td>
+<td><a href="#">web/src/components/stat.tsx</a> <code>web/src/components/stat.tsx:14</code></td>
+</tr>
+<tr>
+<td><code>StatLabel</code></td>
+<td>function</td>
+<td><code>web/src/components/stat.tsx</code></td>
+<td><a href="#">web/src/components/stat.tsx</a> <code>web/src/components/stat.tsx:49</code></td>
+</tr>
+<tr>
+<td><code>Stat</code></td>
+<td>function</td>
+<td><code>web/src/components/stat.tsx</code></td>
+<td><a href="#">web/src/components/stat.tsx</a> <code>web/src/components/stat.tsx:61</code></td>
+</tr>
+<tr>
+<td><code>StatGrid</code></td>
+<td>function</td>
+<td><code>web/src/components/stat.tsx</code></td>
+<td><a href="#">web/src/components/stat.tsx</a> <code>web/src/components/stat.tsx:157</code></td>
+</tr>
+<tr>
+<td><code>SortDirection</code></td>
+<td>type</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:19</code></td>
+</tr>
+<tr>
+<td><code>ariaSort</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:21</code></td>
+</tr>
+<tr>
+<td><code>SortButton</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:29</code></td>
+</tr>
+<tr>
+<td><code>EmptyState</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:68</code></td>
+</tr>
+<tr>
+<td><code>ErrorState</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:98</code></td>
+</tr>
+<tr>
+<td><code>PanelSkeleton</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:123</code></td>
+</tr>
+<tr>
+<td><code>DisclosurePanel</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:136</code></td>
+</tr>
+<tr>
+<td><code>WarningsList</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:247</code></td>
+</tr>
+<tr>
+<td><code>OfflineCard</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:280</code></td>
+</tr>
+<tr>
+<td><code>StatSkeleton</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:330</code></td>
+</tr>
+<tr>
+<td><code>Panel</code></td>
+<td>function</td>
+<td><code>web/src/components/panel.tsx</code></td>
+<td><a href="#">web/src/components/panel.tsx</a> <code>web/src/components/panel.tsx:5</code></td>
+</tr>
+<tr>
+<td><code>PanelHeader</code></td>
+<td>function</td>
+<td><code>web/src/components/panel.tsx</code></td>
+<td><a href="#">web/src/components/panel.tsx</a> <code>web/src/components/panel.tsx:15</code></td>
+</tr>
+<tr>
+<td><code>PanelBody</code></td>
+<td>function</td>
+<td><code>web/src/components/panel.tsx</code></td>
+<td><a href="#">web/src/components/panel.tsx</a> <code>web/src/components/panel.tsx:55</code></td>
+</tr>
+<tr>
+<td><code>PanelNote</code></td>
+<td>function</td>
+<td><code>web/src/components/panel.tsx</code></td>
+<td><a href="#">web/src/components/panel.tsx</a> <code>web/src/components/panel.tsx:59</code></td>
+</tr>
+<tr>
+<td><code>SERIES_SLOTS</code></td>
+<td>const</td>
+<td><code>web/src/components/series.ts</code></td>
+<td><a href="#">web/src/components/series.ts</a> <code>web/src/components/series.ts:1</code></td>
+</tr>
+<tr>
+<td><code>seriesColor</code></td>
+<td>function</td>
+<td><code>web/src/components/series.ts</code></td>
+<td><a href="#">web/src/components/series.ts</a> <code>web/src/components/series.ts:3</code></td>
+</tr>
+<tr>
+<td><code>TokenBucket</code></td>
+<td>interface</td>
+<td><code>web/src/components/series.ts</code></td>
+<td><a href="#">web/src/components/series.ts</a> <code>web/src/components/series.ts:7</code></td>
+</tr>
+<tr>
+<td><code>TOKEN_BUCKETS</code></td>
+<td>const</td>
+<td><code>web/src/components/series.ts</code></td>
+<td><a href="#">web/src/components/series.ts</a> <code>web/src/components/series.ts:14</code></td>
+</tr>
+<tr>
+<td><code>SearchField</code></td>
+<td>function</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:18</code></td>
+</tr>
+<tr>
+<td><code>FacetOption</code></td>
+<td>interface</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:56</code></td>
+</tr>
+<tr>
+<td><code>FacetGroup</code></td>
+<td>function</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:63</code></td>
+</tr>
+<tr>
+<td><code>ChipRow</code></td>
+<td>function</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:120</code></td>
+</tr>
+<tr>
+<td><code>DateRange</code></td>
+<td>function</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:156</code></td>
+</tr>
+<tr>
+<td><code>SortSelect</code></td>
+<td>function</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:195</code></td>
+</tr>
+<tr>
+<td><code>ActiveFilter</code></td>
+<td>interface</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:224</code></td>
+</tr>
+<tr>
+<td><code>FilterChips</code></td>
+<td>function</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:231</code></td>
+</tr>
+<tr>
+<td><code>TODAY</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:3</code></td>
+</tr>
+<tr>
+<td><code>DAYS</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:5</code></td>
+</tr>
+<tr>
+<td><code>ModelInfo</code></td>
+<td>interface</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:15</code></td>
+</tr>
+<tr>
+<td><code>MODELS</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:29</code></td>
+</tr>
+<tr>
+<td><code>PRICED_MODELS</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:123</code></td>
+</tr>
+<tr>
+<td><code>SeriesPoint</code></td>
+<td>interface</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:125</code></td>
+</tr>
+<tr>
+<td><code>SERIES</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:136</code></td>
+</tr>
+<tr>
+<td><code>CLIENTS</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:152</code></td>
+</tr>
+<tr>
+<td><code>PROJECTS</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:161</code></td>
+</tr>
+<tr>
+<td><code>PrototypeSession</code></td>
+<td>interface</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:170</code></td>
+</tr>
+<tr>
+<td><code>SourceRecord</code></td>
+<td>interface</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:419</code></td>
+</tr>
+<tr>
+<td><code>SOURCES</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:435</code></td>
+</tr>
+<tr>
+<td><code>Section</code></td>
+<td>function</td>
+<td><code>web/src/components/detail.tsx</code></td>
+<td><a href="#">web/src/components/detail.tsx</a> <code>web/src/components/detail.tsx:6</code></td>
+</tr>
+</tbody>
+</table>
+<p>124 more public names are omitted; see the cited files.</p>
+<h2>Explanation</h2>
+<h3>What the dashboard is</h3>
+<p>The dashboard code is a single page React application that shows token usage and its list price cost for the AI coding tools found on this machine. It mounts one top level component inside a tooltip provider and loads the shared theme stylesheet <code>web/src/main.tsx:7-13</code>. The page never reads logs itself. Every figure comes from JSON that the local <code>ai-usage-cost</code> server returns <code>web/src/api.ts:489-500</code>.</p>
+<h3>How data is loaded</h3>
+<p>All network access goes through one helper, <code>getJson</code>. A failed <code>fetch</code> becomes an <code>ApiError</code> that says the server could not be reached, and a non success status becomes an <code>ApiError</code> naming the path and the status <code>web/src/api.ts:489-500</code>. Endpoints are relative paths such as <code>api/meta</code>, <code>api/rates</code> and <code>api/report</code>, so the page works under whatever host and port serves it <code>web/src/api.ts:502-512</code> <code>web/src/api.ts:532</code>.</p>
+<p>The report request carries the whole filter state as a query string. Dates, search text, cost states, clients, models, projects and outcomes are added only when set, and the sidechain, traced and error flags are added only when they differ from their default <code>web/src/api.ts:514-533</code>. Per session detail has its own paths: trace, economics, context, outcome and span content are read with GET, the outcome is saved with PUT, and a session is removed with DELETE <code>web/src/api.ts:539-595</code>.</p>
+<h3>State held by the page</h3>
+<p>The top level component owns the whole page state: the metadata, the rate table, the report, the current query, the selected view, the open session workspace and the loading and error flags <code>web/src/App.tsx:132-145</code>. A blank query has no dates, no facets, sidechains included and no outcome, traced or error filter <code>web/src/App.tsx:23-35</code>. The four views are overview, sessions, sources and pricing <code>web/src/api.ts:361</code>.</p>
+<p>On first load the metadata and the rate table are fetched together. When the query has no dates yet, the range is set from the first day in the data up to today <code>web/src/App.tsx:166-181</code>. A second effect fetches the report whenever the metadata or the query changes, and cancels the previous request through an abort controller so a slow answer cannot overwrite a newer one <code>web/src/App.tsx:183-201</code>. While a new query is in flight the page keeps the old report and dims the counter, because <code>refetching</code> is true until the settled query equals the current one <code>web/src/App.tsx:203</code> <code>web/src/App.tsx:322-326</code>.</p>
+<p>Active filters are shown as removable chips built from the query, with client and model ids replaced by their labels where known <code>web/src/App.tsx:54-127</code>. Facet toggling adds a value to a list or removes it if present <code>web/src/App.tsx:43-45</code> <code>web/src/App.tsx:151-164</code>.</p>
+<h3>Rescan and automatic refresh</h3>
+<p>The Rescan button posts to the server, then bumps a reload counter that makes the metadata, rates and report load again <code>web/src/App.tsx:211-222</code>. A timer repeats this every five minutes while the tab is visible <code>web/src/App.tsx:21</code> <code>web/src/App.tsx:224-249</code>. The timer stops when the tab is hidden, and on becoming visible again a rescan runs at once if the last scan is older than five minutes <code>web/src/App.tsx:235-243</code>.</p>
+<h3>Failure and loading screens</h3>
+<p>If the error text says the server could not be reached, the page shows an offline card with the command <code>ai-usage-cost serve</code> and a retry button <code>web/src/App.tsx:251-261</code>. Any other error shows an error state <code>web/src/App.tsx:271-277</code>, and the first load shows a loading label <code>web/src/App.tsx:263-269</code>. This split keeps a stopped server visibly different from a server that answered with an error.</p>
+<h3>The four views and the session workspace</h3>
+<p>Each view renders only when its data has arrived: overview and sources need the report and the metadata, sessions needs the report, pricing needs the report and the rate table <code>web/src/App.tsx:330-339</code>. Choosing a session opens a workspace panel for the row with the matching session id and source <code>web/src/App.tsx:284-288</code> <code>web/src/App.tsx:342-353</code>.</p>
+<p>The workspace has four tabs, Summary, Trace, Economics and Context <code>web/src/SessionWorkspace.tsx:49</code> <code>web/src/SessionWorkspace.tsx:72-77</code>. The outcome is fetched when the workspace opens, while the other three resources are fetched only after their tab has been requested once <code>web/src/SessionWorkspace.tsx:447-474</code>. Each lazy resource moves through idle, loading, ready or error and ignores answers from an aborted request <code>web/src/SessionWorkspace.tsx:81-111</code>. On a wide screen the workspace is a docked side panel that can be resized and closed with Escape, and on a narrow screen it becomes a sheet <code>web/src/SessionWorkspace.tsx:486-493</code> <code>web/src/SessionWorkspace.tsx:600-625</code>.</p>
+<h3>Reading the cost correctly</h3>
+<p>The cost state of a session is one of priced, free, unpriced or unavailable <code>web/src/api.ts:61</code>. The summary tab explains each state in words: priced requests use list prices, free means a local runtime counted at zero, unpriced means no rate entry matches so the cost stays out of totals, and unavailable means the client logs no token counts so cost is left blank <code>web/src/SessionWorkspace.tsx:113-130</code>. Missing values are shown as unavailable, never as zero, which is also what the capability table says about provenance <code>web/src/Sources.tsx:28-34</code>.</p>
+<p>When a tool wrote its own cost, the page shows it as a second line, and flags a divergence if the two figures differ by more than five percent or one cent <code>web/src/pricing-notes.ts:36-39</code> <code>web/src/pricing-notes.ts:47-56</code>. A row priced from a sibling model's rate is marked as estimated <code>web/src/pricing-notes.ts:65-68</code>. A notice appears when the rate table is 30 days old and turns to caution at 90 days <code>web/src/pricing-notes.ts:16-34</code>.</p>
+<h3>Recording an outcome</h3>
+<p>A person can rate a session as successful, partial, failed, abandoned or unrated, and add notes and tags <code>web/src/SessionWorkspace.tsx:262-289</code>. Each change is sent with PUT, tags are split on commas and trimmed <code>web/src/SessionWorkspace.tsx:255-260</code>, and notes or tags are saved only when the field loses focus and the text actually changed <code>web/src/SessionWorkspace.tsx:291-294</code>. The status line shows saving, the error text, the save time or "not rated yet" <code>web/src/SessionWorkspace.tsx:296-302</code>. This is the one place where the dashboard writes data back to the server.</p>
+<h3>Sessions, sources and pricing</h3>
+<p>The sessions table sorts by start time, newest first, and shows at most 120 rows <code>web/src/Sessions.tsx:48</code> <code>web/src/Sessions.tsx:240-253</code>. Clicking the active column header flips the direction and a new column starts descending <code>web/src/Sessions.tsx:259-264</code>. Sessions without a cost sort as minus one, so they fall below priced rows when sorted by cost or tokens <code>web/src/Sessions.tsx:91-94</code>.</p>
+<p>The sources view lists readers with verified ones first and experimental ones after, and it says when a reader was not detected on this machine <code>web/src/Sources.tsx:36-39</code> <code>web/src/Sources.tsx:41-46</code>.</p>
+<p>The pricing view builds one row per rate. A rate row is free when its merged provider rules say so, priced when buckets matched to it carry spend, and unused otherwise <code>web/src/Pricing.tsx:119-128</code>. Spend is joined by model key and only exact or suffix matches count, so an estimated bucket is credited to its parent separately <code>web/src/Pricing.tsx:90-117</code>. Cache prices use the published figure when present, otherwise input price times the provider ratio, otherwise nothing <code>web/src/pricing-format.ts:47-72</code>. Rows get Preview, Retired or Unverified tags <code>web/src/pricing-format.ts:149-161</code>.</p>
+<h3>Per turn insights</h3>
+<p><code>turn-insights.ts</code> computes the facts shown above the economics table. The unattributed row, the spend outside any turn, is kept out of every ranking <code>web/src/turn-insights.ts:4-8</code> <code>web/src/turn-insights.ts:15-17</code> <code>web/src/turn-insights.ts:52-61</code>. Cost concentration is the top three turns as a share of turn cost, and is empty when no turn is priced <code>web/src/turn-insights.ts:70-82</code>. The half trend splits turns by order into two halves and compares their cost <code>web/src/turn-insights.ts:121-140</code>.</p>
+<h3>Formatting and theme</h3>
+<p>Money is shown in US dollars with two decimals, with four decimals for values under one cent so a tooltip never shows $0.00 for a real cost <code>web/src/format.ts:19-27</code>. Token counts are abbreviated with K, M and B, rolled up so 999,999 does not read as 1000K <code>web/src/format.ts:53-64</code>. Dates are parsed as plain days so the viewer's time zone never shifts them <code>web/src/format.ts:105-116</code>.</p>
+<p>The theme is light or dark. It uses the stored choice when present and the system preference otherwise, and a blocked local storage falls back without an error <code>web/src/theme.ts:5-33</code>. Changing the theme sets it on the document and notifies subscribers <code>web/src/theme.ts:42-47</code> <code>web/src/theme.ts:56-69</code>.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

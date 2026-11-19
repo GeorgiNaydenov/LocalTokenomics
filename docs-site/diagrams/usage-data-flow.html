@@ -1,0 +1,111 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Usage data flow</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/usage-data-flow.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Data · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Usage data flow</h1>
+<p>This view shows where usage data comes from, where it is kept and who can see it. Logs flow in, prices and settings are read from local files, and the report goes back to the person. It lets a privacy reviewer check that text from a session is only released when the person allows it.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>Source databases are opened read only, so the tool never changes the logs of another tool. <code>src/ai_usage_cost/sources/base.py:123</code></li>
+<li>Ingest records requests, spans and a fingerprint of each file in the store. <code>src/ai_usage_cost/store.py:281</code></li>
+<li>The privacy settings tell ingest which projects to leave out and how long to keep trace rows. <code>src/ai_usage_cost/pipeline.py:183</code></li>
+<li>The rate table is read from a local file and joined to each request. <code>src/ai_usage_cost/pricing.py:22</code></li>
+<li>The settings file sits in the home folder next to the store. <code>src/ai_usage_cost/privacy.py:12</code></li>
+<li>The report goes back to the person as a table, as JSON or as an API reply. <code>src/ai_usage_cost/cli.py:105</code> <code>src/ai_usage_cost/cli.py:96</code></li>
+<li>A rating or a forget request writes a row to the store. <code>src/ai_usage_cost/store.py:568</code> <code>src/ai_usage_cost/store.py:595</code></li>
+<li>Span text is refused while metadata only is on, and redacted when it is released. <code>src/ai_usage_cost/privacy.py:87</code> <code>src/ai_usage_cost/privacy.py:98</code></li>
+<li>The alert command is the one flow that sends data out of the machine, to the targets the person names. <code>src/ai_usage_cost/cli.py:349</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>Realises the privacy stance described in <a href="../security/ai-usage-cost-security.html">Ai usage cost Security</a>.</li>
+<li>The stores D1 to D3 correspond to the tables in <a href="../data/ai-usage-cost-data-model.html">Ai usage cost Data Model</a>.</li>
+<li>The order of the same steps over time is <a href="../diagrams/scan-pipeline-from-logs-to-report.html">Scan pipeline from logs to report</a>.</li>
+<li>The HTTP routes behind the person's requests are in <a href="../application/ai-usage-cost-api.html">Ai usage cost API</a>.</li>
+</ul>
+<h2>The diagram</h2>
+<pre class="mermaid">flowchart LR
+    e1[&quot;External: AI coding tool logs and databases&quot;]:::extsys
+    e2([&quot;Person: reads the report, rates sessions&quot;]):::person
+    e3[&quot;External: notification target&quot;]:::extsys
+    subgraph tb[&quot;Trust boundary: the owner&#x27;s machine&quot;]
+        p1(&quot;1.0 Ingest changed log files&quot;):::proc
+        p2(&quot;2.0 Price every request&quot;):::proc
+        p3(&quot;3.0 Build the report&quot;):::proc
+        p4(&quot;4.0 Present report and alerts&quot;):::proc
+        p5(&quot;5.0 Release span text with redaction&quot;):::sec
+        p6(&quot;6.0 Record a rating or forget a session&quot;):::proc
+        d1[(&quot;D1 usage.db store&quot;)]:::store
+        d2[(&quot;D2 rates.json&quot;)]:::store
+        d3[(&quot;D3 config.json privacy settings&quot;)]:::store
+    end
+
+    e1 --&gt;|&quot;log records, read only&quot;| p1
+    d3 --&gt;|&quot;excluded projects, retention days&quot;| p1
+    p1 --&gt;|&quot;requests, spans, file fingerprints&quot;| d1
+    d1 --&gt;|&quot;requests, session flags&quot;| p2
+    d2 --&gt;|&quot;rate rows, prefixes, as-of date&quot;| p2
+    p2 --&gt;|&quot;priced events, warnings&quot;| p3
+    p3 --&gt;|&quot;report: totals, buckets, sessions&quot;| p4
+    e2 --&gt;|&quot;filters, commands&quot;| p4
+    p4 --&gt;|&quot;report as table, JSON, PNG or API reply&quot;| e2
+    p4 --&gt;|&quot;spend alert text&quot;| e3
+    e2 --&gt;|&quot;rating, forget request&quot;| p6
+    p6 --&gt;|&quot;outcome row, exclusion row&quot;| d1
+    e2 --&gt;|&quot;span id&quot;| p5
+    d1 --&gt;|&quot;record offset and content path&quot;| p5
+    d3 --&gt;|&quot;metadata only flag, size limit&quot;| p5
+    e1 --&gt;|&quot;raw record text&quot;| p5
+    p5 --&gt;|&quot;redacted text or refusal&quot;| e2
+
+    subgraph Legend
+        direction LR
+        zlegend_a(&quot;1.0 Process&quot;):::proc
+        zlegend_b(&quot;Security control&quot;):::sec
+        zlegend_c[(&quot;D1 Data store&quot;)]:::store
+        zlegend_d([&quot;Person&quot;]):::person
+        zlegend_e[&quot;External system, not controlled&quot;]:::extsys
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d ~~~ zlegend_e
+    end
+
+    classDef proc fill:#dae8fc,stroke:#222222,color:#222222
+    classDef sec fill:#e1d5e7,stroke:#222222,color:#222222
+    classDef store fill:#d5e8d4,stroke:#222222,color:#222222
+    classDef person fill:#fff2cc,stroke:#222222,color:#222222
+    classDef extsys fill:#f5f5f5,stroke:#666666,stroke-dasharray:5 5,color:#222222
+    style tb fill:none,stroke:#9673a6,stroke-dasharray:5 5
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/store.py:190</code></td>
+<td>Process 1.0</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pipeline.py:166</code></td>
+<td>Process 2.0</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/aggregate.py:675</code></td>
+<td>Process 3.0</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:299</code></td>
+<td>The outbound notification</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/privacy.py:86</code></td>
+<td>Process 5.0</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/store.py:568</code></td>
+<td>Process 6.0</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

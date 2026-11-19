@@ -1,0 +1,125 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Route and API Index</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/route-and-api-index.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> </p><h1>Route and API Index</h1>
+<p>Every route the extractors found, with its handler.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Handler</th>
+<th>Framework</th>
+<th>Auth</th>
+<th>Component</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/</code></td>
+<td><code>missing_build</code></td>
+<td>fastapi</td>
+<td>-</td>
+<td>src/ai_usage_cost</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:399</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/meta</code></td>
+<td><code>meta</code></td>
+<td>fastapi</td>
+<td>-</td>
+<td>src/ai_usage_cost</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:256</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/rates</code></td>
+<td><code>rates</code></td>
+<td>fastapi</td>
+<td>-</td>
+<td>src/ai_usage_cost</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:385</code></td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/refresh</code></td>
+<td><code>refresh</code></td>
+<td>fastapi</td>
+<td>-</td>
+<td>src/ai_usage_cost</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:389</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/report</code></td>
+<td><code>report</code></td>
+<td>fastapi</td>
+<td>-</td>
+<td>src/ai_usage_cost</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:290</code></td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/sessions/{source}/{session_id}</code></td>
+<td><code>forget_session</code></td>
+<td>fastapi</td>
+<td>-</td>
+<td>src/ai_usage_cost</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:362</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/sessions/{source}/{session_id}/context</code></td>
+<td><code>context</code></td>
+<td>fastapi</td>
+<td>-</td>
+<td>src/ai_usage_cost</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:346</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/sessions/{source}/{session_id}/economics</code></td>
+<td><code>economics</code></td>
+<td>fastapi</td>
+<td>-</td>
+<td>src/ai_usage_cost</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:334</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/sessions/{source}/{session_id}/outcome</code></td>
+<td><code>outcome</code></td>
+<td>fastapi</td>
+<td>-</td>
+<td>src/ai_usage_cost</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:351</code></td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/api/sessions/{source}/{session_id}/outcome</code></td>
+<td><code>rate_session</code></td>
+<td>fastapi</td>
+<td>-</td>
+<td>src/ai_usage_cost</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:356</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/sessions/{source}/{session_id}/spans/{span_id}/content</code></td>
+<td><code>span_content</code></td>
+<td>fastapi</td>
+<td>-</td>
+<td>src/ai_usage_cost</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:374</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/sessions/{source}/{session_id}/trace</code></td>
+<td><code>trace</code></td>
+<td>fastapi</td>
+<td>-</td>
+<td>src/ai_usage_cost</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:321</code></td>
+</tr>
+</tbody>
+</table></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

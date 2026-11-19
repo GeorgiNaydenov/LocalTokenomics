@@ -1,0 +1,905 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web UI components Overview</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/web-ui-components-overview.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/components/*</code></p><h1>Web UI components Overview</h1>
+<p>What Web UI components is made of and how it connects to the rest of the code.</p>
+<h2>How it works</h2>
+<p>Web UI components holds 43 source files and 5107 lines, with 18 tests that live in it or import its files. The most depended-on files are <code>web/src/components/status.tsx</code>, <code>web/src/components/stat.tsx</code>, <code>web/src/components/states.tsx</code>. It uses <a href="../application/web-overview.html">Web Overview</a>, <a href="../application/web-ui-ui-components-overview.html">Web ui UI components Overview</a>. It is used by <a href="../application/web-overview.html">Web Overview</a>, <a href="../application/web-prototype-overview.html">Web prototype Overview</a>.</p>
+<p>The purpose column quotes each file's own header comment where it has one. Every file is cited by its full line range, and every public name by the line that declares it.</p>
+<h2>What this chunk is</h2>
+<p>This chunk is the set of shared, presentation-only building blocks of the dashboard: stat cards, badges, meters, a stacked daily chart, sparklines, filter controls, a column chooser, session and source cards and a span timeline. The files in the <code>ui/</code> subfolder are the lower-level primitives and belong to a separate chunk for the ui folder, which this chunk imports, for example the button and dropdown menu in <code>web/src/components/columns.tsx:4-12</code>.</p>
+<p>The components do not fetch or price anything. They receive already computed values, labels and colours as props. A session row, for instance, arrives as a summary with model, client, project, started time, request count and pre-formatted token and cost text <code>web/src/components/session.tsx:101-115</code>. The rest of the web app, such as <code>web/src/App.tsx:15-17</code>, imports these components and decides what data goes in.</p>
+<h2>Honest display of missing data</h2>
+<p>The most repeated rule in the chunk is that a missing number is shown as the word "unavailable" and is never replaced by a zero or a guess.</p>
+<ul>
+<li>A cost state is one of priced, free, unpriced or unavailable. Unpriced rows are described as left out of cost totals, and unavailable rows as having no token counts, so cost is never invented <code>web/src/components/status.tsx:8-29</code>.</li>
+<li><code>Unavailable</code> renders the word in the unavailable colour and, when given a hint, makes it an explanation trigger <code>web/src/components/status.tsx:77-94</code>.</li>
+<li>The meter, the bucket bar, the meter row and the comparison meter each switch to the unavailable marker when the value is null or the total is not positive, so no empty bar is drawn <code>web/src/components/status.tsx:253-259</code> <code>web/src/components/status.tsx:296-302</code> <code>web/src/components/status.tsx:383-387</code> <code>web/src/components/status.tsx:422-431</code>.</li>
+<li>The token cell and the session card do the same for token and cost text that is null <code>web/src/components/session.tsx:63-69</code> <code>web/src/components/session.tsx:192-201</code>.</li>
+<li>The context occupancy chart draws a call with unknown occupancy as a hatched full-height bar and says in a note that it is unknown, not zero <code>web/src/components/trace.tsx:136-147</code> <code>web/src/components/trace.tsx:203-209</code>.</li>
+</ul>
+<h2>Badges and ranking</h2>
+<p><code>SignalBadge</code> is the one shape behind the cost state, provenance, outcome, estimated and experimental badges: a coloured dot, a label and an optional explanation popover when a title is given <code>web/src/components/status.tsx:104-147</code>. Provenance has five values (measured, derived, estimated, inferred, unavailable) and outcome has five (successful, partial, failed, abandoned, unrated) <code>web/src/components/status.tsx:31-65</code>.</p>
+<p><code>CostBadges</code> adds an Estimated badge next to the state badge when a priced row used another model's rate. The estimated colour is the inferred purple on purpose, so it is not confused with the amber of an unpriced row <code>web/src/components/status.tsx:167-195</code>.</p>
+<p>When several rows are rolled up into one, <code>worstState</code> and <code>worstProvenance</code> pick the least trustworthy value by rank, and an empty list gives unavailable <code>web/src/components/rank.ts:3-19</code>.</p>
+<h2>Stat cards</h2>
+<p><code>Stat</code> shows a label, a value, an optional unit and hint, and an optional info popover. When an exact unrounded value is passed, it is appended to the popover so an abbreviated headline never hides the true count <code>web/src/components/stat.tsx:90-95</code>. A numeric value with a formatter animates through <code>NumberTicker</code>, which uses a cubic ease and skips the animation when the reader prefers reduced motion <code>web/src/components/stat.tsx:7-47</code> <code>web/src/components/stat.tsx:113-117</code>.</p>
+<p>A clickable stat card is a <code>div</code> with <code>role="button"</code> rather than a native button, because the info trigger inside it is itself interactive and a button cannot contain another one <code>web/src/components/stat.tsx:132-152</code>.</p>
+<h2>Explanation popovers</h2>
+<p><code>MetricInfo</code> is the popover that explains a number. Its content is either one plain sentence or a structured block with meaning, formula, computed value, provenance and caveats <code>web/src/components/metric-info.tsx:15-24</code> <code>web/src/components/metric-info.tsx:165-187</code>.</p>
+<p>It opens after the pointer rests on the trigger for 400 ms, closes 250 ms after the pointer leaves both trigger and popover, and checks this every 100 ms from one shared pointer position <code>web/src/components/metric-info.tsx:11-13</code> <code>web/src/components/metric-info.tsx:35-44</code> <code>web/src/components/metric-info.tsx:78-111</code>. Focus opens it too, and a click toggles it <code>web/src/components/metric-info.tsx:134-144</code>.</p>
+<p>Focus is deliberately not returned to the trigger on close. Otherwise the trigger's focus handler would reopen the popover and it would flicker forever. A regression test covers exactly this <code>web/src/components/metric-info.tsx:156-162</code> <code>web/src/components/metric-info.test.tsx:17-41</code>.</p>
+<h2>Charts</h2>
+<p>The stacked time chart draws one stacked bar per calendar day. Series are ordered by their total, the first twelve get their own colour and legend entry, and the rest are grouped as "Other (n)" <code>web/src/components/chart-time.tsx:40-93</code> <code>web/src/components/series.ts:1-5</code>. A dashed line marks the mean per calendar day and a vertical line marks the peak day <code>web/src/components/chart-time.tsx:147-171</code>. With no series it renders nothing <code>web/src/components/chart-time.tsx:95</code>.</p>
+<p>The sparkline draws a small line over a baseline that always includes zero, falls back to a flat line when all values are equal, and clamps every point inside the box <code>web/src/components/sparkline.tsx:4-21</code>. It only gets hover details when both labels and a formatter are supplied <code>web/src/components/sparkline.tsx:129-143</code>.</p>
+<p>The shared hover frame gives charts one shared hover and keyboard behaviour: pointer position picks the nearest point, arrow keys, Home and End step through points, Escape clears, and a polite live region reads the selected point aloud <code>web/src/components/chart-hover.tsx:37-66</code> <code>web/src/components/chart-hover.tsx:114-118</code>.</p>
+<p>The context occupancy chart draws one bar per model call showing how full the context window was, in the warning colour at 85 percent or more, with mean and peak lines and a mark where the context was compacted <code>web/src/components/trace.tsx:34</code> <code>web/src/components/trace.tsx:149-163</code> <code>web/src/components/trace.tsx:166-190</code>.</p>
+<h2>Tables, filters and controls</h2>
+<p><code>useHiddenColumns</code> keeps the hidden column keys in <code>localStorage</code> under a key chosen by the caller, and ignores storage errors. <code>visibleColumns</code> returns all columns if the reader hid every one <code>web/src/components/columns.tsx:22-60</code>. The column chooser menu stays open while ticking items <code>web/src/components/columns.tsx:83-90</code>.</p>
+<p>The filters file holds the filter controls: a search box with a clear button, checkbox facets with counts, single-choice chips, a from and to date pair that bounds each side by the other, a sort select, and removable chips for the active filters with a "Clear all" link <code>web/src/components/filters.tsx:18-54</code> <code>web/src/components/filters.tsx:63-118</code> <code>web/src/components/filters.tsx:156-193</code> <code>web/src/components/filters.tsx:231-269</code>.</p>
+<p><code>SortButton</code> shows the sort direction icon and <code>ariaSort</code> maps it to the ARIA value for table headers <code>web/src/components/states.tsx:21-66</code>.</p>
+<h2>Panels, states and layout helpers</h2>
+<p><code>Panel</code>, <code>PanelHeader</code>, <code>PanelBody</code> and <code>PanelNote</code> are the card frame used by most views <code>web/src/components/panel.tsx:5-69</code>. <code>EmptyState</code>, <code>ErrorState</code>, <code>PanelSkeleton</code>, <code>StatSkeleton</code> and <code>DisclosurePanel</code> cover empty, failed, loading and collapsed content <code>web/src/components/states.tsx:68-172</code> <code>web/src/components/states.tsx:330-338</code>.</p>
+<p><code>OfflineCard</code> is the full-page message shown when the local reader is not running. It tells the reader nothing was uploaded, shows the start command and offers retry and copy buttons <code>web/src/components/states.tsx:280-328</code>.</p>
+<p><code>WarningsList</code> groups scan warnings by kind, lets the reader filter by kind and explains each group's severity and estimated impact <code>web/src/components/states.tsx:174-278</code>.</p>
+<p>The detail file offers small layout pieces for side panels: <code>Section</code>, <code>MetaGrid</code>, <code>CodeBlock</code> and <code>PathList</code> <code>web/src/components/detail.tsx:6-80</code>. <code>useWorkspacePanel</code> stores the side panel width, clamped between 360 and 900 pixels and at most 90 percent of the window, and the fullscreen flag in <code>localStorage</code> <code>web/src/components/workspace-panel.ts:3-47</code> <code>web/src/components/workspace-panel.ts:49-73</code>. <code>useMediaQuery</code> subscribes to a CSS media query <code>web/src/components/use-media-query.ts:3-18</code>.</p>
+<h2>Session and source cards</h2>
+<p><code>SessionCard</code> shows state, outcome, error count, model (plus a count of extra models), client, project, start time, requests, tokens and cost. A full-card button opens the session <code>web/src/components/session.tsx:117-205</code>. <code>TracedDot</code>, <code>ErrorCount</code> and <code>TokenCell</code> are the compact table cell versions, and <code>TokenCell</code> bars are scaled to the largest row shown <code>web/src/components/session.tsx:7-99</code>.</p>
+<p><code>SourceCard</code> and <code>SourceDetail</code> summarise one log source: label, path, whether it has token counts or only sessions, an experimental badge in the detail view, a headline figure and a trend sparkline <code>web/src/components/source-card.tsx:9-121</code>.</p>
+<p>The span timeline lists trace spans with a glyph per span kind, a status colour and arrow key navigation using a single tab stop <code>web/src/components/trace.tsx:11-32</code> <code>web/src/components/trace.tsx:240-255</code>. The insight list turns an insight into a jump link when it names a span, and the capability grid shows a provenance badge for trace, tokens, cost, context and latency <code>web/src/components/trace.tsx:364-396</code> <code>web/src/components/trace.tsx:408-435</code>.</p>
+<h2>What a reader must know</h2>
+<ul>
+<li>Colours come from CSS variables such as <code>--state-priced</code> and <code>--chart-other</code>, not from fixed values, so the theme decides the look <code>web/src/components/series.ts:3-5</code> <code>web/src/components/status.tsx:8-29</code>.</li>
+<li>Only three files have tests: the info popover, the ranking helpers and the sparkline geometry. See <a href="../application/web-ui-components-tests.html">Web UI components Tests</a>.</li>
+</ul>
+<h2>Reference</h2>
+<h3>Files</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+<th>Lines</th>
+<th>Imports</th>
+<th>Imported by</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/components/chart-hover.tsx</code></td>
+<td>-</td>
+<td>121</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/chart-hover.tsx</a> <code>web/src/components/chart-hover.tsx:1-121</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/chart-time.tsx</code></td>
+<td>-</td>
+<td>184</td>
+<td>3</td>
+<td>2</td>
+<td><a href="#">web/src/components/chart-time.tsx</a> <code>web/src/components/chart-time.tsx:1-184</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/columns.tsx</code></td>
+<td>-</td>
+<td>95</td>
+<td>2</td>
+<td>2</td>
+<td><a href="#">web/src/components/columns.tsx</a> <code>web/src/components/columns.tsx:1-95</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/detail.tsx</code></td>
+<td>-</td>
+<td>80</td>
+<td>2</td>
+<td>7</td>
+<td><a href="#">web/src/components/detail.tsx</a> <code>web/src/components/detail.tsx:1-80</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/filters.tsx</code></td>
+<td>-</td>
+<td>269</td>
+<td>7</td>
+<td>9</td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:1-269</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/metric-info.tsx</code></td>
+<td>-</td>
+<td>205</td>
+<td>2</td>
+<td>7</td>
+<td><a href="#">web/src/components/metric-info.tsx</a> <code>web/src/components/metric-info.tsx:1-205</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/panel.tsx</code></td>
+<td>-</td>
+<td>69</td>
+<td>1</td>
+<td>13</td>
+<td><a href="#">web/src/components/panel.tsx</a> <code>web/src/components/panel.tsx:1-69</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/rank.ts</code></td>
+<td>-</td>
+<td>19</td>
+<td>1</td>
+<td>3</td>
+<td><a href="#">web/src/components/rank.ts</a> <code>web/src/components/rank.ts:1-19</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/series.ts</code></td>
+<td>-</td>
+<td>29</td>
+<td>0</td>
+<td>10</td>
+<td><a href="#">web/src/components/series.ts</a> <code>web/src/components/series.ts:1-29</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/session.tsx</code></td>
+<td>-</td>
+<td>205</td>
+<td>5</td>
+<td>3</td>
+<td><a href="#">web/src/components/session.tsx</a> <code>web/src/components/session.tsx:1-205</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/source-card.tsx</code></td>
+<td>-</td>
+<td>121</td>
+<td>5</td>
+<td>5</td>
+<td><a href="#">web/src/components/source-card.tsx</a> <code>web/src/components/source-card.tsx:1-121</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/sparkline.tsx</code></td>
+<td>-</td>
+<td>145</td>
+<td>2</td>
+<td>5</td>
+<td><a href="#">web/src/components/sparkline.tsx</a> <code>web/src/components/sparkline.tsx:1-145</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/stat.tsx</code></td>
+<td>-</td>
+<td>164</td>
+<td>2</td>
+<td>15</td>
+<td><a href="#">web/src/components/stat.tsx</a> <code>web/src/components/stat.tsx:1-164</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx</code></td>
+<td>-</td>
+<td>338</td>
+<td>10</td>
+<td>15</td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:1-338</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/status.tsx</code></td>
+<td>-</td>
+<td>454</td>
+<td>4</td>
+<td>19</td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:1-454</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/trace.tsx</code></td>
+<td>-</td>
+<td>435</td>
+<td>6</td>
+<td>4</td>
+<td><a href="#">web/src/components/trace.tsx</a> <code>web/src/components/trace.tsx:1-435</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/accordion.tsx</code></td>
+<td>-</td>
+<td>65</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/accordion.tsx</a> <code>web/src/components/ui/accordion.tsx:1-65</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/alert.tsx</code></td>
+<td>-</td>
+<td>65</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/alert.tsx</a> <code>web/src/components/ui/alert.tsx:1-65</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/badge.tsx</code></td>
+<td>-</td>
+<td>47</td>
+<td>1</td>
+<td>6</td>
+<td><a href="#">web/src/components/ui/badge.tsx</a> <code>web/src/components/ui/badge.tsx:1-47</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/button.tsx</code></td>
+<td>-</td>
+<td>63</td>
+<td>1</td>
+<td>14</td>
+<td><a href="#">web/src/components/ui/button.tsx</a> <code>web/src/components/ui/button.tsx:1-63</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/chart.tsx</code></td>
+<td>-</td>
+<td>371</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/chart.tsx</a> <code>web/src/components/ui/chart.tsx:1-371</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/checkbox.tsx</code></td>
+<td>-</td>
+<td>31</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/checkbox.tsx</a> <code>web/src/components/ui/checkbox.tsx:1-31</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/collapsible.tsx</code></td>
+<td>-</td>
+<td>31</td>
+<td>0</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/collapsible.tsx</a> <code>web/src/components/ui/collapsible.tsx:1-31</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/dialog.tsx</code></td>
+<td>-</td>
+<td>158</td>
+<td>2</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/dialog.tsx</a> <code>web/src/components/ui/dialog.tsx:1-158</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/dropdown-menu.tsx</code></td>
+<td>-</td>
+<td>254</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/dropdown-menu.tsx</a> <code>web/src/components/ui/dropdown-menu.tsx:1-254</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/input.tsx</code></td>
+<td>-</td>
+<td>20</td>
+<td>1</td>
+<td>3</td>
+<td><a href="#">web/src/components/ui/input.tsx</a> <code>web/src/components/ui/input.tsx:1-20</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/label.tsx</code></td>
+<td>-</td>
+<td>21</td>
+<td>1</td>
+<td>5</td>
+<td><a href="#">web/src/components/ui/label.tsx</a> <code>web/src/components/ui/label.tsx:1-21</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/popover.tsx</code></td>
+<td>-</td>
+<td>86</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/popover.tsx</a> <code>web/src/components/ui/popover.tsx:1-86</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/progress.tsx</code></td>
+<td>-</td>
+<td>28</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/progress.tsx</a> <code>web/src/components/ui/progress.tsx:1-28</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/select.tsx</code></td>
+<td>-</td>
+<td>187</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/select.tsx</a> <code>web/src/components/ui/select.tsx:1-187</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/separator.tsx</code></td>
+<td>-</td>
+<td>25</td>
+<td>1</td>
+<td>5</td>
+<td><a href="#">web/src/components/ui/separator.tsx</a> <code>web/src/components/ui/separator.tsx:1-25</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/sheet.tsx</code></td>
+<td>-</td>
+<td>140</td>
+<td>1</td>
+<td>4</td>
+<td><a href="#">web/src/components/ui/sheet.tsx</a> <code>web/src/components/ui/sheet.tsx:1-140</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/skeleton.tsx</code></td>
+<td>-</td>
+<td>13</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/skeleton.tsx</a> <code>web/src/components/ui/skeleton.tsx:1-13</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/sonner.tsx</code></td>
+<td>-</td>
+<td>39</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/sonner.tsx</a> <code>web/src/components/ui/sonner.tsx:1-39</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/switch.tsx</code></td>
+<td>-</td>
+<td>34</td>
+<td>1</td>
+<td>3</td>
+<td><a href="#">web/src/components/ui/switch.tsx</a> <code>web/src/components/ui/switch.tsx:1-34</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/table.tsx</code></td>
+<td>-</td>
+<td>113</td>
+<td>1</td>
+<td>7</td>
+<td><a href="#">web/src/components/ui/table.tsx</a> <code>web/src/components/ui/table.tsx:1-113</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/tabs.tsx</code></td>
+<td>-</td>
+<td>90</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/tabs.tsx</a> <code>web/src/components/ui/tabs.tsx:1-90</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/textarea.tsx</code></td>
+<td>-</td>
+<td>19</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/textarea.tsx</a> <code>web/src/components/ui/textarea.tsx:1-19</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/toggle-group.tsx</code></td>
+<td>-</td>
+<td>81</td>
+<td>2</td>
+<td>6</td>
+<td><a href="#">web/src/components/ui/toggle-group.tsx</a> <code>web/src/components/ui/toggle-group.tsx:1-81</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/toggle.tsx</code></td>
+<td>-</td>
+<td>46</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/toggle.tsx</a> <code>web/src/components/ui/toggle.tsx:1-46</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/tooltip.tsx</code></td>
+<td>-</td>
+<td>56</td>
+<td>1</td>
+<td>10</td>
+<td><a href="#">web/src/components/ui/tooltip.tsx</a> <code>web/src/components/ui/tooltip.tsx:1-56</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/use-media-query.ts</code></td>
+<td>-</td>
+<td>18</td>
+<td>0</td>
+<td>4</td>
+<td><a href="#">web/src/components/use-media-query.ts</a> <code>web/src/components/use-media-query.ts:1-18</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/workspace-panel.ts</code></td>
+<td>-</td>
+<td>73</td>
+<td>0</td>
+<td>1</td>
+<td><a href="#">web/src/components/workspace-panel.ts</a> <code>web/src/components/workspace-panel.ts:1-73</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Public interface</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Kind</th>
+<th>File</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Unavailable</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:77</code></td>
+</tr>
+<tr>
+<td><code>PartialMarker</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:96</code></td>
+</tr>
+<tr>
+<td><code>CostStateBadge</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:149</code></td>
+</tr>
+<tr>
+<td><code>EstimatedBadge</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:171</code></td>
+</tr>
+<tr>
+<td><code>ExperimentalBadge</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:175</code></td>
+</tr>
+<tr>
+<td><code>CostBadges</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:180</code></td>
+</tr>
+<tr>
+<td><code>ProvenanceBadge</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:197</code></td>
+</tr>
+<tr>
+<td><code>OutcomeBadge</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:220</code></td>
+</tr>
+<tr>
+<td><code>Meter</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:238</code></td>
+</tr>
+<tr>
+<td><code>BucketSegment</code></td>
+<td>interface</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:279</code></td>
+</tr>
+<tr>
+<td><code>BucketBar</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:286</code></td>
+</tr>
+<tr>
+<td><code>Legend</code></td>
+<td>function</td>
+<td><code>web/src/components/status.tsx</code></td>
+<td><a href="#">web/src/components/status.tsx</a> <code>web/src/components/status.tsx:324</code></td>
+</tr>
+<tr>
+<td><code>NumberTicker</code></td>
+<td>function</td>
+<td><code>web/src/components/stat.tsx</code></td>
+<td><a href="#">web/src/components/stat.tsx</a> <code>web/src/components/stat.tsx:14</code></td>
+</tr>
+<tr>
+<td><code>StatLabel</code></td>
+<td>function</td>
+<td><code>web/src/components/stat.tsx</code></td>
+<td><a href="#">web/src/components/stat.tsx</a> <code>web/src/components/stat.tsx:49</code></td>
+</tr>
+<tr>
+<td><code>Stat</code></td>
+<td>function</td>
+<td><code>web/src/components/stat.tsx</code></td>
+<td><a href="#">web/src/components/stat.tsx</a> <code>web/src/components/stat.tsx:61</code></td>
+</tr>
+<tr>
+<td><code>StatGrid</code></td>
+<td>function</td>
+<td><code>web/src/components/stat.tsx</code></td>
+<td><a href="#">web/src/components/stat.tsx</a> <code>web/src/components/stat.tsx:157</code></td>
+</tr>
+<tr>
+<td><code>SortDirection</code></td>
+<td>type</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:19</code></td>
+</tr>
+<tr>
+<td><code>ariaSort</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:21</code></td>
+</tr>
+<tr>
+<td><code>SortButton</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:29</code></td>
+</tr>
+<tr>
+<td><code>EmptyState</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:68</code></td>
+</tr>
+<tr>
+<td><code>ErrorState</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:98</code></td>
+</tr>
+<tr>
+<td><code>PanelSkeleton</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:123</code></td>
+</tr>
+<tr>
+<td><code>DisclosurePanel</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:136</code></td>
+</tr>
+<tr>
+<td><code>WarningsList</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:247</code></td>
+</tr>
+<tr>
+<td><code>OfflineCard</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:280</code></td>
+</tr>
+<tr>
+<td><code>StatSkeleton</code></td>
+<td>function</td>
+<td><code>web/src/components/states.tsx</code></td>
+<td><a href="#">web/src/components/states.tsx</a> <code>web/src/components/states.tsx:330</code></td>
+</tr>
+<tr>
+<td><code>Panel</code></td>
+<td>function</td>
+<td><code>web/src/components/panel.tsx</code></td>
+<td><a href="#">web/src/components/panel.tsx</a> <code>web/src/components/panel.tsx:5</code></td>
+</tr>
+<tr>
+<td><code>PanelHeader</code></td>
+<td>function</td>
+<td><code>web/src/components/panel.tsx</code></td>
+<td><a href="#">web/src/components/panel.tsx</a> <code>web/src/components/panel.tsx:15</code></td>
+</tr>
+<tr>
+<td><code>PanelBody</code></td>
+<td>function</td>
+<td><code>web/src/components/panel.tsx</code></td>
+<td><a href="#">web/src/components/panel.tsx</a> <code>web/src/components/panel.tsx:55</code></td>
+</tr>
+<tr>
+<td><code>PanelNote</code></td>
+<td>function</td>
+<td><code>web/src/components/panel.tsx</code></td>
+<td><a href="#">web/src/components/panel.tsx</a> <code>web/src/components/panel.tsx:59</code></td>
+</tr>
+<tr>
+<td><code>SERIES_SLOTS</code></td>
+<td>const</td>
+<td><code>web/src/components/series.ts</code></td>
+<td><a href="#">web/src/components/series.ts</a> <code>web/src/components/series.ts:1</code></td>
+</tr>
+<tr>
+<td><code>seriesColor</code></td>
+<td>function</td>
+<td><code>web/src/components/series.ts</code></td>
+<td><a href="#">web/src/components/series.ts</a> <code>web/src/components/series.ts:3</code></td>
+</tr>
+<tr>
+<td><code>TokenBucket</code></td>
+<td>interface</td>
+<td><code>web/src/components/series.ts</code></td>
+<td><a href="#">web/src/components/series.ts</a> <code>web/src/components/series.ts:7</code></td>
+</tr>
+<tr>
+<td><code>TOKEN_BUCKETS</code></td>
+<td>const</td>
+<td><code>web/src/components/series.ts</code></td>
+<td><a href="#">web/src/components/series.ts</a> <code>web/src/components/series.ts:14</code></td>
+</tr>
+<tr>
+<td><code>SearchField</code></td>
+<td>function</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:18</code></td>
+</tr>
+<tr>
+<td><code>FacetOption</code></td>
+<td>interface</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:56</code></td>
+</tr>
+<tr>
+<td><code>FacetGroup</code></td>
+<td>function</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:63</code></td>
+</tr>
+<tr>
+<td><code>ChipRow</code></td>
+<td>function</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:120</code></td>
+</tr>
+<tr>
+<td><code>DateRange</code></td>
+<td>function</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:156</code></td>
+</tr>
+<tr>
+<td><code>SortSelect</code></td>
+<td>function</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:195</code></td>
+</tr>
+<tr>
+<td><code>ActiveFilter</code></td>
+<td>interface</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:224</code></td>
+</tr>
+<tr>
+<td><code>FilterChips</code></td>
+<td>function</td>
+<td><code>web/src/components/filters.tsx</code></td>
+<td><a href="#">web/src/components/filters.tsx</a> <code>web/src/components/filters.tsx:231</code></td>
+</tr>
+<tr>
+<td><code>Section</code></td>
+<td>function</td>
+<td><code>web/src/components/detail.tsx</code></td>
+<td><a href="#">web/src/components/detail.tsx</a> <code>web/src/components/detail.tsx:6</code></td>
+</tr>
+<tr>
+<td><code>MetaGrid</code></td>
+<td>function</td>
+<td><code>web/src/components/detail.tsx</code></td>
+<td><a href="#">web/src/components/detail.tsx</a> <code>web/src/components/detail.tsx:28</code></td>
+</tr>
+<tr>
+<td><code>CodeBlock</code></td>
+<td>function</td>
+<td><code>web/src/components/detail.tsx</code></td>
+<td><a href="#">web/src/components/detail.tsx</a> <code>web/src/components/detail.tsx:54</code></td>
+</tr>
+<tr>
+<td><code>PathList</code></td>
+<td>function</td>
+<td><code>web/src/components/detail.tsx</code></td>
+<td><a href="#">web/src/components/detail.tsx</a> <code>web/src/components/detail.tsx:67</code></td>
+</tr>
+<tr>
+<td><code>MetricInfoContent</code></td>
+<td>type</td>
+<td><code>web/src/components/metric-info.tsx</code></td>
+<td><a href="#">web/src/components/metric-info.tsx</a> <code>web/src/components/metric-info.tsx:15</code></td>
+</tr>
+<tr>
+<td><code>MetricInfo</code></td>
+<td>function</td>
+<td><code>web/src/components/metric-info.tsx</code></td>
+<td><a href="#">web/src/components/metric-info.tsx</a> <code>web/src/components/metric-info.tsx:46</code></td>
+</tr>
+<tr>
+<td><code>InfoGlyph</code></td>
+<td>function</td>
+<td><code>web/src/components/metric-info.tsx</code></td>
+<td><a href="#">web/src/components/metric-info.tsx</a> <code>web/src/components/metric-info.tsx:193</code></td>
+</tr>
+<tr>
+<td><code>SourceSummary</code></td>
+<td>interface</td>
+<td><code>web/src/components/source-card.tsx</code></td>
+<td><a href="#">web/src/components/source-card.tsx</a> <code>web/src/components/source-card.tsx:9</code></td>
+</tr>
+<tr>
+<td><code>SourceCard</code></td>
+<td>function</td>
+<td><code>web/src/components/source-card.tsx</code></td>
+<td><a href="#">web/src/components/source-card.tsx</a> <code>web/src/components/source-card.tsx:33</code></td>
+</tr>
+<tr>
+<td><code>SourceDetail</code></td>
+<td>function</td>
+<td><code>web/src/components/source-card.tsx</code></td>
+<td><a href="#">web/src/components/source-card.tsx</a> <code>web/src/components/source-card.tsx:66</code></td>
+</tr>
+<tr>
+<td><code>geometry</code></td>
+<td>function</td>
+<td><code>web/src/components/sparkline.tsx</code></td>
+<td><a href="#">web/src/components/sparkline.tsx</a> <code>web/src/components/sparkline.tsx:4</code></td>
+</tr>
+<tr>
+<td><code>Sparkline</code></td>
+<td>function</td>
+<td><code>web/src/components/sparkline.tsx</code></td>
+<td><a href="#">web/src/components/sparkline.tsx</a> <code>web/src/components/sparkline.tsx:89</code></td>
+</tr>
+<tr>
+<td><code>SPAN_KIND_GLYPH</code></td>
+<td>const</td>
+<td><code>web/src/components/trace.tsx</code></td>
+<td><a href="#">web/src/components/trace.tsx</a> <code>web/src/components/trace.tsx:11</code></td>
+</tr>
+<tr>
+<td><code>SPAN_STATUS_COLOR</code></td>
+<td>const</td>
+<td><code>web/src/components/trace.tsx</code></td>
+<td><a href="#">web/src/components/trace.tsx</a> <code>web/src/components/trace.tsx:25</code></td>
+</tr>
+<tr>
+<td><code>HIGH_OCCUPANCY</code></td>
+<td>const</td>
+<td><code>web/src/components/trace.tsx</code></td>
+<td><a href="#">web/src/components/trace.tsx</a> <code>web/src/components/trace.tsx:34</code></td>
+</tr>
+<tr>
+<td><code>OccupancyPoint</code></td>
+<td>interface</td>
+<td><code>web/src/components/trace.tsx</code></td>
+<td><a href="#">web/src/components/trace.tsx</a> <code>web/src/components/trace.tsx:36</code></td>
+</tr>
+<tr>
+<td><code>ContextOccupancy</code></td>
+<td>function</td>
+<td><code>web/src/components/trace.tsx</code></td>
+<td><a href="#">web/src/components/trace.tsx</a> <code>web/src/components/trace.tsx:45</code></td>
+</tr>
+<tr>
+<td><code>TraceSpanRow</code></td>
+<td>interface</td>
+<td><code>web/src/components/trace.tsx</code></td>
+<td><a href="#">web/src/components/trace.tsx</a> <code>web/src/components/trace.tsx:214</code></td>
+</tr>
+<tr>
+<td><code>SpanTimeline</code></td>
+<td>function</td>
+<td><code>web/src/components/trace.tsx</code></td>
+<td><a href="#">web/src/components/trace.tsx</a> <code>web/src/components/trace.tsx:227</code></td>
+</tr>
+<tr>
+<td><code>TraceInsight</code></td>
+<td>interface</td>
+<td><code>web/src/components/trace.tsx</code></td>
+<td><a href="#">web/src/components/trace.tsx</a> <code>web/src/components/trace.tsx:323</code></td>
+</tr>
+<tr>
+<td><code>InsightList</code></td>
+<td>function</td>
+<td><code>web/src/components/trace.tsx</code></td>
+<td><a href="#">web/src/components/trace.tsx</a> <code>web/src/components/trace.tsx:332</code></td>
+</tr>
+<tr>
+<td><code>CapabilityGrid</code></td>
+<td>function</td>
+<td><code>web/src/components/trace.tsx</code></td>
+<td><a href="#">web/src/components/trace.tsx</a> <code>web/src/components/trace.tsx:416</code></td>
+</tr>
+<tr>
+<td><code>useMediaQuery</code></td>
+<td>function</td>
+<td><code>web/src/components/use-media-query.ts</code></td>
+<td><a href="#">web/src/components/use-media-query.ts</a> <code>web/src/components/use-media-query.ts:3</code></td>
+</tr>
+<tr>
+<td><code>STATE_RANK</code></td>
+<td>const</td>
+<td><code>web/src/components/rank.ts</code></td>
+<td><a href="#">web/src/components/rank.ts</a> <code>web/src/components/rank.ts:3</code></td>
+</tr>
+<tr>
+<td><code>PROVENANCE_RANK</code></td>
+<td>const</td>
+<td><code>web/src/components/rank.ts</code></td>
+<td><a href="#">web/src/components/rank.ts</a> <code>web/src/components/rank.ts:5</code></td>
+</tr>
+<tr>
+<td><code>worstState</code></td>
+<td>function</td>
+<td><code>web/src/components/rank.ts</code></td>
+<td><a href="#">web/src/components/rank.ts</a> <code>web/src/components/rank.ts:13</code></td>
+</tr>
+<tr>
+<td><code>worstProvenance</code></td>
+<td>function</td>
+<td><code>web/src/components/rank.ts</code></td>
+<td><a href="#">web/src/components/rank.ts</a> <code>web/src/components/rank.ts:17</code></td>
+</tr>
+<tr>
+<td><code>TracedDot</code></td>
+<td>function</td>
+<td><code>web/src/components/session.tsx</code></td>
+<td><a href="#">web/src/components/session.tsx</a> <code>web/src/components/session.tsx:7</code></td>
+</tr>
+<tr>
+<td><code>ErrorCount</code></td>
+<td>function</td>
+<td><code>web/src/components/session.tsx</code></td>
+<td><a href="#">web/src/components/session.tsx</a> <code>web/src/components/session.tsx:30</code></td>
+</tr>
+<tr>
+<td><code>TokenCell</code></td>
+<td>function</td>
+<td><code>web/src/components/session.tsx</code></td>
+<td><a href="#">web/src/components/session.tsx</a> <code>web/src/components/session.tsx:52</code></td>
+</tr>
+<tr>
+<td><code>SessionSummary</code></td>
+<td>interface</td>
+<td><code>web/src/components/session.tsx</code></td>
+<td><a href="#">web/src/components/session.tsx</a> <code>web/src/components/session.tsx:101</code></td>
+</tr>
+<tr>
+<td><code>SessionCard</code></td>
+<td>function</td>
+<td><code>web/src/components/session.tsx</code></td>
+<td><a href="#">web/src/components/session.tsx</a> <code>web/src/components/session.tsx:117</code></td>
+</tr>
+<tr>
+<td><code>HoverEntry</code></td>
+<td>interface</td>
+<td><code>web/src/components/chart-hover.tsx</code></td>
+<td><a href="#">web/src/components/chart-hover.tsx</a> <code>web/src/components/chart-hover.tsx:6</code></td>
+</tr>
+<tr>
+<td><code>HoverDetail</code></td>
+<td>interface</td>
+<td><code>web/src/components/chart-hover.tsx</code></td>
+<td><a href="#">web/src/components/chart-hover.tsx</a> <code>web/src/components/chart-hover.tsx:12</code></td>
+</tr>
+<tr>
+<td><code>HoverFrame</code></td>
+<td>function</td>
+<td><code>web/src/components/chart-hover.tsx</code></td>
+<td><a href="#">web/src/components/chart-hover.tsx</a> <code>web/src/components/chart-hover.tsx:18</code></td>
+</tr>
+<tr>
+<td><code>TimeSeriesRow</code></td>
+<td>interface</td>
+<td><code>web/src/components/chart-time.tsx</code></td>
+<td><a href="#">web/src/components/chart-time.tsx</a> <code>web/src/components/chart-time.tsx:13</code></td>
+</tr>
+<tr>
+<td><code>TimeChart</code></td>
+<td>function</td>
+<td><code>web/src/components/chart-time.tsx</code></td>
+<td><a href="#">web/src/components/chart-time.tsx</a> <code>web/src/components/chart-time.tsx:23</code></td>
+</tr>
+<tr>
+<td><code>Column</code></td>
+<td>interface</td>
+<td><code>web/src/components/columns.tsx</code></td>
+<td><a href="#">web/src/components/columns.tsx</a> <code>web/src/components/columns.tsx:14</code></td>
+</tr>
+</tbody>
+</table>
+<p>9 more public names are omitted; see the cited files.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

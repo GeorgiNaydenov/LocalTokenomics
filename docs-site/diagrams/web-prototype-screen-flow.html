@@ -1,0 +1,112 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web prototype screen flow</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-prototype-screen-flow.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Web prototype screen flow</h1>
+<p>This diagram shows how a person moves between the screens of the prototype. Every screen is one click from every other, and the only deeper steps are the session drawer and the filters sheet. A designer can hold it next to the real dashboard and compare the paths.</p>
+<h2>What the diagram shows</h2>
+<p>The page opens on the overview tab <code>web/src/prototype/Prototype.tsx:22-22</code>.</p>
+<p>Each header tab calls the tab setter, so any tab reaches any other, including the design system page <code>web/src/prototype/Prototype.tsx:49-67</code> <code>web/src/prototype/Prototype.tsx:16-16</code>.</p>
+<p>A row button on the overview moves the user to the sources tab <code>web/src/prototype/OverviewScreen.tsx:76-82</code>. The screens component supplies that move <code>web/src/prototype/Screens.tsx:361-361</code>.</p>
+<p>A click on a session row opens the drawer <code>web/src/prototype/SessionsScreen.tsx:168-172</code>, and the chosen session is kept as the active one <code>web/src/prototype/Screens.tsx:363-363</code>. Closing the sheet clears it <code>web/src/prototype/Screens.tsx:94-94</code> <code>web/src/prototype/Screens.tsx:375-375</code>.</p>
+<p>The Filters button appears on every tab but the gallery and is hidden on wide windows <code>web/src/prototype/Prototype.tsx:70-79</code>. It opens a left sheet that holds the filter content <code>web/src/prototype/Rail.tsx:264-273</code>.</p>
+<p>Rescan logs disables its button for 900 milliseconds and reads nothing <code>web/src/prototype/Prototype.tsx:26-29</code> <code>web/src/prototype/Prototype.tsx:83-86</code>. The theme button flips between light and dark <code>web/src/prototype/Prototype.tsx:87-94</code>.</p>
+<h2>Capability and related functionality</h2>
+<p>The capability is navigation between the four reference screens and the design system page. The structure of the pages is in <a href="../diagrams/web-prototype-sitemap.html">Web prototype sitemap</a>, the states behind the moves are in <a href="../diagrams/web-prototype-shell-ui-states.html">Web prototype shell UI states</a>, and the journey of a developer is in <a href="../diagrams/web-prototype-user-journey.html">Web prototype user journey</a>.</p>
+<h2>Web prototype screen flow</h2>
+<pre class="mermaid">flowchart TD
+    start([&quot;Developer opens prototype.html&quot;]):::person
+    overview[&quot;Overview tab: default screen&quot;]:::screen
+    sessions[&quot;Sessions tab&quot;]:::screen
+    sources[&quot;Sources tab&quot;]:::screen
+    pricing[&quot;Models and pricing tab&quot;]:::screen
+    gallery[&quot;Design system tab: Gallery&quot;]:::screen
+    drawer[&quot;Session drawer: sheet over Sessions&quot;]:::overlay
+    railsheet[&quot;Filters sheet: narrow windows, any dashboard screen&quot;]:::overlay
+    rescan[&quot;Rescan logs: any screen, button disabled for 900 ms&quot;]:::action
+    theme[&quot;Theme toggle: any screen, light or dark&quot;]:::action
+
+    start --&gt; overview
+    overview --&gt;|&quot;header tab click&quot;| sessions
+    overview --&gt;|&quot;header tab click&quot;| sources
+    overview --&gt;|&quot;header tab click&quot;| pricing
+    overview --&gt;|&quot;header tab click&quot;| gallery
+    sessions --&gt;|&quot;header tab click&quot;| overview
+    sources --&gt;|&quot;header tab click&quot;| overview
+    pricing --&gt;|&quot;header tab click&quot;| overview
+    gallery --&gt;|&quot;header tab click&quot;| overview
+    overview -.-&gt;|&quot;more readers button&quot;| sources
+    sessions --&gt;|&quot;row or card click&quot;| drawer
+    drawer --&gt;|&quot;close&quot;| sessions
+    overview --&gt;|&quot;Filters button below lg&quot;| railsheet
+    railsheet --&gt;|&quot;close&quot;| overview
+    overview --&gt;|&quot;Rescan logs&quot;| rescan
+    rescan --&gt;|&quot;after 900 ms&quot;| overview
+    overview --&gt;|&quot;theme button&quot;| theme
+    theme --&gt;|&quot;mode switches&quot;| overview
+
+    subgraph Legend
+        direction LR
+        zl1([&quot;Yellow pill: the person who starts&quot;]):::person
+        zl2[&quot;Blue box: a screen reached from the header tabs&quot;]:::screen
+        zl3[&quot;Purple box: an overlay that opens above a screen&quot;]:::overlay
+        zl4[&quot;Orange box: a header action that stays on the same screen&quot;]:::action
+        zl5[&quot;Solid arrow: user action. Dashed arrow: a shortcut inside a screen&quot;]:::screen
+        zl1 ~~~ zl2
+        zl2 ~~~ zl3
+        zl3 ~~~ zl4
+        zl4 ~~~ zl5
+    end
+
+    classDef person fill:#fff2cc,stroke:#222222,color:#111111
+    classDef screen fill:#dae8fc,stroke:#222222,color:#111111
+    classDef overlay fill:#e1d5e7,stroke:#222222,color:#111111
+    classDef action fill:#ffe6cc,stroke:#222222,color:#111111
+</pre>
+
+<h3>Node citations</h3>
+<ul>
+<li>start: <code>web/prototype.html:25-25</code></li>
+<li>overview: <code>web/src/prototype/Prototype.tsx:22-22</code></li>
+<li>sessions: <code>web/src/prototype/Prototype.tsx:16-16</code></li>
+<li>sources: <code>web/src/prototype/Screens.tsx:361-361</code></li>
+<li>pricing: <code>web/src/prototype/Screens.tsx:43-48</code></li>
+<li>gallery: <code>web/src/prototype/Prototype.tsx:98-107</code></li>
+<li>drawer: <code>web/src/prototype/Screens.tsx:84-264</code></li>
+<li>railsheet: <code>web/src/prototype/Rail.tsx:264-273</code></li>
+<li>rescan: <code>web/src/prototype/Prototype.tsx:26-29</code></li>
+<li>theme: <code>web/src/prototype/Prototype.tsx:87-94</code></li>
+</ul>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/prototype/Prototype.tsx:49-67</code></td>
+<td>Header tabs</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/OverviewScreen.tsx:76-82</code></td>
+<td>Shortcut to Sources</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/SessionsScreen.tsx:168-172</code></td>
+<td>Row click opens the drawer</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:361-375</code></td>
+<td>Shortcut wiring and drawer close</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Rail.tsx:264-273</code></td>
+<td>Filters sheet</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Prototype.tsx:26-29</code></td>
+<td>Staged rescan</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

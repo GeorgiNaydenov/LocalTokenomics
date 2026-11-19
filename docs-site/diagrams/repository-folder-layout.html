@@ -1,0 +1,106 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Repository folder layout</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/repository-folder-layout.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>pyproject.toml</code>, <code>README.md</code>, <code>web/index.html</code>, <code>web/prototype.html</code></p><h1>Repository folder layout</h1>
+<p>This tree shows how the repository is laid out on disk and where each run starts. A newcomer can find the Python package, the dashboard source, the tests and the automatic checks in one look. It saves the time otherwise spent opening folders to learn what lives where.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The README layout lists the package folder with its sources and render folders, the scripts folder and the web folder. <code>README.md:621</code> <code>README.md:625</code> <code>README.md:635</code></li>
+<li>The scripts folder holds two maintainer tools, and the web folder holds the dashboard source. <code>README.md:636</code> <code>README.md:637</code></li>
+<li>The tests folder is the test path of pytest. <code>pyproject.toml:52</code></li>
+<li>The package metadata file declares the package and installs the console command, whose entry point is the app object in the command line module. <code>pyproject.toml:30</code> <code>src/ai_usage_cost/cli.py:24</code></li>
+<li>The dashboard page loads its entry file from the source folder, and the prototype page loads a second entry file from the prototype folder. <code>web/index.html:26</code> <code>web/prototype.html:25</code></li>
+<li>The public folder of the web project holds the logo used by the README. <code>README.md:2</code></li>
+<li>The build writes the dashboard into a folder named web/dist inside the package folder. <code>web/vite.config.ts:15</code></li>
+<li>The workflows folder holds the Python, Web and CodeQL workflows. <code>.github/workflows/python.yml:1</code> <code>.github/workflows/web.yml:1</code> <code>.github/workflows/codeql.yml:1</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The tree realises the orientation capability of the repository root: it answers where code lives before a reader opens a folder. Details of the root files are in <a href="../application/localtokenomics-root-overview.html">localtokenomics root Overview</a>.</li>
+<li>The folders under the package have their own chunks, for example <a href="../application/ai-usage-cost-sources-overview.html">Ai usage cost sources Overview</a> and <a href="../application/ai-usage-cost-render-overview.html">Ai usage cost render Overview</a>.</li>
+<li>Related maps of the root are <a href="../diagrams/repository-root-concepts.html">Repository root concepts</a>, <a href="../diagrams/repository-root-capabilities.html">Repository root capabilities</a> and <a href="../diagrams/repository-root-configuration.html">Repository root configuration</a>; the build flow is in <a href="../diagrams/localtokenomics-root-wiring.html">LocalTokenomics root wiring</a>.</li>
+</ul>
+<h2>The diagram</h2>
+<pre class="mermaid">flowchart TD
+    root[&quot;(repository root)&quot;]:::folder
+    pyproject[&quot;pyproject.toml&lt;br/&gt;package metadata&quot;]:::file
+    readme[&quot;README.md&lt;br/&gt;product description&quot;]:::file
+    src[&quot;src/&quot;]:::folder
+    web[&quot;web/&quot;]:::folder
+    tests[&quot;tests/&quot;]:::folder
+    scripts[&quot;scripts/&lt;br/&gt;demo_logs.py, rates_diff.py&quot;]:::folder
+    github[&quot;.github/&quot;]:::folder
+    pkg[&quot;src/ai_usage_cost/&quot;]:::folder
+    websrc[&quot;web/src/&quot;]:::folder
+    wpublic[&quot;web/public/&quot;]:::folder
+    workflows[&quot;.github/workflows/&lt;br/&gt;python, web, codeql&quot;]:::folder
+    sources[&quot;sources/&lt;br/&gt;one module per reader&quot;]:::folder
+    render[&quot;render/&lt;br/&gt;terminal.py, png.py&quot;]:::folder
+    dist[&quot;web/dist/ inside the package&lt;br/&gt;built dashboard&quot;]:::folder
+    cli([&quot;cli.py&lt;br/&gt;ai-usage-cost command&quot;]):::entry
+    main([&quot;main.tsx&lt;br/&gt;dashboard entry&quot;]):::entry
+    proto([&quot;prototype/main.tsx&lt;br/&gt;prototype entry&quot;]):::entry
+    root --&gt; pyproject
+    root --&gt; readme
+    root --&gt; src
+    root --&gt; web
+    root --&gt; tests
+    root --&gt; scripts
+    root --&gt; github
+    src --&gt; pkg
+    web --&gt; websrc
+    web --&gt; wpublic
+    github --&gt; workflows
+    pkg --&gt; sources
+    pkg --&gt; render
+    pkg --&gt; dist
+    pkg --&gt; cli
+    websrc --&gt; main
+    websrc --&gt; proto
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Folder: a directory, drawn as on disk&quot;]:::folder
+        zlegend_b[&quot;File: a root file&quot;]:::file
+        zlegend_c([&quot;Entry point: where a run starts&quot;]):::entry
+        zlegend_d[&quot;Arrow: parent contains child&quot;]:::folder
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d
+    end
+    classDef folder fill:#dae8fc,stroke:#222222,color:#111111
+    classDef file fill:#ffffff,stroke:#222222,color:#111111
+    classDef entry fill:#ffe6cc,stroke:#222222,color:#111111
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>README.md:621</code></td>
+<td>Package layout in the README</td>
+</tr>
+<tr>
+<td><code>pyproject.toml:51</code></td>
+<td>Tests folder</td>
+</tr>
+<tr>
+<td><code>pyproject.toml:29</code></td>
+<td>Console command entry</td>
+</tr>
+<tr>
+<td><code>web/index.html:26</code></td>
+<td>Dashboard entry file</td>
+</tr>
+<tr>
+<td><code>web/prototype.html:25</code></td>
+<td>Prototype entry file</td>
+</tr>
+<tr>
+<td><code>web/vite.config.ts:15</code></td>
+<td>Built dashboard folder</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

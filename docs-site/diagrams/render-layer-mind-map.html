@@ -1,0 +1,75 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Render layer mind map</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/render-layer-mind-map.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Strategy · TOGAF: Phase A, Architecture Vision</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/render/**</code></p><h1>Render layer mind map</h1>
+<p>This picture gives a newcomer the render layer on one page. It shows that the layer only presents a finished report, either as a summary in the terminal or as an image, and that it computes no cost. It helps a reader decide whether a change belongs here or in the report code.</p>
+<h2>What the diagram shows</h2>
+<p>The terminal output prints a Total panel, one breakdown table chosen by the caller, a table of unpriced models and a warnings summary <code>src/ai_usage_cost/render/terminal.py:17-46</code>. The Total panel holds the cost, the token and request counts, the date span and the caching saving <code>src/ai_usage_cost/render/terminal.py:49-67</code>.</p>
+<p>The image output draws a two by two figure, titled with the totals, and saves it <code>src/ai_usage_cost/render/png.py:18-33</code>. It selects the Agg backend before it loads the plotting library, so no screen is needed <code>src/ai_usage_cost/render/png.py:7-11</code>. Colours come from a seven colour list <code>src/ai_usage_cost/render/png.py:15-15</code>.</p>
+<p>Both outputs read a report and nothing else: the terminal renderer picks its table from the report buckets <code>src/ai_usage_cost/render/terminal.py:22-28</code>, and the picture writer reads the daily series <code>src/ai_usage_cost/render/png.py:36-40</code>.</p>
+<p>Two commands call the layer. The scan command renders to the terminal after it has built the report <code>src/ai_usage_cost/cli.py:105-105</code>. The export command calls the picture writer only for an output name ending in png <code>src/ai_usage_cost/cli.py:186-192</code>.</p>
+<p>Limits: a terminal table prints at most 30 rows <code>src/ai_usage_cost/render/terminal.py:79-79</code>. The model chart keeps the top 10, the token mix chart the top 8 and the project chart the top 10 <code>src/ai_usage_cost/render/png.py:59-59</code> <code>src/ai_usage_cost/render/png.py:71-71</code> <code>src/ai_usage_cost/render/png.py:90-90</code>. The project chart is left blank when the report has no project buckets <code>src/ai_usage_cost/render/png.py:91-93</code>. Colours follow the position in each chart, so one colour means a different thing in each panel <code>src/ai_usage_cost/render/png.py:49-49</code> <code>src/ai_usage_cost/render/png.py:63-63</code> <code>src/ai_usage_cost/render/png.py:81-81</code>.</p>
+<h2>Capability and related functionality</h2>
+<p>The capability is orientation for the presentation of a priced usage report. The detailed view is <a href="../diagrams/render-layer-components.html">Render layer components</a>, the file by file text is <a href="../application/ai-usage-cost-render-overview.html">Ai usage cost render Overview</a>, and the imports are drawn in <a href="../diagrams/render-layer-module-dependencies.html">Render layer module dependencies</a>.</p>
+<h2>Render layer mind map</h2>
+<pre class="mermaid">mindmap
+  root((Render layer))
+    Terminal output
+      Total panel
+      One breakdown table
+      Unpriced models table
+      Warnings summary
+    Image output
+      Two by two figure
+      Cost per day by client
+      Cost by model and token mix
+      Cost by project
+    Input
+      Report, read only
+      Totals and buckets
+      Daily series
+      Unknown models and warnings
+    Callers
+      Scan command
+      Export command, png only
+    Limits
+      At most 30 table rows
+      Top 10 models, top 8 for token mix
+      Project chart blank when empty
+      Colours follow position
+    Legend
+      Root is the chunk
+      First level is a main concern
+      Second level is a concept inside it
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/render/terminal.py:17-46</code></td>
+<td>The terminal renderer</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/render/terminal.py:49-67</code></td>
+<td>The Total panel</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/render/png.py:18-33</code></td>
+<td>The picture writer</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:105-105</code></td>
+<td>Scan command calls the renderer</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:186-192</code></td>
+<td>Export command calls the picture writer</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

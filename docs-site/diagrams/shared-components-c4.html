@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Shared components C4</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/shared-components-c4.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> covers <code>web/src/components/*</code></p><h1>Shared components C4</h1>
+<p>This view shows how the shared dashboard building blocks are grouped and who uses them. It helps a developer decide where a change to a badge, a chart or a filter belongs, and what else it touches. It also shows what the blocks lean on: basic interface parts, one chart library and the browser.</p>
+<h2>What the diagram shows</h2>
+<p>The dashboard screens import their building blocks from this folder: the overview page takes charts, panels, stat cards and badges. <code>web/src/Overview.tsx:20-37</code></p>
+<p>The sessions page takes the panel, the column chooser, the sort select and the session cards from the same place. <code>web/src/Sessions.tsx:13-31</code></p>
+<p>Filters and columns hold the search field, the facet checkboxes, the date range, the chips and the sort select, and the column chooser lets a reader hide table columns. <code>web/src/components/filters.tsx:18-54</code> <code>web/src/components/columns.tsx:62-95</code></p>
+<p>Layout and detail give every screen the same bordered panel and the section, key value grid, code block and path list used in the session side panel. <code>web/src/components/panel.tsx:5-13</code> <code>web/src/components/detail.tsx:6-26</code></p>
+<p>Page states hold the empty card, the error card with a retry button and the offline card, and they build on the layout panel and on the metric info box. <code>web/src/components/states.tsx:68-96</code> <code>web/src/components/states.tsx:280-328</code></p>
+<p>Stat cards show one headline number with a label and an optional info glyph, and the number counts up unless the reader prefers reduced motion. <code>web/src/components/stat.tsx:61-155</code> <code>web/src/components/stat.tsx:14-47</code></p>
+<p>Session and trace views draw the session card, the source card and the keyboard driven span timeline, and they use the signal badges for state and outcome. <code>web/src/components/session.tsx:117-205</code> <code>web/src/components/source-card.tsx:33-64</code> <code>web/src/components/trace.tsx:227-315</code></p>
+<p>Chart widgets draw the sparkline and the stacked daily bar chart, and the hover frame adds the pointer and keyboard inspection around them. <code>web/src/components/sparkline.tsx:89-145</code> <code>web/src/components/chart-time.tsx:23-184</code> <code>web/src/components/chart-hover.tsx:18-121</code></p>
+<p>The bar chart is drawn with the recharts library. <code>web/src/components/chart-time.tsx:2-2</code></p>
+<p>Signals hold the cost state, provenance and outcome badges, the meters, the bucket bar and the key list, and every badge with a hint opens the metric info box. <code>web/src/components/status.tsx:149-165</code> <code>web/src/components/status.tsx:286-322</code></p>
+<p>Metric info opens its explanation in a popover from the UI primitives folder, which other chunk components also import for buttons, menus and tooltips. <code>web/src/components/metric-info.tsx:46-191</code> <code>web/src/components/columns.tsx:4-4</code> <code>web/src/components/metric-info.tsx:8-8</code></p>
+<p>The signal badges read their data types, class name helper and pricing notes from the rest of the web source folder. <code>web/src/components/status.tsx:3-6</code></p>
+<p>Helpers keep the worst of several states, follow a media query, and remember the side panel width in browser local storage. <code>web/src/components/rank.ts:13-15</code> <code>web/src/components/use-media-query.ts:3-18</code> <code>web/src/components/workspace-panel.ts:49-73</code> <code>web/src/components/workspace-panel.ts:25-31</code></p>
+<p>The column chooser stores the hidden column keys in the same browser storage. <code>web/src/components/columns.tsx:33-39</code></p>
+<h2>Capability and related functionality</h2>
+<p>The diagram realises the shared display layer of the dashboard. The written explanation is in <a href="../application/web-ui-components-overview.html">Web UI components Overview</a>, the tests are in <a href="../application/web-ui-components-tests.html">Web UI components Tests</a>, and the import level view is in <a href="../diagrams/shared-components-imports.html">Shared components imports</a> and <a href="../diagrams/web-ui-components-diagrams.html">Web UI components Diagrams</a>. The primitives box is documented in <a href="../application/web-ui-ui-components-overview.html">Web ui UI components Overview</a>. The behaviour of the info box is in <a href="../diagrams/metric-info-interaction-flow.html">Metric info interaction flow</a>.</p>
+<h2>Shared components C4</h2>
+<p><img alt="drawio-shared-components-c4" src="../assets/drawio-shared-components-c4.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/Overview.tsx:20-37</code></td>
+<td>Overview page imports of the shared blocks</td>
+</tr>
+<tr>
+<td><code>web/src/Sessions.tsx:13-31</code></td>
+<td>Sessions page imports of the shared blocks</td>
+</tr>
+<tr>
+<td><code>web/src/components/filters.tsx:18-54</code></td>
+<td>Search field</td>
+</tr>
+<tr>
+<td><code>web/src/components/columns.tsx:62-95</code></td>
+<td>Column chooser</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:280-328</code></td>
+<td>Offline card</td>
+</tr>
+<tr>
+<td><code>web/src/components/stat.tsx:61-155</code></td>
+<td>Stat card</td>
+</tr>
+<tr>
+<td><code>web/src/components/trace.tsx:227-315</code></td>
+<td>Span timeline</td>
+</tr>
+<tr>
+<td><code>web/src/components/chart-time.tsx:23-184</code></td>
+<td>Stacked time chart</td>
+</tr>
+<tr>
+<td><code>web/src/components/chart-time.tsx:2-2</code></td>
+<td>recharts import</td>
+</tr>
+<tr>
+<td><code>web/src/components/status.tsx:286-322</code></td>
+<td>Bucket bar</td>
+</tr>
+<tr>
+<td><code>web/src/components/metric-info.tsx:46-191</code></td>
+<td>Metric info</td>
+</tr>
+<tr>
+<td><code>web/src/components/workspace-panel.ts:49-73</code></td>
+<td>Workspace panel hook</td>
+</tr>
+<tr>
+<td><code>web/src/components/columns.tsx:33-39</code></td>
+<td>Hidden column storage</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

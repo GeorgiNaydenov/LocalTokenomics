@@ -1,0 +1,174 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>App Screen Map</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/app-screen-map.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>App Screen Map</h1>
+<p>This map shows the frame every view of the dashboard sits in. It lets a reader find where the views are switched, where the slice is filtered and where a rescan is started. It also shows the three full page states the reader sees before any data arrives.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>Before any view appears the shell can show three full page states: the offline card when the server is unreachable, a loading line, and an error card <code>web/src/App.tsx:251-277</code>.</li>
+<li>The header holds the view tabs, the narrow screen Filters button, the rate age notice, the rescan button and the theme switch <code>web/src/Header.tsx:74-134</code>.</li>
+<li>The filter rail holds search, saved views, the date range, the facet groups for cost state, outcome, clients, models and projects, three switches and the reset button <code>web/src/FilterRail.tsx:296-452</code>.</li>
+<li>The same rail opens as a sheet from the left on narrow screens <code>web/src/FilterRail.tsx:486-503</code>.</li>
+<li>The main area shows the active filter chips and exactly one of four views <code>web/src/App.tsx:320-339</code>.</li>
+<li>An open session adds the workspace beside the main area <code>web/src/App.tsx:342-353</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The shell hosts <a href="../application/overview-screen.html">Overview Screen</a>, <a href="../application/sessions-screen.html">Sessions Screen</a>, <a href="../application/sources-screen.html">Sources Screen</a>, <a href="../application/pricing-screen.html">Pricing Screen</a> and <a href="../application/session-workspace-screen.html">Session Workspace Screen</a>. The data flow behind it is explained in <a href="../application/web-overview.html">Web Overview</a> and <a href="../application/web-workflows.html">Web Workflows</a>, and the views are navigated as shown in <a href="../diagrams/web-screen-flow.html">Web Screen Flow</a> and <a href="../diagrams/web-sitemap.html">Web Sitemap</a>.</p>
+<h2>App Screen screen map</h2>
+<p><img alt="drawio-screen-app" src="../assets/drawio-screen-app.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Badge</th>
+<th>Element</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>isOffline</code> error section</td>
+<td><code>web/src/App.tsx:253-253</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;OfflineCard</code> Retry</td>
+<td><code>web/src/App.tsx:255-258</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>if (loading)</code> loading section</td>
+<td><code>web/src/App.tsx:263-263</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>if (error)</code> error section</td>
+<td><code>web/src/App.tsx:271-271</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;button</code> Overview, Sessions, Sources, Models and pricing</td>
+<td><code>web/src/Header.tsx:79-84</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;Button</code> Filters</td>
+<td><code>web/src/Header.tsx:98-98</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;button</code> stale.text</td>
+<td><code>web/src/Header.tsx:105-107</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>&lt;Button</code> Rescan logs</td>
+<td><code>web/src/Header.tsx:128-128</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>&lt;Button</code> Switch theme</td>
+<td><code>web/src/Header.tsx:131-131</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>&lt;SearchField</code> Search sessions, models, repos</td>
+<td><code>web/src/FilterRail.tsx:298-300</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>&lt;button</code> Saved views</td>
+<td><code>web/src/FilterRail.tsx:190-194</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>&lt;ChipRow</code> Range presets</td>
+<td><code>web/src/FilterRail.tsx:311-317</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>&lt;DateRange</code> since, until</td>
+<td><code>web/src/FilterRail.tsx:320-325</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>&lt;FacetGroup</code> Cost state</td>
+<td><code>web/src/FilterRail.tsx:334-338</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>&lt;FacetGroup</code> Outcome</td>
+<td><code>web/src/FilterRail.tsx:342-346</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>&lt;FacetGroup</code> Clients</td>
+<td><code>web/src/FilterRail.tsx:354-358</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td><code>&lt;FacetGroup</code> Models</td>
+<td><code>web/src/FilterRail.tsx:380-384</code></td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>&lt;FacetGroup</code> Projects</td>
+<td><code>web/src/FilterRail.tsx:406-410</code></td>
+</tr>
+<tr>
+<td>19</td>
+<td><code>&lt;SwitchRow</code> Include subagent requests</td>
+<td><code>web/src/FilterRail.tsx:431-434</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td><code>&lt;SwitchRow</code> Traced only</td>
+<td><code>web/src/FilterRail.tsx:436-439</code></td>
+</tr>
+<tr>
+<td>21</td>
+<td><code>&lt;SwitchRow</code> Errors only</td>
+<td><code>web/src/FilterRail.tsx:441-444</code></td>
+</tr>
+<tr>
+<td>22</td>
+<td><code>&lt;Button</code> Clear all filters</td>
+<td><code>web/src/FilterRail.tsx:449-449</code></td>
+</tr>
+<tr>
+<td>23</td>
+<td><code>&lt;Sheet</code> Filters</td>
+<td><code>web/src/FilterRail.tsx:486-489</code></td>
+</tr>
+<tr>
+<td>24</td>
+<td><code>&lt;FilterChips</code> active filters</td>
+<td><code>web/src/App.tsx:327-327</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td><code>view === 'overview' &amp;&amp; report &amp;&amp; meta</code> view section</td>
+<td><code>web/src/App.tsx:330-330</code></td>
+</tr>
+<tr>
+<td>26</td>
+<td><code>view === 'sessions' &amp;&amp; report</code> view section</td>
+<td><code>web/src/App.tsx:333-333</code></td>
+</tr>
+<tr>
+<td>27</td>
+<td><code>view === 'sources' &amp;&amp; report &amp;&amp; meta</code> view section</td>
+<td><code>web/src/App.tsx:336-336</code></td>
+</tr>
+<tr>
+<td>28</td>
+<td><code>view === 'pricing' &amp;&amp; report &amp;&amp; rates</code> view section</td>
+<td><code>web/src/App.tsx:337-337</code></td>
+</tr>
+<tr>
+<td>29</td>
+<td><code>&lt;SessionWorkspace</code> open session</td>
+<td><code>web/src/App.tsx:343-351</code></td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

@@ -38,7 +38,7 @@ Realises the reader layer of [[Ai usage cost sources Overview]]. The generated m
 
 ## Readers component view
 
-`![[docs/brain/architecture/rendered/drawio-src-sources-c4.svg]]`
+![[docs/brain/architecture/rendered/drawio-src-sources-c4.svg]]
 
 > [!example]- Code references
 > | Code | What it shows |

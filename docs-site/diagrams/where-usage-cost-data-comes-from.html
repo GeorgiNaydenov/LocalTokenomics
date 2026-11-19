@@ -1,0 +1,115 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Where usage cost data comes from</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/where-usage-cost-data-comes-from.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Data · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Where usage cost data comes from</h1>
+<p>This view follows each piece of stored data from where it starts to where it ends up. It shows that usage figures come only from the logs on the machine and prices only from the bundled rate file. It also shows which stored data the person creates themselves, such as ratings and forgotten sessions.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>Ingest walks every source root, parses each changed file and writes its requests, its spans and one files row with size, offset and warnings. <code>src/ai_usage_cost/store.py:218-298</code></li>
+<li>A request is stored once per fingerprint, so the same record seen twice is not counted twice. <code>src/ai_usage_cost/store.py:23-24</code> <code>src/ai_usage_cost/store.py:376-386</code></li>
+<li>The privacy settings decide which spans are skipped and how long trace rows are kept. <code>src/ai_usage_cost/pipeline.py:175-185</code> <code>src/ai_usage_cost/store.py:272-277</code> <code>src/ai_usage_cost/store.py:300-303</code></li>
+<li>Spans of a forgotten session are skipped on the next ingest because the exclusions table is read first. <code>src/ai_usage_cost/store.py:213-216</code> <code>src/ai_usage_cost/store.py:273-274</code></li>
+<li>Load reads every stored request in time order and collects the warnings kept on each files row. <code>src/ai_usage_cost/store.py:691-699</code></li>
+<li>Each loaded request is priced against the rate table read from rates.json. <code>src/ai_usage_cost/pipeline.py:192-199</code> <code>src/ai_usage_cost/pricing.py:286-287</code></li>
+<li>Span counts, error counts and ratings per session are read from the trace and outcome tables and used by the report filters. <code>src/ai_usage_cost/pipeline.py:188</code> <code>src/ai_usage_cost/store.py:628-661</code> <code>src/ai_usage_cost/pipeline.py:322-334</code></li>
+<li>The report leaves the tool as JSON, a PNG chart, terminal text or an alert message. <code>src/ai_usage_cost/cli.py:95-105</code> <code>src/ai_usage_cost/cli.py:186-196</code> <code>src/ai_usage_cost/cli.py:339-352</code></li>
+<li>A rating from the dashboard replaces the outcome row of its session, and forgetting a session deletes its spans and rating and writes an exclusion row. <code>src/ai_usage_cost/store.py:572-584</code> <code>src/ai_usage_cost/store.py:595-606</code></li>
+<li>The GPU sampler writes one samples row per reading, and the SQL browser serves the whole store, samples included. <code>src/ai_usage_cost/collect.py:271-277</code> <code>src/ai_usage_cost/cli.py:238-248</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The tables are listed field by field in <a href="../data/ai-usage-cost-data-model.html">Ai usage cost Data Model</a>, and the data flow with its process numbers is drawn in <a href="../diagrams/usage-data-flow.html">Usage data flow</a>.</li>
+<li>The privacy settings that filter the lineage are explained in <a href="../security/ai-usage-cost-security.html">Ai usage cost Security</a>.</li>
+<li>Forgetting a session keeps its requests, a gap recorded as a risk in <a href="../application/ai-usage-cost-specification.html">Ai usage cost Specification</a>.</li>
+</ul>
+<h2>Where usage cost data comes from</h2>
+<pre class="mermaid">flowchart LR
+    logs([&quot;AI coding tool logs&quot;]):::outside
+    ratesfile([&quot;rates.json&quot;]):::outside
+    cfgfile([&quot;config.json&quot;]):::outside
+    gpu([&quot;GPU tools and Ollama&quot;]):::outside
+    viewer([&quot;Person in the dashboard&quot;]):::outside
+
+    ingest[&quot;ingest&quot;]:::process
+    collect[&quot;collect&quot;]:::process
+    load[&quot;load&quot;]:::process
+    price[&quot;price_event&quot;]:::process
+    report[&quot;report_of&quot;]:::process
+    rate[&quot;rate_session and forget_session&quot;]:::process
+    sqlview[&quot;sql (Datasette)&quot;]:::process
+
+    requests[(&quot;requests&quot;)]:::store
+    files[(&quot;files&quot;)]:::store
+    traces[(&quot;trace_events&quot;)]:::store
+    outcomes[(&quot;outcomes&quot;)]:::store
+    exclusions[(&quot;session_exclusions&quot;)]:::store
+    samples[(&quot;samples&quot;)]:::store
+
+    out_json([&quot;JSON, PNG, terminal, alert&quot;]):::outside
+
+    logs --&gt;|usage records| ingest
+    logs --&gt;|trace records| ingest
+    cfgfile --&gt;|exclude_projects, retention| ingest
+    ingest --&gt;|one row per fingerprint| requests
+    ingest --&gt;|mtime, size, offset, warnings| files
+    ingest --&gt;|spans| traces
+    exclusions --&gt;|excluded sessions| ingest
+    requests --&gt;|stored requests| load
+    files --&gt;|scan warnings| load
+    load --&gt;|usage events| price
+    ratesfile --&gt;|rate rows| price
+    price --&gt;|priced events| report
+    traces --&gt;|span and error counts| report
+    outcomes --&gt;|ratings| report
+    report --&gt;|Report| out_json
+    viewer --&gt;|rating, notes, tags| rate
+    rate --&gt;|outcome row| outcomes
+    rate --&gt;|exclusion row| exclusions
+    gpu --&gt;|utilisation, memory, power| collect
+    collect --&gt;|sample rows| samples
+    samples --&gt;|sample rows| sqlview
+
+    subgraph Legend
+        direction LR
+        zlegend_a[(&quot;Data store: a table of usage.db&quot;)]:::store
+        zlegend_b[&quot;Process that reads or writes it&quot;]:::process
+        zlegend_c([&quot;Outside source or sink&quot;]):::outside
+        zlegend_d[&quot;An arrow is named after the data that moves, not the action&quot;]:::process
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d
+    end
+
+    classDef store fill:#d5e8d4,stroke:#222222,color:#222222
+    classDef process fill:#dae8fc,stroke:#222222,color:#222222
+    classDef outside fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:4 3
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/store.py:190-305</code></td>
+<td>Ingest of logs into the store</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/store.py:668-699</code></td>
+<td>Load of stored requests</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pipeline.py:166-199</code></td>
+<td>Pricing of every loaded request</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/store.py:568-606</code></td>
+<td>Rating and forgetting a session</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/collect.py:260-282</code></td>
+<td>GPU sample collection</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

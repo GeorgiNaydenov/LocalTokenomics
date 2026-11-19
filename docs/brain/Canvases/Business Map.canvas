@@ -20,11 +20,74 @@
       "height": 70
     },
     {
+      "id": "n-business-events",
+      "type": "file",
+      "file": "docs/brain/Business/Business Events.md",
+      "x": 380,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-cost-pricing-rules",
+      "type": "file",
+      "file": "docs/brain/Business/Cost pricing Rules.md",
+      "x": 760,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-cost-pricing",
+      "type": "file",
+      "file": "docs/brain/Subdomains/Cost pricing.md",
+      "x": 0,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
       "id": "n-general-rules",
       "type": "file",
       "file": "docs/brain/Business/General Rules.md",
       "x": 380,
-      "y": 0,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-privacy-and-retention-rules",
+      "type": "file",
+      "file": "docs/brain/Business/Privacy and retention Rules.md",
+      "x": 760,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-privacy-and-retention",
+      "type": "file",
+      "file": "docs/brain/Subdomains/Privacy and retention.md",
+      "x": 0,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-spend-reporting-rules",
+      "type": "file",
+      "file": "docs/brain/Business/Spend reporting Rules.md",
+      "x": 380,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-spend-reporting",
+      "type": "file",
+      "file": "docs/brain/Subdomains/Spend reporting.md",
+      "x": 760,
+      "y": 220,
       "width": 320,
       "height": 70
     },
@@ -32,38 +95,1097 @@
       "id": "n-uc-01-compare-a-dashboard-screen-with-its-reference",
       "type": "file",
       "file": "docs/brain/Use Cases/UC-01 Compare a dashboard screen with its reference.md",
+      "x": 0,
+      "y": 330,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-02-rebuild-the-dashboard-bundle",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-02 Rebuild the dashboard bundle.md",
+      "x": 380,
+      "y": 330,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-03-develop-the-dashboard-against-live-data",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-03 Develop the dashboard against live data.md",
       "x": 760,
-      "y": 0,
+      "y": 330,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-04-check-a-change-before-merge",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-04 Check a change before merge.md",
+      "x": 0,
+      "y": 440,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-05-read-usage-and-cost-for-a-period",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-05 Read usage and cost for a period.md",
+      "x": 380,
+      "y": 440,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-06-inspect-one-session",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-06 Inspect one session.md",
+      "x": 760,
+      "y": 440,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-07-rate-a-session-outcome",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-07 Rate a session outcome.md",
+      "x": 0,
+      "y": 550,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-08-check-list-prices",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-08 Check list prices.md",
+      "x": 380,
+      "y": 550,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-09-read-a-figure-and-see-how-far-to-trust-it",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-09 Read a figure and see how far to trust it.md",
+      "x": 760,
+      "y": 550,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-10-narrow-a-list-and-choose-its-columns",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-10 Narrow a list and choose its columns.md",
+      "x": 0,
+      "y": 660,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-11-inspect-a-chart-point",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-11 Inspect a chart point.md",
+      "x": 380,
+      "y": 660,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-12-review-a-session-s-spans-and-context-use",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-12 Review a session's spans and context use.md",
+      "x": 760,
+      "y": 660,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-13-discover-ai-tool-usage-from-local-files",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-13 Discover AI tool usage from local files.md",
+      "x": 0,
+      "y": 770,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-14-read-a-tool-s-sqlite-store-without-a-token-count",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-14 Read a tool's SQLite store without a token count.md",
+      "x": 380,
+      "y": 770,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-15-print-a-usage-and-cost-summary-in-the-terminal",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-15 Print a usage and cost summary in the terminal.md",
+      "x": 760,
+      "y": 770,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-16-export-a-usage-and-cost-chart-as-a-png-image",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-16 Export a usage and cost chart as a PNG image.md",
+      "x": 0,
+      "y": 880,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-17-see-what-my-ai-usage-would-cost",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-17 See what my AI usage would cost.md",
+      "x": 380,
+      "y": 880,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-18-explore-spend-in-the-dashboard",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-18 Explore spend in the dashboard.md",
+      "x": 760,
+      "y": 880,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-19-export-a-report-as-a-file",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-19 Export a report as a file.md",
+      "x": 0,
+      "y": 990,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-20-be-alerted-when-spend-rises",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-20 Be alerted when spend rises.md",
+      "x": 380,
+      "y": 990,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-21-inspect-and-rate-one-session",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-21 Inspect and rate one session.md",
+      "x": 760,
+      "y": 990,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-22-forget-a-session",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-22 Forget a session.md",
+      "x": 0,
+      "y": 1100,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-23-read-the-text-of-one-span",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-23 Read the text of one span.md",
+      "x": 380,
+      "y": 1100,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-24-try-the-tool-with-demo-data",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-24 Try the tool with demo data.md",
+      "x": 760,
+      "y": 1100,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-25-sample-gpu-use-for-local-models",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-25 Sample GPU use for local models.md",
+      "x": 0,
+      "y": 1210,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-26-query-the-store-with-sql",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-26 Query the store with SQL.md",
+      "x": 380,
+      "y": 1210,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-27-browse-sessions-in-the-terminal",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-27 Browse sessions in the terminal.md",
+      "x": 760,
+      "y": 1210,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-uc-28-sort-the-session-list-and-open-one-session-in-the-prototype",
+      "type": "file",
+      "file": "docs/brain/Use Cases/UC-28 Sort the session list and open one session in the prototype.md",
+      "x": 0,
+      "y": 1320,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-usage-collection-rules",
+      "type": "file",
+      "file": "docs/brain/Business/Usage collection Rules.md",
+      "x": 380,
+      "y": 1320,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-usage-collection",
+      "type": "file",
+      "file": "docs/brain/Subdomains/Usage collection.md",
+      "x": 760,
+      "y": 1320,
       "width": 320,
       "height": 70
     }
   ],
   "edges": [
     {
-      "id": "e0-n-actors-n-uc-01-compare-a-dashboard-screen-with-its-reference",
+      "id": "e0-n-actors-n-uc-17-see-what-my-ai-usage-would-cost",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-17-see-what-my-ai-usage-would-cost",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e1-n-actors-n-uc-15-print-a-usage-and-cost-summary-in-the-terminal",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-15-print-a-usage-and-cost-summary-in-the-terminal",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e2-n-actors-n-uc-16-export-a-usage-and-cost-chart-as-a-png-image",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-16-export-a-usage-and-cost-chart-as-a-png-image",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e3-n-actors-n-uc-01-compare-a-dashboard-screen-with-its-reference",
       "fromNode": "n-actors",
       "toNode": "n-uc-01-compare-a-dashboard-screen-with-its-reference",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e1-n-general-rules-n-uc-01-compare-a-dashboard-screen-with-its-reference",
+      "id": "e4-n-actors-n-uc-05-read-usage-and-cost-for-a-period",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-05-read-usage-and-cost-for-a-period",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e5-n-actors-n-uc-06-inspect-one-session",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-06-inspect-one-session",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e6-n-actors-n-uc-07-rate-a-session-outcome",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-07-rate-a-session-outcome",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e7-n-actors-n-uc-08-check-list-prices",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-08-check-list-prices",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e8-n-actors-n-uc-09-read-a-figure-and-see-how-far-to-trust-it",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-09-read-a-figure-and-see-how-far-to-trust-it",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e9-n-actors-n-uc-10-narrow-a-list-and-choose-its-columns",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-10-narrow-a-list-and-choose-its-columns",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e10-n-actors-n-uc-11-inspect-a-chart-point",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-11-inspect-a-chart-point",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e11-n-actors-n-uc-12-review-a-session-s-spans-and-context-use",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-12-review-a-session-s-spans-and-context-use",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e12-n-actors-n-uc-04-check-a-change-before-merge",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-04-check-a-change-before-merge",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e13-n-actors-n-uc-02-rebuild-the-dashboard-bundle",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-02-rebuild-the-dashboard-bundle",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e14-n-actors-n-uc-03-develop-the-dashboard-against-live-data",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-03-develop-the-dashboard-against-live-data",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e15-n-actors-n-uc-20-be-alerted-when-spend-rises",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-20-be-alerted-when-spend-rises",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e16-n-actors-n-uc-18-explore-spend-in-the-dashboard",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-18-explore-spend-in-the-dashboard",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e17-n-actors-n-uc-19-export-a-report-as-a-file",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-19-export-a-report-as-a-file",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e18-n-actors-n-uc-21-inspect-and-rate-one-session",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-21-inspect-and-rate-one-session",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e19-n-actors-n-uc-22-forget-a-session",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-22-forget-a-session",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e20-n-actors-n-uc-23-read-the-text-of-one-span",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-23-read-the-text-of-one-span",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e21-n-actors-n-uc-24-try-the-tool-with-demo-data",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-24-try-the-tool-with-demo-data",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e22-n-actors-n-uc-25-sample-gpu-use-for-local-models",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-25-sample-gpu-use-for-local-models",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e23-n-actors-n-uc-26-query-the-store-with-sql",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-26-query-the-store-with-sql",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e24-n-actors-n-uc-27-browse-sessions-in-the-terminal",
+      "fromNode": "n-actors",
+      "toNode": "n-uc-27-browse-sessions-in-the-terminal",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e25-n-cost-pricing-rules-n-cost-pricing",
+      "fromNode": "n-cost-pricing-rules",
+      "toNode": "n-cost-pricing",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e26-n-cost-pricing-n-cost-pricing-rules",
+      "fromNode": "n-cost-pricing",
+      "toNode": "n-cost-pricing-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e27-n-general-rules-n-uc-02-rebuild-the-dashboard-bundle",
+      "fromNode": "n-general-rules",
+      "toNode": "n-uc-02-rebuild-the-dashboard-bundle",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e28-n-general-rules-n-uc-03-develop-the-dashboard-against-live-data",
+      "fromNode": "n-general-rules",
+      "toNode": "n-uc-03-develop-the-dashboard-against-live-data",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e29-n-general-rules-n-uc-01-compare-a-dashboard-screen-with-its-reference",
       "fromNode": "n-general-rules",
       "toNode": "n-uc-01-compare-a-dashboard-screen-with-its-reference",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e2-n-uc-01-compare-a-dashboard-screen-with-its-reference-n-actors",
+      "id": "e30-n-general-rules-n-uc-28-sort-the-session-list-and-open-one-session-in-the-prototype",
+      "fromNode": "n-general-rules",
+      "toNode": "n-uc-28-sort-the-session-list-and-open-one-session-in-the-prototype",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e31-n-general-rules-n-uc-16-export-a-usage-and-cost-chart-as-a-png-image",
+      "fromNode": "n-general-rules",
+      "toNode": "n-uc-16-export-a-usage-and-cost-chart-as-a-png-image",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e32-n-general-rules-n-uc-06-inspect-one-session",
+      "fromNode": "n-general-rules",
+      "toNode": "n-uc-06-inspect-one-session",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e33-n-general-rules-n-uc-07-rate-a-session-outcome",
+      "fromNode": "n-general-rules",
+      "toNode": "n-uc-07-rate-a-session-outcome",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e34-n-general-rules-n-uc-08-check-list-prices",
+      "fromNode": "n-general-rules",
+      "toNode": "n-uc-08-check-list-prices",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e35-n-general-rules-n-uc-05-read-usage-and-cost-for-a-period",
+      "fromNode": "n-general-rules",
+      "toNode": "n-uc-05-read-usage-and-cost-for-a-period",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e36-n-general-rules-n-uc-13-discover-ai-tool-usage-from-local-files",
+      "fromNode": "n-general-rules",
+      "toNode": "n-uc-13-discover-ai-tool-usage-from-local-files",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e37-n-privacy-and-retention-rules-n-privacy-and-retention",
+      "fromNode": "n-privacy-and-retention-rules",
+      "toNode": "n-privacy-and-retention",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e38-n-privacy-and-retention-rules-n-uc-22-forget-a-session",
+      "fromNode": "n-privacy-and-retention-rules",
+      "toNode": "n-uc-22-forget-a-session",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e39-n-privacy-and-retention-rules-n-uc-23-read-the-text-of-one-span",
+      "fromNode": "n-privacy-and-retention-rules",
+      "toNode": "n-uc-23-read-the-text-of-one-span",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e40-n-privacy-and-retention-n-uc-22-forget-a-session",
+      "fromNode": "n-privacy-and-retention",
+      "toNode": "n-uc-22-forget-a-session",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e41-n-privacy-and-retention-n-uc-23-read-the-text-of-one-span",
+      "fromNode": "n-privacy-and-retention",
+      "toNode": "n-uc-23-read-the-text-of-one-span",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e42-n-privacy-and-retention-n-privacy-and-retention-rules",
+      "fromNode": "n-privacy-and-retention",
+      "toNode": "n-privacy-and-retention-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e43-n-spend-reporting-rules-n-spend-reporting",
+      "fromNode": "n-spend-reporting-rules",
+      "toNode": "n-spend-reporting",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e44-n-spend-reporting-rules-n-uc-17-see-what-my-ai-usage-would-cost",
+      "fromNode": "n-spend-reporting-rules",
+      "toNode": "n-uc-17-see-what-my-ai-usage-would-cost",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e45-n-spend-reporting-rules-n-uc-18-explore-spend-in-the-dashboard",
+      "fromNode": "n-spend-reporting-rules",
+      "toNode": "n-uc-18-explore-spend-in-the-dashboard",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e46-n-spend-reporting-rules-n-uc-19-export-a-report-as-a-file",
+      "fromNode": "n-spend-reporting-rules",
+      "toNode": "n-uc-19-export-a-report-as-a-file",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e47-n-spend-reporting-rules-n-uc-20-be-alerted-when-spend-rises",
+      "fromNode": "n-spend-reporting-rules",
+      "toNode": "n-uc-20-be-alerted-when-spend-rises",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e48-n-spend-reporting-rules-n-uc-26-query-the-store-with-sql",
+      "fromNode": "n-spend-reporting-rules",
+      "toNode": "n-uc-26-query-the-store-with-sql",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e49-n-spend-reporting-rules-n-uc-27-browse-sessions-in-the-terminal",
+      "fromNode": "n-spend-reporting-rules",
+      "toNode": "n-uc-27-browse-sessions-in-the-terminal",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e50-n-spend-reporting-rules-n-uc-21-inspect-and-rate-one-session",
+      "fromNode": "n-spend-reporting-rules",
+      "toNode": "n-uc-21-inspect-and-rate-one-session",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e51-n-spend-reporting-n-uc-17-see-what-my-ai-usage-would-cost",
+      "fromNode": "n-spend-reporting",
+      "toNode": "n-uc-17-see-what-my-ai-usage-would-cost",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e52-n-spend-reporting-n-uc-18-explore-spend-in-the-dashboard",
+      "fromNode": "n-spend-reporting",
+      "toNode": "n-uc-18-explore-spend-in-the-dashboard",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e53-n-spend-reporting-n-uc-19-export-a-report-as-a-file",
+      "fromNode": "n-spend-reporting",
+      "toNode": "n-uc-19-export-a-report-as-a-file",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e54-n-spend-reporting-n-uc-20-be-alerted-when-spend-rises",
+      "fromNode": "n-spend-reporting",
+      "toNode": "n-uc-20-be-alerted-when-spend-rises",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e55-n-spend-reporting-n-uc-21-inspect-and-rate-one-session",
+      "fromNode": "n-spend-reporting",
+      "toNode": "n-uc-21-inspect-and-rate-one-session",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e56-n-spend-reporting-n-uc-26-query-the-store-with-sql",
+      "fromNode": "n-spend-reporting",
+      "toNode": "n-uc-26-query-the-store-with-sql",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e57-n-spend-reporting-n-uc-27-browse-sessions-in-the-terminal",
+      "fromNode": "n-spend-reporting",
+      "toNode": "n-uc-27-browse-sessions-in-the-terminal",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e58-n-spend-reporting-n-spend-reporting-rules",
+      "fromNode": "n-spend-reporting",
+      "toNode": "n-spend-reporting-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e59-n-uc-01-compare-a-dashboard-screen-with-its-reference-n-actors",
       "fromNode": "n-uc-01-compare-a-dashboard-screen-with-its-reference",
       "toNode": "n-actors",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e3-n-uc-01-compare-a-dashboard-screen-with-its-reference-n-general-rules",
+      "id": "e60-n-uc-01-compare-a-dashboard-screen-with-its-reference-n-general-rules",
       "fromNode": "n-uc-01-compare-a-dashboard-screen-with-its-reference",
       "toNode": "n-general-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e61-n-uc-02-rebuild-the-dashboard-bundle-n-actors",
+      "fromNode": "n-uc-02-rebuild-the-dashboard-bundle",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e62-n-uc-02-rebuild-the-dashboard-bundle-n-general-rules",
+      "fromNode": "n-uc-02-rebuild-the-dashboard-bundle",
+      "toNode": "n-general-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e63-n-uc-03-develop-the-dashboard-against-live-data-n-actors",
+      "fromNode": "n-uc-03-develop-the-dashboard-against-live-data",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e64-n-uc-03-develop-the-dashboard-against-live-data-n-general-rules",
+      "fromNode": "n-uc-03-develop-the-dashboard-against-live-data",
+      "toNode": "n-general-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e65-n-uc-04-check-a-change-before-merge-n-actors",
+      "fromNode": "n-uc-04-check-a-change-before-merge",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e66-n-uc-05-read-usage-and-cost-for-a-period-n-actors",
+      "fromNode": "n-uc-05-read-usage-and-cost-for-a-period",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e67-n-uc-05-read-usage-and-cost-for-a-period-n-general-rules",
+      "fromNode": "n-uc-05-read-usage-and-cost-for-a-period",
+      "toNode": "n-general-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e68-n-uc-06-inspect-one-session-n-actors",
+      "fromNode": "n-uc-06-inspect-one-session",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e69-n-uc-06-inspect-one-session-n-general-rules",
+      "fromNode": "n-uc-06-inspect-one-session",
+      "toNode": "n-general-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e70-n-uc-07-rate-a-session-outcome-n-actors",
+      "fromNode": "n-uc-07-rate-a-session-outcome",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e71-n-uc-07-rate-a-session-outcome-n-general-rules",
+      "fromNode": "n-uc-07-rate-a-session-outcome",
+      "toNode": "n-general-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e72-n-uc-08-check-list-prices-n-actors",
+      "fromNode": "n-uc-08-check-list-prices",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e73-n-uc-08-check-list-prices-n-general-rules",
+      "fromNode": "n-uc-08-check-list-prices",
+      "toNode": "n-general-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e74-n-uc-09-read-a-figure-and-see-how-far-to-trust-it-n-actors",
+      "fromNode": "n-uc-09-read-a-figure-and-see-how-far-to-trust-it",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e75-n-uc-10-narrow-a-list-and-choose-its-columns-n-actors",
+      "fromNode": "n-uc-10-narrow-a-list-and-choose-its-columns",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e76-n-uc-11-inspect-a-chart-point-n-actors",
+      "fromNode": "n-uc-11-inspect-a-chart-point",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e77-n-uc-12-review-a-session-s-spans-and-context-use-n-actors",
+      "fromNode": "n-uc-12-review-a-session-s-spans-and-context-use",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e78-n-uc-13-discover-ai-tool-usage-from-local-files-n-general-rules",
+      "fromNode": "n-uc-13-discover-ai-tool-usage-from-local-files",
+      "toNode": "n-general-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e79-n-uc-15-print-a-usage-and-cost-summary-in-the-terminal-n-actors",
+      "fromNode": "n-uc-15-print-a-usage-and-cost-summary-in-the-terminal",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e80-n-uc-16-export-a-usage-and-cost-chart-as-a-png-image-n-actors",
+      "fromNode": "n-uc-16-export-a-usage-and-cost-chart-as-a-png-image",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e81-n-uc-16-export-a-usage-and-cost-chart-as-a-png-image-n-general-rules",
+      "fromNode": "n-uc-16-export-a-usage-and-cost-chart-as-a-png-image",
+      "toNode": "n-general-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e82-n-uc-17-see-what-my-ai-usage-would-cost-n-spend-reporting",
+      "fromNode": "n-uc-17-see-what-my-ai-usage-would-cost",
+      "toNode": "n-spend-reporting",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e83-n-uc-17-see-what-my-ai-usage-would-cost-n-actors",
+      "fromNode": "n-uc-17-see-what-my-ai-usage-would-cost",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e84-n-uc-17-see-what-my-ai-usage-would-cost-n-spend-reporting-rules",
+      "fromNode": "n-uc-17-see-what-my-ai-usage-would-cost",
+      "toNode": "n-spend-reporting-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e85-n-uc-18-explore-spend-in-the-dashboard-n-spend-reporting",
+      "fromNode": "n-uc-18-explore-spend-in-the-dashboard",
+      "toNode": "n-spend-reporting",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e86-n-uc-18-explore-spend-in-the-dashboard-n-actors",
+      "fromNode": "n-uc-18-explore-spend-in-the-dashboard",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e87-n-uc-18-explore-spend-in-the-dashboard-n-spend-reporting-rules",
+      "fromNode": "n-uc-18-explore-spend-in-the-dashboard",
+      "toNode": "n-spend-reporting-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e88-n-uc-19-export-a-report-as-a-file-n-spend-reporting",
+      "fromNode": "n-uc-19-export-a-report-as-a-file",
+      "toNode": "n-spend-reporting",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e89-n-uc-19-export-a-report-as-a-file-n-actors",
+      "fromNode": "n-uc-19-export-a-report-as-a-file",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e90-n-uc-19-export-a-report-as-a-file-n-spend-reporting-rules",
+      "fromNode": "n-uc-19-export-a-report-as-a-file",
+      "toNode": "n-spend-reporting-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e91-n-uc-20-be-alerted-when-spend-rises-n-spend-reporting",
+      "fromNode": "n-uc-20-be-alerted-when-spend-rises",
+      "toNode": "n-spend-reporting",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e92-n-uc-20-be-alerted-when-spend-rises-n-actors",
+      "fromNode": "n-uc-20-be-alerted-when-spend-rises",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e93-n-uc-20-be-alerted-when-spend-rises-n-spend-reporting-rules",
+      "fromNode": "n-uc-20-be-alerted-when-spend-rises",
+      "toNode": "n-spend-reporting-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e94-n-uc-21-inspect-and-rate-one-session-n-spend-reporting",
+      "fromNode": "n-uc-21-inspect-and-rate-one-session",
+      "toNode": "n-spend-reporting",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e95-n-uc-21-inspect-and-rate-one-session-n-actors",
+      "fromNode": "n-uc-21-inspect-and-rate-one-session",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e96-n-uc-21-inspect-and-rate-one-session-n-spend-reporting-rules",
+      "fromNode": "n-uc-21-inspect-and-rate-one-session",
+      "toNode": "n-spend-reporting-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e97-n-uc-22-forget-a-session-n-privacy-and-retention",
+      "fromNode": "n-uc-22-forget-a-session",
+      "toNode": "n-privacy-and-retention",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e98-n-uc-22-forget-a-session-n-actors",
+      "fromNode": "n-uc-22-forget-a-session",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e99-n-uc-22-forget-a-session-n-privacy-and-retention-rules",
+      "fromNode": "n-uc-22-forget-a-session",
+      "toNode": "n-privacy-and-retention-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e100-n-uc-23-read-the-text-of-one-span-n-privacy-and-retention",
+      "fromNode": "n-uc-23-read-the-text-of-one-span",
+      "toNode": "n-privacy-and-retention",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e101-n-uc-23-read-the-text-of-one-span-n-actors",
+      "fromNode": "n-uc-23-read-the-text-of-one-span",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e102-n-uc-23-read-the-text-of-one-span-n-privacy-and-retention-rules",
+      "fromNode": "n-uc-23-read-the-text-of-one-span",
+      "toNode": "n-privacy-and-retention-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e103-n-uc-24-try-the-tool-with-demo-data-n-usage-collection",
+      "fromNode": "n-uc-24-try-the-tool-with-demo-data",
+      "toNode": "n-usage-collection",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e104-n-uc-24-try-the-tool-with-demo-data-n-actors",
+      "fromNode": "n-uc-24-try-the-tool-with-demo-data",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e105-n-uc-25-sample-gpu-use-for-local-models-n-usage-collection",
+      "fromNode": "n-uc-25-sample-gpu-use-for-local-models",
+      "toNode": "n-usage-collection",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e106-n-uc-25-sample-gpu-use-for-local-models-n-actors",
+      "fromNode": "n-uc-25-sample-gpu-use-for-local-models",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e107-n-uc-26-query-the-store-with-sql-n-spend-reporting",
+      "fromNode": "n-uc-26-query-the-store-with-sql",
+      "toNode": "n-spend-reporting",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e108-n-uc-26-query-the-store-with-sql-n-actors",
+      "fromNode": "n-uc-26-query-the-store-with-sql",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e109-n-uc-26-query-the-store-with-sql-n-spend-reporting-rules",
+      "fromNode": "n-uc-26-query-the-store-with-sql",
+      "toNode": "n-spend-reporting-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e110-n-uc-27-browse-sessions-in-the-terminal-n-spend-reporting",
+      "fromNode": "n-uc-27-browse-sessions-in-the-terminal",
+      "toNode": "n-spend-reporting",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e111-n-uc-27-browse-sessions-in-the-terminal-n-actors",
+      "fromNode": "n-uc-27-browse-sessions-in-the-terminal",
+      "toNode": "n-actors",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e112-n-uc-27-browse-sessions-in-the-terminal-n-spend-reporting-rules",
+      "fromNode": "n-uc-27-browse-sessions-in-the-terminal",
+      "toNode": "n-spend-reporting-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e113-n-uc-28-sort-the-session-list-and-open-one-session-in-the-prototype-n-general-rules",
+      "fromNode": "n-uc-28-sort-the-session-list-and-open-one-session-in-the-prototype",
+      "toNode": "n-general-rules",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e114-n-usage-collection-rules-n-usage-collection",
+      "fromNode": "n-usage-collection-rules",
+      "toNode": "n-usage-collection",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e115-n-usage-collection-n-uc-24-try-the-tool-with-demo-data",
+      "fromNode": "n-usage-collection",
+      "toNode": "n-uc-24-try-the-tool-with-demo-data",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e116-n-usage-collection-n-uc-25-sample-gpu-use-for-local-models",
+      "fromNode": "n-usage-collection",
+      "toNode": "n-uc-25-sample-gpu-use-for-local-models",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e117-n-usage-collection-n-usage-collection-rules",
+      "fromNode": "n-usage-collection",
+      "toNode": "n-usage-collection-rules",
       "fromSide": "bottom",
       "toSide": "top"
     }

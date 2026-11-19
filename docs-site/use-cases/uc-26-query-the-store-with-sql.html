@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UC-26 Query the store with SQL</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="use-cases/uc-26-query-the-store-with-sql.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/cli.py</code>, <code>tests/test_cli.py</code></p><h1>UC-26 Query the store with SQL</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>A use case of the <a href="../subdomains/spend-reporting.html">Spend reporting</a> subdomain, written from the code. Every step cites the line that does it, so a reader can check the claim in one click.</p>
+</details>
+<details class="callout callout-tip">
+<summary>How to use it</summary>
+<p>Read the main flow first, then the alternative flows. The rules, terms and diagrams at the end are the ones this use case relies on.</p>
+</details>
+<ul>
+<li><strong>Subdomain:</strong> <a href="../subdomains/spend-reporting.html">Spend reporting</a></li>
+<li><strong>Actors:</strong> <a href="../business/actors.html">Person using the tool</a></li>
+<li><strong>Maturity:</strong> approved</li>
+</ul>
+<h2>Description</h2>
+<p>The person explores the stored requests with SQL in a browser through Datasette.</p>
+<h2>Preconditions</h2>
+<p>The sql extra is installed and a store exists.</p>
+<h2>Main flow</h2>
+<ol>
+<li>The person runs the sql command. <a href="#">src/ai_usage_cost/cli.py:229</a></li>
+<li>The command needs Datasette. <a href="#">src/ai_usage_cost/cli.py:235</a></li>
+<li>It checks that the store file exists. <a href="#">src/ai_usage_cost/cli.py:239</a></li>
+<li>It hands the store to Datasette. <a href="#">src/ai_usage_cost/cli.py:248</a></li>
+</ol>
+<h2>Alternative flows</h2>
+<ul>
+<li>A missing store prints a hint and exits with code 2. <a href="#">src/ai_usage_cost/cli.py:241</a></li>
+</ul>
+<h2>Postconditions</h2>
+<p>Datasette serves the store.</p>
+<h2>Acceptance criteria</h2>
+<ul>
+<li>The explicit store is handed to Datasette. <a href="#">tests/test_cli.py:219</a></li>
+<li>A missing store is named instead of launching. <a href="#">tests/test_cli.py:241</a></li>
+</ul>
+<h2>Business rules</h2>
+<ul>
+<li><a href="../business/spend-reporting-rules.html">BR-116 The alert window ends today</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-117 A rise is measured against the window just before</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-118 An alert fires only above the threshold</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-84 An alert needs exactly one threshold</a></li>
+</ul>
+<h2>Code</h2>
+<ul>
+<li><a href="#">src/ai_usage_cost/cli.py</a></li>
+<li><a href="#">tests/test_cli.py</a></li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

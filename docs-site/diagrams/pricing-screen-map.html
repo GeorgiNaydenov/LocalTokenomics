@@ -1,0 +1,87 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Pricing Screen Map</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/pricing-screen-map.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Pricing Screen Map</h1>
+<p>This map shows where a reader checks the list prices the dashboard uses. It lets them see which models were priced exactly, which were estimated from a sibling and which have no price at all. It also shows how to fix a missing price.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The view stacks the estimated panel, the rate table and a grid of the multipliers and unpriced panels <code>web/src/Pricing.tsx:619-631</code>.</li>
+<li>The rate table lists priced or estimated rows first and reveals unused rows in batches <code>web/src/Pricing.tsx:327-331</code> <code>web/src/Pricing.tsx:411-421</code>.</li>
+<li>A row expands into a detail row through a chevron button <code>web/src/Pricing.tsx:277-286</code> <code>web/src/Pricing.tsx:397-405</code>.</li>
+<li>The unpriced panel offers a copyable rate row for the first unknown model <code>web/src/Pricing.tsx:545-548</code> <code>web/src/Pricing.tsx:591-599</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The view is reached from the tab strip and the rate age notice of <a href="../application/app-screen.html">App Screen</a>. The rate rules, such as cache price derivation and rate row state, are recorded in <a href="../application/web-specification.html">Web Specification</a>. The terms are drawn in <a href="../diagrams/web-glossary-map.html">Web Glossary Map</a>.</p>
+<h2>Pricing Screen screen map</h2>
+<p><img alt="drawio-screen-pricing" src="../assets/drawio-screen-pricing.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Badge</th>
+<th>Element</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>items.length === 0</code> empty section</td>
+<td><code>web/src/Pricing.tsx:428-428</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;Badge</code> rate age</td>
+<td><code>web/src/Pricing.tsx:342-342</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>&lt;Table</code> rates</td>
+<td><code>web/src/Pricing.tsx:352-366</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&lt;button</code> details</td>
+<td><code>web/src/Pricing.tsx:277-279</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;TagBadge</code> tags</td>
+<td><code>web/src/Pricing.tsx:289-289</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;RowDetail</code> detail row</td>
+<td><code>web/src/Pricing.tsx:401-401</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;Button</code> Show more rates</td>
+<td><code>web/src/Pricing.tsx:413-416</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>providersPresent.length === 0</code> empty section</td>
+<td><code>web/src/Pricing.tsx:492-492</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>&lt;ProviderMultipliers</code> per provider</td>
+<td><code>web/src/Pricing.tsx:497-497</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>listed.length === 0 &amp;&amp; unknown.length === 0 &amp;&amp; idle.length === 0</code> empty section</td>
+<td><code>web/src/Pricing.tsx:543-543</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>&lt;UnpricedBadge</code> status</td>
+<td><code>web/src/Pricing.tsx:569-569</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>&lt;CodeBlock</code> rates.json snippet</td>
+<td><code>web/src/Pricing.tsx:597-597</code></td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

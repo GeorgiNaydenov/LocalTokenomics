@@ -1,0 +1,96 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web prototype sitemap</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-prototype-sitemap.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Web prototype sitemap</h1>
+<p>This map lists every place a person can go in the prototype and how the places nest. There are two sections, the dashboard screens and the design system page. No place needs a sign in.</p>
+<h2>What the diagram shows</h2>
+<p>The whole prototype is one page that loads one entry script <code>web/src/prototype/main.tsx:1-11</code>. The places are tabs of that page, not separate addresses <code>web/src/prototype/Prototype.tsx:14-18</code>.</p>
+<p>The dashboard section holds four screens, Overview, Sessions, Sources and Models and pricing <code>web/src/prototype/Screens.tsx:41-48</code>. A filter rail sits beside each of them <code>web/src/prototype/Screens.tsx:344-350</code>.</p>
+<p>The Sessions screen leads to the session drawer <code>web/src/prototype/Screens.tsx:363-363</code>.</p>
+<p>The Overview screen has a cross link to Sources <code>web/src/prototype/OverviewScreen.tsx:76-82</code>. It is the only link that joins two screens other than the tabs.</p>
+<p>The design system section is the gallery, with eight sections that start at colour tokens <code>web/src/prototype/Gallery.tsx:173-173</code> and end at trace components <code>web/src/prototype/Gallery.tsx:621-621</code>.</p>
+<p>The shell shows all tabs at once and asks for no account <code>web/src/prototype/Prototype.tsx:31-110</code>.</p>
+<h2>Capability and related functionality</h2>
+<p>The capability is a plain list of what exists, which a designer can use to check coverage against the real dashboard. The moves between places are in <a href="../diagrams/web-prototype-screen-flow.html">Web prototype screen flow</a>, and the labels of each screen are in the four screen notes, for example <a href="../application/sessions-screen-screen.html">Sessions Screen Screen</a>.</p>
+<h2>Web prototype sitemap</h2>
+<pre class="mermaid">flowchart TD
+    root([&quot;Prototype page: prototype.html&quot;]):::section
+    dash([&quot;Dashboard screens&quot;]):::section
+    ds([&quot;Design system&quot;]):::section
+    ov[&quot;Overview&quot;]:::page
+    se[&quot;Sessions&quot;]:::page
+    so[&quot;Sources&quot;]:::page
+    pr[&quot;Models and pricing&quot;]:::page
+    sd[&quot;Session drawer&quot;]:::page
+    ga[&quot;Gallery: eight sections&quot;]:::page
+    rail[&quot;Filter rail on every dashboard screen&quot;]:::page
+
+    root --&gt; dash
+    root --&gt; ds
+    dash --&gt; ov
+    dash --&gt; se
+    dash --&gt; so
+    dash --&gt; pr
+    dash --&gt; rail
+    se --&gt; sd
+    ds --&gt; ga
+    ov -.-&gt; so
+
+    subgraph Legend
+        direction LR
+        zl1([&quot;Rounded box: a section of the application&quot;]):::section
+        zl2[&quot;Rectangle: a page or panel named as the interface names it&quot;]:::page
+        zl3[&quot;Solid line: parent and child. Dashed line: cross link between branches&quot;]:::page
+        zl4[&quot;No page needs a sign in: the prototype has no accounts&quot;]:::page
+        zl1 ~~~ zl2
+        zl2 ~~~ zl3
+        zl3 ~~~ zl4
+    end
+
+    classDef section fill:#dae8fc,stroke:#222222,color:#111111
+    classDef page fill:#ffffff,stroke:#222222,color:#111111
+</pre>
+
+<h3>Node citations</h3>
+<ul>
+<li>root: <code>web/prototype.html:25-25</code></li>
+<li>dash: <code>web/src/prototype/Screens.tsx:41-48</code></li>
+<li>ds: <code>web/src/prototype/Prototype.tsx:14-18</code></li>
+<li>ov: <code>web/src/prototype/OverviewScreen.tsx:370-386</code></li>
+<li>se: <code>web/src/prototype/SessionsScreen.tsx:82-249</code></li>
+<li>so: <code>web/src/prototype/SourcesScreen.tsx:8-95</code></li>
+<li>pr: <code>web/src/prototype/PricingScreen.tsx:208-218</code></li>
+<li>sd: <code>web/src/prototype/Screens.tsx:84-264</code></li>
+<li>ga: <code>web/src/prototype/Gallery.tsx:173-173</code>, <code>web/src/prototype/Gallery.tsx:621-621</code></li>
+<li>rail: <code>web/src/prototype/Screens.tsx:344-350</code></li>
+</ul>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/prototype/Prototype.tsx:14-18</code></td>
+<td>Tab list</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:41-48</code></td>
+<td>Screen names</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Gallery.tsx:173-173</code></td>
+<td>First gallery section</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Gallery.tsx:621-621</code></td>
+<td>Last gallery section</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/OverviewScreen.tsx:76-82</code></td>
+<td>Cross link to Sources</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

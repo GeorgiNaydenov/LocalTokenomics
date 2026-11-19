@@ -1,0 +1,269 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>App Screen</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/app-screen.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>App Screen</h1>
+<p>The application shell (web/src/App.tsx with web/src/Header.tsx and web/src/FilterRail.tsx): header, filter rail, the active view and the session workspace. Its map is <a href="../diagrams/app-screen-map.html">App Screen Map</a>; each numbered badge in the image is one row below.</p>
+<h2>Screen map</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Element</th>
+<th>What it does</th>
+<th>Handler or target</th>
+<th>State it depends on</th>
+<th>Citation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>isOffline</code> error section</td>
+<td>Replaces the whole page with the offline card when the server cannot be reached.</td>
+<td>-</td>
+<td>error: <code>isOffline</code></td>
+<td><a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:253-253</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;OfflineCard</code> Retry</td>
+<td>Offline card with the command to start the server and a retry button.</td>
+<td><code>setReload</code></td>
+<td>-</td>
+<td><a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:255-258</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>if (loading)</code> loading section</td>
+<td>Shows a loading line until the first report has settled.</td>
+<td>-</td>
+<td>loading: <code>if (loading)</code></td>
+<td><a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:263-263</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>if (error)</code> error section</td>
+<td>Replaces the whole page with an error card for any other failure.</td>
+<td>-</td>
+<td>error: <code>if (error)</code></td>
+<td><a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:271-271</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;button</code> Overview, Sessions, Sources, Models and pricing</td>
+<td>Tab strip that switches the active view.</td>
+<td><code>onSelectView</code></td>
+<td>-</td>
+<td><a href="#">web/src/Header.tsx</a> <code>web/src/Header.tsx:79-84</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;Button</code> Filters</td>
+<td>Opens the filter sheet on screens narrower than the large breakpoint.</td>
+<td><code>onOpenRail</code></td>
+<td>-</td>
+<td><a href="#">web/src/Header.tsx</a> <code>web/src/Header.tsx:98-98</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;button</code> stale.text</td>
+<td>Rate age notice that opens Models and pricing.</td>
+<td><code>onSelectView</code></td>
+<td>shown only while the rates are old</td>
+<td><a href="#">web/src/Header.tsx</a> <code>web/src/Header.tsx:105-107</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>&lt;Button</code> Rescan logs</td>
+<td>Asks the server to rescan the log files.</td>
+<td><code>onRescan</code></td>
+<td>-</td>
+<td><a href="#">web/src/Header.tsx</a> <code>web/src/Header.tsx:128-128</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>&lt;Button</code> Switch theme</td>
+<td>Toggles light and dark mode.</td>
+<td><code>onToggleTheme</code></td>
+<td>-</td>
+<td><a href="#">web/src/Header.tsx</a> <code>web/src/Header.tsx:131-131</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>&lt;SearchField</code> Search sessions, models, repos</td>
+<td>Free text search over the slice.</td>
+<td><code>onChange</code></td>
+<td>-</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:298-300</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>&lt;button</code> Saved views</td>
+<td>Chips that apply a preset patch to the query.</td>
+<td><code>onApply</code></td>
+<td>-</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:190-194</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>&lt;ChipRow</code> Range presets</td>
+<td>Preset date ranges ending today.</td>
+<td><code>onChange</code></td>
+<td>-</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:311-317</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>&lt;DateRange</code> since, until</td>
+<td>Exact start and end day, bounded by the first and last logged day.</td>
+<td><code>onChange</code></td>
+<td>-</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:320-325</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>&lt;FacetGroup</code> Cost state</td>
+<td>Toggles cost states in the query.</td>
+<td><code>onToggleFacet</code></td>
+<td>-</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:334-338</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>&lt;FacetGroup</code> Outcome</td>
+<td>Toggles outcome ratings in the query.</td>
+<td><code>toggleOutcome</code></td>
+<td>-</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:342-346</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>&lt;FacetGroup</code> Clients</td>
+<td>Toggles clients, the most recently active first.</td>
+<td><code>onToggleFacet</code></td>
+<td>-</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:354-358</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td><code>&lt;FacetGroup</code> Models</td>
+<td>Toggles models used in the recency window.</td>
+<td><code>onToggleFacet</code></td>
+<td>-</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:380-384</code></td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>&lt;FacetGroup</code> Projects</td>
+<td>Toggles projects used in the recency window.</td>
+<td><code>onToggleFacet</code></td>
+<td>-</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:406-410</code></td>
+</tr>
+<tr>
+<td>19</td>
+<td><code>&lt;SwitchRow</code> Include subagent requests</td>
+<td>Switch that keeps or drops sidechain requests.</td>
+<td><code>onChange</code></td>
+<td>-</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:431-434</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td><code>&lt;SwitchRow</code> Traced only</td>
+<td>Switch that keeps only traced sessions.</td>
+<td><code>onChange</code></td>
+<td>-</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:436-439</code></td>
+</tr>
+<tr>
+<td>21</td>
+<td><code>&lt;SwitchRow</code> Errors only</td>
+<td>Switch that keeps only sessions with errors.</td>
+<td><code>onChange</code></td>
+<td>-</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:441-444</code></td>
+</tr>
+<tr>
+<td>22</td>
+<td><code>&lt;Button</code> Clear all filters</td>
+<td>Resets the query to the whole logged range.</td>
+<td><code>onReset</code></td>
+<td>shown only while a filter differs from the reset</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:449-449</code></td>
+</tr>
+<tr>
+<td>23</td>
+<td><code>&lt;Sheet</code> Filters</td>
+<td>The same rail as a sheet from the left on narrow screens.</td>
+<td><code>onClose</code></td>
+<td>-</td>
+<td><a href="#">web/src/FilterRail.tsx</a> <code>web/src/FilterRail.tsx:486-489</code></td>
+</tr>
+<tr>
+<td>24</td>
+<td><code>&lt;FilterChips</code> active filters</td>
+<td>One removable chip per active filter.</td>
+<td><code>activeChips</code></td>
+<td>-</td>
+<td><a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:327-327</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td><code>view === 'overview' &amp;&amp; report &amp;&amp; meta</code> view section</td>
+<td>Shows the Overview view.</td>
+<td>-</td>
+<td>view: <code>view === 'overview' &amp;&amp; report &amp;&amp; meta</code></td>
+<td><a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:330-330</code></td>
+</tr>
+<tr>
+<td>26</td>
+<td><code>view === 'sessions' &amp;&amp; report</code> view section</td>
+<td>Shows the Sessions view.</td>
+<td>-</td>
+<td>view: <code>view === 'sessions' &amp;&amp; report</code></td>
+<td><a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:333-333</code></td>
+</tr>
+<tr>
+<td>27</td>
+<td><code>view === 'sources' &amp;&amp; report &amp;&amp; meta</code> view section</td>
+<td>Shows the Sources view.</td>
+<td>-</td>
+<td>view: <code>view === 'sources' &amp;&amp; report &amp;&amp; meta</code></td>
+<td><a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:336-336</code></td>
+</tr>
+<tr>
+<td>28</td>
+<td><code>view === 'pricing' &amp;&amp; report &amp;&amp; rates</code> view section</td>
+<td>Shows the Models and pricing view.</td>
+<td>-</td>
+<td>view: <code>view === 'pricing' &amp;&amp; report &amp;&amp; rates</code></td>
+<td><a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:337-337</code></td>
+</tr>
+<tr>
+<td>29</td>
+<td><code>&lt;SessionWorkspace</code> open session</td>
+<td>Session workspace docked at the right or as a sheet.</td>
+<td><code>closeWorkspace</code></td>
+<td>shown while a session is open and still in the report</td>
+<td><a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:343-351</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Conditional sections</h3>
+<ul>
+<li>error: <code>isOffline</code>, callout 1, <a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:253-253</code></li>
+<li>loading: <code>if (loading)</code>, callout 3, <a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:263-263</code></li>
+<li>error: <code>if (error)</code>, callout 4, <a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:271-271</code></li>
+<li>view: <code>view === 'overview' &amp;&amp; report &amp;&amp; meta</code>, callout 25, <a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:330-330</code></li>
+<li>view: <code>view === 'sessions' &amp;&amp; report</code>, callout 26, <a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:333-333</code></li>
+<li>view: <code>view === 'sources' &amp;&amp; report &amp;&amp; meta</code>, callout 27, <a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:336-336</code></li>
+<li>view: <code>view === 'pricing' &amp;&amp; report &amp;&amp; rates</code>, callout 28, <a href="#">web/src/App.tsx</a> <code>web/src/App.tsx:337-337</code></li>
+</ul>
+<h2>Diagnosis</h2>
+<p>The reader picks a view, narrows the slice and opens sessions here. Every filter change patches one query object, and each new query fetches a new report while the previous request is aborted <code>web/src/App.tsx:147-149</code> <code>web/src/App.tsx:183-201</code>.</p>
+<p>What can go wrong:</p>
+<ul>
+<li>Any failed report request after the first load sets the same error that the full page error card reads, so a single failed refetch replaces the whole dashboard and the card is rendered with no retry action <code>web/src/App.tsx:191-194</code> <code>web/src/App.tsx:271-276</code>.</li>
+<li>The rescan button stays enabled while a scan runs; only its label changes, so a second press starts a second refresh <code>web/src/Header.tsx:128-130</code> <code>web/src/App.tsx:211-222</code>.</li>
+<li>Opening a session from the table looks the row up by session id alone, so two sources that share a session id open the first match <code>web/src/App.tsx:284-288</code>.</li>
+<li>On a large screen the rail is hidden while a workspace is open and the Filters button is hidden at that breakpoint too, so the filters cannot be reached until the workspace is closed <code>web/src/App.tsx:317</code> <code>web/src/FilterRail.tsx:477-481</code> <code>web/src/Header.tsx:98</code>.</li>
+</ul>
+<p>States not handled: a workspace whose session drops out of the report after a filter change disappears without a message while its key stays set <code>web/src/App.tsx:280-282</code> <code>web/src/App.tsx:342</code>.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

@@ -80,7 +80,7 @@ flowchart LR
 =======
 =======
 >>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-%% generated:diagram-module-map-nodes start (do not edit; run brain docs generate) %%
+%% generated:node-citations-module-map start (do not edit; run brain docs generate) %%
 ### Node citations
 
 - (root): `web/eslint.config.js:1-25`, `web/vite.config.ts:1-31`
@@ -91,7 +91,7 @@ flowchart LR
 - web/src/components: `web/src/components/chart-hover.tsx:1-121`, `web/src/components/chart-time.tsx:1-184`, `web/src/components/columns.tsx:1-95`
 - web/src/components/ui: `web/src/components/ui/accordion.tsx:1-65`, `web/src/components/ui/alert.tsx:1-65`, `web/src/components/ui/badge.tsx:1-47`
 - web/src/prototype: `web/src/prototype/Gallery.tsx:1-659`, `web/src/prototype/OverviewScreen.tsx:1-386`, `web/src/prototype/PricingScreen.tsx:1-218`
-%% generated:diagram-module-map-nodes end %%
+%% generated:node-citations-module-map end %%
 <<<<<<< HEAD
 >>>>>>> docs/chunk-ch-localtokenomics-web-src
 =======

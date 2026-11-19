@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Cost state of a request</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/cost-state-of-a-request.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Cost state of a request</h1>
+<p>Every request ends in exactly one of four cost states, and the state decides whether its cost is counted. This view shows what puts a request into each state and how the states are ranked when a session is shown. It explains why a session can be marked unpriced even when most of its requests have a price.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The four states are priced, free, unpriced and unavailable. <code>src/ai_usage_cost/models.py:8</code></li>
+<li>A request with no token counts is unavailable, which is not the same as free. <code>src/ai_usage_cost/pricing.py:421</code></li>
+<li>A provider whose rules say free gives the free state and a zero cost breakdown. <code>src/ai_usage_cost/pricing.py:422</code> <code>src/ai_usage_cost/pricing.py:434</code></li>
+<li>A request whose model matches no rate row is unpriced, so its tokens are counted but its cost is left out. <code>src/ai_usage_cost/pricing.py:425</code></li>
+<li>Every other request is priced. <code>src/ai_usage_cost/pricing.py:426</code></li>
+<li>A match through a shorter prefix keeps the priced state but sets the estimated flag. <code>src/ai_usage_cost/pricing.py:313</code></li>
+<li>The pipeline raises a warning for each estimated model. <code>src/ai_usage_cost/pipeline.py:225</code></li>
+<li>A session shows the worst state among its requests, ranked priced 0, free 1, unpriced 2 and unavailable 3. <code>src/ai_usage_cost/aggregate.py:20</code> <code>src/ai_usage_cost/aggregate.py:640</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>Realises the cost honesty rule described in <a href="../application/ai-usage-cost-overview.html">Ai usage cost Overview</a>: unknown cost is never shown as zero.</li>
+<li>The decision that picks the state is expanded in <a href="../diagrams/how-one-request-is-priced.html">How one request is priced</a>.</li>
+<li>The fields that carry the state are listed in <a href="../data/ai-usage-cost-data-model.html">Ai usage cost Data Model</a>.</li>
+</ul>
+<h2>The diagram</h2>
+<pre class="mermaid">stateDiagram-v2
+    direction LR
+    [*] --&gt; Read: request loaded from the store
+    Read --&gt; unavailable: tokens are None
+    Read --&gt; free: provider rules say free
+    Read --&gt; unpriced: no rate row matches the model
+    Read --&gt; priced: a rate row matches
+    unavailable --&gt; [*]
+    free --&gt; [*]
+    unpriced --&gt; [*]
+    priced --&gt; [*]
+    note right of unavailable
+        Rank 3, the worst. No token counts, so cost is unknown, not zero.
+    end note
+    note right of free
+        Rank 1. Cost is a zero breakdown.
+    end note
+    note right of unpriced
+        Rank 2. Tokens count, cost is excluded, a warning is raised.
+    end note
+    note right of priced
+        Rank 0, the best. A match by a shorter prefix is flagged estimated and a warning is raised.
+    end note
+    note left of Read
+        Legend: a rounded box is a state, an arrow is a transition labelled with its trigger, the filled dot starts, the ringed dot ends, a note records a rule that holds in that state. A session shows the worst state of its requests.
+    end note
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/pricing.py:417</code></td>
+<td>The decision of the state</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pricing.py:429</code></td>
+<td>Where the state is used to skip or compute the cost</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/aggregate.py:570</code></td>
+<td>The worst-state roll up for a session</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

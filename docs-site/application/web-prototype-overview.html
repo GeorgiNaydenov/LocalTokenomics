@@ -1,0 +1,337 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web prototype Overview</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/web-prototype-overview.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Web prototype Overview</h1>
+<p>What Web prototype is made of and how it connects to the rest of the code.</p>
+<h2>How it works</h2>
+<p>Web prototype holds 10 source files and 3215 lines. The most depended-on files are <code>web/src/prototype/data.ts</code>, <code>web/src/prototype/Gallery.tsx</code>, <code>web/src/prototype/OverviewScreen.tsx</code>. It uses <a href="../application/web-overview.html">Web Overview</a>, <a href="../application/web-ui-components-overview.html">Web UI components Overview</a>, <a href="../application/web-ui-ui-components-overview.html">Web ui UI components Overview</a>. No other chunk depends on it.</p>
+<p>The purpose column quotes each file's own header comment where it has one. Every file is cited by its full line range, and every public name by the line that declares it.</p>
+<h2>Status: prototype only</h2>
+<p>Everything in this chunk is a design reference, not part of the shipped product. The folder holds a second browser app that mirrors the four dashboard screens against invented numbers, plus a page that shows the design system parts. The repository's own migration guide calls the folder "reference screens + mock data" with the status "read only" <code>web/src/design-system/MIGRATION.md:63-63</code>, and tells a porter not to import from it but to "copy the composition, not the module" <code>web/src/design-system/MIGRATION.md:38-40</code>.</p>
+<p>The shipped dashboard is a different entry point. Its page loads the main entry script <code>web/index.html:26-26</code>, which renders <code>App</code> <code>web/src/main.tsx:7-13</code>. <code>App</code> fetches real metadata, rates and reports from the local API <code>web/src/App.tsx:168-169</code> <code>web/src/App.tsx:186-186</code> and switches between the Overview, Sessions, Sources and Pricing views <code>web/src/App.tsx:331-338</code>. The prototype has its own page that loads <code>web/src/prototype/main.tsx</code> <code>web/prototype.html:25-25</code>.</p>
+<p>The production build does not include the prototype. The Vite configuration names no extra build input, and writes to the Python package folder <code>web/vite.config.ts:14-17</code>. The migration guide states that <code>prototype.html</code> is "deliberately excluded" from the production build <code>web/src/design-system/MIGRATION.md:419-421</code>, and that <code>npm run dev</code> serves the app at the root and the prototype at <code>/prototype.html</code> <code>web/src/design-system/MIGRATION.md:413-417</code>. During development the dev server proxies <code>/api</code> to a local port <code>web/vite.config.ts:18-26</code>, but nothing in the prototype calls the API.</p>
+<h2>How the prototype is assembled</h2>
+<p>The entry script mounts <code>Prototype</code> in strict mode and loads the shared theme stylesheet <code>web/src/prototype/main.tsx:1-11</code>. The HTML page sets the light or dark theme before first paint from a stored preference or the system setting <code>web/prototype.html:7-21</code>.</p>
+<p><code>Prototype</code> is the shell. It keeps the active tab, whether the mobile filter drawer is open and a scanning flag in local state <code>web/src/prototype/Prototype.tsx:21-24</code>. The tabs are the four screens plus a fifth called "Design system" <code>web/src/prototype/Prototype.tsx:14-18</code>. The header shows the product name and a theme toggle <code>web/src/prototype/Prototype.tsx:34-96</code>. A tab other than the gallery renders <code>Screens</code>, and the gallery tab renders <code>Gallery</code> <code>web/src/prototype/Prototype.tsx:98-107</code>.</p>
+<p>Two header elements are staged. The "Rescan logs" button only flips the scanning flag for 900 milliseconds and reads no logs <code>web/src/prototype/Prototype.tsx:26-29</code>. The text "scanned 2 min ago" is a fixed string <code>web/src/prototype/Prototype.tsx:80-82</code>.</p>
+<p><code>Screens</code> holds the filter state and the open session, draws the filter rail, the chip row and the active screen <code>web/src/prototype/Screens.tsx:266-378</code>. The four screen names are declared once <code>web/src/prototype/Screens.tsx:41-48</code>. The screen is chosen by a plain conditional <code>web/src/prototype/Screens.tsx:360-368</code>.</p>
+<h2>What is faked</h2>
+<p>All figures come from <code>data.ts</code>. The reference date is a fixed day in September 2026 <code>web/src/prototype/data.ts:3-3</code>, and the 30 day axis is computed from a fixed start <code>web/src/prototype/data.ts:5-7</code>. Daily series are shaped by a sine and cosine function with a weekend dip <code>web/src/prototype/data.ts:9-13</code>. Headline totals such as cost, requests, sessions and the rate date are literal numbers <code>web/src/prototype/data.ts:617-632</code>. The session list is a few hand written sessions padded with scaled copies until it reaches 184 rows <code>web/src/prototype/data.ts:698-742</code>.</p>
+<p>The data file takes only its type names from the real API module <code>web/src/prototype/data.ts:1-1</code>. The migration guide describes the file as mirroring "a subset" of the real data shapes <code>web/src/design-system/MIGRATION.md:53-53</code>.</p>
+<p>Several behaviours look live but are not:</p>
+<ul>
+<li>The filter rail edits state and produces chips <code>web/src/prototype/Screens.tsx:277-340</code>, but the screens are rendered without any filter value <code>web/src/prototype/Screens.tsx:360-368</code>, so filtering changes nothing on screen.</li>
+<li>The session drawer splits a session's cost across the four token buckets with fixed weights <code>web/src/prototype/Screens.tsx:50-69</code>. The real app has its own economics tab, and the migration guide calls the drawer only a "partial" reference <code>web/src/design-system/MIGRATION.md:81-81</code>.</li>
+<li>The drawer's "Reprice this model" block prints a rate override with zero prices for the chosen model <code>web/src/prototype/Screens.tsx:253-257</code>.</li>
+</ul>
+<h2>The screens and their shipped counterparts</h2>
+<p>The migration guide pairs each prototype file with the shipped file it is the reference for <code>web/src/design-system/MIGRATION.md:78-84</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Prototype file</th>
+<th>What it shows</th>
+<th>Shipped counterpart named by the guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/prototype/OverviewScreen.tsx</code></td>
+<td>Detected sources, KPI row, cost over time, cost by model, token mix, cache savings, cost by project <code>web/src/prototype/OverviewScreen.tsx:370-386</code></td>
+<td><code>web/src/Overview.tsx</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/SessionsScreen.tsx</code></td>
+<td>Sortable session table, capped at a row limit, with a card layout on phones <code>web/src/prototype/SessionsScreen.tsx:82-103</code></td>
+<td><code>web/src/Sessions.tsx</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/SourcesScreen.tsx</code></td>
+<td>Readers that found logs, readers that found nothing, scan warnings <code>web/src/prototype/SourcesScreen.tsx:8-95</code></td>
+<td><code>web/src/Sources.tsx</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/PricingScreen.tsx</code></td>
+<td>Rate table, provider multipliers, models with tokens and no rate <code>web/src/prototype/PricingScreen.tsx:208-218</code></td>
+<td><code>web/src/Pricing.tsx</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Rail.tsx</code></td>
+<td>Filter rail, a fixed column on wide screens and a slide-in sheet on narrow ones <code>web/src/prototype/Rail.tsx:245-276</code></td>
+<td><code>web/src/FilterRail.tsx</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Prototype.tsx</code> and <code>Screens.tsx</code></td>
+<td>Header, chip row, session drawer</td>
+<td><code>web/src/Header.tsx</code>, <code>web/src/App.tsx</code>, <code>web/src/SessionWorkspace.tsx</code></td>
+</tr>
+</tbody>
+</table>
+<p>The session table sorts a copy of all sessions and then shows only the first <code>SESSION_LIMIT</code> rows <code>web/src/prototype/SessionsScreen.tsx:87-96</code>, and the limit is 120 <code>web/src/prototype/data.ts:744-744</code>. The pricing screen computes cache prices from a provider rule or a default multiplier and marks a model free when both prices are zero <code>web/src/prototype/PricingScreen.tsx:33-44</code>. Models with no spend are hidden until a reveal count is raised <code>web/src/prototype/PricingScreen.tsx:46-52</code>. The sources screen hides readers that found nothing inside a collapsed panel <code>web/src/prototype/SourcesScreen.tsx:51-80</code>.</p>
+<h2>Parts that exist only in the prototype</h2>
+<p>The "Design system" tab is a component gallery. It is one long page of sections for colour tokens, typography, actions, inputs, data display, feedback, domain components and trace components <code>web/src/prototype/Gallery.tsx:173-173</code> <code>web/src/prototype/Gallery.tsx:226-226</code> <code>web/src/prototype/Gallery.tsx:249-249</code> <code>web/src/prototype/Gallery.tsx:346-346</code> <code>web/src/prototype/Gallery.tsx:424-424</code> <code>web/src/prototype/Gallery.tsx:477-477</code> <code>web/src/prototype/Gallery.tsx:547-547</code> <code>web/src/prototype/Gallery.tsx:621-621</code>. The shipped app has no counterpart.</p>
+<p><code>CapabilityGrid</code>, the "What can be known here" block of the session drawer <code>web/src/prototype/Screens.tsx:212-214</code>, is used by the prototype and the gallery <code>web/src/prototype/Gallery.tsx:647-647</code>. The migration guide records that the shipped app does not use it and shows capabilities as a row of provenance badges and the Sources matrix instead <code>web/src/design-system/MIGRATION.md:365-365</code>.</p>
+<h2>Documentation that disagrees with the code</h2>
+<p>The design system README says the shipping dashboard "still runs on the older <code>src/ds/</code> CSS system" <code>web/src/design-system/README.md:142-147</code>. The shipped entry point already imports the new theme stylesheet <code>web/src/main.tsx:5-5</code>, and the old CSS folder no longer exists in the web source tree. The code wins: the shipped dashboard uses the same design system the prototype shows. The README and the migration guide's step list read as older than the code, and this chunk does not change them.</p>
+<h2>Reference</h2>
+<h3>Files</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+<th>Lines</th>
+<th>Imports</th>
+<th>Imported by</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/prototype/Gallery.tsx</code></td>
+<td>-</td>
+<td>659</td>
+<td>30</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/Gallery.tsx</a> <code>web/src/prototype/Gallery.tsx:1-659</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/OverviewScreen.tsx</code></td>
+<td>-</td>
+<td>386</td>
+<td>10</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:1-386</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/PricingScreen.tsx</code></td>
+<td>-</td>
+<td>218</td>
+<td>9</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:1-218</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Prototype.tsx</code></td>
+<td>-</td>
+<td>112</td>
+<td>9</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/Prototype.tsx</a> <code>web/src/prototype/Prototype.tsx:1-112</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Rail.tsx</code></td>
+<td>-</td>
+<td>276</td>
+<td>12</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/Rail.tsx</a> <code>web/src/prototype/Rail.tsx:1-276</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx</code></td>
+<td>-</td>
+<td>378</td>
+<td>15</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:1-378</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/SessionsScreen.tsx</code></td>
+<td>-</td>
+<td>249</td>
+<td>11</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:1-249</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/SourcesScreen.tsx</code></td>
+<td>-</td>
+<td>95</td>
+<td>6</td>
+<td>1</td>
+<td><a href="#">web/src/prototype/SourcesScreen.tsx</a> <code>web/src/prototype/SourcesScreen.tsx:1-95</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/data.ts</code></td>
+<td>-</td>
+<td>831</td>
+<td>1</td>
+<td>8</td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:1-831</code></td>
+</tr>
+<tr>
+<td><code>web/src/prototype/main.tsx</code></td>
+<td>-</td>
+<td>11</td>
+<td>1</td>
+<td>0</td>
+<td><a href="#">web/src/prototype/main.tsx</a> <code>web/src/prototype/main.tsx:1-11</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Public interface</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Kind</th>
+<th>File</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TODAY</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:3</code></td>
+</tr>
+<tr>
+<td><code>DAYS</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:5</code></td>
+</tr>
+<tr>
+<td><code>ModelInfo</code></td>
+<td>interface</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:15</code></td>
+</tr>
+<tr>
+<td><code>MODELS</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:29</code></td>
+</tr>
+<tr>
+<td><code>PRICED_MODELS</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:123</code></td>
+</tr>
+<tr>
+<td><code>SeriesPoint</code></td>
+<td>interface</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:125</code></td>
+</tr>
+<tr>
+<td><code>SERIES</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:136</code></td>
+</tr>
+<tr>
+<td><code>CLIENTS</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:152</code></td>
+</tr>
+<tr>
+<td><code>PROJECTS</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:161</code></td>
+</tr>
+<tr>
+<td><code>PrototypeSession</code></td>
+<td>interface</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:170</code></td>
+</tr>
+<tr>
+<td><code>SourceRecord</code></td>
+<td>interface</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:419</code></td>
+</tr>
+<tr>
+<td><code>SOURCES</code></td>
+<td>const</td>
+<td><code>web/src/prototype/data.ts</code></td>
+<td><a href="#">web/src/prototype/data.ts</a> <code>web/src/prototype/data.ts:435</code></td>
+</tr>
+<tr>
+<td><code>Gallery</code></td>
+<td>function</td>
+<td><code>web/src/prototype/Gallery.tsx</code></td>
+<td><a href="#">web/src/prototype/Gallery.tsx</a> <code>web/src/prototype/Gallery.tsx:161</code></td>
+</tr>
+<tr>
+<td><code>OverviewScreen</code></td>
+<td>function</td>
+<td><code>web/src/prototype/OverviewScreen.tsx</code></td>
+<td><a href="#">web/src/prototype/OverviewScreen.tsx</a> <code>web/src/prototype/OverviewScreen.tsx:370</code></td>
+</tr>
+<tr>
+<td><code>PricingScreen</code></td>
+<td>function</td>
+<td><code>web/src/prototype/PricingScreen.tsx</code></td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:208</code></td>
+</tr>
+<tr>
+<td><code>Prototype</code></td>
+<td>function</td>
+<td><code>web/src/prototype/Prototype.tsx</code></td>
+<td><a href="#">web/src/prototype/Prototype.tsx</a> <code>web/src/prototype/Prototype.tsx:20</code></td>
+</tr>
+<tr>
+<td><code>FilterState</code></td>
+<td>interface</td>
+<td><code>web/src/prototype/Rail.tsx</code></td>
+<td><a href="#">web/src/prototype/Rail.tsx</a> <code>web/src/prototype/Rail.tsx:30</code></td>
+</tr>
+<tr>
+<td><code>INITIAL_FILTERS</code></td>
+<td>const</td>
+<td><code>web/src/prototype/Rail.tsx</code></td>
+<td><a href="#">web/src/prototype/Rail.tsx</a> <code>web/src/prototype/Rail.tsx:46</code></td>
+</tr>
+<tr>
+<td><code>isDirty</code></td>
+<td>function</td>
+<td><code>web/src/prototype/Rail.tsx</code></td>
+<td><a href="#">web/src/prototype/Rail.tsx</a> <code>web/src/prototype/Rail.tsx:62</code></td>
+</tr>
+<tr>
+<td><code>RailContent</code></td>
+<td>function</td>
+<td><code>web/src/prototype/Rail.tsx</code></td>
+<td><a href="#">web/src/prototype/Rail.tsx</a> <code>web/src/prototype/Rail.tsx:80</code></td>
+</tr>
+<tr>
+<td><code>FilterRail</code></td>
+<td>function</td>
+<td><code>web/src/prototype/Rail.tsx</code></td>
+<td><a href="#">web/src/prototype/Rail.tsx</a> <code>web/src/prototype/Rail.tsx:245</code></td>
+</tr>
+<tr>
+<td><code>ScreenId</code></td>
+<td>type</td>
+<td><code>web/src/prototype/Screens.tsx</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:41</code></td>
+</tr>
+<tr>
+<td><code>SCREEN_LABELS</code></td>
+<td>const</td>
+<td><code>web/src/prototype/Screens.tsx</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:43</code></td>
+</tr>
+<tr>
+<td><code>Screens</code></td>
+<td>function</td>
+<td><code>web/src/prototype/Screens.tsx</code></td>
+<td><a href="#">web/src/prototype/Screens.tsx</a> <code>web/src/prototype/Screens.tsx:266</code></td>
+</tr>
+<tr>
+<td><code>SessionsScreen</code></td>
+<td>function</td>
+<td><code>web/src/prototype/SessionsScreen.tsx</code></td>
+<td><a href="#">web/src/prototype/SessionsScreen.tsx</a> <code>web/src/prototype/SessionsScreen.tsx:82</code></td>
+</tr>
+<tr>
+<td><code>SourcesScreen</code></td>
+<td>function</td>
+<td><code>web/src/prototype/SourcesScreen.tsx</code></td>
+<td><a href="#">web/src/prototype/SourcesScreen.tsx</a> <code>web/src/prototype/SourcesScreen.tsx:8</code></td>
+</tr>
+</tbody>
+</table></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

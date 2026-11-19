@@ -1,0 +1,108 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Session Workspace Screen Map</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/session-workspace-screen-map.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Session Workspace Screen Map</h1>
+<p>This map shows the panel a reader works in once they open one session. It lets them rate the outcome, keep notes and move between the four views of that session. It also shows how each tab waits for its data and what it shows when the server does not answer.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The header shows the session name and subtitle, and in docked mode the fullscreen and close buttons <code>web/src/SessionWorkspace.tsx:497-532</code>.</li>
+<li>Under it sits the outcome control: a toggle group, an info glyph, the notes and tags button, a status line and the two fields <code>web/src/SessionWorkspace.tsx:303-362</code>.</li>
+<li>Four tabs follow; only the tabs the reader has opened fetch their data <code>web/src/SessionWorkspace.tsx:447</code> <code>web/src/SessionWorkspace.tsx:471-474</code> <code>web/src/SessionWorkspace.tsx:536-596</code>.</li>
+<li>A loading or failed tab shows a placeholder through one shared wrapper <code>web/src/SessionWorkspace.tsx:379-394</code>.</li>
+<li>Docked, the panel is an aside with a resize handle; otherwise it is a sheet <code>web/src/SessionWorkspace.tsx:600-625</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The workspace is opened from <a href="../application/sessions-screen.html">Sessions Screen</a> and hosts <a href="../application/trace-tab-screen.html">Trace Tab Screen</a>, <a href="../application/economics-tab-screen.html">Economics Tab Screen</a> and <a href="../application/context-tab-screen.html">Context Tab Screen</a>. Its loading states are drawn in <a href="../diagrams/web-workspace-state-chart.html">Web Workspace State Chart</a> and the outcome form in <a href="../diagrams/web-outcome-form-wireframe.html">Web Outcome Form Wireframe</a>. Rating a session is a use case in <a href="../application/web-specification.html">Web Specification</a>.</p>
+<h2>Session Workspace Screen screen map</h2>
+<p><img alt="drawio-screen-session-workspace" src="../assets/drawio-screen-session-workspace.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Badge</th>
+<th>Element</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&lt;h2</code> session name</td>
+<td><code>web/src/SessionWorkspace.tsx:502-502</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;Button</code> Fullscreen</td>
+<td><code>web/src/SessionWorkspace.tsx:518-523</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>&lt;Button</code> Close session</td>
+<td><code>web/src/SessionWorkspace.tsx:527-527</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&lt;ToggleGroup</code> successful, partial, failed, abandoned, unrated</td>
+<td><code>web/src/SessionWorkspace.tsx:306-312</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;MetricInfo</code> rating meanings</td>
+<td><code>web/src/SessionWorkspace.tsx:321-321</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;Button</code> Notes and tags</td>
+<td><code>web/src/SessionWorkspace.tsx:330-330</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;span</code> status</td>
+<td><code>web/src/SessionWorkspace.tsx:333-333</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>&lt;Textarea</code> Notes</td>
+<td><code>web/src/SessionWorkspace.tsx:342-346</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>&lt;Input</code> Tags, comma separated</td>
+<td><code>web/src/SessionWorkspace.tsx:352-356</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>&lt;TabsTrigger</code> Summary, Trace, Economics, Context</td>
+<td><code>web/src/SessionWorkspace.tsx:547-547</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>&lt;SummaryTab</code> Summary</td>
+<td><code>web/src/SessionWorkspace.tsx:555-555</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>if (!tokens) {</code> empty section</td>
+<td><code>web/src/SessionWorkspace.tsx:134-134</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>case 'loading':</code> loading section</td>
+<td><code>web/src/SessionWorkspace.tsx:387-387</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>case 'error':</code> error section</td>
+<td><code>web/src/SessionWorkspace.tsx:389-389</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>&lt;ResizeHandle</code> resize</td>
+<td><code>web/src/SessionWorkspace.tsx:613-613</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>&lt;Sheet</code> workspace sheet</td>
+<td><code>web/src/SessionWorkspace.tsx:620-620</code></td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

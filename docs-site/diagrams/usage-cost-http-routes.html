@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Usage cost HTTP routes</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/usage-cost-http-routes.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Usage cost HTTP routes</h1>
+<p>This map lists every address the local dashboard talks to, grouped by what it serves. It shows which calls only read numbers and which ones change stored data, such as rating or forgetting a session. It also makes plain that no address asks who is calling, so the tool relies on staying on the local machine.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>One function builds the application, keeps the current analysis in memory and caches the spans of each session until the next refresh. <code>src/ai_usage_cost/api.py:198-214</code></li>
+<li>The meta route returns the clients, providers, models, projects, day range, rate table age, grouped warning counts and source list. <code>src/ai_usage_cost/api.py:255-287</code></li>
+<li>The report route passes every filter of its query string to the report builder. <code>src/ai_usage_cost/api.py:289-318</code></li>
+<li>The rates route returns the loaded rate table, and the refresh route runs the analysis again, clears the span cache and returns fresh meta. <code>src/ai_usage_cost/api.py:384-392</code></li>
+<li>The trace, economics, context and outcome routes read one session's spans through a helper that answers 404 when the session is unknown or was forgotten. <code>src/ai_usage_cost/api.py:230-242</code> <code>src/ai_usage_cost/api.py:320-353</code></li>
+<li>The economics route labels each turn with a redacted snippet of its first user message, and only when the privacy settings release text. <code>src/ai_usage_cost/api.py:333-343</code> <code>src/ai_usage_cost/api.py:70-83</code></li>
+<li>The put route stores a rating with notes and tags and returns it with fresh signals. <code>src/ai_usage_cost/api.py:355-359</code></li>
+<li>The delete route forgets a session, drops its cached spans and returns how many spans it deleted. <code>src/ai_usage_cost/api.py:361-368</code></li>
+<li>The content route returns the text of one span and answers 404 when the span is missing or its text is not released. <code>src/ai_usage_cost/api.py:370-382</code></li>
+<li>The root serves the built dashboard when the bundle folder exists, and otherwise a message that tells the reader how to build it. <code>src/ai_usage_cost/api.py:394-402</code></li>
+<li>Any route that opens the store answers 503 when the analysis was built without one. <code>src/ai_usage_cost/api.py:219-223</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>Serves the use cases explore spend in the dashboard, inspect and rate one session, forget a session and read the text of one span, drawn in <a href="../diagrams/usage-cost-goals.html">Usage cost goals</a>.</li>
+<li>The route list with its parameters is in <a href="../application/ai-usage-cost-api.html">Ai usage cost API</a>, and the refusals are drawn in <a href="../diagrams/usage-cost-refusals.html">Usage cost refusals</a>.</li>
+<li>The serve command that starts this application on the loopback address is in <a href="../application/ai-usage-cost-workflows.html">Ai usage cost Workflows</a>, and the missing caller check is a risk in <a href="../security/ai-usage-cost-security.html">Ai usage cost Security</a>.</li>
+</ul>
+<h2>Usage cost HTTP routes</h2>
+<p><img alt="drawio-usage-cost-http-routes" src="../assets/drawio-usage-cost-http-routes.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/api.py:198-253</code></td>
+<td>Application, span cache, store and session helpers</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/api.py:255-318</code></td>
+<td>Meta and report routes</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/api.py:320-382</code></td>
+<td>Session routes</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/api.py:384-402</code></td>
+<td>Rates, refresh and dashboard routes</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

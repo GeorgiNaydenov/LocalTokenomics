@@ -1,0 +1,1152 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>localtokenomics root Tests</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/localtokenomics-root-tests.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/*</code></p><h1>localtokenomics root Tests</h1>
+<p>The tests that cover the localtokenomics root chunk and what they check.</p>
+<h2>How it works</h2>
+<p>188 tests exercise this chunk. 64 of its 75 files are not imported by any test.</p>
+<h2>What the tests cover</h2>
+<p>The tests are Vitest files beside the dashboard code. Vitest runs them in a jsdom browser stand-in, and a shared setup file removes rendered components after every test so one test cannot leak into the next. <code>web/vite.config.ts:27-30</code> <code>web/src/test-setup.ts:6-8</code> The command is npm test, which maps to vitest run. <code>web/package.json:12</code></p>
+<p>The tests check dashboard logic that turns raw numbers into labels, rather than screens. The pricing tests check that spend is summed over every bucket matched to one rate row and that buckets matched to another row are ignored. <code>web/src/Pricing.test.ts:96-113</code> Two rows that share a display label must not mix their spend. <code>web/src/Pricing.test.ts:115-125</code></p>
+<p>The trace tests check how a span's time window is derived. The end comes from the logged end time, or from the start plus the duration, and stays unknown when neither is logged. <code>web/src/TraceTab.test.ts:64-79</code> An unparsable start timestamp leaves the start unknown instead of guessing one. <code>web/src/TraceTab.test.ts:81-84</code></p>
+<p>The Python side has its own tests under the tests folder; pyproject.toml points pytest there. <code>pyproject.toml:51-52</code> Those belong to the chunks of the Python package.</p>
+<h2>What a reader must know</h2>
+<p>The count above comes from the generated table, which includes every test under the web folder. Most dashboard files have no test of their own, and the quality gate for them is the type check and lint step of the web workflow. <code>.github/workflows/web.yml:36-43</code></p>
+<h2>Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Scenario</th>
+<th>File</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rateUnavailableHint</code></td>
+<td>Rate unavailable hint</td>
+<td><code>web/src/EconomicsTab.test.ts</code></td>
+<td><a href="#">web/src/EconomicsTab.test.ts</a> <code>web/src/EconomicsTab.test.ts:16</code></td>
+</tr>
+<tr>
+<td><code>names the missing timing capability instead of claiming no source anywhere logs it</code></td>
+<td>Names the missing timing capability instead of claiming no source anywhere logs it</td>
+<td><code>web/src/EconomicsTab.test.ts</code></td>
+<td><a href="#">web/src/EconomicsTab.test.ts</a> <code>web/src/EconomicsTab.test.ts:17</code></td>
+</tr>
+<tr>
+<td><code>names the missing token capability when latency is fine but tokens are not</code></td>
+<td>Names the missing token capability when latency is fine but tokens are not</td>
+<td><code>web/src/EconomicsTab.test.ts</code></td>
+<td><a href="#">web/src/EconomicsTab.test.ts</a> <code>web/src/EconomicsTab.test.ts:21</code></td>
+</tr>
+<tr>
+<td><code>falls back to a generic reason when both capabilities are present but this row lacks one</code></td>
+<td>Falls back to a generic reason when both capabilities are present but this row lacks one</td>
+<td><code>web/src/EconomicsTab.test.ts</code></td>
+<td><a href="#">web/src/EconomicsTab.test.ts</a> <code>web/src/EconomicsTab.test.ts:25</code></td>
+</tr>
+<tr>
+<td><code>falls back to a generic reason when capability data was not supplied</code></td>
+<td>Falls back to a generic reason when capability data was not supplied</td>
+<td><code>web/src/EconomicsTab.test.ts</code></td>
+<td><a href="#">web/src/EconomicsTab.test.ts</a> <code>web/src/EconomicsTab.test.ts:29</code></td>
+</tr>
+<tr>
+<td><code>buildRow spend join by model key</code></td>
+<td>Build row spend join by model key</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:96</code></td>
+</tr>
+<tr>
+<td><code>sums every bucket matched to this row</code></td>
+<td>Sums every bucket matched to this row</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:97</code></td>
+</tr>
+<tr>
+<td><code>ignores buckets matched to another row</code></td>
+<td>Ignores buckets matched to another row</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:106</code></td>
+</tr>
+<tr>
+<td><code>does not collide when two rows share a display label</code></td>
+<td>Does not collide when two rows share a display label</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:115</code></td>
+</tr>
+<tr>
+<td><code>does not credit an estimated bucket to the parent, and lists it separately</code></td>
+<td>Does not credit an estimated bucket to the parent, and lists it separately</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:127</code></td>
+</tr>
+<tr>
+<td><code>reports unused with zero spend when nothing matches</code></td>
+<td>Reports unused with zero spend when nothing matches</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:140</code></td>
+</tr>
+<tr>
+<td><code>estimatedModels</code></td>
+<td>Estimated models</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:148</code></td>
+</tr>
+<tr>
+<td><code>only returns estimated matches, biggest cost first</code></td>
+<td>Only returns estimated matches, biggest cost first</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:149</code></td>
+</tr>
+<tr>
+<td><code>buildRow cache columns</code></td>
+<td>Build row cache columns</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:160</code></td>
+</tr>
+<tr>
+<td><code>derives cache prices from the provider rules</code></td>
+<td>Derives cache prices from the provider rules</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:161</code></td>
+</tr>
+<tr>
+<td><code>prefers absolute prices the row publishes</code></td>
+<td>Prefers absolute prices the row publishes</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:167</code></td>
+</tr>
+<tr>
+<td><code>mixes absolute and derived per field</code></td>
+<td>Mixes absolute and derived per field</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:173</code></td>
+</tr>
+<tr>
+<td><code>keeps provider fields when cache_rules is partial</code></td>
+<td>Keeps provider fields when cache rules is partial</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:180</code></td>
+</tr>
+<tr>
+<td><code>is unavailable (null) with no provider block and no absolute price</code></td>
+<td>Is unavailable (null) with no provider block and no absolute price</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:189</code></td>
+</tr>
+<tr>
+<td><code>shows free for a free provider</code></td>
+<td>Shows free for a free provider</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:197</code></td>
+</tr>
+<tr>
+<td><code>buildRow metadata</code></td>
+<td>Build row metadata</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:207</code></td>
+</tr>
+<tr>
+<td><code>formats the context window</code></td>
+<td>Formats the context window</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:208</code></td>
+</tr>
+<tr>
+<td><code>lists variants with prices</code></td>
+<td>Lists variants with prices</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:213</code></td>
+</tr>
+<tr>
+<td><code>carries band, peak and period detail strings</code></td>
+<td>Carries band, peak and period detail strings</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:224</code></td>
+</tr>
+<tr>
+<td><code>tags preview, retired and unverified rows</code></td>
+<td>Tags preview, retired and unverified rows</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:239</code></td>
+</tr>
+<tr>
+<td><code>splitUnpriced</code></td>
+<td>Split unpriced</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:245</code></td>
+</tr>
+<tr>
+<td><code>matches the longest prefix and separates truly unknown models</code></td>
+<td>Matches the longest prefix and separates truly unknown models</td>
+<td><code>web/src/Pricing.test.ts</code></td>
+<td><a href="#">web/src/Pricing.test.ts</a> <code>web/src/Pricing.test.ts:252</code></td>
+</tr>
+<tr>
+<td><code>spanWindow</code></td>
+<td>Span window</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:64</code></td>
+</tr>
+<tr>
+<td><code>uses the logged end time when present</code></td>
+<td>Uses the logged end time when present</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:65</code></td>
+</tr>
+<tr>
+<td><code>derives the end from start plus duration when no end time is logged</code></td>
+<td>Derives the end from start plus duration when no end time is logged</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:71</code></td>
+</tr>
+<tr>
+<td><code>leaves the end unknown when neither an end time nor a duration is logged</code></td>
+<td>Leaves the end unknown when neither an end time nor a duration is logged</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:76</code></td>
+</tr>
+<tr>
+<td><code>leaves the start unknown for an unparsable timestamp</code></td>
+<td>Leaves the start unknown for an unparsable timestamp</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:81</code></td>
+</tr>
+<tr>
+<td><code>resolveInsightTurn</code></td>
+<td>Resolve insight turn</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:87</code></td>
+</tr>
+<tr>
+<td><code>uses the span own turn_id directly when set</code></td>
+<td>Uses the span own turn id directly when set</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:88</code></td>
+</tr>
+<tr>
+<td><code>walks the parent_id chain to find an ancestor turn span</code></td>
+<td>Walks the parent id chain to find an ancestor turn span</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:97</code></td>
+</tr>
+<tr>
+<td><code>numbers turns in seq order across multiple turns</code></td>
+<td>Numbers turns in seq order across multiple turns</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:107</code></td>
+</tr>
+<tr>
+<td><code>returns null when the span has no resolvable turn</code></td>
+<td>Returns null when the span has no resolvable turn</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:117</code></td>
+</tr>
+<tr>
+<td><code>returns null for an unknown span id</code></td>
+<td>Returns null for an unknown span id</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:126</code></td>
+</tr>
+<tr>
+<td><code>stops at the depth cap instead of looping on a cyclical parent chain</code></td>
+<td>Stops at the depth cap instead of looping on a cyclical parent chain</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:130</code></td>
+</tr>
+<tr>
+<td><code>summarizeInsightTurns</code></td>
+<td>Summarize insight turns</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:139</code></td>
+</tr>
+<tr>
+<td><code>returns null when the session has no turns at all</code></td>
+<td>Returns null when the session has no turns at all</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:140</code></td>
+</tr>
+<tr>
+<td><code>reports every turn carrying an insight when spread evenly</code></td>
+<td>Reports every turn carrying an insight when spread evenly</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:144</code></td>
+</tr>
+<tr>
+<td><code>names the dominant turns once they pass half the weighted total</code></td>
+<td>Names the dominant turns once they pass half the weighted total</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:161</code></td>
+</tr>
+<tr>
+<td><code>stays under the threshold when the top turns hold half or less</code></td>
+<td>Stays under the threshold when the top turns hold half or less</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:174</code></td>
+</tr>
+<tr>
+<td><code>says nothing could be tied to a turn when every insight is unresolvable</code></td>
+<td>Says nothing could be tied to a turn when every insight is unresolvable</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:187</code></td>
+</tr>
+<tr>
+<td><code>groupSpansByTurn</code></td>
+<td>Group spans by turn</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:195</code></td>
+</tr>
+<tr>
+<td><code>groups spans under the turn span sharing their turn_id, excluding it from the breakdown</code></td>
+<td>Groups spans under the turn span sharing their turn id, excluding it from the breakdown</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:196</code></td>
+</tr>
+<tr>
+<td><code>orders turns chronologically by the turn span started_at</code></td>
+<td>Orders turns chronologically by the turn span started at</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:212</code></td>
+</tr>
+<tr>
+<td><code>falls back to the earliest child span start when the turn span itself is missing</code></td>
+<td>Falls back to the earliest child span start when the turn span itself is missing</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:222</code></td>
+</tr>
+<tr>
+<td><code>uses the turn span's own duration directly and never sums children</code></td>
+<td>Uses the turn span's own duration directly and never sums children</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:232</code></td>
+</tr>
+<tr>
+<td><code>marks duration unavailable when the turn span carries none, even though children do</code></td>
+<td>Marks duration unavailable when the turn span carries none, even though children do</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:264</code></td>
+</tr>
+<tr>
+<td><code>sums input and output tokens across the turn's model_call spans</code></td>
+<td>Sums input and output tokens across the turn's model call spans</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:281</code></td>
+</tr>
+<tr>
+<td><code>marks tokens unavailable when any contributing model_call span has none, rather than treating it as zero</code></td>
+<td>Marks tokens unavailable when any contributing model call span has none, rather than treating it as zero</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:306</code></td>
+</tr>
+<tr>
+<td><code>collects spans with no turn_id into an "Outside any turn" group placed last</code></td>
+<td>Collects spans with no turn id into an "outside any turn" group placed last</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:324</code></td>
+</tr>
+<tr>
+<td><code>counts a failed tool call once, not twice for the call and its paired result</code></td>
+<td>Counts a failed tool call once, not twice for the call and its paired result</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:337</code></td>
+</tr>
+<tr>
+<td><code>still counts a failed tool call with no paired result</code></td>
+<td>Still counts a failed tool call with no paired result</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:354</code></td>
+</tr>
+<tr>
+<td><code>collects the distinct models used by the turn's model_call spans</code></td>
+<td>Collects the distinct models used by the turn's model call spans</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:363</code></td>
+</tr>
+<tr>
+<td><code>reads is_sidechain from the turn span</code></td>
+<td>Reads is sidechain from the turn span</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:374</code></td>
+</tr>
+<tr>
+<td><code>returns nothing for an empty trace</code></td>
+<td>Returns nothing for an empty trace</td>
+<td><code>web/src/TraceTab.test.ts</code></td>
+<td><a href="#">web/src/TraceTab.test.ts</a> <code>web/src/TraceTab.test.ts:380</code></td>
+</tr>
+<tr>
+<td><code>MetricInfo</code></td>
+<td>Metric info</td>
+<td><code>web/src/components/metric-info.test.tsx</code></td>
+<td><a href="#">web/src/components/metric-info.test.tsx</a> <code>web/src/components/metric-info.test.tsx:6</code></td>
+</tr>
+<tr>
+<td><code>opens on click and shows the simple content</code></td>
+<td>Opens on click and shows the simple content</td>
+<td><code>web/src/components/metric-info.test.tsx</code></td>
+<td><a href="#">web/src/components/metric-info.test.tsx</a> <code>web/src/components/metric-info.test.tsx:7</code></td>
+</tr>
+<tr>
+<td><code>closes on a second click and does not return focus to the trigger</code></td>
+<td>Closes on a second click and does not return focus to the trigger</td>
+<td><code>web/src/components/metric-info.test.tsx</code></td>
+<td><a href="#">web/src/components/metric-info.test.tsx</a> <code>web/src/components/metric-info.test.tsx:17</code></td>
+</tr>
+<tr>
+<td><code>renders the rich metric content with meaning, formula and computed value</code></td>
+<td>Renders the rich metric content with meaning, formula and computed value</td>
+<td><code>web/src/components/metric-info.test.tsx</code></td>
+<td><a href="#">web/src/components/metric-info.test.tsx</a> <code>web/src/components/metric-info.test.tsx:43</code></td>
+</tr>
+<tr>
+<td><code>worstState</code></td>
+<td>Worst state</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:4</code></td>
+</tr>
+<tr>
+<td><code>picks unavailable over unpriced, free and priced</code></td>
+<td>Picks unavailable over unpriced, free and priced</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:5</code></td>
+</tr>
+<tr>
+<td><code>picks unpriced over free and priced</code></td>
+<td>Picks unpriced over free and priced</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:9</code></td>
+</tr>
+<tr>
+<td><code>returns unavailable for an empty list</code></td>
+<td>Returns unavailable for an empty list</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:13</code></td>
+</tr>
+<tr>
+<td><code>is order-independent</code></td>
+<td>Is order-independent</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:17</code></td>
+</tr>
+<tr>
+<td><code>worstProvenance</code></td>
+<td>Worst provenance</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:23</code></td>
+</tr>
+<tr>
+<td><code>picks unavailable as the worst</code></td>
+<td>Picks unavailable as the worst</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:24</code></td>
+</tr>
+<tr>
+<td><code>picks measured as the best when nothing worse is present</code></td>
+<td>Picks measured as the best when nothing worse is present</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:28</code></td>
+</tr>
+<tr>
+<td><code>returns unavailable for an empty list</code></td>
+<td>Returns unavailable for an empty list</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:32</code></td>
+</tr>
+<tr>
+<td><code>geometry</code></td>
+<td>Geometry</td>
+<td><code>web/src/components/sparkline.test.ts</code></td>
+<td><a href="#">web/src/components/sparkline.test.ts</a> <code>web/src/components/sparkline.test.ts:4</code></td>
+</tr>
+<tr>
+<td><code>scales a series that peaks below 1 to the real max instead of flattening it</code></td>
+<td>Scales a series that peaks below 1 to the real max instead of flattening it</td>
+<td><code>web/src/components/sparkline.test.ts</code></td>
+<td><a href="#">web/src/components/sparkline.test.ts</a> <code>web/src/components/sparkline.test.ts:5</code></td>
+</tr>
+<tr>
+<td><code>keeps every y coordinate inside the viewBox height for a series with negative dips</code></td>
+<td>Keeps every y coordinate inside the view box height for a series with negative dips</td>
+<td><code>web/src/components/sparkline.test.ts</code></td>
+<td><a href="#">web/src/components/sparkline.test.ts</a> <code>web/src/components/sparkline.test.ts:10</code></td>
+</tr>
+<tr>
+<td><code>falls back to a flat line without dividing by zero when every value is identical</code></td>
+<td>Falls back to a flat line without dividing by zero when every value is identical</td>
+<td><code>web/src/components/sparkline.test.ts</code></td>
+<td><a href="#">web/src/components/sparkline.test.ts</a> <code>web/src/components/sparkline.test.ts:19</code></td>
+</tr>
+<tr>
+<td><code>draws the highest value nearest the top of the box</code></td>
+<td>Draws the highest value nearest the top of the box</td>
+<td><code>web/src/components/sparkline.test.ts</code></td>
+<td><a href="#">web/src/components/sparkline.test.ts</a> <code>web/src/components/sparkline.test.ts:24</code></td>
+</tr>
+<tr>
+<td><code>formatMoney</code></td>
+<td>Format money</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:20</code></td>
+</tr>
+<tr>
+<td><code>formats whole dollars with two decimal places</code></td>
+<td>Formats whole dollars with two decimal places</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:21</code></td>
+</tr>
+<tr>
+<td><code>formatMoneyExact</code></td>
+<td>Format money exact</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:26</code></td>
+</tr>
+<tr>
+<td><code>keeps four decimal places for a sub-cent value instead of collapsing to $0.00</code></td>
+<td>Keeps four decimal places for a sub-cent value instead of collapsing to $0.00</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:27</code></td>
+</tr>
+<tr>
+<td><code>falls back to two decimal places once a cent is reached</code></td>
+<td>Falls back to two decimal places once a cent is reached</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:31</code></td>
+</tr>
+<tr>
+<td><code>renders exactly zero as $0.00, not four decimal places</code></td>
+<td>Renders exactly zero as $0.00, not four decimal places</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:35</code></td>
+</tr>
+<tr>
+<td><code>formatTokens</code></td>
+<td>Format tokens</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:40</code></td>
+</tr>
+<tr>
+<td><code>abbreviates millions</code></td>
+<td>Abbreviates millions</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:41</code></td>
+</tr>
+<tr>
+<td><code>renders small counts as-is</code></td>
+<td>Renders small counts as-is</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:45</code></td>
+</tr>
+<tr>
+<td><code>rolls 999,999 tokens up to the next unit instead of "1000K"</code></td>
+<td>Rolls 999,999 tokens up to the next unit instead of "1000k"</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:49</code></td>
+</tr>
+<tr>
+<td><code>rolls 999,999,999 tokens up to the next unit instead of "1000M"</code></td>
+<td>Rolls 999,999,999 tokens up to the next unit instead of "1000m"</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:53</code></td>
+</tr>
+<tr>
+<td><code>does not promote a value that legitimately rounds within its unit</code></td>
+<td>Does not promote a value that legitimately rounds within its unit</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:57</code></td>
+</tr>
+<tr>
+<td><code>handles negative values with the sign in front</code></td>
+<td>Handles negative values with the sign in front</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:61</code></td>
+</tr>
+<tr>
+<td><code>formats zero as a plain count</code></td>
+<td>Formats zero as a plain count</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:65</code></td>
+</tr>
+<tr>
+<td><code>formatMoneyShort</code></td>
+<td>Format money short</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:70</code></td>
+</tr>
+<tr>
+<td><code>gains a millions branch instead of stopping at K</code></td>
+<td>Gains a millions branch instead of stopping at k</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:71</code></td>
+</tr>
+<tr>
+<td><code>places a negative sign before the dollar sign, not after</code></td>
+<td>Places a negative sign before the dollar sign, not after</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:75</code></td>
+</tr>
+<tr>
+<td><code>rounds a negative two-digit value to a whole number</code></td>
+<td>Rounds a negative two-digit value to a whole number</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:79</code></td>
+</tr>
+<tr>
+<td><code>promotes a value that rounds up to a whole ten-thousands figure</code></td>
+<td>Promotes a value that rounds up to a whole ten-thousands figure</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:83</code></td>
+</tr>
+<tr>
+<td><code>keeps a whole dollar amount unscaled</code></td>
+<td>Keeps a whole dollar amount unscaled</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:87</code></td>
+</tr>
+<tr>
+<td><code>keeps a fractional amount under $10 in cents</code></td>
+<td>Keeps a fractional amount under $10 in cents</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:91</code></td>
+</tr>
+<tr>
+<td><code>formatDuration</code></td>
+<td>Format duration</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:96</code></td>
+</tr>
+<tr>
+<td><code>renders sub-second durations in ms</code></td>
+<td>Renders sub-second durations in ms</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:97</code></td>
+</tr>
+<tr>
+<td><code>returns a placeholder for invalid input</code></td>
+<td>Returns a placeholder for invalid input</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:101</code></td>
+</tr>
+<tr>
+<td><code>formatPercent</code></td>
+<td>Format percent</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:107</code></td>
+</tr>
+<tr>
+<td><code>formats a ratio as a whole-number percentage by default</code></td>
+<td>Formats a ratio as a whole-number percentage by default</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:108</code></td>
+</tr>
+<tr>
+<td><code>honors the requested digit count</code></td>
+<td>Honors the requested digit count</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:112</code></td>
+</tr>
+<tr>
+<td><code>plural</code></td>
+<td>Plural</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:117</code></td>
+</tr>
+<tr>
+<td><code>keeps the singular form for a count of one</code></td>
+<td>Keeps the singular form for a count of one</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:118</code></td>
+</tr>
+<tr>
+<td><code>adds an s for every other count</code></td>
+<td>Adds an s for every other count</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:122</code></td>
+</tr>
+<tr>
+<td><code>formats the count with thousands separators</code></td>
+<td>Formats the count with thousands separators</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:127</code></td>
+</tr>
+<tr>
+<td><code>logSpanMs</code></td>
+<td>Log span ms</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:136</code></td>
+</tr>
+<tr>
+<td><code>returns the gap between the first and last record</code></td>
+<td>Returns the gap between the first and last record</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:137</code></td>
+</tr>
+<tr>
+<td><code>returns zero when the end is not after the start</code></td>
+<td>Returns zero when the end is not after the start</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:142</code></td>
+</tr>
+<tr>
+<td><code>returns zero for an unparsable timestamp instead of NaN</code></td>
+<td>Returns zero for an unparsable timestamp instead of na n</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:147</code></td>
+</tr>
+<tr>
+<td><code>today</code></td>
+<td>Today</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:153</code></td>
+</tr>
+<tr>
+<td><code>returns an ISO date string in the local calendar</code></td>
+<td>Returns an iso date string in the local calendar</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:154</code></td>
+</tr>
+<tr>
+<td><code>formatDay</code></td>
+<td>Format day</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:161</code></td>
+</tr>
+<tr>
+<td><code>parses the ISO day as a plain date, never shifted by the viewer's time zone</code></td>
+<td>Parses the iso day as a plain date, never shifted by the viewer's time zone</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:162</code></td>
+</tr>
+<tr>
+<td><code>can omit the year</code></td>
+<td>Can omit the year</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:166</code></td>
+</tr>
+<tr>
+<td><code>shiftDays</code></td>
+<td>Shift days</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:171</code></td>
+</tr>
+<tr>
+<td><code>moves forward across a month boundary using UTC arithmetic</code></td>
+<td>Moves forward across a month boundary using utc arithmetic</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:172</code></td>
+</tr>
+<tr>
+<td><code>moves backward across a year boundary</code></td>
+<td>Moves backward across a year boundary</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:176</code></td>
+</tr>
+<tr>
+<td><code>formatTimestamp and formatClock</code></td>
+<td>Format timestamp and format clock</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:181</code></td>
+</tr>
+<tr>
+<td><code>both return a placeholder for an unparsable timestamp</code></td>
+<td>Both return a placeholder for an unparsable timestamp</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:182</code></td>
+</tr>
+<tr>
+<td><code>formatTimestamp returns a placeholder for a null input</code></td>
+<td>Format timestamp returns a placeholder for a null input</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:187</code></td>
+</tr>
+<tr>
+<td><code>daySpan</code></td>
+<td>Day span</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:192</code></td>
+</tr>
+<tr>
+<td><code>lists every day inclusive of both ends</code></td>
+<td>Lists every day inclusive of both ends</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:193</code></td>
+</tr>
+<tr>
+<td><code>returns a single day when from equals to</code></td>
+<td>Returns a single day when from equals to</td>
+<td><code>web/src/format.test.ts</code></td>
+<td><a href="#">web/src/format.test.ts</a> <code>web/src/format.test.ts:197</code></td>
+</tr>
+<tr>
+<td><code>providerLabel</code></td>
+<td>Provider label</td>
+<td><code>web/src/pricing-format.test.ts</code></td>
+<td><a href="#">web/src/pricing-format.test.ts</a> <code>web/src/pricing-format.test.ts:12</code></td>
+</tr>
+<tr>
+<td><code>maps known providers</code></td>
+<td>Maps known providers</td>
+<td><code>web/src/pricing-format.test.ts</code></td>
+<td><a href="#">web/src/pricing-format.test.ts</a> <code>web/src/pricing-format.test.ts:13</code></td>
+</tr>
+<tr>
+<td><code>capitalises unknown providers</code></td>
+<td>Capitalises unknown providers</td>
+<td><code>web/src/pricing-format.test.ts</code></td>
+<td><a href="#">web/src/pricing-format.test.ts</a> <code>web/src/pricing-format.test.ts:20</code></td>
+</tr>
+<tr>
+<td><code>formatContextWindow</code></td>
+<td>Format context window</td>
+<td><code>web/src/pricing-format.test.ts</code></td>
+<td><a href="#">web/src/pricing-format.test.ts</a> <code>web/src/pricing-format.test.ts:25</code></td>
+</tr>
+<tr>
+<td><code>formats K and M</code></td>
+<td>Formats k and m</td>
+<td><code>web/src/pricing-format.test.ts</code></td>
+<td><a href="#">web/src/pricing-format.test.ts</a> <code>web/src/pricing-format.test.ts:26</code></td>
+</tr>
+<tr>
+<td><code>is null when unknown</code></td>
+<td>Is null when unknown</td>
+<td><code>web/src/pricing-format.test.ts</code></td>
+<td><a href="#">web/src/pricing-format.test.ts</a> <code>web/src/pricing-format.test.ts:33</code></td>
+</tr>
+<tr>
+<td><code>peakWindowText</code></td>
+<td>Peak window text</td>
+<td><code>web/src/pricing-format.test.ts</code></td>
+<td><a href="#">web/src/pricing-format.test.ts</a> <code>web/src/pricing-format.test.ts:38</code></td>
+</tr>
+<tr>
+<td><code>compresses weekday runs and lists hour ranges in UTC</code></td>
+<td>Compresses weekday runs and lists hour ranges in utc</td>
+<td><code>web/src/pricing-format.test.ts</code></td>
+<td><a href="#">web/src/pricing-format.test.ts</a> <code>web/src/pricing-format.test.ts:39</code></td>
+</tr>
+<tr>
+<td><code>handles split weekday sets</code></td>
+<td>Handles split weekday sets</td>
+<td><code>web/src/pricing-format.test.ts</code></td>
+<td><a href="#">web/src/pricing-format.test.ts</a> <code>web/src/pricing-format.test.ts:52</code></td>
+</tr>
+<tr>
+<td><code>stalenessBadge</code></td>
+<td>Staleness badge</td>
+<td><code>web/src/pricing-format.test.ts</code></td>
+<td><a href="#">web/src/pricing-format.test.ts</a> <code>web/src/pricing-format.test.ts:59</code></td>
+</tr>
+<tr>
+<td><code>has thresholds at 30 and 90 days</code></td>
+<td>Has thresholds at 30 and 90 days</td>
+<td><code>web/src/pricing-format.test.ts</code></td>
+<td><a href="#">web/src/pricing-format.test.ts</a> <code>web/src/pricing-format.test.ts:60</code></td>
+</tr>
+<tr>
+<td><code>matchUnpriced</code></td>
+<td>Match unpriced</td>
+<td><code>web/src/pricing-format.test.ts</code></td>
+<td><a href="#">web/src/pricing-format.test.ts</a> <code>web/src/pricing-format.test.ts:69</code></td>
+</tr>
+<tr>
+<td><code>prefers the longest prefix, case-insensitively</code></td>
+<td>Prefers the longest prefix, case-insensitively</td>
+<td><code>web/src/pricing-format.test.ts</code></td>
+<td><a href="#">web/src/pricing-format.test.ts</a> <code>web/src/pricing-format.test.ts:75</code></td>
+</tr>
+<tr>
+<td><code>returns null with no prefix match</code></td>
+<td>Returns null with no prefix match</td>
+<td><code>web/src/pricing-format.test.ts</code></td>
+<td><a href="#">web/src/pricing-format.test.ts</a> <code>web/src/pricing-format.test.ts:80</code></td>
+</tr>
+<tr>
+<td><code>ratesAgeNotice</code></td>
+<td>Rates age notice</td>
+<td><code>web/src/pricing-notes.test.ts</code></td>
+<td><a href="#">web/src/pricing-notes.test.ts</a> <code>web/src/pricing-notes.test.ts:11</code></td>
+</tr>
+<tr>
+<td><code>is silent when fresh or unknown</code></td>
+<td>Is silent when fresh or unknown</td>
+<td><code>web/src/pricing-notes.test.ts</code></td>
+<td><a href="#">web/src/pricing-notes.test.ts</a> <code>web/src/pricing-notes.test.ts:12</code></td>
+</tr>
+<tr>
+<td><code>is info from 30 days</code></td>
+<td>Is info from 30 days</td>
+<td><code>web/src/pricing-notes.test.ts</code></td>
+<td><a href="#">web/src/pricing-notes.test.ts</a> <code>web/src/pricing-notes.test.ts:16</code></td>
+</tr>
+<tr>
+<td><code>is caution from 90 days</code></td>
+<td>Is caution from 90 days</td>
+<td><code>web/src/pricing-notes.test.ts</code></td>
+<td><a href="#">web/src/pricing-notes.test.ts</a> <code>web/src/pricing-notes.test.ts:23</code></td>
+</tr>
+<tr>
+<td><code>reportedDiverges</code></td>
+<td>Reported diverges</td>
+<td><code>web/src/pricing-notes.test.ts</code></td>
+<td><a href="#">web/src/pricing-notes.test.ts</a> <code>web/src/pricing-notes.test.ts:29</code></td>
+</tr>
+<tr>
+<td><code>ignores differences within 5% or one cent</code></td>
+<td>Ignores differences within 5% or one cent</td>
+<td><code>web/src/pricing-notes.test.ts</code></td>
+<td><a href="#">web/src/pricing-notes.test.ts</a> <code>web/src/pricing-notes.test.ts:30</code></td>
+</tr>
+<tr>
+<td><code>flags larger differences</code></td>
+<td>Flags larger differences</td>
+<td><code>web/src/pricing-notes.test.ts</code></td>
+<td><a href="#">web/src/pricing-notes.test.ts</a> <code>web/src/pricing-notes.test.ts:34</code></td>
+</tr>
+<tr>
+<td><code>reportedNote</code></td>
+<td>Reported note</td>
+<td><code>web/src/pricing-notes.test.ts</code></td>
+<td><a href="#">web/src/pricing-notes.test.ts</a> <code>web/src/pricing-notes.test.ts:40</code></td>
+</tr>
+<tr>
+<td><code>returns null when no reported cost</code></td>
+<td>Returns null when no reported cost</td>
+<td><code>web/src/pricing-notes.test.ts</code></td>
+<td><a href="#">web/src/pricing-notes.test.ts</a> <code>web/src/pricing-notes.test.ts:41</code></td>
+</tr>
+<tr>
+<td><code>formats the line without a note when close</code></td>
+<td>Formats the line without a note when close</td>
+<td><code>web/src/pricing-notes.test.ts</code></td>
+<td><a href="#">web/src/pricing-notes.test.ts</a> <code>web/src/pricing-notes.test.ts:45</code></td>
+</tr>
+<tr>
+<td><code>adds the note when divergent</code></td>
+<td>Adds the note when divergent</td>
+<td><code>web/src/pricing-notes.test.ts</code></td>
+<td><a href="#">web/src/pricing-notes.test.ts</a> <code>web/src/pricing-notes.test.ts:48</code></td>
+</tr>
+<tr>
+<td><code>isEstimatedPriced</code></td>
+<td>Is estimated priced</td>
+<td><code>web/src/pricing-notes.test.ts</code></td>
+<td><a href="#">web/src/pricing-notes.test.ts</a> <code>web/src/pricing-notes.test.ts:54</code></td>
+</tr>
+<tr>
+<td><code>requires priced state and estimated cost</code></td>
+<td>Requires priced state and estimated cost</td>
+<td><code>web/src/pricing-notes.test.ts</code></td>
+<td><a href="#">web/src/pricing-notes.test.ts</a> <code>web/src/pricing-notes.test.ts:56</code></td>
+</tr>
+<tr>
+<td><code>truncateLabel</code></td>
+<td>Truncate label</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:56</code></td>
+</tr>
+<tr>
+<td><code>leaves a short label untouched</code></td>
+<td>Leaves a short label untouched</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:57</code></td>
+</tr>
+<tr>
+<td><code>cuts a long label to the limit and appends an ellipsis</code></td>
+<td>Cuts a long label to the limit and appends an ellipsis</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:61</code></td>
+</tr>
+<tr>
+<td><code>never appends an ellipsis when the label exactly fits</code></td>
+<td>Never appends an ellipsis when the label exactly fits</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:67</code></td>
+</tr>
+<tr>
+<td><code>turnLabel</code></td>
+<td>Turn label</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:72</code></td>
+</tr>
+<tr>
+<td><code>formats an ordinal with a quoted, truncated snippet</code></td>
+<td>Formats an ordinal with a quoted, truncated snippet</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:73</code></td>
+</tr>
+<tr>
+<td><code>falls back to just the ordinal when the label is null, never an empty quoted string</code></td>
+<td>Falls back to just the ordinal when the label is null, never an empty quoted string</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:79</code></td>
+</tr>
+<tr>
+<td><code>shows the unattributed row label unchanged, not an ordinal</code></td>
+<td>Shows the unattributed row label unchanged, not an ordinal</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:83</code></td>
+</tr>
+<tr>
+<td><code>realTurns</code></td>
+<td>Real turns</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:90</code></td>
+</tr>
+<tr>
+<td><code>excludes the unattributed row</code></td>
+<td>Excludes the unattributed row</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:91</code></td>
+</tr>
+<tr>
+<td><code>sortRealTurns</code></td>
+<td>Sort real turns</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:97</code></td>
+</tr>
+<tr>
+<td><code>excludes the unattributed row from ordinal sorting entirely, not just ranks it last</code></td>
+<td>Excludes the unattributed row from ordinal sorting entirely, not just ranks it last</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:104</code></td>
+</tr>
+<tr>
+<td><code>sorts by cost descending</code></td>
+<td>Sorts by cost descending</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:109</code></td>
+</tr>
+<tr>
+<td><code>sorts by duration ascending</code></td>
+<td>Sorts by duration ascending</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:113</code></td>
+</tr>
+<tr>
+<td><code>sorts by errors descending</code></td>
+<td>Sorts by errors descending</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:117</code></td>
+</tr>
+<tr>
+<td><code>costConcentration</code></td>
+<td>Cost concentration</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:122</code></td>
+</tr>
+<tr>
+<td><code>is null when no turn carries a priced cost</code></td>
+<td>Is null when no turn carries a priced cost</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:123</code></td>
+</tr>
+<tr>
+<td><code>computes the top-N share against the sum of turn cost, not the unattributed row</code></td>
+<td>Computes the top-n share against the sum of turn cost, not the unattributed row</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:127</code></td>
+</tr>
+<tr>
+<td><code>longestTurn</code></td>
+<td>Longest turn</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:143</code></td>
+</tr>
+<tr>
+<td><code>picks the turn with the largest known duration, ignoring turns with no duration</code></td>
+<td>Picks the turn with the largest known duration, ignoring turns with no duration</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:144</code></td>
+</tr>
+<tr>
+<td><code>is null when no turn has a known duration</code></td>
+<td>Is null when no turn has a known duration</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:153</code></td>
+</tr>
+<tr>
+<td><code>errorOrRetryTurns</code></td>
+<td>Error or retry turns</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:158</code></td>
+</tr>
+<tr>
+<td><code>counts turns with an error or a retry and finds the worst by errors first</code></td>
+<td>Counts turns with an error or a retry and finds the worst by errors first</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:159</code></td>
+</tr>
+<tr>
+<td><code>is empty when nothing has an error or a retry</code></td>
+<td>Is empty when nothing has an error or a retry</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:171</code></td>
+</tr>
+<tr>
+<td><code>toolHeaviestTurn</code></td>
+<td>Tool heaviest turn</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:176</code></td>
+</tr>
+<tr>
+<td><code>picks the turn with the most tool calls</code></td>
+<td>Picks the turn with the most tool calls</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:177</code></td>
+</tr>
+<tr>
+<td><code>is null when no turn made a tool call</code></td>
+<td>Is null when no turn made a tool call</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:182</code></td>
+</tr>
+<tr>
+<td><code>halfCostTrend</code></td>
+<td>Half cost trend</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:187</code></td>
+</tr>
+<tr>
+<td><code>is null with fewer than two turns</code></td>
+<td>Is null with fewer than two turns</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:188</code></td>
+</tr>
+<tr>
+<td><code>splits by ordinal into two halves and sums each half separately</code></td>
+<td>Splits by ordinal into two halves and sums each half separately</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:192</code></td>
+</tr>
+<tr>
+<td><code>leaves changeFraction null when the first half has no cost to compare against</code></td>
+<td>Leaves change fraction null when the first half has no cost to compare against</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:207</code></td>
+</tr>
+<tr>
+<td><code>unattributedCostShare</code></td>
+<td>Unattributed cost share</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:213</code></td>
+</tr>
+<tr>
+<td><code>is null when there is no unattributed row</code></td>
+<td>Is null when there is no unattributed row</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:214</code></td>
+</tr>
+<tr>
+<td><code>is null when the unattributed row carries no cost</code></td>
+<td>Is null when the unattributed row carries no cost</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:218</code></td>
+</tr>
+<tr>
+<td><code>shares against turn cost plus its own, matching costConcentration's denominator</code></td>
+<td>Shares against turn cost plus its own, matching cost concentration's denominator</td>
+<td><code>web/src/turn-insights.test.ts</code></td>
+<td><a href="#">web/src/turn-insights.test.ts</a> <code>web/src/turn-insights.test.ts:222</code></td>
+</tr>
+</tbody>
+</table></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

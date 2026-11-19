@@ -1,0 +1,222 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Ai usage cost Diagrams</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/ai-usage-cost-diagrams.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Data · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Ai usage cost Diagrams</h1>
+<p>Generated views of the Ai usage cost chunk; hand-laid views are added next to them.</p>
+<h2>Hand-laid views</h2>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Diagram</th>
+<th>Question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conceptual model</td>
+<td><a href="../diagrams/usage-cost-conceptual-model.html">Usage cost conceptual model</a></td>
+<td>What are the things the tool talks about?</td>
+</tr>
+<tr>
+<td>State</td>
+<td><a href="../diagrams/cost-state-of-a-request.html">Cost state of a request</a></td>
+<td>Which cost state can a request end in?</td>
+</tr>
+<tr>
+<td>Sequence</td>
+<td><a href="../diagrams/scan-pipeline-from-logs-to-report.html">Scan pipeline from logs to report</a></td>
+<td>In what order do the parts work during a scan?</td>
+</tr>
+<tr>
+<td>Decision flowchart</td>
+<td><a href="../diagrams/how-one-request-is-priced.html">How one request is priced</a></td>
+<td>What settles the price of one request?</td>
+</tr>
+<tr>
+<td>Data flow</td>
+<td><a href="../diagrams/usage-data-flow.html">Usage data flow</a></td>
+<td>Where does the data come from, rest and go?</td>
+</tr>
+<tr>
+<td>BPMN</td>
+<td><a href="../diagrams/scan-and-report-process.html">Scan and report process</a></td>
+<td>What is the scan as a process between a person and the tool?</td>
+</tr>
+<tr>
+<td>Mind map</td>
+<td><a href="../diagrams/usage-cost-concepts.html">Usage cost concepts</a></td>
+<td>What is the core made of, in one picture?</td>
+</tr>
+<tr>
+<td>API map</td>
+<td><a href="../diagrams/usage-cost-http-routes.html">Usage cost HTTP routes</a></td>
+<td>Which addresses does the dashboard call, and which ones change data?</td>
+</tr>
+<tr>
+<td>Use case diagram</td>
+<td><a href="../diagrams/usage-cost-goals.html">Usage cost goals</a></td>
+<td>What can a person get done, and who else takes part?</td>
+</tr>
+<tr>
+<td>Class diagram</td>
+<td><a href="../diagrams/usage-cost-types.html">Usage cost types</a></td>
+<td>Which in memory types carry a request from log to report?</td>
+</tr>
+<tr>
+<td>Data lineage</td>
+<td><a href="../diagrams/where-usage-cost-data-comes-from.html">Where usage cost data comes from</a></td>
+<td>Where does each stored table get its data, and who reads it?</td>
+</tr>
+<tr>
+<td>Activity</td>
+<td><a href="../diagrams/spend-alert-run.html">Spend alert run</a></td>
+<td>What happens in one run of the spend alert?</td>
+</tr>
+<tr>
+<td>Timeline</td>
+<td><a href="../diagrams/store-schema-versions.html">Store schema versions</a></td>
+<td>In what order did the store gain its tables and columns?</td>
+</tr>
+<tr>
+<td>Gantt</td>
+<td><a href="../diagrams/alert-comparison-windows.html">Alert comparison windows</a></td>
+<td>Which days does the alert compare?</td>
+</tr>
+<tr>
+<td>Error flow</td>
+<td><a href="../diagrams/usage-cost-refusals.html">Usage cost refusals</a></td>
+<td>How does the core refuse, and what does it absorb quietly?</td>
+</tr>
+<tr>
+<td>Glossary map</td>
+<td><a href="../diagrams/usage-cost-terms.html">Usage cost terms</a></td>
+<td>How do the domain words relate?</td>
+</tr>
+<tr>
+<td>Package tree</td>
+<td><a href="../diagrams/usage-cost-folders.html">Usage cost folders</a></td>
+<td>How is the package laid out on disk?</td>
+</tr>
+</tbody>
+</table>
+<p>The conceptual model also serves as the conceptual data model (kind erd-conceptual).</p>
+<p>The container view below is the C4 view and the entity view is the physical model of the store.</p>
+<h2>Components around Ai usage cost</h2>
+<pre class="mermaid">flowchart LR
+    subgraph g_src[&quot;src&quot;]
+        localtokenomics_src_ai_usage_cost[&quot;src/ai_usage_cost&lt;br/&gt;13 files, 5069 lines&lt;br/&gt;python&quot;]:::system
+        localtokenomics_src_ai_usage_cost_render[&quot;src/ai_usage_cost/render&lt;br/&gt;3 files, 187 lines&lt;br/&gt;python&quot;]:::system
+        localtokenomics_src_ai_usage_cost_sources[&quot;src/ai_usage_cost/sources&lt;br/&gt;22 files, 4722 lines&lt;br/&gt;python&quot;]:::system
+    end
+    localtokenomics_src_ai_usage_cost --&gt; localtokenomics_src_ai_usage_cost_sources
+    localtokenomics_src_ai_usage_cost --&gt; localtokenomics_src_ai_usage_cost_render
+    localtokenomics_src_ai_usage_cost_render --&gt; localtokenomics_src_ai_usage_cost
+    localtokenomics_src_ai_usage_cost_sources --&gt; localtokenomics_src_ai_usage_cost
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Component: part of this system&quot;]:::system
+        zlegend_b[&quot;Solid arrow: imports or calls&quot;]:::system
+        zlegend_a ~~~ zlegend_b
+    end
+    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233
+</pre>
+
+<h2>Entity relationship view of Ai usage cost</h2>
+<pre class="mermaid">erDiagram
+    samples {
+        TEXT machine
+        TEXT sampled_at
+        REAL gpu_util
+        INTEGER vram_used
+        INTEGER vram_total
+        REAL power_w
+        TEXT source
+    }
+    requests {
+        TEXT fingerprint PK
+        TEXT source
+        TEXT client
+        TEXT provider
+        TEXT model
+        TEXT session_id
+        TEXT timestamp
+        TEXT request_id
+        INTEGER uncached_input
+        INTEGER cache_read
+        INTEGER cache_write_5m
+        INTEGER cache_write_1h
+        INTEGER output
+        INTEGER reasoning_output
+        INTEGER is_sidechain
+        TEXT tier
+        TEXT project
+        TEXT working_directory
+        TEXT repository
+        TEXT branch
+        TEXT machine
+        TEXT source_file
+        TEXT raw
+        TEXT title
+        TEXT title_source
+        REAL reported_cost
+    }
+    files {
+        TEXT path PK
+        TEXT source
+        REAL mtime
+        INTEGER size
+        TEXT ingested_at
+        TEXT warnings
+        INTEGER parser_version
+        INTEGER ingested_offset
+        TEXT boundary_hash
+        TEXT title_seed
+    }
+    trace_events {
+        TEXT span_id PK
+        TEXT parent_id
+        TEXT record_parent
+        TEXT source
+        TEXT session_id
+        TEXT turn_id
+        TEXT agent_id
+        INTEGER is_sidechain
+        INTEGER seq
+        TEXT kind
+        TEXT name
+        TEXT model
+        TEXT status
+        TEXT started_at
+        TEXT ended_at
+        INTEGER duration_ms
+        TEXT duration_provenance
+        INTEGER ttft_ms
+        INTEGER uncached_input
+        INTEGER cache_read
+        INTEGER cache_write_5m
+        INTEGER cache_write_1h
+        INTEGER output
+        INTEGER reasoning_output
+        TEXT tokens_provenance
+        INTEGER context_capacity
+        TEXT capacity_provenance
+        INTEGER retry_attempt
+        TEXT error
+        TEXT source_file
+        INTEGER record_offset
+        INTEGER record_length
+        TEXT content_path
+        TEXT detail
+    }
+    outcomes {
+        TEXT source PK
+        TEXT session_id PK
+        TEXT outcome
+        TEXT notes
+        TEXT tags
+        TEXT updated_at
+    }
+    session_exclusions {
+        TEXT source PK
+        TEXT session_id PK
+        TEXT excluded_at
+    }
+</pre></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web Sessions Table State Chart</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-sessions-table-state-chart.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Web Sessions Table State Chart</h1>
+<p>This chart shows the shapes the session list can take. It helps a reader understand why they may see cards, a table or a message, and why some sessions are not listed. It also shows that opening any row leads to the session workspace.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>An empty slice shows an empty state, a phone shows cards, and a wider screen shows the table <code>web/src/Sessions.tsx:298-327</code>.</li>
+<li>A header press sorts by its column or flips the direction <code>web/src/Sessions.tsx:259-262</code>.</li>
+<li>Only the first rows up to the limit are drawn, and the note says how many are hidden <code>web/src/Sessions.tsx:48-48</code> <code>web/src/Sessions.tsx:375-377</code>.</li>
+<li>A row or a card opens the workspace <code>web/src/Sessions.tsx:323-323</code> <code>web/src/Sessions.tsx:354-354</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The chart belongs to <a href="../application/sessions-screen.html">Sessions Screen</a> and its table is drawn in <a href="../diagrams/web-sessions-table-wireframe.html">Web Sessions Table Wireframe</a>. Opening a row leads to <a href="../application/session-workspace-screen.html">Session Workspace Screen</a>.</p>
+<h2>Web Sessions Table State Chart</h2>
+<pre class="mermaid">stateDiagram-v2
+    direction LR
+    [*] --&gt; Empty: no session in the slice
+    [*] --&gt; Cards: sessions, phone width
+    [*] --&gt; Table: sessions, wider screen
+    Table --&gt; Table: header pressed, sort or flip direction
+    Table --&gt; Capped: more than the row limit
+    Cards --&gt; Capped: more than the row limit
+    Table --&gt; WorkspaceOpen: row clicked
+    Cards --&gt; WorkspaceOpen: card opened
+    Capped --&gt; WorkspaceOpen: row clicked
+    note right of Capped
+        Not handled: rows past the limit are reachable only by narrowing the filters.
+    end note
+    note left of Empty
+        Legend: the filled dot starts, a rounded box is a state of the sessions list, an arrow is labelled with the condition or event in the code, a note marks a gap.
+    end note
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/Sessions.tsx:298-327</code></td>
+<td>An empty slice shows an empty state, a phone shows cards, and a wider screen shows the table</td>
+</tr>
+<tr>
+<td><code>web/src/Sessions.tsx:259-262</code></td>
+<td>A header press sorts by its column or flips the direction</td>
+</tr>
+<tr>
+<td><code>web/src/Sessions.tsx:48-48</code></td>
+<td>Only the first rows up to the limit are drawn, and the note says how many are hidden</td>
+</tr>
+<tr>
+<td><code>web/src/Sessions.tsx:375-377</code></td>
+<td>Only the first rows up to the limit are drawn, and the note says how many are hidden</td>
+</tr>
+<tr>
+<td><code>web/src/Sessions.tsx:323-323</code></td>
+<td>A row or a card opens the workspace</td>
+</tr>
+<tr>
+<td><code>web/src/Sessions.tsx:354-354</code></td>
+<td>A row or a card opens the workspace</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

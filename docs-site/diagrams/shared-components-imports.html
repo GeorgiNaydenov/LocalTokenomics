@@ -1,0 +1,121 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Shared components imports</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/shared-components-imports.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> covers <code>web/src/components/*</code></p><h1>Shared components imports</h1>
+<p>This graph shows which shared component files import which. It lets a developer see how far a change to a base file reaches before editing it. The graph also confirms that dependencies run one way, from big widgets down to small parts.</p>
+<h2>What the diagram shows</h2>
+<p>The base layer holds the metric info box, the stat card, the hover frame and the series colours, and the stat card imports the info box. <code>web/src/components/stat.tsx:4-4</code> <code>web/src/components/sparkline.tsx:1-1</code></p>
+<p>The status badges and the page states also import the info box. <code>web/src/components/status.tsx:4-4</code> <code>web/src/components/states.tsx:15-15</code></p>
+<p>The detail helpers import the stat label, and so do the filters. <code>web/src/components/detail.tsx:4-4</code> <code>web/src/components/filters.tsx:15-15</code></p>
+<p>The page states import the code block, the panel parts and the info box. <code>web/src/components/states.tsx:13-14</code></p>
+<p>The source card imports the sparkline, the badges and the stat label, and the sparkline imports the hover frame. <code>web/src/components/source-card.tsx:4-6</code> <code>web/src/components/sparkline.tsx:1-1</code></p>
+<p>The session card imports the badge metadata, and the trace widgets import the hover frame, the badges and the stat label. <code>web/src/components/session.tsx:5-5</code> <code>web/src/components/trace.tsx:5-9</code></p>
+<p>The time chart imports the series colours and the key list from the badges. <code>web/src/components/chart-time.tsx:10-11</code></p>
+<p>The column chooser, the info box and the time chart import primitives from the UI folder. <code>web/src/components/columns.tsx:4-4</code> <code>web/src/components/metric-info.tsx:8-8</code> <code>web/src/components/chart-time.tsx:9-9</code></p>
+<p>The badges, the session card and the page states import the class helper, data types, formatters and pricing notes of the main web folder. <code>web/src/components/status.tsx:3-6</code> <code>web/src/components/session.tsx:2-2</code> <code>web/src/components/states.tsx:17-17</code></p>
+<p>The rank, media query and workspace panel files import nothing from their siblings, only from React and the data types. <code>web/src/components/rank.ts:1-1</code> <code>web/src/components/use-media-query.ts:1-1</code> <code>web/src/components/workspace-panel.ts:1-1</code></p>
+<p>No import cycle exists between the files of this folder: every arrow points from a higher layer to a lower one.</p>
+<h2>Capability and related functionality</h2>
+<p>The graph realises the file level view of the shared display layer. The folder level view is <a href="../diagrams/web-ui-components-diagrams.html">Web UI components Diagrams</a>, the grouped view is <a href="../diagrams/shared-components-c4.html">Shared components C4</a>, and the render tree is <a href="../diagrams/dashboard-component-composition.html">Dashboard component composition</a>. The primitives folder is described in <a href="../application/web-ui-ui-components-overview.html">Web ui UI components Overview</a>.</p>
+<h2>Shared components imports</h2>
+<pre class="mermaid">flowchart TD
+    subgraph Top[&quot;Top layer: widgets that combine others&quot;]
+        session[&quot;session.tsx&quot;]:::module
+        source[&quot;source-card.tsx&quot;]:::module
+        trace[&quot;trace.tsx&quot;]:::module
+        chartTime[&quot;chart-time.tsx&quot;]:::module
+        states[&quot;states.tsx&quot;]:::module
+        filters[&quot;filters.tsx&quot;]:::module
+        columns[&quot;columns.tsx&quot;]:::module
+    end
+    subgraph Mid[&quot;Middle layer&quot;]
+        detail[&quot;detail.tsx&quot;]:::module
+        status[&quot;status.tsx&quot;]:::module
+        sparkline[&quot;sparkline.tsx&quot;]:::module
+        panel[&quot;panel.tsx&quot;]:::module
+    end
+    subgraph Base[&quot;Base layer&quot;]
+        stat[&quot;stat.tsx&quot;]:::module
+        hover[&quot;chart-hover.tsx&quot;]:::module
+        series[&quot;series.ts&quot;]:::module
+        info[&quot;metric-info.tsx&quot;]:::module
+    end
+    alone[&quot;rank.ts, use-media-query.ts, workspace-panel.ts&quot;]:::module
+    ui[&quot;components/ui&quot;]:::external
+    srcmods[&quot;design-system, api, format, pricing-notes&quot;]:::external
+
+    status --&gt; info
+    stat --&gt; info
+    states --&gt; info
+    states --&gt; detail
+    states --&gt; panel
+    detail --&gt; stat
+    filters --&gt; stat
+    source --&gt; sparkline
+    source --&gt; status
+    source --&gt; stat
+    sparkline --&gt; hover
+    session --&gt; status
+    trace --&gt; hover
+    trace --&gt; status
+    trace --&gt; stat
+    chartTime --&gt; series
+    chartTime --&gt; status
+    Top --&gt; ui
+    Base --&gt; ui
+    Top --&gt; srcmods
+    Mid --&gt; srcmods
+    Base --&gt; srcmods
+    alone --&gt; srcmods
+
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Module: one file&quot;]:::module
+        zlegend_b[&quot;Outside this chunk&quot;]:::external
+        zlegend_c[&quot;Red arrow: import cycle, none found here&quot;]:::cycle
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c
+    end
+
+    classDef module fill:#dae8fc,stroke:#222222,color:#222222
+    classDef external fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:5 3
+    classDef cycle fill:#f8cecc,stroke:#b85450,color:#222222
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/components/stat.tsx:4-4</code></td>
+<td>Stat card imports the info box</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:13-14</code></td>
+<td>Page states imports</td>
+</tr>
+<tr>
+<td><code>web/src/components/source-card.tsx:4-6</code></td>
+<td>Source card imports</td>
+</tr>
+<tr>
+<td><code>web/src/components/trace.tsx:5-9</code></td>
+<td>Trace imports</td>
+</tr>
+<tr>
+<td><code>web/src/components/chart-time.tsx:10-11</code></td>
+<td>Time chart imports</td>
+</tr>
+<tr>
+<td><code>web/src/components/chart-time.tsx:9-9</code></td>
+<td>Chart primitives import</td>
+</tr>
+<tr>
+<td><code>web/src/components/rank.ts:1-1</code></td>
+<td>Rank imports</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

@@ -1,0 +1,84 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Offline card Screen</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/offline-card-screen.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> covers <code>web/src/components/states.tsx</code></p><h1>Offline card Screen</h1>
+<p>The full page card that the app shows when the local reader does not answer (<code>web/src/components/states.tsx:280-328</code>). Its map is <a href="../diagrams/offline-card-screen-map.html">Offline card screen map</a>; each numbered badge in the image is one row below.</p>
+<h2>Screen map</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Element</th>
+<th>What it does</th>
+<th>Handler or target</th>
+<th>State it depends on</th>
+<th>Citation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&lt;p</code> No server on {host}</td>
+<td>Eyebrow line in the destructive colour that names the host that did not answer.</td>
+<td>-</td>
+<td><code>host</code> prop</td>
+<td><code>web/src/components/states.tsx:307-308</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;h1</code> The dashboard lost the local reader.</td>
+<td>Headline of the screen. It is the only heading, and the card sits alone in a full height grid.</td>
+<td>-</td>
+<td>-</td>
+<td><code>web/src/components/states.tsx:310-311</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>&lt;p</code> Nothing was uploaded and nothing was lost</td>
+<td>Reassures the reader that the last scan is still in the local SQLite store and that the view reconnects once the reader runs again.</td>
+<td>-</td>
+<td>-</td>
+<td><code>web/src/components/states.tsx:313-315</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&lt;CodeBlock</code> start command</td>
+<td>Shows the command passed in as a prop, in a bordered block that wraps long lines.</td>
+<td><code>command</code> prop</td>
+<td><code>command</code> prop</td>
+<td><code>web/src/components/states.tsx:317-317</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;Button</code> Retry connection</td>
+<td>Asks the page to try the connection again by calling the function the page passed in.</td>
+<td><code>onRetry</code></td>
+<td><code>onRetry</code> prop</td>
+<td><code>web/src/components/states.tsx:319-319</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;Button</code> Copy command</td>
+<td>Writes the command to the clipboard and, when that succeeds, flips the label to Copied for two seconds.</td>
+<td><code>copy</code></td>
+<td><code>copied</code> state</td>
+<td><code>web/src/components/states.tsx:320-322</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>copied ? 'Copied' : 'Copy command'</code> copy feedback section</td>
+<td>Switches the label of the copy button between its two texts.</td>
+<td>-</td>
+<td>copy feedback: <code>copied</code></td>
+<td><code>web/src/components/states.tsx:321-321</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Conditional sections</h3>
+<ul>
+<li>copy feedback: <code>copied ? 'Copied' : 'Copy command'</code>, callout 7, <code>web/src/components/states.tsx:321-321</code></li>
+</ul>
+<h2>Diagnosis</h2>
+<p>The reader of this screen cannot do much: they can press Retry connection to ask the page to reconnect, or press Copy command to put the start command on the clipboard and then run it in a terminal by hand <code>web/src/components/states.tsx:319-322</code>.</p>
+<p>What can go wrong: the clipboard write is wrapped in a promise whose rejection is swallowed, so on a browser that refuses clipboard access the button silently stays at Copy command and the reader gets no sign that nothing was copied <code>web/src/components/states.tsx:294-300</code>.</p>
+<p>The reset timer of the Copied label is started with a bare timeout that is never cleared, so unmounting the card inside the two seconds leaves a state update pending <code>web/src/components/states.tsx:298-298</code>.</p>
+<p>States the code does not handle: there is no loading or in progress state while a retry runs, so pressing Retry connection twice sends two reloads, and no state tells the reader that a retry just failed again <code>web/src/components/states.tsx:319-319</code>.</p>
+<p>The text states that the last scan is still in the local SQLite store; that is a fixed sentence in the markup and the component never checks it <code>web/src/components/states.tsx:313-315</code>.</p>
+<p>The page decides when this card shows, by looking for a fixed sentence in the error text, so a reworded error message would show the plain error card instead <code>web/src/App.tsx:251-251</code>.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

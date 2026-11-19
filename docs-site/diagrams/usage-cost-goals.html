@@ -1,0 +1,96 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Usage cost goals</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/usage-cost-goals.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business · TOGAF: Phase B, Business Architecture</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Usage cost goals</h1>
+<p>This view lists what a person can get done with the tool and which outside parties take part. Every goal starts from the same step: reading the logs that AI coding tools already keep and pricing them. Seeing the goals together helps decide where a change will be felt.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>There is one human actor and no login: every command is run by the person who owns the machine. <code>src/ai_usage_cost/cli.py:24-27</code></li>
+<li>Seeing the cost means scanning the logs, pricing them and printing a breakdown, and the command exits with code 1 when no usage is found. <code>src/ai_usage_cost/cli.py:87-105</code></li>
+<li>The dashboard, the export, the alert and the terminal browser all start by running the same analysis, which is why they include the first goal. <code>src/ai_usage_cost/cli.py:125</code> <code>src/ai_usage_cost/cli.py:184-185</code> <code>src/ai_usage_cost/cli.py:331-332</code> <code>src/ai_usage_cost/cli.py:369-370</code></li>
+<li>The demo command writes synthetic logs and then serves the dashboard over them with a separate store. <code>src/ai_usage_cost/cli.py:159-172</code></li>
+<li>Inspecting, rating and forgetting a session, and reading the text of one span, are steps inside the dashboard served by session routes. <code>src/ai_usage_cost/api.py:320-382</code></li>
+<li>The alert sends its message to each notification address the person passes. <code>src/ai_usage_cost/cli.py:344-354</code></li>
+<li>The GPU sampler and the SQL browser work on the store directly and do not price anything. <code>src/ai_usage_cost/cli.py:211-225</code> <code>src/ai_usage_cost/cli.py:235-248</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>Each goal is a use case in the specification note of this chunk, <a href="../application/ai-usage-cost-specification.html">Ai usage cost Specification</a>, with its cited main flow.</li>
+<li>The routes behind the dashboard goals are drawn in <a href="../diagrams/usage-cost-http-routes.html">Usage cost HTTP routes</a>, and the alert run in <a href="../diagrams/spend-alert-run.html">Spend alert run</a>.</li>
+<li>The shared first step is drawn in <a href="../diagrams/scan-pipeline-from-logs-to-report.html">Scan pipeline from logs to report</a>.</li>
+</ul>
+<h2>Usage cost goals</h2>
+<pre class="mermaid">flowchart LR
+    person([&quot;Person using the tool&quot;]):::actor
+    logs([&quot;AI coding tool logs&quot;]):::external
+    notify([&quot;Notification target&quot;]):::external
+
+    subgraph sys[&quot;ai usage cost&quot;]
+        direction TB
+        uc1(&quot;See what my AI usage would cost&quot;):::usecase
+        uc2(&quot;Explore spend in the dashboard&quot;):::usecase
+        uc3(&quot;Export a report as a file&quot;):::usecase
+        uc4(&quot;Be alerted when spend rises&quot;):::usecase
+        uc5(&quot;Inspect and rate one session&quot;):::usecase
+        uc6(&quot;Forget a session&quot;):::usecase
+        uc7(&quot;Read the text of one span&quot;):::usecase
+        uc8(&quot;Try the tool with demo data&quot;):::usecase
+        uc9(&quot;Sample GPU use for local models&quot;):::usecase
+        uc10(&quot;Query the store with SQL&quot;):::usecase
+        uc11(&quot;Browse sessions in the terminal&quot;):::usecase
+    end
+
+    person --- uc1
+    person --- uc2
+    person --- uc3
+    person --- uc4
+    person --- uc8
+    person --- uc9
+    person --- uc10
+    person --- uc11
+    uc1 --- logs
+    uc4 --- notify
+    uc2 -.-&gt;|include| uc1
+    uc3 -.-&gt;|include| uc1
+    uc4 -.-&gt;|include| uc1
+    uc11 -.-&gt;|include| uc1
+    uc8 -.-&gt;|include| uc2
+    uc5 -.-&gt;|extend| uc2
+    uc6 -.-&gt;|extend| uc2
+    uc7 -.-&gt;|extend| uc5
+
+    subgraph Legend
+        direction LR
+        zlegend_a([&quot;Actor&quot;]):::actor
+        zlegend_b(&quot;Use case&quot;):::usecase
+        zlegend_c[&quot;System boundary: the outer box&quot;]:::boundary
+        zlegend_d([&quot;Outside system&quot;]):::external
+        zlegend_e[&quot;include: always runs the other goal&quot;]:::boundary
+        zlegend_f[&quot;extend: an optional step of the other goal&quot;]:::boundary
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d ~~~ zlegend_e ~~~ zlegend_f
+    end
+
+    classDef actor fill:#fff2cc,stroke:#222222,color:#222222
+    classDef usecase fill:#dae8fc,stroke:#222222,color:#222222
+    classDef external fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:4 3
+    classDef boundary fill:#ffffff,stroke:#222222,color:#222222
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:71-376</code></td>
+<td>The eight commands behind the goals</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/api.py:320-382</code></td>
+<td>The session routes behind the dashboard goals</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

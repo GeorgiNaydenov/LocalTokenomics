@@ -1,0 +1,77 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UC-13 Discover AI tool usage from local files</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="use-cases/uc-13-discover-ai-tool-usage-from-local-files.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/sources/__init__.py</code>, <code>src/ai_usage_cost/sources/base.py</code>, <code>src/ai_usage_cost/store.py</code>, <code>tests/test_claude_code.py</code></p><h1>UC-13 Discover AI tool usage from local files</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>A use case of the subdomain, written from the code. Every step cites the line that does it, so a reader can check the claim in one click.</p>
+</details>
+<details class="callout callout-tip">
+<summary>How to use it</summary>
+<p>Read the main flow first, then the alternative flows. The rules, terms and diagrams at the end are the ones this use case relies on.</p>
+</details>
+<ul>
+<li><strong>Maturity:</strong> approved</li>
+</ul>
+<h2>Description</h2>
+<p>The tool finds the logs and data stores of the supported AI coding tools on this machine and turns each into usage events, without changing any of them.</p>
+<h2>Preconditions</h2>
+<p>At least one supported tool has written data in a default root, or the user passes a root.</p>
+<h2>Main flow</h2>
+<ol>
+<li>
+<ol>
+<li>The registry collects the SOURCE of every reader module. <a href="#">src/ai_usage_cost/sources/<strong>init</strong>.py:17</a></li>
+</ol>
+</li>
+<li>
+<ol>
+<li>The store keeps only the roots that exist. <a href="#">src/ai_usage_cost/sources/base.py:49</a></li>
+</ol>
+</li>
+<li>
+<ol>
+<li>The reader lists the files under each root. <a href="#">src/ai_usage_cost/store.py:220</a></li>
+</ol>
+</li>
+<li>
+<ol>
+<li>Unchanged files are skipped. <a href="#">src/ai_usage_cost/store.py:230</a></li>
+</ol>
+</li>
+<li>
+<ol>
+<li>The reader parses a changed file into usage events. <a href="#">src/ai_usage_cost/store.py:255</a></li>
+</ol>
+</li>
+<li>
+<ol>
+<li>The store writes the event rows and a file record. <a href="#">src/ai_usage_cost/store.py:281</a></li>
+</ol>
+</li>
+</ol>
+<h2>Alternative flows</h2>
+<p>A file that cannot be read adds a warning and is skipped. <a href="#">src/ai_usage_cost/store.py:225</a></p>
+<h2>Postconditions</h2>
+<p>Usage events and a file record exist in the usage store for every readable file.</p>
+<h2>Acceptance criteria</h2>
+<p>The Claude Code reader skips synthetic and zero token records. <a href="#">tests/test_claude_code.py:102</a></p>
+<h2>Business rules</h2>
+<ul>
+<li><a href="../business/general-rules.html">BR-39 Readers only read</a></li>
+<li><a href="../business/general-rules.html">BR-40 A reader is found by its SOURCE value</a></li>
+<li><a href="../business/general-rules.html">BR-41 Unparsable lines are skipped and counted</a></li>
+<li><a href="../business/general-rules.html">BR-45 Experimental readers carry a flag</a></li>
+</ul>
+<h2>Diagrams</h2>
+<ul>
+<li><a href="../diagrams/reader-data-lineage.html">Reader data lineage</a></li>
+<li><a href="../diagrams/reader-glossary-map.html">Reader glossary map</a></li>
+<li><a href="../diagrams/reader-module-imports.html">Reader module imports</a></li>
+<li><a href="../diagrams/reader-types.html">Reader types</a></li>
+<li><a href="../diagrams/readers-concepts.html">Readers concepts</a></li>
+</ul>
+<h2>Code</h2>
+<ul>
+<li><a href="#">src/ai_usage_cost/sources/<strong>init</strong>.py</a></li>
+<li><a href="#">src/ai_usage_cost/sources/base.py</a></li>
+<li><a href="#">src/ai_usage_cost/store.py</a></li>
+<li><a href="#">tests/test_claude_code.py</a></li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

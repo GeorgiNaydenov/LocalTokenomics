@@ -1,0 +1,67 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Sessions Screen Map</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/sessions-screen-map.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Sessions Screen Map</h1>
+<p>This map shows the list a reader uses to find one session and open it. It lets them sort, hide columns and see which sessions cost the most or failed. It also shows the cap on how many rows are drawn.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The header carries the sort select and, on wider screens with rows, the column chooser <code>web/src/Sessions.tsx:281-296</code>.</li>
+<li>The body is an empty state, phone cards or a table, in that order of checks <code>web/src/Sessions.tsx:298-371</code>.</li>
+<li>Each header cell is a sort button and each row opens the session <code>web/src/Sessions.tsx:338-345</code> <code>web/src/Sessions.tsx:352-356</code>.</li>
+<li>At most a fixed number of rows is drawn and the note says so <code>web/src/Sessions.tsx:48</code> <code>web/src/Sessions.tsx:373-379</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>Opening a row shows <a href="../application/session-workspace-screen.html">Session Workspace Screen</a>. The row limit is the rule recorded in <a href="../application/web-specification.html">Web Specification</a>, and the view is reached from <a href="../application/app-screen.html">App Screen</a>. The journey through it is drawn in <a href="../diagrams/web-user-journey.html">Web User Journey</a>.</p>
+<h2>Sessions Screen screen map</h2>
+<p><img alt="drawio-screen-sessions" src="../assets/drawio-screen-sessions.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Badge</th>
+<th>Element</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&lt;SortSelect</code> sort</td>
+<td><code>web/src/Sessions.tsx:286-289</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;ColumnChooser</code> columns</td>
+<td><code>web/src/Sessions.tsx:292-292</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>sorted.length === 0</code> empty section</td>
+<td><code>web/src/Sessions.tsx:298-298</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&lt;SessionCard</code> phone cards</td>
+<td><code>web/src/Sessions.tsx:306-323</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;Table</code> sessions</td>
+<td><code>web/src/Sessions.tsx:329-332</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;SortButton</code> column header</td>
+<td><code>web/src/Sessions.tsx:338-343</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;TableRow</code> session row</td>
+<td><code>web/src/Sessions.tsx:352-354</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>&lt;PanelNote</code> row limit note</td>
+<td><code>web/src/Sessions.tsx:374-374</code></td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

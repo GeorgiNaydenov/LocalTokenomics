@@ -55,6 +55,62 @@ This view lists what a person can get done with the tool and which outside parti
 ## Usage cost goals
 
 %% generated:diagram-usage-cost-goals start (do not edit; run brain docs generate) %%
+```mermaid
+flowchart LR
+    person(["Person using the tool"]):::actor
+    logs(["AI coding tool logs"]):::external
+    notify(["Notification target"]):::external
+
+    subgraph sys["ai usage cost"]
+        direction TB
+        uc1("See what my AI usage would cost"):::usecase
+        uc2("Explore spend in the dashboard"):::usecase
+        uc3("Export a report as a file"):::usecase
+        uc4("Be alerted when spend rises"):::usecase
+        uc5("Inspect and rate one session"):::usecase
+        uc6("Forget a session"):::usecase
+        uc7("Read the text of one span"):::usecase
+        uc8("Try the tool with demo data"):::usecase
+        uc9("Sample GPU use for local models"):::usecase
+        uc10("Query the store with SQL"):::usecase
+        uc11("Browse sessions in the terminal"):::usecase
+    end
+
+    person --- uc1
+    person --- uc2
+    person --- uc3
+    person --- uc4
+    person --- uc8
+    person --- uc9
+    person --- uc10
+    person --- uc11
+    uc1 --- logs
+    uc4 --- notify
+    uc2 -.->|include| uc1
+    uc3 -.->|include| uc1
+    uc4 -.->|include| uc1
+    uc11 -.->|include| uc1
+    uc8 -.->|include| uc2
+    uc5 -.->|extend| uc2
+    uc6 -.->|extend| uc2
+    uc7 -.->|extend| uc5
+
+    subgraph Legend
+        direction LR
+        zlegend_a(["Actor"]):::actor
+        zlegend_b("Use case"):::usecase
+        zlegend_c["System boundary: the outer box"]:::boundary
+        zlegend_d(["Outside system"]):::external
+        zlegend_e["include: always runs the other goal"]:::boundary
+        zlegend_f["extend: an optional step of the other goal"]:::boundary
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d ~~~ zlegend_e ~~~ zlegend_f
+    end
+
+    classDef actor fill:#fff2cc,stroke:#222222,color:#222222
+    classDef usecase fill:#dae8fc,stroke:#222222,color:#222222
+    classDef external fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:4 3
+    classDef boundary fill:#ffffff,stroke:#222222,color:#222222
+```
 %% generated:diagram-usage-cost-goals end %%
 
 > [!example]- Code references

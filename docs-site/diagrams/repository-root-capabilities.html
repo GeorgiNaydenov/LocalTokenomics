@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Repository root capabilities</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/repository-root-capabilities.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Strategy · TOGAF: Phase A, Architecture Vision</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>pyproject.toml</code>, <code>.pre-commit-config.yaml</code>, <code>.github/workflows/**</code>, <code>web/*.ts</code>, <code>web/*.js</code>, <code>web/*.json</code></p><h1>Repository root capabilities</h1>
+<p>This map shows what the repository root lets a maintainer do, grouped by the job each file serves. It covers installing the tool, building the dashboard, keeping the code healthy and checking every change. It also shows the one check that is set up but never run, which a maintainer may want to wire in.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>Installing the package gives anyone the console command named ai-usage-cost. <code>pyproject.toml:30</code></li>
+<li>The extras for charts, SQL browsing, alerts and the text interface are optional, so they are chosen at install time. <code>pyproject.toml:16</code> <code>pyproject.toml:19</code></li>
+<li>The wheel contains only the Python package folder, and the dashboard build writes into that folder, so the built dashboard ships inside the wheel. <code>pyproject.toml:37</code> <code>web/vite.config.ts:15</code></li>
+<li>The build script runs the type checker before Vite, so a type error stops the bundle. <code>web/package.json:8</code></li>
+<li>The development server forwards every API request to the Python server for hot reload against live data. <code>web/vite.config.ts:21</code> <code>web/vite.config.ts:22</code></li>
+<li>Component tests run in a simulated browser and a setup file cleans up after each test. <code>web/vite.config.ts:28</code> <code>web/src/test-setup.ts:7</code></li>
+<li>Ruff checks the rule families E, F, I, UP and B with a line length of 100. <code>pyproject.toml:40</code> <code>pyproject.toml:44</code></li>
+<li>Mypy runs with the pydantic plugin and the dashboard type checker runs in strict mode. <code>pyproject.toml:48</code> <code>web/tsconfig.json:19</code></li>
+<li>Pylint must score at least 9.0. <code>pyproject.toml:113</code></li>
+<li>ESLint applies the React hooks rules and ignores the built dashboard. <code>web/eslint.config.js:21</code> <code>web/eslint.config.js:8</code></li>
+<li>The pre-commit file runs ruff, ruff format, pylint and ESLint, and keeps mypy as a manual stage. <code>.pre-commit-config.yaml:19</code> <code>.pre-commit-config.yaml:30</code></li>
+<li>Bandit is configured to skip the tests, the virtual environment and the web folder. No step of the Python workflow or the pre-commit file runs it. <code>pyproject.toml:120</code> <code>.github/workflows/python.yml:53</code></li>
+<li>The Python workflow tests on Ubuntu and Windows with Python 3.11, 3.12 and 3.13. <code>.github/workflows/python.yml:22</code> <code>.github/workflows/python.yml:23</code></li>
+<li>The web workflow runs lint, type check, test and build. <code>.github/workflows/web.yml:37</code> <code>.github/workflows/web.yml:46</code></li>
+<li>CodeQL analyses Python and TypeScript on pull requests, pushes and a weekly schedule. <code>.github/workflows/codeql.yml:25</code> <code>.github/workflows/codeql.yml:8</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The map realises the build and quality capability of the repository root, the same capability as in <a href="../diagrams/localtokenomics-root-wiring.html">LocalTokenomics root wiring</a>, seen as a list of jobs rather than as a flow.</li>
+<li>It serves the maintainer. The files it groups are explained in <a href="../application/localtokenomics-root-overview.html">localtokenomics root Overview</a> and <a href="../operations/localtokenomics-root-operations.html">localtokenomics root Operations</a>, and the settings behind them in <a href="../diagrams/repository-root-configuration.html">Repository root configuration</a>.</li>
+<li>The one dashed box is a gap worth a decision: the security lint setting exists but nothing runs it. It is also recorded in <a href="../security/localtokenomics-root-security.html">localtokenomics root Security</a> and in the specification of this chunk.</li>
+<li>The concepts behind the jobs are in <a href="../diagrams/repository-root-concepts.html">Repository root concepts</a>, and the folders they touch in <a href="../diagrams/repository-folder-layout.html">Repository folder layout</a>.</li>
+</ul>
+<h2>The diagram</h2>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pyproject.toml:29</code></td>
+<td>Console command</td>
+</tr>
+<tr>
+<td><code>pyproject.toml:36</code></td>
+<td>Wheel contents</td>
+</tr>
+<tr>
+<td><code>web/vite.config.ts:14</code></td>
+<td>Dashboard build output</td>
+</tr>
+<tr>
+<td><code>web/vite.config.ts:27</code></td>
+<td>Test runner settings</td>
+</tr>
+<tr>
+<td><code>pyproject.toml:119</code></td>
+<td>Security lint configuration</td>
+</tr>
+<tr>
+<td><code>.github/workflows/python.yml:19</code></td>
+<td>Python test matrix</td>
+</tr>
+<tr>
+<td><code>.github/workflows/web.yml:19</code></td>
+<td>Web checks</td>
+</tr>
+<tr>
+<td><code>.github/workflows/codeql.yml:18</code></td>
+<td>CodeQL analysis</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

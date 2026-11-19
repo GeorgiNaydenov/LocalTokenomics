@@ -11,12 +11,6 @@
       "color": "2"
     },
     {
-<<<<<<< HEAD
-      "id": "n-coverage-map",
-      "type": "file",
-      "file": "docs/brain/Operations/Coverage Map.md",
-      "x": 0,
-=======
       "id": "n-ai-usage-cost-operations",
       "type": "file",
       "file": "docs/brain/Operations/Ai usage cost Operations.md",
@@ -26,12 +20,29 @@
       "height": 70
     },
     {
+      "id": "n-ai-usage-cost-render-operations",
+      "type": "file",
+      "file": "docs/brain/Operations/Ai usage cost render Operations.md",
+      "x": 380,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ai-usage-cost-sources-operations",
+      "type": "file",
+      "file": "docs/brain/Operations/Ai usage cost sources Operations.md",
+      "x": 760,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
       "id": "n-coverage-map",
       "type": "file",
       "file": "docs/brain/Operations/Coverage Map.md",
-      "x": 380,
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
-      "y": 0,
+      "x": 0,
+      "y": 110,
       "width": 320,
       "height": 70
     },
@@ -39,12 +50,17 @@
       "id": "n-environment-variables",
       "type": "file",
       "file": "docs/brain/Operations/Environment Variables.md",
-<<<<<<< HEAD
       "x": 380,
-=======
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-non-functional-requirements",
+      "type": "file",
+      "file": "docs/brain/Operations/Non-Functional Requirements.md",
       "x": 760,
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
-      "y": 0,
+      "y": 110,
       "width": 320,
       "height": 70
     },
@@ -52,39 +68,26 @@
       "id": "n-project-facts",
       "type": "file",
       "file": "docs/brain/Operations/Project Facts.md",
-<<<<<<< HEAD
-      "x": 760,
-      "y": 0,
-=======
       "x": 0,
-      "y": 110,
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "y": 220,
       "width": 320,
       "height": 70
     },
     {
       "id": "n-release-checklist",
       "type": "file",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       "file": "docs/brain/Operations/Release Checklist.md",
-=======
-      "file": "docs/brain/Releases/Release Checklist.md",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
-      "file": "docs/brain/Releases/Release Checklist.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "file": "docs/brain/Releases/Release Checklist.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-      "x": 0,
-=======
-      "file": "docs/brain/Releases/Release Checklist.md",
       "x": 380,
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
-      "y": 110,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-release-checklist",
+      "type": "file",
+      "file": "docs/brain/Releases/Release Checklist.md",
+      "x": 760,
+      "y": 220,
       "width": 320,
       "height": 70
     },
@@ -92,125 +95,138 @@
       "id": "n-requirement-catalogue",
       "type": "file",
       "file": "docs/brain/Operations/Requirement Catalogue.md",
-<<<<<<< HEAD
-      "x": 380,
-      "y": 110,
+      "x": 0,
+      "y": 330,
       "width": 320,
       "height": 70
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       "id": "n-risks-and-open-questions",
       "type": "file",
       "file": "docs/brain/Operations/Risks and Open Questions.md",
-=======
-      "id": "n-rollback-runbook",
-      "type": "file",
-      "file": "docs/brain/Releases/Rollback Runbook.md",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
-      "id": "n-rollback-runbook",
-      "type": "file",
-      "file": "docs/brain/Releases/Rollback Runbook.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "n-rollback-runbook",
-      "type": "file",
-      "file": "docs/brain/Releases/Rollback Runbook.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
-      "x": 760,
-      "y": 110,
+      "x": 380,
+      "y": 330,
       "width": 320,
       "height": 70
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       "id": "n-rollback-runbook",
       "type": "file",
       "file": "docs/brain/Operations/Rollback Runbook.md",
-=======
-      "id": "n-localtokenomics-root-operations",
-      "type": "file",
-      "file": "docs/brain/Operations/localtokenomics root Operations.md",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
-      "id": "n-web-operations",
-      "type": "file",
-      "file": "docs/brain/Operations/Web Operations.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "n-web-ui-ui-components-operations",
-      "type": "file",
-      "file": "docs/brain/Operations/Web ui UI components Operations.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
+      "x": 760,
+      "y": 330,
+      "width": 320,
+      "height": 70
+    },
+    {
       "id": "n-rollback-runbook",
       "type": "file",
       "file": "docs/brain/Releases/Rollback Runbook.md",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "x": 0,
-      "y": 220,
+      "y": 440,
       "width": 320,
       "height": 70
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+    },
+    {
+      "id": "n-web-operations",
+      "type": "file",
+      "file": "docs/brain/Operations/Web Operations.md",
+      "x": 380,
+      "y": 440,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-components-operations",
+      "type": "file",
+      "file": "docs/brain/Operations/Web UI components Operations.md",
+      "x": 760,
+      "y": 440,
+      "width": 320,
+      "height": 70
     },
     {
       "id": "n-web-prototype-operations",
       "type": "file",
       "file": "docs/brain/Operations/Web prototype Operations.md",
-      "x": 380,
-      "y": 220,
+      "x": 0,
+      "y": 550,
       "width": 320,
       "height": 70
-=======
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+    },
+    {
+      "id": "n-web-ui-ui-components-operations",
+      "type": "file",
+      "file": "docs/brain/Operations/Web ui UI components Operations.md",
+      "x": 380,
+      "y": 550,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-localtokenomics-root-operations",
+      "type": "file",
+      "file": "docs/brain/Operations/localtokenomics root Operations.md",
+      "x": 760,
+      "y": 550,
+      "width": 320,
+      "height": 70
     }
   ],
   "edges": [
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "e0-n-coverage-map-n-web-prototype-operations",
-      "fromNode": "n-coverage-map",
-      "toNode": "n-web-prototype-operations",
-=======
-      "id": "e0-n-coverage-map-n-localtokenomics-root-operations",
-      "fromNode": "n-coverage-map",
-      "toNode": "n-localtokenomics-root-operations",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
-      "id": "e0-n-coverage-map-n-web-operations",
-      "fromNode": "n-coverage-map",
-      "toNode": "n-web-operations",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "e0-n-coverage-map-n-web-ui-ui-components-operations",
-      "fromNode": "n-coverage-map",
-      "toNode": "n-web-ui-ui-components-operations",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
       "id": "e0-n-coverage-map-n-ai-usage-cost-operations",
       "fromNode": "n-coverage-map",
       "toNode": "n-ai-usage-cost-operations",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e1-n-coverage-map-n-ai-usage-cost-render-operations",
+      "fromNode": "n-coverage-map",
+      "toNode": "n-ai-usage-cost-render-operations",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e2-n-coverage-map-n-ai-usage-cost-sources-operations",
+      "fromNode": "n-coverage-map",
+      "toNode": "n-ai-usage-cost-sources-operations",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e3-n-coverage-map-n-localtokenomics-root-operations",
+      "fromNode": "n-coverage-map",
+      "toNode": "n-localtokenomics-root-operations",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e4-n-coverage-map-n-web-operations",
+      "fromNode": "n-coverage-map",
+      "toNode": "n-web-operations",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e5-n-coverage-map-n-web-ui-components-operations",
+      "fromNode": "n-coverage-map",
+      "toNode": "n-web-ui-components-operations",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e6-n-coverage-map-n-web-ui-ui-components-operations",
+      "fromNode": "n-coverage-map",
+      "toNode": "n-web-ui-ui-components-operations",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e7-n-coverage-map-n-web-prototype-operations",
+      "fromNode": "n-coverage-map",
+      "toNode": "n-web-prototype-operations",
       "fromSide": "bottom",
       "toSide": "top"
     }

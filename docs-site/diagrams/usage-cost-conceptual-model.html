@@ -1,0 +1,91 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Usage cost conceptual model</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/usage-cost-conceptual-model.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business · TOGAF: Phase B, Business Architecture</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Usage cost conceptual model</h1>
+<p>This view names the main things the tool talks about and how they relate: a tool, its log files, the requests inside them, the price rows and the reports. It gives a new reader the vocabulary before any technical page. It also shows that cost belongs to a single request and is only summed later.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>A source is one supported AI coding tool, and it knows how to list its log files. <code>src/ai_usage_cost/sources/base.py:23</code></li>
+<li>Each usage event remembers the file it came from. <code>src/ai_usage_cost/models.py:67</code></li>
+<li>A session is the set of events that share a source and a session id. <code>src/ai_usage_cost/aggregate.py:582</code></li>
+<li>An event may carry token counts, and some tools log none. <code>src/ai_usage_cost/models.py:57</code></li>
+<li>Pricing wraps each event in a priced event that holds a cost state and an optional cost breakdown. <code>src/ai_usage_cost/models.py:117</code> <code>src/ai_usage_cost/models.py:120</code></li>
+<li>A priced event uses at most one rate row, found by the model id. <code>src/ai_usage_cost/pricing.py:431</code></li>
+<li>A person can rate a session, and the rating is kept per source and session. <code>src/ai_usage_cost/store.py:67</code></li>
+<li>A session can also be traced as spans. <code>src/ai_usage_cost/store.py:46</code></li>
+<li>A report sums priced events into buckets and carries the warnings. <code>src/ai_usage_cost/aggregate.py:472</code> <code>src/ai_usage_cost/aggregate.py:127</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>Gives the shared vocabulary for <a href="../data/ai-usage-cost-data-model.html">Ai usage cost Data Model</a>, which lists every field of these concepts.</li>
+<li>The tables behind the concepts are drawn in the generated entity view in <a href="../diagrams/ai-usage-cost-diagrams.html">Ai usage cost Diagrams</a>.</li>
+<li>How a request moves from event to priced event is shown in <a href="../diagrams/how-one-request-is-priced.html">How one request is priced</a> and <a href="../diagrams/cost-state-of-a-request.html">Cost state of a request</a>.</li>
+</ul>
+<h2>The diagram</h2>
+<pre class="mermaid">%%{init: {&quot;theme&quot;: &quot;base&quot;, &quot;themeVariables&quot;: {&quot;primaryColor&quot;: &quot;#dae8fc&quot;, &quot;primaryBorderColor&quot;: &quot;#222222&quot;, &quot;primaryTextColor&quot;: &quot;#222222&quot;, &quot;lineColor&quot;: &quot;#333333&quot;, &quot;tertiaryColor&quot;: &quot;#ffffff&quot;}}}%%
+erDiagram
+    %% Conceptual model: one box is one concept of the domain, not one table.
+    SOURCE ||--o{ LOG_FILE : &quot;is read from&quot;
+    LOG_FILE ||--o{ USAGE_EVENT : &quot;yields&quot;
+    SESSION ||--|{ USAGE_EVENT : &quot;groups&quot;
+    USAGE_EVENT ||--o| TOKEN_USAGE : &quot;counts&quot;
+    USAGE_EVENT ||--|| PRICED_EVENT : &quot;becomes&quot;
+    PRICED_EVENT }o--o| RATE_ROW : &quot;uses&quot;
+    PRICED_EVENT ||--o| COST_BREAKDOWN : &quot;costs&quot;
+    SESSION ||--o| OUTCOME : &quot;is rated by&quot;
+    SESSION ||--o{ SPAN : &quot;is traced as&quot;
+    REPORT ||--o{ BUCKET : &quot;sums into&quot;
+    REPORT ||--o{ WARNING : &quot;carries&quot;
+    USAGE_EVENT {
+        string client &quot;the AI tool&quot;
+        string model &quot;as logged&quot;
+        string tier &quot;service tier&quot;
+    }
+    PRICED_EVENT {
+        string state &quot;priced, free, unpriced, unavailable&quot;
+    }
+    RATE_ROW {
+        string match &quot;model id prefix&quot;
+        float input_per_million &quot;USD&quot;
+    }
+    BUCKET {
+        string key &quot;client, provider, model, project or day&quot;
+    }
+    LEGEND {
+        mark concept &quot;every box is a concept of the domain&quot;
+        line crow_foot &quot;line ends: one bar is exactly one, ring is optional, three prongs are many&quot;
+        color blue &quot;blue boxes are parts of this system&quot;
+        text label &quot;the words on a line say how the first concept relates to the second&quot;
+    }
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/models.py:49</code></td>
+<td>The usage event</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/models.py:117</code></td>
+<td>The priced event</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/aggregate.py:462</code></td>
+<td>The report with its buckets and warnings</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/base.py:18</code></td>
+<td>The source description</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/trace.py:147</code></td>
+<td>The rating of a session</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

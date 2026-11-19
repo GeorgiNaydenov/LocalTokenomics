@@ -1,0 +1,157 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Overview Screen Map</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/overview-screen-map.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Overview Screen Map</h1>
+<p>This map shows the first view a reader lands on. It lets them see in one place what the slice cost, which readers found logs and where the spend went. Each numbered part says which figures it shows and when it shows nothing instead of a guess.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The view stacks the detected readers panel, the headline figures, the outcome row, the heaviest sessions, the time chart and four panels in two grids <code>web/src/Overview.tsx:900-916</code>.</li>
+<li>The headline row has six figures, and the last one, Flagged, opens the Sources view when warnings exist <code>web/src/Overview.tsx:191-318</code> <code>web/src/Overview.tsx:321-329</code>.</li>
+<li>The time chart has two toggle groups, one for the stacking and one for the metric <code>web/src/Overview.tsx:552-576</code>.</li>
+<li>Each panel that may lack data draws an unavailable marker or an empty state rather than a zero <code>web/src/Overview.tsx:479-481</code> <code>web/src/Overview.tsx:579-584</code> <code>web/src/Overview.tsx:803-814</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The view is selected from <a href="../application/app-screen.html">App Screen</a>. The figures come from the report described in <a href="../data/web-data-model.html">Web Data Model</a>, and the rule that an absent figure is never drawn as zero is part of <a href="../application/web-specification.html">Web Specification</a>. The Flagged figure leads to <a href="../application/sources-screen.html">Sources Screen</a>.</p>
+<h2>Overview Screen screen map</h2>
+<p><img alt="drawio-screen-overview" src="../assets/drawio-screen-overview.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Badge</th>
+<th>Element</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&lt;SourceCard</code> reader cards</td>
+<td><code>web/src/Overview.tsx:117-117</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;button</code> more readers</td>
+<td><code>web/src/Overview.tsx:151-153</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>&lt;Stat</code> API equivalent cost</td>
+<td><code>web/src/Overview.tsx:193-193</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&lt;Stat</code> Tokens</td>
+<td><code>web/src/Overview.tsx:223-223</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;Stat</code> Requests</td>
+<td><code>web/src/Overview.tsx:246-246</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;Stat</code> Sessions</td>
+<td><code>web/src/Overview.tsx:265-265</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;Stat</code> Cache saved</td>
+<td><code>web/src/Overview.tsx:284-284</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>&lt;Stat</code> Flagged</td>
+<td><code>web/src/Overview.tsx:325-329</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>&lt;Stat</code> Success rate</td>
+<td><code>web/src/Overview.tsx:362-362</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>&lt;Stat</code> Tokens per success</td>
+<td><code>web/src/Overview.tsx:377-377</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>&lt;Stat</code> Cost per success</td>
+<td><code>web/src/Overview.tsx:392-392</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>&lt;HeavyRow</code> Most expensive</td>
+<td><code>web/src/Overview.tsx:472-472</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>byCost.length === 0</code> empty section</td>
+<td><code>web/src/Overview.tsx:479-479</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>&lt;HeavyRow</code> Longest log span</td>
+<td><code>web/src/Overview.tsx:492-492</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>bySpan.length === 0</code> empty section</td>
+<td><code>web/src/Overview.tsx:499-499</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>&lt;ToggleGroup</code> Client, Provider, Model</td>
+<td><code>web/src/Overview.tsx:554-559</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td><code>&lt;ToggleGroup</code> Cost, Tokens</td>
+<td><code>web/src/Overview.tsx:565-570</code></td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>rows.length === 0</code> empty section</td>
+<td><code>web/src/Overview.tsx:579-579</code></td>
+</tr>
+<tr>
+<td>19</td>
+<td><code>&lt;TimeChart</code> daily bars</td>
+<td><code>web/src/Overview.tsx:585-585</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td><code>&lt;MeterRow</code> model rows</td>
+<td><code>web/src/Overview.tsx:667-667</code></td>
+</tr>
+<tr>
+<td>21</td>
+<td><code>&lt;button</code> Show more</td>
+<td><code>web/src/Overview.tsx:708-711</code></td>
+</tr>
+<tr>
+<td>22</td>
+<td><code>&lt;BucketBar</code> per model buckets</td>
+<td><code>web/src/Overview.tsx:751-751</code></td>
+</tr>
+<tr>
+<td>23</td>
+<td><code>&lt;ComparisonMeter</code> no cache against billed</td>
+<td><code>web/src/Overview.tsx:790-790</code></td>
+</tr>
+<tr>
+<td>24</td>
+<td><code>{priced ? (</code> empty section</td>
+<td><code>web/src/Overview.tsx:803-803</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td><code>&lt;MeterRow</code> project rows</td>
+<td><code>web/src/Overview.tsx:848-848</code></td>
+</tr>
+<tr>
+<td>26</td>
+<td><code>&lt;button</code> Show more</td>
+<td><code>web/src/Overview.tsx:877-880</code></td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

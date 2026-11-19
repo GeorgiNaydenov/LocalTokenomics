@@ -1,0 +1,208 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Vault Documentation Rules</title><link rel="icon" href="assets/logo.svg"><link rel="stylesheet" href="assets/tokens.css"><link rel="stylesheet" href="assets/app.css"><link rel="stylesheet" href="assets/extra.css"></head><body data-root="" data-page="vault-documentation-rules.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="index.html"><img src="assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Navigation</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">confirmed</span> </p><h1>Obsidian Vault Documentation</h1>
+<p>Canonical skill for the project vault. The Codex copy at <code>.codex/skills/obsidian-vault-documentation/SKILL.md</code> is a pointer to this file. Derivable facts (route lists, counts, harness inventories, ADR indexes, diagram source) are generated; hand-written notes explain intent and declare which code they own.</p>
+<h2>Required Context</h2>
+<ol>
+<li>Read <code>CLAUDE.md</code> (or <code>AGENTS.md</code> for Codex) and <code>MEMORY.md</code>.</li>
+<li>Start at <code>docs/00 Start Here.md</code>.</li>
+<li>Read the matching syntax skill when touching its file type: <code>.claude/skills/obsidian-markdown/SKILL.md</code> for notes, <code>.claude/skills/obsidian-bases/SKILL.md</code> for <code>.base</code> files, <code>.claude/skills/json-canvas/SKILL.md</code> for <code>.canvas</code> files, <code>.claude/skills/obsidian-cli/SKILL.md</code> when the CLI is available.</li>
+<li>Treat code, <code>prisma/schema.prisma</code>, route files, <code>MEMORY.md</code>, and harness files as truth when a note disagrees.</li>
+</ol>
+<h2>Vault Root and Links</h2>
+<ul>
+<li>The vault root is the repository root. Obsidian detects all file extensions, applies <code>userIgnoreFilters</code>, and hides <code>src/</code>, <code>tests/</code>, <code>scripts/</code>, and <code>prisma/</code> from the graph.</li>
+<li>Link to source with a wikilink that uses the full vault-root path and the file extension, for example <code>&lt;a href="#"&gt;src/lib/cache.ts&lt;/a&gt;</code> or <code>&lt;a href="#"&gt;prisma/schema.prisma&lt;/a&gt;</code>.</li>
+<li>Never wikilink a directory, because Obsidian cannot resolve one. Write the directory as a backticked path such as <code>src/lib/auth/</code>.</li>
+<li>Never wikilink a path that contains <code>[</code> or <code>]</code> (for example <code>src/app/api/resources/[slug]/route.ts</code>), because Obsidian cannot resolve them. Write it as a backticked path.</li>
+<li>Never wikilink <code>README.md</code>; several files share that name. Use the full path.</li>
+<li>Dot-folders (<code>.claude/</code>, <code>.codex/</code>, <code>.github/</code>) are not indexed by Obsidian. Never wikilink into them from hand-written notes. Use a backticked path, or link to the generated note under <code>docs/Harness/</code>.</li>
+<li>Link notes to each other by title or by full path when titles collide.</li>
+</ul>
+<h2>Folder Map</h2>
+<p>All folders live under <code>docs/</code>. The map is fixed so generators never move files. Note names carry no number prefixes; use "and" rather than "&amp;" in file names; link notes by basename.</p>
+<table>
+<thead>
+<tr>
+<th>Folder</th>
+<th>Holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(root)</td>
+<td><code>00 Start Here.md</code> and <code>Reading Paths by Role.md</code>, the only root notes</td>
+</tr>
+<tr>
+<td><code>01 Strategy/</code></td>
+<td>Drivers, goals, capability maps, the roadmap (TOGAF phase A)</td>
+</tr>
+<tr>
+<td><code>02 Business/</code></td>
+<td>Processes (BPMN), conceptual models, use cases, actors, rules, the language of the domain (phase B)</td>
+</tr>
+<tr>
+<td><code>03 Application/</code></td>
+<td><code>Software/</code> (modules, routes, screens, sequences, state, tests) and <code>Data/</code> (entities, ER, flows, retention) (phase C)</td>
+</tr>
+<tr>
+<td><code>04 Technology/</code></td>
+<td><code>Infrastructure/</code>, <code>Operations/</code>, <code>Security/</code> (phase D)</td>
+</tr>
+<tr>
+<td><code>05 Motivation/</code></td>
+<td><code>Requirements/</code> and <code>Risks/</code> (requirements management)</td>
+</tr>
+<tr>
+<td><code>06 Implementation and Migration/</code></td>
+<td><code>Decisions/</code>, <code>Releases/</code>, <code>Governance/</code>, <code>Change/</code> (phases E to H)</td>
+</tr>
+<tr>
+<td>Inside each layer</td>
+<td><code>Notes/</code>, <code>Diagrams/</code> and <code>Use Cases/</code>, and one generated <code>&lt;Layer&gt; Layer.md</code> that lists them</td>
+</tr>
+<tr>
+<td><code>Harness/</code></td>
+<td>Generated, one note per rule, skill, command, agent, hook, and reference, plus the hand-written <code>Harness Overview.md</code></td>
+</tr>
+<tr>
+<td><code>Decisions/</code></td>
+<td>Generated <code>ADR Index.md</code>; the ADRs themselves stay in <code>docs/adr/</code></td>
+</tr>
+<tr>
+<td><code>Diagrams/</code></td>
+<td>The diagram hub, index and notation guide; each diagram's own wrapper note lives in its layer</td>
+</tr>
+<tr>
+<td><code>Glossary/</code></td>
+<td>Domain language</td>
+</tr>
+<tr>
+<td><code>Releases/</code></td>
+<td>Release notes</td>
+</tr>
+<tr>
+<td><code>Archive/</code></td>
+<td>Retired notes, kept with <code>status: archived</code></td>
+</tr>
+<tr>
+<td><code>Bases/</code></td>
+<td><code>.base</code> files</td>
+</tr>
+<tr>
+<td><code>Canvases/</code></td>
+<td><code>.canvas</code> files</td>
+</tr>
+<tr>
+<td><code>Templates/</code></td>
+<td>Note templates</td>
+</tr>
+</tbody>
+</table>
+<h2>Frontmatter Schema</h2>
+<p>Flat YAML on every durable note.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td>String, required</td>
+</tr>
+<tr>
+<td><code>aliases</code></td>
+<td>List. Old filenames go here after a rename. May be <code>[]</code></td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>List from the controlled list below</td>
+</tr>
+<tr>
+<td><code>area</code></td>
+<td><code>navigation</code>, <code>business</code>, <code>application</code>, <code>data</code>, <code>security</code>, <code>operations</code>, <code>harness</code>, <code>decisions</code>, <code>diagrams</code>, <code>glossary</code>, <code>releases</code>, <code>archive</code></td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>draft</code>, <code>active</code>, <code>generated</code>, <code>archived</code>. ADRs in <code>docs/adr/</code> use <code>Proposed</code>, <code>Accepted</code>, <code>Superseded</code>, or <code>Deprecated</code> instead</td>
+</tr>
+<tr>
+<td><code>audience</code></td>
+<td><code>public</code> or <code>internal</code>. Default <code>internal</code>. Notes on the admin route, env var names, rate limits, threat model, harness, or secrets handling are always <code>internal</code></td>
+</tr>
+<tr>
+<td><code>covers</code></td>
+<td>List of repo-relative globs the note owns (<code>*</code> and <code>**</code>). Brackets are literal, so <code>src/app/api/resources/[slug]/**</code> matches a literal <code>[slug]</code> folder. Omit or use <code>[]</code> when the note owns no code</td>
+</tr>
+<tr>
+<td><code>verified-against</code></td>
+<td>Git commit SHA (7 to 40 hex chars) the note was last checked against. Replaces the forbidden <code>reviewed:</code> date</td>
+</tr>
+<tr>
+<td><code>generated</code></td>
+<td>Boolean <code>true</code>, only on whole-file generated notes, which must also set <code>status: generated</code></td>
+</tr>
+<tr>
+<td><code>sources</code></td>
+<td>Only on diagram wrappers: list of vault-root-relative paths to <code>.mmd</code> or <code>.bpmn</code> sources (see Diagrams). Legacy single <code>source</code> string also accepted</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>ADRs only, <code>YYYY-MM-DD</code></td>
+</tr>
+</tbody>
+</table>
+<p>Controlled tags: <code>adr</code>, <code>diagram</code>, <code>bpmn</code>, <code>drawio</code>, <code>mermaid</code>, <code>c4</code>, <code>erd</code>, <code>canvas</code>, <code>base</code>, <code>generated</code>, <code>template</code>, <code>harness</code>, <code>rule</code>, <code>skill</code>, <code>command</code>, <code>agent</code>, <code>hook</code>, <code>release</code>, <code>runbook</code>, <code>reference</code>, <code>overview</code>, <code>accounts</code>, <code>auth</code>, <code>mfa</code>, <code>privacy</code>, <code>security</code>, <code>caching</code>, <code>deployment</code>, <code>ci</code>, <code>search</code>, <code>seo</code>, <code>curation</code>, <code>journeys</code>, <code>library</code>, <code>glossary</code>, <code>admin</code>, <code>roadmap</code>. Do not invent tags.</p>
+<h2>Generated Blocks</h2>
+<p>Generators own regions of a note, delimited by paired Obsidian comments on their own lines, outside code fences:</p>
+<pre><code>
+...generated content...
+
+</code></pre>
+<ul>
+<li><code>&lt;id&gt;</code> uses lowercase letters, digits, and hyphens.</li>
+<li>Hand-written text outside the markers is never touched by generators. Never edit text inside the markers by hand; fix the source or the generator and rerun.</li>
+<li>A note that is generated end to end sets <code>generated: true</code> and <code>status: generated</code>.</li>
+<li>Never copy a number, count, or list that a generator owns into hand-written prose. Link to the generated note instead.</li>
+</ul>
+<h2>Diagrams</h2>
+<ul>
+<li>Mermaid sources live in <code>docs/architecture/diagrams/*.mmd</code>. BPMN sources live in <code>docs/architecture/bpmn/*.bpmn</code> and draw.io sources in <code>docs/architecture/drawio/*.drawio</code>; both render to <code>docs/architecture/rendered/*.svg</code> (<code>npm run docs:diagrams:drawio</code> needs the draw.io desktop application).</li>
+<li>A wrapper note in <code>docs/Diagrams/</code> lists its diagrams in <code>sources:</code>, a list of vault-root-relative <code>.mmd</code> or <code>.bpmn</code> paths. One wrapper may hold several diagrams, and one source may appear in several wrappers. The older single <code>source:</code> string stays valid and uses the block id <code>diagram</code>.</li>
+<li>For each <code>.mmd</code> entry, the wrapper holds a generated block with id <code>diagram-&lt;stem&gt;</code>, where <code>&lt;stem&gt;</code> is the file name without the extension (<code>docs/architecture/diagrams/foo-bar.mmd</code> gives <code>diagram-foo-bar</code>). The sync script copies the <code>.mmd</code> content into a <code>mermaid</code> code fence between the markers, filling every block of a note in one run. The generator skips an entry whose marker pair is missing.</li>
+<li>For BPMN and draw.io, list the <code>.bpmn</code> or <code>.drawio</code> path in <code>sources:</code>, omit any marker pair, and embed the render by hand with <code>&lt;img alt="&amp;lt;name&amp;gt;" src="assets/&lt;name&gt;.svg"&gt;</code>. These entries are never synced. A draw.io file name starts with <code>drawio-</code> so its render name cannot collide with a Mermaid render.</li>
+<li><code>check-vault</code> rule <code>wrapper-source</code> fails when a <code>sources</code>/<code>source</code> path does not exist, when a <code>.mmd</code> entry has no marker pair, or when a <code>diagram-&lt;stem&gt;</code> block has no matching <code>sources</code> entry.</li>
+<li><code>Diagrams/Diagram Index.md</code> counts a wrapper as covering every path in <code>sources</code> and <code>source</code>.</li>
+<li>Canvas nodes use repo-root-relative <code>file</code> paths. Bases are embedded with <code>&lt;img alt="&amp;lt;name&amp;gt;" src="assets/&lt;name&gt;.base#&lt;exact view name&gt;"&gt;</code>.</li>
+</ul>
+<h2>Ownership and the Docs-Sync Guard</h2>
+<ul>
+<li>A note owns the code its <code>covers</code> globs match. A change to a matching path requires that note to change in the same commit.</li>
+<li><code>.claude/hooks/docs-sync-guard.mjs</code> is the enforcement point. Target behaviour: it maps changed paths to owning notes through <code>covers</code> and blocks when an owning note is missing from the change. The guard rewrite lands later in this overhaul; until then it applies the older rule that any documented-surface change needs some <code>docs/</code> or <code>docs/adr/</code> update.</li>
+<li>Run <code>node --preserve-symlinks-main .claude/hooks/docs-sync-guard.mjs --finalize</code> before finalizing a documented-surface change.</li>
+<li><code>DOCS_SYNC_ACK=1</code> is an explicit override. Use it only with a stated rationale, such as a change with no documentable effect.</li>
+<li>When you add a note that owns code, set <code>covers</code> and <code>verified-against</code> at the commit you checked.</li>
+</ul>
+<h2>Authoring Rules</h2>
+<ul>
+<li>Code is truth. Verify every claim in the file before writing it, and set <code>verified-against</code> to the commit you checked.</li>
+<li>Keep notes small and single-topic so agents can load them cheaply. Split a note that serves two questions.</li>
+<li>Link generously with wikilinks. Use callouts sparingly.</li>
+<li>No emojis, no em dashes, and no arrow glyphs in note prose. Write normal prose, not terse chat style.</li>
+<li>One-line comments only in code samples, and only when the reason is not obvious.</li>
+<li>Never put <code>.env*</code> values, secrets, or admin credentials in a note. Env var names live in <code>.claude/references/env-vars.md</code>.</li>
+<li>Keep Obsidian local pane state out of git (<code>.obsidian/workspace*.json</code> is ignored).</li>
+<li>Do not edit generated notes by hand: everything under <code>docs/Harness/</code> except <code>Harness Overview.md</code>, plus <code>Decisions/ADR Index.md</code>, <code>Diagrams/Diagram Index.md</code>, <code>Application/Routes.md</code>, <code>Data/Schema ERD.md</code>, and <code>Operations/Project Facts.md</code>. Run <code>npm run docs:vault</code> instead.</li>
+</ul>
+<h2>Verification</h2>
+<ul>
+<li><code>npm.cmd run check:vault</code> (once present): validates frontmatter, <code>covers</code> globs, wikilinks, and generated-block pairing.</li>
+<li><code>npm.cmd run docs:vault</code> (once present): regenerates generated blocks and notes. Rerun it, then confirm a second run produces no diff.</li>
+<li><code>npm.cmd run check:harness</code> when files under <code>.claude/</code>, <code>CLAUDE.md</code>, <code>AGENTS.md</code>, <code>MEMORY.md</code>, <code>.gitignore</code>, or <code>scripts/check-harness.mjs</code> change.</li>
+<li><code>npm.cmd run check:memory</code> when <code>MEMORY.md</code> or the coverage map changes.</li>
+<li>Parse every <code>.canvas</code> file as JSON and every <code>.base</code> file as YAML.</li>
+<li>Optional: with <code>obsidian</code> on PATH and the app running, use the Obsidian CLI to list unresolved links (see <code>.claude/skills/obsidian-cli/SKILL.md</code>).</li>
+</ul>
+<h2>Layer folders</h2>
+<p><code>brain docs layout</code> (also run by <code>generate</code>, <code>review</code>, <code>showcase</code> and the chunk export) moves each note into the folder of its layer. The layer comes from a <code>layer:</code> key in the frontmatter when present, otherwise from the diagram kind (for example <code>bpmn</code> and <code>erd-conceptual</code> are Business, <code>dfd</code> and <code>erd</code> are Data, <code>sequence</code>, <code>c4</code> and <code>state</code> are Application, <code>deployment</code> is Technology, <code>trust-boundary</code> is Security, <code>capability</code> is Strategy) or from the note's <code>area</code>. Notes that belong to no layer stay where they are. Obsidian links by title, so a move breaks no link, and generators that still name the old path are redirected to the new one. Set <code>layout: flat</code> in the configuration to turn the grouping off.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="assets/site-data.js"></script><script src="assets/site.js"></script><script src="assets/mermaid.min.js"></script><script src="assets/mermaid-init.js"></script></body></html>

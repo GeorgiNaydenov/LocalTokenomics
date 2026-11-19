@@ -1,0 +1,737 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Domain Models</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="data/domain-models.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Data</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/aggregate.py</code>, <code>src/ai_usage_cost/models.py</code>, <code>src/ai_usage_cost/pricing.py</code>, <code>src/ai_usage_cost/privacy.py</code>, <code>src/ai_usage_cost/trace.py</code></p><h1>Domain Models</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>The entities the application works with, their attributes and where each is declared in the code.</p>
+</details>
+<h2>AlertDecision</h2>
+<p>The entity AlertDecision, declared in src/ai_usage_cost/cli.py lines 252-254. It has 2 fields and 0 relations.</p>
+<ul>
+<li><code>fire</code>: <code>bool</code></li>
+<li><code>message</code>: <code>str</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>AlertDecision</code>: <code>class AlertDecision:</code></p>
+<h2>Analysis</h2>
+<p>The entity Analysis, declared in src/ai_usage_cost/pipeline.py lines 45-63. It has 9 fields and 0 relations.</p>
+<ul>
+<li><code>events</code>: <code>list[PricedEvent]</code></li>
+<li><code>table</code>: <code>RateTable</code></li>
+<li><code>files</code>: <code>int</code></li>
+<li><code>warnings</code>: <code>list[str]</code></li>
+<li><code>scan_warnings</code>: <code>list[str]</code></li>
+<li><code>sources</code>: <code>list[SourceInfo]</code></li>
+<li><code>session_flags</code>: <code>dict[tuple[str, str], tuple[bool, int, str]]</code></li>
+<li><code>db_path</code>: <code>Path | None</code></li>
+<li><code>today</code>: <code>date | None</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>Analysis</code>: <code>class Analysis:</code></p>
+<h2>apps</h2>
+<p>The table apps apps, declared in src/ai_usage_cost/demo.py lines 52-69. It has 16 fields and 0 relations.</p>
+<ul>
+<li><code>id</code>: <code>INTEGER (PK, required)</code></li>
+<li><code>name</code>: <code>TEXT</code></li>
+<li><code>path</code>: <code>TEXT</code></li>
+<li><code>created_at</code>: <code>INTEGER</code></li>
+<li><code>updated_at</code>: <code>INTEGER</code></li>
+<li><code>github_org</code>: <code>TEXT</code></li>
+<li><code>github_repo</code>: <code>TEXT</code></li>
+<li><code>chat_context</code>: <code>TEXT</code></li>
+<li><code>github_branch</code>: <code>TEXT</code></li>
+<li><code>vercel_project_id</code>: <code>TEXT</code></li>
+<li><code>vercel_project_name</code>: <code>TEXT</code></li>
+<li><code>vercel_team_id</code>: <code>TEXT</code></li>
+<li><code>vercel_deployment_url</code>: <code>TEXT</code></li>
+<li><code>neon_project_id</code>: <code>TEXT</code></li>
+<li><code>neon_development_branch_id</code>: <code>TEXT</code></li>
+<li><code>neon_preview_branch_id</code>: <code>TEXT</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>apps</code>: <code>CREATE TABLE apps (</code></p>
+<h2>Bucket</h2>
+<p>A group of priced events under one key such as a client, provider, model, project or day, with summed tokens and cost. <a href="#">src/ai_usage_cost/models.py:123</a></p>
+<ul>
+<li>key, label, tokens, cost, events, sessions, reported_cost</li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>Bucket</code>: <code>class Bucket(BaseModel):</code></p>
+<h2>Capabilities</h2>
+<p>The entity Capabilities, declared in src/ai_usage_cost/trace.py lines 104-109. It has 5 fields and 0 relations.</p>
+<ul>
+<li><code>trace</code>: <code>Provenance</code></li>
+<li><code>tokens</code>: <code>Provenance</code></li>
+<li><code>cost</code>: <code>Provenance</code></li>
+<li><code>context</code>: <code>Provenance</code></li>
+<li><code>latency</code>: <code>Provenance</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>Capabilities</code>: <code>class Capabilities(BaseModel):</code></p>
+<h2>chats</h2>
+<p>The table chats chats, declared in src/ai_usage_cost/demo.py lines 71-77. It has 5 fields and 0 relations.</p>
+<ul>
+<li><code>id</code>: <code>INTEGER (PK, required)</code></li>
+<li><code>app_id</code>: <code>INTEGER</code></li>
+<li><code>title</code>: <code>TEXT</code></li>
+<li><code>created_at</code>: <code>INTEGER</code></li>
+<li><code>initial_commit_hash</code>: <code>TEXT</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>chats</code>: <code>CREATE TABLE chats (</code></p>
+<h2>ClientInfo</h2>
+<p>The entity ClientInfo, declared in src/ai_usage_cost/api.py lines 86-88. It has 2 fields and 0 relations.</p>
+<ul>
+<li><code>id</code>: <code>str</code></li>
+<li><code>label</code>: <code>str</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>ClientInfo</code>: <code>class ClientInfo(BaseModel):</code></p>
+<h2>Config</h2>
+<p>The privacy settings read from config.json in the store folder. <a href="#">src/ai_usage_cost/privacy.py:52</a></p>
+<ul>
+<li><code>metadata_only</code>: <code>default true</code></li>
+<li>exclude_projects, max_content_bytes</li>
+<li><code>metadata_retention_days, content_retention_days</code>: <code>default None</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>Config</code>: <code>class Config(BaseModel):</code></p>
+<h2>ContextSnapshot</h2>
+<p>The entity ContextSnapshot, declared in src/ai_usage_cost/trace.py lines 112-131. It has 14 fields and 0 relations.</p>
+<ul>
+<li><code>span_id</code>: <code>str</code></li>
+<li><code>model</code>: <code>str | None</code></li>
+<li><code>started_at</code>: <code>datetime</code></li>
+<li><code>input_total</code>: <code>int | None</code></li>
+<li><code>tokens_provenance</code>: <code>Provenance</code></li>
+<li><code>capacity</code>: <code>int | None</code></li>
+<li><code>capacity_provenance</code>: <code>Provenance</code></li>
+<li><code>occupancy</code>: <code>float | None</code></li>
+<li><code>occupancy_provenance</code>: <code>Provenance</code></li>
+<li><code>delta_input</code>: <code>int | None</code></li>
+<li><code>added_span_ids</code>: <code>list[str]</code></li>
+<li><code>compacted_before</code>: <code>bool</code></li>
+<li><code>composition</code>: <code>dict[str, float]</code></li>
+<li><code>model_config</code>: <code>ConfigDict</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>ContextSnapshot</code>: <code>class ContextSnapshot(BaseModel):</code></p>
+<h2>CostBreakdown</h2>
+<p>The computed cost of a request or of a group of requests, split into uncached input, cache read, cache write and output, with the no cache baseline. <a href="#">src/ai_usage_cost/models.py:75</a></p>
+<ul>
+<li><code>uncached_input, cache_read, cache_write, output, no_cache_equivalent</code>: <code>dollars</code></li>
+<li><code>estimated</code>: <code>true when any part was priced from a shorter id prefix</code></li>
+<li><code>total, cache_savings</code>: <code>derived</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>CostBreakdown</code>: <code>class CostBreakdown(BaseModel):</code></p>
+<h2>Economics</h2>
+<p>The entity Economics, declared in src/ai_usage_cost/trace.py lines 177-181. It has 4 fields and 0 relations.</p>
+<ul>
+<li><code>totals</code>: <code>EconRow</code></li>
+<li><code>by_turn</code>: <code>list[EconRow]</code></li>
+<li><code>by_model</code>: <code>list[EconRow]</code></li>
+<li><code>by_tool</code>: <code>list[EconRow]</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>Economics</code>: <code>class Economics(BaseModel):</code></p>
+<h2>EconRow</h2>
+<p>The entity EconRow, declared in src/ai_usage_cost/trace.py lines 154-174. It has 19 fields and 0 relations.</p>
+<ul>
+<li><code>key</code>: <code>str</code></li>
+<li><code>label</code>: <code>str | None</code></li>
+<li><code>ordinal</code>: <code>int | None</code></li>
+<li><code>started_at</code>: <code>datetime | None</code></li>
+<li><code>is_sidechain</code>: <code>bool</code></li>
+<li><code>model_calls</code>: <code>int</code></li>
+<li><code>tool_calls</code>: <code>int</code></li>
+<li><code>tokens</code>: <code>TokenUsage | None</code></li>
+<li><code>tokens_provenance</code>: <code>Provenance</code></li>
+<li><code>cost</code>: <code>CostBreakdown | None</code></li>
+<li><code>cost_state</code>: <code>CostState</code></li>
+<li><code>duration_ms</code>: <code>int | None</code></li>
+<li><code>duration_provenance</code>: <code>Provenance</code></li>
+<li><code>errors</code>: <code>int</code></li>
+<li><code>retries</code>: <code>int | None</code></li>
+<li><code>amplification</code>: <code>float | None</code></li>
+<li><code>cache_hit_ratio</code>: <code>float | None</code></li>
+<li><code>tokens_per_second</code>: <code>float | None</code></li>
+<li><code>model_config</code>: <code>ConfigDict</code></li>
+</ul>
+<p>Lifecycle is described by <a href="../application/state-machines.html">CostState lifecycle</a>.</p>
+<p>Source:
+- <code>EconRow</code>: <code>class EconRow(BaseModel):</code></p>
+<h2>Facets</h2>
+<p>The entity Facets, declared in src/ai_usage_cost/aggregate.py lines 454-459. It has 5 fields and 0 relations.</p>
+<ul>
+<li><code>states</code>: <code>dict[str, int]</code></li>
+<li><code>clients</code>: <code>dict[str, int]</code></li>
+<li><code>models</code>: <code>dict[str, int]</code></li>
+<li><code>projects</code>: <code>dict[str, int]</code></li>
+<li><code>outcomes</code>: <code>dict[str, int]</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>Facets</code>: <code>class Facets(BaseModel):</code></p>
+<h2>files</h2>
+<p>The table files files, declared in src/ai_usage_cost/store.py lines 36-82. It has 10 fields and 0 relations.</p>
+<ul>
+<li><code>path</code>: <code>TEXT (PK, required)</code></li>
+<li><code>source</code>: <code>TEXT (required)</code></li>
+<li><code>mtime</code>: <code>REAL (required)</code></li>
+<li><code>size</code>: <code>INTEGER (required)</code></li>
+<li><code>ingested_at</code>: <code>TEXT (required)</code></li>
+<li><code>warnings</code>: <code>TEXT (required)</code></li>
+<li><code>parser_version</code>: <code>INTEGER (required), default 0</code></li>
+<li><code>ingested_offset</code>: <code>INTEGER (required), default 0</code></li>
+<li><code>boundary_hash</code>: <code>TEXT</code></li>
+<li><code>title_seed</code>: <code>TEXT</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>files</code>: <code>CREATE TABLE files (</code></p>
+<h2>IngestSummary</h2>
+<p>The entity IngestSummary, declared in src/ai_usage_cost/store.py lines 134-137. It has 3 fields and 0 relations.</p>
+<ul>
+<li><code>files_parsed</code>: <code>int</code></li>
+<li><code>files_skipped</code>: <code>int</code></li>
+<li><code>warnings</code>: <code>list[str]</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>IngestSummary</code>: <code>class IngestSummary:</code></p>
+<h2>Insight</h2>
+<p>The entity Insight, declared in src/ai_usage_cost/trace.py lines 184-189. It has 5 fields and 0 relations.</p>
+<ul>
+<li><code>kind</code>: <code>str</code></li>
+<li><code>severity</code>: <code>Literal['info', 'warning', 'critical']</code></li>
+<li><code>span_id</code>: <code>str</code></li>
+<li><code>message</code>: <code>str</code></li>
+<li><code>count</code>: <code>int</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>Insight</code>: <code>class Insight(BaseModel):</code></p>
+<h2>messages</h2>
+<p>The table messages messages, declared in src/ai_usage_cost/demo.py lines 79-87. It has 7 fields and 0 relations.</p>
+<ul>
+<li><code>id</code>: <code>INTEGER (PK, required)</code></li>
+<li><code>chat_id</code>: <code>INTEGER</code></li>
+<li><code>role</code>: <code>TEXT</code></li>
+<li><code>content</code>: <code>TEXT</code></li>
+<li><code>created_at</code>: <code>INTEGER</code></li>
+<li><code>approval_state</code>: <code>TEXT</code></li>
+<li><code>commit_hash</code>: <code>TEXT</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>messages</code>: <code>CREATE TABLE messages (</code></p>
+<h2>Meta</h2>
+<p>The entity Meta, declared in src/ai_usage_cost/api.py lines 105-128. It has 18 fields and 0 relations.</p>
+<ul>
+<li><code>clients</code>: <code>list[ClientInfo]</code></li>
+<li><code>providers</code>: <code>list[str]</code></li>
+<li><code>models</code>: <code>list[str]</code></li>
+<li><code>projects</code>: <code>list[str]</code></li>
+<li><code>first_day</code>: <code>date | None</code></li>
+<li><code>last_day</code>: <code>date | None</code></li>
+<li><code>rates_as_of</code>: <code>str</code></li>
+<li><code>rates_age_days</code>: <code>int | None</code></li>
+<li><code>currency</code>: <code>str</code></li>
+<li><code>files_scanned</code>: <code>int</code></li>
+<li><code>events</code>: <code>int</code></li>
+<li><code>warnings</code>: <code>list[str]</code></li>
+<li><code>warning_summary</code>: <code>WarningSummary</code></li>
+<li><code>session_warnings</code>: <code>dict[str, list[str]]</code></li>
+<li><code>sources</code>: <code>list[SourceInfo]</code></li>
+<li><code>client_last_seen</code>: <code>dict[str, str]</code></li>
+<li><code>model_last_seen</code>: <code>dict[str, str]</code></li>
+<li><code>project_last_seen</code>: <code>dict[str, str]</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>Meta</code>: <code>class Meta(BaseModel):</code></p>
+<h2>ModelMatch</h2>
+<p>The entity ModelMatch, declared in src/ai_usage_cost/pricing.py lines 224-229. It has 2 fields and 0 relations.</p>
+<ul>
+<li><code>match</code>: <code>str | None</code></li>
+<li><code>kind</code>: <code>Literal['exact', 'suffix', 'estimated', 'none']</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>ModelMatch</code>: <code>class ModelMatch(BaseModel):</code></p>
+<h2>ModelRate</h2>
+<p>One row of the rate table: prices per million tokens for a model id prefix, with variants, bands, a peak window and dated periods. <a href="#">src/ai_usage_cost/pricing.py:126</a></p>
+<ul>
+<li><code>match, provider, display</code>: <code>required</code></li>
+<li><code>input, output, cache_read, cache_write_5m, cache_write_1h</code>: <code>dollars per million tokens</code></li>
+<li>variants, bands, peak, periods, cache_rules, context_window, status</li>
+</ul>
+<p>Source:
+- <code>ModelRate</code>: <code>class ModelRate(PriceSet):</code></p>
+<h2>Outcome</h2>
+<p>The rating a person gives to a session, with notes and tags, plus signals computed from its spans. <a href="#">src/ai_usage_cost/trace.py:147</a></p>
+<ul>
+<li><code>source, session_id</code>: <code>identity</code></li>
+<li><code>outcome</code>: <code>successful, partial, failed, abandoned or unrated</code></li>
+<li>notes, tags, updated_at, signals</li>
+</ul>
+<p>Source:
+- <code>Outcome</code>: <code>class Outcome(OutcomeUpdate):</code></p>
+<h2>outcomes</h2>
+<p>The table outcomes outcomes, declared in src/ai_usage_cost/store.py lines 63-68. It has 6 fields and 0 relations.</p>
+<ul>
+<li><code>source</code>: <code>TEXT (PK, required)</code></li>
+<li><code>session_id</code>: <code>TEXT (PK, required)</code></li>
+<li><code>outcome</code>: <code>TEXT (required)</code></li>
+<li><code>notes</code>: <code>TEXT (required)</code></li>
+<li><code>tags</code>: <code>TEXT (required)</code></li>
+<li><code>updated_at</code>: <code>TEXT (required)</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>outcomes</code>: <code>CREATE TABLE outcomes (</code></p>
+<h2>OutcomeSignals</h2>
+<p>The entity OutcomeSignals, declared in src/ai_usage_cost/trace.py lines 134-138. It has 4 fields and 0 relations.</p>
+<ul>
+<li><code>aborted_turns</code>: <code>int</code></li>
+<li><code>interrupted_tools</code>: <code>int</code></li>
+<li><code>errors</code>: <code>int</code></li>
+<li><code>last_turn_status</code>: <code>SpanStatus</code></li>
+</ul>
+<p>Lifecycle is described by <a href="../application/state-machines.html">SpanStatus lifecycle</a>.</p>
+<p>Source:
+- <code>OutcomeSignals</code>: <code>class OutcomeSignals(BaseModel):</code></p>
+<h2>OutcomeUpdate</h2>
+<p>The entity OutcomeUpdate, declared in src/ai_usage_cost/trace.py lines 141-144. It has 3 fields and 0 relations.</p>
+<ul>
+<li><code>outcome</code>: <code>OutcomeLabel</code></li>
+<li><code>notes</code>: <code>str</code></li>
+<li><code>tags</code>: <code>list[str]</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>OutcomeUpdate</code>: <code>class OutcomeUpdate(BaseModel):</code></p>
+<h2>PartialRules</h2>
+<p>The entity PartialRules, declared in src/ai_usage_cost/pricing.py lines 109-117. It has 5 fields and 0 relations.</p>
+<ul>
+<li><code>cache_read</code>: <code>float | None</code></li>
+<li><code>cache_write_5m</code>: <code>float | None</code></li>
+<li><code>cache_write_1h</code>: <code>float | None</code></li>
+<li><code>batch</code>: <code>float | None</code></li>
+<li><code>free</code>: <code>bool | None</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>PartialRules</code>: <code>class PartialRules(BaseModel):</code></p>
+<h2>Period</h2>
+<p>The entity Period, declared in src/ai_usage_cost/pricing.py lines 68-98. It has 11 fields and 0 relations.</p>
+<ul>
+<li><code>model_config</code>: <code>ConfigDict</code></li>
+<li><code>from_</code>: <code>date | None</code></li>
+<li><code>until</code>: <code>date | None</code></li>
+<li><code>input</code>: <code>float | None</code></li>
+<li><code>output</code>: <code>float | None</code></li>
+<li><code>cache_read</code>: <code>float | None</code></li>
+<li><code>cache_write_5m</code>: <code>float | None</code></li>
+<li><code>cache_write_1h</code>: <code>float | None</code></li>
+<li><code>variants</code>: <code>dict[str, PriceSet] | None</code></li>
+<li><code>bands</code>: <code>list[Band] | None</code></li>
+<li><code>peak</code>: <code>Peak | None</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>Period</code>: <code>class Period(BaseModel):</code></p>
+<h2>Prefix</h2>
+<p>The entity Prefix, declared in src/ai_usage_cost/pricing.py lines 169-171. It has 2 fields and 0 relations.</p>
+<ul>
+<li><code>prefix</code>: <code>str</code></li>
+<li><code>provider</code>: <code>str | None</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>Prefix</code>: <code>class Prefix(BaseModel):</code></p>
+<h2>PricedEvent</h2>
+<p>A usage event with its cost breakdown (absent when not priced) and its cost state. <a href="#">src/ai_usage_cost/models.py:117</a></p>
+<ul>
+<li><code>event</code>: <code>the usage event</code></li>
+<li><code>cost</code>: <code>breakdown or None</code></li>
+<li><code>state</code>: <code>priced, free, unpriced or unavailable</code></li>
+</ul>
+<p>Lifecycle is described by <a href="../application/state-machines.html">CostState lifecycle</a>.</p>
+<p>Source:
+- <code>PricedEvent</code>: <code>class PricedEvent(BaseModel):</code></p>
+<h2>PriceSet</h2>
+<p>The entity PriceSet, declared in src/ai_usage_cost/pricing.py lines 29-37. It has 5 fields and 0 relations.</p>
+<ul>
+<li><code>input</code>: <code>float</code></li>
+<li><code>output</code>: <code>float</code></li>
+<li><code>cache_read</code>: <code>float | None</code></li>
+<li><code>cache_write_5m</code>: <code>float | None</code></li>
+<li><code>cache_write_1h</code>: <code>float | None</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>PriceSet</code>: <code>class PriceSet(BaseModel):</code></p>
+<h2>ProviderRules</h2>
+<p>The entity ProviderRules, declared in src/ai_usage_cost/pricing.py lines 101-106. It has 5 fields and 0 relations.</p>
+<ul>
+<li><code>cache_read</code>: <code>float</code></li>
+<li><code>cache_write_5m</code>: <code>float</code></li>
+<li><code>cache_write_1h</code>: <code>float</code></li>
+<li><code>batch</code>: <code>float</code></li>
+<li><code>free</code>: <code>bool</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>ProviderRules</code>: <code>class ProviderRules(BaseModel):</code></p>
+<h2>RateTable</h2>
+<p>The loaded rates.json: model rows, provider cache rules, gateway prefixes and models known to have no price. <a href="#">src/ai_usage_cost/pricing.py:252</a></p>
+<ul>
+<li>as_of, currency, units, notes</li>
+<li><code>models</code>: <code>rows keyed by a match prefix</code></li>
+<li><code>providers</code>: <code>cache and batch rules per provider</code></li>
+<li>prefixes, unpriced_models</li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>RateTable</code>: <code>class RateTable(BaseModel):</code></p>
+<h2>Report</h2>
+<p>The answer to one query: totals, buckets by client, provider, model, project and day, session rows, warnings and facets. <a href="#">src/ai_usage_cost/aggregate.py:462</a></p>
+<ul>
+<li>totals, by_client, by_provider, by_model, by_project, by_day, series, sessions</li>
+<li>unknown_models, warnings, scan_warnings, warning_groups, facets, model_matches</li>
+<li>rates_as_of, rates_age_days, currency, files_scanned, files_in_slice</li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>Report</code>: <code>class Report(BaseModel):</code></p>
+<h2>requests</h2>
+<p>The table requests requests, declared in src/ai_usage_cost/store.py lines 23-85. It has 26 fields and 0 relations.</p>
+<ul>
+<li><code>fingerprint</code>: <code>TEXT (PK, required)</code></li>
+<li><code>source</code>: <code>TEXT (required)</code></li>
+<li><code>client</code>: <code>TEXT (required)</code></li>
+<li><code>provider</code>: <code>TEXT</code></li>
+<li><code>model</code>: <code>TEXT</code></li>
+<li><code>session_id</code>: <code>TEXT (required)</code></li>
+<li><code>timestamp</code>: <code>TEXT (required)</code></li>
+<li><code>request_id</code>: <code>TEXT</code></li>
+<li><code>uncached_input</code>: <code>INTEGER</code></li>
+<li><code>cache_read</code>: <code>INTEGER</code></li>
+<li><code>cache_write_5m</code>: <code>INTEGER</code></li>
+<li><code>cache_write_1h</code>: <code>INTEGER</code></li>
+<li><code>output</code>: <code>INTEGER</code></li>
+<li><code>reasoning_output</code>: <code>INTEGER</code></li>
+<li><code>is_sidechain</code>: <code>INTEGER (required)</code></li>
+<li><code>tier</code>: <code>TEXT (required)</code></li>
+<li><code>project</code>: <code>TEXT</code></li>
+<li><code>working_directory</code>: <code>TEXT</code></li>
+<li><code>repository</code>: <code>TEXT</code></li>
+<li><code>branch</code>: <code>TEXT</code></li>
+<li><code>machine</code>: <code>TEXT (required)</code></li>
+<li><code>source_file</code>: <code>TEXT (required)</code></li>
+<li><code>raw</code>: <code>TEXT (required)</code></li>
+<li><code>title</code>: <code>TEXT</code></li>
+<li><code>title_source</code>: <code>TEXT (required), default 'folder'</code></li>
+<li><code>reported_cost</code>: <code>REAL</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>requests</code>: <code>CREATE TABLE requests (</code></p>
+<h2>Sample</h2>
+<p>The entity Sample, declared in src/ai_usage_cost/collect.py lines 49-56. It has 7 fields and 0 relations.</p>
+<ul>
+<li><code>machine</code>: <code>str</code></li>
+<li><code>sampled_at</code>: <code>datetime</code></li>
+<li><code>gpu_util</code>: <code>float | None</code></li>
+<li><code>vram_used</code>: <code>int | None</code></li>
+<li><code>vram_total</code>: <code>int | None</code></li>
+<li><code>power_w</code>: <code>float | None</code></li>
+<li><code>source</code>: <code>str</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>Sample</code>: <code>class Sample(BaseModel):</code></p>
+<h2>samples</h2>
+<p>The table samples samples, declared in src/ai_usage_cost/collect.py lines 19-23. It has 7 fields and 0 relations.</p>
+<ul>
+<li><code>machine</code>: <code>TEXT (required)</code></li>
+<li><code>sampled_at</code>: <code>TEXT (required)</code></li>
+<li><code>gpu_util</code>: <code>REAL</code></li>
+<li><code>vram_used</code>: <code>INTEGER</code></li>
+<li><code>vram_total</code>: <code>INTEGER</code></li>
+<li><code>power_w</code>: <code>REAL</code></li>
+<li><code>source</code>: <code>TEXT (required)</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>samples</code>: <code>CREATE TABLE IF NOT EXISTS samples (</code></p>
+<h2>SeriesPoint</h2>
+<p>The entity SeriesPoint, declared in src/ai_usage_cost/aggregate.py lines 37-45. It has 8 fields and 0 relations.</p>
+<ul>
+<li><code>day</code>: <code>date</code></li>
+<li><code>client</code>: <code>str</code></li>
+<li><code>provider</code>: <code>str</code></li>
+<li><code>model</code>: <code>str</code></li>
+<li><code>source</code>: <code>str</code></li>
+<li><code>cost</code>: <code>float</code></li>
+<li><code>tokens</code>: <code>int</code></li>
+<li><code>events</code>: <code>int</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>SeriesPoint</code>: <code>class SeriesPoint(BaseModel):</code></p>
+<h2>session_exclusions</h2>
+<p>The table session_exclusions session_exclusions, declared in src/ai_usage_cost/store.py lines 69-72. It has 3 fields and 0 relations.</p>
+<ul>
+<li><code>source</code>: <code>TEXT (PK, required)</code></li>
+<li><code>session_id</code>: <code>TEXT (PK, required)</code></li>
+<li><code>excluded_at</code>: <code>TEXT (required)</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>session_exclusions</code>: <code>CREATE TABLE session_exclusions (</code></p>
+<h2>SessionRow</h2>
+<p>One session in a report: its time span, models, summed tokens and cost, worst cost state and rating. <a href="#">src/ai_usage_cost/aggregate.py:48</a></p>
+<ul>
+<li><code>session_id, source, client, provider</code>: <code>identity</code></li>
+<li>start_time, end_time, request_count, tokens, cost, reported_cost</li>
+<li><code>cost_state</code>: <code>worst of its requests; outcome, traced, error_count, title</code></li>
+</ul>
+<p>Lifecycle is described by <a href="../application/state-machines.html">CostState lifecycle</a>.</p>
+<p>Source:
+- <code>SessionRow</code>: <code>class SessionRow(BaseModel):</code></p>
+<h2>Source</h2>
+<p>The frozen description of one reader: id, label, client names, default roots, file lister, parse function, token data flag, display path, optional spans, capabilities, experimental flag and resume hook.</p>
+<ul>
+<li><code>id</code>: <code>str</code></li>
+<li><code>label</code>: <code>str</code></li>
+<li><code>clients</code>: <code>dict[str, str]</code></li>
+<li><code>default_roots</code>: <code>Callable[[], list[Path]]</code></li>
+<li><code>files</code>: <code>Callable[[Path], list[Path]]</code></li>
+<li><code>parse</code>: <code>Callable&lt;a href="#"&gt;Path, list[str&lt;/a&gt;, Iterator[UsageEvent]]</code></li>
+<li><code>token_data</code>: <code>TokenData</code></li>
+<li><code>display_path</code>: <code>str</code></li>
+<li><code>spans</code>: <code>Callable&lt;a href="#"&gt;Path, list[str&lt;/a&gt;, Iterator[Span]] | None</code></li>
+<li><code>capabilities</code>: <code>Capabilities</code></li>
+<li><code>experimental</code>: <code>bool</code></li>
+<li><code>parse_resume</code>: <code>Callable[[Path, list[str], int, str | None], Iterator[UsageEvent]] | None</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <a href="#">src/ai_usage_cost/sources/base.py</a>: <code>class Source:</code></p>
+<h2>SourceInfo</h2>
+<p>The entity SourceInfo, declared in src/ai_usage_cost/pipeline.py lines 31-41. It has 10 fields and 0 relations.</p>
+<ul>
+<li><code>id</code>: <code>str</code></li>
+<li><code>label</code>: <code>str</code></li>
+<li><code>clients</code>: <code>list[str]</code></li>
+<li><code>token_data</code>: <code>TokenData</code></li>
+<li><code>path</code>: <code>str</code></li>
+<li><code>root_hint</code>: <code>str</code></li>
+<li><code>detected</code>: <code>bool</code></li>
+<li><code>files</code>: <code>int</code></li>
+<li><code>capabilities</code>: <code>Capabilities</code></li>
+<li><code>experimental</code>: <code>bool</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>SourceInfo</code>: <code>class SourceInfo(BaseModel):</code></p>
+<h2>Span</h2>
+<p>One step of a session trace: a turn, a message, a model call, a tool call or an error, with timing, tokens and where its record sits in the log. <a href="#">src/ai_usage_cost/trace.py:55</a></p>
+<ul>
+<li>span_id, parent_id, session_id, turn_id, agent_id, kind, status</li>
+<li>started_at, ended_at, duration_ms, tokens, context_capacity, each with a provenance</li>
+<li>source_file, record_offset, record_length, content_path</li>
+</ul>
+<p>Lifecycle is described by <a href="../application/state-machines.html">SpanKind lifecycle</a>. Lifecycle is described by <a href="../application/state-machines.html">SpanStatus lifecycle</a>.</p>
+<p>Source:
+- <code>Span</code>: <code>class Span(BaseModel):</code></p>
+<h2>SpanContent</h2>
+<p>The entity SpanContent, declared in src/ai_usage_cost/trace.py lines 201-205. It has 4 fields and 0 relations.</p>
+<ul>
+<li><code>span_id</code>: <code>str</code></li>
+<li><code>content</code>: <code>str</code></li>
+<li><code>truncated</code>: <code>bool</code></li>
+<li><code>redactions</code>: <code>int</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>SpanContent</code>: <code>class SpanContent(BaseModel):</code></p>
+<h2>Spec</h2>
+<p>Per tool settings shared by the Cline family readers: source id, client name, extension id, whether input tokens include cache buckets, and whether the SDK store is read.</p>
+<ul>
+<li><code>source_id</code>: <code>str</code></li>
+<li><code>client</code>: <code>str</code></li>
+<li><code>ext_id</code>: <code>str</code></li>
+<li><code>tokens_in_inclusive</code>: <code>bool</code></li>
+<li><code>sdk</code>: <code>bool</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <a href="#">src/ai_usage_cost/sources/cline.py</a>: <code>class Spec:</code></p>
+<h2>TokenUsage</h2>
+<p>The token counts of one request, split into uncached input, cache read, two cache write buckets, output and reasoning output. <a href="#">src/ai_usage_cost/models.py:12</a></p>
+<ul>
+<li><code>uncached_input, cache_read, cache_write_5m, cache_write_1h, output, reasoning_output</code>: <code>whole numbers, default 0</code></li>
+<li><code>cache_write, input_total, total</code>: <code>derived, never stored</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>TokenUsage</code>: <code>class TokenUsage(BaseModel):</code></p>
+<h2>Totals</h2>
+<p>The entity Totals, declared in src/ai_usage_cost/aggregate.py lines 26-34. It has 8 fields and 0 relations.</p>
+<ul>
+<li><code>tokens</code>: <code>TokenUsage</code></li>
+<li><code>cost</code>: <code>CostBreakdown</code></li>
+<li><code>reported_cost</code>: <code>float | None</code></li>
+<li><code>events</code>: <code>int</code></li>
+<li><code>priced_events</code>: <code>int</code></li>
+<li><code>sessions</code>: <code>int</code></li>
+<li><code>first_event</code>: <code>datetime | None</code></li>
+<li><code>last_event</code>: <code>datetime | None</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>Totals</code>: <code>class Totals(BaseModel):</code></p>
+<h2>Trace</h2>
+<p>The entity Trace, declared in src/ai_usage_cost/trace.py lines 192-198. It has 6 fields and 0 relations.</p>
+<ul>
+<li><code>source</code>: <code>str</code></li>
+<li><code>session_id</code>: <code>str</code></li>
+<li><code>capabilities</code>: <code>Capabilities</code></li>
+<li><code>spans</code>: <code>list[Span]</code></li>
+<li><code>outcome</code>: <code>Outcome | None</code></li>
+<li><code>insights</code>: <code>list[Insight]</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>Trace</code>: <code>class Trace(BaseModel):</code></p>
+<h2>trace_events</h2>
+<p>The table trace_events trace_events, declared in src/ai_usage_cost/store.py lines 43-60. It has 34 fields and 0 relations.</p>
+<ul>
+<li><code>span_id</code>: <code>TEXT (PK, required)</code></li>
+<li><code>parent_id</code>: <code>TEXT</code></li>
+<li><code>record_parent</code>: <code>TEXT</code></li>
+<li><code>source</code>: <code>TEXT (required)</code></li>
+<li><code>session_id</code>: <code>TEXT (required)</code></li>
+<li><code>turn_id</code>: <code>TEXT</code></li>
+<li><code>agent_id</code>: <code>TEXT</code></li>
+<li><code>is_sidechain</code>: <code>INTEGER (required)</code></li>
+<li><code>seq</code>: <code>INTEGER (required)</code></li>
+<li><code>kind</code>: <code>TEXT (required)</code></li>
+<li><code>name</code>: <code>TEXT</code></li>
+<li><code>model</code>: <code>TEXT</code></li>
+<li><code>status</code>: <code>TEXT (required)</code></li>
+<li><code>started_at</code>: <code>TEXT (required)</code></li>
+<li><code>ended_at</code>: <code>TEXT</code></li>
+<li><code>duration_ms</code>: <code>INTEGER</code></li>
+<li><code>duration_provenance</code>: <code>TEXT (required)</code></li>
+<li><code>ttft_ms</code>: <code>INTEGER</code></li>
+<li><code>uncached_input</code>: <code>INTEGER</code></li>
+<li><code>cache_read</code>: <code>INTEGER</code></li>
+<li><code>cache_write_5m</code>: <code>INTEGER</code></li>
+<li><code>cache_write_1h</code>: <code>INTEGER</code></li>
+<li><code>output</code>: <code>INTEGER</code></li>
+<li><code>reasoning_output</code>: <code>INTEGER</code></li>
+<li><code>tokens_provenance</code>: <code>TEXT (required)</code></li>
+<li><code>context_capacity</code>: <code>INTEGER</code></li>
+<li><code>capacity_provenance</code>: <code>TEXT (required)</code></li>
+<li><code>retry_attempt</code>: <code>INTEGER</code></li>
+<li><code>error</code>: <code>TEXT</code></li>
+<li><code>source_file</code>: <code>TEXT (required)</code></li>
+<li><code>record_offset</code>: <code>INTEGER (required)</code></li>
+<li><code>record_length</code>: <code>INTEGER (required)</code></li>
+<li><code>content_path</code>: <code>TEXT</code></li>
+<li><code>detail</code>: <code>TEXT (required)</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>trace_events</code>: <code>CREATE TABLE trace_events (</code></p>
+<h2>UnknownModel</h2>
+<p>The entity UnknownModel, declared in src/ai_usage_cost/aggregate.py lines 77-80. It has 3 fields and 0 relations.</p>
+<ul>
+<li><code>model</code>: <code>str</code></li>
+<li><code>tokens</code>: <code>int</code></li>
+<li><code>events</code>: <code>int</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>UnknownModel</code>: <code>class UnknownModel(BaseModel):</code></p>
+<h2>UnpricedModel</h2>
+<p>The entity UnpricedModel, declared in src/ai_usage_cost/pricing.py lines 232-242. It has 3 fields and 0 relations.</p>
+<ul>
+<li><code>match</code>: <code>str</code></li>
+<li><code>note</code>: <code>str</code></li>
+<li><code>status</code>: <code>Literal['watchlist', 'no_list_price'] | None</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>UnpricedModel</code>: <code>class UnpricedModel(BaseModel):</code></p>
+<h2>UsageEvent</h2>
+<p>One request read from a log: who made it, when, with which model and how many tokens, plus project and title context. <a href="#">src/ai_usage_cost/models.py:49</a></p>
+<ul>
+<li><code>source, client, session_id, timestamp</code>: <code>required</code></li>
+<li><code>provider, model, request_id, tokens</code>: <code>optional; tokens is None when the log has no counts</code></li>
+<li><code>tier</code>: <code>service tier, default standard</code></li>
+<li><code>reported_cost</code>: <code>the cost the tool itself logged, kept beside the computed one</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>UsageEvent</code>: <code>class UsageEvent(BaseModel):</code></p>
+<h2>WarningGroup</h2>
+<p>The entity WarningGroup, declared in src/ai_usage_cost/aggregate.py lines 115-127. It has 11 fields and 0 relations.</p>
+<ul>
+<li><code>kind</code>: <code>str</code></li>
+<li><code>label</code>: <code>str</code></li>
+<li><code>count</code>: <code>int</code></li>
+<li><code>summary</code>: <code>str</code></li>
+<li><code>severity</code>: <code>WarningSeverity</code></li>
+<li><code>total_delta_tokens</code>: <code>int</code></li>
+<li><code>total_delta_cost</code>: <code>float</code></li>
+<li><code>worst_example</code>: <code>WarningInstance | None</code></li>
+<li><code>affected_sessions</code>: <code>int</code></li>
+<li><code>instances</code>: <code>list[WarningInstance]</code></li>
+<li><code>warnings</code>: <code>list[str]</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>WarningGroup</code>: <code>class WarningGroup(BaseModel):</code></p>
+<h2>WarningInstance</h2>
+<p>The entity WarningInstance, declared in src/ai_usage_cost/aggregate.py lines 100-111. It has 10 fields and 0 relations.</p>
+<ul>
+<li><code>kind</code>: <code>str</code></li>
+<li><code>message</code>: <code>str</code></li>
+<li><code>source</code>: <code>str</code></li>
+<li><code>file</code>: <code>str | None</code></li>
+<li><code>session_id</code>: <code>str | None</code></li>
+<li><code>severity</code>: <code>WarningSeverity</code></li>
+<li><code>delta_tokens</code>: <code>int | None</code></li>
+<li><code>delta_cost</code>: <code>float | None</code></li>
+<li><code>likely_cause</code>: <code>str | None</code></li>
+<li><code>auto_corrected</code>: <code>bool</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>WarningInstance</code>: <code>class WarningInstance(BaseModel):</code></p>
+<h2>WarningSummary</h2>
+<p>The entity WarningSummary, declared in src/ai_usage_cost/api.py lines 91-102. It has 4 fields and 0 relations.</p>
+<ul>
+<li><code>critical</code>: <code>int</code></li>
+<li><code>caution</code>: <code>int</code></li>
+<li><code>info</code>: <code>int</code></li>
+<li><code>total_delta_cost</code>: <code>float</code></li>
+</ul>
+<p>No lifecycle field was found in the code.</p>
+<p>Source:
+- <code>WarningSummary</code>: <code>class WarningSummary(BaseModel):</code></p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

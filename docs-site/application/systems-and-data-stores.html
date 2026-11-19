@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Systems and Data Stores</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/systems-and-data-stores.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/pipeline.py</code>, <code>src/ai_usage_cost/pricing.py</code>, <code>src/ai_usage_cost/privacy.py</code></p><h1>Systems and Data Stores</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>The parts the application is built from and the places it keeps data.</p>
+</details>
+<h2>Ai usage cost</h2>
+<p>The python component src/ai_usage_cost with 13 files and 5069 lines. Its documentation lives in the chunk ch-localtokenomics-src-ai-usage-cost.</p>
+<p>Source:
+- <a href="#">src/ai_usage_cost/<strong>init</strong>.py:1-1</a>: <code>__version__ = "0.2.0"</code></p>
+<h2>Ai usage cost render</h2>
+<p>The python component src/ai_usage_cost/render with 3 files and 187 lines. Its documentation lives in the chunk ch-localtokenomics-src-ai-usage-cost-render.</p>
+<p>Source:
+- <a href="#">src/ai_usage_cost/render/<strong>init</strong>.py:1-1</a></p>
+<h2>Ai usage cost sources</h2>
+<p>The python component src/ai_usage_cost/sources with 22 files and 4722 lines. Its documentation lives in the chunk ch-localtokenomics-src-ai-usage-cost-sources.</p>
+<p>Source:
+- <a href="#">src/ai_usage_cost/sources/<strong>init</strong>.py:1-5</a>: <code>from __future__ import annotations</code></p>
+<h2>localtokenomics root</h2>
+<p>The python component localtokenomics root with 2 files and 1668 lines. Its documentation lives in the chunk ch-localtokenomics-root.</p>
+<p>Source:
+- <a href="#">scripts/demo_logs.py:1-5</a>: <code>"""Generate synthetic Claude Code, Codex, Jan and Dyad logs for developing the dashboard.</code></p>
+<h2>Web</h2>
+<p>The typescript component web/src with 20 files and 7127 lines. Its documentation lives in the chunk ch-localtokenomics-web-src.</p>
+<p>Source:
+- <a href="#">web/src/App.tsx:1-5</a>: <code>import { useCallback, useEffect, useState } from 'react'</code></p>
+<h2>Web prototype</h2>
+<p>The typescript component web/src/prototype with 10 files and 3215 lines. Its documentation lives in the chunk ch-localtokenomics-web-src-prototype.</p>
+<p>Source:
+- <a href="#">web/src/prototype/Gallery.tsx:1-5</a>: <code>import { useState } from 'react'</code></p>
+<h2>Web UI components</h2>
+<p>The typescript component web/src/components with 18 files and 3024 lines. Its documentation lives in the chunk ch-localtokenomics-web-src-components.</p>
+<p>Source:
+- <a href="#">web/src/components/chart-hover.tsx:1-5</a>: <code>import * as React from 'react'</code></p>
+<h2>Web ui UI components</h2>
+<p>The typescript component web/src/components/ui with 25 files and 2083 lines. Its documentation lives in the chunk ch-localtokenomics-web-src-components-ui.</p>
+<p>Source:
+- <a href="#">web/src/components/ui/accordion.tsx:1-5</a>: <code>"use client"</code></p>
+<h2>Data of Ai usage cost</h2>
+<p>The 51 entities declared in the Ai usage cost module, stored in the tables apps, chats, files, messages, outcomes, requests.</p>
+<h2>Data of Ai usage cost sources</h2>
+<p>The 2 entities declared in the Ai usage cost sources module.</p>
+<h2>Privacy configuration file</h2>
+<p>An optional config.json in the store folder. When it is missing or invalid the defaults apply: <a href="#">src/ai_usage_cost/privacy.py:12</a>.</p>
+<p>Source:
+- <code>DEFAULT_CONFIG_PATH</code>: <code>DEFAULT_CONFIG_PATH = Path.home()</code></p>
+<h2>Rate table file</h2>
+<p>The shipped rates.json beside the pricing code, replaceable with the rates option: <a href="#">src/ai_usage_cost/pricing.py:22</a>.</p>
+<p>Source:
+- <code>DEFAULT_RATES_PATH</code>: <code>DEFAULT_RATES_PATH = Path(__file__)</code></p>
+<h2>Usage store</h2>
+<p>A SQLite file in the home folder that holds requests, files, trace events, outcomes, exclusions and GPU samples: <a href="#">src/ai_usage_cost/pipeline.py:28</a>.</p>
+<p>Source:
+- <code>DEFAULT_DB_PATH</code>: <code>DEFAULT_DB_PATH = Path.home()</code></p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

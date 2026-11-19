@@ -1,0 +1,52 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Scan and report process</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/scan-and-report-process.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business · TOGAF: Phase B, Business Architecture</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Scan and report process</h1>
+<p>This view shows the scan as a business process between a person and the tool. The person asks to see their spend, and the tool does the reading, pricing and adding up. It also shows the one case where nothing is produced, which helps when explaining an empty result.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The person starts the process by running the scan command or opening the dashboard. <code>src/ai_usage_cost/cli.py:72</code></li>
+<li>The tool loads the privacy settings and opens the store. <code>src/ai_usage_cost/pipeline.py:175</code> <code>src/ai_usage_cost/pipeline.py:176</code></li>
+<li>It finds the log files under each source root. <code>src/ai_usage_cost/store.py:220</code></li>
+<li>A file that has not changed is skipped. <code>src/ai_usage_cost/store.py:230</code></li>
+<li>A changed file is parsed and its requests are stored. <code>src/ai_usage_cost/store.py:255</code> <code>src/ai_usage_cost/store.py:271</code></li>
+<li>The stored requests are loaded and each one is priced. <code>src/ai_usage_cost/pipeline.py:186</code> <code>src/ai_usage_cost/pipeline.py:198</code></li>
+<li>Warnings are added for unpriced and estimated models and for old rates. <code>src/ai_usage_cost/pipeline.py:212</code> <code>src/ai_usage_cost/pipeline.py:235</code></li>
+<li>The requests are filtered and grouped into a report. <code>src/ai_usage_cost/pipeline.py:335</code></li>
+<li>With no requests the command ends with exit code 1. <code>src/ai_usage_cost/cli.py:98</code> <code>src/ai_usage_cost/cli.py:104</code></li>
+<li>With requests the report is returned and the person reads it. <code>src/ai_usage_cost/cli.py:105</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>Realises the scan capability described in <a href="../application/ai-usage-cost-workflows.html">Ai usage cost Workflows</a>.</li>
+<li>The technical order of the same process is <a href="../diagrams/scan-pipeline-from-logs-to-report.html">Scan pipeline from logs to report</a>, and the data it moves is <a href="../diagrams/usage-data-flow.html">Usage data flow</a>.</li>
+<li>The pricing step inside the process is opened up in <a href="../diagrams/how-one-request-is-priced.html">How one request is priced</a>.</li>
+</ul>
+<h2>The diagram</h2>
+<p><img alt="Scan and report process" src="../architecture/rendered/bpmn-scan-and-report.svg" /></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:72</code></td>
+<td>The command that starts the process</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pipeline.py:166</code></td>
+<td>Settings, store, ingest, pricing and warnings</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/store.py:190</code></td>
+<td>The file loop with its skip decision</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pipeline.py:305</code></td>
+<td>Filtering and grouping</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

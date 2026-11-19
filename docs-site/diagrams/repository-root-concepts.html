@@ -1,0 +1,93 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Repository root concepts</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/repository-root-concepts.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Strategy · TOGAF: Phase A, Architecture Vision</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>pyproject.toml</code>, <code>README.md</code>, <code>web/*.ts</code>, <code>web/*.js</code>, <code>web/*.json</code></p><h1>Repository root concepts</h1>
+<p>This picture gives a newcomer the main ideas of the repository root on one page. The root ties a Python tool and a web dashboard into one package and keeps both honest with automatic checks. Reading it first makes the longer notes easier to follow.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The Python package branch holds the project name and the one console command it installs. <code>pyproject.toml:2</code> <code>pyproject.toml:30</code></li>
+<li>Five libraries are required and everything else is an optional extra, so a plain install stays small. <code>pyproject.toml:7</code> <code>pyproject.toml:15</code></li>
+<li>The wheel is built by hatchling. <code>pyproject.toml:34</code></li>
+<li>The dashboard branch names the Vite plugins, the relative base path and the output folder inside the Python package. <code>web/vite.config.ts:8</code> <code>web/vite.config.ts:7</code> <code>web/vite.config.ts:15</code></li>
+<li>The development server listens on port 5173 and forwards API calls to the Python server on port 8420. <code>web/vite.config.ts:19</code> <code>web/vite.config.ts:22</code></li>
+<li>The quality branch lists the Python lint rule families, the mypy plugin and the pylint threshold. <code>pyproject.toml:44</code> <code>pyproject.toml:48</code> <code>pyproject.toml:113</code></li>
+<li>On the dashboard side the type checker runs in strict mode and ESLint warns about files that export more than components. <code>web/tsconfig.json:19</code> <code>web/eslint.config.js:22</code></li>
+<li>The delivery branch lists the three workflows: Python, Web and a CodeQL scan that also runs weekly. <code>.github/workflows/python.yml:1</code> <code>.github/workflows/web.yml:1</code> <code>.github/workflows/codeql.yml:8</code></li>
+<li>The product promises branch repeats what the README tells a reader: local, read only, offline, with optional settings and a local store. <code>README.md:26</code> <code>README.md:433</code> <code>README.md:475</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The map supports onboarding to the repository root. Its detail is in <a href="../application/localtokenomics-root-overview.html">localtokenomics root Overview</a> and <a href="../operations/localtokenomics-root-operations.html">localtokenomics root Operations</a>.</li>
+<li>The folders behind these concepts are drawn in <a href="../diagrams/repository-folder-layout.html">Repository folder layout</a>; the files that configure them are listed in <a href="../diagrams/repository-root-configuration.html">Repository root configuration</a>.</li>
+<li>The jobs the root files perform are grouped in <a href="../diagrams/repository-root-capabilities.html">Repository root capabilities</a>; the build and check flow is in <a href="../diagrams/localtokenomics-root-wiring.html">LocalTokenomics root wiring</a>.</li>
+</ul>
+<h2>The diagram</h2>
+<pre class="mermaid">mindmap
+  root((Repository root))
+    Python package
+      Name ai-usage-cost version 0.2.0
+      Console command ai-usage-cost
+      Five required libraries
+      Optional extras png sql alert tui
+      Wheel built by hatchling
+    Dashboard build
+      Vite with React and Tailwind
+      Relative base path
+      Output into src/ai_usage_cost/web/dist
+      Dev server port 5173
+      API proxy to port 8420
+    Quality gates
+      ruff and ruff format
+      mypy with pydantic plugin
+      pylint at least 9.0
+      ESLint and strict tsc
+      pre-commit hooks
+    Delivery checks
+      Python workflow
+      Web workflow
+      CodeQL weekly scan
+    Product promises
+      Local and read only
+      Offline with no API key
+      Settings in config.json
+      Store in usage.db
+    Legend
+      Centre circle is the repository root
+      First level branch is one concern of the root files
+      Second level leaf is a concept named as in the files
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pyproject.toml:29</code></td>
+<td>Console command table</td>
+</tr>
+<tr>
+<td><code>web/vite.config.ts:14</code></td>
+<td>Build output folder and folder clearing</td>
+</tr>
+<tr>
+<td><code>web/vite.config.ts:18</code></td>
+<td>Development server port and API proxy</td>
+</tr>
+<tr>
+<td><code>pyproject.toml:112</code></td>
+<td>Pylint score threshold</td>
+</tr>
+<tr>
+<td><code>.github/workflows/codeql.yml:7</code></td>
+<td>Weekly CodeQL trigger</td>
+</tr>
+<tr>
+<td><code>README.md:433</code></td>
+<td>Optional settings file the README documents</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

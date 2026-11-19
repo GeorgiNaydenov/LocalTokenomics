@@ -1,0 +1,99 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Render layer module dependencies</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/render-layer-module-dependencies.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/render/**</code></p><h1>Render layer module dependencies</h1>
+<p>This view shows what the render files import. They depend on the report code and on two third party libraries, and no file outside the layer imports them except the command line. A maintainer can change how output looks without touching how cost is computed.</p>
+<h2>What the diagram shows</h2>
+<p>The command line module imports the terminal renderer at the top of the file <code>src/ai_usage_cost/cli.py:22-22</code>, and imports the picture writer inside the export command, so only that command loads it <code>src/ai_usage_cost/cli.py:190-190</code>. It also imports the report type <code>src/ai_usage_cost/cli.py:17-17</code>.</p>
+<p>The terminal renderer imports the report and bucket types from the report module and three parts of the rich library <code>src/ai_usage_cost/render/terminal.py:3-7</code>.</p>
+<p>The picture writer imports the report type and the matplotlib library <code>src/ai_usage_cost/render/png.py:7-13</code>.</p>
+<p>The report module imports the shared models, the pricing matcher and a helper from the sources base <code>src/ai_usage_cost/aggregate.py:11-13</code>. It does not import the render layer.</p>
+<p>No cycle exists between these files. The generated folder view in <a href="../diagrams/ai-usage-cost-render-diagrams.html">Ai usage cost render Diagrams</a> shows a loop only because the command line module and the report module sit in the parent folder of the render folder.</p>
+<h2>Capability and related functionality</h2>
+<p>The capability is a clear boundary: the layer sits between the command line and the report code. The component view is <a href="../diagrams/render-layer-components.html">Render layer components</a> and the one page summary is <a href="../diagrams/render-layer-mind-map.html">Render layer mind map</a>.</p>
+<h2>Render layer module dependencies</h2>
+<pre class="mermaid">flowchart TD
+    subgraph cmd[&quot;Command line layer&quot;]
+        cli[&quot;cli.py&quot;]:::mod
+    end
+    subgraph render[&quot;Render layer&quot;]
+        terminal[&quot;render/terminal.py&quot;]:::mod
+        png[&quot;render/png.py&quot;]:::mod
+    end
+    subgraph report[&quot;Report layer&quot;]
+        aggregate[&quot;aggregate.py&quot;]:::mod
+        models[&quot;models.py&quot;]:::mod
+        pricing[&quot;pricing.py&quot;]:::mod
+        sourcesbase[&quot;sources/base.py&quot;]:::mod
+    end
+    rich[&quot;rich&quot;]:::external
+    mpl[&quot;matplotlib&quot;]:::external
+
+    cli --&gt; terminal
+    cli -.-&gt; png
+    cli --&gt; aggregate
+    terminal --&gt; aggregate
+    png --&gt; aggregate
+    terminal --&gt; rich
+    png --&gt; mpl
+    aggregate --&gt; models
+    aggregate --&gt; pricing
+    aggregate --&gt; sourcesbase
+
+    subgraph Legend
+        direction LR
+        zl1[&quot;Box: a module, an arrow from A to B means A imports B&quot;]:::mod
+        zl2[&quot;Dashed arrow: an import inside a function, run only when that command runs&quot;]:::mod
+        zl3[&quot;Grey dashed box: a third party package&quot;]:::external
+        zl4[&quot;Red arrow: a cycle. None exists between these files&quot;]:::mod
+        zl1 ~~~ zl2
+        zl2 ~~~ zl3
+        zl3 ~~~ zl4
+    end
+
+    classDef mod fill:#dae8fc,stroke:#222222,color:#111111
+    classDef external fill:#e6e6e6,stroke:#222222,stroke-dasharray:5 3,color:#111111
+</pre>
+
+<h3>Node citations</h3>
+<ul>
+<li>cli: <code>src/ai_usage_cost/cli.py:17-22</code></li>
+<li>terminal: <code>src/ai_usage_cost/render/terminal.py:3-7</code></li>
+<li>png: <code>src/ai_usage_cost/render/png.py:7-13</code></li>
+<li>aggregate: <code>src/ai_usage_cost/aggregate.py:11-13</code></li>
+<li>models: <code>src/ai_usage_cost/aggregate.py:11-11</code></li>
+<li>pricing: <code>src/ai_usage_cost/aggregate.py:12-12</code></li>
+<li>sourcesbase: <code>src/ai_usage_cost/aggregate.py:13-13</code></li>
+<li>rich: <code>src/ai_usage_cost/render/terminal.py:3-5</code></li>
+<li>mpl: <code>src/ai_usage_cost/render/png.py:7-11</code></li>
+</ul>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:17-22</code></td>
+<td>Command line imports</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:190-190</code></td>
+<td>Import inside the export command</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/render/terminal.py:3-7</code></td>
+<td>Terminal renderer imports</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/render/png.py:7-13</code></td>
+<td>Picture writer imports</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/aggregate.py:11-13</code></td>
+<td>Report module imports</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

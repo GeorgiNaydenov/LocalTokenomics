@@ -1,0 +1,770 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Ai usage cost sources Overview</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/ai-usage-cost-sources-overview.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/sources/**</code></p><h1>Ai usage cost sources Overview</h1>
+<p>What Ai usage cost sources is made of and how it connects to the rest of the code.</p>
+<h2>How it works</h2>
+<p>Ai usage cost sources holds 22 source files and 4722 lines, with 2 entities, 515 tests that live in it or import its files. The most depended-on files are <code>src/ai_usage_cost/sources/base.py</code>, <code>src/ai_usage_cost/sources/__init__.py</code>, <code>src/ai_usage_cost/sources/claude_code.py</code>. It uses <a href="../application/ai-usage-cost-overview.html">Ai usage cost Overview</a>. It is used by <a href="../application/ai-usage-cost-overview.html">Ai usage cost Overview</a>.</p>
+<p>The purpose column quotes each file's own header comment where it has one. Every file is cited by its full line range, and every public name by the line that declares it.</p>
+<h3>What a reader is</h3>
+<p>A reader is one module that holds a single module level <code>SOURCE</code> value of type <code>Source</code>, a frozen dataclass. <code>src/ai_usage_cost/sources/claude_code.py:672</code> <code>Source</code> carries an id, a label, a map of client names, a function returning the default root paths, a function listing the files under one root, a <code>parse</code> function that yields usage events from one file, a <code>token_data</code> flag, a display path, and optional span, capability and resume hooks. <code>src/ai_usage_cost/sources/base.py:17-40</code></p>
+<p><code>token_data</code> is either <code>full</code> or <code>session</code>. <code>src/ai_usage_cost/sources/base.py:14</code> Readers that can only see that a conversation happened, not how many tokens it used, declare <code>session</code> and emit events with <code>tokens=None</code>. Examples are Cursor, Windsurf, Dyad, Jan and Ollama. <code>src/ai_usage_cost/sources/cursor.py:72-83</code> <code>src/ai_usage_cost/sources/ollama_app.py:25-43</code> Readers that find real token counts, such as Claude Code, Codex, Gemini CLI and Grok Build, declare <code>full</code>. <code>src/ai_usage_cost/sources/claude_code.py:672-678</code> <code>src/ai_usage_cost/sources/grok_build.py:113-121</code></p>
+<p>Each reader repeats the same four steps: find candidate roots, list the files under a root, read records, and map them to a <code>UsageEvent</code> with a model, a timestamp, a session id, a request id, a project and a title. <code>src/ai_usage_cost/sources/claude_code.py:34-110</code> The shared helpers in the base module do the file reading, so a reader holds only the format knowledge, and the shared helpers live in one place. <code>src/ai_usage_cost/sources/base.py:69-176</code></p>
+<h3>Shared helpers</h3>
+<ul>
+<li><code>read_json_lines</code> and <code>read_json_records</code> read a JSON Lines file, skip blank lines, count lines that fail to parse and add one warning per file. <code>read_json_records</code> also returns the byte offset and length of each record and can start from a byte offset. <code>src/ai_usage_cost/sources/base.py:69-114</code></li>
+<li><code>read_sqlite</code> opens a database through a read only URI, returns no rows when the file is missing, and turns a SQLite error into a warning instead of a crash. <code>src/ai_usage_cost/sources/base.py:117-129</code></li>
+<li><code>jsonl_files</code> finds every <code>*.jsonl</code> under a root and <code>single_file</code> treats the root itself as the one file. <code>src/ai_usage_cost/sources/base.py:132-137</code></li>
+<li><code>parse_timestamp</code> accepts seconds, milliseconds or an ISO string, and falls back to the file modification time. <code>src/ai_usage_cost/sources/base.py:140-156</code></li>
+<li><code>project_of</code> takes the last path segment of a working directory, and <code>title_of</code> builds the folder fallback title from the project and the session id. <code>src/ai_usage_cost/sources/base.py:159-176</code></li>
+</ul>
+<h3>Where each reader looks</h3>
+<p>Roots are computed per machine, never configured in the repository. Several readers read an environment variable by name to move the root: <code>GEMINI_CLI_HOME</code>, <code>COPILOT_HOME</code>, <code>GROK_HOME</code>, <code>MUSE_DATA_DIR</code>, <code>QWEN_RUNTIME_DIR</code>, <code>QWEN_HOME</code> and the Cline directory variables. <code>src/ai_usage_cost/sources/gemini_cli.py:31-35</code> <code>src/ai_usage_cost/sources/copilot_cli.py:61-64</code> <code>src/ai_usage_cost/sources/grok_build.py:14-17</code> <code>src/ai_usage_cost/sources/muse_code.py:59-65</code> <code>src/ai_usage_cost/sources/qwen_code.py:30-35</code> <code>src/ai_usage_cost/sources/cline.py:123-132</code></p>
+<table>
+<thead>
+<tr>
+<th>Reader id</th>
+<th>What it reads</th>
+<th>Token data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>claude-code</td>
+<td>JSONL files under the Claude projects folders of the home directory; assistant records with a <code>usage</code> object <code>src/ai_usage_cost/sources/claude_code.py:34-37</code> <code>src/ai_usage_cost/sources/claude_code.py:71-86</code></td>
+<td>full</td>
+</tr>
+<tr>
+<td>codex</td>
+<td>Rollout JSONL files under the <code>.codex</code> sessions folder; <code>token_count</code> and <code>token_usage_record</code> payloads <code>src/ai_usage_cost/sources/codex.py:46-47</code> <code>src/ai_usage_cost/sources/codex.py:169-178</code></td>
+<td>full</td>
+</tr>
+<tr>
+<td>gemini-cli</td>
+<td><code>chats/session-*.jsonl</code> and older <code>session-*.json</code> under the <code>.gemini</code> tmp folder <code>src/ai_usage_cost/sources/gemini_cli.py:38-54</code></td>
+<td>full</td>
+</tr>
+<tr>
+<td><code>copilot-chat</code></td>
+<td><code>session-store.db</code> of the VS Code family <code>github.copilot-chat</code> extension; one event per turn without tokens <code>src/ai_usage_cost/sources/copilot_chat.py:16-59</code></td>
+<td>session</td>
+</tr>
+<tr>
+<td>copilot-cli</td>
+<td><code>events.jsonl</code> under <code>session-state</code>; per model usage taken from <code>session.shutdown</code> metrics <code>src/ai_usage_cost/sources/copilot_cli.py:61-72</code></td>
+<td>session</td>
+</tr>
+<tr>
+<td><code>cursor</code></td>
+<td><code>state.vscdb</code> databases, table <code>cursorDiskKV</code>, keys <code>composerData:%</code> <code>src/ai_usage_cost/sources/cursor.py:30-62</code></td>
+<td>session</td>
+</tr>
+<tr>
+<td><code>windsurf</code></td>
+<td><code>state.vscdb</code>, table <code>ItemTable</code>, key <code>cascade.chatdata</code> <code>src/ai_usage_cost/sources/windsurf.py:15</code> <code>src/ai_usage_cost/sources/windsurf.py:33</code> <code>src/ai_usage_cost/sources/windsurf.py:45-48</code></td>
+<td>session</td>
+</tr>
+<tr>
+<td>ollama-app</td>
+<td>Ollama <code>db.sqlite</code>, assistant rows of <code>messages</code> <code>src/ai_usage_cost/sources/ollama_app.py:13-31</code></td>
+<td>session</td>
+</tr>
+<tr>
+<td><code>dyad</code></td>
+<td>Dyad <code>sqlite.db</code>, assistant rows of <code>messages</code> joined to chats and apps <code>src/ai_usage_cost/sources/dyad.py:24-33</code></td>
+<td>session</td>
+</tr>
+<tr>
+<td><code>jan</code></td>
+<td><code>messages.jsonl</code> per thread under the Jan data folder <code>src/ai_usage_cost/sources/jan.py:16-38</code></td>
+<td>session</td>
+</tr>
+<tr>
+<td>grok-build</td>
+<td><code>updates.jsonl</code> under the Grok home <code>sessions</code> folder; <code>turn_completed</code> updates <code>src/ai_usage_cost/sources/grok_build.py:14-35</code></td>
+<td>full</td>
+</tr>
+<tr>
+<td><code>antigravity</code></td>
+<td>Transcript logs under <code>~/.gemini/antigravity/brain</code>; spans only, no tokens or cost <code>src/ai_usage_cost/sources/antigravity.py:44-45</code> <code>src/ai_usage_cost/sources/antigravity.py:297-314</code></td>
+<td>session</td>
+</tr>
+<tr>
+<td>openai-compat</td>
+<td>JSONL files from a root the user passes; records with a <code>usage</code> object <code>src/ai_usage_cost/sources/openai_compat.py:11-25</code></td>
+<td>full</td>
+</tr>
+<tr>
+<td>cline, roo-code, kilo-code-legacy</td>
+<td><code>ui_messages.json</code> task files and Cline SDK <code>*.messages.json</code> files <code>src/ai_usage_cost/sources/cline.py:139-149</code></td>
+<td>full</td>
+</tr>
+<tr>
+<td><code>opencode</code>, <code>kilo-code</code></td>
+<td>SQLite <code>opencode.db</code> or <code>kilo.db</code>, <code>step-finish</code> parts <code>src/ai_usage_cost/sources/opencode.py:1-8</code> <code>src/ai_usage_cost/sources/kilo_code.py:5-11</code></td>
+<td>full</td>
+</tr>
+<tr>
+<td>qwen-code</td>
+<td>per project <code>chats</code> folder session JSONL, assistant <code>usageMetadata</code> <code>src/ai_usage_cost/sources/qwen_code.py:1-8</code></td>
+<td>full</td>
+</tr>
+<tr>
+<td>muse-code</td>
+<td><code>session.jsonl</code> files, <code>model_completed</code> events <code>src/ai_usage_cost/sources/muse_code.py:18-21</code> <code>src/ai_usage_cost/sources/muse_code.py:68-73</code></td>
+<td>full</td>
+</tr>
+</tbody>
+</table>
+<p>The OpenAI-compatible reader returns no default roots at all and needs <code>--root openai-compat=PATH</code>. <code>src/ai_usage_cost/sources/openai_compat.py:11-12</code> <code>src/ai_usage_cost/sources/openai_compat.py:88</code></p>
+<h3>Format notes worth knowing</h3>
+<ul>
+<li>Claude Code splits cache writes into 5 minute and 1 hour buckets and reads the thinking token count separately. <code>src/ai_usage_cost/sources/claude_code.py:623-642</code> Records whose model is missing or marked synthetic are dropped. <code>src/ai_usage_cost/sources/claude_code.py:80-82</code> Claude Code is the only reader that declares <code>parse_resume</code>, so a log that only grew is read from its last offset. <code>src/ai_usage_cost/sources/claude_code.py:43-50</code> <code>src/ai_usage_cost/sources/claude_code.py:672-678</code></li>
+<li>Codex skips a <code>token_count</code> whose total did not change, because Codex repeats such records on rate limit updates. <code>src/ai_usage_cost/sources/codex.py:194-197</code> It also works out how many tokens a forked thread inherited from its parent. <code>src/ai_usage_cost/sources/codex.py:181-189</code></li>
+<li>Gemini CLI replays an append only operation log and counts every distinct billed message id once, including messages later rewound. <code>src/ai_usage_cost/sources/gemini_cli.py:1-15</code></li>
+<li>Copilot CLI emits the difference between consecutive shutdown totals per model, and counts no compaction calls by default. <code>src/ai_usage_cost/sources/copilot_cli.py:7-17</code> <code>src/ai_usage_cost/sources/copilot_cli.py:55-58</code></li>
+<li>The OpenCode reader never selects prompt or response text, and it lists the <code>-wal</code> file next to the database only as a change trigger. <code>src/ai_usage_cost/sources/opencode.py:19-22</code></li>
+<li>The Cline reader drops the <code>request</code> prompt text the moment it parses the usage string, and never stores or logs it. <code>src/ai_usage_cost/sources/cline.py:5-8</code></li>
+<li>Roo Code and Kilo Code legacy are thin modules that call the Cline <code>make_source</code> with their own spec. <code>src/ai_usage_cost/sources/roo_code.py:5-29</code> <code>src/ai_usage_cost/sources/kilo_legacy.py:15-33</code> Kilo Code v7 reuses the OpenCode <code>make_source</code>. <code>src/ai_usage_cost/sources/kilo_code.py:5-11</code></li>
+</ul>
+<h3>Experimental readers</h3>
+<p><code>Source.experimental</code> marks a parser built from the tool's source and synthetic fixtures but not yet checked against a real session. It surfaces as a badge so the numbers are read with that caveat. <code>src/ai_usage_cost/sources/base.py:29-31</code> The readers that set it are Gemini CLI, Copilot CLI, Muse Code and Qwen Code directly, and OpenCode, Kilo Code, Cline, Roo Code and Kilo Code legacy through their shared <code>make_source</code> functions. <code>src/ai_usage_cost/sources/gemini_cli.py:214-225</code> <code>src/ai_usage_cost/sources/copilot_cli.py:264-275</code> <code>src/ai_usage_cost/sources/muse_code.py:284-295</code> <code>src/ai_usage_cost/sources/qwen_code.py:163-175</code> <code>src/ai_usage_cost/sources/opencode.py:324-343</code> <code>src/ai_usage_cost/sources/cline.py:409-430</code> The Copilot CLI and Muse Code module headers say plainly that no real log was available to check against. <code>src/ai_usage_cost/sources/copilot_cli.py:3-5</code> <code>src/ai_usage_cost/sources/muse_code.py:1-7</code> The Cline module also lists token meaning per source as unverified. <code>src/ai_usage_cost/sources/cline.py:23-26</code></p>
+<h3>How the pipeline picks readers</h3>
+<p><code>registry()</code> walks every module in the package except <code>base</code>, imports it, and keeps the module's <code>SOURCE</code> when it is a <code>Source</code>. Adding a reader therefore means adding a module, with no list to edit. The result is sorted by id. <code>src/ai_usage_cost/sources/__init__.py:11-20</code> <code>client_labels()</code> merges the client name maps of all readers. <code>src/ai_usage_cost/sources/__init__.py:23-27</code></p>
+<p>The <code>analyze</code> function passes every registered reader, with any user roots, to <code>store.ingest</code>. <code>src/ai_usage_cost/pipeline.py:166-185</code> For each reader the store keeps only roots that exist, lists their files, and skips a file whose modification time, size and parser version match the stored row. <code>src/ai_usage_cost/sources/base.py:47-49</code> <code>src/ai_usage_cost/store.py:218-231</code> A file that only grew, whose reader has <code>parse_resume</code>, is read from its stored offset when the boundary hash still matches. Every other changed file is parsed again in full. <code>src/ai_usage_cost/store.py:234-255</code> After parsing, the store replaces the file's rows and its file record. <code>src/ai_usage_cost/store.py:262-290</code></p>
+<p>After ingest, <code>_sources_of</code> builds one <code>SourceInfo</code> per registered reader with its label, token data, root hint, files found, capabilities and <code>experimental</code> flag, and marks it detected when files were found. <code>src/ai_usage_cost/pipeline.py:141-163</code> The web page lists verified readers first and experimental ones after. <code>web/src/Sources.tsx:36-38</code></p>
+<p><code>base.scan</code> is a second, store free way to run one reader: it skips missing roots, parses each file, and turns an <code>OSError</code> into a warning. <code>src/ai_usage_cost/sources/base.py:52-66</code></p>
+<h2>Reference</h2>
+<h3>Files</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+<th>Lines</th>
+<th>Imports</th>
+<th>Imported by</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/sources/__init__.py</code></td>
+<td>-</td>
+<td>27</td>
+<td>1</td>
+<td>13</td>
+<td><a href="#">src/ai_usage_cost/sources/<strong>init</strong>.py</a> <code>src/ai_usage_cost/sources/__init__.py:1-27</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/antigravity.py</code></td>
+<td>-</td>
+<td>314</td>
+<td>3</td>
+<td>2</td>
+<td><a href="#">src/ai_usage_cost/sources/antigravity.py</a> <code>src/ai_usage_cost/sources/antigravity.py:1-314</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td>-</td>
+<td>176</td>
+<td>2</td>
+<td>28</td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:1-176</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/claude_code.py</code></td>
+<td>-</td>
+<td>690</td>
+<td>3</td>
+<td>3</td>
+<td><a href="#">src/ai_usage_cost/sources/claude_code.py</a> <code>src/ai_usage_cost/sources/claude_code.py:1-690</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/cline.py</code></td>
+<td>-</td>
+<td>442</td>
+<td>3</td>
+<td>3</td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:1-442</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/codex.py</code></td>
+<td>-</td>
+<td>962</td>
+<td>3</td>
+<td>2</td>
+<td><a href="#">src/ai_usage_cost/sources/codex.py</a> <code>src/ai_usage_cost/sources/codex.py:1-962</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/copilot_chat.py</code></td>
+<td>-</td>
+<td>72</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/copilot_chat.py</a> <code>src/ai_usage_cost/sources/copilot_chat.py:1-72</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/copilot_cli.py</code></td>
+<td>-</td>
+<td>275</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/copilot_cli.py</a> <code>src/ai_usage_cost/sources/copilot_cli.py:1-275</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/cursor.py</code></td>
+<td>-</td>
+<td>97</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/cursor.py</a> <code>src/ai_usage_cost/sources/cursor.py:1-97</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/dyad.py</code></td>
+<td>-</td>
+<td>64</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/dyad.py</a> <code>src/ai_usage_cost/sources/dyad.py:1-64</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/gemini_cli.py</code></td>
+<td>Gemini CLI (google-gemini/gemini-cli) session logs.</td>
+<td>225</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/gemini_cli.py</a> <code>src/ai_usage_cost/sources/gemini_cli.py:1-225</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/grok_build.py</code></td>
+<td>-</td>
+<td>123</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/grok_build.py</a> <code>src/ai_usage_cost/sources/grok_build.py:1-123</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/jan.py</code></td>
+<td>-</td>
+<td>110</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/jan.py</a> <code>src/ai_usage_cost/sources/jan.py:1-110</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/kilo_code.py</code></td>
+<td>Kilo Code v7 -- an OpenCode fork storing kilo.db; same parser, different roots.</td>
+<td>17</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/kilo_code.py</a> <code>src/ai_usage_cost/sources/kilo_code.py:1-17</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/kilo_legacy.py</code></td>
+<td>Kilo Code legacy v5 task dirs: see cline.py for the format.</td>
+<td>33</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/kilo_legacy.py</a> <code>src/ai_usage_cost/sources/kilo_legacy.py:1-33</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/muse_code.py</code></td>
+<td>-</td>
+<td>295</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/muse_code.py</a> <code>src/ai_usage_cost/sources/muse_code.py:1-295</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/ollama_app.py</code></td>
+<td>-</td>
+<td>56</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/ollama_app.py</a> <code>src/ai_usage_cost/sources/ollama_app.py:1-56</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/openai_compat.py</code></td>
+<td>-</td>
+<td>96</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/openai_compat.py</a> <code>src/ai_usage_cost/sources/openai_compat.py:1-96</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/opencode.py</code></td>
+<td>OpenCode (anomalyco/opencode, formerly sst/opencode) -- SQLite opencode.db.</td>
+<td>352</td>
+<td>3</td>
+<td>2</td>
+<td><a href="#">src/ai_usage_cost/sources/opencode.py</a> <code>src/ai_usage_cost/sources/opencode.py:1-352</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/qwen_code.py</code></td>
+<td>Qwen Code (QwenLM/qwen-code, a Gemini CLI fork) session logs.</td>
+<td>175</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/qwen_code.py</a> <code>src/ai_usage_cost/sources/qwen_code.py:1-175</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/roo_code.py</code></td>
+<td>Roo Code (final release 3.53.0, archived 2026-05-15): see cline.py for the format.</td>
+<td>29</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/roo_code.py</a> <code>src/ai_usage_cost/sources/roo_code.py:1-29</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/windsurf.py</code></td>
+<td>-</td>
+<td>92</td>
+<td>3</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/sources/windsurf.py</a> <code>src/ai_usage_cost/sources/windsurf.py:1-92</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Public interface</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Kind</th>
+<th>File</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Source</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:18</code></td>
+</tr>
+<tr>
+<td><code>present_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:47</code></td>
+</tr>
+<tr>
+<td><code>scan</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:52</code></td>
+</tr>
+<tr>
+<td><code>read_json_lines</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:69</code></td>
+</tr>
+<tr>
+<td><code>read_json_records</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:87</code></td>
+</tr>
+<tr>
+<td><code>read_sqlite</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:117</code></td>
+</tr>
+<tr>
+<td><code>jsonl_files</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:132</code></td>
+</tr>
+<tr>
+<td><code>single_file</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:136</code></td>
+</tr>
+<tr>
+<td><code>parse_timestamp</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:140</code></td>
+</tr>
+<tr>
+<td><code>project_of</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:159</code></td>
+</tr>
+<tr>
+<td><code>as_int</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:165</code></td>
+</tr>
+<tr>
+<td><code>title_of</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/base.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/base.py</a> <code>src/ai_usage_cost/sources/base.py:169</code></td>
+</tr>
+<tr>
+<td><code>registry</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/__init__.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/<strong>init</strong>.py</a> <code>src/ai_usage_cost/sources/__init__.py:11</code></td>
+</tr>
+<tr>
+<td><code>client_labels</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/__init__.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/<strong>init</strong>.py</a> <code>src/ai_usage_cost/sources/__init__.py:23</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/claude_code.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/claude_code.py</a> <code>src/ai_usage_cost/sources/claude_code.py:34</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/claude_code.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/claude_code.py</a> <code>src/ai_usage_cost/sources/claude_code.py:39</code></td>
+</tr>
+<tr>
+<td><code>parse_resume</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/claude_code.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/claude_code.py</a> <code>src/ai_usage_cost/sources/claude_code.py:43</code></td>
+</tr>
+<tr>
+<td><code>spans</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/claude_code.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/claude_code.py</a> <code>src/ai_usage_cost/sources/claude_code.py:113</code></td>
+</tr>
+<tr>
+<td><code>Spec</code></td>
+<td>class</td>
+<td><code>src/ai_usage_cost/sources/cline.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:82</code></td>
+</tr>
+<tr>
+<td><code>vscode_bases</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/cline.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:95</code></td>
+</tr>
+<tr>
+<td><code>task_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/cline.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:108</code></td>
+</tr>
+<tr>
+<td><code>sdk_sessions_root</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/cline.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:123</code></td>
+</tr>
+<tr>
+<td><code>cline_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/cline.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:135</code></td>
+</tr>
+<tr>
+<td><code>data_files</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/cline.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:139</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/cline.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:152</code></td>
+</tr>
+<tr>
+<td><code>make_source</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/cline.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cline.py</a> <code>src/ai_usage_cost/sources/cline.py:409</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/antigravity.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/antigravity.py</a> <code>src/ai_usage_cost/sources/antigravity.py:44</code></td>
+</tr>
+<tr>
+<td><code>antigravity_files</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/antigravity.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/antigravity.py</a> <code>src/ai_usage_cost/sources/antigravity.py:48</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/antigravity.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/antigravity.py</a> <code>src/ai_usage_cost/sources/antigravity.py:62</code></td>
+</tr>
+<tr>
+<td><code>spans</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/antigravity.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/antigravity.py</a> <code>src/ai_usage_cost/sources/antigravity.py:91</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/codex.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/codex.py</a> <code>src/ai_usage_cost/sources/codex.py:46</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/codex.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/codex.py</a> <code>src/ai_usage_cost/sources/codex.py:107</code></td>
+</tr>
+<tr>
+<td><code>spans</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/codex.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/codex.py</a> <code>src/ai_usage_cost/sources/codex.py:246</code></td>
+</tr>
+<tr>
+<td><code>make_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/opencode.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/opencode.py</a> <code>src/ai_usage_cost/sources/opencode.py:69</code></td>
+</tr>
+<tr>
+<td><code>make_files</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/opencode.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/opencode.py</a> <code>src/ai_usage_cost/sources/opencode.py:88</code></td>
+</tr>
+<tr>
+<td><code>make_parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/opencode.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/opencode.py</a> <code>src/ai_usage_cost/sources/opencode.py:154</code></td>
+</tr>
+<tr>
+<td><code>make_source</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/opencode.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/opencode.py</a> <code>src/ai_usage_cost/sources/opencode.py:324</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/copilot_chat.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/copilot_chat.py</a> <code>src/ai_usage_cost/sources/copilot_chat.py:16</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/copilot_chat.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/copilot_chat.py</a> <code>src/ai_usage_cost/sources/copilot_chat.py:32</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/copilot_cli.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/copilot_cli.py</a> <code>src/ai_usage_cost/sources/copilot_cli.py:61</code></td>
+</tr>
+<tr>
+<td><code>session_files</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/copilot_cli.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/copilot_cli.py</a> <code>src/ai_usage_cost/sources/copilot_cli.py:67</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/copilot_cli.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/copilot_cli.py</a> <code>src/ai_usage_cost/sources/copilot_cli.py:75</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/cursor.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cursor.py</a> <code>src/ai_usage_cost/sources/cursor.py:17</code></td>
+</tr>
+<tr>
+<td><code>cursor_files</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/cursor.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cursor.py</a> <code>src/ai_usage_cost/sources/cursor.py:30</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/cursor.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/cursor.py</a> <code>src/ai_usage_cost/sources/cursor.py:54</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/dyad.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/dyad.py</a> <code>src/ai_usage_cost/sources/dyad.py:13</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/dyad.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/dyad.py</a> <code>src/ai_usage_cost/sources/dyad.py:24</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/gemini_cli.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/gemini_cli.py</a> <code>src/ai_usage_cost/sources/gemini_cli.py:31</code></td>
+</tr>
+<tr>
+<td><code>session_files</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/gemini_cli.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/gemini_cli.py</a> <code>src/ai_usage_cost/sources/gemini_cli.py:38</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/gemini_cli.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/gemini_cli.py</a> <code>src/ai_usage_cost/sources/gemini_cli.py:172</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/grok_build.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/grok_build.py</a> <code>src/ai_usage_cost/sources/grok_build.py:14</code></td>
+</tr>
+<tr>
+<td><code>session_files</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/grok_build.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/grok_build.py</a> <code>src/ai_usage_cost/sources/grok_build.py:20</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/grok_build.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/grok_build.py</a> <code>src/ai_usage_cost/sources/grok_build.py:24</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/jan.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/jan.py</a> <code>src/ai_usage_cost/sources/jan.py:16</code></td>
+</tr>
+<tr>
+<td><code>jan_files</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/jan.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/jan.py</a> <code>src/ai_usage_cost/sources/jan.py:28</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/jan.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/jan.py</a> <code>src/ai_usage_cost/sources/jan.py:32</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/kilo_legacy.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/kilo_legacy.py</a> <code>src/ai_usage_cost/sources/kilo_legacy.py:22</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/muse_code.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/muse_code.py</a> <code>src/ai_usage_cost/sources/muse_code.py:59</code></td>
+</tr>
+<tr>
+<td><code>session_files</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/muse_code.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/muse_code.py</a> <code>src/ai_usage_cost/sources/muse_code.py:68</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/muse_code.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/muse_code.py</a> <code>src/ai_usage_cost/sources/muse_code.py:205</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/ollama_app.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/ollama_app.py</a> <code>src/ai_usage_cost/sources/ollama_app.py:13</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/ollama_app.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/ollama_app.py</a> <code>src/ai_usage_cost/sources/ollama_app.py:25</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/openai_compat.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/openai_compat.py</a> <code>src/ai_usage_cost/sources/openai_compat.py:11</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/openai_compat.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/openai_compat.py</a> <code>src/ai_usage_cost/sources/openai_compat.py:15</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/qwen_code.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/qwen_code.py</a> <code>src/ai_usage_cost/sources/qwen_code.py:30</code></td>
+</tr>
+<tr>
+<td><code>session_files</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/qwen_code.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/qwen_code.py</a> <code>src/ai_usage_cost/sources/qwen_code.py:38</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/qwen_code.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/qwen_code.py</a> <code>src/ai_usage_cost/sources/qwen_code.py:95</code></td>
+</tr>
+<tr>
+<td><code>spans</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/qwen_code.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/qwen_code.py</a> <code>src/ai_usage_cost/sources/qwen_code.py:131</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/roo_code.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/roo_code.py</a> <code>src/ai_usage_cost/sources/roo_code.py:17</code></td>
+</tr>
+<tr>
+<td><code>default_roots</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/windsurf.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/windsurf.py</a> <code>src/ai_usage_cost/sources/windsurf.py:18</code></td>
+</tr>
+<tr>
+<td><code>windsurf_files</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/windsurf.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/windsurf.py</a> <code>src/ai_usage_cost/sources/windsurf.py:31</code></td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/sources/windsurf.py</code></td>
+<td><a href="#">src/ai_usage_cost/sources/windsurf.py</a> <code>src/ai_usage_cost/sources/windsurf.py:45</code></td>
+</tr>
+</tbody>
+</table></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

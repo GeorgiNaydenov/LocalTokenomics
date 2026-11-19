@@ -1,0 +1,79 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web Concept Map</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-concept-map.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Strategy · TOGAF: Phase A, Architecture Vision</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Web Concept Map</h1>
+<p>This picture gives a newcomer the main ideas of the dashboard on one page. It groups them into what the reader sees, what comes from the server, how the slice is narrowed and how a session is judged. It is the starting point before reading the screen maps.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The screens are the four views in the header tab strip plus the session workspace <code>web/src/Header.tsx:24-24</code> <code>web/src/App.tsx:342-342</code>.</li>
+<li>The data comes from the metadata, rate table and report requests, and from the per session trace, economics and context requests <code>web/src/api.ts:502-511</code> <code>web/src/api.ts:543-555</code>.</li>
+<li>The query holds search, cost states, clients, models, projects, outcomes and three switches <code>web/src/App.tsx:23-35</code>.</li>
+<li>A session is judged with an outcome label plus notes and tags <code>web/src/SessionWorkspace.tsx:79-79</code> <code>web/src/SessionWorkspace.tsx:244-248</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The concepts are drawn as related terms in <a href="../diagrams/web-glossary-map.html">Web Glossary Map</a>, the screens in <a href="../diagrams/web-sitemap.html">Web Sitemap</a> and the files in <a href="../diagrams/web-package-tree.html">Web Package Tree</a>. The notes of the chunk are <a href="../application/web-overview.html">Web Overview</a>, <a href="../application/web-workflows.html">Web Workflows</a> and <a href="../data/web-data-model.html">Web Data Model</a>.</p>
+<h2>Web Concept Map</h2>
+<pre class="mermaid">mindmap
+  root((Web dashboard))
+    Screens
+      Overview
+      Sessions
+      Sources
+      Models and pricing
+      Session workspace
+    Data from the server
+      Meta
+      Report
+      Rate table
+      Trace, economics, context
+    Filters and query
+      Saved views
+      Facets
+      Date range
+      Switches
+    Session judgement
+      Outcome rating
+      Notes and tags
+    Legend
+      First level: a main concern of the chunk
+      Second level: a concept inside that concern
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/Header.tsx:24-24</code></td>
+<td>The screens are the four views in the header tab strip plus the session workspace</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:342-342</code></td>
+<td>The screens are the four views in the header tab strip plus the session workspace</td>
+</tr>
+<tr>
+<td><code>web/src/api.ts:502-511</code></td>
+<td>The data comes from the metadata, rate table and report requests, and from the per session trace, economics and context requests</td>
+</tr>
+<tr>
+<td><code>web/src/api.ts:543-555</code></td>
+<td>The data comes from the metadata, rate table and report requests, and from the per session trace, economics and context requests</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:23-35</code></td>
+<td>The query holds search, cost states, clients, models, projects, outcomes and three switches</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:79-79</code></td>
+<td>A session is judged with an outcome label plus notes and tags</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:244-248</code></td>
+<td>A session is judged with an outcome label plus notes and tags</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

@@ -1,0 +1,81 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Actors</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="business/actors.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/cli.py</code>, <code>src/ai_usage_cost/sources/base.py</code></p><h1>Actors</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>The people and systems that use the application, and the use cases each one starts or takes part in.</p>
+</details>
+<h2>AI coding tool logs</h2>
+<p>The files and databases that AI coding tools write on the machine. They are read and never changed: <a href="#">src/ai_usage_cost/sources/base.py:123</a>.</p>
+<ul>
+<li><strong>Kind:</strong> external</li>
+<li><strong>Use cases:</strong> <a href="../use-cases/uc-17-see-what-my-ai-usage-would-cost.html">UC-17 See what my AI usage would cost</a></li>
+</ul>
+<p>Source:
+- <code>Source</code>: <code>class Source:</code></p>
+<h2>CLI user</h2>
+<p>The person who runs the scan or export command in a terminal.</p>
+<ul>
+<li><strong>Kind:</strong> human</li>
+<li><strong>Use cases:</strong> <a href="../use-cases/uc-15-print-a-usage-and-cost-summary-in-the-terminal.html">UC-15 Print a usage and cost summary in the terminal</a>, <a href="../use-cases/uc-16-export-a-usage-and-cost-chart-as-a-png-image.html">UC-16 Export a usage and cost chart as a PNG image</a></li>
+</ul>
+<p>Source:
+- <code>scan</code>: <code>def scan(</code></p>
+<h2>Dashboard developer</h2>
+<p>A person who builds or restyles the dashboard and opens the prototype to see how a screen or component should look.</p>
+<ul>
+<li><strong>Kind:</strong> human</li>
+<li><strong>Use cases:</strong> <a href="../use-cases/uc-01-compare-a-dashboard-screen-with-its-reference.html">UC-01 Compare a dashboard screen with its reference</a></li>
+</ul>
+<h2>Dashboard reader</h2>
+<p>The person who opens the local dashboard to read usage and list price cost. The code has no login or role check, so there is one human actor.</p>
+<ul>
+<li><strong>Kind:</strong> human</li>
+<li><strong>Use cases:</strong> <a href="../use-cases/uc-05-read-usage-and-cost-for-a-period.html">UC-05 Read usage and cost for a period</a>, <a href="../use-cases/uc-06-inspect-one-session.html">UC-06 Inspect one session</a>, <a href="../use-cases/uc-07-rate-a-session-outcome.html">UC-07 Rate a session outcome</a>, <a href="../use-cases/uc-08-check-list-prices.html">UC-08 Check list prices</a>, <a href="../use-cases/uc-09-read-a-figure-and-see-how-far-to-trust-it.html">UC-09 Read a figure and see how far to trust it</a>, <a href="../use-cases/uc-10-narrow-a-list-and-choose-its-columns.html">UC-10 Narrow a list and choose its columns</a>, <a href="../use-cases/uc-11-inspect-a-chart-point.html">UC-11 Inspect a chart point</a>, <a href="../use-cases/uc-12-review-a-session-s-spans-and-context-use.html">UC-12 Review a session&#x27;s spans and context use</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/src/main.tsx</a>: <code>createRoot(document.getElementById('root') as HTMLElement).render(</code></p>
+<h2>GitHub workflow runner</h2>
+<p>The hosted runner that executes the Python, web and CodeQL workflows on pull requests, pushes to main and a weekly schedule.</p>
+<ul>
+<li><strong>Kind:</strong> system</li>
+<li><strong>Use cases:</strong> <a href="../use-cases/uc-04-check-a-change-before-merge.html">UC-04 Check a change before merge</a></li>
+</ul>
+<p>Source:
+- <code>.github/workflows/web.yml</code>: <code>runs-on: ubuntu-latest</code></p>
+<h2>Maintainer</h2>
+<p>A person who changes the dashboard source or the Python package and runs the build and the checks.</p>
+<ul>
+<li><strong>Kind:</strong> human</li>
+<li><strong>Use cases:</strong> <a href="../use-cases/uc-02-rebuild-the-dashboard-bundle.html">UC-02 Rebuild the dashboard bundle</a>, <a href="../use-cases/uc-03-develop-the-dashboard-against-live-data.html">UC-03 Develop the dashboard against live data</a></li>
+</ul>
+<p>Source:
+- <a href="#">web/package.json</a>: <code>"build": "tsc --noEmit &amp;&amp; vite build",</code></p>
+<h2>Notification target</h2>
+<p>A service reached through an Apprise address the person passes to the alert command: <a href="#">src/ai_usage_cost/cli.py:344</a>.</p>
+<ul>
+<li><strong>Kind:</strong> external</li>
+<li><strong>Use cases:</strong> <a href="../use-cases/uc-20-be-alerted-when-spend-rises.html">UC-20 Be alerted when spend rises</a></li>
+</ul>
+<p>Source:
+- <code>alert</code>: <code>notifier = apprise.Apprise()</code></p>
+<h2>Person using the tool</h2>
+<p>The owner of the machine who runs the commands and opens the dashboard. The code has no other role and no login: <a href="#">src/ai_usage_cost/cli.py:24</a>.</p>
+<ul>
+<li><strong>Kind:</strong> human</li>
+<li><strong>Use cases:</strong> <a href="../use-cases/uc-17-see-what-my-ai-usage-would-cost.html">UC-17 See what my AI usage would cost</a>, <a href="../use-cases/uc-18-explore-spend-in-the-dashboard.html">UC-18 Explore spend in the dashboard</a>, <a href="../use-cases/uc-19-export-a-report-as-a-file.html">UC-19 Export a report as a file</a>, <a href="../use-cases/uc-20-be-alerted-when-spend-rises.html">UC-20 Be alerted when spend rises</a>, <a href="../use-cases/uc-21-inspect-and-rate-one-session.html">UC-21 Inspect and rate one session</a>, <a href="../use-cases/uc-22-forget-a-session.html">UC-22 Forget a session</a>, <a href="../use-cases/uc-23-read-the-text-of-one-span.html">UC-23 Read the text of one span</a>, <a href="../use-cases/uc-24-try-the-tool-with-demo-data.html">UC-24 Try the tool with demo data</a>, <a href="../use-cases/uc-25-sample-gpu-use-for-local-models.html">UC-25 Sample GPU use for local models</a>, <a href="../use-cases/uc-26-query-the-store-with-sql.html">UC-26 Query the store with SQL</a>, <a href="../use-cases/uc-27-browse-sessions-in-the-terminal.html">UC-27 Browse sessions in the terminal</a></li>
+</ul>
+<p>Source:
+- <code>app</code>: <code>app = typer.Typer(</code></p>
+<h2>User of Ai usage cost</h2>
+<p>A person who calls the 12 routes or opens the 0 screens of the Ai usage cost module. The code does not name roles; the agent refines this actor when roles are visible.</p>
+<ul>
+<li><strong>Kind:</strong> human</li>
+</ul>
+<p>Source:
+- <a href="#">src/ai_usage_cost/api.py</a>: <code>def meta() -&gt; Meta:</code></p>
+<h2>User of localtokenomics root</h2>
+<p>A person who calls the 0 routes or opens the 1 screens of the localtokenomics root module. The code does not name roles; the agent refines this actor when roles are visible.</p>
+<ul>
+<li><strong>Kind:</strong> human</li>
+</ul>
+<p>Source:
+- <a href="#">web/index.html</a>: <code>&lt;!doctype html&gt;</code></p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

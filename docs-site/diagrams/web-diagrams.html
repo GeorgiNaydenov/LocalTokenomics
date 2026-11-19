@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web Diagrams</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-diagrams.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Web Diagrams</h1>
+<p>Generated views of the Web chunk; hand-laid views are added next to them.</p>
+<h2>Components around Web</h2>
+<pre class="mermaid">flowchart LR
+    subgraph g_web[&quot;web&quot;]
+        localtokenomics_web_src[&quot;web/src&lt;br/&gt;20 files, 7127 lines&lt;br/&gt;typescript&quot;]:::system
+        localtokenomics_web_src_components[&quot;web/src/components&lt;br/&gt;18 files, 3024 lines&lt;br/&gt;typescript&quot;]:::system
+        localtokenomics_web_src_components_ui[&quot;web/src/components/ui&lt;br/&gt;25 files, 2083 lines&lt;br/&gt;typescript&quot;]:::system
+    end
+    localtokenomics_web_src --&gt; localtokenomics_web_src_components
+    localtokenomics_web_src --&gt; localtokenomics_web_src_components_ui
+    localtokenomics_web_src_components --&gt; localtokenomics_web_src
+    localtokenomics_web_src_components --&gt; localtokenomics_web_src_components_ui
+    localtokenomics_web_src_components_ui --&gt; localtokenomics_web_src
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Component: part of this system&quot;]:::system
+        zlegend_b[&quot;Solid arrow: imports or calls&quot;]:::system
+        zlegend_a ~~~ zlegend_b
+    end
+    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233
+</pre>
+
+<h2>Hand-laid views</h2>
+<p>Screens, each with a numbered screen map and a callout table: <a href="../application/app-screen.html">App Screen</a>, <a href="../application/overview-screen.html">Overview Screen</a>, <a href="../application/sessions-screen.html">Sessions Screen</a>, <a href="../application/sources-screen.html">Sources Screen</a>, <a href="../application/pricing-screen.html">Pricing Screen</a>, <a href="../application/session-workspace-screen.html">Session Workspace Screen</a>, <a href="../application/trace-tab-screen.html">Trace Tab Screen</a>, <a href="../application/context-tab-screen.html">Context Tab Screen</a> and <a href="../application/economics-tab-screen.html">Economics Tab Screen</a>.</p>
+<p>Structure and navigation: <a href="../diagrams/web-dashboard-components.html">Web Dashboard Components</a>, <a href="../diagrams/web-component-composition.html">Web Component Composition</a>, <a href="../diagrams/web-package-tree.html">Web Package Tree</a>, <a href="../diagrams/web-sitemap.html">Web Sitemap</a>, <a href="../diagrams/web-screen-flow.html">Web Screen Flow</a>, <a href="../diagrams/web-user-journey.html">Web User Journey</a>, <a href="../diagrams/web-concept-map.html">Web Concept Map</a> and <a href="../diagrams/web-glossary-map.html">Web Glossary Map</a>.</p>
+<p>Forms, tables and dialogs: <a href="../diagrams/web-outcome-form-wireframe.html">Web Outcome Form Wireframe</a>, <a href="../diagrams/web-filter-rail-wireframe.html">Web Filter Rail Wireframe</a>, <a href="../diagrams/web-sessions-table-wireframe.html">Web Sessions Table Wireframe</a>, <a href="../diagrams/web-rate-table-wireframe.html">Web Rate Table Wireframe</a> and <a href="../diagrams/web-workspace-panel-wireframe.html">Web Workspace Panel Wireframe</a>.</p>
+<p>States and failures: <a href="../diagrams/web-app-load-state-chart.html">Web App Load State Chart</a>, <a href="../diagrams/web-workspace-state-chart.html">Web Workspace State Chart</a>, <a href="../diagrams/web-outcome-save-state-chart.html">Web Outcome Save State Chart</a>, <a href="../diagrams/web-trace-state-chart.html">Web Trace State Chart</a>, <a href="../diagrams/web-sessions-table-state-chart.html">Web Sessions Table State Chart</a> and <a href="../diagrams/web-error-flow.html">Web Error Flow</a>.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

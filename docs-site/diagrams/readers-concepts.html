@@ -1,0 +1,90 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Readers concepts</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/readers-concepts.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Strategy · TOGAF: Phase A, Architecture Vision</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/sources/**</code></p><h1>Readers concepts</h1>
+<p>This picture gives a newcomer the main ideas of the readers package on one page. A reader is a small module that turns one tool's local files into usage records without changing anything. Seeing the five concerns together makes it easier to add a reader or to judge what a number can be trusted for.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The reader contract branch: each reader module holds one value named SOURCE, an instance of the frozen dataclass Source. <code>src/ai_usage_cost/sources/base.py:18</code> <code>src/ai_usage_cost/sources/claude_code.py:672</code></li>
+<li>The registry imports every module of the package except the base module and keeps the ones that hold a SOURCE value of type Source. <code>src/ai_usage_cost/sources/__init__.py:14</code> <code>src/ai_usage_cost/sources/__init__.py:17</code> <code>src/ai_usage_cost/sources/__init__.py:18</code></li>
+<li>Token data is either full or session, and a reader can be flagged experimental. <code>src/ai_usage_cost/sources/base.py:14</code> <code>src/ai_usage_cost/sources/base.py:31</code></li>
+<li>The finding files branch: a reader computes its default roots per machine, some of them moved by an environment variable, and a root can also be passed with the root option. <code>src/ai_usage_cost/sources/base.py:22</code> <code>src/ai_usage_cost/sources/gemini_cli.py:32</code> <code>src/ai_usage_cost/sources/base.py:44</code></li>
+<li>Each reader lists the files under a root with its own files function. <code>src/ai_usage_cost/sources/base.py:23</code></li>
+<li>The reading records branch: JSON lines are read with a count of lines that fail to parse, and the count becomes one warning per file. <code>src/ai_usage_cost/sources/base.py:69</code> <code>src/ai_usage_cost/sources/base.py:84</code></li>
+<li>JSON records can also be read with the byte offset and length of each record, starting from a given offset. <code>src/ai_usage_cost/sources/base.py:87</code> <code>src/ai_usage_cost/sources/base.py:99</code></li>
+<li>SQLite files are opened through a read only URI, and a database error becomes a warning instead of a crash. <code>src/ai_usage_cost/sources/base.py:123</code> <code>src/ai_usage_cost/sources/base.py:128</code></li>
+<li>The mapping to events branch: an event carries a model, a timestamp, a session id, a request id, a project, a title and optional token counts. <code>src/ai_usage_cost/models.py:55</code> <code>src/ai_usage_cost/models.py:56</code> <code>src/ai_usage_cost/models.py:57</code></li>
+<li>The project is the last segment of the working directory, and the fallback title joins the project and the session id. <code>src/ai_usage_cost/sources/base.py:159</code> <code>src/ai_usage_cost/sources/base.py:176</code></li>
+<li>The reader families branch: Roo Code and Kilo Code legacy are thin modules over the Cline family builder, and Kilo Code reuses the OpenCode builder. <code>src/ai_usage_cost/sources/roo_code.py:12</code> <code>src/ai_usage_cost/sources/kilo_code.py:9</code></li>
+<li>Cursor and Windsurf read keys out of the VS Code state database, and the JSONL readers such as Claude Code list every JSONL file under a root. <code>src/ai_usage_cost/sources/cursor.py:59</code> <code>src/ai_usage_cost/sources/windsurf.py:47</code> <code>src/ai_usage_cost/sources/claude_code.py:677</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The map supports onboarding to the readers package: it names the concerns before a reader opens any file. <a href="../application/ai-usage-cost-sources-overview.html">Ai usage cost sources Overview</a> explains the readers in prose, and <a href="../application/ai-usage-cost-sources-workflows.html">Ai usage cost sources Workflows</a> walks through a scan. The sibling views are <a href="../diagrams/readers-concepts.html">Readers concepts</a>, <a href="../diagrams/reader-types.html">Reader types</a>, <a href="../diagrams/reader-data-lineage.html">Reader data lineage</a>, <a href="../diagrams/reader-module-imports.html">Reader module imports</a>, <a href="../diagrams/reader-glossary-map.html">Reader glossary map</a>, <a href="../diagrams/readers-component-view.html">Readers component view</a> and <a href="../diagrams/readers-data-flow.html">Readers data flow</a>.</li>
+<li>The concepts match the notes of the chunk: the contract in the overview, the reading rules in <a href="../security/ai-usage-cost-sources-security.html">Ai usage cost sources Security</a>, and the families in <a href="../application/ai-usage-cost-sources-api.html">Ai usage cost sources API</a>.</li>
+</ul>
+<h2>The diagram</h2>
+<pre class="mermaid">mindmap
+  root((Readers))
+    Reader contract
+      One SOURCE value per module
+      Source frozen dataclass
+      Registry finds modules by name
+      token_data full or session
+      Experimental flag
+    Finding files
+      Default roots per machine
+      Environment variable overrides
+      Root passed with the root option
+      Files listed under each root
+    Reading records
+      JSON lines with a bad line count
+      JSON records with byte offsets
+      SQLite opened read only
+      Warnings instead of crashes
+    Mapping to events
+      Model and timestamp
+      Session and request id
+      Project and title
+      Token counts or none
+    Reader families
+      Cline family
+      OpenCode family
+      VS Code state databases
+      JSONL session logs
+    Legend
+      Centre circle is the readers package
+      First level branch is one concern of a reader
+      Leaf is a concept named as in the code
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/sources/base.py:18</code></td>
+<td>The reader contract</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/__init__.py:11</code></td>
+<td>Registry that finds readers by name</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/base.py:117</code></td>
+<td>Read only SQLite access</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/base.py:140</code></td>
+<td>Timestamp mapping</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/roo_code.py:21</code></td>
+<td>A family member built by a shared builder</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

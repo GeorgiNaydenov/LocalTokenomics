@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>LocalTokenomics root wiring</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/localtokenomics-root-wiring.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/*</code></p><h1>LocalTokenomics root wiring</h1>
+<p>This view shows how the top level files of the project fit together. It explains how the dashboard is built, where the finished files end up, and which automatic checks guard both halves. A maintainer can use it to see what to change, and what to run, before touching the dashboard or the package.</p>
+<h2>What the diagram shows</h2>
+<p>The maintainer edits the dashboard source and runs the build script from the web folder. <code>web/package.json:6-13</code></p>
+<p>The build configuration writes the finished dashboard into a folder inside the Python package. <code>web/vite.config.ts:14-17</code></p>
+<p>The package metadata builds the installable wheel from that same package folder, so the finished dashboard is shipped with it. <code>pyproject.toml:32-37</code></p>
+<p>During development the dashboard dev server forwards every request that starts with <code>/api</code> to the Python server on port 8420. <code>web/vite.config.ts:18-26</code></p>
+<p>The dashboard lint rules apply to the dashboard TypeScript files and skip the built folder. <code>web/eslint.config.js:8-11</code></p>
+<p>The Python workflow runs on a pull request and a push to the main branch. It runs ruff, pylint, mypy and pytest. <code>.github/workflows/python.yml:3-6</code> <code>.github/workflows/python.yml:41-54</code></p>
+<p>The web workflow runs on the same triggers and runs lint, type check, test and build. <code>.github/workflows/web.yml:3-6</code> <code>.github/workflows/web.yml:36-46</code></p>
+<h2>Capability and related functionality</h2>
+<p>The diagram realises the build and quality capability of the repository root. It serves the maintainer, not the person who only installs the tool. The files it shows are explained in <a href="../application/localtokenomics-root-overview.html">localtokenomics root Overview</a> and <a href="../operations/localtokenomics-root-operations.html">localtokenomics root Operations</a>, and the dashboard tests are in <a href="../application/localtokenomics-root-tests.html">localtokenomics root Tests</a>. The generated module map for the same chunk is in <a href="../diagrams/localtokenomics-root-diagrams.html">localtokenomics root Diagrams</a>.</p>
+<h2>LocalTokenomics root wiring</h2>
+<pre class="mermaid">flowchart LR
+    dev([&quot;Maintainer&lt;br/&gt;person&quot;]):::person
+    subgraph sys[&quot;LocalTokenomics repository root&quot;]
+        pkg[&quot;pyproject.toml&lt;br/&gt;ai-usage-cost package&lt;br/&gt;Python, hatchling&quot;]:::system
+        vite[&quot;web/vite.config.ts&lt;br/&gt;dashboard build and dev server&lt;br/&gt;Vite, React, Tailwind&quot;]:::system
+        lint[&quot;web/eslint.config.js&lt;br/&gt;dashboard lint rules&lt;br/&gt;ESLint&quot;]:::system
+        dist[&quot;src/ai_usage_cost/web/dist&lt;br/&gt;built dashboard bundle&lt;br/&gt;static files&quot;]:::system
+    end
+    ci[&quot;GitHub workflows&lt;br/&gt;run by a schedule or a pull request&lt;br/&gt;python, web, codeql&quot;]:::run
+    api[&quot;Python server&lt;br/&gt;127.0.0.1:8420&lt;br/&gt;serves /api&quot;]:::external
+    dev --&gt;|&quot;edits web/src, runs npm build&quot;| vite
+    vite --&gt;|&quot;writes bundle&quot;| dist
+    pkg --&gt;|&quot;ships wheel with&quot;| dist
+    vite -.-&gt;|&quot;dev proxy of /api&quot;| api
+    ci --&gt;|&quot;runs lint, typecheck, test, build&quot;| lint
+    ci --&gt;|&quot;runs ruff, pylint, mypy, pytest&quot;| pkg
+    subgraph Legend
+        direction LR
+        zl_a([&quot;Person&quot;]):::person
+        zl_b[&quot;Part of this system&quot;]:::system
+        zl_c[&quot;Run by a schedule or a pull request&quot;]:::run
+        zl_d[&quot;System with its own source folder&quot;]:::external
+        zl_e[&quot;Solid arrow: required call or output&quot;]:::system
+        zl_f[&quot;Dashed arrow: development only&quot;]:::system
+        zl_a ~~~ zl_b ~~~ zl_c ~~~ zl_d ~~~ zl_e ~~~ zl_f
+    end
+    classDef person fill:#fff2cc,stroke:#222222,color:#111111
+    classDef system fill:#dae8fc,stroke:#222222,color:#111111
+    classDef run fill:#ffe6cc,stroke:#222222,color:#111111
+    classDef external fill:#eeeeee,stroke:#222222,stroke-dasharray:5 3,color:#111111
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/vite.config.ts:14-17</code></td>
+<td>Build output folder inside the Python package</td>
+</tr>
+<tr>
+<td><code>web/vite.config.ts:18-26</code></td>
+<td>Dev server port and the <code>/api</code> proxy</td>
+</tr>
+<tr>
+<td><code>web/eslint.config.js:7-25</code></td>
+<td>Lint rules and ignored folders</td>
+</tr>
+<tr>
+<td><code>web/package.json:6-13</code></td>
+<td>Dashboard scripts the maintainer and the web workflow run</td>
+</tr>
+<tr>
+<td><code>pyproject.toml:29-37</code></td>
+<td>Console script and wheel contents</td>
+</tr>
+<tr>
+<td><code>.github/workflows/python.yml:3-54</code></td>
+<td>Python checks</td>
+</tr>
+<tr>
+<td><code>.github/workflows/web.yml:3-46</code></td>
+<td>Web checks</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

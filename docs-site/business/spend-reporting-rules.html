@@ -1,0 +1,90 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Spend reporting Rules</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="business/spend-reporting-rules.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/aggregate.py</code>, <code>src/ai_usage_cost/api.py</code>, <code>src/ai_usage_cost/cli.py</code>, <code>src/ai_usage_cost/models.py</code>, <code>src/ai_usage_cost/pipeline.py</code></p><h1>Spend reporting Rules</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>The business rules of the <a href="../subdomains/spend-reporting.html">Spend reporting</a> subdomain, as the code enforces them. Each rule is a heading, so a use case links straight to it, and each names the line of code that enforces it.</p>
+</details>
+<h2>BR-116 The alert window ends today</h2>
+<p>The alert reports the window of local days that ends today and starts the given number of days back, today included. <a href="#">src/ai_usage_cost/cli.py:330</a></p>
+<ul>
+<li><strong>Category:</strong> calculation</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-17-see-what-my-ai-usage-would-cost.html">UC-17 See what my AI usage would cost</a>, <a href="../use-cases/uc-18-explore-spend-in-the-dashboard.html">UC-18 Explore spend in the dashboard</a>, <a href="../use-cases/uc-19-export-a-report-as-a-file.html">UC-19 Export a report as a file</a>, <a href="../use-cases/uc-20-be-alerted-when-spend-rises.html">UC-20 Be alerted when spend rises</a>, <a href="../use-cases/uc-26-query-the-store-with-sql.html">UC-26 Query the store with SQL</a>, <a href="../use-cases/uc-27-browse-sessions-in-the-terminal.html">UC-27 Browse sessions in the terminal</a></li>
+</ul>
+<p>Source:
+- <code>alert</code>: <code>since = until - timedelta(days=days - 1)</code></p>
+<h2>BR-117 A rise is measured against the window just before</h2>
+<p>With the rise threshold the earlier window has the same length and ends the day before the current window starts. <a href="#">src/ai_usage_cost/cli.py:336</a></p>
+<ul>
+<li><strong>Category:</strong> calculation</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-17-see-what-my-ai-usage-would-cost.html">UC-17 See what my AI usage would cost</a>, <a href="../use-cases/uc-18-explore-spend-in-the-dashboard.html">UC-18 Explore spend in the dashboard</a>, <a href="../use-cases/uc-19-export-a-report-as-a-file.html">UC-19 Export a report as a file</a>, <a href="../use-cases/uc-20-be-alerted-when-spend-rises.html">UC-20 Be alerted when spend rises</a>, <a href="../use-cases/uc-26-query-the-store-with-sql.html">UC-26 Query the store with SQL</a>, <a href="../use-cases/uc-27-browse-sessions-in-the-terminal.html">UC-27 Browse sessions in the terminal</a></li>
+</ul>
+<p>Source:
+- <code>alert</code>: <code>analysis, since=since - timedelta(days=days), until=since - timedelta(days=1)</code></p>
+<h2>BR-118 An alert fires only above the threshold</h2>
+<p>The alert fires when the compared amount is strictly greater than the threshold; an equal amount sends nothing. <a href="#">src/ai_usage_cost/cli.py:282</a></p>
+<ul>
+<li><strong>Category:</strong> calculation</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-17-see-what-my-ai-usage-would-cost.html">UC-17 See what my AI usage would cost</a>, <a href="../use-cases/uc-18-explore-spend-in-the-dashboard.html">UC-18 Explore spend in the dashboard</a>, <a href="../use-cases/uc-19-export-a-report-as-a-file.html">UC-19 Export a report as a file</a>, <a href="../use-cases/uc-20-be-alerted-when-spend-rises.html">UC-20 Be alerted when spend rises</a>, <a href="../use-cases/uc-26-query-the-store-with-sql.html">UC-26 Query the store with SQL</a>, <a href="../use-cases/uc-27-browse-sessions-in-the-terminal.html">UC-27 Browse sessions in the terminal</a></li>
+</ul>
+<p>Source:
+- <code>alert_decision</code>: <code>return AlertDecision(fire=amount &gt; threshold, message="\n".join(lines))</code></p>
+<h2>BR-120 A route without a store answers 503</h2>
+<p>A route that must open the store answers 503 when the analysis was built without a store path. <a href="#">src/ai_usage_cost/api.py:223</a></p>
+<ul>
+<li><strong>Category:</strong> interface</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-18-explore-spend-in-the-dashboard.html">UC-18 Explore spend in the dashboard</a>, <a href="../use-cases/uc-21-inspect-and-rate-one-session.html">UC-21 Inspect and rate one session</a></li>
+</ul>
+<p>Source:
+- <code>create_app.opened</code>: <code>raise HTTPException(503, "this analysis was built without a store")</code></p>
+<h2>BR-78 The local calendar day decides the day of an event</h2>
+<p>An event belongs to the machine's local calendar day, a timestamp without an offset is read as UTC, and both bucketing and date filters use the same function. <a href="#">src/ai_usage_cost/models.py:146</a></p>
+<ul>
+<li><strong>Category:</strong> reporting</li>
+</ul>
+<p>Source:
+- <code>local_day</code>: <code>return aware.astimezone().date()</code></p>
+<h2>BR-79 A session shows its worst cost state</h2>
+<p>The cost state of a session is the worst of its requests, ranked priced, free, unpriced, unavailable. <a href="#">src/ai_usage_cost/aggregate.py:640</a></p>
+<ul>
+<li><strong>Category:</strong> reporting</li>
+</ul>
+<p>Source:
+- <code>sessions_of</code>: <code>row.cost_state = max(states[key], key=lambda s: _STATE_RANK[s])</code></p>
+<h2>BR-80 A session title prefers the tool, then the latest</h2>
+<p>The title of a session comes from the highest ranked title source among its events, a tool title first and a folder fallback last, and among equals the latest wins. <a href="#">src/ai_usage_cost/aggregate.py:21</a></p>
+<ul>
+<li><strong>Category:</strong> reporting</li>
+</ul>
+<p>Source:
+- <code>_TITLE_SOURCE_RANK</code>: <code>Lower rank wins when picking a session's display title</code></p>
+<h2>BR-81 A reported cost that differs is flagged</h2>
+<p>A session whose tool reported cost and computed cost differ by more than five percent of the reported figure or one cent gets a warning. Free models are never compared. <a href="#">src/ai_usage_cost/pipeline.py:133</a></p>
+<ul>
+<li><strong>Category:</strong> reporting</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-17-see-what-my-ai-usage-would-cost.html">UC-17 See what my AI usage would cost</a></li>
+</ul>
+<p>Source:
+- <code>reported_cost_divergences</code>: <code>if abs(reported - computed) &gt; max(0.05 * reported, 0.01):</code></p>
+<h2>BR-82 Old rates raise a warning</h2>
+<p>When the rate table's as of date is more than 30 days old a warning asks for the table to be checked again. <a href="#">src/ai_usage_cost/pipeline.py:235</a></p>
+<ul>
+<li><strong>Category:</strong> reporting</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-17-see-what-my-ai-usage-would-cost.html">UC-17 See what my AI usage would cost</a></li>
+</ul>
+<p>Source:
+- <code>analyze</code>: <code>if age is not None and age &gt; STALE_INFO_DAYS:</code></p>
+<h2>BR-84 An alert needs exactly one threshold</h2>
+<p>The alert command needs a window length of at least one day and exactly one of a window total threshold or a rise threshold. <a href="#">src/ai_usage_cost/cli.py:323</a></p>
+<ul>
+<li><strong>Category:</strong> reporting</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-17-see-what-my-ai-usage-would-cost.html">UC-17 See what my AI usage would cost</a>, <a href="../use-cases/uc-18-explore-spend-in-the-dashboard.html">UC-18 Explore spend in the dashboard</a>, <a href="../use-cases/uc-19-export-a-report-as-a-file.html">UC-19 Export a report as a file</a>, <a href="../use-cases/uc-20-be-alerted-when-spend-rises.html">UC-20 Be alerted when spend rises</a>, <a href="../use-cases/uc-26-query-the-store-with-sql.html">UC-26 Query the store with SQL</a>, <a href="../use-cases/uc-27-browse-sessions-in-the-terminal.html">UC-27 Browse sessions in the terminal</a></li>
+</ul>
+<p>Source:
+- <code>alert</code>: <code>pass --over or --rise-over, not both</code></p>
+<h2>BR-85 An unknown session answers 404</h2>
+<p>A session route for a source and session id that the store does not hold, or that was forgotten, answers 404. <a href="#">src/ai_usage_cost/api.py:236</a></p>
+<ul>
+<li><strong>Category:</strong> interface</li>
+<li><strong>Used in:</strong> <a href="../use-cases/uc-18-explore-spend-in-the-dashboard.html">UC-18 Explore spend in the dashboard</a>, <a href="../use-cases/uc-21-inspect-and-rate-one-session.html">UC-21 Inspect and rate one session</a></li>
+</ul>
+<p>Source:
+- <code>create_app.session_spans</code>: <code>no session {session_id!r} under source {source!r}</code></p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

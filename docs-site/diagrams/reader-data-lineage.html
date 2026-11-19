@@ -1,0 +1,95 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Reader data lineage</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/reader-data-lineage.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Data · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/sources/**</code></p><h1>Reader data lineage</h1>
+<p>This diagram follows the data from the files AI coding tools leave on a machine to the records the rest of the product uses. It shows where each data set is only read, where it is turned into something new and where warnings travel. A reader of the diagram can tell at once that no tool file is ever changed.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The tools write JSON line logs, JSON task files and SQLite stores. The readers only read them. <code>src/ai_usage_cost/sources/claude_code.py:677</code> <code>src/ai_usage_cost/sources/cline.py:424</code> <code>src/ai_usage_cost/sources/base.py:123</code></li>
+<li>Root paths come from each reader's default roots or from a root the user passes, and only roots that exist are kept. <code>src/ai_usage_cost/sources/base.py:47</code> <code>src/ai_usage_cost/sources/base.py:49</code></li>
+<li>For every kept root the reader's files function lists the files to read. <code>src/ai_usage_cost/store.py:220</code></li>
+<li>The ingest loop calls the reader's parse function for each file and passes it a warnings list. <code>src/ai_usage_cost/store.py:255</code></li>
+<li>Four readers also provide a spans function, which reads the same log again to build span records. <code>src/ai_usage_cost/sources/claude_code.py:681</code> <code>src/ai_usage_cost/sources/codex.py:954</code> <code>src/ai_usage_cost/sources/qwen_code.py:172</code> <code>src/ai_usage_cost/sources/antigravity.py:306</code></li>
+<li>The JSON line helpers count lines that fail to parse and add one warning per file, and the SQLite helper turns a database error into a warning. <code>src/ai_usage_cost/sources/base.py:84</code> <code>src/ai_usage_cost/sources/base.py:128</code></li>
+<li>Usage events, span records and warnings leave the chunk to the store, which receives the registered sources. <code>src/ai_usage_cost/pipeline.py:180</code></li>
+<li>The client labels of every reader are merged into one map for the report. <code>src/ai_usage_cost/sources/__init__.py:26</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The diagram realises the discovery capability: usage data is found and read in place, never copied or edited. <a href="../application/ai-usage-cost-sources-overview.html">Ai usage cost sources Overview</a> explains the readers in prose, and <a href="../application/ai-usage-cost-sources-workflows.html">Ai usage cost sources Workflows</a> walks through a scan. The sibling views are <a href="../diagrams/readers-concepts.html">Readers concepts</a>, <a href="../diagrams/reader-types.html">Reader types</a>, <a href="../diagrams/reader-data-lineage.html">Reader data lineage</a>, <a href="../diagrams/reader-module-imports.html">Reader module imports</a>, <a href="../diagrams/reader-glossary-map.html">Reader glossary map</a>, <a href="../diagrams/readers-component-view.html">Readers component view</a> and <a href="../diagrams/readers-data-flow.html">Readers data flow</a>.</li>
+<li>The fuller data flow, with trust boundaries and the store, is in <a href="../diagrams/readers-data-flow.html">Readers data flow</a>. The privacy rules that this lineage follows are in <a href="../security/ai-usage-cost-sources-security.html">Ai usage cost sources Security</a>.</li>
+</ul>
+<h2>The diagram</h2>
+<pre class="mermaid">flowchart LR
+    tools([&quot;AI coding tools&lt;br/&gt;write logs on this machine&quot;]):::external
+    roots_in([&quot;Root paths&lt;br/&gt;per machine defaults or the root option&quot;]):::external
+    logs[(&quot;JSONL session logs&lt;br/&gt;claude-code, codex, gemini-cli, jan&quot;)]:::store
+    tasks[(&quot;JSON task files&lt;br/&gt;cline, roo-code, kilo-code-legacy&quot;)]:::store
+    dbs[(&quot;SQLite stores&lt;br/&gt;opencode, cursor, dyad, ollama-app&quot;)]:::store
+    pick[&quot;Pick roots&lt;br/&gt;present_roots keeps roots that exist&quot;]:::process
+    listing[&quot;List files&lt;br/&gt;files(root) per reader&quot;]:::process
+    parse[&quot;Read and map&lt;br/&gt;parse(path, warnings)&quot;]:::process
+    spans[&quot;Build spans&lt;br/&gt;spans(path, warnings), four readers&quot;]:::process
+    reg[&quot;Registry&lt;br/&gt;registry(), client_labels()&quot;]:::process
+    store([&quot;Usage store and report&lt;br/&gt;store.py, pipeline.py, other chunks&quot;]):::external
+    tools --&gt;|records and rows| logs
+    tools --&gt;|records and rows| tasks
+    tools --&gt;|records and rows| dbs
+    roots_in --&gt;|root paths| pick
+    pick --&gt;|existing roots| listing
+    logs --&gt;|file names| listing
+    tasks --&gt;|file names| listing
+    dbs --&gt;|file names| listing
+    listing --&gt;|file paths| parse
+    logs --&gt;|raw records| parse
+    tasks --&gt;|raw records| parse
+    dbs --&gt;|read only rows| parse
+    logs --&gt;|raw records| spans
+    parse --&gt;|usage events| store
+    parse -.-&gt;|warnings| store
+    spans --&gt;|span records| store
+    reg --&gt;|sources and client labels| store
+    subgraph Legend
+        direction LR
+        zlegend_a([&quot;Outside source or sink&quot;]):::external
+        zlegend_b[(&quot;Data store: a tool&#x27;s files&quot;)]:::store
+        zlegend_c[&quot;Process: a step of a reader&quot;]:::process
+        zlegend_d[&quot;Arrow is named after the data, not the action&quot;]:::process
+        zlegend_e[&quot;Dashed arrow: a side output&quot;]:::process
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d ~~~ zlegend_e
+    end
+    classDef external fill:#eeeeee,stroke:#222222,stroke-dasharray:5 3,color:#111111
+    classDef store fill:#d5e8d4,stroke:#222222,color:#111111
+    classDef process fill:#dae8fc,stroke:#222222,color:#111111
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/sources/base.py:47</code></td>
+<td>Root selection</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/base.py:117</code></td>
+<td>Read only database access</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/store.py:220</code></td>
+<td>Ingest loop that lists files</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/store.py:255</code></td>
+<td>Full parse of a file</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/__init__.py:23</code></td>
+<td>Client label merge</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Readers component view</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/readers-component-view.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> </p><h1>Readers component view</h1>
+<p>This view shows how the tool turns the files other AI coding tools leave on a machine into usage events. Every supported tool has its own reader, and all of them follow one shared contract. Adding support for a new tool means adding one module, which keeps the list of supported tools easy to grow and easy to audit.</p>
+<h2>What the diagram shows</h2>
+<ol>
+<li>The registry imports every module in the readers package except the base module and keeps the one <code>SOURCE</code> each module defines. <code>src/ai_usage_cost/sources/__init__.py:11-20</code></li>
+<li>The base module holds the <code>Source</code> contract and the shared helpers for JSON Lines, SQLite and timestamps. <code>src/ai_usage_cost/sources/base.py:17-40</code> <code>src/ai_usage_cost/sources/base.py:69-176</code></li>
+<li>JSON Lines readers parse one record per line, for example the Claude Code assistant records with a <code>usage</code> object. <code>src/ai_usage_cost/sources/claude_code.py:65-86</code></li>
+<li>SQLite readers open the tool's database read only through the shared helper, for example Cursor reading <code>composerData:%</code> keys. <code>src/ai_usage_cost/sources/base.py:117-129</code> <code>src/ai_usage_cost/sources/cursor.py:57-61</code></li>
+<li>The Cline family readers share one parser for <code>ui_messages.json</code> task files, and Roo Code and Kilo Code legacy only supply their own settings. <code>src/ai_usage_cost/sources/cline.py:139-149</code> <code>src/ai_usage_cost/sources/roo_code.py:9-29</code></li>
+<li>The Antigravity reader supplies spans only and no token counts. <code>src/ai_usage_cost/sources/antigravity.py:297-314</code></li>
+<li>The pipeline asks the registry for the readers and passes them to the store, which writes events and file records. <code>src/ai_usage_cost/pipeline.py:166-185</code> <code>src/ai_usage_cost/store.py:218-231</code></li>
+</ol>
+<h2>Capability and related functionality</h2>
+<p>Realises the reader layer of <a href="../application/ai-usage-cost-sources-overview.html">Ai usage cost sources Overview</a>. The generated module map is in <a href="../diagrams/ai-usage-cost-sources-diagrams.html">Ai usage cost sources Diagrams</a>, the data shape is in <a href="../data/ai-usage-cost-sources-data-model.html">Ai usage cost sources Data Model</a>, and the flow of one file through a reader is in <a href="../diagrams/readers-data-flow.html">Readers data flow</a>.</p>
+<h2>Readers component view</h2>
+<p><img alt="drawio-src-sources-c4" src="../assets/drawio-src-sources-c4.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/sources/__init__.py:11-27</code></td>
+<td>Registry and client labels</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/base.py:17-176</code></td>
+<td>Source contract and shared helpers</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/claude_code.py:34-110</code></td>
+<td>A JSON Lines reader</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/cursor.py:17-84</code></td>
+<td>A SQLite reader</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/cline.py:81-149</code></td>
+<td>Cline family parser settings and files</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/antigravity.py:297-314</code></td>
+<td>Spans only reader</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pipeline.py:166-185</code></td>
+<td>Pipeline passing readers to the store</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

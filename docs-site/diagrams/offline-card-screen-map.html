@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Offline card screen map</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/offline-card-screen-map.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> covers <code>web/src/components/*</code></p><h1>Offline card screen map</h1>
+<p>This map shows the one screen a reader sees when the dashboard cannot reach its local reader. It numbers every part of the screen so a designer or tester can talk about it without reading code. The table in the screen note explains each number.</p>
+<h2>What the diagram shows</h2>
+<p>The card stands alone in a grid that fills the viewport height and centres its content, so nothing else of the dashboard is visible while it shows. <code>web/src/components/states.tsx:304-304</code></p>
+<p>Badge 1 marks the red eyebrow that names the host, and badge 2 marks the headline. <code>web/src/components/states.tsx:307-308</code> <code>web/src/components/states.tsx:310-311</code></p>
+<p>Badge 3 marks the reassurance that nothing was uploaded and that the last scan stays in the local store. <code>web/src/components/states.tsx:313-315</code></p>
+<p>Badge 4 marks the start command in a code block. <code>web/src/components/states.tsx:317-317</code></p>
+<p>Badge 5 marks Retry connection, which calls the function the page passed in. <code>web/src/components/states.tsx:319-319</code></p>
+<p>Badge 6 marks Copy command, and the dashed box 7 shows that its label changes to Copied while the copied state is true. <code>web/src/components/states.tsx:320-321</code></p>
+<h2>Capability and related functionality</h2>
+<p>The map realises the offline experience of the dashboard. The numbered table and the diagnosis are in <a href="../application/offline-card-screen.html">Offline card Screen</a>. Failure paths around it are in <a href="../diagrams/offline-and-error-handling-flow.html">Offline and error handling flow</a>, and the composition is in <a href="../diagrams/dashboard-component-composition.html">Dashboard component composition</a>. The page that decides when to show it is described in <a href="../application/web-overview.html">Web Overview</a>.</p>
+<h2>Offline card screen map</h2>
+<p><img alt="drawio-offline-card-screen" src="../assets/drawio-offline-card-screen.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/components/states.tsx:307-308</code></td>
+<td>Badge 1</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:310-311</code></td>
+<td>Badge 2</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:313-315</code></td>
+<td>Badge 3</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:317-317</code></td>
+<td>Badge 4</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:319-319</code></td>
+<td>Badge 5</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:320-322</code></td>
+<td>Badge 6</td>
+</tr>
+<tr>
+<td><code>web/src/components/states.tsx:321-321</code></td>
+<td>Badge 7</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Layered Viewpoints</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/layered-viewpoints.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> </p><h1>Layered Viewpoints</h1>
+<p>Two layered views derived from the code: how components communicate, and the technology each layer rests on.</p>
+<h2>Application communication</h2>
+<pre class="mermaid">flowchart LR
+    localtokenomics_root[&quot;(root)&lt;br/&gt;2 files&lt;br/&gt;0 routes&quot;]:::system
+    localtokenomics_src_ai_usage_cost[&quot;src/ai_usage_cost&lt;br/&gt;13 files&lt;br/&gt;12 routes&quot;]:::system
+    localtokenomics_src_ai_usage_cost_render[&quot;src/ai_usage_cost/render&lt;br/&gt;3 files&lt;br/&gt;0 routes&quot;]:::system
+    localtokenomics_src_ai_usage_cost_sources[&quot;src/ai_usage_cost/sources&lt;br/&gt;22 files&lt;br/&gt;0 routes&quot;]:::system
+    localtokenomics_root[&quot;(root)&lt;br/&gt;2 files&lt;br/&gt;0 routes&quot;]:::system
+    localtokenomics_web_src[&quot;web/src&lt;br/&gt;20 files&lt;br/&gt;0 routes&quot;]:::system
+    localtokenomics_web_src_components[&quot;web/src/components&lt;br/&gt;18 files&lt;br/&gt;0 routes&quot;]:::system
+    localtokenomics_web_src_components_ui[&quot;web/src/components/ui&lt;br/&gt;25 files&lt;br/&gt;0 routes&quot;]:::system
+    localtokenomics_web_src_prototype[&quot;web/src/prototype&lt;br/&gt;10 files&lt;br/&gt;0 routes&quot;]:::system
+    db_localtokenomics_src_ai_usage_cost[(&quot;Data of src-ai-usage-cost&lt;br/&gt;51 entities&quot;)]:::store
+    localtokenomics_src_ai_usage_cost --&gt; db_localtokenomics_src_ai_usage_cost
+    db_localtokenomics_src_ai_usage_cost_sources[(&quot;Data of src-ai-usage-cost-sources&lt;br/&gt;2 entities&quot;)]:::store
+    localtokenomics_src_ai_usage_cost_sources --&gt; db_localtokenomics_src_ai_usage_cost_sources
+    localtokenomics_root --&gt; localtokenomics_src_ai_usage_cost
+    localtokenomics_src_ai_usage_cost --&gt; localtokenomics_src_ai_usage_cost_sources
+    localtokenomics_src_ai_usage_cost --&gt; localtokenomics_src_ai_usage_cost_render
+    localtokenomics_src_ai_usage_cost_render --&gt; localtokenomics_src_ai_usage_cost
+    localtokenomics_src_ai_usage_cost_sources --&gt; localtokenomics_src_ai_usage_cost
+    localtokenomics_web_src --&gt; localtokenomics_web_src_components
+    localtokenomics_web_src --&gt; localtokenomics_web_src_components_ui
+    localtokenomics_web_src_components --&gt; localtokenomics_web_src
+    localtokenomics_web_src_components --&gt; localtokenomics_web_src_components_ui
+    localtokenomics_web_src_components_ui --&gt; localtokenomics_web_src
+    localtokenomics_web_src_prototype --&gt; localtokenomics_web_src_components
+    localtokenomics_web_src_prototype --&gt; localtokenomics_web_src_components_ui
+    localtokenomics_web_src_prototype --&gt; localtokenomics_web_src
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Component: part of this system&quot;]:::system
+        zlegend_b[&quot;Data store&quot;]:::store
+        zlegend_c[&quot;System you do not control&quot;]:::external
+        zlegend_d[&quot;Solid arrow: imports or calls; dashed: call to another repository&quot;]:::system
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d
+    end
+    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233
+    classDef store fill:#d5e8d4,stroke:#82b366,color:#142233
+    classDef external fill:#f5f5f5,stroke:#666666,color:#142233
+    classDef admin fill:#ffe6cc,stroke:#d79b00,color:#142233
+    classDef security fill:#e1d5e7,stroke:#9673a6,color:#142233
+</pre>
+
+<h2>Technology landscape</h2>
+<pre class="mermaid">flowchart TB
+    subgraph g_Languages[&quot;Languages&quot;]
+        lang_python[&quot;python&quot;]:::system
+        lang_sql[&quot;sql&quot;]:::system
+        lang_typescript[&quot;typescript&quot;]:::system
+    end
+    subgraph g_Frameworks_and_libraries[&quot;Frameworks and libraries&quot;]
+        dep_pydantic[&quot;pydantic&quot;]:::system
+        dep_fastapi[&quot;fastapi&quot;]:::system
+        dep_react[&quot;react&quot;]:::system
+        dep_tailwindcss[&quot;tailwindcss&quot;]:::system
+    end
+    subgraph g_Data[&quot;Data&quot;]
+        data_store[&quot;Database (from entity definitions)&quot;]:::store
+    end
+    subgraph g_Build_and_delivery[&quot;Build and delivery&quot;]
+        ops__github_workflows_codeql_yml[&quot;.github/workflows/codeql.yml&quot;]:::system
+        ops__github_workflows_python_yml[&quot;.github/workflows/python.yml&quot;]:::system
+        ops__github_workflows_web_yml[&quot;.github/workflows/web.yml&quot;]:::system
+    end
+    subgraph g_Tests[&quot;Tests&quot;]
+        dep_pytest[&quot;pytest&quot;]:::system
+        dep_vitest[&quot;vitest&quot;]:::system
+    end
+    g_Languages --&gt; g_Frameworks_and_libraries
+    g_Frameworks_and_libraries --&gt; g_Data
+    g_Data --&gt; g_Build_and_delivery
+    g_Build_and_delivery --&gt; g_Tests
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Component: part of this system&quot;]:::system
+        zlegend_d[&quot;Arrow: the layer above is implemented with the layer below&quot;]:::system
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d
+    end
+    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233
+    classDef store fill:#d5e8d4,stroke:#82b366,color:#142233
+    classDef external fill:#f5f5f5,stroke:#666666,color:#142233
+    classDef admin fill:#ffe6cc,stroke:#d79b00,color:#142233
+    classDef security fill:#e1d5e7,stroke:#9673a6,color:#142233
+</pre></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

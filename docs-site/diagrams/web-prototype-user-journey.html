@@ -1,0 +1,67 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web prototype user journey</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-prototype-user-journey.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business · TOGAF: Phase B, Business Architecture</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Web prototype user journey</h1>
+<p>This journey follows a developer who wants to port a dashboard screen and first looks at the prototype. Most steps are easy, and the two low points are controls that look live and do nothing. That tells a reader where the prototype could mislead.</p>
+<h2>What the diagram shows</h2>
+<p>The developer opens the prototype page, which loads the shell with its header and tabs <code>web/src/prototype/Prototype.tsx:34-96</code>.</p>
+<p>On the overview the developer scans the tiles and charts, and can switch the chart stacking and metric <code>web/src/prototype/OverviewScreen.tsx:370-386</code> <code>web/src/prototype/OverviewScreen.tsx:178-198</code>.</p>
+<p>The filter rail edits state and shows chips, but the screens are rendered without the filters, so nothing changes. That is the first low score <code>web/src/prototype/Screens.tsx:277-281</code> <code>web/src/prototype/Screens.tsx:360-368</code>.</p>
+<p>On Sessions the developer sorts the table and opens a drawer <code>web/src/prototype/SessionsScreen.tsx:99-105</code> <code>web/src/prototype/SessionsScreen.tsx:168-172</code>. A session without token counts shows an empty state, which is a middle score <code>web/src/prototype/Screens.tsx:164-169</code>.</p>
+<p>Sources shows readers with and without logs <code>web/src/prototype/SourcesScreen.tsx:15-80</code>, and Pricing shows the rate table and multipliers <code>web/src/prototype/PricingScreen.tsx:46-170</code>.</p>
+<p>The gallery shows tokens and components side by side <code>web/src/prototype/Gallery.tsx:161-173</code>.</p>
+<p>Pressing Rescan logs only spins a button for 900 milliseconds, which is the second low score <code>web/src/prototype/Prototype.tsx:26-29</code>.</p>
+<h2>Capability and related functionality</h2>
+<p>The capability is the guided review of the reference screens. The paths between screens are in <a href="../diagrams/web-prototype-screen-flow.html">Web prototype screen flow</a>, and the places are listed in <a href="../diagrams/web-prototype-sitemap.html">Web prototype sitemap</a>.</p>
+<h2>Web prototype user journey</h2>
+<pre class="mermaid">journey
+    title Developer porting a dashboard screen: see how it should look before copying the layout
+    section Page shell
+        Open the prototype page on the dev server: 5: Developer
+        Read the header and tabs: 5: Developer
+    section Overview
+        Scan the KPI tiles and charts: 5: Developer
+        Switch chart stacking and metric: 5: Developer
+        Try the filter rail and see nothing change: 2: Developer
+    section Sessions
+        Sort the session table: 5: Developer
+        Open a session drawer: 4: Developer
+        Read a session with no token counts: 3: Developer
+    section Sources and Pricing
+        Check readers with and without logs: 4: Developer
+        Read the rate table and multipliers: 5: Developer
+    section Design system
+        Compare tokens and components in the gallery: 5: Developer
+    section Header actions
+        Press Rescan logs and see only a spinner: 2: Developer
+    section Legend
+        Score 1 is painful and 5 is easy: 3: Developer
+        Developer is the only actor, there are no end users here: 3: Developer
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/prototype/Prototype.tsx:26-29</code></td>
+<td>Staged rescan</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:360-368</code></td>
+<td>Screens get no filter value</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/SessionsScreen.tsx:99-105</code></td>
+<td>Sorting</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:164-169</code></td>
+<td>Empty state without token counts</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

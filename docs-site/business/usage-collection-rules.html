@@ -1,0 +1,47 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Usage collection Rules</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="business/usage-collection-rules.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/sources/base.py</code>, <code>src/ai_usage_cost/store.py</code></p><h1>Usage collection Rules</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>The business rules of the <a href="../subdomains/usage-collection.html">Usage collection</a> subdomain, as the code enforces them. Each rule is a heading, so a use case links straight to it, and each names the line of code that enforces it.</p>
+</details>
+<h2>BR-119 Schema migrations only run forward</h2>
+<p>Opening the store runs every migration after the stored schema version, in list order, and records the new version after each; there is no downgrade step. <a href="#">src/ai_usage_cost/store.py:147</a></p>
+<ul>
+<li><strong>Category:</strong> data</li>
+</ul>
+<p>Source:
+- <code>open_store</code>: <code>for index, migration in enumerate(MIGRATIONS[current:], start=current):</code></p>
+<h2>BR-69 A request is stored once per fingerprint</h2>
+<p>A later record with the same fingerprint replaces an earlier one only when it carries more output, because streamed records grow and the last one holds the billed count. <a href="#">src/ai_usage_cost/store.py:359</a></p>
+<ul>
+<li><strong>Category:</strong> data integrity</li>
+</ul>
+<p>Source:
+- <code>_insert</code>: <code>the last (equivalently, largest) record carries the final, billed count</code></p>
+<h2>BR-70 Records that disagree on input tokens keep the first</h2>
+<p>When two records for one request disagree on input tokens, the first is kept and a warning is added. <a href="#">src/ai_usage_cost/store.py:352</a></p>
+<ul>
+<li><strong>Category:</strong> data integrity</li>
+</ul>
+<p>Source:
+- <code>_insert</code>: <code>disagree on input tokens -- keeping the first</code></p>
+<h2>BR-71 An unchanged file is not parsed again</h2>
+<p>A file whose modification time, size and parser version match the stored values is skipped. <a href="#">src/ai_usage_cost/store.py:229</a></p>
+<ul>
+<li><strong>Category:</strong> performance</li>
+</ul>
+<p>Source:
+- <code>ingest</code>: <code>(mtime, size, PARSER_VERSION) == prior[:3]</code></p>
+<h2>BR-72 A grown file resumes only when its earlier bytes are unchanged</h2>
+<p>A file is read from its old end only when its source has a resume hook, it only grew, the previous scan reached its old end and a hash of the bytes before that point still matches. <a href="#">src/ai_usage_cost/store.py:250</a></p>
+<ul>
+<li><strong>Category:</strong> performance</li>
+</ul>
+<p>Source:
+- <code>ingest</code>: <code>_boundary_hash(path, prior[1]) == prior[4]</code></p>
+<h2>BR-86 Source databases are opened read only</h2>
+<p>A source database is opened with a read only URI, so the tool never changes another tool's data. <a href="#">src/ai_usage_cost/sources/base.py:123</a></p>
+<ul>
+<li><strong>Category:</strong> privacy</li>
+</ul>
+<p>Source:
+- <code>read_sqlite</code>: <code>?mode=ro</code></p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

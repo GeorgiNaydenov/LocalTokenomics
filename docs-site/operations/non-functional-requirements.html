@@ -1,0 +1,71 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Non-Functional Requirements</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="operations/non-functional-requirements.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Operations</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/cli.py</code>, <code>src/ai_usage_cost/collect.py</code>, <code>src/ai_usage_cost/pricing.py</code>, <code>src/ai_usage_cost/privacy.py</code>, <code>src/ai_usage_cost/store.py</code>, <code>web/src/components/chart-hover.tsx</code>, <code>web/src/components/stat.tsx</code></p><h1>Non-Functional Requirements</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>What the application must keep true while it works: safety, privacy, performance and quality targets, each with the code that keeps it.</p>
+</details>
+<h2>NFR-01 Python version support</h2>
+<p>The package supports Python 3.11 or newer and the workflow tests 3.11, 3.12 and 3.13 on Ubuntu and Windows.</p>
+<ul>
+<li><strong>Target:</strong> 3 Python versions on 2 operating systems
+Source:</li>
+<li><code>.github/workflows/python.yml</code>: <code>python-version: ["3.11", "3.12", "3.13"]</code></li>
+</ul>
+<h2>NFR-02 Keyboard and screen reader access to charts and timelines</h2>
+<p>Charts with hover detail and the span timeline can be operated with the keyboard, and the selected point is announced.</p>
+<ul>
+<li><strong>Target:</strong> Arrow, Home, End and Escape keys, and a polite live region. <code>web/src/components/chart-hover.tsx:61</code></li>
+</ul>
+<h2>NFR-03 Reduced motion is respected</h2>
+<p>Animated numbers skip their animation when the reader prefers reduced motion.</p>
+<ul>
+<li><strong>Target:</strong> No animation under the reduced motion media query. <code>web/src/components/stat.tsx:10</code></li>
+</ul>
+<h2>NFR-04 Chart colours follow the light and dark theme</h2>
+<p>A chart writes one set of colour variables for the light theme and one scoped to the dark selector, so series colours change with the theme.</p>
+<ul>
+<li><strong>Target:</strong> Both themes covered by ChartStyle
+Source:</li>
+<li><code>THEMES</code>: <code>const THEMES = { light: "", dark: ".dark" } as const</code></li>
+</ul>
+<h2>NFR-05 PNG export runs without a display</h2>
+<p>The picture writer selects the non interactive Agg backend before importing pyplot.</p>
+<ul>
+<li><strong>Target:</strong> no display server required
+Source:</li>
+<li><code>write_png</code>: <code>matplotlib.use("Agg")</code></li>
+</ul>
+<h2>NFR-06 Incremental ingest</h2>
+<p>Ingest avoids reparsing work: it skips unchanged files <a href="#">src/ai_usage_cost/store.py:229</a> and hashes a fixed window of <a href="#">src/ai_usage_cost/store.py:19</a> bytes to check a resumed file.</p>
+<ul>
+<li><strong>Target:</strong> An unchanged file is skipped and a grown file is read from its old end when its source allows</li>
+</ul>
+<h2>NFR-07 Rate lookup is cached</h2>
+<p>Rate lookups are cached by the raw model id because a session calls them tens of thousands of times: <a href="#">src/ai_usage_cost/pricing.py:267</a>.</p>
+<ul>
+<li><strong>Target:</strong> One prefix scan per distinct model id</li>
+</ul>
+<h2>NFR-08 Released text size limit</h2>
+<p>Span text is cut to a byte limit before it is returned: <a href="#">src/ai_usage_cost/privacy.py:11</a>.</p>
+<ul>
+<li><strong>Target:</strong> At most 65,536 bytes of span text per request by default</li>
+</ul>
+<h2>NFR-09 Store uses write ahead logging</h2>
+<p>The store opens in WAL mode and applies pending migrations in order: <a href="#">src/ai_usage_cost/store.py:144</a> and <a href="#">src/ai_usage_cost/store.py:146</a>.</p>
+<ul>
+<li><strong>Target:</strong> Journal mode WAL and migrations by user version</li>
+</ul>
+<h2>NFR-10 GPU sampler command timeouts</h2>
+<p>Each external sampler call has a timeout: <a href="#">src/ai_usage_cost/collect.py:214</a>, <a href="#">src/ai_usage_cost/collect.py:183</a> and <a href="#">src/ai_usage_cost/collect.py:197</a>.</p>
+<ul>
+<li><strong>Target:</strong> 10 seconds for nvidia-smi and rocm-smi, 30 seconds for PowerShell counters, 0.5 seconds for Ollama</li>
+</ul>
+<h2>NFR-11 Server binds to loopback by default</h2>
+<p>The serve and sql commands listen on the loopback address unless told otherwise: <a href="#">src/ai_usage_cost/cli.py:110</a>.</p>
+<ul>
+<li><strong>Target:</strong> Host 127.0.0.1</li>
+</ul>
+<h2>NFR-12 GPU sampling interval</h2>
+<p>The collect command samples at a default interval of two seconds and sleeps between readings. <a href="#">src/ai_usage_cost/cli.py:201</a> <a href="#">src/ai_usage_cost/collect.py:277</a></p>
+<ul>
+<li><strong>Target:</strong> One reading every 2 seconds by default, until stopped or a duration ends</li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

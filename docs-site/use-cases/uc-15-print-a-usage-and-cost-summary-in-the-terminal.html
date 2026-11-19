@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UC-15 Print a usage and cost summary in the terminal</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="use-cases/uc-15-print-a-usage-and-cost-summary-in-the-terminal.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/cli.py</code>, <code>src/ai_usage_cost/render/terminal.py</code></p><h1>UC-15 Print a usage and cost summary in the terminal</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>A use case of the subdomain, written from the code. Every step cites the line that does it, so a reader can check the claim in one click.</p>
+</details>
+<details class="callout callout-tip">
+<summary>How to use it</summary>
+<p>Read the main flow first, then the alternative flows. The rules, terms and diagrams at the end are the ones this use case relies on.</p>
+</details>
+<ul>
+<li><strong>Actors:</strong> <a href="../business/actors.html">CLI user</a></li>
+<li><strong>Maturity:</strong> approved</li>
+</ul>
+<h2>Description</h2>
+<p>A user runs the scan command and reads the headline cost and one breakdown table as text.</p>
+<h2>Preconditions</h2>
+<p>Usage was found: the scan command exits with code 1 and a hint when the report has no events.</p>
+<h2>Main flow</h2>
+<ol>
+<li>
+<ol>
+<li>The user runs scan; the command builds the report and, when --json is not set, passes it to the terminal renderer. <a href="#">src/ai_usage_cost/cli.py:105</a></li>
+</ol>
+</li>
+<li>
+<ol>
+<li>The renderer prints the Total panel with cost, tokens, requests, sessions, date span, log file count and rates date. <a href="#">src/ai_usage_cost/render/terminal.py:20</a></li>
+</ol>
+</li>
+<li>
+<ol>
+<li>It picks the table for the requested grouping and prints it when the bucket list is not empty. <a href="#">src/ai_usage_cost/render/terminal.py:29</a></li>
+</ol>
+</li>
+<li>
+<ol>
+<li>It lists unpriced models and tells the user to add them to rates.json. <a href="#">src/ai_usage_cost/render/terminal.py:40</a></li>
+</ol>
+</li>
+<li>
+<ol>
+<li>It prints every warning when verbose, otherwise only a count. <a href="#">src/ai_usage_cost/render/terminal.py:46</a></li>
+</ol>
+</li>
+</ol>
+<h2>Alternative flows</h2>
+<p>Step 3 alt: an unknown grouping name falls back to the model table. <a href="#">src/ai_usage_cost/render/terminal.py:29</a>
+Start alt: no events found, the command prints a notice and exits with code 1. <a href="#">src/ai_usage_cost/cli.py:104</a></p>
+<h2>Postconditions</h2>
+<p>The terminal shows a Total panel, one table for the chosen grouping, and the unpriced and warning notices when they apply.</p>
+<h2>Acceptance criteria</h2>
+<p>The headline shows a prompt caching saving line only when the saving is above zero. <a href="#">src/ai_usage_cost/render/terminal.py:62</a></p>
+<h2>Code</h2>
+<ul>
+<li><a href="#">src/ai_usage_cost/cli.py</a></li>
+<li><a href="#">src/ai_usage_cost/render/terminal.py</a></li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

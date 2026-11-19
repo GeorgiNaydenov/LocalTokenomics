@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Spend reporting</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="subdomains/spend-reporting.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/aggregate.py</code>, <code>src/ai_usage_cost/api.py</code>, <code>src/ai_usage_cost/cli.py</code>, <code>src/ai_usage_cost/models.py</code>, <code>src/ai_usage_cost/pipeline.py</code>, <code>src/ai_usage_cost/render/png.py</code>, <code>src/ai_usage_cost/render/terminal.py</code>, <code>src/ai_usage_cost/tui.py</code>, <code>tests/test_api.py</code>, <code>tests/test_cli.py</code>, <code>tests/test_pipeline.py</code>, <code>tests/test_store.py</code></p><h1>Spend reporting</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>A subdomain: one area of the business that the application serves. This note lists its use cases, the rules it enforces and the terms it uses.</p>
+</details>
+<ul>
+<li><strong>Type:</strong> core</li>
+</ul>
+<h2>Description</h2>
+<p>Joins priced requests into totals, buckets, sessions, facets and warning groups and presents them on the command line and over HTTP. Main code: <a href="#">src/ai_usage_cost/pipeline.py:166</a>, <a href="#">src/ai_usage_cost/aggregate.py:675</a>, <a href="#">src/ai_usage_cost/cli.py:24</a> and <a href="#">src/ai_usage_cost/api.py:198</a>.</p>
+<h2>Use cases (7)</h2>
+<ul>
+<li><a href="../use-cases/uc-17-see-what-my-ai-usage-would-cost.html">UC-17 See what my AI usage would cost</a></li>
+<li><a href="../use-cases/uc-18-explore-spend-in-the-dashboard.html">UC-18 Explore spend in the dashboard</a></li>
+<li><a href="../use-cases/uc-19-export-a-report-as-a-file.html">UC-19 Export a report as a file</a></li>
+<li><a href="../use-cases/uc-20-be-alerted-when-spend-rises.html">UC-20 Be alerted when spend rises</a></li>
+<li><a href="../use-cases/uc-21-inspect-and-rate-one-session.html">UC-21 Inspect and rate one session</a></li>
+<li><a href="../use-cases/uc-26-query-the-store-with-sql.html">UC-26 Query the store with SQL</a></li>
+<li><a href="../use-cases/uc-27-browse-sessions-in-the-terminal.html">UC-27 Browse sessions in the terminal</a></li>
+</ul>
+<h2>Business rules (11)</h2>
+<p>All of them, with the code that enforces each one: <a href="../business/spend-reporting-rules.html">Spend reporting Rules</a>.</p>
+<ul>
+<li><a href="../business/spend-reporting-rules.html">BR-116 The alert window ends today</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-117 A rise is measured against the window just before</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-118 An alert fires only above the threshold</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-120 A route without a store answers 503</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-78 The local calendar day decides the day of an event</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-79 A session shows its worst cost state</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-80 A session title prefers the tool, then the latest</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-81 A reported cost that differs is flagged</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-82 Old rates raise a warning</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-84 An alert needs exactly one threshold</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-85 An unknown session answers 404</a></li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

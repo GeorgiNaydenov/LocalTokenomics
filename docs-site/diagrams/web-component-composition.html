@@ -1,0 +1,122 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web Component Composition</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-component-composition.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Web Component Composition</h1>
+<p>This picture shows which part of the dashboard draws which other part. It helps a developer find where a piece of the screen lives before changing it. Shared parts are drawn once, so a reader sees how far a change to one of them reaches.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The entry file mounts the App component inside a tooltip provider <code>web/src/main.tsx:7-12</code>.</li>
+<li>App renders the header, the filter rail, the filter chips, the offline and error cards, one of four views and the workspace <code>web/src/App.tsx:255-255</code> <code>web/src/App.tsx:274-274</code> <code>web/src/App.tsx:292-304</code> <code>web/src/App.tsx:307-318</code> <code>web/src/App.tsx:327-327</code> <code>web/src/App.tsx:330-340</code> <code>web/src/App.tsx:343-352</code>.</li>
+<li>The filter rail renders its content twice, as a docked aside and inside a sheet <code>web/src/FilterRail.tsx:477-503</code>.</li>
+<li>The workspace renders the outcome control, the tab list and a loading wrapper around the trace, economics and context tabs <code>web/src/SessionWorkspace.tsx:533-533</code> <code>web/src/SessionWorkspace.tsx:536-596</code>.</li>
+<li>Sessions, Trace and Context render the shared empty state <code>web/src/Sessions.tsx:299-299</code> <code>web/src/TraceTab.tsx:980-980</code> <code>web/src/ContextTab.tsx:166-166</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The composition sits under <a href="../application/app-screen.html">App Screen</a> and the screen notes such as <a href="../application/session-workspace-screen.html">Session Workspace Screen</a>. The C4 view of the same code is <a href="../diagrams/web-dashboard-components.html">Web Dashboard Components</a> and the folders are in <a href="../diagrams/web-package-tree.html">Web Package Tree</a>.</p>
+<h2>Web Component Composition</h2>
+<pre class="mermaid">flowchart TD
+    main([&quot;main.tsx entry&quot;]):::entry --&gt; App
+    App[&quot;App&quot;]:::page
+    App --&gt; Header[&quot;Header&quot;]:::shared
+    App --&gt; FilterRail[&quot;FilterRail&quot;]:::shared
+    App --&gt; FilterChips[&quot;FilterChips&quot;]:::lib
+    App --&gt; OfflineCard[&quot;OfflineCard, ErrorState&quot;]:::lib
+    App --&gt; Overview[&quot;Overview&quot;]:::page
+    App --&gt; Sessions[&quot;Sessions&quot;]:::page
+    App --&gt; Sources[&quot;Sources&quot;]:::page
+    App --&gt; Pricing[&quot;Pricing&quot;]:::page
+    App --&gt; SessionWorkspace[&quot;SessionWorkspace&quot;]:::page
+    FilterRail --&gt; Sheet[&quot;Sheet&quot;]:::third
+    SessionWorkspace --&gt; Sheet
+    SessionWorkspace --&gt; Tabs[&quot;Tabs&quot;]:::third
+    SessionWorkspace --&gt; OutcomeControl[&quot;OutcomeControl&quot;]:::shared
+    SessionWorkspace --&gt; SummaryTab[&quot;SummaryTab&quot;]:::shared
+    SessionWorkspace --&gt; LoadableTab[&quot;LoadableTab&quot;]:::shared
+    LoadableTab --&gt; TraceTab[&quot;TraceTab&quot;]:::shared
+    LoadableTab --&gt; EconomicsTab[&quot;EconomicsTab&quot;]:::shared
+    LoadableTab --&gt; ContextTab[&quot;ContextTab&quot;]:::shared
+    Sessions --&gt; EmptyState[&quot;EmptyState&quot;]:::lib
+    TraceTab --&gt; EmptyState
+    ContextTab --&gt; EmptyState
+    subgraph Legend
+        direction LR
+        zl1[&quot;Page: thick border&quot;]:::page
+        zl2[&quot;Component of this chunk&quot;]:::shared
+        zl3[&quot;Shared component from web/src/components&quot;]:::lib
+        zl4[&quot;Third party primitive, dashed&quot;]:::third
+        zl5([&quot;Entry point&quot;]):::entry
+        zl6[&quot;Arrow reads: renders&quot;]:::lib
+    end
+    classDef page fill:#dae8fc,stroke:#222222,stroke-width:3px,color:#142233
+    classDef shared fill:#dae8fc,stroke:#222222,color:#142233
+    classDef lib fill:#ffffff,stroke:#222222,color:#222222
+    classDef third fill:#eeeeee,stroke:#666666,stroke-dasharray:4 3,color:#222222
+    classDef entry fill:#fff2cc,stroke:#222222,color:#222222
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/main.tsx:7-12</code></td>
+<td>The entry file mounts the App component inside a tooltip provider</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:255-255</code></td>
+<td>App renders the header, the filter rail, the filter chips, the offline and error cards, one of four views and the workspace</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:274-274</code></td>
+<td>App renders the header, the filter rail, the filter chips, the offline and error cards, one of four views and the workspace</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:292-304</code></td>
+<td>App renders the header, the filter rail, the filter chips, the offline and error cards, one of four views and the workspace</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:307-318</code></td>
+<td>App renders the header, the filter rail, the filter chips, the offline and error cards, one of four views and the workspace</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:327-327</code></td>
+<td>App renders the header, the filter rail, the filter chips, the offline and error cards, one of four views and the workspace</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:330-340</code></td>
+<td>App renders the header, the filter rail, the filter chips, the offline and error cards, one of four views and the workspace</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:343-352</code></td>
+<td>App renders the header, the filter rail, the filter chips, the offline and error cards, one of four views and the workspace</td>
+</tr>
+<tr>
+<td><code>web/src/FilterRail.tsx:477-503</code></td>
+<td>The filter rail renders its content twice, as a docked aside and inside a sheet</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:533-533</code></td>
+<td>The workspace renders the outcome control, the tab list and a loading wrapper around the trace, economics and context tabs</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:536-596</code></td>
+<td>The workspace renders the outcome control, the tab list and a loading wrapper around the trace, economics and context tabs</td>
+</tr>
+<tr>
+<td><code>web/src/Sessions.tsx:299-299</code></td>
+<td>Sessions, Trace and Context render the shared empty state</td>
+</tr>
+<tr>
+<td><code>web/src/TraceTab.tsx:980-980</code></td>
+<td>Sessions, Trace and Context render the shared empty state</td>
+</tr>
+<tr>
+<td><code>web/src/ContextTab.tsx:166-166</code></td>
+<td>Sessions, Trace and Context render the shared empty state</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

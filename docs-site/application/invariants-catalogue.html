@@ -1,0 +1,201 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Invariants Catalogue</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/invariants-catalogue.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Motivation / Requirements · TOGAF: Requirements Management</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> </p><h1>Invariants Catalogue</h1>
+<p>Rules the code enforces, each with where it is enforced and which test mentions it.</p>
+<table>
+<thead>
+<tr>
+<th>Invariant</th>
+<th>Outcome</th>
+<th>Source</th>
+<th>Guarded by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>load_rates</code> refuses when not isinstance(data, dict) or not isinstance(data.get('models'), list)</td>
+<td>raises CatalogError</td>
+<td><a href="#">scripts/rates_diff.py</a> <code>scripts/rates_diff.py:260</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>load_catalog</code> refuses when not isinstance(data, dict)</td>
+<td>raises CatalogError</td>
+<td><a href="#">scripts/rates_diff.py</a> <code>scripts/rates_diff.py:279</code></td>
+<td><code>tests/test_rates_diff.py:90</code></td>
+</tr>
+<tr>
+<td><code>create_app</code> refuses when path is None</td>
+<td>raises HTTPException (503)</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:222</code></td>
+<td><code>tests/test_api.py:13</code></td>
+</tr>
+<tr>
+<td><code>opened</code> refuses when path is None</td>
+<td>raises HTTPException (503)</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:222</code></td>
+<td><code>tests/test_trace_antigravity.py:130</code></td>
+</tr>
+<tr>
+<td><code>create_app</code> refuses when not store.session_exists(conn, source, session_id)</td>
+<td>raises HTTPException (404)</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:235</code></td>
+<td><code>tests/test_api.py:13</code></td>
+</tr>
+<tr>
+<td><code>session_spans</code> refuses when not store.session_exists(conn, source, session_id)</td>
+<td>raises HTTPException (404)</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:235</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>create_app</code> refuses when not store.session_exists(conn, source, session_id)</td>
+<td>raises HTTPException (404)</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:364</code></td>
+<td><code>tests/test_api.py:13</code></td>
+</tr>
+<tr>
+<td><code>forget_session</code> refuses when not store.session_exists(conn, source, session_id)</td>
+<td>raises HTTPException (404)</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:364</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>create_app</code> refuses when span is None</td>
+<td>raises HTTPException (404)</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:377</code></td>
+<td><code>tests/test_api.py:13</code></td>
+</tr>
+<tr>
+<td><code>span_content</code> refuses when span is None</td>
+<td>raises HTTPException (404)</td>
+<td><a href="#">src/ai_usage_cost/api.py</a> <code>src/ai_usage_cost/api.py:377</code></td>
+<td><code>tests/test_api.py:568</code></td>
+</tr>
+<tr>
+<td><code>_roots</code> refuses when not path</td>
+<td>raises typer.BadParameter</td>
+<td><a href="#">src/ai_usage_cost/cli.py</a> <code>src/ai_usage_cost/cli.py:65</code></td>
+<td><code>tests/conftest.py:28</code></td>
+</tr>
+<tr>
+<td><code>alert</code> refuses when days &lt; 1</td>
+<td>raises typer.BadParameter</td>
+<td><a href="#">src/ai_usage_cost/cli.py</a> <code>src/ai_usage_cost/cli.py:320</code></td>
+<td><code>tests/test_cli.py:67</code></td>
+</tr>
+<tr>
+<td><code>alert</code> refuses when over is not None and rise_over is not None</td>
+<td>raises typer.BadParameter</td>
+<td><a href="#">src/ai_usage_cost/cli.py</a> <code>src/ai_usage_cost/cli.py:322</code></td>
+<td><code>tests/test_cli.py:67</code></td>
+</tr>
+<tr>
+<td><code>alert</code> refuses when threshold is None</td>
+<td>raises typer.BadParameter</td>
+<td><a href="#">src/ai_usage_cost/cli.py</a> <code>src/ai_usage_cost/cli.py:325</code></td>
+<td><code>tests/test_cli.py:67</code></td>
+</tr>
+<tr>
+<td><code>_valid_window</code> validates the model</td>
+<td>validates before accepting the value</td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:54</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>_valid_window</code> refuses when any((not 0 &lt;= day &lt;= 6 for day in self.weekdays))</td>
+<td>raises ValueError</td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:55</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>_valid_window</code> refuses when any((not 0 &lt;= start &lt; end &lt;= 24 for start, end in self.utc_hours))</td>
+<td>raises ValueError</td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:58</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>_ordered</code> validates the model</td>
+<td>validates before accepting the value</td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:90</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>_ordered</code> refuses when self.from_ is not None and self.until is not None and (self.from_ &gt;= self.until)</td>
+<td>raises ValueError</td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:91</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>_sorted_bands</code> validates bands</td>
+<td>validates before accepting the value</td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:149</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>_disjoint_periods</code> validates the model</td>
+<td>validates before accepting the value</td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:153</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>_disjoint_periods</code> refuses when earlier.until is None or (later.from_ or date.min) &lt; earlier.until</td>
+<td>raises ValueError</td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:158</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>_consistent</code> validates the model</td>
+<td>validates before accepting the value</td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:272</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>_consistent</code> refuses when duplicates</td>
+<td>raises ValueError</td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:275</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>_consistent</code> refuses when missing</td>
+<td>raises ValueError</td>
+<td><a href="#">src/ai_usage_cost/pricing.py</a> <code>src/ai_usage_cost/pricing.py:281</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>read_content</code> refuses when config.metadata_only or span.content_path is None</td>
+<td>raises ContentUnavailable</td>
+<td><a href="#">src/ai_usage_cost/privacy.py</a> <code>src/ai_usage_cost/privacy.py:87</code></td>
+<td><code>tests/test_privacy.py:13</code></td>
+</tr>
+<tr>
+<td><code>resolve_path</code> refuses when index &gt;= len(current)</td>
+<td>raises ContentUnavailable</td>
+<td><a href="#">src/ai_usage_cost/privacy.py</a> <code>src/ai_usage_cost/privacy.py:109</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>_values_match_provenance</code> validates the model</td>
+<td>validates before accepting the value</td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:89</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>_values_match_provenance</code> refuses when (value is None) != (provenance == 'unavailable')</td>
+<td>raises ValueError</td>
+<td><a href="#">src/ai_usage_cost/trace.py</a> <code>src/ai_usage_cost/trace.py:96</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>getJson</code> refuses when !response.ok</td>
+<td>throws ApiError</td>
+<td><a href="#">web/src/api.ts</a> <code>web/src/api.ts:496</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td><code>useChart</code> refuses when !context</td>
+<td>throws Error</td>
+<td><a href="#">web/src/components/ui/chart.tsx</a> <code>web/src/components/ui/chart.tsx:32</code></td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<p>31 refusals, requirements and constraints were read from the code; 19 have no test that mentions their enclosing symbol.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

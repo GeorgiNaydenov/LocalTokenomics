@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Context Tab Screen Map</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/context-tab-screen-map.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Context Tab Screen Map</h1>
+<p>This map shows how a reader sees how full the model's context window got during one session. It lets them spot calls near the limit, see where the context was compacted and jump to the steps that added the most. It also shows what is drawn when a size is unknown.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>An empty session shows one empty state and nothing else <code>web/src/ContextTab.tsx:164-171</code>.</li>
+<li>Otherwise the occupancy chart comes first, with a reader specific note for Claude Code <code>web/src/ContextTab.tsx:186-207</code>.</li>
+<li>Each call card shows input tokens, the change since the previous call, an occupancy meter, provenance badges and buttons for the spans that added context <code>web/src/ContextTab.tsx:81-155</code>.</li>
+<li>Cards are revealed in batches <code>web/src/ContextTab.tsx:14</code> <code>web/src/ContextTab.tsx:215-224</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The tab lives inside <a href="../application/session-workspace-screen.html">Session Workspace Screen</a>, and its added span buttons focus <a href="../application/trace-tab-screen.html">Trace Tab Screen</a>. Occupancy and provenance are explained in <a href="../diagrams/web-glossary-map.html">Web Glossary Map</a>.</p>
+<h2>Context Tab Screen screen map</h2>
+<p><img alt="drawio-screen-context-tab" src="../assets/drawio-screen-context-tab.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Badge</th>
+<th>Element</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>snapshots.length === 0</code> empty section</td>
+<td><code>web/src/ContextTab.tsx:164-164</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;ContextOccupancy</code> occupancy chart</td>
+<td><code>web/src/ContextTab.tsx:192-192</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>props.source === 'claude-code'</code> info section</td>
+<td><code>web/src/ContextTab.tsx:199-199</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>snapshot.compacted_before</code> info section</td>
+<td><code>web/src/ContextTab.tsx:74-74</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>snapshot.occupancy === null</code> empty section</td>
+<td><code>web/src/ContextTab.tsx:42-42</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;ProvenanceBadge</code> capacity, occupancy, tokens</td>
+<td><code>web/src/ContextTab.tsx:115-115</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;Button</code> added span</td>
+<td><code>web/src/ContextTab.tsx:135-139</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>snapshot.added_span_ids.length === 0</code> empty section</td>
+<td><code>web/src/ContextTab.tsx:149-149</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>&lt;Button</code> Show more calls</td>
+<td><code>web/src/ContextTab.tsx:216-220</code></td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

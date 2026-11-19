@@ -1,0 +1,228 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>State Machines</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/state-machines.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/models.py</code>, <code>src/ai_usage_cost/pricing.py</code>, <code>web/src/SessionWorkspace.tsx</code>, <code>web/src/TraceTab.tsx</code>, <code>web/src/components/metric-info.tsx</code>, <code>web/src/components/states.tsx</code>, <code>web/src/prototype/Gallery.tsx</code>, <code>web/src/prototype/data.ts</code></p><h1>State Machines</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>The values that move through states, the states they can take and the code that moves them.</p>
+</details>
+<h2>RateState lifecycle</h2>
+<ul>
+<li><code>free</code></li>
+<li><code>priced</code></li>
+<li><code>unused</code></li>
+</ul>
+<p>From any state to priced: Gallery sets state at <a href="#">web/src/prototype/Gallery.tsx:584</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:41</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:54</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:67</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:80</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:93</a>
+From any state to free: (module) sets state at <a href="#">web/src/prototype/data.ts:119</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:216</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:240</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:264</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:288</a>
+From any state to free: (module) sets state at <a href="#">web/src/prototype/data.ts:336</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:384</a></p>
+<p>Source:
+- <code>RateState</code>: <code>type RateState = 'free' | 'priced' | 'unused'</code>
+- <code>Gallery</code>: <code>session={{ id: '9f3c1a44', state: 'priced', model: 'Claude Opus 5', extraModels: 1, client: 'Claude Code', project: 'ai-usage-cost', started</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>state: 'priced',</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>state: 'free',</code></p>
+<h2>CostState lifecycle</h2>
+<ul>
+<li><code>priced</code></li>
+<li><code>free</code></li>
+<li><code>unpriced</code></li>
+<li><code>unavailable</code></li>
+</ul>
+<p>From any state to priced: Gallery sets state at <a href="#">web/src/prototype/Gallery.tsx:584</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:41</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:54</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:67</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:80</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:93</a>
+From any state to unpriced: (module) sets state at <a href="#">web/src/prototype/data.ts:106</a>
+From any state to free: (module) sets state at <a href="#">web/src/prototype/data.ts:119</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:216</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:240</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:264</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:288</a>
+From any state to unavailable: (module) sets state at <a href="#">web/src/prototype/data.ts:312</a>
+From any state to free: (module) sets state at <a href="#">web/src/prototype/data.ts:336</a>
+From any state to unpriced: (module) sets state at <a href="#">web/src/prototype/data.ts:360</a>
+From any state to priced: (module) sets state at <a href="#">web/src/prototype/data.ts:384</a>
+From any state to unavailable: (module) sets state at <a href="#">web/src/prototype/data.ts:408</a></p>
+<p>Source:
+- <code>CostState</code>: <code>export type CostState = 'priced' | 'free' | 'unpriced' | 'unavailable'</code>
+- <code>Gallery</code>: <code>session={{ id: '9f3c1a44', state: 'priced', model: 'Claude Opus 5', extraModels: 1, client: 'Claude Code', project: 'ai-usage-cost', started</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>state: 'priced',</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>state: 'unpriced',</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>state: 'free',</code></p>
+<h2>SpanKind lifecycle</h2>
+<ul>
+<li><code>turn</code></li>
+<li><code>user</code></li>
+<li><code>assistant</code></li>
+<li><code>reasoning</code></li>
+<li><code>model_call</code></li>
+<li><code>tool_call</code></li>
+<li><code>tool_result</code></li>
+<li><code>retrieval</code></li>
+<li><code>compaction</code></li>
+<li><code>error</code></li>
+<li><code>subagent</code></li>
+</ul>
+<p>From any state to error: useLazyResource sets status at <a href="#">web/src/SessionWorkspace.tsx:105</a>
+From any state to error: toggleContent sets status at <a href="#">web/src/TraceTab.tsx:796</a>
+From any state to error: (module) sets status at <a href="#">web/src/prototype/data.ts:809</a></p>
+<p>Source:
+- <code>SpanKind</code>: <code>export type SpanKind =</code>
+- <code>useLazyResource</code>: <code>setSettled({ load, result: { status: 'error', message: messageOf(cause) } })</code>
+- <code>toggleContent</code>: <code>const next: ContentState = isMissing(cause) ? { status: 'off' } : { status: 'error', message: messageOf(cause) }</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>{ spanId: 's8', kind: 'error', name: 'File changed on disk, retrying', status: 'error', depth: 2, durationMs: null, tokens: null },</code></p>
+<h2>SpanStatus lifecycle</h2>
+<ul>
+<li><code>ok</code></li>
+<li><code>error</code></li>
+<li><code>interrupted</code></li>
+<li><code>aborted</code></li>
+<li><code>running</code></li>
+<li><code>unknown</code></li>
+</ul>
+<p>From any state to error: useLazyResource sets status at <a href="#">web/src/SessionWorkspace.tsx:105</a>
+From any state to error: toggleContent sets status at <a href="#">web/src/TraceTab.tsx:796</a>
+From any state to ok: (module) sets status at <a href="#">web/src/prototype/data.ts:802</a>
+From any state to ok: (module) sets status at <a href="#">web/src/prototype/data.ts:803</a>
+From any state to ok: (module) sets status at <a href="#">web/src/prototype/data.ts:804</a>
+From any state to ok: (module) sets status at <a href="#">web/src/prototype/data.ts:805</a>
+From any state to ok: (module) sets status at <a href="#">web/src/prototype/data.ts:806</a>
+From any state to ok: (module) sets status at <a href="#">web/src/prototype/data.ts:807</a>
+From any state to interrupted: (module) sets status at <a href="#">web/src/prototype/data.ts:808</a>
+From any state to error: (module) sets status at <a href="#">web/src/prototype/data.ts:809</a>
+From any state to ok: (module) sets status at <a href="#">web/src/prototype/data.ts:810</a>
+From any state to ok: (module) sets status at <a href="#">web/src/prototype/data.ts:811</a>
+From any state to ok: (module) sets status at <a href="#">web/src/prototype/data.ts:812</a></p>
+<p>Source:
+- <code>SpanStatus</code>: <code>export type SpanStatus = 'ok' | 'error' | 'interrupted' | 'aborted' | 'running' | 'unknown'</code>
+- <code>useLazyResource</code>: <code>setSettled({ load, result: { status: 'error', message: messageOf(cause) } })</code>
+- <code>toggleContent</code>: <code>const next: ContentState = isMissing(cause) ? { status: 'off' } : { status: 'error', message: messageOf(cause) }</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>{ spanId: 's1', kind: 'turn', name: 'Turn 14 — rebuild the design system', status: 'ok', depth: 0, durationMs: 184_000, tokens: 412_004 },</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>{ spanId: 's2', kind: 'user', name: 'User message', status: 'ok', depth: 1, durationMs: null, tokens: 1_204 },</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>{ spanId: 's3', kind: 'model_call', name: 'claude-opus-5', status: 'ok', depth: 1, durationMs: 21_400, tokens: 188_320 },</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>{ spanId: 's4', kind: 'reasoning', name: 'Reasoning', status: 'ok', depth: 2, durationMs: 8_200, tokens: 42_110 },</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>{ spanId: 's5', kind: 'tool_call', name: 'Read web/src/Overview.tsx', status: 'ok', depth: 2, durationMs: 140, tokens: null },</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>{ spanId: 's6', kind: 'tool_result', name: '633 lines', status: 'ok', depth: 3, durationMs: null, tokens: 18_902 },</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>{ spanId: 's7', kind: 'tool_call', name: 'Edit web/src/components/status.tsx', status: 'interrupted', depth: 2, durationMs: 90, tokens: null</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>{ spanId: 's8', kind: 'error', name: 'File changed on disk, retrying', status: 'error', depth: 2, durationMs: null, tokens: null },</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>{ spanId: 's9', kind: 'subagent', name: 'Explore — find chart callers', status: 'ok', depth: 1, durationMs: 46_000, tokens: 94_220 },</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>{ spanId: 's10', kind: 'compaction', name: 'Context compacted', status: 'ok', depth: 1, durationMs: 3_100, tokens: null },</code></p>
+<h2>MatchKind lifecycle</h2>
+<ul>
+<li><code>exact</code></li>
+<li><code>suffix</code></li>
+<li><code>estimated</code></li>
+<li><code>none</code></li>
+</ul>
+<p>No assignment of these values was found in the code of this module.</p>
+<p>Source:
+- <code>MatchKind</code>: <code>export type MatchKind = 'exact' | 'suffix' | 'estimated' | 'none'</code></p>
+<h2>TokenDataKind lifecycle</h2>
+<ul>
+<li><code>full</code></li>
+<li><code>session</code></li>
+</ul>
+<p>No assignment of these values was found in the code of this module.</p>
+<p>Source:
+- <code>TokenDataKind</code>: <code>export type TokenDataKind = 'full' | 'session'</code></p>
+<h2>RateStatus lifecycle</h2>
+<ul>
+<li><code>ga</code></li>
+<li><code>preview</code></li>
+<li><code>retired</code></li>
+</ul>
+<p>No assignment of these values was found in the code of this module.</p>
+<p>Source:
+- <code>RateStatus</code>: <code>export type RateStatus = 'ga' | 'preview' | 'retired'</code></p>
+<h2>Request cost state</h2>
+<ul>
+<li><code>priced</code></li>
+<li><code>free</code></li>
+<li><code>unpriced</code></li>
+<li><code>unavailable</code></li>
+</ul>
+<p>Each request ends in exactly one state. The estimated flag is a mark on priced, not a state. <a href="#">src/ai_usage_cost/models.py:8</a></p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>To</th>
+<th>Trigger</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>loaded</td>
+<td>unavailable</td>
+<td>the request has no token counts</td>
+<td><a href="#">src/ai_usage_cost/pricing.py:421</a></td>
+</tr>
+<tr>
+<td>loaded</td>
+<td>free</td>
+<td>the provider rules say free</td>
+<td><a href="#">src/ai_usage_cost/pricing.py:422</a></td>
+</tr>
+<tr>
+<td>loaded</td>
+<td>unpriced</td>
+<td>no rate row matches the model</td>
+<td><a href="#">src/ai_usage_cost/pricing.py:425</a></td>
+</tr>
+<tr>
+<td>loaded</td>
+<td>priced</td>
+<td>a rate row matches</td>
+<td><a href="#">src/ai_usage_cost/pricing.py:426</a></td>
+</tr>
+</tbody>
+</table>
+<p>Transitions out of a state are not found: the state is recomputed on every analysis and never changes in place.</p>
+<p>Source:
+- <code>cost_state_of</code>: <code>def cost_state_of(</code></p>
+<h2>RowStatus lifecycle</h2>
+<ul>
+<li><code>ga</code></li>
+<li><code>preview</code></li>
+<li><code>retired</code></li>
+</ul>
+<p>No assignment of these values was found in the code of this module.</p>
+<p>Source:
+- <code>RowStatus</code>: <code>RowStatus = Literal["ga", "preview", "retired"]</code></p>
+<h2>Warnings list view</h2>
+<ul>
+<li><code>ShowingAll, Filtered, NothingShown, NoGroups. A separate machine per group row has Collapsed, Expanded, AlwaysOpen and Stuck.</code></li>
+</ul>
+<p>Mount to ShowingAll while no kind is picked <a href="#">web/src/components/states.tsx:248</a>. ShowingAll to Filtered when a kind toggle is picked <a href="#">web/src/components/states.tsx:260</a>. Filtered to ShowingAll when the last kind is cleared <a href="#">web/src/components/states.tsx:249</a>. A row goes from Collapsed to Expanded on the Show files button, which exists only when its count is above one <a href="#">web/src/components/states.tsx:224</a>. A row with a count of exactly one is always open <a href="#">web/src/components/states.tsx:230</a>.</p>
+<p>Source:
+- <code>WarningsList</code>: <code>const shown = kinds.length === 0 ? groups : groups.filter((group) =&gt; kinds.includes(group.kind))</code>
+- <code>WarningGroupRow</code>: <code>{(expanded || group.count === 1) &amp;&amp; (</code></p>
+<h2>Info box open state</h2>
+<ul>
+<li><code>Closed, Open.</code></li>
+</ul>
+<p>Closed to Open when the pointer has stayed on the trigger or the box for 400 ms <a href="#">web/src/components/metric-info.tsx:92</a>, when the trigger gets keyboard focus <a href="#">web/src/components/metric-info.tsx:134</a>, or on a click <a href="#">web/src/components/metric-info.tsx:143</a>. Open to Closed when the pointer has been outside both for 250 ms and the trigger is not focused <a href="#">web/src/components/metric-info.tsx:105</a>, on a second click, or on any close request of the popover <a href="#">web/src/components/metric-info.tsx:116</a>.</p>
+<p>Source:
+- <code>MetricInfo</code>: <code>const [open, setOpen] = useState(false)</code></p>
+<h2>Workspace tab data</h2>
+<ul>
+<li><code>idle</code></li>
+<li><code>loading</code></li>
+<li><code>ready</code></li>
+<li><code>error</code></li>
+</ul>
+<p>idle to loading: the tab is selected for the first time <a href="#">web/src/SessionWorkspace.tsx:453</a>
+loading to ready: the endpoint answers <a href="#">web/src/SessionWorkspace.tsx:101</a>
+loading to error: the endpoint fails and the request was not aborted <a href="#">web/src/SessionWorkspace.tsx:105</a>
+error to loading: not found; only a new session or a remount runs the load again</p>
+<p>Source:
+- <code>useLazyResource</code>: <code>function useLazyResource&lt;T&gt;(enabled: boolean, load: (signal: AbortSignal) =&gt; Promise&lt;T&gt;): Loadable&lt;T&gt; {</code></p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

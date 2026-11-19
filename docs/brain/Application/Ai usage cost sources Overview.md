@@ -20,7 +20,7 @@ What Ai usage cost sources is made of and how it connects to the rest of the cod
 
 ## How it works
 
-Ai usage cost sources holds 22 source files and 4722 lines, with 2 entities, 515 tests that live in it or import its files. The most depended-on files are `src/ai_usage_cost/sources/base.py`, `src/ai_usage_cost/sources/__init__.py`, `src/ai_usage_cost/sources/claude_code.py`. It uses Ai usage cost Overview. It is used by Ai usage cost Overview.
+Ai usage cost sources holds 22 source files and 4722 lines, with 2 entities, 515 tests that live in it or import its files. The most depended-on files are `src/ai_usage_cost/sources/base.py`, `src/ai_usage_cost/sources/__init__.py`, `src/ai_usage_cost/sources/claude_code.py`. It uses [[Ai usage cost Overview]]. It is used by [[Ai usage cost Overview]].
 
 The purpose column quotes each file's own header comment where it has one. Every file is cited by its full line range, and every public name by the line that declares it.
 

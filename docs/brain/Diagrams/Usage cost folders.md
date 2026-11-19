@@ -52,6 +52,38 @@ This view shows how the core package is laid out on disk and where a person or a
 ## Usage cost folders
 
 %% generated:diagram-usage-cost-folders start (do not edit; run brain docs generate) %%
+```mermaid
+flowchart TD
+    pkg["src/ai_usage_cost/"]:::folder
+    cli(["cli.py: ai-usage-cost commands"]):::entry
+    api(["api.py: create_app"]):::entry
+    core["pipeline.py, pricing.py, aggregate.py, models.py"]:::folder
+    data["store.py, trace.py, privacy.py, collect.py"]:::folder
+    extra["demo.py, tui.py, rates.json, __init__.py"]:::folder
+    sources["sources/: one reader per AI tool"]:::folder
+    render["render/: terminal.py, png.py"]:::folder
+    web["web/dist: built dashboard bundle"]:::folder
+
+    pkg --> cli
+    pkg --> api
+    pkg --> core
+    pkg --> data
+    pkg --> extra
+    pkg --> sources
+    pkg --> render
+    pkg --> web
+
+    subgraph Legend
+        direction LR
+        zlegend_a["Folder or group of files"]:::folder
+        zlegend_b(["Entry point"]):::entry
+        zlegend_c["An arrow from parent to child means contains"]:::folder
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c
+    end
+
+    classDef folder fill:#dae8fc,stroke:#222222,color:#222222
+    classDef entry fill:#fff2cc,stroke:#222222,color:#222222
+```
 %% generated:diagram-usage-cost-folders end %%
 
 > [!example]- Code references

@@ -1,0 +1,388 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Risks and Open Questions</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="operations/risks-and-open-questions.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Operations</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/aggregate.py</code>, <code>src/ai_usage_cost/api.py</code>, <code>src/ai_usage_cost/cli.py</code>, <code>src/ai_usage_cost/collect.py</code>, <code>src/ai_usage_cost/models.py</code>, <code>src/ai_usage_cost/pipeline.py</code>, <code>src/ai_usage_cost/pricing.py</code>, <code>src/ai_usage_cost/privacy.py</code>, <code>src/ai_usage_cost/store.py</code>, <code>web/src/App.tsx</code>, <code>web/src/Header.tsx</code>, <code>web/src/SessionWorkspace.tsx</code>, <code>web/src/Sessions.tsx</code>, <code>web/src/TraceTab.tsx</code>, <code>web/src/api.ts</code>, <code>web/src/components/chart-time.tsx</code>, <code>web/src/components/columns.tsx</code>, <code>web/src/components/metric-info.tsx</code>, <code>web/src/components/rank.test.ts</code>, <code>web/src/components/states.tsx</code>, <code>web/src/components/ui/chart.tsx</code>, <code>web/src/format.ts</code>, <code>web/src/main.tsx</code>, <code>web/src/prototype/Prototype.tsx</code></p><h1>Risks and Open Questions</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>What could go wrong and what is not yet known, each with the code that raises it.</p>
+</details>
+<h2>RSK-01 Prototype looks live but is staged</h2>
+<p>Filters, the rescan button and the scanned 2 min ago text suggest real behaviour but do nothing, so a reader may take the prototype for working product.</p>
+<p>Notes state the staged parts; the migration guide marks the folder read only.</p>
+<h2>RSK-02 Design system README and migration guide are out of date</h2>
+<p>The README says the shipped dashboard still runs on the old src/ds CSS system, but the shipped entry point already imports the new theme and the ds folder is absent.</p>
+<p>Open question for the owner of the web folder; this chunk does not edit those files.</p>
+<h2>RSK-03 No tests cover the prototype</h2>
+<p>No test file imports or lives inside the prototype folder, so a change to a reference screen is unchecked except by typecheck and lint.</p>
+<p>Accepted: the folder is read only reference code.</p>
+<h2>RSK-04 Mypy is a manual pre-commit stage, so type errors in the Pyt</h2>
+<p>Mypy is a manual pre-commit stage, so type errors in the Python package are caught only by the workflow or a deliberate local run.</p>
+<p>The Python workflow runs mypy on src for every pull request.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood medium
+Source:</li>
+<li><code>.pre-commit-config.yaml</code>: <code>stages: [manual]</code></li>
+</ul>
+<h2>RSK-05 Bandit security scanning skips the web folder, so dashboard</h2>
+<p>Bandit security scanning skips the web folder, so dashboard code gets security analysis only from CodeQL.</p>
+<p>The CodeQL workflow scans JavaScript and TypeScript on every pull request and weekly.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood low
+Source:</li>
+<li><a href="#">pyproject.toml</a>: <code>exclude_dirs = ["tests", ".venv", "web"]</code></li>
+</ul>
+<h2>RSK-06 Risk 1꞉ The dashboard client can write to the</h2>
+<p>The dashboard client can write to the server with PUT for outcomes and DELETE for sessions, although it mainly reads usage.</p>
+<p>Confirm in the server chunk that delete only removes derived trace data; see <a href="#">web/src/api.ts:593</a>.</p>
+<h2>RSK-07 Risk 2꞉ Most files in this chunk have no</h2>
+<p>Most files in this chunk have no test importing them, only the pure helper modules are tested.</p>
+<p>Add component tests for the views if they change often; the tested helpers include <a href="#">web/src/format.ts:20</a>.</p>
+<h2>RSK-08 Most shared components have no tests</h2>
+<p>Only the info popover, the ranking helpers and the sparkline geometry have tests. The stat cards, the daily chart, the filters, the column chooser and the session and trace views are untested, so a change can break a figure shown to the reader unnoticed. <a href="#">web/src/components/rank.test.ts:4</a></p>
+<p>Add tests for the display rules recorded in this chunk, starting with the unavailable marker and the twelve series limit.</p>
+<ul>
+<li><strong>Impact:</strong> medium, likelihood medium</li>
+</ul>
+<h2>RSK-09 Popover timing depends on a polling interval</h2>
+<p>The info popover decides to open and close from a 100 ms poll of the pointer position, so it can lag on a slow machine. <a href="#">web/src/components/metric-info.tsx:11</a></p>
+<p>The popover also opens on focus and click, so it is reachable without the poll. <a href="#">web/src/components/metric-info.tsx:143</a></p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood low</li>
+</ul>
+<h2>RSK-10 Primitives have no tests of their own</h2>
+<p>No test file lives in this folder, so a change to a shared primitive is exercised only through the screens that import it.</p>
+<p>Cover primitives through the screens that use them, or add tests beside the primitives.</p>
+<h2>RSK-11 Cline family token semantics unverified</h2>
+<p>Cline family token semantics are unverified: it is not known whether input tokens include cache buckets, so cost may be off.</p>
+<p>The policy is held per source in one table and the module header says to flip it when a real log shows otherwise.</p>
+<h2>RSK-12 Copilot CLI and Muse Code unchecked against real logs</h2>
+<p>Copilot CLI and Muse Code were built without a real log to check against, so their totals may be wrong.</p>
+<p>Both are flagged experimental and shown with a badge.</p>
+<h2>RSK-13 Render layer has no tests of its own</h2>
+<p>No test file imports or lives inside the render folder, so output format changes are not caught here.</p>
+<p>Add tests for the headline text, the 30 row cut and the empty project panel.</p>
+<ul>
+<li><strong>Impact:</strong> medium, likelihood medium
+Source:</li>
+<li><code>render</code>: <code>def render(</code></li>
+</ul>
+<h2>RSK-14 Silent row truncation in terminal tables</h2>
+<p>Only 30 rows are printed and nothing tells the user that more exist.</p>
+<p>Print a note when buckets are cut.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood medium
+Source:</li>
+<li><code>_bucket_table</code>: <code>for bucket in rows[:30]:</code></li>
+</ul>
+<h2>RSK-15 HTTP routes have no authentication</h2>
+<p>No route checks a caller <a href="#">src/ai_usage_cost/api.py:198</a>.</p>
+<p>The default host is the loopback address <a href="#">src/ai_usage_cost/cli.py:110</a> and metadata only is on by default <a href="#">src/ai_usage_cost/privacy.py:53</a>.</p>
+<ul>
+<li><strong>Impact:</strong> Anyone who can reach the port can read costs and, with the content route, span text if metadata only is off, and can forget sessions, likelihood low while the host stays on loopback</li>
+</ul>
+<h2>RSK-16 Daily series uses the UTC date</h2>
+<p>Buckets by day use the local day <a href="#">src/ai_usage_cost/aggregate.py:704</a> while the series uses <a href="#">src/ai_usage_cost/aggregate.py:544</a>.</p>
+<p>Not found in the code. See the open question on the series day.</p>
+<ul>
+<li><strong>Impact:</strong> The by day buckets and the series can place the same event on different days near midnight, likelihood medium</li>
+</ul>
+<h2>RSK-17 Secret patterns are a fixed list</h2>
+<p>Redaction relies on nine patterns <a href="#">src/ai_usage_cost/privacy.py:14</a>.</p>
+<p>Content is off by default <a href="#">src/ai_usage_cost/privacy.py:53</a> and text is cut to a byte limit <a href="#">src/ai_usage_cost/privacy.py:11</a>.</p>
+<ul>
+<li><strong>Impact:</strong> A secret in a form the patterns do not match is returned in released text, likelihood low, and only when metadata only is off</li>
+</ul>
+<h2>RSK-18 A privacy typo silently resets the settings</h2>
+<p>An invalid file is replaced by defaults without a message <a href="#">src/ai_usage_cost/privacy.py:67</a>.</p>
+<p>Not found in the code.</p>
+<ul>
+<li><strong>Impact:</strong> A person who mistypes config.json believes a project is excluded but the defaults apply, likelihood medium</li>
+</ul>
+<h2>RSK-19 Content retention is accepted but does nothing</h2>
+<p>The setting is read but no content is stored <a href="#">src/ai_usage_cost/pipeline.py:242</a>.</p>
+<p>The pipeline adds a warning when it is set.</p>
+<ul>
+<li><strong>Impact:</strong> A person may expect text to expire, likelihood low</li>
+</ul>
+<h2>RSK-20 Prices drift from the vendors</h2>
+<p>The table carries an as of date and warns only after a fixed age <a href="#">src/ai_usage_cost/aggregate.py:179</a>.</p>
+<p>Estimated, unpriced and tier gaps are warned about each scan.</p>
+<ul>
+<li><strong>Impact:</strong> Cost figures can be wrong without any warning until the table is 30 days old, likelihood medium</li>
+</ul>
+<h2>RSK-21 A mistyped settings file silently drops the project exclusions</h2>
+<p>One wrong value in the settings file, for example text where a number belongs, makes the whole file fall back to defaults. A project named in exclude_projects is then no longer excluded at ingest, and nothing tells the user.</p>
+<p>Raise a warning when the file exists but fails to load or validate, or validate each key on its own so one bad key cannot discard the others.</p>
+<ul>
+<li><strong>Impact:</strong> medium, likelihood low
+Source:</li>
+<li><a href="#">src/ai_usage_cost/privacy.py</a>: <code>except ValidationError:</code></li>
+<li><a href="#">src/ai_usage_cost/pipeline.py</a>: <code>exclude_projects=config.exclude_projects,</code></li>
+</ul>
+<h2>RSK-22 Bandit is configured but no workflow or hook runs it</h2>
+<p>The package file holds a bandit section and the dev extras install bandit, but the Python workflow steps and the pre-commit hooks never call it. The security lint therefore never gates a change; only CodeQL does.</p>
+<p>Add a bandit step to the Python workflow, or remove the unused section and extra so the files do not suggest a check that does not run.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood high
+Source:</li>
+<li><a href="#">pyproject.toml</a>: <code>[tool.bandit]</code></li>
+<li><a href="#">pyproject.toml</a>: <code>"bandit&gt;=1.7",</code></li>
+<li><code>.github/workflows/python.yml</code>: <code>run: uv run --no-sync pytest -q</code></li>
+</ul>
+<h2>RSK-23 Export writes a chart for a report with no events</h2>
+<p>The scan command refuses an empty report with a hint and exit code 1, but the export command has no such check, so a png export of an empty report writes a figure with a zero cost title and empty axes and then prints that it wrote the file.</p>
+<p>Share the empty report check between the two commands, or print a warning before the picture is written.</p>
+<p>Source:
+- <a href="#">src/ai_usage_cost/cli.py</a>: <code>if not report.totals.events:</code>
+- <a href="#">src/ai_usage_cost/cli.py</a>: <code>write_png(report, out)</code>
+- <a href="#">src/ai_usage_cost/render/png.py</a>: <code>fig.suptitle(</code></p>
+<h2>RSK-24 A missing timestamp is stamped with the scan time</h2>
+<p>Copilot Chat, Dyad and Ollama call parse_timestamp without a fallback file. When the stored time is missing or unreadable the helper returns the current time, so the event lands on the day of the scan and moves each time the file is rebuilt.</p>
+<p>Pass the file path as the fallback, as the other readers do, or skip the row and add a warning.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood low
+Source:</li>
+<li><a href="#">src/ai_usage_cost/sources/base.py</a>: <code>return datetime.now(tz=UTC)</code></li>
+<li><a href="#">src/ai_usage_cost/sources/copilot_chat.py</a>: <code>timestamp=parse_timestamp(timestamp),</code></li>
+<li><a href="#">src/ai_usage_cost/sources/dyad.py</a>: <code>timestamp=parse_timestamp(created_at),</code></li>
+<li><a href="#">src/ai_usage_cost/sources/ollama_app.py</a>: <code>timestamp=parse_timestamp(created_at),</code></li>
+</ul>
+<h2>RSK-25 One broken reader module stops the registry</h2>
+<p>The registry imports every module of the package with no guard, so an import error in a single reader raises out of the registry call and no reader can be used until the module is fixed.</p>
+<p>Catch the import error per module, skip that reader and report a warning naming it.</p>
+<ul>
+<li><strong>Impact:</strong> medium, likelihood low
+Source:</li>
+<li><a href="#">src/ai_usage_cost/sources/<strong>init</strong>.py</a>: <code>module = importlib.import_module(f"{__name__}.{info.name}")</code></li>
+</ul>
+<h2>RSK-26 Two readers import a private name from the Cline module</h2>
+<p>Roo Code and Kilo Code legacy import _TOKENS_IN_INCLUSIVE, a name that starts with an underscore, from the Cline module, so a rename inside Cline breaks them without a public contract saying so.</p>
+<p>Expose the table under a public name or pass the flag through Spec.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood low
+Source:</li>
+<li><a href="#">src/ai_usage_cost/sources/roo_code.py</a>: <code>from .cline import _TOKENS_IN_INCLUSIVE, Spec, make_source, task_roots</code></li>
+<li><a href="#">src/ai_usage_cost/sources/kilo_legacy.py</a>: <code>from .cline import _TOKENS_IN_INCLUSIVE, Spec, make_source, task_roots</code></li>
+</ul>
+<h2>RSK-27 Forgetting a session keeps its cost</h2>
+<p>Forgetting deletes only the session's spans and rating <a href="#">src/ai_usage_cost/store.py:597</a>, and ingest checks exclusions only for spans <a href="#">src/ai_usage_cost/store.py:273</a>, so its requests are kept and stored again.</p>
+<p>Not found in the code. See the open question on forgetting requests.</p>
+<ul>
+<li><strong>Impact:</strong> A forgotten session still counts in totals and its raw records stay in the store, while its routes answer 404, likelihood high whenever a session is forgotten</li>
+</ul>
+<h2>RSK-28 Project exclusion and retention skip requests</h2>
+<p>Requests are inserted without the exclusion test <a href="#">src/ai_usage_cost/store.py:270</a> and retention deletes only trace rows <a href="#">src/ai_usage_cost/store.py:302</a>.</p>
+<p>Not found in the code.</p>
+<ul>
+<li><strong>Impact:</strong> Requests of an excluded or expired project keep their project, working directory and raw record in the store and in reports, likelihood medium</li>
+</ul>
+<h2>RSK-29 Truncation runs before redaction</h2>
+<p>Released text is truncated first and redacted after <a href="#">src/ai_usage_cost/privacy.py:97</a> <a href="#">src/ai_usage_cost/privacy.py:98</a>.</p>
+<p>Content is off by default <a href="#">src/ai_usage_cost/privacy.py:53</a>.</p>
+<ul>
+<li><strong>Impact:</strong> A secret cut at the byte limit can fall below a pattern's minimum length and be returned unredacted, likelihood low, and only when metadata only is off</li>
+</ul>
+<h2>RSK-30 A bad date option ends in a raw error</h2>
+<p>Dates are parsed with no guard <a href="#">src/ai_usage_cost/cli.py:45</a>.</p>
+<p>Not found in the code.</p>
+<ul>
+<li><strong>Impact:</strong> A mistyped since or until value shows a Python error instead of a usage message, likelihood medium</li>
+</ul>
+<h2>RSK-31 An invalid rate file stops every command</h2>
+<p>Loading validates the whole file with no handler <a href="#">src/ai_usage_cost/pricing.py:287</a>.</p>
+<p>The model validators reject duplicate keys and overlapping periods at load, so a bad file fails loudly rather than pricing quietly.</p>
+<ul>
+<li><strong>Impact:</strong> One malformed rates.json row stops scan, serve, export, alert and tui with a validation error, likelihood low for the bundled file, medium for a file passed with --rates</li>
+</ul>
+<h2>RSK-32 Chart style text is built from config keys without escaping</h2>
+<p>The chart style element is filled by putting each config key and colour into a template string and passing it as HTML. The time chart builds its config keys from row data, so a key that holds a closing brace or a closing style tag would change the style rules or end the element. The data comes from local logs, so the exposure is small, but nothing validates the key. <a href="#">web/src/components/ui/chart.tsx:102</a> <a href="#">web/src/components/ui/chart.tsx:92</a> <a href="#">web/src/components/chart-time.tsx:65</a></p>
+<p>Map keys to safe indexed names such as series-1 before they enter the style text, and keep the readable name only in the label.</p>
+<ul>
+<li><strong>Impact:</strong> medium, likelihood low
+Source:</li>
+<li><code>ChartStyle</code></li>
+</ul>
+<h2>RSK-33 A chart part outside its container throws with no error boundary above it</h2>
+<p>The chart hook throws a plain error when no container is above it, and the app is mounted with one render call and no error boundary, so the error would leave the page blank. <a href="#">web/src/components/ui/chart.tsx:33</a> <a href="#">web/src/main.tsx:7</a></p>
+<p>Add one error boundary around the app that shows the existing error card with a retry button.</p>
+<ul>
+<li><strong>Impact:</strong> medium, likelihood low</li>
+</ul>
+<h2>RSK-34 A chart legend label is empty for a series with no config entry</h2>
+<p>The legend content prints only the config label, with no fallback to the series name, so a series missing from the config shows a colour square and no text, while the tooltip falls back to the raw name. <a href="#">web/src/components/ui/chart.tsx:319</a> <a href="#">web/src/components/ui/chart.tsx:249</a></p>
+<p>Fall back to the series name in the legend as the tooltip does.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood low</li>
+</ul>
+<h2>RSK-35 Hidden columns and shown columns can disagree</h2>
+<p>When a reader unchecks every column, the table guard returns the full column list, so the table still shows every column while the chooser shows every box unchecked. <a href="#">web/src/components/columns.tsx:59</a> <a href="#">web/src/components/columns.tsx:85</a></p>
+<p>Either keep the last column checked and disabled in the chooser, or show an explanation when the guard applies.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood medium</li>
+</ul>
+<h2>RSK-36 A failed copy of the start command gives no feedback</h2>
+<p>The offline card swallows a rejected clipboard write, so on a browser that blocks clipboard access the button stays at Copy command and the reader is not told that nothing was copied. <a href="#">web/src/components/states.tsx:300</a></p>
+<p>Show a short failure label or select the command text so the reader can copy it by hand.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood medium</li>
+</ul>
+<h2>RSK-37 Empty warnings and empty charts draw nothing</h2>
+<p>The warnings list, the time chart, the sparkline and the context bars return an empty area or nothing when they have no data, and the component gives no message, so a page that forgets its own empty card shows a blank space. <a href="#">web/src/components/chart-time.tsx:95</a> <a href="#">web/src/components/states.tsx:272</a></p>
+<p>Pages already pass an empty card in most places; add the same in every place that renders these parts, or give the parts an empty message prop.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood medium</li>
+</ul>
+<h2>RSK-38 Every info box keeps a timer and one global pointer listener</h2>
+<p>Each info box starts its own 100 ms interval for its whole lifetime, and one pointer listener is added to the window at load and never removed, so a table with many badges runs many timers. <a href="#">web/src/components/metric-info.tsx:79</a> <a href="#">web/src/components/metric-info.tsx:37</a></p>
+<p>Start the timer only while the pointer is near or the box is open.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood medium</li>
+</ul>
+<h2>RSK-39 A test title says the opposite of what it checks</h2>
+<p>The rank test named picks measured as the best expects the result derived, which is the worst of the two inputs, so the title misleads a reader of the test list. <a href="#">web/src/components/rank.test.ts:28</a></p>
+<p>Rename the test to say that the worse of measured and derived wins.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood low</li>
+</ul>
+<h2>RSK-40 Sessions footer asks the user to narrow filters that do nothing</h2>
+<p>The footer note says to narrow the filters to see the rest of the sessions, but the screen receives no filter value, so the advice cannot work. A port that copies the text would promise a control the data layer does not apply.</p>
+<p>Pass the filter state into the screen when porting, or drop the sentence from the reference.</p>
+<p>Source:
+- <a href="#">web/src/prototype/SessionsScreen.tsx</a>: <code>Narrow the filters to see the rest.</code></p>
+<h2>RSK-41 Session rows can be opened by mouse only</h2>
+<p>The table row has a click handler and a pointer cursor but no key handler and no tab stop, so a keyboard user cannot open a session. Only the error count has a tab stop. A screen meant as the reference for the real one should not carry this gap.</p>
+<p>Make the row focusable and open it on Enter, or put a button in the id cell, in the shipped screen.</p>
+<p>Source:
+- <a href="#">web/src/prototype/SessionsScreen.tsx</a>: <code>className="cursor-pointer"</code></p>
+<h2>RSK-42 Cache prices of providers without rules are defaults, not published prices</h2>
+<p>The pricing screen derives cache prices from the provider rules and falls back to 0.1 for reads and 1.25 for writes when the provider has none. The rule table lists three providers while the rate table also has deepseek, moonshot and mistral rows, so their cache columns show the default. The note beside the multipliers says discounts differ by provider.</p>
+<p>Show a dash, or mark the figure as a default, for providers without a rule.</p>
+<p>Source:
+- <a href="#">web/src/prototype/PricingScreen.tsx</a>: <code>const rules = PROVIDER_RULES[rate.provider]</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>export const PROVIDER_RULES: Record&lt;string, ProviderRules&gt; = {</code></p>
+<h2>RSK-43 Overview panels read the first item of a list without a guard</h2>
+<p>The cost by model panel reads the first ranked model and the project panel reads the first project to write its title. With real data and an empty list both would fail. Averages and shares also divide by totals without a zero check.</p>
+<p>Add an empty state for each panel before the layout is ported.</p>
+<p>Source:
+- <a href="#">web/src/prototype/OverviewScreen.tsx</a>: <code>const top = ranked[0]</code>
+- <a href="#">web/src/prototype/OverviewScreen.tsx</a>: <code>const averagePerSession = TOTALS.cost / TOTALS.sessions</code></p>
+<h2>RSK-44 Sample figures are stored twice and can drift</h2>
+<p>The spend of each model is written once in the model list and once in the rate table, for example the figure of the top model, with no link between them. An edit to one copy leaves the other stale, and the overview and pricing screens would disagree.</p>
+<p>Derive one list from the other, or add a test that compares them.</p>
+<p>Source:
+- <a href="#">web/src/prototype/data.ts</a>: <code>cost: 1489.22,</code>
+- <a href="#">web/src/prototype/data.ts</a>: <code>spend: 1489.22</code></p>
+<h2>RSK-45 Risk 5꞉ Sessions are identified by session id alone in the table and when opened</h2>
+<p>The sessions table keys its rows and opens the workspace by session id only, and the shell looks the row up by that id alone, so two sources that share a session id collide and the first match opens. <a href="#">web/src/Sessions.tsx:354</a> <a href="#">web/src/App.tsx:285</a></p>
+<p>Pass the source with the session id, as the workspace key already does. <a href="#">web/src/App.tsx:344</a></p>
+<ul>
+<li><strong>Impact:</strong> medium, likelihood low</li>
+</ul>
+<h2>RSK-46 Risk 6꞉ One failed report refetch hides the whole dashboard</h2>
+<p>A failed report request after the first load sets the shared error, and the shell then replaces every view with an error card that has no retry action. <a href="#">web/src/App.tsx:193</a> <a href="#">web/src/App.tsx:274</a></p>
+<p>Keep the last report on screen with an inline error and a retry, or pass a retry handler to the error card.</p>
+<ul>
+<li><strong>Impact:</strong> medium, likelihood medium</li>
+</ul>
+<h2>RSK-47 Risk 7꞉ Outcome saves are not sequenced</h2>
+<p>A rating pick and a notes or tags blur each start a save while another may still run, and the toggle stays enabled during a save, so answers can arrive out of order and the older one can win. <a href="#">web/src/SessionWorkspace.tsx:274</a> <a href="#">web/src/SessionWorkspace.tsx:312</a></p>
+<p>Queue saves or ignore answers of superseded saves.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood low</li>
+</ul>
+<h2>RSK-48 Risk 8꞉ A missing span text is recognised by message wording</h2>
+<p>The trace tab treats an error as not found when its message contains 404, which depends on the wording of the API helper rather than on a status field. <a href="#">web/src/TraceTab.tsx:60</a> <a href="#">web/src/api.ts:497</a></p>
+<p>Carry the HTTP status on the error object and test it.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood low</li>
+</ul>
+<h2>RSK-49 Risk 9꞉ Rescan can be started twice</h2>
+<p>The Rescan logs button stays enabled while a scan runs, only its label changes, so a second press sends a second refresh. <a href="#">web/src/Header.tsx:128</a> <a href="#">web/src/App.tsx:211</a></p>
+<p>Disable the button while rescanning is true.</p>
+<ul>
+<li><strong>Impact:</strong> low, likelihood medium</li>
+</ul>
+<h2>RSK-50 Risk 10꞉ Session rows cannot be opened from the keyboard</h2>
+<p>A sessions table row opens the workspace on click only, with no tab stop or key handler, while the turn rows of the trace tab do have both. <a href="#">web/src/Sessions.tsx:355</a> <a href="#">web/src/TraceTab.tsx:686</a></p>
+<p>Give the row a tab stop and an Enter handler, or put a button in the session cell.</p>
+<ul>
+<li><strong>Impact:</strong> medium, likelihood high</li>
+</ul>
+<h2>OQ-01 Is the prototype still wanted once every screen is ported？</h2>
+<p>The migration guide treats the folder as a working reference during the port. Should it be deleted or kept after the port, and should the README and guide be updated to say the port is done? Checked web/src/design-system/MIGRATION.md and README.md.</p>
+<h2>OQ-02 Is Node 20 tested for the dashboard build</h2>
+<p>The README asks for Node.js 20 or newer to rebuild the dashboard, but the web workflow only runs Node 22. Is Node 20 meant to be tested?</p>
+<h2>OQ-03 Question 3꞉ Does the DELETE session endpoint remove the</h2>
+<p>Does the DELETE session endpoint remove the user's own log files or only the derived trace store? The client only reports a deleted span count, see web/src/api.ts.</p>
+<h2>OQ-04 Question 4꞉ Is deleteSession reachable from any screen in</h2>
+<p>Is deleteSession reachable from any screen in this chunk? No caller was found in the pages read, only its definition in web/src/api.ts.</p>
+<h2>OQ-05 Why the Other series limit is twelve</h2>
+<p>Is twelve series a design choice or the number of colours defined in the theme? The code only shows the constant in web/src/components/series.ts.</p>
+<h2>OQ-06 Which primitives are unused</h2>
+<p>Dialog, Alert, Accordion and Progress are imported only by the component gallery. Should they stay in the layer or be removed?</p>
+<h2>OQ-07 Experimental readers verified？</h2>
+<p>Which experimental readers have been verified against a real session since their module headers were written?</p>
+<h2>OQ-08 Muse Code cache write tokens</h2>
+<p>Does Muse Code cache_write_tokens sit inside input_tokens? The module marks it unverified.</p>
+<h2>OQ-09 Where is the dashboard data produced</h2>
+<p>The brief for this chunk mentions data for the local dashboard, but the render folder holds only terminal.py and png.py. The dashboard reads the report from the HTTP route in src/ai_usage_cost/api.py. Is the dashboard payload meant to belong to another chunk?</p>
+<h2>OQ-10 Does the PNG chart need a group by option</h2>
+<p>write_png always charts model, project, day and token mix and ignores the grouping the user chose in scan. Is that intended?</p>
+<h2>OQ-11 Should the series use the local day</h2>
+<p>The series groups by the UTC date of an event <a href="#">src/ai_usage_cost/aggregate.py:544</a> while every other day view uses the local day <a href="#">src/ai_usage_cost/models.py:146</a>. Is that intended?</p>
+<ul>
+<li><strong>Status:</strong> open</li>
+</ul>
+<h2>OQ-12 Who may use the HTTP interface</h2>
+<p>The code has no caller check <a href="#">src/ai_usage_cost/api.py:198</a>. Is loopback binding the intended only control, and is a non loopback host a supported setup?</p>
+<ul>
+<li><strong>Status:</strong> open</li>
+</ul>
+<h2>OQ-13 Will content capture be built</h2>
+<p>Metadata only and content retention exist <a href="#">src/ai_usage_cost/privacy.py:57</a> but the pipeline says no content is persisted <a href="#">src/ai_usage_cost/pipeline.py:242</a>. Is persisted content planned?</p>
+<ul>
+<li><strong>Status:</strong> open</li>
+</ul>
+<h2>OQ-14 Why 30 days for stale rates</h2>
+<p>The stale rate threshold is a constant <a href="#">src/ai_usage_cost/aggregate.py:179</a>. What is the reason for the value?</p>
+<ul>
+<li><strong>Status:</strong> open</li>
+</ul>
+<h2>OQ-15 Should the README list content_retention_days</h2>
+<p>The settings model has a fifth setting, content_retention_days, that is accepted but inert and only produces a warning. The README lists four settings. Is the omission intended?</p>
+<h2>OQ-16 Should local checks and the workflow lint the same folders</h2>
+<p>The README tells contributors to run ruff on src, tests and scripts, while the Python workflow runs ruff on the whole repository root. Which scope is the rule?</p>
+<h2>OQ-17 Should the four chart colours keep one meaning across panels？</h2>
+<p>Colours are assigned by position in each chart, so a reader can take indigo for a client in one panel and for the top model in another. Checked src/ai_usage_cost/render/png.py. Is a fixed colour per client or per model wanted?</p>
+<h2>OQ-18 Is the scan helper in the shared module still needed</h2>
+<p>The shared module has a scan function that loops over roots, files and parse, but the real ingest loop in the store does its own looping with skip and resume logic. Only a test file calls the helper. Should it be removed or reused by the store?</p>
+<p>Source:
+- <a href="#">src/ai_usage_cost/sources/base.py</a>: <code>def scan(</code>
+- <a href="#">src/ai_usage_cost/store.py</a>: <code>for path in source.files(root):</code></p>
+<h2>OQ-19 Should forgetting a session remove its requests</h2>
+<p>Forgetting removes spans and the rating but keeps requests <a href="#">src/ai_usage_cost/store.py:595</a>. Should the session's cost and raw records also go, and should project exclusion apply to requests?</p>
+<ul>
+<li><strong>Status:</strong> open</li>
+</ul>
+<h2>OQ-20 Sampler error message omits rocm-smi</h2>
+<p>The sampler supports rocm-smi <a href="#">src/ai_usage_cost/collect.py:88</a> but the error names only nvidia-smi and PowerShell <a href="#">src/ai_usage_cost/cli.py:214</a>. Is the message stale?</p>
+<ul>
+<li><strong>Status:</strong> open</li>
+</ul>
+<h2>OQ-21 Should the toast host ship in the main app</h2>
+<p>In the web source only the prototype page mounts the toast host, and the shipped dashboard entry mounts only the tooltip provider. Is the toast primitive meant for a later screen or is it dead code in the shipped app? <a href="#">web/src/prototype/Prototype.tsx:109</a> <a href="#">web/src/main.tsx:9</a></p>
+<h2>OQ-22 Are the chart legend parts still needed</h2>
+<p>The wrapper exports a legend and a legend content part, but the time chart draws its own key list instead. Does any screen plan to use these two, or can they go? <a href="#">web/src/components/ui/chart.tsx:270</a> <a href="#">web/src/components/chart-time.tsx:174</a></p>
+<h2>OQ-23 Should a retry on the offline card show progress</h2>
+<p>The Retry connection button only bumps a counter in the page and the card shows no pending or failed state, so pressing it twice sends two reloads. Is that intended?</p>
+<h2>OQ-24 Is the offline card matched by message text on purpose</h2>
+<p>The app decides that the reader is offline by looking for a fixed sentence in the error text before it draws the offline card, so a reworded message would show the plain error card instead. Should the failure carry a typed marker? <a href="#">web/src/App.tsx:251</a></p>
+<h2>OQ-25 Does the shared token cell clamp a negative bar fraction？</h2>
+<p>A session without token counts has a token total of minus one, and the table divides it by the largest total to get the bar fraction, which is then negative. The prototype does not clamp it. Checked web/src/prototype/SessionsScreen.tsx; the answer is in the shared session component, which belongs to another chunk.</p>
+<h2>OQ-26 Which sort keys does the sort menu offer compared with the column headers？</h2>
+<p>The column headers can sort by client, model, id and outcome, but the option list of the sort menu has no entry for them, so the menu value after a header press has no matching option. Checked web/src/prototype/SessionsScreen.tsx and web/src/prototype/data.ts; how the menu shows an unknown value is decided in the shared component.</p>
+<h2>OQ-27 Question 11꞉ Should filters stay reachable on a large screen while a session is open？</h2>
+<p>On a large screen the filter rail is hidden while a workspace is open and the Filters button is hidden at that breakpoint, so the filters cannot be reached until the workspace closes. Is that intended? See web/src/App.tsx (docked), web/src/FilterRail.tsx (aside) and web/src/Header.tsx (Filters button).</p>
+<h2>OQ-28 Question 12꞉ Which warnings should the Flagged figure count？</h2>
+<p>The Flagged figure of the overview counts the warning summary of the last scan, while the Sources view lists the warning groups of the current report. Should both use the same set? See web/src/Overview.tsx (FlaggedStat) and web/src/Sources.tsx (Scan warnings panel).</p>
+<h2>OQ-29 Question 13꞉ Should failed tabs and span texts offer a retry？</h2>
+<p>A workspace tab whose endpoint failed and a span text that failed both keep the error with no retry until the session is reopened. Is a retry wanted? See web/src/SessionWorkspace.tsx (LoadableTab) and web/src/TraceTab.tsx (toggleContent).</p>
+<h2>OQ-30 Question 14꞉ Should the heaviest sessions on the overview open their session？</h2>
+<p>The rows of the heaviest sessions panel show a session but have no click handler, unlike the sessions table. Is opening a session from the overview wanted? See web/src/Overview.tsx (HeavyRow).</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

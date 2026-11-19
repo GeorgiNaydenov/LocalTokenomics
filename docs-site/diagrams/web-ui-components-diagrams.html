@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web UI components Diagrams</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-ui-components-diagrams.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/components/*</code></p><h1>Web UI components Diagrams</h1>
+<p>This view shows how the shared dashboard building blocks sit between the main web application and the lower-level interface primitives. It helps a reader see which direction dependencies run before changing a shared card, badge or chart.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The centre box is the set of shared dashboard components: stat cards, badges, charts, filters and session views <code>web/src/components/status.tsx:1-454</code>.</li>
+<li>An arrow from the components to the main web application exists because the badges import the data types, the design helper and the pricing notes from it <code>web/src/components/status.tsx:3-6</code>.</li>
+<li>An arrow from the components to the primitives box exists because the column chooser builds on the shared button and dropdown menu <code>web/src/components/columns.tsx:4-12</code>.</li>
+<li>An arrow from the main web application back to the components exists because the app screens import filters, stat cards and states from them <code>web/src/App.tsx:15-17</code>.</li>
+<li>An arrow from the primitives to the main web application exists because the button primitive uses the shared class name helper <code>web/src/components/ui/button.tsx:3</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The diagram realises the shared display layer of the dashboard. The written explanation is in <a href="../application/web-ui-components-overview.html">Web UI components Overview</a>, and the tests that guard it are in <a href="../application/web-ui-components-tests.html">Web UI components Tests</a>. The neighbouring modules are Web Overview and Web ui UI components Overview.</p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/components/status.tsx:3-6</code></td>
+<td>Imports from the main web application</td>
+</tr>
+<tr>
+<td><code>web/src/components/columns.tsx:4-12</code></td>
+<td>Imports from the primitives</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:15-17</code></td>
+<td>Application imports of the components</td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/button.tsx:3</code></td>
+<td>Primitive importing the shared helper</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2>More views of the shared components</h2>
+<p>The shared dashboard components also have these views: <a href="../diagrams/shared-components-c4.html">Shared components C4</a> for the groups and what they lean on, <a href="../diagrams/shared-components-concepts.html">Shared components concepts</a> for the vocabulary, <a href="../diagrams/dashboard-component-composition.html">Dashboard component composition</a> for which component renders which, <a href="../diagrams/shared-components-imports.html">Shared components imports</a> for the file level imports, <a href="../diagrams/warnings-list-states.html">Warnings list states</a> and <a href="../diagrams/metric-info-interaction-flow.html">Metric info interaction flow</a> for two behaviours, <a href="../diagrams/offline-and-error-handling-flow.html">Offline and error handling flow</a> for the failure paths, <a href="../diagrams/offline-card-screen-map.html">Offline card screen map</a> with its screen note <a href="../application/offline-card-screen.html">Offline card Screen</a>, and <a href="../diagrams/session-card-wireframe.html">Session card wireframe</a> for the compact session card.</p>
+<h2>Components around Web UI components</h2>
+<pre class="mermaid">flowchart LR
+    subgraph g_web[&quot;web&quot;]
+        localtokenomics_web_src_components[&quot;web/src/components&lt;br/&gt;18 files, 3024 lines&lt;br/&gt;typescript&quot;]:::system
+        localtokenomics_web_src[&quot;web/src&lt;br/&gt;20 files, 7127 lines&lt;br/&gt;typescript&quot;]:::system
+        localtokenomics_web_src_components_ui[&quot;web/src/components/ui&lt;br/&gt;25 files, 2083 lines&lt;br/&gt;typescript&quot;]:::system
+    end
+    localtokenomics_web_src_components --&gt; localtokenomics_web_src
+    localtokenomics_web_src_components --&gt; localtokenomics_web_src_components_ui
+    localtokenomics_web_src --&gt; localtokenomics_web_src_components
+    localtokenomics_web_src --&gt; localtokenomics_web_src_components_ui
+    localtokenomics_web_src_components_ui --&gt; localtokenomics_web_src
+    subgraph Legend
+        direction LR
+        zlegend_a[&quot;Component: part of this system&quot;]:::system
+        zlegend_b[&quot;Solid arrow: imports or calls&quot;]:::system
+        zlegend_a ~~~ zlegend_b
+    end
+    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233
+</pre></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

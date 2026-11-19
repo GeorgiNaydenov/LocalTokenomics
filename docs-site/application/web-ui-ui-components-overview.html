@@ -1,0 +1,266 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web ui UI components Overview</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/web-ui-ui-components-overview.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/components/ui/**</code></p><h1>Web ui UI components Overview</h1>
+<p>What Web ui UI components is made of and how it connects to the rest of the code.</p>
+<h2>How it works</h2>
+<p>Web ui UI components holds 25 source files and 2083 lines. The most depended-on files are <code>web/src/components/ui/button.tsx</code>, <code>web/src/components/ui/tooltip.tsx</code>, <code>web/src/components/ui/table.tsx</code>. It uses <a href="../application/web-overview.html">Web Overview</a>. It is used by <a href="../application/web-ui-components-overview.html">Web UI components Overview</a>, <a href="../application/web-overview.html">Web Overview</a>, <a href="../application/web-prototype-overview.html">Web prototype Overview</a>.</p>
+<p>The purpose column quotes each file's own header comment where it has one. Every file is cited by its full line range, and every public name by the line that declares it.</p>
+<h2>What this layer is for</h2>
+<p>This folder is the design system layer of the dashboard. Each file wraps one interface primitive, such as a button, an input, a dialog or a table, so that screens never style these elements from scratch. Screens import the primitives and compose them, for example <code>web/src/FilterRail.tsx:9-13</code> pulls in <code>Button</code>, <code>Label</code>, <code>Separator</code>, <code>Sheet</code> and <code>Switch</code> to build the filter panel.</p>
+<p>Every primitive joins its class names through the shared <code>cn</code> helper, which combines <code>clsx</code> with <code>tailwind-merge</code> (<code>web/src/design-system/cn.ts:1-6</code>). A caller can therefore pass a <code>className</code> that overrides a default style without leaving two conflicting utility classes on the element (<code>web/src/components/ui/input.tsx:9-14</code>).</p>
+<p>Each primitive also stamps a <code>data-slot</code> attribute on its element, for example <code>button</code> (<code>web/src/components/ui/button.tsx:54</code>) and <code>input</code> (<code>web/src/components/ui/input.tsx:8</code>). Variants are exposed as <code>data-variant</code> and <code>data-size</code> attributes as well (<code>web/src/components/ui/button.tsx:55-56</code>), so parent components and tests can target a part of a primitive by name.</p>
+<h2>Families of primitives</h2>
+<h3>Actions and status</h3>
+<p><code>Button</code> offers the variants default, destructive, outline, secondary, ghost and link, and the sizes default, xs, sm, lg and four icon sizes (<code>web/src/components/ui/button.tsx:10-31</code>). It is the most reused primitive in the chunk, and its <code>asChild</code> option lets it hand its styling to another element through Radix <code>Slot</code> (<code>web/src/components/ui/button.tsx:44-50</code>). <code>Badge</code> is the small pill counterpart with its own variants, and it supports <code>asChild</code> the same way (<code>web/src/components/ui/badge.tsx:10-35</code>). The dashboard uses it for markers on source cards and pricing rows (<code>web/src/components/source-card.tsx:3</code>, <code>web/src/Pricing.tsx:28</code>).</p>
+<p><code>Alert</code> renders a bordered message with <code>role="alert"</code> and a title and description part (<code>web/src/components/ui/alert.tsx:21-34</code>). <code>Skeleton</code> is a pulsing placeholder block, and <code>Progress</code> shows a bar whose indicator is shifted by the <code>value</code> prop (<code>web/src/components/ui/skeleton.tsx:3-11</code>, <code>web/src/components/ui/progress.tsx:19-23</code>). <code>web/src/components/states.tsx:126-129</code> composes skeletons into the loading panel.</p>
+<h3>Form controls</h3>
+<p><code>Input</code> and <code>Textarea</code> share one look: a bordered field with a focus ring and a red ring when <code>aria-invalid</code> is set (<code>web/src/components/ui/input.tsx:9-14</code>, <code>web/src/components/ui/textarea.tsx:8-13</code>). <code>Label</code>, <code>Checkbox</code> and <code>Switch</code> wrap Radix controls (<code>web/src/components/ui/label.tsx:10-18</code>, <code>web/src/components/ui/checkbox.tsx:13-27</code>, <code>web/src/components/ui/switch.tsx:15-30</code>). <code>Switch</code> takes a <code>size</code> of <code>sm</code> or <code>default</code> (<code>web/src/components/ui/switch.tsx:7-13</code>). The session workspace builds its edit form from <code>Button</code>, <code>Input</code>, <code>Label</code> and <code>Textarea</code> (<code>web/src/SessionWorkspace.tsx:35-38</code>).</p>
+<p><code>Select</code> is a set of parts: trigger, content, item, group, label, separator and scroll buttons (<code>web/src/components/ui/select.tsx:6-176</code>). The trigger has a <code>size</code> of <code>sm</code> or <code>default</code> and always draws a chevron icon (<code>web/src/components/ui/select.tsx:24-46</code>). The filter bar uses it together with <code>Checkbox</code>, <code>Input</code> and <code>Label</code> (<code>web/src/components/filters.tsx:4-14</code>).</p>
+<p><code>Toggle</code> is a two state button, and <code>ToggleGroup</code> places several of them in a row. The group passes its variant, size and spacing to every item through a React context, and an item falls back to its own props only when the group sets none (<code>web/src/components/ui/toggle-group.tsx:8-16</code>, <code>web/src/components/ui/toggle-group.tsx:42-44</code>, <code>web/src/components/ui/toggle-group.tsx:62-63</code>). Because the group is reused in six files, it is the usual way the dashboard offers a choice between a few modes (<code>web/src/Overview.tsx:38</code>, <code>web/src/TraceTab.tsx:19</code>).</p>
+<h3>Overlays and disclosure</h3>
+<p><code>Dialog</code> and <code>Sheet</code> are both built on the Radix dialog primitive. Each has a trigger, portal, overlay, content, header, footer, title and description part, and each content part shows a close button with a screen reader label unless <code>showCloseButton</code> is false (<code>web/src/components/ui/dialog.tsx:50-82</code>, <code>web/src/components/ui/sheet.tsx:44-83</code>). <code>SheetContent</code> adds a <code>side</code> option for top, right, bottom or left, defaulting to right (<code>web/src/components/ui/sheet.tsx:44-53</code>). The dashboard uses sheets for slide in panels, such as the filter rail on small screens (<code>web/src/FilterRail.tsx:486-495</code>). The only consumer of <code>Dialog</code> found in the dashboard is the component gallery (<code>web/src/prototype/Gallery.tsx:292</code>).</p>
+<p><code>Popover</code>, <code>Tooltip</code> and <code>DropdownMenu</code> render their content in a portal so that it is not clipped by the panel that owns the trigger (<code>web/src/components/ui/popover.tsx:23-35</code>, <code>web/src/components/ui/tooltip.tsx:38-52</code>, <code>web/src/components/ui/dropdown-menu.tsx:31-49</code>). <code>TooltipProvider</code> sets the default hover delay to zero, and the dashboard roots wrap the app in a provider with a 200 ms delay (<code>web/src/components/ui/tooltip.tsx:7-18</code>, <code>web/src/main.tsx:9-11</code>, <code>web/src/prototype/Prototype.tsx:32</code>). The file table below shows <code>Tooltip</code> is imported by ten files, the second highest count in the folder.</p>
+<p><code>Accordion</code> and <code>Collapsible</code> hide and reveal content. The accordion trigger sits inside a header and adds a chevron, while <code>Collapsible</code> is a thin wrapper that adds only <code>data-slot</code> attributes (<code>web/src/components/ui/accordion.tsx:27-47</code>, <code>web/src/components/ui/collapsible.tsx:3-9</code>). <code>web/src/components/states.tsx:150-169</code> composes a collapsible panel from the trigger and content parts. <code>Tabs</code> splits a view into panes, with a <code>default</code> and a <code>line</code> list variant (<code>web/src/components/ui/tabs.tsx:8-40</code>).</p>
+<p>The toast host <code>Toaster</code> is the one primitive that depends on app state: it reads the current theme mode from <code>useTheme</code> and passes it to the Sonner toaster, and it maps the toast colours to the popover theme variables (<code>web/src/components/ui/sonner.tsx:10-34</code>). The prototype mounts it once at the bottom right (<code>web/src/prototype/Prototype.tsx:109</code>).</p>
+<h3>Data display</h3>
+<p><code>Table</code> wraps a native table in a container that scrolls horizontally, and the header, body, footer, row, head, cell and caption parts each add their own styling (<code>web/src/components/ui/table.tsx:4-17</code>, <code>web/src/components/ui/table.tsx:104-113</code>). The pricing and sessions screens compose them for their rate and session lists (<code>web/src/Pricing.tsx:37</code>, <code>web/src/Sessions.tsx:29</code>).</p>
+<p>The chart file is the only large one, and it adapts Recharts rather than Radix. <code>ChartContainer</code> takes a <code>ChartConfig</code> that maps each series to a label, an icon and either one colour or a light and dark colour pair, and it shares that config with its children through a context (<code>web/src/components/ui/chart.tsx:12-27</code>, <code>web/src/components/ui/chart.tsx:60-77</code>). <code>ChartStyle</code> turns the config into CSS variables, one per series key and prefixed with <code>--color-</code>, scoped to the chart's own id, in one block for light and one for the <code>.dark</code> selector (<code>web/src/components/ui/chart.tsx:7</code>, <code>web/src/components/ui/chart.tsx:81-112</code>). The tooltip and legend content parts read the same config, and <code>useChart</code> throws when they are used outside a container (<code>web/src/components/ui/chart.tsx:29-37</code>, <code>web/src/components/ui/chart.tsx:282</code>). The time chart builds its config and renders inside the container (<code>web/src/components/chart-time.tsx:63</code>, <code>web/src/components/chart-time.tsx:99</code>).</p>
+<h2>What a reader must know</h2>
+<ul>
+<li>The folder has no logic of its own about tokens or costs. Business meaning lives in the screens that compose these parts.</li>
+<li>No test file lives in this folder, so the primitives are exercised only through the screens that use them.</li>
+<li>Most overlay and form primitives are split into several exported parts, so a screen imports the root and the parts it needs, as <code>web/src/FilterRail.tsx:12</code> does for the sheet.</li>
+</ul>
+<h2>Reference</h2>
+<h3>Files</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+<th>Lines</th>
+<th>Imports</th>
+<th>Imported by</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/components/ui/accordion.tsx</code></td>
+<td>-</td>
+<td>65</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/accordion.tsx</a> <code>web/src/components/ui/accordion.tsx:1-65</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/alert.tsx</code></td>
+<td>-</td>
+<td>65</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/alert.tsx</a> <code>web/src/components/ui/alert.tsx:1-65</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/badge.tsx</code></td>
+<td>-</td>
+<td>47</td>
+<td>1</td>
+<td>6</td>
+<td><a href="#">web/src/components/ui/badge.tsx</a> <code>web/src/components/ui/badge.tsx:1-47</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/button.tsx</code></td>
+<td>-</td>
+<td>63</td>
+<td>1</td>
+<td>14</td>
+<td><a href="#">web/src/components/ui/button.tsx</a> <code>web/src/components/ui/button.tsx:1-63</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/chart.tsx</code></td>
+<td>-</td>
+<td>371</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/chart.tsx</a> <code>web/src/components/ui/chart.tsx:1-371</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/checkbox.tsx</code></td>
+<td>-</td>
+<td>31</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/checkbox.tsx</a> <code>web/src/components/ui/checkbox.tsx:1-31</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/collapsible.tsx</code></td>
+<td>-</td>
+<td>31</td>
+<td>0</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/collapsible.tsx</a> <code>web/src/components/ui/collapsible.tsx:1-31</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/dialog.tsx</code></td>
+<td>-</td>
+<td>158</td>
+<td>2</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/dialog.tsx</a> <code>web/src/components/ui/dialog.tsx:1-158</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/dropdown-menu.tsx</code></td>
+<td>-</td>
+<td>254</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/dropdown-menu.tsx</a> <code>web/src/components/ui/dropdown-menu.tsx:1-254</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/input.tsx</code></td>
+<td>-</td>
+<td>20</td>
+<td>1</td>
+<td>3</td>
+<td><a href="#">web/src/components/ui/input.tsx</a> <code>web/src/components/ui/input.tsx:1-20</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/label.tsx</code></td>
+<td>-</td>
+<td>21</td>
+<td>1</td>
+<td>5</td>
+<td><a href="#">web/src/components/ui/label.tsx</a> <code>web/src/components/ui/label.tsx:1-21</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/popover.tsx</code></td>
+<td>-</td>
+<td>86</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/popover.tsx</a> <code>web/src/components/ui/popover.tsx:1-86</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/progress.tsx</code></td>
+<td>-</td>
+<td>28</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/progress.tsx</a> <code>web/src/components/ui/progress.tsx:1-28</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/select.tsx</code></td>
+<td>-</td>
+<td>187</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/select.tsx</a> <code>web/src/components/ui/select.tsx:1-187</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/separator.tsx</code></td>
+<td>-</td>
+<td>25</td>
+<td>1</td>
+<td>5</td>
+<td><a href="#">web/src/components/ui/separator.tsx</a> <code>web/src/components/ui/separator.tsx:1-25</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/sheet.tsx</code></td>
+<td>-</td>
+<td>140</td>
+<td>1</td>
+<td>4</td>
+<td><a href="#">web/src/components/ui/sheet.tsx</a> <code>web/src/components/ui/sheet.tsx:1-140</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/skeleton.tsx</code></td>
+<td>-</td>
+<td>13</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/skeleton.tsx</a> <code>web/src/components/ui/skeleton.tsx:1-13</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/sonner.tsx</code></td>
+<td>-</td>
+<td>39</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/sonner.tsx</a> <code>web/src/components/ui/sonner.tsx:1-39</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/switch.tsx</code></td>
+<td>-</td>
+<td>34</td>
+<td>1</td>
+<td>3</td>
+<td><a href="#">web/src/components/ui/switch.tsx</a> <code>web/src/components/ui/switch.tsx:1-34</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/table.tsx</code></td>
+<td>-</td>
+<td>113</td>
+<td>1</td>
+<td>7</td>
+<td><a href="#">web/src/components/ui/table.tsx</a> <code>web/src/components/ui/table.tsx:1-113</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/tabs.tsx</code></td>
+<td>-</td>
+<td>90</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/tabs.tsx</a> <code>web/src/components/ui/tabs.tsx:1-90</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/textarea.tsx</code></td>
+<td>-</td>
+<td>19</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">web/src/components/ui/textarea.tsx</a> <code>web/src/components/ui/textarea.tsx:1-19</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/toggle-group.tsx</code></td>
+<td>-</td>
+<td>81</td>
+<td>2</td>
+<td>6</td>
+<td><a href="#">web/src/components/ui/toggle-group.tsx</a> <code>web/src/components/ui/toggle-group.tsx:1-81</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/toggle.tsx</code></td>
+<td>-</td>
+<td>46</td>
+<td>1</td>
+<td>2</td>
+<td><a href="#">web/src/components/ui/toggle.tsx</a> <code>web/src/components/ui/toggle.tsx:1-46</code></td>
+</tr>
+<tr>
+<td><code>web/src/components/ui/tooltip.tsx</code></td>
+<td>-</td>
+<td>56</td>
+<td>1</td>
+<td>10</td>
+<td><a href="#">web/src/components/ui/tooltip.tsx</a> <code>web/src/components/ui/tooltip.tsx:1-56</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Public interface</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Kind</th>
+<th>File</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ChartConfig</code></td>
+<td>type</td>
+<td><code>web/src/components/ui/chart.tsx</code></td>
+<td><a href="#">web/src/components/ui/chart.tsx</a> <code>web/src/components/ui/chart.tsx:12</code></td>
+</tr>
+</tbody>
+</table></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

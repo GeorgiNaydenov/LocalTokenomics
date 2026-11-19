@@ -1,0 +1,150 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Reader types</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/reader-types.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Data · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/sources/**</code></p><h1>Reader types</h1>
+<p>This diagram shows the few data types that every reader is built from and what each one holds. A reader describes itself with one record, produces usage records, and may add step by step spans. Knowing these shapes is enough to read any reader module or to write a new one.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>Source is a frozen dataclass with an id, a label, a client map, a default roots function, a files function, a parse function, a token data flag and a display path. <code>src/ai_usage_cost/sources/base.py:18</code> <code>src/ai_usage_cost/sources/base.py:24</code> <code>src/ai_usage_cost/sources/base.py:26</code></li>
+<li>Its optional parts are a spans function, a capabilities value, an experimental flag and a resume function. <code>src/ai_usage_cost/sources/base.py:27</code> <code>src/ai_usage_cost/sources/base.py:28</code> <code>src/ai_usage_cost/sources/base.py:40</code></li>
+<li>Token data is a two value type, full or session. <code>src/ai_usage_cost/sources/base.py:14</code></li>
+<li>Capabilities holds five labels, one each for trace, tokens, cost, context and latency, and every label defaults to unavailable. <code>src/ai_usage_cost/trace.py:104</code> <code>src/ai_usage_cost/trace.py:109</code></li>
+<li>Provenance has five values: measured, derived, estimated, inferred and unavailable. <code>src/ai_usage_cost/models.py:9</code></li>
+<li>A usage event names its source, client, model, timestamp, session and request, and may carry token usage, a title with its source and the cost the tool logged itself. <code>src/ai_usage_cost/models.py:49</code> <code>src/ai_usage_cost/models.py:57</code> <code>src/ai_usage_cost/models.py:72</code></li>
+<li>Token usage splits counts into uncached input, cache read, two cache write buckets, output and reasoning output. <code>src/ai_usage_cost/models.py:12</code> <code>src/ai_usage_cost/models.py:16</code></li>
+<li>A span has an id, a kind, a status, a start time and the file, offset and length of the record it came from. <code>src/ai_usage_cost/trace.py:55</code> <code>src/ai_usage_cost/trace.py:84</code></li>
+<li>Spec is a frozen dataclass with a source id, a client name, an extension id, a flag for whether input tokens include cache, and an sdk flag. The Cline builder turns a Spec into a Source. <code>src/ai_usage_cost/sources/cline.py:82</code> <code>src/ai_usage_cost/sources/cline.py:86</code> <code>src/ai_usage_cost/sources/cline.py:410</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The diagram realises the reader contract capability: the typed boundary between a tool's files and the rest of the application. <a href="../application/ai-usage-cost-sources-overview.html">Ai usage cost sources Overview</a> explains the readers in prose, and <a href="../application/ai-usage-cost-sources-workflows.html">Ai usage cost sources Workflows</a> walks through a scan. The sibling views are <a href="../diagrams/readers-concepts.html">Readers concepts</a>, <a href="../diagrams/reader-types.html">Reader types</a>, <a href="../diagrams/reader-data-lineage.html">Reader data lineage</a>, <a href="../diagrams/reader-module-imports.html">Reader module imports</a>, <a href="../diagrams/reader-glossary-map.html">Reader glossary map</a>, <a href="../diagrams/readers-component-view.html">Readers component view</a> and <a href="../diagrams/readers-data-flow.html">Readers data flow</a>.</li>
+<li>The models behind the diagram live outside this chunk. The usage event and token usage are described with the other chunks of the package, and the contract itself is in <a href="../data/ai-usage-cost-sources-data-model.html">Ai usage cost sources Data Model</a>.</li>
+</ul>
+<h2>The diagram</h2>
+<pre class="mermaid">classDiagram
+    direction LR
+    class Source {
+        &lt;&lt;frozen dataclass&gt;&gt;
+        +str id
+        +str label
+        +dict clients
+        +default_roots() list~Path~
+        +files(Path) list~Path~
+        +parse(Path, warnings) Iterator~UsageEvent~
+        +TokenData token_data
+        +str display_path
+        +spans(Path, warnings) Iterator~Span~
+        +bool experimental
+        +parse_resume(Path, warnings, offset, state) Iterator~UsageEvent~
+        +root_hint str
+    }
+    class Spec {
+        &lt;&lt;frozen dataclass&gt;&gt;
+        +str source_id
+        +str client
+        +str ext_id
+        +bool tokens_in_inclusive
+        +bool sdk
+    }
+    class Capabilities {
+        +Provenance trace
+        +Provenance tokens
+        +Provenance cost
+        +Provenance context
+        +Provenance latency
+    }
+    class UsageEvent {
+        +str source
+        +str client
+        +str model
+        +datetime timestamp
+        +str session_id
+        +str request_id
+        +str project
+        +str title
+        +str title_source
+        +int record_offset
+        +float reported_cost
+    }
+    class TokenUsage {
+        +int uncached_input
+        +int cache_read
+        +int cache_write_5m
+        +int cache_write_1h
+        +int output
+        +int reasoning_output
+    }
+    class Span {
+        +str span_id
+        +SpanKind kind
+        +SpanStatus status
+        +datetime started_at
+        +str source_file
+        +int record_offset
+        +int record_length
+    }
+    class TokenData {
+        &lt;&lt;enumeration&gt;&gt;
+        full
+        session
+    }
+    class Provenance {
+        &lt;&lt;enumeration&gt;&gt;
+        measured
+        derived
+        estimated
+        inferred
+        unavailable
+    }
+    Source *-- &quot;1&quot; Capabilities : declares
+    Source --&gt; &quot;1&quot; TokenData : token_data
+    Source ..&gt; UsageEvent : parse yields
+    Source ..&gt; Span : spans yields, optional
+    UsageEvent o-- &quot;0..1&quot; TokenUsage : tokens
+    Span o-- &quot;0..1&quot; TokenUsage : tokens
+    Capabilities --&gt; Provenance : each field
+    Spec ..&gt; Source : make_source builds
+    class Legend {
+        &lt;&lt;legend&gt;&gt;
+        Box is a type with its fields
+        Diamond line is composition
+        Open diamond line is a part that may be absent
+        Dashed arrow is a use, not ownership
+        0..1 means the value may be missing
+    }
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/sources/base.py:18</code></td>
+<td>Reader record</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/cline.py:82</code></td>
+<td>Specification used by the Cline family builder</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/trace.py:104</code></td>
+<td>Per reader capability labels</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/models.py:49</code></td>
+<td>Usage record produced by parse</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/models.py:12</code></td>
+<td>Token buckets</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/trace.py:55</code></td>
+<td>Step record produced by spans</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

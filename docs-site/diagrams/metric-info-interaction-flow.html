@@ -1,0 +1,121 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Metric info interaction flow</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/metric-info-interaction-flow.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> covers <code>web/src/components/*</code></p><h1>Metric info interaction flow</h1>
+<p>This flow shows how a reader gets an explanation for a number or a badge. The box opens by hover, keyboard focus or tap, and it closes without stealing focus. This matters because almost every figure on the dashboard hangs an explanation on this one component.</p>
+<h2>What the diagram shows</h2>
+<p>The info glyph is a small letter i drawn next to a label, and the stat card wraps it in the info box when it has an explanation. <code>web/src/components/metric-info.tsx:193-205</code> <code>web/src/components/stat.tsx:101-103</code></p>
+<p>One listener on the page records the last pointer position for every info box. <code>web/src/components/metric-info.tsx:35-42</code></p>
+<p>Each box checks that position every 100 ms, and when the pointer has stayed on the trigger or on the box for 400 ms it opens. <code>web/src/components/metric-info.tsx:11-13</code> <code>web/src/components/metric-info.tsx:88-94</code></p>
+<p>Keyboard focus on the trigger opens the box at once, and a click or tap toggles it. <code>web/src/components/metric-info.tsx:134-136</code> <code>web/src/components/metric-info.tsx:141-143</code></p>
+<p>The box opens on the right of the trigger and moves away from the screen edge when it would not fit. <code>web/src/components/metric-info.tsx:151-155</code></p>
+<p>A simple box shows one paragraph, and a metric box shows the meaning and then the formula, computed value, provenance and caveats that were supplied. <code>web/src/components/metric-info.tsx:165-165</code> <code>web/src/components/metric-info.tsx:168-183</code></p>
+<p>The box closes when the pointer has been outside both the trigger and the box for 250 ms and the trigger is not focused. <code>web/src/components/metric-info.tsx:100-107</code></p>
+<p>Any other close request from the popover resets the focus flag and the timer. <code>web/src/components/metric-info.tsx:116-123</code></p>
+<p>The box never hands focus back to the trigger when it closes, because the focus handler of the trigger would reopen it at once. <code>web/src/components/metric-info.tsx:162-162</code></p>
+<p>A test opens the box by click and checks the text. <code>web/src/components/metric-info.test.tsx:7-7</code></p>
+<h2>Capability and related functionality</h2>
+<p>The flow realises the on demand explanation of metrics and badges. The component is drawn in <a href="../diagrams/shared-components-c4.html">Shared components C4</a> and <a href="../diagrams/dashboard-component-composition.html">Dashboard component composition</a>. Its tests are in <a href="../application/web-ui-components-tests.html">Web UI components Tests</a>. Its popover comes from <a href="../application/web-ui-ui-components-overview.html">Web ui UI components Overview</a>. The page level screens that use it are described in <a href="../application/web-overview.html">Web Overview</a>.</p>
+<h2>Metric info interaction flow</h2>
+<pre class="mermaid">flowchart TD
+    start([&quot;Reader sees an info glyph or an explained badge&quot;]):::startNode
+    d1{&quot;How does the reader reach it?&quot;}:::decision
+    s1[&quot;Pointer rests on the trigger or the box&quot;]:::step
+    s2[&quot;Keyboard focus lands on the trigger&quot;]:::step
+    s3[&quot;Reader clicks or taps the trigger&quot;]:::step
+    s4[&quot;A 100 ms poll counts 400 ms of pointer time&quot;]:::step
+    s5[&quot;Box opens at once&quot;]:::step
+    s6[&quot;Box toggles open or closed&quot;]:::step
+    open[&quot;Box is open on the right of the trigger&quot;]:::step
+    d2{&quot;Which content kind?&quot;}:::decision
+    s7[&quot;One paragraph of text&quot;]:::step
+    s8[&quot;Meaning, formula, computed value, provenance, caveats, each only when given&quot;]:::step
+    d3{&quot;How does it close?&quot;}:::decision
+    s9[&quot;Pointer outside both for 250 ms and trigger not focused&quot;]:::step
+    s10[&quot;Reader clicks the trigger again&quot;]:::step
+    s11[&quot;The popover reports a close request&quot;]:::step
+    done([&quot;Box closed, focus is not handed back&quot;]):::ok
+
+    start --&gt; d1
+    d1 --&gt;|hover| s1
+    d1 --&gt;|keyboard| s2
+    d1 --&gt;|click or tap| s3
+    s1 --&gt; s4
+    s4 --&gt; open
+    s2 --&gt; s5
+    s5 --&gt; open
+    s3 --&gt; s6
+    s6 --&gt; open
+    open --&gt; d2
+    d2 --&gt;|simple| s7
+    d2 --&gt;|metric| s8
+    s7 --&gt; d3
+    s8 --&gt; d3
+    d3 --&gt;|pointer leaves| s9
+    d3 --&gt;|second click| s10
+    d3 --&gt;|other| s11
+    s9 --&gt; done
+    s10 --&gt; done
+    s11 --&gt; done
+
+    subgraph Legend
+        direction LR
+        zlegend_a([&quot;Start&quot;]):::startNode
+        zlegend_b[&quot;Step&quot;]:::step
+        zlegend_c{&quot;Decision, arrows are labelled&quot;}:::decision
+        zlegend_d([&quot;End&quot;]):::ok
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d
+    end
+
+    classDef startNode fill:#fff2cc,stroke:#222222,color:#222222
+    classDef step fill:#dae8fc,stroke:#222222,color:#222222
+    classDef decision fill:#ffffff,stroke:#222222,color:#222222
+    classDef ok fill:#d5e8d4,stroke:#222222,color:#222222
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/components/metric-info.tsx:35-42</code></td>
+<td>Shared pointer listener</td>
+</tr>
+<tr>
+<td><code>web/src/components/metric-info.tsx:11-13</code></td>
+<td>Timing constants</td>
+</tr>
+<tr>
+<td><code>web/src/components/metric-info.tsx:88-94</code></td>
+<td>Open after 400 ms</td>
+</tr>
+<tr>
+<td><code>web/src/components/metric-info.tsx:134-136</code></td>
+<td>Open on focus</td>
+</tr>
+<tr>
+<td><code>web/src/components/metric-info.tsx:141-143</code></td>
+<td>Toggle on click</td>
+</tr>
+<tr>
+<td><code>web/src/components/metric-info.tsx:151-155</code></td>
+<td>Popover placement</td>
+</tr>
+<tr>
+<td><code>web/src/components/metric-info.tsx:100-107</code></td>
+<td>Close after 250 ms outside</td>
+</tr>
+<tr>
+<td><code>web/src/components/metric-info.tsx:162-162</code></td>
+<td>No focus return</td>
+</tr>
+<tr>
+<td><code>web/src/components/metric-info.test.tsx:7-7</code></td>
+<td>Click test</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

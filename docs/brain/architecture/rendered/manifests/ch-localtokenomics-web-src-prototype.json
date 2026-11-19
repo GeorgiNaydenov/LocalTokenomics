@@ -1,0 +1,37 @@
+{
+ "drawio-prototype-page-layout.svg": {
+  "bytes": 656179,
+  "output_sha256": "e2db86ec72412c6a9c310d9b7ff03dde59773273932c5a03895b622185d5c81c",
+  "source": "docs/brain/architecture/drawio/drawio-prototype-page-layout.drawio",
+  "source_sha256": "53a0afb017d4cfe040893bc6b8b59bee97e6001480df2137dd5ffe491e25d5e9",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-screen-overview-screen.svg": {
+  "bytes": 587689,
+  "output_sha256": "eadc6415f702c2b1806994dd7db75f6522fdfdb588e3827a0164f3d86aa49c12",
+  "source": "docs/brain/architecture/drawio/drawio-screen-overview-screen.drawio",
+  "source_sha256": "108af3c1a33685c61b963f9e64858064e6ff08305bb28df0c93319abc992d005",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-screen-pricing-screen.svg": {
+  "bytes": 395315,
+  "output_sha256": "9418669a5129064cbbcfd33c81bf97247a9f203b76c991949afaf2aa654ce846",
+  "source": "docs/brain/architecture/drawio/drawio-screen-pricing-screen.drawio",
+  "source_sha256": "ffc0986a156211759aceb7a0540eae9c4f6bdc99dc88c6eda84076a07edd8756",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-screen-sessions-screen.svg": {
+  "bytes": 654866,
+  "output_sha256": "ad75e76fcb5ee51b32a929b8c967d9c84e1130f87d94f1df0c8dbc47475ae38d",
+  "source": "docs/brain/architecture/drawio/drawio-screen-sessions-screen.drawio",
+  "source_sha256": "a10480879615d46f698d6463d51da448b94ad25aa7efcb3bee289355593204ef",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-screen-sources-screen.svg": {
+  "bytes": 318023,
+  "output_sha256": "a0ff38d290a220d459f38e2a17c7f7eb4c3138c25e1450d10ad3b39335b52f68",
+  "source": "docs/brain/architecture/drawio/drawio-screen-sources-screen.drawio",
+  "source_sha256": "0c170bf72e20d1f8242ad11a9728dbeb94cc8faba09b0d9ebcda51f8bc67ba7c",
+  "tool": "draw.io 28.1.2"
+ }
+}

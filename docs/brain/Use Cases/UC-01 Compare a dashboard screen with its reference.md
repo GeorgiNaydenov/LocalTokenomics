@@ -27,7 +27,7 @@ subdomain: ''
 
 ## Description
 
-A [[Actors#Dashboard developer|Dashboard developer]] opens the [[Prototype]] page to see how one of the four screens, or a design system part, should look against [[Mock data]], then reads the matching [[Reference screen]] before changing the shipped screen.
+A [[Actors#Dashboard developer|Dashboard developer]] opens the Prototype page to see how one of the four screens, or a design system part, should look against Mock data, then reads the matching Reference screen before changing the shipped screen.
 
 ## Preconditions
 
@@ -59,6 +59,8 @@ No test covers the prototype. Criteria come from the code: the page offers five 
 - [[General Rules#BR-02 Prototype filters do not filter the screens|BR-02 Prototype filters do not filter the screens]]
 - [[General Rules#BR-04 Prototype splits session cost across token buckets by fixed weights|BR-04 Prototype splits session cost across token buckets by fixed weights]]
 - [[General Rules#BR-05 Prototype rescan is staged|BR-05 Prototype rescan is staged]]
+- [[General Rules#BR-122 Drawer trace blocks show the same sample data for every traced session|BR-122 Drawer trace blocks show the same sample data for every traced session]]
+- [[General Rules#BR-123 Screens stay mounted across the four screen tabs but not across the gallery|BR-123 Screens stay mounted across the four screen tabs but not across the gallery]]
 
 ## Code
 

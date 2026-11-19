@@ -1,0 +1,47 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Render layer components</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/render-layer-components.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/render/**</code></p><h1>Render layer components</h1>
+<p>This view shows how a finished usage and cost report becomes something a person can read. One path prints a summary in the terminal. The other saves a picture that can be shared or filed. Seeing both side by side makes clear that neither one computes any cost itself.</p>
+<h2>What the diagram shows</h2>
+<p>A person runs the scan command or the export command of the command line tool. <code>src/ai_usage_cost/cli.py:71-72</code> <code>src/ai_usage_cost/cli.py:175-176</code></p>
+<p>The scan command builds a report and, unless JSON was asked for, hands it to the terminal renderer together with a console. <code>src/ai_usage_cost/cli.py:87-105</code></p>
+<p>The export command calls the picture writer only when the output file name ends in .png. <code>src/ai_usage_cost/cli.py:186-192</code></p>
+<p>The terminal renderer reads the report totals and one chosen group of buckets, and prints them through the rich console it was given. <code>src/ai_usage_cost/render/terminal.py:17-31</code></p>
+<p>The picture writer reads the same report and draws four charts with matplotlib on the Agg backend, which needs no screen. <code>src/ai_usage_cost/render/png.py:7-11</code> <code>src/ai_usage_cost/render/png.py:18-29</code></p>
+<p>The picture writer creates the parent folder of the output path and saves the figure there. <code>src/ai_usage_cost/render/png.py:31-33</code></p>
+<h2>Capability and related functionality</h2>
+<p>The capability is the presentation of a priced usage report in two forms. It sits behind the commands described in <a href="../application/ai-usage-cost-render-overview.html">Ai usage cost render Overview</a>. The report itself is built outside this layer, in the aggregation code of the main package.</p>
+<p>The dashboard does not use this layer. The report it reads comes from the HTTP route in <code>src/ai_usage_cost/api.py</code>, not from these two files.</p>
+<h2>Render layer components</h2>
+<p><img alt="Render layer components, C4 component view" src="../architecture/rendered/drawio-render-c4.svg" /></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:71-105</code></td>
+<td>scan command calling the terminal renderer</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:175-196</code></td>
+<td>export command calling the picture writer</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/render/terminal.py:17-46</code></td>
+<td>terminal renderer</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/render/png.py:18-33</code></td>
+<td>picture writer</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/aggregate.py:462-482</code></td>
+<td>report model both renderers read</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

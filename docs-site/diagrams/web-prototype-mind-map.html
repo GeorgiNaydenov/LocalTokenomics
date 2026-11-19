@@ -1,0 +1,81 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web prototype mind map</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-prototype-mind-map.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Strategy · TOGAF: Phase A, Architecture Vision</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Web prototype mind map</h1>
+<p>This picture gives a newcomer the whole prototype on one page. It names the five parts that matter: the shell, the four screens, the filters and the session drawer, the sample data and the design system page. It helps a person decide which file to open first.</p>
+<h2>What the diagram shows</h2>
+<p>The shell is one header with five tabs, a theme button and a rescan button <code>web/src/prototype/Prototype.tsx:34-96</code>. The tab list holds the four screens and the design system page <code>web/src/prototype/Prototype.tsx:14-18</code>. The rescan button only flips a flag for 900 milliseconds <code>web/src/prototype/Prototype.tsx:26-29</code>.</p>
+<p>The four screens are named once and chosen by a plain conditional <code>web/src/prototype/Screens.tsx:41-48</code> <code>web/src/prototype/Screens.tsx:360-368</code>.</p>
+<p>The filter rail edits a filter state and the chips show it <code>web/src/prototype/Rail.tsx:30-44</code> <code>web/src/prototype/Screens.tsx:283-340</code>. The session drawer opens from a row and shows cost, tokens and trace <code>web/src/prototype/Screens.tsx:84-264</code>. The screens are rendered without any filter value, so the filters change nothing on screen <code>web/src/prototype/Screens.tsx:360-368</code>.</p>
+<p>The sample data takes only its type names from the real API module <code>web/src/prototype/data.ts:1-1</code>. Totals are literal numbers <code>web/src/prototype/data.ts:617-632</code>, daily series come from a sine function <code>web/src/prototype/data.ts:9-13</code>, and sessions are repeated from a short seed list <code>web/src/prototype/data.ts:698-742</code>.</p>
+<p>The design system page is one long gallery with eight sections, from colour tokens <code>web/src/prototype/Gallery.tsx:173-173</code> to trace components <code>web/src/prototype/Gallery.tsx:621-621</code>.</p>
+<h2>Capability and related functionality</h2>
+<p>The capability is orientation: one picture that maps the folder to the five concerns a reader meets. It sits above the detailed views, <a href="../diagrams/web-prototype-c4-components.html">Web prototype C4 components</a> for the containers, <a href="../diagrams/web-prototype-component-tree.html">Web prototype component tree</a> for what renders what, and <a href="../application/web-prototype-overview.html">Web prototype Overview</a> for the file by file text.</p>
+<h2>Web prototype mind map</h2>
+<pre class="mermaid">mindmap
+  root((Web prototype))
+    Shell and navigation
+      Prototype header
+      Five tabs
+      Theme toggle
+      Rescan logs button, staged
+    Four reference screens
+      Overview
+      Sessions
+      Sources
+      Pricing
+    Filters and session drawer
+      FilterRail
+      FilterState and chips
+      SessionDrawer
+      Filters change nothing on screen
+    Mock data
+      data.ts
+      Sessions, sources, rates
+      Totals as literals
+      Sine wave daily series
+    Design system page
+      Gallery
+      Colour tokens
+      Actions and inputs
+      Trace components
+    Legend
+      Root is the chunk
+      First level is a main concern
+      Second level is a concept or file part
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/prototype/Prototype.tsx:14-96</code></td>
+<td>Tabs, header and staged rescan button</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:41-48</code></td>
+<td>The four screen names</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Screens.tsx:266-378</code></td>
+<td>Filter state, chips, active screen and drawer</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Rail.tsx:30-44</code></td>
+<td>The filter state fields</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/data.ts:617-632</code></td>
+<td>Literal totals</td>
+</tr>
+<tr>
+<td><code>web/src/prototype/Gallery.tsx:173-173</code></td>
+<td>First gallery section</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

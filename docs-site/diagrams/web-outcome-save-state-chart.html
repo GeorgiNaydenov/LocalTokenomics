@@ -1,0 +1,77 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web Outcome Save State Chart</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-outcome-save-state-chart.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Web Outcome Save State Chart</h1>
+<p>This chart shows how a reader's judgement of a session is kept. A rating is stored the moment it is picked, and notes and tags are stored when the reader leaves the field. The chart also shows what the reader sees when a save fails.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The stored outcome is fetched when the workspace opens, for every session <code>web/src/SessionWorkspace.tsx:471-471</code>.</li>
+<li>Typing changes only the local draft <code>web/src/SessionWorkspace.tsx:345-345</code> <code>web/src/SessionWorkspace.tsx:355-355</code>.</li>
+<li>Leaving a field saves only when notes or tags differ from what is stored <code>web/src/SessionWorkspace.tsx:291-294</code>.</li>
+<li>Picking a rating saves at once <code>web/src/SessionWorkspace.tsx:312-312</code>.</li>
+<li>A save sets saving, then stores the answer or keeps the draft and shows the error <code>web/src/SessionWorkspace.tsx:274-288</code>.</li>
+<li>The status line shows saving, the save error, the load error, the rated time or not rated yet <code>web/src/SessionWorkspace.tsx:296-301</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The form is drawn in <a href="../diagrams/web-outcome-form-wireframe.html">Web Outcome Form Wireframe</a> and sits on <a href="../application/session-workspace-screen.html">Session Workspace Screen</a>. Rating a session is a use case in <a href="../application/web-specification.html">Web Specification</a>.</p>
+<h2>Web Outcome Save State Chart</h2>
+<pre class="mermaid">stateDiagram-v2
+    direction LR
+    [*] --&gt; Loading: workspace opens
+    Loading --&gt; Stored: outcome loaded
+    Loading --&gt; LoadError: outcome request fails
+    Stored --&gt; Editing: notes or tags typed
+    LoadError --&gt; Editing: notes or tags typed
+    Editing --&gt; Editing: blur with no change
+    Editing --&gt; Saving: blur with a change
+    Stored --&gt; Saving: rating picked
+    LoadError --&gt; Saving: rating picked
+    Saving --&gt; Stored: server answers
+    Saving --&gt; SaveError: save fails
+    SaveError --&gt; Saving: rating picked or field edited
+    note right of Saving
+        Not handled: saves are not queued; a second save can start while the first runs.
+    end note
+    note left of Loading
+        Legend: the filled dot starts, a rounded box is a state of the outcome form, an arrow is labelled with the event in the code, a note marks a gap.
+    end note
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:471-471</code></td>
+<td>The stored outcome is fetched when the workspace opens, for every session</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:345-345</code></td>
+<td>Typing changes only the local draft</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:355-355</code></td>
+<td>Typing changes only the local draft</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:291-294</code></td>
+<td>Leaving a field saves only when notes or tags differ from what is stored</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:312-312</code></td>
+<td>Picking a rating saves at once</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:274-288</code></td>
+<td>A save sets saving, then stores the answer or keeps the draft and shows the error</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:296-301</code></td>
+<td>The status line shows saving, the save error, the load error, the rated time or not rated yet</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

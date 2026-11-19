@@ -1,0 +1,1827 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Ai usage cost Tests</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/ai-usage-cost-tests.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Ai usage cost Tests</h1>
+<p>The tests that cover the Ai usage cost chunk and what they check.</p>
+<h2>How it works</h2>
+<p>719 tests exercise this chunk. 4 of its 38 files are not imported by any test.</p>
+<h3>What the tests prove</h3>
+<p>The tests are the best statement of intended behaviour, so each group below names the rule it protects.</p>
+<ul>
+<li>Pricing. Cache buckets are priced separately and the no cache baseline bills every input token at the full rate (<code>tests/test_pricing.py:41-57</code>). A batch request halves every component (<code>tests/test_pricing.py:99</code>). A dated snapshot id resolves to the longest matching row, and a model with no row is not priced (<code>tests/test_pricing.py:113</code>, <code>tests/test_pricing.py:173</code>). A free provider prices at zero, and without token counts it is <code>unavailable</code> (<code>tests/test_pricing.py:392</code>, <code>tests/test_pricing.py:408</code>).</li>
+<li>Estimated rates. A model matched only by a shorter prefix is flagged as estimated, an exact or suffix match is not, and the flag is carried through summed breakdowns (<code>tests/test_pricing.py:548-564</code>).</li>
+<li>Store. Ingesting twice changes nothing, and a grown file replaces its own rows (<code>tests/test_store.py:158</code>, <code>tests/test_store.py:176</code>). A message split over several records keeps the largest output, and a smaller duplicate never lowers it (<code>tests/test_store.py:260</code>, <code>tests/test_store.py:283</code>). Records that disagree on input tokens keep the first and warn (<code>tests/test_store.py:485</code>). A resumed scan does not delete earlier rows (<code>tests/test_store.py:427</code>).</li>
+<li>Pipeline. Since and until include their boundary days, and a Codex local time and a Claude UTC time at one instant fall on the same local day (<code>tests/test_pipeline.py:71</code>, <code>tests/test_pipeline.py:104</code>). Every breakdown sums to the grand total (<code>tests/test_pipeline.py:203</code>). Estimated and unpriced models each raise a warning (<code>tests/test_pipeline.py:498-506</code>).</li>
+<li>Privacy. Each secret pattern is replaced, and the specific pattern wins over the generic assignment pattern (<code>tests/test_privacy.py:56</code>, <code>tests/test_privacy.py:64</code>).</li>
+</ul>
+<p>The source parsers have one test file each. They belong to the sources chunk and are listed below only because they import the core files.</p>
+<h2>Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Scenario</th>
+<th>File</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test_only_planner_response_records_become_events</code></td>
+<td>Only planner response records become events</td>
+<td><code>tests/test_antigravity.py</code></td>
+<td><a href="#">tests/test_antigravity.py</a> <code>tests/test_antigravity.py:19</code></td>
+</tr>
+<tr>
+<td><code>test_model_carries_forward_from_settings_change_text</code></td>
+<td>Model carries forward from settings change text</td>
+<td><code>tests/test_antigravity.py</code></td>
+<td><a href="#">tests/test_antigravity.py</a> <code>tests/test_antigravity.py:25</code></td>
+</tr>
+<tr>
+<td><code>test_cwd_carries_forward_to_the_next_planner_response</code></td>
+<td>Cwd carries forward to the next planner response</td>
+<td><code>tests/test_antigravity.py</code></td>
+<td><a href="#">tests/test_antigravity.py</a> <code>tests/test_antigravity.py:32</code></td>
+</tr>
+<tr>
+<td><code>test_session_id_comes_from_the_brain_directory_name</code></td>
+<td>Session id comes from the brain directory name</td>
+<td><code>tests/test_antigravity.py</code></td>
+<td><a href="#">tests/test_antigravity.py</a> <code>tests/test_antigravity.py:39</code></td>
+</tr>
+<tr>
+<td><code>test_tokens_are_always_none</code></td>
+<td>Tokens are always none</td>
+<td><code>tests/test_antigravity.py</code></td>
+<td><a href="#">tests/test_antigravity.py</a> <code>tests/test_antigravity.py:45</code></td>
+</tr>
+<tr>
+<td><code>test_a_session_with_no_model_selection_message_stays_unavailable_not_broken</code></td>
+<td>A session with no model selection message stays unavailable not broken</td>
+<td><code>tests/test_antigravity.py</code></td>
+<td><a href="#">tests/test_antigravity.py</a> <code>tests/test_antigravity.py:50</code></td>
+</tr>
+<tr>
+<td><code>test_transcript_full_is_preferred_over_transcript</code></td>
+<td>Transcript full is preferred over transcript</td>
+<td><code>tests/test_antigravity.py</code></td>
+<td><a href="#">tests/test_antigravity.py</a> <code>tests/test_antigravity.py:67</code></td>
+</tr>
+<tr>
+<td><code>test_real_fixture_prefers_transcript_full</code></td>
+<td>Real fixture prefers transcript full</td>
+<td><code>tests/test_antigravity.py</code></td>
+<td><a href="#">tests/test_antigravity.py</a> <code>tests/test_antigravity.py:92</code></td>
+</tr>
+<tr>
+<td><code>test_meta_describes_the_scan</code></td>
+<td>Meta describes the scan</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:77</code></td>
+</tr>
+<tr>
+<td><code>test_meta_last_seen_reflects_the_full_scan_not_a_report_filter</code></td>
+<td>Meta last seen reflects the full scan not a report filter</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:121</code></td>
+</tr>
+<tr>
+<td><code>test_report_returns_the_expected_shape</code></td>
+<td>Report returns the expected shape</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:133</code></td>
+</tr>
+<tr>
+<td><code>test_session_title_serializes_with_the_folder_fallback</code></td>
+<td>Session title serializes with the folder fallback</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:189</code></td>
+</tr>
+<tr>
+<td><code>test_computed_fields_are_serialized</code></td>
+<td>Computed fields are serialized</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:199</code></td>
+</tr>
+<tr>
+<td><code>test_client_filter_narrows_the_report</code></td>
+<td>Client filter narrows the report</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:233</code></td>
+</tr>
+<tr>
+<td><code>test_provider_filter_narrows_the_report</code></td>
+<td>Provider filter narrows the report</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:242</code></td>
+</tr>
+<tr>
+<td><code>test_date_filter_narrows_the_report</code></td>
+<td>Date filter narrows the report</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:247</code></td>
+</tr>
+<tr>
+<td><code>test_include_sidechains_false_drops_the_subagent_event</code></td>
+<td>Include sidechains false drops the subagent event</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:253</code></td>
+</tr>
+<tr>
+<td><code>test_model_and_project_filters_compose</code></td>
+<td>Model and project filters compose</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:259</code></td>
+</tr>
+<tr>
+<td><code>test_states_filter_narrows_the_report</code></td>
+<td>States filter narrows the report</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:267</code></td>
+</tr>
+<tr>
+<td><code>test_search_filter_narrows_the_report</code></td>
+<td>Search filter narrows the report</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:276</code></td>
+</tr>
+<tr>
+<td><code>test_a_filter_that_matches_nothing_returns_an_empty_report</code></td>
+<td>A filter that matches nothing returns an empty report</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:284</code></td>
+</tr>
+<tr>
+<td><code>test_rates_returns_the_loaded_table</code></td>
+<td>Rates returns the loaded table</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:291</code></td>
+</tr>
+<tr>
+<td><code>test_meta_and_report_carry_the_rates_age_and_model_matches</code></td>
+<td>Meta and report carry the rates age and model matches</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:314</code></td>
+</tr>
+<tr>
+<td><code>test_sources_expose_the_experimental_flag</code></td>
+<td>Sources expose the experimental flag</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:326</code></td>
+</tr>
+<tr>
+<td><code>test_cursor_is_registered_with_nothing_available</code></td>
+<td>Cursor is registered with nothing available</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:333</code></td>
+</tr>
+<tr>
+<td><code>test_every_parent_id_resolves_inside_the_trace</code></td>
+<td>Every parent id resolves inside the trace</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:349</code></td>
+</tr>
+<tr>
+<td><code>test_an_unknown_session_has_no_trace</code></td>
+<td>An unknown session has no trace</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:364</code></td>
+</tr>
+<tr>
+<td><code>test_spans_are_loaded_once_and_shared_across_endpoints</code></td>
+<td>Spans are loaded once and shared across endpoints</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:368</code></td>
+</tr>
+<tr>
+<td><code>test_refresh_invalidates_the_span_cache</code></td>
+<td>Refresh invalidates the span cache</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:392</code></td>
+</tr>
+<tr>
+<td><code>test_deleting_a_session_invalidates_only_its_own_cache_entry</code></td>
+<td>Deleting a session invalidates only its own cache entry</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:427</code></td>
+</tr>
+<tr>
+<td><code>test_economics_totals_equal_the_sum_over_model_calls</code></td>
+<td>Economics totals equal the sum over model calls</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:454</code></td>
+</tr>
+<tr>
+<td><code>test_economics_reports_absent_tokens_rather_than_zero</code></td>
+<td>Economics reports absent tokens rather than zero</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:472</code></td>
+</tr>
+<tr>
+<td><code>test_report_and_economics_agree_without_token_counts</code></td>
+<td>Report and economics agree without token counts</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:483</code></td>
+</tr>
+<tr>
+<td><code>test_claude_code_context_capacity_is_estimated_from_the_rate_table</code></td>
+<td>Claude code context capacity is estimated from the rate table</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:497</code></td>
+</tr>
+<tr>
+<td><code>test_codex_context_occupancy_is_derived_from_the_logged_window</code></td>
+<td>Codex context occupancy is derived from the logged window</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:512</code></td>
+</tr>
+<tr>
+<td><code>test_an_outcome_round_trips_and_carries_computed_signals</code></td>
+<td>An outcome round trips and carries computed signals</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:525</code></td>
+</tr>
+<tr>
+<td><code>test_deleting_a_session_removes_its_trace_but_not_its_requests</code></td>
+<td>Deleting a session removes its trace but not its requests</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:553</code></td>
+</tr>
+<tr>
+<td><code>test_span_content_is_unavailable_while_metadata_only_is_on</code></td>
+<td>Span content is unavailable while metadata only is on</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:568</code></td>
+</tr>
+<tr>
+<td><code>test_span_content_is_redacted_when_content_capture_is_allowed</code></td>
+<td>Span content is redacted when content capture is allowed</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:574</code></td>
+</tr>
+<tr>
+<td><code>test_the_report_can_be_filtered_by_trace_data_and_errors</code></td>
+<td>The report can be filtered by trace data and errors</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:591</code></td>
+</tr>
+<tr>
+<td><code>test_by_turn_rows_carry_ordinal_started_at_and_a_privacy_gated_label</code></td>
+<td>By turn rows carry ordinal started at and a privacy gated label</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:610</code></td>
+</tr>
+<tr>
+<td><code>test_totals_report_how_many_events_actually_priced_the_dollar_figure</code></td>
+<td>Totals report how many events actually priced the dollar figure</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:630</code></td>
+</tr>
+<tr>
+<td><code>test_files_in_slice_narrows_with_the_report_but_files_scanned_does_not</code></td>
+<td>Files in slice narrows with the report but files scanned does not</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:638</code></td>
+</tr>
+<tr>
+<td><code>test_session_is_sidechain_only_when_every_event_is_but_has_sidechain_on_any</code></td>
+<td>Session is sidechain only when every event is but has sidechain on any</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:661</code></td>
+</tr>
+<tr>
+<td><code>test_session_cost_state_is_the_worst_of_its_requests_with_mixed_states_kept</code></td>
+<td>Session cost state is the worst of its requests with mixed states kept</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:680</code></td>
+</tr>
+<tr>
+<td><code>test_build_report_files_in_slice_counts_distinct_source_files_in_the_filtered_set</code></td>
+<td>Build report files in slice counts distinct source files in the filtered set</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:692</code></td>
+</tr>
+<tr>
+<td><code>test_meta_warning_summary_counts_instances_by_severity</code></td>
+<td>Meta warning summary counts instances by severity</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:765</code></td>
+</tr>
+<tr>
+<td><code>test_meta_session_warnings_keys_by_session_id_with_sorted_kinds</code></td>
+<td>Meta session warnings keys by session id with sorted kinds</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:778</code></td>
+</tr>
+<tr>
+<td><code>test_meta_warning_summary_is_all_zero_when_nothing_is_flagged</code></td>
+<td>Meta warning summary is all zero when nothing is flagged</td>
+<td><code>tests/test_api.py</code></td>
+<td><a href="#">tests/test_api.py</a> <code>tests/test_api.py:788</code></td>
+</tr>
+<tr>
+<td><code>test_four_token_buckets_map_straight_across</code></td>
+<td>Four token buckets map straight across</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:52</code></td>
+</tr>
+<tr>
+<td><code>test_input_tokens_is_taken_as_already_excluding_cache</code></td>
+<td>Input tokens is taken as already excluding cache</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:61</code></td>
+</tr>
+<tr>
+<td><code>test_cache_creation_supplies_the_5m_1h_split</code></td>
+<td>Cache creation supplies the 5m 1h split</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:69</code></td>
+</tr>
+<tr>
+<td><code>test_missing_cache_creation_falls_back_to_the_5m_bucket</code></td>
+<td>Missing cache creation falls back to the 5m bucket</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:75</code></td>
+</tr>
+<tr>
+<td><code>test_usage_iterations_are_not_summed_on_top_of_the_top_level_block</code></td>
+<td>Usage iterations are not summed on top of the top level block</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:83</code></td>
+</tr>
+<tr>
+<td><code>test_thinking_tokens_are_recorded_but_not_billed</code></td>
+<td>Thinking tokens are recorded but not billed</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:93</code></td>
+</tr>
+<tr>
+<td><code>test_synthetic_and_zero_token_records_are_skipped</code></td>
+<td>Synthetic and zero token records are skipped</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:102</code></td>
+</tr>
+<tr>
+<td><code>test_non_assistant_records_are_ignored</code></td>
+<td>Non assistant records are ignored</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:109</code></td>
+</tr>
+<tr>
+<td><code>test_repeated_message_id_and_request_id_in_one_file_yields_two_events</code></td>
+<td>Repeated message id and request id in one file yields two events</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:122</code></td>
+</tr>
+<tr>
+<td><code>test_the_same_record_in_two_files_has_the_same_request_id</code></td>
+<td>The same record in two files has the same request id</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:128</code></td>
+</tr>
+<tr>
+<td><code>test_is_sidechain_and_fast_speed_are_carried_through</code></td>
+<td>Is sidechain and fast speed are carried through</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:134</code></td>
+</tr>
+<tr>
+<td><code>test_service_tier_batch_becomes_the_batch_tier</code></td>
+<td>Service tier batch becomes the batch tier</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:142</code></td>
+</tr>
+<tr>
+<td><code>test_default_tier_is_standard</code></td>
+<td>Default tier is standard</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:148</code></td>
+</tr>
+<tr>
+<td><code>test_project_name_comes_from_cwd</code></td>
+<td>Project name comes from cwd</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:152</code></td>
+</tr>
+<tr>
+<td><code>test_custom_title_record_sets_the_title_and_tool_source</code></td>
+<td>Custom title record sets the title and tool source</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:163</code></td>
+</tr>
+<tr>
+<td><code>test_a_later_custom_title_record_wins_over_an_earlier_one</code></td>
+<td>A later custom title record wins over an earlier one</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:177</code></td>
+</tr>
+<tr>
+<td><code>test_no_custom_title_falls_back_to_the_folder_title</code></td>
+<td>No custom title falls back to the folder title</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:192</code></td>
+</tr>
+<tr>
+<td><code>test_a_message_split_over_three_records_yields_three_parse_events</code></td>
+<td>A message split over three records yields three parse events</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:212</code></td>
+</tr>
+<tr>
+<td><code>test_a_message_split_over_three_records_keeps_the_largest_output_in_the_trace</code></td>
+<td>A message split over three records keeps the largest output in the trace</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:218</code></td>
+</tr>
+<tr>
+<td><code>test_session_id_and_timestamp_come_from_the_record</code></td>
+<td>Session id and timestamp come from the record</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:231</code></td>
+</tr>
+<tr>
+<td><code>test_parse_resume_yields_only_records_after_the_offset</code></td>
+<td>Parse resume yields only records after the offset</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:242</code></td>
+</tr>
+<tr>
+<td><code>test_parse_resume_carries_a_seeded_title_forward</code></td>
+<td>Parse resume carries a seeded title forward</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:265</code></td>
+</tr>
+<tr>
+<td><code>test_parse_resume_picks_up_a_title_that_changes_after_the_offset</code></td>
+<td>Parse resume picks up a title that changes after the offset</td>
+<td><code>tests/test_claude_code.py</code></td>
+<td><a href="#">tests/test_claude_code.py</a> <code>tests/test_claude_code.py:293</code></td>
+</tr>
+<tr>
+<td><code>test_spend_under_the_threshold_does_not_fire</code></td>
+<td>Spend under the threshold does not fire</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:66</code></td>
+</tr>
+<tr>
+<td><code>test_spend_over_the_threshold_fires</code></td>
+<td>Spend over the threshold fires</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:73</code></td>
+</tr>
+<tr>
+<td><code>test_spend_exactly_at_the_threshold_does_not_fire</code></td>
+<td>Spend exactly at the threshold does not fire</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:77</code></td>
+</tr>
+<tr>
+<td><code>test_rise_over_compares_the_rise_not_the_total</code></td>
+<td>Rise over compares the rise not the total</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:81</code></td>
+</tr>
+<tr>
+<td><code>test_a_drop_never_fires_in_rise_over_mode</code></td>
+<td>A drop never fires in rise over mode</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:90</code></td>
+</tr>
+<tr>
+<td><code>test_message_reports_unpriced_and_unavailable_usage_as_excluded</code></td>
+<td>Message reports unpriced and unavailable usage as excluded</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:94</code></td>
+</tr>
+<tr>
+<td><code>test_message_omits_the_exclusion_line_when_everything_is_priced</code></td>
+<td>Message omits the exclusion line when everything is priced</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:110</code></td>
+</tr>
+<tr>
+<td><code>test_alert_rejects_a_non_positive_window</code></td>
+<td>Alert rejects a non positive window</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:143</code></td>
+</tr>
+<tr>
+<td><code>test_alert_needs_exactly_one_threshold</code></td>
+<td>Alert needs exactly one threshold</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:150</code></td>
+</tr>
+<tr>
+<td><code>test_alert_delivers_and_exits_zero</code></td>
+<td>Alert delivers and exits zero</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:160</code></td>
+</tr>
+<tr>
+<td><code>test_alert_stays_quiet_and_exits_zero_below_the_threshold</code></td>
+<td>Alert stays quiet and exits zero below the threshold</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:169</code></td>
+</tr>
+<tr>
+<td><code>test_alert_fails_on_a_rejected_target</code></td>
+<td>Alert fails on a rejected target</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:178</code></td>
+</tr>
+<tr>
+<td><code>test_alert_fails_when_delivery_fails</code></td>
+<td>Alert fails when delivery fails</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:188</code></td>
+</tr>
+<tr>
+<td><code>test_tui_filter_matches_any_visible_session_field</code></td>
+<td>Tui filter matches any visible session field</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:197</code></td>
+</tr>
+<tr>
+<td><code>test_sql_hands_the_explicit_db_to_datasette</code></td>
+<td>Sql hands the explicit db to datasette</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:219</code></td>
+</tr>
+<tr>
+<td><code>test_sql_falls_back_to_the_default_store</code></td>
+<td>Sql falls back to the default store</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:231</code></td>
+</tr>
+<tr>
+<td><code>test_sql_names_the_missing_store_instead_of_launching</code></td>
+<td>Sql names the missing store instead of launching</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:241</code></td>
+</tr>
+<tr>
+<td><code>test_a_missing_extra_explains_how_to_install_it</code></td>
+<td>A missing extra explains how to install it</td>
+<td><code>tests/test_cli.py</code></td>
+<td><a href="#">tests/test_cli.py</a> <code>tests/test_cli.py:259</code></td>
+</tr>
+<tr>
+<td><code>test_sources_registered_and_experimental</code></td>
+<td>Sources registered and experimental</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:59</code></td>
+</tr>
+<tr>
+<td><code>test_cline_legacy_counted_records_and_skips</code></td>
+<td>Cline legacy counted records and skips</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:73</code></td>
+</tr>
+<tr>
+<td><code>test_cline_legacy_tokens_exclusive_policy_and_cost</code></td>
+<td>Cline legacy tokens exclusive policy and cost</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:86</code></td>
+</tr>
+<tr>
+<td><code>test_cancelled_request_without_cost_is_counted</code></td>
+<td>Cancelled request without cost is counted</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:106</code></td>
+</tr>
+<tr>
+<td><code>test_deleted_api_reqs_and_subagent_usage_counted</code></td>
+<td>Deleted api reqs and subagent usage counted</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:113</code></td>
+</tr>
+<tr>
+<td><code>test_model_falls_back_to_nearest_earlier_task_metadata_entry</code></td>
+<td>Model falls back to nearest earlier task metadata entry</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:123</code></td>
+</tr>
+<tr>
+<td><code>test_request_text_never_leaks</code></td>
+<td>Request text never leaks</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:131</code></td>
+</tr>
+<tr>
+<td><code>test_partial_entries_skipped</code></td>
+<td>Partial entries skipped</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:137</code></td>
+</tr>
+<tr>
+<td><code>test_bad_json_text_and_missing_keys_do_not_crash</code></td>
+<td>Bad json text and missing keys do not crash</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:144</code></td>
+</tr>
+<tr>
+<td><code>test_duplicate_task_and_timestamp_emitted_once</code></td>
+<td>Duplicate task and timestamp emitted once</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:161</code></td>
+</tr>
+<tr>
+<td><code>test_truncated_array_is_salvaged_with_warning</code></td>
+<td>Truncated array is salvaged with warning</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:168</code></td>
+</tr>
+<tr>
+<td><code>test_non_array_file_warns</code></td>
+<td>Non array file warns</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:177</code></td>
+</tr>
+<tr>
+<td><code>test_missing_root_yields_nothing</code></td>
+<td>Missing root yields nothing</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:185</code></td>
+</tr>
+<tr>
+<td><code>test_inclusive_policy_subtracts_cache_and_clamps</code></td>
+<td>Inclusive policy subtracts cache and clamps</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:193</code></td>
+</tr>
+<tr>
+<td><code>test_exclusive_policy_keeps_tokens_in</code></td>
+<td>Exclusive policy keeps tokens in</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:204</code></td>
+</tr>
+<tr>
+<td><code>test_policy_table_per_source</code></td>
+<td>Policy table per source</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:210</code></td>
+</tr>
+<tr>
+<td><code>test_roo_inclusive_no_model_with_cost_and_subtask</code></td>
+<td>Roo inclusive no model with cost and subtask</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:221</code></td>
+</tr>
+<tr>
+<td><code>test_kilo_legacy_source_and_policy</code></td>
+<td>Kilo legacy source and policy</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:240</code></td>
+</tr>
+<tr>
+<td><code>test_lowercase_directory_names_matched</code></td>
+<td>Lowercase directory names matched</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:254</code></td>
+</tr>
+<tr>
+<td><code>test_default_roots_linux_variants</code></td>
+<td>Default roots linux variants</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:268</code></td>
+</tr>
+<tr>
+<td><code>test_sdk_root_env_overrides</code></td>
+<td>Sdk root env overrides</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:284</code></td>
+</tr>
+<tr>
+<td><code>test_files_finds_task_and_sdk_files</code></td>
+<td>Files finds task and sdk files</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:295</code></td>
+</tr>
+<tr>
+<td><code>test_sdk_messages_inclusive_with_manifest_fallbacks</code></td>
+<td>Sdk messages inclusive with manifest fallbacks</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:307</code></td>
+</tr>
+<tr>
+<td><code>test_sdk_legacy_migrated_session_skipped_and_subagent_flagged</code></td>
+<td>Sdk legacy migrated session skipped and subagent flagged</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:327</code></td>
+</tr>
+<tr>
+<td><code>test_sdk_bad_file_warns</code></td>
+<td>Sdk bad file warns</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:335</code></td>
+</tr>
+<tr>
+<td><code>test_reparse_is_idempotent_through_the_store</code></td>
+<td>Reparse is idempotent through the store</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:347</code></td>
+</tr>
+<tr>
+<td><code>test_pipeline_prices_known_model_and_tolerates_unpriced</code></td>
+<td>Pipeline prices known model and tolerates unpriced</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:359</code></td>
+</tr>
+<tr>
+<td><code>test_negative_token_fields_are_clamped</code></td>
+<td>Negative token fields are clamped</td>
+<td><code>tests/test_cline.py</code></td>
+<td><a href="#">tests/test_cline.py</a> <code>tests/test_cline.py:377</code></td>
+</tr>
+<tr>
+<td><code>test_cached_input_is_a_subset_of_input_tokens</code></td>
+<td>Cached input is a subset of input tokens</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:85</code></td>
+</tr>
+<tr>
+<td><code>test_uncached_input_is_the_whole_input_when_nothing_was_cached</code></td>
+<td>Uncached input is the whole input when nothing was cached</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:92</code></td>
+</tr>
+<tr>
+<td><code>test_reasoning_output_is_a_subset_of_output_and_not_double_counted</code></td>
+<td>Reasoning output is a subset of output and not double counted</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:101</code></td>
+</tr>
+<tr>
+<td><code>test_cached_input_greater_than_input_is_clamped</code></td>
+<td>Cached input greater than input is clamped</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:110</code></td>
+</tr>
+<tr>
+<td><code>test_model_comes_from_session_meta</code></td>
+<td>Model comes from session meta</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:117</code></td>
+</tr>
+<tr>
+<td><code>test_mid_session_model_change_applies_only_to_later_events</code></td>
+<td>Mid session model change applies only to later events</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:121</code></td>
+</tr>
+<tr>
+<td><code>test_session_id_and_project_come_from_session_meta</code></td>
+<td>Session id and project come from session meta</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:132</code></td>
+</tr>
+<tr>
+<td><code>test_model_is_none_when_the_rollout_never_names_one</code></td>
+<td>Model is none when the rollout never names one</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:138</code></td>
+</tr>
+<tr>
+<td><code>test_events_before_the_first_model_record_are_backfilled</code></td>
+<td>Events before the first model record are backfilled</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:143</code></td>
+</tr>
+<tr>
+<td><code>test_all_zero_last_token_usage_events_are_skipped</code></td>
+<td>All zero last token usage events are skipped</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:167</code></td>
+</tr>
+<tr>
+<td><code>test_records_without_last_token_usage_are_skipped</code></td>
+<td>Records without last token usage are skipped</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:172</code></td>
+</tr>
+<tr>
+<td><code>test_token_count_at_the_top_level_is_still_parsed</code></td>
+<td>Token count at the top level is still parsed</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:187</code></td>
+</tr>
+<tr>
+<td><code>test_top_level_envelope_alone_parses</code></td>
+<td>Top level envelope alone parses</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:194</code></td>
+</tr>
+<tr>
+<td><code>test_originator_maps_to_the_codex_desktop_client</code></td>
+<td>Originator maps to the codex desktop client</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:223</code></td>
+</tr>
+<tr>
+<td><code>test_unknown_originator_is_slugified_not_dropped</code></td>
+<td>Unknown originator is slugified not dropped</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:248</code></td>
+</tr>
+<tr>
+<td><code>test_subagent_source_marks_is_sidechain</code></td>
+<td>Subagent source marks is sidechain</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:263</code></td>
+</tr>
+<tr>
+<td><code>test_no_session_meta_still_parses_with_default_client</code></td>
+<td>No session meta still parses with default client</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:278</code></td>
+</tr>
+<tr>
+<td><code>test_matching_session_total_produces_no_warning</code></td>
+<td>Matching session total produces no warning</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:285</code></td>
+</tr>
+<tr>
+<td><code>test_disagreeing_session_total_warns_and_names_the_file</code></td>
+<td>Disagreeing session total warns and names the file</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:291</code></td>
+</tr>
+<tr>
+<td><code>test_a_real_total_with_an_all_zero_breakdown_still_counts_toward_reconciliation</code></td>
+<td>A real total with an all zero breakdown still counts toward reconciliation</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:301</code></td>
+</tr>
+<tr>
+<td><code>test_drift_within_tolerance_is_not_warned_about</code></td>
+<td>Drift within tolerance is not warned about</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:323</code></td>
+</tr>
+<tr>
+<td><code>test_large_absolute_drift_under_one_percent_is_not_warned_about</code></td>
+<td>Large absolute drift under one percent is not warned about</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:335</code></td>
+</tr>
+<tr>
+<td><code>test_duplicate_token_count_events_with_an_unchanged_total_are_not_double_counted</code></td>
+<td>Duplicate token count events with an unchanged total are not double counted</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:342</code></td>
+</tr>
+<tr>
+<td><code>test_token_usage_record_is_parsed_and_preferred_exclusively_over_token_count</code></td>
+<td>Token usage record is parsed and preferred exclusively over token count</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:361</code></td>
+</tr>
+<tr>
+<td><code>test_a_file_without_token_usage_records_still_uses_token_count</code></td>
+<td>A file without token usage records still uses token count</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:391</code></td>
+</tr>
+<tr>
+<td><code>test_forked_thread_reconciliation_subtracts_inherited_history</code></td>
+<td>Forked thread reconciliation subtracts inherited history</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:396</code></td>
+</tr>
+<tr>
+<td><code>test_the_same_shape_without_forked_from_id_still_warns</code></td>
+<td>The same shape without forked from id still warns</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:422</code></td>
+</tr>
+<tr>
+<td><code>test_a_counter_reset_gets_its_own_warning_kind_not_a_drift_percentage</code></td>
+<td>A counter reset gets its own warning kind not a drift percentage</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:442</code></td>
+</tr>
+<tr>
+<td><code>test_thread_name_from_session_index_sets_the_tool_title</code></td>
+<td>Thread name from session index sets the tool title</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:472</code></td>
+</tr>
+<tr>
+<td><code>test_a_command_name_wrapper_thread_name_falls_through_to_folder</code></td>
+<td>A command name wrapper thread name falls through to folder</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:502</code></td>
+</tr>
+<tr>
+<td><code>test_no_session_index_file_falls_back_to_folder_title</code></td>
+<td>No session index file falls back to folder title</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:534</code></td>
+</tr>
+<tr>
+<td><code>test_session_index_is_shared_across_every_rollout_file_under_one_root</code></td>
+<td>Session index is shared across every rollout file under one root</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:540</code></td>
+</tr>
+<tr>
+<td><code>test_fingerprint_disambiguates_duplicate_token_count_fallback_keys</code></td>
+<td>Fingerprint disambiguates duplicate token count fallback keys</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:588</code></td>
+</tr>
+<tr>
+<td><code>test_service_tier_maps_to_a_price_tier</code></td>
+<td>Service tier maps to a price tier</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:648</code></td>
+</tr>
+<tr>
+<td><code>test_a_rollout_that_never_names_a_tier_is_standard_and_keeps_its_models</code></td>
+<td>A rollout that never names a tier is standard and keeps its models</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:653</code></td>
+</tr>
+<tr>
+<td><code>test_a_late_tier_is_not_applied_to_events_that_ran_before_it</code></td>
+<td>A late tier is not applied to events that ran before it</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:674</code></td>
+</tr>
+<tr>
+<td><code>test_only_the_model_is_backfilled_the_tier_is_the_one_in_force_at_the_time</code></td>
+<td>Only the model is backfilled the tier is the one in force at the time</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:688</code></td>
+</tr>
+<tr>
+<td><code>test_a_tier_change_mid_session_applies_only_to_later_events</code></td>
+<td>A tier change mid session applies only to later events</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:710</code></td>
+</tr>
+<tr>
+<td><code>test_a_settings_record_without_a_tier_resets_to_standard</code></td>
+<td>A settings record without a tier resets to standard</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:723</code></td>
+</tr>
+<tr>
+<td><code>test_a_non_settings_record_without_a_tier_does_not_reset_it</code></td>
+<td>A non settings record without a tier does not reset it</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:734</code></td>
+</tr>
+<tr>
+<td><code>test_parsing_a_large_rollout_with_no_tier_stays_linear</code></td>
+<td>Parsing a large rollout with no tier stays linear</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:748</code></td>
+</tr>
+<tr>
+<td><code>test_the_tier_also_applies_to_token_usage_record_files</code></td>
+<td>The tier also applies to token usage record files</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:769</code></td>
+</tr>
+<tr>
+<td><code>test_the_tier_fixture_carries_the_real_key_path</code></td>
+<td>The tier fixture carries the real key path</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:774</code></td>
+</tr>
+<tr>
+<td><code>test_a_priority_event_is_priced_at_the_priority_variant</code></td>
+<td>A priority event is priced at the priority variant</td>
+<td><code>tests/test_codex.py</code></td>
+<td><a href="#">tests/test_codex.py</a> <code>tests/test_codex.py:779</code></td>
+</tr>
+<tr>
+<td><code>test_ensure_samples_table_is_idempotent</code></td>
+<td>Ensure samples table is idempotent</td>
+<td><code>tests/test_collect.py</code></td>
+<td><a href="#">tests/test_collect.py</a> <code>tests/test_collect.py:61</code></td>
+</tr>
+<tr>
+<td><code>test_collect_writes_a_row_per_sample</code></td>
+<td>Collect writes a row per sample</td>
+<td><code>tests/test_collect.py</code></td>
+<td><a href="#">tests/test_collect.py</a> <code>tests/test_collect.py:71</code></td>
+</tr>
+<tr>
+<td><code>test_collect_inserts_nothing_when_no_backend_is_available</code></td>
+<td>Collect inserts nothing when no backend is available</td>
+<td><code>tests/test_collect.py</code></td>
+<td><a href="#">tests/test_collect.py</a> <code>tests/test_collect.py:87</code></td>
+</tr>
+<tr>
+<td><code>test_sample_once_returns_none_without_a_backend</code></td>
+<td>Sample once returns none without a backend</td>
+<td><code>tests/test_collect.py</code></td>
+<td><a href="#">tests/test_collect.py</a> <code>tests/test_collect.py:100</code></td>
+</tr>
+<tr>
+<td><code>test_energy_is_unavailable_without_a_tdp</code></td>
+<td>Energy is unavailable without a tdp</td>
+<td><code>tests/test_collect.py</code></td>
+<td><a href="#">tests/test_collect.py</a> <code>tests/test_collect.py:105</code></td>
+</tr>
+<tr>
+<td><code>test_energy_sums_tdp_times_utilisation_times_elapsed</code></td>
+<td>Energy sums tdp times utilisation times elapsed</td>
+<td><code>tests/test_collect.py</code></td>
+<td><a href="#">tests/test_collect.py</a> <code>tests/test_collect.py:109</code></td>
+</tr>
+<tr>
+<td><code>test_energy_of_a_single_sample_is_zero</code></td>
+<td>Energy of a single sample is zero</td>
+<td><code>tests/test_collect.py</code></td>
+<td><a href="#">tests/test_collect.py</a> <code>tests/test_collect.py:114</code></td>
+</tr>
+<tr>
+<td><code>test_nvidia_smi_output_is_parsed_into_measured_values</code></td>
+<td>Nvidia smi output is parsed into measured values</td>
+<td><code>tests/test_collect.py</code></td>
+<td><a href="#">tests/test_collect.py</a> <code>tests/test_collect.py:118</code></td>
+</tr>
+<tr>
+<td><code>test_nvidia_smi_reports_no_power_when_the_driver_says_not_available</code></td>
+<td>Nvidia smi reports no power when the driver says not available</td>
+<td><code>tests/test_collect.py</code></td>
+<td><a href="#">tests/test_collect.py</a> <code>tests/test_collect.py:122</code></td>
+</tr>
+<tr>
+<td><code>test_unparseable_nvidia_smi_output_yields_no_sample</code></td>
+<td>Unparseable nvidia smi output yields no sample</td>
+<td><code>tests/test_collect.py</code></td>
+<td><a href="#">tests/test_collect.py</a> <code>tests/test_collect.py:129</code></td>
+</tr>
+<tr>
+<td><code>test_rocm_smi_output_is_parsed</code></td>
+<td>Rocm smi output is parsed</td>
+<td><code>tests/test_collect.py</code></td>
+<td><a href="#">tests/test_collect.py</a> <code>tests/test_collect.py:133</code></td>
+</tr>
+<tr>
+<td><code>test_rocm_smi_without_power_reports_none</code></td>
+<td>Rocm smi without power reports none</td>
+<td><code>tests/test_collect.py</code></td>
+<td><a href="#">tests/test_collect.py</a> <code>tests/test_collect.py:148</code></td>
+</tr>
+<tr>
+<td><code>test_rocm_smi_rejects_output_without_a_card</code></td>
+<td>Rocm smi rejects output without a card</td>
+<td><code>tests/test_collect.py</code></td>
+<td><a href="#">tests/test_collect.py</a> <code>tests/test_collect.py:156</code></td>
+</tr>
+<tr>
+<td><code>test_each_turn_yields_one_event</code></td>
+<td>Each turn yields one event</td>
+<td><code>tests/test_copilot_chat.py</code></td>
+<td><a href="#">tests/test_copilot_chat.py</a> <code>tests/test_copilot_chat.py:28</code></td>
+</tr>
+<tr>
+<td><code>test_populated_session_carries_cwd_repository_branch_and_project</code></td>
+<td>Populated session carries cwd repository branch and project</td>
+<td><code>tests/test_copilot_chat.py</code></td>
+<td><a href="#">tests/test_copilot_chat.py</a> <code>tests/test_copilot_chat.py:32</code></td>
+</tr>
+<tr>
+<td><code>test_second_turn_in_same_session_gets_its_own_request_id</code></td>
+<td>Second turn in same session gets its own request id</td>
+<td><code>tests/test_copilot_chat.py</code></td>
+<td><a href="#">tests/test_copilot_chat.py</a> <code>tests/test_copilot_chat.py:48</code></td>
+</tr>
+<tr>
+<td><code>test_null_cwd_falls_back_to_no_project</code></td>
+<td>Null cwd falls back to no project</td>
+<td><code>tests/test_copilot_chat.py</code></td>
+<td><a href="#">tests/test_copilot_chat.py</a> <code>tests/test_copilot_chat.py:56</code></td>
+</tr>
+<tr>
+<td><code>test_session_summary_becomes_the_tool_title</code></td>
+<td>Session summary becomes the tool title</td>
+<td><code>tests/test_copilot_chat.py</code></td>
+<td><a href="#">tests/test_copilot_chat.py</a> <code>tests/test_copilot_chat.py:64</code></td>
+</tr>
+<tr>
+<td><code>test_null_summary_falls_back_to_the_folder_title</code></td>
+<td>Null summary falls back to the folder title</td>
+<td><code>tests/test_copilot_chat.py</code></td>
+<td><a href="#">tests/test_copilot_chat.py</a> <code>tests/test_copilot_chat.py:70</code></td>
+</tr>
+<tr>
+<td><code>test_empty_database_yields_no_events_and_no_warnings</code></td>
+<td>Empty database yields no events and no warnings</td>
+<td><code>tests/test_copilot_chat.py</code></td>
+<td><a href="#">tests/test_copilot_chat.py</a> <code>tests/test_copilot_chat.py:76</code></td>
+</tr>
+<tr>
+<td><code>test_basic_fixture_maps_tokens_and_metadata</code></td>
+<td>Basic fixture maps tokens and metadata</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:77</code></td>
+</tr>
+<tr>
+<td><code>test_title_comes_from_workspace_yaml_name</code></td>
+<td>Title comes from workspace yaml name</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:102</code></td>
+</tr>
+<tr>
+<td><code>test_title_falls_back_to_summary_then_folder</code></td>
+<td>Title falls back to summary then folder</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:107</code></td>
+</tr>
+<tr>
+<td><code>test_workspace_yaml_supplies_cwd_when_start_has_no_context</code></td>
+<td>Workspace yaml supplies cwd when start has no context</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:119</code></td>
+</tr>
+<tr>
+<td><code>test_ephemeral_usage_events_are_ignored</code></td>
+<td>Ephemeral usage events are ignored</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:131</code></td>
+</tr>
+<tr>
+<td><code>test_ephemeral_shutdown_is_skipped</code></td>
+<td>Ephemeral shutdown is skipped</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:137</code></td>
+</tr>
+<tr>
+<td><code>test_resume_emits_deltas_between_cumulative_shutdowns</code></td>
+<td>Resume emits deltas between cumulative shutdowns</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:144</code></td>
+</tr>
+<tr>
+<td><code>test_deltas_are_tracked_per_model</code></td>
+<td>Deltas are tracked per model</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:166</code></td>
+</tr>
+<tr>
+<td><code>test_smaller_total_is_a_counter_reset_and_taken_whole</code></td>
+<td>Smaller total is a counter reset and taken whole</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:180</code></td>
+</tr>
+<tr>
+<td><code>test_crashed_session_without_shutdown_warns_and_emits_nothing</code></td>
+<td>Crashed session without shutdown warns and emits nothing</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:195</code></td>
+</tr>
+<tr>
+<td><code>test_output_after_last_shutdown_warns_but_keeps_earlier_events</code></td>
+<td>Output after last shutdown warns but keeps earlier events</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:208</code></td>
+</tr>
+<tr>
+<td><code>test_idle_session_without_shutdown_does_not_warn</code></td>
+<td>Idle session without shutdown does not warn</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:223</code></td>
+</tr>
+<tr>
+<td><code>test_compaction_complete_is_its_own_event_when_enabled</code></td>
+<td>Compaction complete is its own event when enabled</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:229</code></td>
+</tr>
+<tr>
+<td><code>test_agent_metrics_are_not_double_counted</code></td>
+<td>Agent metrics are not double counted</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:263</code></td>
+</tr>
+<tr>
+<td><code>test_copilot_credits_in_raw_and_no_reported_cost</code></td>
+<td>Copilot credits in raw and no reported cost</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:269</code></td>
+</tr>
+<tr>
+<td><code>test_dotted_model_passes_through_and_prices_via_matcher</code></td>
+<td>Dotted model passes through and prices via matcher</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:275</code></td>
+</tr>
+<tr>
+<td><code>test_negative_and_odd_values_never_go_negative</code></td>
+<td>Negative and odd values never go negative</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:283</code></td>
+</tr>
+<tr>
+<td><code>test_malformed_lines_and_missing_keys_do_not_crash</code></td>
+<td>Malformed lines and missing keys do not crash</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:292</code></td>
+</tr>
+<tr>
+<td><code>test_missing_root_yields_nothing</code></td>
+<td>Missing root yields nothing</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:310</code></td>
+</tr>
+<tr>
+<td><code>test_copilot_home_env_override</code></td>
+<td>Copilot home env override</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:315</code></td>
+</tr>
+<tr>
+<td><code>test_reparse_is_idempotent_and_fingerprints_are_unique</code></td>
+<td>Reparse is idempotent and fingerprints are unique</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:322</code></td>
+</tr>
+<tr>
+<td><code>test_source_is_experimental_and_discovered</code></td>
+<td>Source is experimental and discovered</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:337</code></td>
+</tr>
+<tr>
+<td><code>test_end_to_end_pipeline_prices_known_and_tolerates_unknown_model</code></td>
+<td>End to end pipeline prices known and tolerates unknown model</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:343</code></td>
+</tr>
+<tr>
+<td><code>test_compaction_is_not_counted_by_default</code></td>
+<td>Compaction is not counted by default</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:372</code></td>
+</tr>
+<tr>
+<td><code>test_negative_inputs_are_clamped_to_zero</code></td>
+<td>Negative inputs are clamped to zero</td>
+<td><code>tests/test_copilot_cli.py</code></td>
+<td><a href="#">tests/test_copilot_cli.py</a> <code>tests/test_copilot_cli.py:386</code></td>
+</tr>
+<tr>
+<td><code>test_each_composer_yields_one_event</code></td>
+<td>Each composer yields one event</td>
+<td><code>tests/test_cursor.py</code></td>
+<td><a href="#">tests/test_cursor.py</a> <code>tests/test_cursor.py:28</code></td>
+</tr>
+<tr>
+<td><code>test_composer_id_and_timestamp_come_from_the_row</code></td>
+<td>Composer id and timestamp come from the row</td>
+<td><code>tests/test_cursor.py</code></td>
+<td><a href="#">tests/test_cursor.py</a> <code>tests/test_cursor.py:32</code></td>
+</tr>
+<tr>
+<td><code>test_second_composer_gets_its_own_request_id</code></td>
+<td>Second composer gets its own request id</td>
+<td><code>tests/test_cursor.py</code></td>
+<td><a href="#">tests/test_cursor.py</a> <code>tests/test_cursor.py:42</code></td>
+</tr>
+<tr>
+<td><code>test_composer_name_becomes_the_tool_title</code></td>
+<td>Composer name becomes the tool title</td>
+<td><code>tests/test_cursor.py</code></td>
+<td><a href="#">tests/test_cursor.py</a> <code>tests/test_cursor.py:48</code></td>
+</tr>
+<tr>
+<td><code>test_missing_name_falls_back_to_the_folder_title</code></td>
+<td>Missing name falls back to the folder title</td>
+<td><code>tests/test_cursor.py</code></td>
+<td><a href="#">tests/test_cursor.py</a> <code>tests/test_cursor.py:58</code></td>
+</tr>
+<tr>
+<td><code>test_empty_database_yields_no_events_and_no_warnings</code></td>
+<td>Empty database yields no events and no warnings</td>
+<td><code>tests/test_cursor.py</code></td>
+<td><a href="#">tests/test_cursor.py</a> <code>tests/test_cursor.py:73</code></td>
+</tr>
+<tr>
+<td><code>test_missing_cursor_disk_kv_table_yields_no_events_and_no_warnings</code></td>
+<td>Missing cursor disk kv table yields no events and no warnings</td>
+<td><code>tests/test_cursor.py</code></td>
+<td><a href="#">tests/test_cursor.py</a> <code>tests/test_cursor.py:80</code></td>
+</tr>
+<tr>
+<td><code>test_missing_file_yields_no_events_and_no_warnings</code></td>
+<td>Missing file yields no events and no warnings</td>
+<td><code>tests/test_cursor.py</code></td>
+<td><a href="#">tests/test_cursor.py</a> <code>tests/test_cursor.py:87</code></td>
+</tr>
+<tr>
+<td><code>test_discovers_global_and_workspace_state_dbs</code></td>
+<td>Discovers global and workspace state dbs</td>
+<td><code>tests/test_cursor.py</code></td>
+<td><a href="#">tests/test_cursor.py</a> <code>tests/test_cursor.py:93</code></td>
+</tr>
+<tr>
+<td><code>test_no_installation_yields_no_files</code></td>
+<td>No installation yields no files</td>
+<td><code>tests/test_cursor.py</code></td>
+<td><a href="#">tests/test_cursor.py</a> <code>tests/test_cursor.py:108</code></td>
+</tr>
+<tr>
+<td><code>test_demo_store_is_separate_from_the_real_store</code></td>
+<td>Demo store is separate from the real store</td>
+<td><code>tests/test_demo.py</code></td>
+<td><a href="#">tests/test_demo.py</a> <code>tests/test_demo.py:27</code></td>
+</tr>
+<tr>
+<td><code>test_every_source_is_pointed_inside_the_demo_tree</code></td>
+<td>Every source is pointed inside the demo tree</td>
+<td><code>tests/test_demo.py</code></td>
+<td><a href="#">tests/test_demo.py</a> <code>tests/test_demo.py:33</code></td>
+</tr>
+<tr>
+<td><code>test_generate_twice_converges</code></td>
+<td>Generate twice converges</td>
+<td><code>tests/test_demo.py</code></td>
+<td><a href="#">tests/test_demo.py</a> <code>tests/test_demo.py:40</code></td>
+</tr>
+<tr>
+<td><code>test_demo_analysis_reads_only_generated_files</code></td>
+<td>Demo analysis reads only generated files</td>
+<td><code>tests/test_demo.py</code></td>
+<td><a href="#">tests/test_demo.py</a> <code>tests/test_demo.py:47</code></td>
+</tr>
+<tr>
+<td><code>test_off_removes_the_demo_tree_then_serves_real_data</code></td>
+<td>Off removes the demo tree then serves real data</td>
+<td><code>tests/test_demo.py</code></td>
+<td><a href="#">tests/test_demo.py</a> <code>tests/test_demo.py:61</code></td>
+</tr>
+<tr>
+<td><code>test_demo_shows_priced_estimated_and_unpriced_states</code></td>
+<td>Demo shows priced estimated and unpriced states</td>
+<td><code>tests/test_demo.py</code></td>
+<td><a href="#">tests/test_demo.py</a> <code>tests/test_demo.py:89</code></td>
+</tr>
+<tr>
+<td><code>test_demo_context_windows_come_from_the_rate_table</code></td>
+<td>Demo context windows come from the rate table</td>
+<td><code>tests/test_demo.py</code></td>
+<td><a href="#">tests/test_demo.py</a> <code>tests/test_demo.py:111</code></td>
+</tr>
+<tr>
+<td><code>test_demo_is_deterministic</code></td>
+<td>Demo is deterministic</td>
+<td><code>tests/test_demo.py</code></td>
+<td><a href="#">tests/test_demo.py</a> <code>tests/test_demo.py:117</code></td>
+</tr>
+<tr>
+<td><code>test_only_assistant_rows_produce_events</code></td>
+<td>Only assistant rows produce events</td>
+<td><code>tests/test_dyad.py</code></td>
+<td><a href="#">tests/test_dyad.py</a> <code>tests/test_dyad.py:28</code></td>
+</tr>
+<tr>
+<td><code>test_repo_populated_app_maps_org_and_repo</code></td>
+<td>Repo populated app maps org and repo</td>
+<td><code>tests/test_dyad.py</code></td>
+<td><a href="#">tests/test_dyad.py</a> <code>tests/test_dyad.py:32</code></td>
+</tr>
+<tr>
+<td><code>test_repo_missing_app_maps_repository_to_none</code></td>
+<td>Repo missing app maps repository to none</td>
+<td><code>tests/test_dyad.py</code></td>
+<td><a href="#">tests/test_dyad.py</a> <code>tests/test_dyad.py:45</code></td>
+</tr>
+<tr>
+<td><code>test_chat_title_becomes_the_tool_title</code></td>
+<td>Chat title becomes the tool title</td>
+<td><code>tests/test_dyad.py</code></td>
+<td><a href="#">tests/test_dyad.py</a> <code>tests/test_dyad.py:56</code></td>
+</tr>
+<tr>
+<td><code>test_null_chat_title_falls_back_to_the_folder_title</code></td>
+<td>Null chat title falls back to the folder title</td>
+<td><code>tests/test_dyad.py</code></td>
+<td><a href="#">tests/test_dyad.py</a> <code>tests/test_dyad.py:66</code></td>
+</tr>
+<tr>
+<td><code>test_basic_fixture_totals_and_metadata</code></td>
+<td>Basic fixture totals and metadata</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:57</code></td>
+</tr>
+<tr>
+<td><code>test_subagent_file_is_sidechain</code></td>
+<td>Subagent file is sidechain</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:81</code></td>
+</tr>
+<tr>
+<td><code>test_tool_added_only_when_total_reconciles</code></td>
+<td>Tool added only when total reconciles</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:87</code></td>
+</tr>
+<tr>
+<td><code>test_inclusive_cached_never_negative</code></td>
+<td>Inclusive cached never negative</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:95</code></td>
+</tr>
+<tr>
+<td><code>test_null_tokens_skipped_and_missing_keys_tolerated</code></td>
+<td>Null tokens skipped and missing keys tolerated</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:101</code></td>
+</tr>
+<tr>
+<td><code>test_title_falls_back_to_folder_and_session_to_filename</code></td>
+<td>Title falls back to folder and session to filename</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:110</code></td>
+</tr>
+<tr>
+<td><code>test_project_root_marker</code></td>
+<td>Project root marker</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:117</code></td>
+</tr>
+<tr>
+<td><code>test_set_messages_checkpoint_and_last_summary_wins</code></td>
+<td>Set messages checkpoint and last summary wins</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:126</code></td>
+</tr>
+<tr>
+<td><code>test_malformed_and_truncated_lines_warn</code></td>
+<td>Malformed and truncated lines warn</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:140</code></td>
+</tr>
+<tr>
+<td><code>test_legacy_whole_file_json</code></td>
+<td>Legacy whole file json</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:148</code></td>
+</tr>
+<tr>
+<td><code>test_files_ignore_unrelated_antigravity_data</code></td>
+<td>Files ignore unrelated antigravity data</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:161</code></td>
+</tr>
+<tr>
+<td><code>test_env_override</code></td>
+<td>Env override</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:172</code></td>
+</tr>
+<tr>
+<td><code>test_reparse_is_idempotent_through_the_store</code></td>
+<td>Reparse is idempotent through the store</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:177</code></td>
+</tr>
+<tr>
+<td><code>test_source_is_experimental_and_discovered</code></td>
+<td>Source is experimental and discovered</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:185</code></td>
+</tr>
+<tr>
+<td><code>test_pipeline_prices_known_model_and_survives_unknown</code></td>
+<td>Pipeline prices known model and survives unknown</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:190</code></td>
+</tr>
+<tr>
+<td><code>test_negative_token_fields_clamp_to_zero</code></td>
+<td>Negative token fields clamp to zero</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:207</code></td>
+</tr>
+<tr>
+<td><code>test_id_less_identical_lines_dedup</code></td>
+<td>Id less identical lines dedup</td>
+<td><code>tests/test_gemini_cli.py</code></td>
+<td><a href="#">tests/test_gemini_cli.py</a> <code>tests/test_gemini_cli.py:214</code></td>
+</tr>
+<tr>
+<td><code>test_basic_fixture_yields_only_turn_completed_events_with_nonzero_tokens</code></td>
+<td>Basic fixture yields only turn completed events with nonzero tokens</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:59</code></td>
+</tr>
+<tr>
+<td><code>test_cached_input_is_split_out_of_input_tokens</code></td>
+<td>Cached input is split out of input tokens</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:68</code></td>
+</tr>
+<tr>
+<td><code>test_top_level_usage_is_used_when_model_usage_map_is_absent</code></td>
+<td>Top level usage is used when model usage map is absent</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:76</code></td>
+</tr>
+<tr>
+<td><code>test_cache_creation_tokens_become_cache_write_and_are_not_double_counted</code></td>
+<td>Cache creation tokens become cache write and are not double counted</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:83</code></td>
+</tr>
+<tr>
+<td><code>test_session_and_project_come_from_summary_json</code></td>
+<td>Session and project come from summary json</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:93</code></td>
+</tr>
+<tr>
+<td><code>test_session_and_project_fall_back_to_url_decoded_directory_names</code></td>
+<td>Session and project fall back to url decoded directory names</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:100</code></td>
+</tr>
+<tr>
+<td><code>test_non_turn_completed_updates_are_skipped</code></td>
+<td>Non turn completed updates are skipped</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:110</code></td>
+</tr>
+<tr>
+<td><code>test_turn_completed_without_usage_is_skipped</code></td>
+<td>Turn completed without usage is skipped</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:119</code></td>
+</tr>
+<tr>
+<td><code>test_all_zero_token_turns_are_skipped</code></td>
+<td>All zero token turns are skipped</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:133</code></td>
+</tr>
+<tr>
+<td><code>test_multiple_models_in_one_turn_emit_one_event_each</code></td>
+<td>Multiple models in one turn emit one event each</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:139</code></td>
+</tr>
+<tr>
+<td><code>test_request_id_includes_event_id_and_model_for_dedup</code></td>
+<td>Request id includes event id and model for dedup</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:163</code></td>
+</tr>
+<tr>
+<td><code>test_model_is_unknown_without_summary_or_model_usage_map</code></td>
+<td>Model is unknown without summary or model usage map</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:170</code></td>
+</tr>
+<tr>
+<td><code>test_agent_timestamp_ms_takes_priority_over_envelope_seconds</code></td>
+<td>Agent timestamp ms takes priority over envelope seconds</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:176</code></td>
+</tr>
+<tr>
+<td><code>test_envelope_seconds_are_used_when_agent_timestamp_is_absent</code></td>
+<td>Envelope seconds are used when agent timestamp is absent</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:184</code></td>
+</tr>
+<tr>
+<td><code>test_line_session_id_wins_over_summary_id</code></td>
+<td>Line session id wins over summary id</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:192</code></td>
+</tr>
+<tr>
+<td><code>test_summary_session_id_is_used_when_line_omits_it</code></td>
+<td>Summary session id is used when line omits it</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:202</code></td>
+</tr>
+<tr>
+<td><code>test_default_roots_uses_grok_home_when_set</code></td>
+<td>Default roots uses grok home when set</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:212</code></td>
+</tr>
+<tr>
+<td><code>test_default_roots_falls_back_to_home_dot_grok</code></td>
+<td>Default roots falls back to home dot grok</td>
+<td><code>tests/test_grok_build.py</code></td>
+<td><a href="#">tests/test_grok_build.py</a> <code>tests/test_grok_build.py:219</code></td>
+</tr>
+<tr>
+<td><code>test_a_single_hit_keeps_its_own_sentence</code></td>
+<td>A single hit keeps its own sentence</td>
+<td><code>tests/test_insights.py</code></td>
+<td><a href="#">tests/test_insights.py</a> <code>tests/test_insights.py:57</code></td>
+</tr>
+<tr>
+<td><code>test_many_hits_of_the_same_kind_collapse_into_one_insight</code></td>
+<td>Many hits of the same kind collapse into one insight</td>
+<td><code>tests/test_insights.py</code></td>
+<td><a href="#">tests/test_insights.py</a> <code>tests/test_insights.py:67</code></td>
+</tr>
+<tr>
+<td><code>test_no_em_dash_in_any_generated_message</code></td>
+<td>No em dash in any generated message</td>
+<td><code>tests/test_insights.py</code></td>
+<td><a href="#">tests/test_insights.py</a> <code>tests/test_insights.py:81</code></td>
+</tr>
+<tr>
+<td><code>test_a_quiet_session_has_no_amplification_insight</code></td>
+<td>A quiet session has no amplification insight</td>
+<td><code>tests/test_insights.py</code></td>
+<td><a href="#">tests/test_insights.py</a> <code>tests/test_insights.py:89</code></td>
+</tr>
+<tr>
+<td><code>test_cache_miss_worst_pick_is_the_lowest_ratio_not_the_highest</code></td>
+<td>Cache miss worst pick is the lowest ratio not the highest</td>
+<td><code>tests/test_insights.py</code></td>
+<td><a href="#">tests/test_insights.py</a> <code>tests/test_insights.py:95</code></td>
+</tr>
+<tr>
+<td><code>test_amplification_insight_uses_paid_tokens_not_cached_reads</code></td>
+<td>Amplification insight uses paid tokens not cached reads</td>
+<td><code>tests/test_insights.py</code></td>
+<td><a href="#">tests/test_insights.py</a> <code>tests/test_insights.py:130</code></td>
+</tr>
+<tr>
+<td><code>test_the_shipped_claude_code_trace_fixture_produces_no_amplification_insight</code></td>
+<td>The shipped claude code trace fixture produces no amplification insight</td>
+<td><code>tests/test_insights.py</code></td>
+<td><a href="#">tests/test_insights.py</a> <code>tests/test_insights.py:160</code></td>
+</tr>
+<tr>
+<td><code>test_context_pressure_fires_from_the_rate_table_capacity</code></td>
+<td>Context pressure fires from the rate table capacity</td>
+<td><code>tests/test_insights.py</code></td>
+<td><a href="#">tests/test_insights.py</a> <code>tests/test_insights.py:172</code></td>
+</tr>
+<tr>
+<td><code>test_a_contributor_from_an_earlier_turn_is_not_lost_across_an_intervening_call</code></td>
+<td>A contributor from an earlier turn is not lost across an intervening call</td>
+<td><code>tests/test_insights.py</code></td>
+<td><a href="#">tests/test_insights.py</a> <code>tests/test_insights.py:201</code></td>
+</tr>
+<tr>
+<td><code>test_only_assistant_messages_become_events</code></td>
+<td>Only assistant messages become events</td>
+<td><code>tests/test_jan.py</code></td>
+<td><a href="#">tests/test_jan.py</a> <code>tests/test_jan.py:19</code></td>
+</tr>
+<tr>
+<td><code>test_client_and_provider_and_model_come_from_thread_json</code></td>
+<td>Client and provider and model come from thread json</td>
+<td><code>tests/test_jan.py</code></td>
+<td><a href="#">tests/test_jan.py</a> <code>tests/test_jan.py:24</code></td>
+</tr>
+<tr>
+<td><code>test_tokens_are_none</code></td>
+<td>Tokens are none</td>
+<td><code>tests/test_jan.py</code></td>
+<td><a href="#">tests/test_jan.py</a> <code>tests/test_jan.py:33</code></td>
+</tr>
+<tr>
+<td><code>test_session_id_matches_thread_id</code></td>
+<td>Session id matches thread id</td>
+<td><code>tests/test_jan.py</code></td>
+<td><a href="#">tests/test_jan.py</a> <code>tests/test_jan.py:38</code></td>
+</tr>
+<tr>
+<td><code>test_missing_thread_json_yields_events_with_no_model</code></td>
+<td>Missing thread json yields events with no model</td>
+<td><code>tests/test_jan.py</code></td>
+<td><a href="#">tests/test_jan.py</a> <code>tests/test_jan.py:43</code></td>
+</tr>
+<tr>
+<td><code>test_thread_json_title_becomes_the_tool_title</code></td>
+<td>Thread json title becomes the tool title</td>
+<td><code>tests/test_jan.py</code></td>
+<td><a href="#">tests/test_jan.py</a> <code>tests/test_jan.py:58</code></td>
+</tr>
+<tr>
+<td><code>test_missing_thread_json_falls_back_to_the_folder_title</code></td>
+<td>Missing thread json falls back to the folder title</td>
+<td><code>tests/test_jan.py</code></td>
+<td><a href="#">tests/test_jan.py</a> <code>tests/test_jan.py:64</code></td>
+</tr>
+<tr>
+<td><code>test_kilo_events_use_kilo_source_and_same_mapping</code></td>
+<td>Kilo events use kilo source and same mapping</td>
+<td><code>tests/test_kilo_code.py</code></td>
+<td><a href="#">tests/test_kilo_code.py</a> <code>tests/test_kilo_code.py:28</code></td>
+</tr>
+<tr>
+<td><code>test_kilo_roots_and_env</code></td>
+<td>Kilo roots and env</td>
+<td><code>tests/test_kilo_code.py</code></td>
+<td><a href="#">tests/test_kilo_code.py</a> <code>tests/test_kilo_code.py:43</code></td>
+</tr>
+<tr>
+<td><code>test_kilo_finds_channel_dbs_not_opencode_dbs</code></td>
+<td>Kilo finds channel dbs not opencode dbs</td>
+<td><code>tests/test_kilo_code.py</code></td>
+<td><a href="#">tests/test_kilo_code.py</a> <code>tests/test_kilo_code.py:51</code></td>
+</tr>
+<tr>
+<td><code>test_kilo_registered_experimental_and_missing_root_safe</code></td>
+<td>Kilo registered experimental and missing root safe</td>
+<td><code>tests/test_kilo_code.py</code></td>
+<td><a href="#">tests/test_kilo_code.py</a> <code>tests/test_kilo_code.py:57</code></td>
+</tr>
+<tr>
+<td><code>test_basic_fixture_counts_each_step_once</code></td>
+<td>Basic fixture counts each step once</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:92</code></td>
+</tr>
+<tr>
+<td><code>test_token_mapping_and_metadata</code></td>
+<td>Token mapping and metadata</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:100</code></td>
+</tr>
+<tr>
+<td><code>test_cache_write_is_inside_input_by_default</code></td>
+<td>Cache write is inside input by default</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:119</code></td>
+</tr>
+<tr>
+<td><code>test_cache_write_policy_constant_both_values</code></td>
+<td>Cache write policy constant both values</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:127</code></td>
+</tr>
+<tr>
+<td><code>test_uncached_input_never_negative</code></td>
+<td>Uncached input never negative</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:142</code></td>
+</tr>
+<tr>
+<td><code>test_cached_tokens_alias_used_when_cache_read_absent</code></td>
+<td>Cached tokens alias used when cache read absent</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:156</code></td>
+</tr>
+<tr>
+<td><code>test_conflicting_cache_aliases_prefer_cache_read_and_warn</code></td>
+<td>Conflicting cache aliases prefer cache read and warn</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:165</code></td>
+</tr>
+<tr>
+<td><code>test_trap_goal_usage_attribution_is_not_usage</code></td>
+<td>Trap goal usage attribution is not usage</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:177</code></td>
+</tr>
+<tr>
+<td><code>test_trap_mirrored_child_stream_in_parent_is_skipped</code></td>
+<td>Trap mirrored child stream in parent is skipped</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:184</code></td>
+</tr>
+<tr>
+<td><code>test_trap_replayed_prefix_dedups_on_stream_seq_and_usage_id</code></td>
+<td>Trap replayed prefix dedups on stream seq and usage id</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:196</code></td>
+</tr>
+<tr>
+<td><code>test_replay_in_a_second_file_gets_the_same_request_id</code></td>
+<td>Replay in a second file gets the same request id</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:205</code></td>
+</tr>
+<tr>
+<td><code>test_recorded_at_is_microseconds</code></td>
+<td>Recorded at is microseconds</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:216</code></td>
+</tr>
+<tr>
+<td><code>test_timestamp_units_all_resolve_to_same_instant</code></td>
+<td>Timestamp units all resolve to same instant</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:224</code></td>
+</tr>
+<tr>
+<td><code>test_retained_frame_wrapper_is_unwrapped</code></td>
+<td>Retained frame wrapper is unwrapped</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:230</code></td>
+</tr>
+<tr>
+<td><code>test_unknown_shapes_are_skipped_with_one_aggregate_warning</code></td>
+<td>Unknown shapes are skipped with one aggregate warning</td>
+<td><code>tests/test_muse_code.py</code></td>
+<td><a href="#">tests/test_muse_code.py</a> <code>tests/test_muse_code.py:246</code></td>
+</tr>
+</tbody>
+</table></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Repository root configuration</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/repository-root-configuration.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Technology / Operations · TOGAF: Phase D, Technology Architecture</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>pyproject.toml</code>, <code>.pre-commit-config.yaml</code>, <code>web/*.ts</code>, <code>web/*.js</code>, <code>web/*.json</code></p><h1>Repository root configuration</h1>
+<p>This map lists every configuration file at the repository root and the tool that reads it. A maintainer can see which setting to change for a given tool and which settings are optional. It also shows the one settings block that no tool reads, and the one optional file that changes how the dashboard treats private content.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The project table in the package file names the package, its Python floor and its required libraries. The build system table names hatchling as the builder. <code>pyproject.toml:6</code> <code>pyproject.toml:33</code></li>
+<li>The ruff table sets a line length of 100 and the rule families E, F, I, UP and B. <code>pyproject.toml:40</code> <code>pyproject.toml:44</code></li>
+<li>The mypy table pins Python 3.11, loads the pydantic plugin and ignores missing imports. <code>pyproject.toml:47</code> <code>pyproject.toml:49</code></li>
+<li>The pylint tables load the pydantic introspection list, set a line length of 100, disable checks that ruff already covers and fail under a score of 9.0. <code>pyproject.toml:58</code> <code>pyproject.toml:62</code> <code>pyproject.toml:113</code></li>
+<li>The pytest table points the runner at the tests folder. <code>pyproject.toml:52</code></li>
+<li>The bandit table excludes three folders. No file in the root chunk calls bandit. <code>pyproject.toml:120</code></li>
+<li>The Vite file sets the base path, the alias, the build output folder, the development server with its API proxy and the test environment. <code>web/vite.config.ts:7</code> <code>web/vite.config.ts:11</code> <code>web/vite.config.ts:16</code> <code>web/vite.config.ts:28</code></li>
+<li>The TypeScript file turns on strict mode, the unused checks and the same alias as Vite. <code>web/tsconfig.json:19</code> <code>web/tsconfig.json:20</code> <code>web/tsconfig.json:30</code></li>
+<li>The ESLint file sets the rule presets, the React plugins and the ignored folders. <code>web/eslint.config.js:10</code> <code>web/eslint.config.js:8</code></li>
+<li>The web package file defines the six scripts that the web workflow and the pre-commit hook call. <code>web/package.json:10</code> <code>.github/workflows/web.yml:40</code></li>
+<li>The pre-commit file lists the hooks and marks mypy as manual. <code>.pre-commit-config.yaml:21</code> <code>.pre-commit-config.yaml:19</code></li>
+<li>The optional settings file in the user's home folder has five settings, each with a default, and the privacy module reads it. The README lists only four of them, the fifth is accepted but inert and only produces a warning, and a file that fails to load or to validate is ignored as a whole. <code>src/ai_usage_cost/pipeline.py:242</code> <code>README.md:438</code> <code>src/ai_usage_cost/privacy.py:12</code> <code>src/ai_usage_cost/privacy.py:57</code> <code>src/ai_usage_cost/privacy.py:63</code> <code>src/ai_usage_cost/privacy.py:67</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The map realises the configuration view of the repository root. It answers which file to open for a tool, where the wiring diagram <a href="../diagrams/localtokenomics-root-wiring.html">LocalTokenomics root wiring</a> answers how the tools connect.</li>
+<li>The settings file for private content is described for readers in <a href="../security/localtokenomics-root-security.html">localtokenomics root Security</a> and its data model in <a href="../data/localtokenomics-root-data-model.html">localtokenomics root Data Model</a>.</li>
+<li>Environment variables are not shown here because no root file reads one. The source readers read them and belong to the sources chunk. Related maps: <a href="../diagrams/repository-root-capabilities.html">Repository root capabilities</a>, <a href="../diagrams/repository-folder-layout.html">Repository folder layout</a> and <a href="../diagrams/repository-root-concepts.html">Repository root concepts</a>.</li>
+</ul>
+<h2>The diagram</h2>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pyproject.toml:1</code></td>
+<td>Package metadata and required libraries</td>
+</tr>
+<tr>
+<td><code>pyproject.toml:43</code></td>
+<td>Ruff rule families</td>
+</tr>
+<tr>
+<td><code>pyproject.toml:119</code></td>
+<td>Bandit folder exclusions</td>
+</tr>
+<tr>
+<td><code>web/vite.config.ts:20</code></td>
+<td>Development API proxy</td>
+</tr>
+<tr>
+<td><code>web/tsconfig.json:19</code></td>
+<td>Strict type checking</td>
+</tr>
+<tr>
+<td><code>web/eslint.config.js:11</code></td>
+<td>Files ESLint checks</td>
+</tr>
+<tr>
+<td><code>.pre-commit-config.yaml:1</code></td>
+<td>Pre-commit hook list</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/privacy.py:53</code></td>
+<td>Default of the first privacy setting</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

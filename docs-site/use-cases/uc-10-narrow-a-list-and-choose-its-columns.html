@@ -1,0 +1,40 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UC-10 Narrow a list and choose its columns</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="use-cases/uc-10-narrow-a-list-and-choose-its-columns.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> covers <code>web/src/components/filters.tsx</code>, <code>web/src/components/columns.tsx</code></p><h1>UC-10 Narrow a list and choose its columns</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>A use case of the subdomain, written from the code. Every step cites the line that does it, so a reader can check the claim in one click.</p>
+</details>
+<details class="callout callout-tip">
+<summary>How to use it</summary>
+<p>Read the main flow first, then the alternative flows. The rules, terms and diagrams at the end are the ones this use case relies on.</p>
+</details>
+<ul>
+<li><strong>Actors:</strong> <a href="../business/actors.html">Dashboard reader</a></li>
+<li><strong>Maturity:</strong> approved</li>
+</ul>
+<h2>Description</h2>
+<p>The reader filters sessions by search text, facets, chips and dates, sorts them, and hides columns they do not need.</p>
+<h2>Preconditions</h2>
+<p>A table or list view is on screen with options supplied by the screen.</p>
+<h2>Main flow</h2>
+<ol>
+<li>The reader types in the search box or ticks facet options. <a href="#">web/src/components/filters.tsx:18</a></li>
+<li>The reader picks a sort order. <a href="#">web/src/components/filters.tsx:195</a></li>
+<li>The reader sets a from and to date. <a href="#">web/src/components/filters.tsx:156</a></li>
+<li>Active filters appear as removable chips with a Clear all link. <a href="#">web/src/components/filters.tsx:231</a></li>
+<li>The reader opens the column menu and ticks columns, which are stored. <a href="#">web/src/components/columns.tsx:41</a></li>
+</ol>
+<h2>Alternative flows</h2>
+<ul>
+<li>At step 5, when every column is hidden, all columns are shown. <a href="#">web/src/components/columns.tsx:59</a></li>
+</ul>
+<h2>Postconditions</h2>
+<p>The filter chips list every active filter, and the hidden columns are remembered in the browser.</p>
+<h2>Acceptance criteria</h2>
+<ul>
+<li>No automated test covers this flow. Criterion from the code: hiding every column leaves all columns visible. <a href="#">web/src/components/columns.tsx:59</a></li>
+</ul>
+<h2>Code</h2>
+<ul>
+<li><a href="#">web/src/components/filters.tsx</a></li>
+<li><a href="#">web/src/components/columns.tsx</a></li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

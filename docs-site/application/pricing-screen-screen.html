@@ -1,0 +1,150 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Pricing Screen Screen</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/pricing-screen-screen.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Pricing Screen Screen</h1>
+<p>The Pricing screen (<code>web/src/prototype/PricingScreen.tsx:208-218</code>), labelled Models and pricing in the tabs <code>web/src/prototype/Screens.tsx:43-48</code>. The map is <a href="../diagrams/pricing-screen-screen-map.html">Pricing Screen Screen Map</a>; each numbered badge in the image is one row below.</p>
+<h2>Screen map</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Element</th>
+<th>What it does</th>
+<th>Handler or target</th>
+<th>State it depends on</th>
+<th>Citation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&lt;PanelHeader</code> rate table</td>
+<td>Title with the rate date and a hint that cache prices are derived and cost is never stored.</td>
+<td>-</td>
+<td><code>TOTALS.ratesAsOf</code></td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:57-61</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;Table</code> rates</td>
+<td>Table of rates, priced models first.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:63</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>&lt;TableHead</code> column headers</td>
+<td>Eight column headers; unlike the sessions table they are not sortable.</td>
+<td>-</td>
+<td><code>RATE_COLUMNS</code></td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:67-72</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&lt;TableRow</code> one row per rate</td>
+<td>Row with model, provider, input, derived cache prices, output, state and spend.</td>
+<td>-</td>
+<td><code>rate.match</code></td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:80</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>rate.inherited</code> conditional section</td>
+<td>Inherited marker, drawn only for a rate taken from another model.</td>
+<td>-</td>
+<td>conditional: <code>rate.inherited</code></td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:84-88</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;Badge</code> inherited</td>
+<td>Outlined badge that says the rate is inherited.</td>
+<td>-</td>
+<td><code>rate.inherited</code></td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:85-87</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;Badge</code> state</td>
+<td>Badge with free, priced or unused, derived from the rate and the spend.</td>
+<td>-</td>
+<td><code>values.state</code></td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:102-104</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>hidden &gt; 0</code> conditional section</td>
+<td>Reveal row, drawn only while unused rates are still hidden.</td>
+<td>-</td>
+<td>conditional: <code>hidden &gt; 0</code></td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:115-125</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>&lt;Button</code> show more rates</td>
+<td>Reveals four more unused rates per press; there is no way to hide them again.</td>
+<td><code>setRevealed</code> (inline, adds <code>REVEAL_BATCH</code>)</td>
+<td><code>hidden</code></td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:117-123</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>&lt;PanelHeader</code> multipliers</td>
+<td>Title of the per provider multiplier panel.</td>
+<td>-</td>
+<td><code>PROVIDER_RULES</code></td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:135-138</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>&lt;MeterRow</code> one meter per multiplier</td>
+<td>Meter for cache read, cache write 5 minutes, cache write 1 hour and batch, per provider.</td>
+<td>-</td>
+<td><code>item.value</code></td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:152-158</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>UNKNOWN_MODELS.length === 0</code> empty section</td>
+<td>Panel is skipped entirely when no model has tokens without a rate.</td>
+<td>-</td>
+<td>empty: <code>UNKNOWN_MODELS.length === 0</code></td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:173</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>&lt;div</code> one row per unpriced model</td>
+<td>Row with the model name, its tokens and its events.</td>
+<td>-</td>
+<td><code>UNKNOWN_MODELS</code></td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:185-193</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>&lt;CodeBlock</code> rates.json line</td>
+<td>Example rate line to add, built from the first unpriced model.</td>
+<td>-</td>
+<td><code>first.model</code></td>
+<td><a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:200-202</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Conditional sections</h3>
+<ul>
+<li>conditional: <code>rate.inherited</code>, callout 5, <a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:84-88</code></li>
+<li>conditional: <code>hidden &gt; 0</code>, callout 8, <a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:115-125</code></li>
+<li>empty: <code>UNKNOWN_MODELS.length === 0</code>, callout 12, <a href="#">web/src/prototype/PricingScreen.tsx</a> <code>web/src/prototype/PricingScreen.tsx:173</code></li>
+</ul>
+<h2>Diagnosis</h2>
+<p><strong>What the user can do.</strong> Read the rate table, with priced models first and unused models folded away <code>web/src/prototype/PricingScreen.tsx:49-53</code>. Press the button to reveal four more unused rates at a time <code>web/src/prototype/PricingScreen.tsx:117-123</code>. Read the multiplier meters for each provider and the list of models that have tokens and no rate <code>web/src/prototype/PricingScreen.tsx:130-206</code>.</p>
+<p><strong>What can go wrong.</strong></p>
+<ul>
+<li>Cache prices come from the provider rules, with a default of 0.1 for a read and 1.25 for a write when the provider has no rule <code>web/src/prototype/PricingScreen.tsx:40-41</code>. The rule table lists only three providers <code>web/src/prototype/data.ts:604-608</code>, yet the rate table also holds deepseek, moonshot and mistral rows <code>web/src/prototype/data.ts:592-594</code>. Their cache columns therefore show the default, not a published price, while the note under the multiplier panel says discounts differ by provider <code>web/src/prototype/PricingScreen.tsx:164-167</code>. A port must not copy the default.</li>
+<li>The reveal button only adds rows. There is no control to fold them again <code>web/src/prototype/PricingScreen.tsx:115-125</code>.</li>
+<li>The column headers are plain text, so the table cannot be sorted, unlike the sessions table <code>web/src/prototype/PricingScreen.tsx:66-73</code>.</li>
+<li>The unpriced panel shows an example rate line with zero prices <code>web/src/prototype/PricingScreen.tsx:200-202</code>. The user must edit the file by hand; the screen offers no form.</li>
+</ul>
+<p><strong>States the code does not handle.</strong></p>
+<ul>
+<li>No loading and no error state: rates are literal constants <code>web/src/prototype/PricingScreen.tsx:18-18</code>.</li>
+<li>An empty rate list draws an empty table with no message <code>web/src/prototype/PricingScreen.tsx:76-112</code>.</li>
+<li>When no model lacks a rate the whole unpriced panel disappears without a note saying that every model is priced <code>web/src/prototype/PricingScreen.tsx:173-173</code>.</li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

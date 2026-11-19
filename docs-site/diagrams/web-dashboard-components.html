@@ -1,0 +1,92 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web Dashboard Components</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-dashboard-components.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code></p><h1>Web Dashboard Components</h1>
+<p>This view shows how the local dashboard is put together, from the person reading it to the server that holds the numbers. It lets a new team member see which part loads data, which part shows it and which part only formats it. It also makes clear that the page itself calculates nothing and only asks the server.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The person opens the page, which mounts one top level component inside a tooltip provider <code>web/src/main.tsx:7-13</code>.</li>
+<li>That component loads the metadata, the rate table and the report, and holds the query, the view and the open session <code>web/src/App.tsx:132-145</code> <code>web/src/App.tsx:166-201</code>.</li>
+<li>All network calls go through one module of typed helpers that talk to the local server over relative paths <code>web/src/api.ts:489-512</code>.</li>
+<li>The component shows one of four views, overview, sessions, sources or pricing, once their data has arrived <code>web/src/App.tsx:330-339</code>.</li>
+<li>Opening a session shows the workspace with four tabs, and each tab fetches its own data from the same helper module when first requested <code>web/src/SessionWorkspace.tsx:72-77</code> <code>web/src/SessionWorkspace.tsx:457-474</code>.</li>
+<li>The views and the workspace use small pure modules for money, token and date formatting, price notes, price text and per turn insights <code>web/src/format.ts:19-27</code> <code>web/src/pricing-notes.ts:27-34</code> <code>web/src/pricing-format.ts:83-90</code> <code>web/src/turn-insights.ts:73-82</code>.</li>
+<li>The theme module reads the saved choice from browser local storage and writes it back when the mode changes <code>web/src/theme.ts:12-33</code> <code>web/src/theme.ts:42-47</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The diagram realises the usage and cost dashboard. It sits above <a href="../application/web-overview.html">Web Overview</a>, which lists every file and explains the data flow in prose, and next to the generated module view in <a href="../diagrams/web-diagrams.html">Web Diagrams</a>. The tests behind the pure modules are listed in <a href="../application/web-tests.html">Web Tests</a>.</p>
+<h2>Diagram</h2>
+<pre class="mermaid">flowchart LR
+    person([&quot;Person&lt;br/&gt;reads usage and cost&quot;]):::person
+    server[&quot;ai-usage-cost server&lt;br/&gt;external, not in this chunk&lt;br/&gt;JSON over HTTP&quot;]:::external
+    subgraph dash[&quot;Web dashboard (web/src, React and TypeScript)&quot;]
+        app[&quot;App&lt;br/&gt;component&lt;br/&gt;state, loading, refresh&quot;]:::system
+        api[&quot;api.ts&lt;br/&gt;module&lt;br/&gt;typed fetch helpers&quot;]:::system
+        views[&quot;Overview, Sessions, Sources, Pricing&lt;br/&gt;components&lt;br/&gt;four views&quot;]:::system
+        ws[&quot;SessionWorkspace&lt;br/&gt;component&lt;br/&gt;Summary, Trace, Economics, Context&quot;]:::system
+        helpers[&quot;format, pricing-notes, pricing-format, turn-insights&lt;br/&gt;modules&lt;br/&gt;pure display rules&quot;]:::system
+        theme[&quot;theme.ts&lt;br/&gt;module&lt;br/&gt;light or dark mode&quot;]:::system
+    end
+    store[(&quot;Browser local storage&lt;br/&gt;theme choice&quot;)]:::data
+    person --&gt; app
+    app --&gt; api
+    app --&gt; views
+    app --&gt; ws
+    views --&gt; helpers
+    ws --&gt; api
+    ws --&gt; helpers
+    app --&gt; theme
+    api -.-&gt; server
+    theme -.-&gt; store
+    subgraph Legend
+        direction LR
+        zlegend_a([&quot;Stadium: a person&quot;]):::person
+        zlegend_b[&quot;Rounded box: part of this system&quot;]:::system
+        zlegend_c[&quot;Dashed grey box: external system&quot;]:::external
+        zlegend_d[(&quot;Cylinder: data store&quot;)]:::data
+        zlegend_e[&quot;Solid arrow: call or use. Dashed arrow: network or storage access&quot;]:::system
+        zlegend_a ~~~ zlegend_b
+        zlegend_b ~~~ zlegend_c
+        zlegend_c ~~~ zlegend_d
+        zlegend_d ~~~ zlegend_e
+    end
+    classDef system fill:#dae8fc,stroke:#222222,color:#142233
+    classDef person fill:#fff2cc,stroke:#222222,color:#222222
+    classDef external fill:#eeeeee,stroke:#222222,stroke-dasharray:5 3,color:#222222
+    classDef data fill:#d5e8d4,stroke:#222222,color:#142233
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/main.tsx:7-13</code></td>
+<td>The entry point mounts the app</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:166-201</code></td>
+<td>Metadata, rates and report loading</td>
+</tr>
+<tr>
+<td><code>web/src/api.ts:489-512</code></td>
+<td>The single fetch helper and the metadata and rate endpoints</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:330-339</code></td>
+<td>The four views</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:457-474</code></td>
+<td>Lazy loading of the workspace tabs</td>
+</tr>
+<tr>
+<td><code>web/src/theme.ts:12-33</code></td>
+<td>Theme choice kept in local storage</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

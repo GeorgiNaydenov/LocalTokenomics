@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web Outcome Form Wireframe</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-outcome-form-wireframe.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Web Outcome Form Wireframe</h1>
+<p>This wireframe shows the small form a reader uses to judge a session. It lays out the five ratings, the notes and tags fields and the status line that confirms a save. It helps a designer change the form without losing a part.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>Five toggle items carry the outcome labels in a fixed order <code>web/src/SessionWorkspace.tsx:79-79</code> <code>web/src/SessionWorkspace.tsx:315-320</code>.</li>
+<li>An info glyph explains each rating, and a button opens the fields <code>web/src/SessionWorkspace.tsx:321-329</code> <code>web/src/SessionWorkspace.tsx:330-330</code>.</li>
+<li>A status line shows the save state and the outcome signals <code>web/src/SessionWorkspace.tsx:333-336</code>.</li>
+<li>When open, a notes text area and a tags input sit side by side, each saved on blur <code>web/src/SessionWorkspace.tsx:338-351</code> <code>web/src/SessionWorkspace.tsx:346-346</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The behaviour is in <a href="../diagrams/web-outcome-save-state-chart.html">Web Outcome Save State Chart</a>, and the form sits on <a href="../application/session-workspace-screen.html">Session Workspace Screen</a>. Rating a session is a use case in <a href="../application/web-specification.html">Web Specification</a>.</p>
+<h2>Web Outcome Form Wireframe</h2>
+<p><img alt="drawio-web-outcome-form" src="../assets/drawio-web-outcome-form.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:79-79</code></td>
+<td>Five toggle items carry the outcome labels in a fixed order</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:315-320</code></td>
+<td>Five toggle items carry the outcome labels in a fixed order</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:321-329</code></td>
+<td>An info glyph explains each rating, and a button opens the fields</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:330-330</code></td>
+<td>An info glyph explains each rating, and a button opens the fields</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:333-336</code></td>
+<td>A status line shows the save state and the outcome signals</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:338-351</code></td>
+<td>When open, a notes text area and a tags input sit side by side, each saved on blur</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:346-346</code></td>
+<td>When open, a notes text area and a tags input sit side by side, each saved on blur</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

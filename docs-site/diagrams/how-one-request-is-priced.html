@@ -1,0 +1,112 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>How one request is priced</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/how-one-request-is-priced.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>How one request is priced</h1>
+<p>This view lays out how the tool decides the price of one request. It shows the early exits where a request is left unpriced and the order in which the date, the size, the service tier and the time of day change the rate. Anyone checking a number on a report can follow the same steps.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>A request with no token counts leaves the flow as unavailable. <code>src/ai_usage_cost/pricing.py:420</code></li>
+<li>A free provider leaves the flow as free with a zero breakdown. <code>src/ai_usage_cost/pricing.py:422</code></li>
+<li>A model with no rate row leaves the flow as unpriced. <code>src/ai_usage_cost/pricing.py:424</code></li>
+<li>The price fields of the first period that covers the UTC date replace the row's own. <code>src/ai_usage_cost/pricing.py:505</code></li>
+<li>The last band whose minimum is at or under the request's total input is selected. <code>src/ai_usage_cost/pricing.py:508</code></li>
+<li>A tier other than standard uses the row's variant for that tier when one exists. <code>src/ai_usage_cost/pricing.py:520</code></li>
+<li>Without a variant a batch request gets the batch factor on every price. <code>src/ai_usage_cost/pricing.py:523</code></li>
+<li>Any other tier is flagged as unpriced for that tier and keeps the standard price. <code>src/ai_usage_cost/pricing.py:526</code></li>
+<li>A peak window that covers the UTC weekday and hour replaces the price. <code>src/ai_usage_cost/pricing.py:528</code></li>
+<li>Each cache price is the set's own figure, else the row's published ratio, else the provider multiplier. <code>src/ai_usage_cost/pricing.py:478</code></li>
+<li>The result is a cost breakdown that also keeps a no cache baseline. <code>src/ai_usage_cost/pricing.py:559</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>Realises the pricing rule behind every cost figure in <a href="../application/ai-usage-cost-overview.html">Ai usage cost Overview</a>.</li>
+<li>The three early exits are the states drawn in <a href="../diagrams/cost-state-of-a-request.html">Cost state of a request</a>.</li>
+<li>The run that calls this step for every request is <a href="../diagrams/scan-pipeline-from-logs-to-report.html">Scan pipeline from logs to report</a>.</li>
+<li>The rate table fields it reads are listed in <a href="../data/ai-usage-cost-data-model.html">Ai usage cost Data Model</a>.</li>
+</ul>
+<h2>The diagram</h2>
+<pre class="mermaid">flowchart TD
+    start([&quot;Request to price&quot;]):::startNode
+    d1{&quot;Token counts logged?&quot;}:::decision
+    x1([&quot;unavailable: no cost, tokens not counted&quot;]):::fail
+    d2{&quot;Provider marked free?&quot;}:::decision
+    x2([&quot;free: zero cost breakdown&quot;]):::ok
+    d3{&quot;Rate row found for the model?&quot;}:::decision
+    x3([&quot;unpriced: tokens counted, cost excluded&quot;]):::fail
+    s1[&quot;Apply the period for the UTC date, then the band for total input&quot;]:::step
+    d4{&quot;Tier is standard?&quot;}:::decision
+    d5{&quot;Row has a variant for the tier?&quot;}:::decision
+    s3[&quot;Use the variant price&quot;]:::step
+    d6{&quot;Tier is batch?&quot;}:::decision
+    s4[&quot;Apply the batch factor to every price&quot;]:::step
+    s5[&quot;Flag tier unpriced, keep the standard price&quot;]:::step
+    d7{&quot;Peak window covers the UTC time?&quot;}:::decision
+    s6[&quot;Use the peak price&quot;]:::step
+    s7[&quot;Resolve the three cache prices&quot;]:::step
+    x4([&quot;priced: cost breakdown returned&quot;]):::ok
+
+    start --&gt; d1
+    d1 --&gt;|no| x1
+    d1 --&gt;|yes| d2
+    d2 --&gt;|yes| x2
+    d2 --&gt;|no| d3
+    d3 --&gt;|no| x3
+    d3 --&gt;|yes| s1
+    s1 --&gt; d4
+    d4 --&gt;|yes| d7
+    d4 --&gt;|no| d5
+    d5 --&gt;|yes| s3
+    d5 --&gt;|no| d6
+    s3 --&gt; d7
+    d6 --&gt;|yes| s4
+    d6 --&gt;|no| s5
+    s4 --&gt; d7
+    s5 --&gt; d7
+    d7 --&gt;|yes| s6
+    d7 --&gt;|no| s7
+    s6 --&gt; s7
+    s7 --&gt; x4
+
+    subgraph Legend
+        direction LR
+        zlegend_a([&quot;Start&quot;]):::startNode
+        zlegend_b[&quot;Step&quot;]:::step
+        zlegend_c{&quot;Decision&quot;}:::decision
+        zlegend_d([&quot;Exit that succeeds&quot;]):::ok
+        zlegend_e([&quot;Exit that fails to price&quot;]):::fail
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d ~~~ zlegend_e
+    end
+
+    classDef startNode fill:#fff2cc,stroke:#222222,color:#222222
+    classDef step fill:#dae8fc,stroke:#222222,color:#222222
+    classDef decision fill:#ffffff,stroke:#222222,color:#222222
+    classDef ok fill:#d5e8d4,stroke:#222222,color:#222222
+    classDef fail fill:#f8cecc,stroke:#222222,color:#222222
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/pricing.py:495</code></td>
+<td>Period, band, tier, peak and cache price resolution</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pricing.py:429</code></td>
+<td>The early exits and the call to cost of</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pricing.py:446</code></td>
+<td>How a period replaces the row's prices</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pricing.py:478</code></td>
+<td>The three step cache price rule</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

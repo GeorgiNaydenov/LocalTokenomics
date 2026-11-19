@@ -1,0 +1,95 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web Screen Flow</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/web-screen-flow.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Web Screen Flow</h1>
+<p>This flow shows how a reader moves between the screens of the dashboard. It makes clear which controls lead where, including the shortcuts from the overview and the header. It helps a designer see that the dashboard has no page addresses and keeps the place in memory only.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The header tab strip switches between Overview, Sessions, Sources and Models and pricing <code>web/src/Header.tsx:24-24</code> <code>web/src/Header.tsx:84-84</code>.</li>
+<li>The rate age notice opens Models and pricing <code>web/src/Header.tsx:107-107</code>.</li>
+<li>The overview opens Sources from the more readers line and from the Flagged figure <code>web/src/Overview.tsx:153-153</code> <code>web/src/Overview.tsx:329-329</code>.</li>
+<li>A session row or card opens the workspace on its Summary tab <code>web/src/App.tsx:284-287</code> <code>web/src/Sessions.tsx:354-354</code>.</li>
+<li>An added span button on the Context tab jumps to the Trace tab <code>web/src/SessionWorkspace.tsx:481-484</code>.</li>
+<li>The workspace closes with its close button or with Escape when docked <code>web/src/SessionWorkspace.tsx:527-527</code> <code>web/src/SessionWorkspace.tsx:489-489</code>.</li>
+<li>The view is plain component state, so a page reload returns to the overview <code>web/src/App.tsx:136-136</code>.</li>
+</ul>
+<h2>Capability and related functionality</h2>
+<p>The screens are documented in <a href="../application/app-screen.html">App Screen</a>, <a href="../application/overview-screen.html">Overview Screen</a>, <a href="../application/sessions-screen.html">Sessions Screen</a>, <a href="../application/sources-screen.html">Sources Screen</a>, <a href="../application/pricing-screen.html">Pricing Screen</a> and <a href="../application/session-workspace-screen.html">Session Workspace Screen</a>. The structure without the transitions is <a href="../diagrams/web-sitemap.html">Web Sitemap</a>, and a full walk is <a href="../diagrams/web-user-journey.html">Web User Journey</a>.</p>
+<h2>Web Screen Flow</h2>
+<pre class="mermaid">flowchart TD
+    start([&quot;Reader opens the dashboard&quot;]):::person --&gt; ov[&quot;Overview&quot;]:::step
+    ov --&gt;|tab| se[&quot;Sessions&quot;]:::step
+    ov --&gt;|tab| so[&quot;Sources&quot;]:::step
+    ov --&gt;|tab| pr[&quot;Models and pricing&quot;]:::step
+    ov --&gt;|more readers line or Flagged| so
+    hdr[&quot;Header rate age notice&quot;]:::step --&gt;|click| pr
+    se --&gt;|row or card| ws[&quot;Session workspace, Summary tab&quot;]:::step
+    ws --&gt;|tab| tr[&quot;Trace tab&quot;]:::step
+    ws --&gt;|tab| ec[&quot;Economics tab&quot;]:::step
+    ws --&gt;|tab| cx[&quot;Context tab&quot;]:::step
+    cx --&gt;|added span| tr
+    ws --&gt;|close or Escape| se
+    subgraph Legend
+        direction LR
+        zl1([&quot;Start: the reader&quot;]):::person
+        zl2[&quot;Screen or tab&quot;]:::step
+        zl3[&quot;Solid arrow: a navigation, labelled with the control&quot;]:::step
+    end
+    classDef person fill:#fff2cc,stroke:#222222,color:#222222
+    classDef step fill:#dae8fc,stroke:#222222,color:#142233
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/Header.tsx:24-24</code></td>
+<td>The header tab strip switches between Overview, Sessions, Sources and Models and pricing</td>
+</tr>
+<tr>
+<td><code>web/src/Header.tsx:84-84</code></td>
+<td>The header tab strip switches between Overview, Sessions, Sources and Models and pricing</td>
+</tr>
+<tr>
+<td><code>web/src/Header.tsx:107-107</code></td>
+<td>The rate age notice opens Models and pricing</td>
+</tr>
+<tr>
+<td><code>web/src/Overview.tsx:153-153</code></td>
+<td>The overview opens Sources from the more readers line and from the Flagged figure</td>
+</tr>
+<tr>
+<td><code>web/src/Overview.tsx:329-329</code></td>
+<td>The overview opens Sources from the more readers line and from the Flagged figure</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:284-287</code></td>
+<td>A session row or card opens the workspace on its Summary tab</td>
+</tr>
+<tr>
+<td><code>web/src/Sessions.tsx:354-354</code></td>
+<td>A session row or card opens the workspace on its Summary tab</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:481-484</code></td>
+<td>An added span button on the Context tab jumps to the Trace tab</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:527-527</code></td>
+<td>The workspace closes with its close button or with Escape when docked</td>
+</tr>
+<tr>
+<td><code>web/src/SessionWorkspace.tsx:489-489</code></td>
+<td>The workspace closes with its close button or with Escape when docked</td>
+</tr>
+<tr>
+<td><code>web/src/App.tsx:136-136</code></td>
+<td>The view is plain component state, so a page reload returns to the overview</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

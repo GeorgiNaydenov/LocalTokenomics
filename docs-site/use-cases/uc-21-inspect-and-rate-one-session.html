@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UC-21 Inspect and rate one session</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="use-cases/uc-21-inspect-and-rate-one-session.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/api.py</code>, <code>tests/test_api.py</code></p><h1>UC-21 Inspect and rate one session</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>A use case of the <a href="../subdomains/spend-reporting.html">Spend reporting</a> subdomain, written from the code. Every step cites the line that does it, so a reader can check the claim in one click.</p>
+</details>
+<details class="callout callout-tip">
+<summary>How to use it</summary>
+<p>Read the main flow first, then the alternative flows. The rules, terms and diagrams at the end are the ones this use case relies on.</p>
+</details>
+<ul>
+<li><strong>Subdomain:</strong> <a href="../subdomains/spend-reporting.html">Spend reporting</a></li>
+<li><strong>Actors:</strong> <a href="../business/actors.html">An unknown session answers 404</a>, <a href="../business/actors.html">Outcome</a>, <a href="../business/actors.html">Person using the tool</a>, <a href="../business/actors.html">Span</a></li>
+<li><strong>Maturity:</strong> approved</li>
+</ul>
+<h2>Description</h2>
+<p>The person opens the trace of a session, sees where cost and errors came from, and records whether it went well.</p>
+<h2>Preconditions</h2>
+<p>The session exists in the store.</p>
+<h2>Main flow</h2>
+<ol>
+<li>The person asks for the trace of a session. <a href="#">src/ai_usage_cost/api.py:321</a></li>
+<li>The interface loads the spans once and caches them. <a href="#">src/ai_usage_cost/api.py:240</a></li>
+<li>The person asks for the economics of the session, which are summed per turn, model and tool. <a href="#">src/ai_usage_cost/api.py:336</a></li>
+<li>The person stores a rating with notes and tags. <a href="#">src/ai_usage_cost/api.py:358</a></li>
+<li>The stored rating comes back with signals computed from the spans. <a href="#">src/ai_usage_cost/api.py:359</a></li>
+</ol>
+<h2>Alternative flows</h2>
+<ul>
+<li>An unknown session answers 404. <a href="#">src/ai_usage_cost/api.py:236</a></li>
+</ul>
+<h2>Postconditions</h2>
+<p>A rating is stored for the session.</p>
+<h2>Acceptance criteria</h2>
+<ul>
+<li>An unknown session has no trace. <a href="#">tests/test_api.py:364</a></li>
+<li>An outcome round trips and carries computed signals. <a href="#">tests/test_api.py:525</a></li>
+<li>Economics totals equal the sum over model calls. <a href="#">tests/test_api.py:454</a></li>
+</ul>
+<h2>Business rules</h2>
+<ul>
+<li><a href="../business/spend-reporting-rules.html">BR-120 A route without a store answers 503</a></li>
+<li><a href="../business/spend-reporting-rules.html">BR-85 An unknown session answers 404</a></li>
+</ul>
+<h2>Code</h2>
+<ul>
+<li><a href="#">src/ai_usage_cost/api.py</a></li>
+<li><a href="#">tests/test_api.py</a></li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

@@ -1,0 +1,94 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Sessions Screen</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/sessions-screen.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/*</code>, <code>web/src/design-system/*</code></p><h1>Sessions Screen</h1>
+<p>The Sessions view (web/src/Sessions.tsx): a sortable table of the sessions in the slice, cards on a phone. Its map is <a href="../diagrams/sessions-screen-map.html">Sessions Screen Map</a>; each numbered badge in the image is one row below.</p>
+<h2>Screen map</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Element</th>
+<th>What it does</th>
+<th>Handler or target</th>
+<th>State it depends on</th>
+<th>Citation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&lt;SortSelect</code> sort</td>
+<td>Select that sets the sort key and direction.</td>
+<td><code>onSortSelect</code></td>
+<td>-</td>
+<td><a href="#">web/src/Sessions.tsx</a> <code>web/src/Sessions.tsx:286-289</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;ColumnChooser</code> columns</td>
+<td>Hides or shows table columns, remembered in the browser.</td>
+<td><code>toggleColumn</code></td>
+<td>desktop only, and only with rows</td>
+<td><a href="#">web/src/Sessions.tsx</a> <code>web/src/Sessions.tsx:292-292</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>sorted.length === 0</code> empty section</td>
+<td>Shows an empty state when the slice holds no session.</td>
+<td>-</td>
+<td>empty: <code>sorted.length === 0</code></td>
+<td><a href="#">web/src/Sessions.tsx</a> <code>web/src/Sessions.tsx:298-298</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&lt;SessionCard</code> phone cards</td>
+<td>One card per session on a phone.</td>
+<td><code>onOpenSession</code></td>
+<td>phone width</td>
+<td><a href="#">web/src/Sessions.tsx</a> <code>web/src/Sessions.tsx:306-323</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;Table</code> sessions</td>
+<td>Table of the shown sessions with the visible columns.</td>
+<td><code>shownColumns</code></td>
+<td>-</td>
+<td><a href="#">web/src/Sessions.tsx</a> <code>web/src/Sessions.tsx:329-332</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt;SortButton</code> column header</td>
+<td>Header button that sorts by its column or flips the direction.</td>
+<td><code>onHeaderSort</code></td>
+<td>-</td>
+<td><a href="#">web/src/Sessions.tsx</a> <code>web/src/Sessions.tsx:338-343</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;TableRow</code> session row</td>
+<td>Clicking a row opens the session workspace.</td>
+<td><code>onOpenSession</code></td>
+<td>-</td>
+<td><a href="#">web/src/Sessions.tsx</a> <code>web/src/Sessions.tsx:352-354</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>&lt;PanelNote</code> row limit note</td>
+<td>Says how many sessions are shown out of how many.</td>
+<td>-</td>
+<td>-</td>
+<td><a href="#">web/src/Sessions.tsx</a> <code>web/src/Sessions.tsx:374-374</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Conditional sections</h3>
+<ul>
+<li>empty: <code>sorted.length === 0</code>, callout 3, <a href="#">web/src/Sessions.tsx</a> <code>web/src/Sessions.tsx:298-298</code></li>
+</ul>
+<h2>Diagnosis</h2>
+<p>The reader sorts, hides columns and opens a session. Sorting is local to the loaded report <code>web/src/Sessions.tsx:244-251</code>.</p>
+<p>What can go wrong:</p>
+<ul>
+<li>Rows and cards are keyed and opened by session id only, so two sources with the same session id collide as React keys and open the same session <code>web/src/Sessions.tsx:307</code> <code>web/src/Sessions.tsx:323</code> <code>web/src/Sessions.tsx:353-354</code>.</li>
+<li>A table row opens the session on click only; it has no tab stop and no key handler, unlike the turn rows of the trace tab <code>web/src/Sessions.tsx:352-357</code> <code>web/src/TraceTab.tsx:683-694</code>.</li>
+<li>Beyond the row limit the remaining sessions cannot be reached except by narrowing the filters <code>web/src/Sessions.tsx:253</code> <code>web/src/Sessions.tsx:375-376</code>.</li>
+</ul>
+<p>States not handled: there is no loading state of its own; a refetch keeps the old rows, and only the shell dims the count line <code>web/src/App.tsx:203</code> <code>web/src/App.tsx:322</code>.</p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

@@ -1,0 +1,52 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UC-23 Read the text of one span</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="use-cases/uc-23-read-the-text-of-one-span.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/api.py</code>, <code>src/ai_usage_cost/privacy.py</code>, <code>tests/test_api.py</code>, <code>tests/test_privacy.py</code></p><h1>UC-23 Read the text of one span</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>A use case of the <a href="../subdomains/privacy-and-retention.html">Privacy and retention</a> subdomain, written from the code. Every step cites the line that does it, so a reader can check the claim in one click.</p>
+</details>
+<details class="callout callout-tip">
+<summary>How to use it</summary>
+<p>Read the main flow first, then the alternative flows. The rules, terms and diagrams at the end are the ones this use case relies on.</p>
+</details>
+<ul>
+<li><strong>Subdomain:</strong> <a href="../subdomains/privacy-and-retention.html">Privacy and retention</a></li>
+<li><strong>Actors:</strong> <a href="../business/actors.html">Config</a>, <a href="../business/actors.html">Person using the tool</a>, <a href="../business/actors.html">Released text is cut and then redacted</a>, <a href="../business/actors.html">Span</a>, <a href="../business/actors.html">Span text is refused in metadata only mode</a></li>
+<li><strong>Maturity:</strong> approved</li>
+</ul>
+<h2>Description</h2>
+<p>The person reads the text of one step of a session, safely, when they have allowed it.</p>
+<h2>Preconditions</h2>
+<p>Metadata only is off in the settings and the span has a content path.</p>
+<h2>Main flow</h2>
+<ol>
+<li>The person asks for the content of a span. <a href="#">src/ai_usage_cost/api.py:374</a></li>
+<li>The interface finds the span in the session. <a href="#">src/ai_usage_cost/api.py:376</a></li>
+<li>The privacy module reads the record from the log at the stored offset. <a href="#">src/ai_usage_cost/privacy.py:91</a></li>
+<li>The text is truncated and then redacted. <a href="#">src/ai_usage_cost/privacy.py:98</a></li>
+</ol>
+<h2>Alternative flows</h2>
+<ul>
+<li>In metadata only mode the answer is 404. <a href="#">src/ai_usage_cost/api.py:382</a></li>
+<li>An unknown span answers 404. <a href="#">src/ai_usage_cost/api.py:378</a></li>
+</ul>
+<h2>Postconditions</h2>
+<p>The text is returned cut and redacted, with counts.</p>
+<h2>Acceptance criteria</h2>
+<ul>
+<li>Content is unavailable while metadata only is on. <a href="#">tests/test_api.py:568</a></li>
+<li>Content is redacted when capture is allowed. <a href="#">tests/test_api.py:574</a></li>
+<li>Each secret pattern is replaced. <a href="#">tests/test_privacy.py:56</a></li>
+</ul>
+<h2>Business rules</h2>
+<ul>
+<li><a href="../business/privacy-and-retention-rules.html">BR-121 Unreadable span text answers 404</a></li>
+<li><a href="../business/privacy-and-retention-rules.html">BR-75 Span text is refused in metadata only mode</a></li>
+<li><a href="../business/privacy-and-retention-rules.html">BR-76 Released text is cut and then redacted</a></li>
+<li><a href="../business/privacy-and-retention-rules.html">BR-77 A bad configuration file gives the defaults</a></li>
+</ul>
+<h2>Code</h2>
+<ul>
+<li><a href="#">src/ai_usage_cost/api.py</a></li>
+<li><a href="#">src/ai_usage_cost/privacy.py</a></li>
+<li><a href="#">tests/test_api.py</a></li>
+<li><a href="#">tests/test_privacy.py</a></li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

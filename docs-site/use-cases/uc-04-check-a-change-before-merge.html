@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UC-04 Check a change before merge</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="use-cases/uc-04-check-a-change-before-merge.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> </p><h1>UC-04 Check a change before merge</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>A use case of the subdomain, written from the code. Every step cites the line that does it, so a reader can check the claim in one click.</p>
+</details>
+<details class="callout callout-tip">
+<summary>How to use it</summary>
+<p>Read the main flow first, then the alternative flows. The rules, terms and diagrams at the end are the ones this use case relies on.</p>
+</details>
+<ul>
+<li><strong>Actors:</strong> <a href="../business/actors.html">GitHub workflow runner</a>, <a href="../business/actors.html">Python code must keep a pylint score of 9.0</a>, <a href="../business/actors.html">Web dependencies are installed from the lockfile</a></li>
+<li><strong>Maturity:</strong> approved</li>
+</ul>
+<h2>Description</h2>
+<p>A pull request triggers the Python, web and CodeQL workflows, which run the same checks a maintainer runs locally.</p>
+<h2>Preconditions</h2>
+<p>A pull request is opened or main is pushed.</p>
+<h2>Main flow</h2>
+<ol>
+<li>
+<ol>
+<li>The workflows start on a pull request or a push to main. <code>.github/workflows/python.yml:6</code></li>
+</ol>
+</li>
+<li>
+<ol>
+<li>The Python workflow runs ruff, pylint, mypy and pytest. <code>.github/workflows/python.yml:54</code></li>
+</ol>
+</li>
+<li>
+<ol>
+<li>The web workflow lints, type checks, tests and builds. <code>.github/workflows/web.yml:46</code></li>
+</ol>
+</li>
+<li>
+<ol>
+<li>CodeQL analyses Python and JavaScript or TypeScript. <code>.github/workflows/codeql.yml:25</code></li>
+</ol>
+</li>
+</ol>
+<h2>Alternative flows</h2>
+<p>2a. A failure in one Python version and operating system pair does not cancel the others. <code>.github/workflows/python.yml:20</code></p>
+<h2>Postconditions</h2>
+<p>Each workflow reports pass or fail.</p>
+<h2>Acceptance criteria</h2>
+<p>The pylint step fails below 9.0. <code>.github/workflows/python.yml:48</code></p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

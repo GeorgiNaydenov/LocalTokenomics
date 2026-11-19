@@ -1,0 +1,127 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Web UI components Tests</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/web-ui-components-tests.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/components/*</code></p><h1>Web UI components Tests</h1>
+<p>The tests that cover the Web UI components chunk and what they check.</p>
+<h2>How it works</h2>
+<p>18 tests exercise this chunk. 40 of its 43 files are not imported by any test.</p>
+<p>Three areas have tests. The <code>MetricInfo</code> popover is tested for opening on click, for closing on a second click without focus returning to the trigger, and for rendering the structured content <code>web/src/components/metric-info.test.tsx:7-63</code>. The ranking helpers are tested for picking the worst value, for an empty list and for ignoring input order <code>web/src/components/rank.test.ts:4-35</code>. The sparkline geometry is tested for scaling, staying inside the box and flat series <code>web/src/components/sparkline.test.ts:4-29</code>.</p>
+<p>Nothing else here has a test: the stat cards, the stacked time chart, the filter controls, the column chooser and the session and trace views. A change to them is checked only by running the dashboard.</p>
+<h2>Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Scenario</th>
+<th>File</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MetricInfo</code></td>
+<td>Metric info</td>
+<td><code>web/src/components/metric-info.test.tsx</code></td>
+<td><a href="#">web/src/components/metric-info.test.tsx</a> <code>web/src/components/metric-info.test.tsx:6</code></td>
+</tr>
+<tr>
+<td><code>opens on click and shows the simple content</code></td>
+<td>Opens on click and shows the simple content</td>
+<td><code>web/src/components/metric-info.test.tsx</code></td>
+<td><a href="#">web/src/components/metric-info.test.tsx</a> <code>web/src/components/metric-info.test.tsx:7</code></td>
+</tr>
+<tr>
+<td><code>closes on a second click and does not return focus to the trigger</code></td>
+<td>Closes on a second click and does not return focus to the trigger</td>
+<td><code>web/src/components/metric-info.test.tsx</code></td>
+<td><a href="#">web/src/components/metric-info.test.tsx</a> <code>web/src/components/metric-info.test.tsx:17</code></td>
+</tr>
+<tr>
+<td><code>renders the rich metric content with meaning, formula and computed value</code></td>
+<td>Renders the rich metric content with meaning, formula and computed value</td>
+<td><code>web/src/components/metric-info.test.tsx</code></td>
+<td><a href="#">web/src/components/metric-info.test.tsx</a> <code>web/src/components/metric-info.test.tsx:43</code></td>
+</tr>
+<tr>
+<td><code>worstState</code></td>
+<td>Worst state</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:4</code></td>
+</tr>
+<tr>
+<td><code>picks unavailable over unpriced, free and priced</code></td>
+<td>Picks unavailable over unpriced, free and priced</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:5</code></td>
+</tr>
+<tr>
+<td><code>picks unpriced over free and priced</code></td>
+<td>Picks unpriced over free and priced</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:9</code></td>
+</tr>
+<tr>
+<td><code>returns unavailable for an empty list</code></td>
+<td>Returns unavailable for an empty list</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:13</code></td>
+</tr>
+<tr>
+<td><code>is order-independent</code></td>
+<td>Is order-independent</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:17</code></td>
+</tr>
+<tr>
+<td><code>worstProvenance</code></td>
+<td>Worst provenance</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:23</code></td>
+</tr>
+<tr>
+<td><code>picks unavailable as the worst</code></td>
+<td>Picks unavailable as the worst</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:24</code></td>
+</tr>
+<tr>
+<td><code>picks measured as the best when nothing worse is present</code></td>
+<td>Picks measured as the best when nothing worse is present</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:28</code></td>
+</tr>
+<tr>
+<td><code>returns unavailable for an empty list</code></td>
+<td>Returns unavailable for an empty list</td>
+<td><code>web/src/components/rank.test.ts</code></td>
+<td><a href="#">web/src/components/rank.test.ts</a> <code>web/src/components/rank.test.ts:32</code></td>
+</tr>
+<tr>
+<td><code>geometry</code></td>
+<td>Geometry</td>
+<td><code>web/src/components/sparkline.test.ts</code></td>
+<td><a href="#">web/src/components/sparkline.test.ts</a> <code>web/src/components/sparkline.test.ts:4</code></td>
+</tr>
+<tr>
+<td><code>scales a series that peaks below 1 to the real max instead of flattening it</code></td>
+<td>Scales a series that peaks below 1 to the real max instead of flattening it</td>
+<td><code>web/src/components/sparkline.test.ts</code></td>
+<td><a href="#">web/src/components/sparkline.test.ts</a> <code>web/src/components/sparkline.test.ts:5</code></td>
+</tr>
+<tr>
+<td><code>keeps every y coordinate inside the viewBox height for a series with negative dips</code></td>
+<td>Keeps every y coordinate inside the view box height for a series with negative dips</td>
+<td><code>web/src/components/sparkline.test.ts</code></td>
+<td><a href="#">web/src/components/sparkline.test.ts</a> <code>web/src/components/sparkline.test.ts:10</code></td>
+</tr>
+<tr>
+<td><code>falls back to a flat line without dividing by zero when every value is identical</code></td>
+<td>Falls back to a flat line without dividing by zero when every value is identical</td>
+<td><code>web/src/components/sparkline.test.ts</code></td>
+<td><a href="#">web/src/components/sparkline.test.ts</a> <code>web/src/components/sparkline.test.ts:19</code></td>
+</tr>
+<tr>
+<td><code>draws the highest value nearest the top of the box</code></td>
+<td>Draws the highest value nearest the top of the box</td>
+<td><code>web/src/components/sparkline.test.ts</code></td>
+<td><a href="#">web/src/components/sparkline.test.ts</a> <code>web/src/components/sparkline.test.ts:24</code></td>
+</tr>
+</tbody>
+</table></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

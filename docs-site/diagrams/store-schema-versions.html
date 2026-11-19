@@ -1,0 +1,71 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Store schema versions</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/store-schema-versions.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Store schema versions</h1>
+<p>This view shows how the local database grew, one version at a time, in the order the tool upgrades an older file. It tells a reader which data an old database lacks until the tool opens it once. It also explains why a database opened by a newer version cannot simply be read by an older one.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>Opening the store reads the schema version, runs every later migration in list order and records the new version after each one. <code>src/ai_usage_cost/store.py:140-151</code></li>
+<li>Version 1 creates the requests table keyed by fingerprint and the files table keyed by path. <code>src/ai_usage_cost/store.py:22-41</code></li>
+<li>Version 2 adds the trace, outcome and exclusion tables and a parser version on each file. <code>src/ai_usage_cost/store.py:42-74</code></li>
+<li>Version 3 adds a session title and where the title came from. <code>src/ai_usage_cost/store.py:75-78</code></li>
+<li>Version 4 adds the offset, boundary hash and title seed that let a grown file be read from where the last scan stopped. <code>src/ai_usage_cost/store.py:79-83</code> <code>src/ai_usage_cost/store.py:241-253</code></li>
+<li>Version 5 adds the cost the tool logged itself. <code>src/ai_usage_cost/store.py:84-87</code></li>
+<li>The parser version is a separate number, and a file stored under an older one is parsed again in full. <code>src/ai_usage_cost/store.py:89</code> <code>src/ai_usage_cost/store.py:229-231</code></li>
+<li>The samples table is created by the GPU sampler with its own statement, not by a migration. <code>src/ai_usage_cost/collect.py:18-25</code> <code>src/ai_usage_cost/collect.py:59-61</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>The tables and their fields are in <a href="../data/ai-usage-cost-data-model.html">Ai usage cost Data Model</a>, and where each table is filled from is drawn in <a href="../diagrams/where-usage-cost-data-comes-from.html">Where usage cost data comes from</a>.</li>
+<li>The resume rule that version 4 enables is part of <a href="../diagrams/scan-and-report-process.html">Scan and report process</a>.</li>
+<li>There is no downgrade step: migrations only run forward from the stored version (<code>src/ai_usage_cost/store.py:146-150</code>). Running the tool is covered in <a href="../operations/ai-usage-cost-operations.html">Ai usage cost Operations</a>.</li>
+</ul>
+<h2>Store schema versions</h2>
+<pre class="mermaid">timeline
+    title usage.db schema: migrations in the order open_store applies them
+    section Legend
+        A section is one schema version (user_version after the step) : An entry is what that migration adds, in run order
+    section Version 1
+        requests table : fingerprint key, tokens, tier, project, raw record
+        files table : path key, mtime, size, warnings
+    section Version 2
+        trace_events table : spans with provenance per value
+        outcomes table : one rating per source and session
+        session_exclusions table : forgotten sessions
+        files.parser_version : reparse when the parser changes
+    section Version 3
+        requests.title and title_source : session titles
+    section Version 4
+        files.ingested_offset, boundary_hash, title_seed : resume a file that only grew
+    section Version 5
+        requests.reported_cost : cost the tool logged itself
+    section Any version
+        samples table : created by collect, outside the migration list
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/store.py:21-87</code></td>
+<td>The migration list</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/store.py:140-151</code></td>
+<td>How the migrations are applied</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/store.py:89</code></td>
+<td>The parser version</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/collect.py:18-25</code></td>
+<td>The samples table statement</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

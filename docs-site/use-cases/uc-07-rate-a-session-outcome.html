@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UC-07 Rate a session outcome</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="use-cases/uc-07-rate-a-session-outcome.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> covers <code>web/src/SessionWorkspace.tsx</code>, <code>web/src/api.ts</code></p><h1>UC-07 Rate a session outcome</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>A use case of the subdomain, written from the code. Every step cites the line that does it, so a reader can check the claim in one click.</p>
+</details>
+<details class="callout callout-tip">
+<summary>How to use it</summary>
+<p>Read the main flow first, then the alternative flows. The rules, terms and diagrams at the end are the ones this use case relies on.</p>
+</details>
+<ul>
+<li><strong>Actors:</strong> <a href="../business/actors.html">Dashboard reader</a></li>
+<li><strong>Maturity:</strong> approved</li>
+</ul>
+<h2>Description</h2>
+<p>The Dashboard reader marks a session successful, partial, failed, abandoned or unrated and adds notes and tags.</p>
+<h2>Preconditions</h2>
+<p>A session workspace is open.</p>
+<h2>Main flow</h2>
+<ol>
+<li>The reader picks an outcome label. <a href="#">web/src/SessionWorkspace.tsx:312</a></li>
+<li>The page sends it with PUT. <a href="#">web/src/api.ts:577</a></li>
+</ol>
+<h2>Alternative flows</h2>
+<ul>
+<li>At step 2, a failed save shows the error text in the status line. <a href="#">web/src/SessionWorkspace.tsx:287</a></li>
+</ul>
+<h2>Postconditions</h2>
+<p>The server holds the outcome, notes and tags.</p>
+<h2>Acceptance criteria</h2>
+<ul>
+<li>Notes and tags are not resent when unchanged. <a href="#">web/src/SessionWorkspace.tsx:292</a></li>
+</ul>
+<h2>Business rules</h2>
+<ul>
+<li><a href="../business/general-rules.html">BR-124 A workspace tab loads its data only when first opened</a></li>
+<li><a href="../business/general-rules.html">BR-15 Unavailable is never shown as zero</a></li>
+<li><a href="../business/general-rules.html">BR-16 Unpriced cost stays out of totals</a></li>
+<li><a href="../business/general-rules.html">BR-24 Outcome notes are saved only when changed</a></li>
+</ul>
+<h2>Code</h2>
+<ul>
+<li><a href="#">web/src/SessionWorkspace.tsx</a></li>
+<li><a href="#">web/src/api.ts</a></li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

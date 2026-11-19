@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Readers data flow</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/readers-data-flow.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Data · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> </p><h1>Readers data flow</h1>
+<p>This view follows one file from a coding tool through a reader into the usage store. It shows which steps only read, which steps guard against damaged data, and which data reaches the developer. That helps a reviewer confirm the tool never changes the files it measures.</p>
+<h2>What the diagram shows</h2>
+<ol>
+<li>The reader finds roots for its tool and lists the files under each root that exists. <code>src/ai_usage_cost/sources/base.py:47-49</code> <code>src/ai_usage_cost/sources/base.py:58</code></li>
+<li>Records are read with helpers that open files for reading only, skip lines that fail to parse and add one warning per file. <code>src/ai_usage_cost/sources/base.py:69-84</code> <code>src/ai_usage_cost/sources/base.py:87-114</code></li>
+<li>SQLite stores are opened through a read only URI, and a database error becomes a warning. <code>src/ai_usage_cost/sources/base.py:117-129</code></li>
+<li>Each reader maps its records to usage events with a model, tokens, session, project and title. <code>src/ai_usage_cost/sources/claude_code.py:94-110</code></li>
+<li>The store skips a file whose modification time, size and parser version are unchanged, and resumes a file that only grew when its reader allows it. <code>src/ai_usage_cost/store.py:228-231</code> <code>src/ai_usage_cost/store.py:243-251</code></li>
+<li>The store writes event rows and a file record per parsed file. <code>src/ai_usage_cost/store.py:262-290</code></li>
+<li>The pipeline reports each reader with its detected state and file count. <code>src/ai_usage_cost/pipeline.py:141-163</code></li>
+</ol>
+<h2>Capability and related functionality</h2>
+<p>Realises the reading and ingest steps described in <a href="../application/ai-usage-cost-sources-overview.html">Ai usage cost sources Overview</a>. It complements <a href="../diagrams/readers-component-view.html">Readers component view</a> and the controls listed in <a href="../security/ai-usage-cost-sources-security.html">Ai usage cost sources Security</a>.</p>
+<h2>Readers data flow</h2>
+<p><img alt="drawio-src-sources-dfd" src="../assets/drawio-src-sources-dfd.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/sources/base.py:47-66</code></td>
+<td>Root presence and the scan loop</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/base.py:69-129</code></td>
+<td>Read only record and SQLite helpers</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/sources/claude_code.py:94-110</code></td>
+<td>Event mapping</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/store.py:218-290</code></td>
+<td>Skip, resume and write</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pipeline.py:141-163</code></td>
+<td>Reader status for the developer</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

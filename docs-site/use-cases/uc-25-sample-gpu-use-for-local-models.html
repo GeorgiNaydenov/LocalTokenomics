@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>UC-25 Sample GPU use for local models</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="use-cases/uc-25-sample-gpu-use-for-local-models.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">approved</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/cli.py</code>, <code>src/ai_usage_cost/collect.py</code>, <code>tests/test_collect.py</code></p><h1>UC-25 Sample GPU use for local models</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>A use case of the <a href="../subdomains/usage-collection.html">Usage collection</a> subdomain, written from the code. Every step cites the line that does it, so a reader can check the claim in one click.</p>
+</details>
+<details class="callout callout-tip">
+<summary>How to use it</summary>
+<p>Read the main flow first, then the alternative flows. The rules, terms and diagrams at the end are the ones this use case relies on.</p>
+</details>
+<ul>
+<li><strong>Subdomain:</strong> <a href="../subdomains/usage-collection.html">Usage collection</a></li>
+<li><strong>Actors:</strong> <a href="../business/actors.html">Person using the tool</a></li>
+<li><strong>Maturity:</strong> approved</li>
+</ul>
+<h2>Description</h2>
+<p>The person records GPU load and memory while local models run, so energy can be estimated from a power rating.</p>
+<h2>Preconditions</h2>
+<p>A sampler is available: nvidia-smi, rocm-smi or Windows performance counters.</p>
+<h2>Main flow</h2>
+<ol>
+<li>The person runs the collect command. <a href="#">src/ai_usage_cost/cli.py:200</a></li>
+<li>The command picks a backend. <a href="#">src/ai_usage_cost/collect.py:85</a></li>
+<li>Each interval it takes a sample and stores it. <a href="#">src/ai_usage_cost/collect.py:275</a></li>
+<li>Energy is the rating times utilisation times elapsed time, only when a rating is given. <a href="#">src/ai_usage_cost/collect.py:255</a></li>
+</ol>
+<h2>Alternative flows</h2>
+<ul>
+<li>With no sampler the command prints that none is available and exits with code 1. <a href="#">src/ai_usage_cost/cli.py:214</a></li>
+</ul>
+<h2>Postconditions</h2>
+<p>Samples are stored, and energy is shown when a power rating is given.</p>
+<h2>Acceptance criteria</h2>
+<ul>
+<li>Energy is unavailable without a rating. <a href="#">tests/test_collect.py:105</a></li>
+<li>No rows are written when no backend exists. <a href="#">tests/test_collect.py:87</a></li>
+</ul>
+<h2>Code</h2>
+<ul>
+<li><a href="#">src/ai_usage_cost/cli.py</a></li>
+<li><a href="#">src/ai_usage_cost/collect.py</a></li>
+<li><a href="#">tests/test_collect.py</a></li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

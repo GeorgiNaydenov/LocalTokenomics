@@ -18,7 +18,9 @@ Screens, components and design tokens read from the code.
 %% generated:ui-inventory start (do not edit; run brain docs generate) %%
 ### Screens
 
-No page components were detected.
+| Screen | Code |
+|---|---|
+| `Index` | [[web/index.html]] `web/index.html:1` |
 
 ### Components
 

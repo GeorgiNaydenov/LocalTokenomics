@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Business Events</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="business/business-events.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Business</nav><p><span class="chip">generated</span> <span class="chip">draft</span> <span class="chip">confirmed</span> covers <code>src/ai_usage_cost/api.py</code>, <code>src/ai_usage_cost/cli.py</code>, <code>src/ai_usage_cost/collect.py</code>, <code>src/ai_usage_cost/pipeline.py</code>, <code>src/ai_usage_cost/store.py</code></p><h1>Business Events</h1>
+<details class="callout callout-info">
+<summary>What this is</summary>
+<p>The things that happen in the business that the application reacts to or records. Each event names the code that raises or declares it.</p>
+</details>
+<h2>Analysis refreshed</h2>
+<p>Happens when the dashboard asks for a refresh: the analysis is rebuilt and the span cache is cleared. <a href="#">src/ai_usage_cost/api.py:391</a></p>
+<p>Source:
+- <code>create_app.refresh</code>: <code>state["analysis"] = analyze(db_path=db_path, roots=roots, rates_path=rates_path)</code></p>
+<h2>Conflicting records warning</h2>
+<p>Raised when two records for one request disagree on input tokens. <a href="#">src/ai_usage_cost/store.py:352</a></p>
+<p>Source:
+- <code>_insert</code>: <code>disagree on input tokens</code></p>
+<h2>Estimated price warning</h2>
+<p>Raised once per model priced from a shorter prefix, naming the parent rate and the token volume. <a href="#">src/ai_usage_cost/pipeline.py:225</a></p>
+<p>Source:
+- <code>analyze</code>: <code>has no rates.json row of its own</code></p>
+<h2>GPU sample recorded</h2>
+<p>Written once per successful reading of the GPU sampler, into the samples table. <a href="#">src/ai_usage_cost/collect.py:275</a></p>
+<p>Source:
+- <code>insert_sample</code>: <code>def insert_sample(conn: sqlite3.Connection, sample: Sample) -&gt; None:</code></p>
+<h2>Reported cost divergence warning</h2>
+<p>Raised for a session whose tool reported cost and computed cost disagree. <a href="#">src/ai_usage_cost/pipeline.py:135</a></p>
+<p>Source:
+- <code>reported_cost_divergences</code>: <code>differs from</code></p>
+<h2>Session forgotten</h2>
+<p>Recorded when a person forgets a session: its spans and rating go and an exclusion is stored. <a href="#">src/ai_usage_cost/store.py:595</a></p>
+<p>Source:
+- <code>delete_session</code>: <code>def delete_session(</code></p>
+<h2>Session rated</h2>
+<p>Recorded when a person stores an outcome for a session. <a href="#">src/ai_usage_cost/store.py:568</a></p>
+<p>Source:
+- <code>put_outcome</code>: <code>def put_outcome(</code></p>
+<h2>Spend alert sent</h2>
+<p>Raised when the window's spend or rise crosses the threshold and the notification is delivered. <a href="#">src/ai_usage_cost/cli.py:349</a></p>
+<p>Source:
+- <code>alert</code>: <code>if not notifier.notify(</code></p>
+<h2>Stale rates warning</h2>
+<p>Raised when the rate table is older than the threshold. <a href="#">src/ai_usage_cost/pipeline.py:237</a></p>
+<p>Source:
+- <code>analyze</code>: <code>prices may have changed</code></p>
+<h2>Tier unpriced warning</h2>
+<p>Raised when requests ran on a tier the row has no price for and were billed at the standard rate. <a href="#">src/ai_usage_cost/pipeline.py:231</a></p>
+<p>Source:
+- <code>analyze</code>: <code>billed at the standard rate instead</code></p>
+<h2>Unpriced model warning</h2>
+<p>Raised once per model that has tokens and no rate. <a href="#">src/ai_usage_cost/pipeline.py:215</a></p>
+<p>Source:
+- <code>analyze</code>: <code>no rate for model {unknown.model!r}</code></p></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

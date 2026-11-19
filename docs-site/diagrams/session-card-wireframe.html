@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Session card wireframe</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/session-card-wireframe.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">draft</span> <span class="chip">draft</span> <span class="chip">inferred</span> covers <code>web/src/components/*</code></p><h1>Session card wireframe</h1>
+<p>This wireframe shows how one session appears as a card on narrow screens. It lets a designer check the order of the rows and see which rows are optional. A developer can compare it with a table row of the same session.</p>
+<h2>What the diagram shows</h2>
+<p>The card is one bordered box that highlights on hover, and an invisible button stretched over it opens the session through the function the page passes in. <code>web/src/components/session.tsx:117-205</code> <code>web/src/components/session.tsx:136-141</code></p>
+<p>The header row holds the cost state dot and label and the session id at the right, and a traced dot appears only when the traced prop is given. <code>web/src/components/session.tsx:143-143</code> <code>web/src/components/session.tsx:139-139</code></p>
+<p>The outcome row, with the outcome badge and the error count, is drawn only when an outcome is given, and the error count only when that count is given. <code>web/src/components/session.tsx:159-173</code></p>
+<p>The model row shows the model name and a plus count when more than one model was used. <code>web/src/components/session.tsx:175-180</code></p>
+<p>The next rows show client and project, then start time and request count. <code>web/src/components/session.tsx:183-184</code> <code>web/src/components/session.tsx:187-188</code></p>
+<p>The last row shows the token label and the cost, and each falls back to the word unavailable when it is null. <code>web/src/components/session.tsx:192-200</code></p>
+<h2>Capability and related functionality</h2>
+<p>The wireframe realises the compact form of a session on the sessions page. Its states are covered in <a href="../diagrams/offline-and-error-handling-flow.html">Offline and error handling flow</a> and its place in the tree in <a href="../diagrams/dashboard-component-composition.html">Dashboard component composition</a>. The explanation is in <a href="../application/web-ui-components-overview.html">Web UI components Overview</a>. The matching table view is described in <a href="../application/web-overview.html">Web Overview</a>.</p>
+<h2>Session card wireframe</h2>
+<p><img alt="drawio-session-card-layout" src="../assets/drawio-session-card-layout.svg"></p>
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>web/src/components/session.tsx:117-205</code></td>
+<td>Card component</td>
+</tr>
+<tr>
+<td><code>web/src/components/session.tsx:136-141</code></td>
+<td>Overlay button</td>
+</tr>
+<tr>
+<td><code>web/src/components/session.tsx:159-173</code></td>
+<td>Outcome row condition</td>
+</tr>
+<tr>
+<td><code>web/src/components/session.tsx:183-184</code></td>
+<td>Client and project row</td>
+</tr>
+<tr>
+<td><code>web/src/components/session.tsx:192-200</code></td>
+<td>Tokens and cost row</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

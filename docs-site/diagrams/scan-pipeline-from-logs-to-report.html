@@ -1,0 +1,110 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Scan pipeline from logs to report</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="diagrams/scan-pipeline-from-logs-to-report.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/*</code></p><h1>Scan pipeline from logs to report</h1>
+<p>This view follows one scan from the command a person types to the report that appears on screen. It shows which parts of the tool do the work and in what order. A reader can see why a repeated scan is fast and where a warning about rates comes from.</p>
+<h2>What the diagram shows</h2>
+<ul>
+<li>The person starts a scan from the command line, which asks the pipeline for an analysis. <code>src/ai_usage_cost/cli.py:87</code></li>
+<li>The pipeline loads the privacy settings and opens the store. <code>src/ai_usage_cost/pipeline.py:175</code> <code>src/ai_usage_cost/pipeline.py:176</code></li>
+<li>Opening the store applies every migration the store has not seen yet. <code>src/ai_usage_cost/store.py:147</code></li>
+<li>Ingest visits the files under each source root that exists. <code>src/ai_usage_cost/store.py:219</code></li>
+<li>A file whose modification time, size and parser version are unchanged is skipped. <code>src/ai_usage_cost/store.py:230</code></li>
+<li>A file that only grew is read from where the last scan stopped when its source allows it. <code>src/ai_usage_cost/store.py:252</code></li>
+<li>Any other changed or new file is parsed again in full. <code>src/ai_usage_cost/store.py:255</code></li>
+<li>A request is stored once per fingerprint, and a later record with more output replaces the earlier one. <code>src/ai_usage_cost/store.py:356</code></li>
+<li>The pipeline then loads the stored requests, the file counts and the session flags. <code>src/ai_usage_cost/pipeline.py:186</code></li>
+<li>It loads the rate table and prices each request. <code>src/ai_usage_cost/pipeline.py:192</code> <code>src/ai_usage_cost/pipeline.py:198</code></li>
+<li>Warnings are added for models without a rate. <code>src/ai_usage_cost/pipeline.py:212</code></li>
+<li>The command line turns the analysis into a report limited by date and client. <code>src/ai_usage_cost/cli.py:88</code> <code>src/ai_usage_cost/pipeline.py:305</code></li>
+<li>When the report holds no requests the command prints a notice and exits with code 1. <code>src/ai_usage_cost/cli.py:104</code></li>
+<li>Otherwise the command prints the tables. <code>src/ai_usage_cost/cli.py:105</code></li>
+</ul>
+<h2>Capability and related functionality</h2>
+<ul>
+<li>Realises the scan capability described in <a href="../application/ai-usage-cost-workflows.html">Ai usage cost Workflows</a>, the command that most people run first.</li>
+<li>The same run seen as data movement is <a href="../diagrams/usage-data-flow.html">Usage data flow</a>, and as a business process it is <a href="../diagrams/scan-and-report-process.html">Scan and report process</a>.</li>
+<li>The pricing step is opened up in <a href="../diagrams/how-one-request-is-priced.html">How one request is priced</a>, and the states a priced request can end in are in <a href="../diagrams/cost-state-of-a-request.html">Cost state of a request</a>.</li>
+<li>The HTTP routes that reuse this pipeline are listed in <a href="../application/ai-usage-cost-api.html">Ai usage cost API</a>.</li>
+</ul>
+<h2>The diagram</h2>
+<pre class="mermaid">sequenceDiagram
+    autonumber
+    box rgb(255,242,204) Person
+        actor U as Person
+    end
+    box rgb(218,232,252) This system
+        participant C as Command line
+        participant A as Pipeline
+        participant X as Source parsers
+        participant R as Rate table
+        participant G as Report builder
+    end
+    box rgb(213,232,212) Data
+        participant S as Store
+    end
+    U-&gt;&gt;+C: ai-usage-cost scan
+    C-&gt;&gt;+A: analyze with db, roots, rates and rebuild
+    A-&gt;&gt;+S: open_store, migrate to the latest version
+    S--&gt;&gt;-A: connection
+    A-&gt;&gt;+S: ingest with privacy exclusions
+    loop each file under each present root
+        alt size, mtime and parser version unchanged
+            S-&gt;&gt;S: skip the file
+        else changed or new
+            S-&gt;&gt;+X: parse, or parse_resume when the file only grew
+            X--&gt;&gt;-S: events, spans and warnings
+            S-&gt;&gt;S: insert requests, keep the largest output
+        end
+    end
+    S--&gt;&gt;-A: ingest summary
+    Note over A,S: Rule: a request is stored once per fingerprint, and a later record with more output replaces the earlier one
+    A-&gt;&gt;+S: load requests, file counts, session flags
+    S--&gt;&gt;-A: events, counts, flags
+    A-&gt;&gt;+R: load the rate table
+    R--&gt;&gt;-A: rows, prefixes, as of date
+    loop each event
+        A-&gt;&gt;R: price_event
+        R--&gt;&gt;A: cost breakdown and state
+    end
+    A--&gt;&gt;-C: Analysis with warnings
+    C-&gt;&gt;+G: report_of with since, until and filters
+    G--&gt;&gt;-C: Report
+    alt the report has no requests
+        C--&gt;&gt;U: No usage found, exit code 1
+    else requests found
+        C--&gt;&gt;-U: terminal tables or JSON
+    end
+    Note over U,S: Legend: yellow is a person, blue is this system, green is data, a solid arrow is a call, a dashed arrow is a reply, a bar on a lifeline is a participant working, a framed block is a loop or a branch, a note is a rule
+</pre>
+
+<details class="callout callout-example">
+<summary>Code references</summary>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/cli.py:72</code></td>
+<td>The scan command</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pipeline.py:166</code></td>
+<td>Analysis: ingest, load, price, warn</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/store.py:190</code></td>
+<td>Incremental ingest with skip and resume</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pricing.py:429</code></td>
+<td>Pricing of one request</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/pipeline.py:305</code></td>
+<td>Filtering and report building</td>
+</tr>
+</tbody>
+</table>
+</details></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

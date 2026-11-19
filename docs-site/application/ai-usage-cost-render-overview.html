@@ -1,0 +1,94 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Ai usage cost render Overview</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/ai-usage-cost-render-overview.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>src/ai_usage_cost/render/**</code></p><h1>Ai usage cost render Overview</h1>
+<p>What Ai usage cost render is made of and how it connects to the rest of the code.</p>
+<h2>How it works</h2>
+<p>Ai usage cost render holds 3 source files and 187 lines. The most depended-on files are <code>src/ai_usage_cost/render/png.py</code>, <code>src/ai_usage_cost/render/terminal.py</code>, <code>src/ai_usage_cost/render/__init__.py</code>. It uses <a href="../application/ai-usage-cost-overview.html">Ai usage cost Overview</a>. It is used by <a href="../application/ai-usage-cost-overview.html">Ai usage cost Overview</a>.</p>
+<p>The purpose column quotes each file's own header comment where it has one. Every file is cited by its full line range, and every public name by the line that declares it.</p>
+<h2>What this layer does</h2>
+<p>The render layer turns a finished <code>Report</code> into something a person can read. It computes no cost itself: both files only read fields the report already holds. <code>src/ai_usage_cost/render/terminal.py:17-31</code> <code>src/ai_usage_cost/render/png.py:18-29</code></p>
+<p>There are two outputs. The terminal renderer prints text through a rich console. The picture writer saves a four panel chart as an image file. <code>src/ai_usage_cost/render/terminal.py:17-20</code> <code>src/ai_usage_cost/render/png.py:18-19</code></p>
+<p>The package file <code>src/ai_usage_cost/render/__init__.py</code> is empty, so a caller imports the two modules directly. <code>src/ai_usage_cost/cli.py:22-22</code> <code>src/ai_usage_cost/cli.py:190-190</code></p>
+<h2>Terminal output</h2>
+<p>The renderer first prints a Total panel. It shows the API-equivalent cost, the token and request counts, the number of sessions, the date span of the data, the number of log files scanned and the date of the rates. When no event has a time, the span reads "no data". <code>src/ai_usage_cost/render/terminal.py:49-61</code></p>
+<p>A second line about prompt caching appears only when the saving is above zero. It states the saving and what the cost would have been without caching. <code>src/ai_usage_cost/render/terminal.py:62-66</code></p>
+<p>One breakdown table follows. The caller picks the grouping by model, client, provider, project or day, and an unknown name falls back to model. The table is skipped when the chosen list is empty. <code>src/ai_usage_cost/render/terminal.py:22-31</code></p>
+<p>Each table has the cost, four token columns (input, cache read, cache write, output) and the request count. It prints at most 30 rows and says nothing about rows it left out. The day grouping is sorted oldest first and the others keep the order the report gave them. <code>src/ai_usage_cost/render/terminal.py:70-85</code></p>
+<p>Models without a rate are shown in their own table, described as excluded from totals, with a reminder to add them to rates.json. <code>src/ai_usage_cost/render/terminal.py:33-40</code></p>
+<p>Warnings are printed in full only when the verbose flag is set. Otherwise the renderer prints how many there are and how to see them. <code>src/ai_usage_cost/render/terminal.py:42-46</code></p>
+<h2>Image output</h2>
+<p>The picture writer makes a two by two figure. Its title carries the cost, the token count and the request count. The panels are cost per day stacked by client, cost by model, token mix by model, and cost by project. <code>src/ai_usage_cost/render/png.py:19-29</code></p>
+<p>It selects the Agg backend before importing pyplot, so it works without a display. <code>src/ai_usage_cost/render/png.py:7-11</code></p>
+<p>The model cost chart shows the top 10 models, the token mix chart the top 8, and the project chart the top 10. The project panel is turned off when the report has no project buckets. <code>src/ai_usage_cost/render/png.py:59-59</code> <code>src/ai_usage_cost/render/png.py:71-71</code> <code>src/ai_usage_cost/render/png.py:90-93</code></p>
+<p>A seven color palette is reused by position and wraps around when there are more items. <code>src/ai_usage_cost/render/png.py:15-15</code> <code>src/ai_usage_cost/render/png.py:49-49</code></p>
+<p>The writer creates the missing parent folders of the output path, saves the figure at the given resolution (140 dots per inch by default) and closes it. <code>src/ai_usage_cost/render/png.py:18-18</code> <code>src/ai_usage_cost/render/png.py:31-33</code></p>
+<h2>Who calls it</h2>
+<p>Only the command line calls these functions. The scan command renders to the terminal after building the report, and exits with code 1 and a hint when no usage was found. The export command calls the picture writer for a .png path and refuses extensions other than .json and .png. <code>src/ai_usage_cost/cli.py:98-105</code> <code>src/ai_usage_cost/cli.py:186-195</code></p>
+<h2>What to know</h2>
+<p>The dashboard does not read anything from this layer. The report it shows is served by the HTTP route in <code>src/ai_usage_cost/api.py:289-289</code>, and the same report can be printed as JSON by the scan command. <code>src/ai_usage_cost/cli.py:95-97</code></p>
+<p>The picture writer ignores the grouping option of the scan command, because export takes no such option. <code>src/ai_usage_cost/cli.py:176-183</code></p>
+<p>No test file in the repository imports this folder, so the output format has no test of its own here.</p>
+<p>The components are drawn in <a href="../diagrams/render-layer-components.html">Render layer components</a>.</p>
+<h2>Reference</h2>
+<h3>Files</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+<th>Lines</th>
+<th>Imports</th>
+<th>Imported by</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ai_usage_cost/render/__init__.py</code></td>
+<td>-</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>empty file</td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/render/png.py</code></td>
+<td>-</td>
+<td>101</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/render/png.py</a> <code>src/ai_usage_cost/render/png.py:1-101</code></td>
+</tr>
+<tr>
+<td><code>src/ai_usage_cost/render/terminal.py</code></td>
+<td>-</td>
+<td>86</td>
+<td>1</td>
+<td>1</td>
+<td><a href="#">src/ai_usage_cost/render/terminal.py</a> <code>src/ai_usage_cost/render/terminal.py:1-86</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Public interface</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Kind</th>
+<th>File</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>write_png</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/render/png.py</code></td>
+<td><a href="#">src/ai_usage_cost/render/png.py</a> <code>src/ai_usage_cost/render/png.py:18</code></td>
+</tr>
+<tr>
+<td><code>render</code></td>
+<td>function</td>
+<td><code>src/ai_usage_cost/render/terminal.py</code></td>
+<td><a href="#">src/ai_usage_cost/render/terminal.py</a> <code>src/ai_usage_cost/render/terminal.py:17</code></td>
+</tr>
+</tbody>
+</table></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

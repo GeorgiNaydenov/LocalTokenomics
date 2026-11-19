@@ -1,0 +1,100 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Sources Screen Screen</title><link rel="icon" href="../assets/logo.svg"><link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/app.css"><link rel="stylesheet" href="../assets/extra.css"></head><body data-root="../" data-page="application/sources-screen-screen.html" data-kind="page"><header class="topbar" role="banner"><a class="brand" href="../index.html"><img src="../assets/logo.svg" width="28" height="28" alt="">Product Brain</a><span class="project-name" id="project"></span><div class="gsearch" style="position:relative"><input type="search" id="q" placeholder="Search the documentation" aria-label="Search titles, headings and tags"><div id="results"></div></div><div class="tools"><a class="btn" href="../graph.html">Knowledge graph</a></div></header><div class="k-layout"><div class="k-body"><nav class="k-nav" id="nav" aria-label="Documentation layers"></nav><main class="k-main" id="main"><nav class="crumbs" aria-label="Breadcrumb">Application / Software · TOGAF: Phase C, Information Systems Architectures</nav><p><span class="chip">active</span> <span class="chip">approved</span> <span class="chip">inferred</span> covers <code>web/src/prototype/**</code></p><h1>Sources Screen Screen</h1>
+<p>The Sources screen (<code>web/src/prototype/SourcesScreen.tsx:8-95</code>). The map is <a href="../diagrams/sources-screen-screen-map.html">Sources Screen Screen Map</a>; each numbered badge in the image is one row below.</p>
+<h2>Screen map</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Element</th>
+<th>What it does</th>
+<th>Handler or target</th>
+<th>State it depends on</th>
+<th>Citation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>&lt;PanelHeader</code> readers with data</td>
+<td>Title that counts readers with logs and how many of them have token counts.</td>
+<td>-</td>
+<td><code>detected</code>, <code>withTokens</code></td>
+<td><a href="#">web/src/prototype/SourcesScreen.tsx</a> <code>web/src/prototype/SourcesScreen.tsx:16-19</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>&lt;SourceDetail</code> one block per detected reader</td>
+<td>Detail block with path, clients, headline, trend and four stats: files, sessions, requests and last event.</td>
+<td>-</td>
+<td><code>detected</code></td>
+<td><a href="#">web/src/prototype/SourcesScreen.tsx</a> <code>web/src/prototype/SourcesScreen.tsx:22-46</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>undetected.length &gt; 0</code> conditional section</td>
+<td>Collapsible block, drawn only when some readers found nothing on this machine.</td>
+<td>-</td>
+<td>conditional: <code>undetected.length &gt; 0</code></td>
+<td><a href="#">web/src/prototype/SourcesScreen.tsx</a> <code>web/src/prototype/SourcesScreen.tsx:51-80</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>&lt;DisclosurePanel</code> available, not detected here</td>
+<td>Disclosure that opens the list of readers that found nothing.</td>
+<td>-</td>
+<td><code>undetected</code></td>
+<td><a href="#">web/src/prototype/SourcesScreen.tsx</a> <code>web/src/prototype/SourcesScreen.tsx:52-57</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;div</code> one row per missing reader</td>
+<td>Row with the reader label, its log path and its root hint.</td>
+<td>-</td>
+<td><code>undetected</code></td>
+<td><a href="#">web/src/prototype/SourcesScreen.tsx</a> <code>web/src/prototype/SourcesScreen.tsx:60-72</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>SCAN_WARNINGS.length &gt; 0</code> conditional section</td>
+<td>Scan warnings panel, drawn only when the last scan left warnings.</td>
+<td>-</td>
+<td>conditional: <code>SCAN_WARNINGS.length &gt; 0</code></td>
+<td><a href="#">web/src/prototype/SourcesScreen.tsx</a> <code>web/src/prototype/SourcesScreen.tsx:82-92</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;PanelHeader</code> scan warnings</td>
+<td>Title that counts the file and parse warnings.</td>
+<td>-</td>
+<td><code>SCAN_WARNINGS</code></td>
+<td><a href="#">web/src/prototype/SourcesScreen.tsx</a> <code>web/src/prototype/SourcesScreen.tsx:84-87</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>&lt;WarningsList</code> warnings</td>
+<td>List of the warnings, passed as one hand built group of kind other.</td>
+<td>-</td>
+<td><code>SCAN_WARNINGS</code></td>
+<td><a href="#">web/src/prototype/SourcesScreen.tsx</a> <code>web/src/prototype/SourcesScreen.tsx:89</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Conditional sections</h3>
+<ul>
+<li>conditional: <code>undetected.length &gt; 0</code>, callout 3, <a href="#">web/src/prototype/SourcesScreen.tsx</a> <code>web/src/prototype/SourcesScreen.tsx:51-80</code></li>
+<li>conditional: <code>SCAN_WARNINGS.length &gt; 0</code>, callout 6, <a href="#">web/src/prototype/SourcesScreen.tsx</a> <code>web/src/prototype/SourcesScreen.tsx:82-92</code></li>
+</ul>
+<h2>Diagnosis</h2>
+<p><strong>What the user can do.</strong> Read one detail block per reader that found logs, with path, clients, headline and four counts <code>web/src/prototype/SourcesScreen.tsx:15-49</code>. Open a folded block to see the readers that found nothing and where each one looks <code>web/src/prototype/SourcesScreen.tsx:51-80</code>. Read the warnings of the last scan <code>web/src/prototype/SourcesScreen.tsx:82-92</code>. The screen has no controls that change data.</p>
+<p><strong>What can go wrong.</strong></p>
+<ul>
+<li>A reader without token counts shows its request count as the headline instead of a cost <code>web/src/prototype/SourcesScreen.tsx:31-33</code>. The copy says elsewhere that cost is never invented, so this is deliberate, but the headline then mixes two units on one list.</li>
+<li>The warnings panel builds one fixed group of kind other for all warnings <code>web/src/prototype/SourcesScreen.tsx:89-89</code>. The real scan groups warnings by kind with a severity and a worst example, so this prototype does not show how grouping looks.</li>
+<li>The detail block gets an empty footer text <code>web/src/prototype/SourcesScreen.tsx:34-34</code>, so the layout of a footer is not demonstrated.</li>
+<li>The disclosure promises that an undetected reader appears everywhere on the next scan <code>web/src/prototype/SourcesScreen.tsx:73-76</code>. The Rescan logs button of the shell reads no logs, so the promise cannot be tried in the prototype <code>web/src/prototype/Prototype.tsx:26-29</code>.</li>
+</ul>
+<p><strong>States the code does not handle.</strong></p>
+<ul>
+<li>No loading state while a scan runs, and no error state when a scan fails; the page changes nothing during the staged rescan <code>web/src/prototype/Prototype.tsx:26-29</code>.</li>
+<li>No empty state for zero detected readers: the first panel would show a title that counts zero and an empty list <code>web/src/prototype/SourcesScreen.tsx:15-49</code>.</li>
+</ul></main><aside class="rail" id="rail" aria-label="Links"></aside></div></div><script src="../assets/site-data.js"></script><script src="../assets/site.js"></script><script src="../assets/mermaid.min.js"></script><script src="../assets/mermaid-init.js"></script></body></html>

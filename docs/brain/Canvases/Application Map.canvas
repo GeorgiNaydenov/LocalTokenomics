@@ -11,40 +11,15 @@
       "color": "4"
     },
     {
-<<<<<<< HEAD
-      "id": "n-invariants-catalogue",
-      "type": "file",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "file": "docs/brain/Application/Invariants Catalogue.md",
-=======
-      "file": "docs/brain/Operations/Invariants Catalogue.md",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
-      "file": "docs/brain/Operations/Invariants Catalogue.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "file": "docs/brain/Operations/Invariants Catalogue.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
       "id": "n-ai-usage-cost-api",
       "type": "file",
       "file": "docs/brain/Application/Ai usage cost API.md",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "x": 0,
       "y": 0,
       "width": 320,
       "height": 70
     },
     {
-<<<<<<< HEAD
-      "id": "n-route-and-api-index",
-      "type": "file",
-      "file": "docs/brain/Application/Route and API Index.md",
-      "x": 380,
-      "y": 0,
-=======
       "id": "n-ai-usage-cost-overview",
       "type": "file",
       "file": "docs/brain/Application/Ai usage cost Overview.md",
@@ -54,11 +29,20 @@
       "height": 70
     },
     {
+      "id": "n-ai-usage-cost-specification",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost Specification.md",
+      "x": 760,
+      "y": 0,
+      "width": 320,
+      "height": 70
+    },
+    {
       "id": "n-ai-usage-cost-tests",
       "type": "file",
       "file": "docs/brain/Application/Ai usage cost Tests.md",
-      "x": 760,
-      "y": 0,
+      "x": 0,
+      "y": 110,
       "width": 320,
       "height": 70
     },
@@ -66,8 +50,134 @@
       "id": "n-ai-usage-cost-workflows",
       "type": "file",
       "file": "docs/brain/Application/Ai usage cost Workflows.md",
-      "x": 0,
+      "x": 380,
       "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ai-usage-cost-render-api",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost render API.md",
+      "x": 760,
+      "y": 110,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ai-usage-cost-render-overview",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost render Overview.md",
+      "x": 0,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ai-usage-cost-render-specification",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost render Specification.md",
+      "x": 380,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ai-usage-cost-render-tests",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost render Tests.md",
+      "x": 760,
+      "y": 220,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ai-usage-cost-render-workflows",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost render Workflows.md",
+      "x": 0,
+      "y": 330,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ai-usage-cost-sources-api",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost sources API.md",
+      "x": 380,
+      "y": 330,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ai-usage-cost-sources-overview",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost sources Overview.md",
+      "x": 760,
+      "y": 330,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ai-usage-cost-sources-specification",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost sources Specification.md",
+      "x": 0,
+      "y": 440,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ai-usage-cost-sources-tests",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost sources Tests.md",
+      "x": 380,
+      "y": 440,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-ai-usage-cost-sources-workflows",
+      "type": "file",
+      "file": "docs/brain/Application/Ai usage cost sources Workflows.md",
+      "x": 760,
+      "y": 440,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-app-screen",
+      "type": "file",
+      "file": "docs/brain/Application/App Screen.md",
+      "x": 0,
+      "y": 550,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-context-tab-screen",
+      "type": "file",
+      "file": "docs/brain/Application/Context Tab Screen.md",
+      "x": 380,
+      "y": 550,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-economics-tab-screen",
+      "type": "file",
+      "file": "docs/brain/Application/Economics Tab Screen.md",
+      "x": 760,
+      "y": 550,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-invariants-catalogue",
+      "type": "file",
+      "file": "docs/brain/Application/Invariants Catalogue.md",
+      "x": 0,
+      "y": 660,
       "width": 320,
       "height": 70
     },
@@ -76,7 +186,52 @@
       "type": "file",
       "file": "docs/brain/Operations/Invariants Catalogue.md",
       "x": 380,
-      "y": 110,
+      "y": 660,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-offline-card-screen",
+      "type": "file",
+      "file": "docs/brain/Application/Offline card Screen.md",
+      "x": 760,
+      "y": 660,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-overview-screen-screen",
+      "type": "file",
+      "file": "docs/brain/Application/Overview Screen Screen.md",
+      "x": 0,
+      "y": 770,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-overview-screen",
+      "type": "file",
+      "file": "docs/brain/Application/Overview Screen.md",
+      "x": 380,
+      "y": 770,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-pricing-screen-screen",
+      "type": "file",
+      "file": "docs/brain/Application/Pricing Screen Screen.md",
+      "x": 760,
+      "y": 770,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-pricing-screen",
+      "type": "file",
+      "file": "docs/brain/Application/Pricing Screen.md",
+      "x": 0,
+      "y": 880,
       "width": 320,
       "height": 70
     },
@@ -84,9 +239,8 @@
       "id": "n-route-and-api-index",
       "type": "file",
       "file": "docs/brain/Application/Route and API Index.md",
-      "x": 760,
-      "y": 110,
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "x": 380,
+      "y": 880,
       "width": 320,
       "height": 70
     },
@@ -94,162 +248,224 @@
       "id": "n-screens-and-ui-inventory",
       "type": "file",
       "file": "docs/brain/Application/Screens and UI Inventory.md",
-<<<<<<< HEAD
       "x": 760,
-      "y": 0,
+      "y": 880,
       "width": 320,
       "height": 70
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+      "id": "n-session-workspace-screen",
+      "type": "file",
+      "file": "docs/brain/Application/Session Workspace Screen.md",
+      "x": 0,
+      "y": 990,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-sessions-screen-screen",
+      "type": "file",
+      "file": "docs/brain/Application/Sessions Screen Screen.md",
+      "x": 380,
+      "y": 990,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-sessions-screen",
+      "type": "file",
+      "file": "docs/brain/Application/Sessions Screen.md",
+      "x": 760,
+      "y": 990,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-sources-screen-screen",
+      "type": "file",
+      "file": "docs/brain/Application/Sources Screen Screen.md",
+      "x": 0,
+      "y": 1100,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-sources-screen",
+      "type": "file",
+      "file": "docs/brain/Application/Sources Screen.md",
+      "x": 380,
+      "y": 1100,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-state-machines",
+      "type": "file",
+      "file": "docs/brain/Application/State Machines.md",
+      "x": 760,
+      "y": 1100,
+      "width": 320,
+      "height": 70
+    },
+    {
       "id": "n-systems-and-data-stores",
       "type": "file",
       "file": "docs/brain/Application/Systems and Data Stores.md",
       "x": 0,
-      "y": 110,
-=======
-      "x": 0,
-      "y": 220,
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
+      "y": 1210,
       "width": 320,
       "height": 70
     },
     {
       "id": "n-test-coverage-matrix",
       "type": "file",
-<<<<<<< HEAD
       "file": "docs/brain/Application/Test Coverage Matrix.md",
-=======
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
+      "x": 380,
+      "y": 1210,
+      "width": 320,
+      "height": 70
+    },
+    {
       "id": "n-test-coverage-matrix",
       "type": "file",
       "file": "docs/brain/Operations/Test Coverage Matrix.md",
-      "x": 0,
-      "y": 110,
+      "x": 760,
+      "y": 1210,
       "width": 320,
       "height": 70
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "n-localtokenomics-root-api",
+      "id": "n-trace-tab-screen",
       "type": "file",
-      "file": "docs/brain/Application/localtokenomics root API.md",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
+      "file": "docs/brain/Application/Trace Tab Screen.md",
+      "x": 0,
+      "y": 1320,
+      "width": 320,
+      "height": 70
+    },
+    {
       "id": "n-web-api",
       "type": "file",
       "file": "docs/brain/Application/Web API.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "n-web-ui-ui-components-api",
-      "type": "file",
-      "file": "docs/brain/Application/Web ui UI components API.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
       "x": 380,
-      "y": 110,
+      "y": 1320,
       "width": 320,
       "height": 70
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "n-web-prototype-api",
-      "type": "file",
-      "file": "docs/brain/Application/Web prototype API.md",
-=======
-      "id": "n-localtokenomics-root-overview",
-      "type": "file",
-      "file": "docs/brain/Application/localtokenomics root Overview.md",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
       "id": "n-web-overview",
       "type": "file",
       "file": "docs/brain/Application/Web Overview.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "n-web-ui-ui-components-overview",
-      "type": "file",
-      "file": "docs/brain/Application/Web ui UI components Overview.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
       "x": 760,
-      "y": 110,
+      "y": 1320,
       "width": 320,
       "height": 70
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "n-web-prototype-overview",
+      "id": "n-web-specification",
       "type": "file",
-      "file": "docs/brain/Application/Web prototype Overview.md",
-=======
-      "id": "n-localtokenomics-root-tests",
-      "type": "file",
-      "file": "docs/brain/Application/localtokenomics root Tests.md",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
+      "file": "docs/brain/Application/Web Specification.md",
+      "x": 0,
+      "y": 1430,
+      "width": 320,
+      "height": 70
+    },
+    {
       "id": "n-web-tests",
       "type": "file",
       "file": "docs/brain/Application/Web Tests.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "n-web-ui-ui-components-tests",
-      "type": "file",
-      "file": "docs/brain/Application/Web ui UI components Tests.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-      "x": 0,
-      "y": 220,
+      "x": 380,
+      "y": 1430,
       "width": 320,
       "height": 70
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "id": "n-web-prototype-specification",
+      "id": "n-web-ui-components-api",
       "type": "file",
-      "file": "docs/brain/Application/Web prototype Specification.md",
-=======
-      "id": "n-localtokenomics-root-workflows",
+      "file": "docs/brain/Application/Web UI components API.md",
+      "x": 760,
+      "y": 1430,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-components-overview",
       "type": "file",
-      "file": "docs/brain/Application/localtokenomics root Workflows.md",
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
+      "file": "docs/brain/Application/Web UI components Overview.md",
+      "x": 0,
+      "y": 1540,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-components-specification",
+      "type": "file",
+      "file": "docs/brain/Application/Web UI components Specification.md",
+      "x": 380,
+      "y": 1540,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-components-tests",
+      "type": "file",
+      "file": "docs/brain/Application/Web UI components Tests.md",
+      "x": 760,
+      "y": 1540,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-components-workflows",
+      "type": "file",
+      "file": "docs/brain/Application/Web UI components Workflows.md",
+      "x": 0,
+      "y": 1650,
+      "width": 320,
+      "height": 70
+    },
+    {
       "id": "n-web-workflows",
       "type": "file",
       "file": "docs/brain/Application/Web Workflows.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
-      "id": "n-web-ui-ui-components-workflows",
-      "type": "file",
-      "file": "docs/brain/Application/Web ui UI components Workflows.md",
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-=======
-      "file": "docs/brain/Operations/Test Coverage Matrix.md",
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
       "x": 380,
-      "y": 220,
+      "y": 1650,
       "width": 320,
       "height": 70
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+    },
+    {
+      "id": "n-web-prototype-api",
+      "type": "file",
+      "file": "docs/brain/Application/Web prototype API.md",
+      "x": 760,
+      "y": 1650,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-overview",
+      "type": "file",
+      "file": "docs/brain/Application/Web prototype Overview.md",
+      "x": 0,
+      "y": 1760,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-prototype-specification",
+      "type": "file",
+      "file": "docs/brain/Application/Web prototype Specification.md",
+      "x": 380,
+      "y": 1760,
+      "width": 320,
+      "height": 70
     },
     {
       "id": "n-web-prototype-tests",
       "type": "file",
       "file": "docs/brain/Application/Web prototype Tests.md",
       "x": 760,
-      "y": 220,
+      "y": 1760,
       "width": 320,
       "height": 70
     },
@@ -258,36 +474,276 @@
       "type": "file",
       "file": "docs/brain/Application/Web prototype Workflows.md",
       "x": 0,
-      "y": 330,
+      "y": 1870,
       "width": 320,
       "height": 70
-=======
->>>>>>> docs/chunk-ch-localtokenomics-root
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src
-=======
->>>>>>> docs/chunk-ch-localtokenomics-web-src-components-ui
-    }
-  ],
-  "edges": []
-=======
+    },
+    {
+      "id": "n-web-ui-ui-components-api",
+      "type": "file",
+      "file": "docs/brain/Application/Web ui UI components API.md",
+      "x": 380,
+      "y": 1870,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-ui-components-overview",
+      "type": "file",
+      "file": "docs/brain/Application/Web ui UI components Overview.md",
+      "x": 760,
+      "y": 1870,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-ui-components-specification",
+      "type": "file",
+      "file": "docs/brain/Application/Web ui UI components Specification.md",
+      "x": 0,
+      "y": 1980,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-ui-components-tests",
+      "type": "file",
+      "file": "docs/brain/Application/Web ui UI components Tests.md",
+      "x": 380,
+      "y": 1980,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-web-ui-ui-components-workflows",
+      "type": "file",
+      "file": "docs/brain/Application/Web ui UI components Workflows.md",
+      "x": 760,
+      "y": 1980,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-localtokenomics-root-api",
+      "type": "file",
+      "file": "docs/brain/Application/localtokenomics root API.md",
+      "x": 0,
+      "y": 2090,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-localtokenomics-root-overview",
+      "type": "file",
+      "file": "docs/brain/Application/localtokenomics root Overview.md",
+      "x": 380,
+      "y": 2090,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-localtokenomics-root-specification",
+      "type": "file",
+      "file": "docs/brain/Application/localtokenomics root Specification.md",
+      "x": 760,
+      "y": 2090,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-localtokenomics-root-tests",
+      "type": "file",
+      "file": "docs/brain/Application/localtokenomics root Tests.md",
+      "x": 0,
+      "y": 2200,
+      "width": 320,
+      "height": 70
+    },
+    {
+      "id": "n-localtokenomics-root-workflows",
+      "type": "file",
+      "file": "docs/brain/Application/localtokenomics root Workflows.md",
+      "x": 380,
+      "y": 2200,
+      "width": 320,
+      "height": 70
     }
   ],
   "edges": [
     {
-      "id": "e0-n-ai-usage-cost-overview-n-ai-usage-cost-api",
+      "id": "e0-n-ai-usage-cost-overview-n-ai-usage-cost-render-overview",
+      "fromNode": "n-ai-usage-cost-overview",
+      "toNode": "n-ai-usage-cost-render-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e1-n-ai-usage-cost-overview-n-ai-usage-cost-sources-overview",
+      "fromNode": "n-ai-usage-cost-overview",
+      "toNode": "n-ai-usage-cost-sources-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e2-n-ai-usage-cost-overview-n-ai-usage-cost-api",
       "fromNode": "n-ai-usage-cost-overview",
       "toNode": "n-ai-usage-cost-api",
       "fromSide": "bottom",
       "toSide": "top"
     },
     {
-      "id": "e1-n-ai-usage-cost-overview-n-ai-usage-cost-workflows",
+      "id": "e3-n-ai-usage-cost-overview-n-ai-usage-cost-workflows",
       "fromNode": "n-ai-usage-cost-overview",
       "toNode": "n-ai-usage-cost-workflows",
       "fromSide": "bottom",
       "toSide": "top"
+    },
+    {
+      "id": "e4-n-ai-usage-cost-specification-n-systems-and-data-stores",
+      "fromNode": "n-ai-usage-cost-specification",
+      "toNode": "n-systems-and-data-stores",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e5-n-ai-usage-cost-specification-n-state-machines",
+      "fromNode": "n-ai-usage-cost-specification",
+      "toNode": "n-state-machines",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e6-n-ai-usage-cost-render-overview-n-ai-usage-cost-overview",
+      "fromNode": "n-ai-usage-cost-render-overview",
+      "toNode": "n-ai-usage-cost-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e7-n-ai-usage-cost-sources-overview-n-ai-usage-cost-overview",
+      "fromNode": "n-ai-usage-cost-sources-overview",
+      "toNode": "n-ai-usage-cost-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e8-n-ai-usage-cost-sources-specification-n-systems-and-data-stores",
+      "fromNode": "n-ai-usage-cost-sources-specification",
+      "toNode": "n-systems-and-data-stores",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e9-n-web-overview-n-web-ui-components-overview",
+      "fromNode": "n-web-overview",
+      "toNode": "n-web-ui-components-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e10-n-web-overview-n-web-ui-ui-components-overview",
+      "fromNode": "n-web-overview",
+      "toNode": "n-web-ui-ui-components-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e11-n-web-overview-n-web-prototype-overview",
+      "fromNode": "n-web-overview",
+      "toNode": "n-web-prototype-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e12-n-web-specification-n-state-machines",
+      "fromNode": "n-web-specification",
+      "toNode": "n-state-machines",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e13-n-web-ui-components-overview-n-web-overview",
+      "fromNode": "n-web-ui-components-overview",
+      "toNode": "n-web-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e14-n-web-ui-components-overview-n-web-ui-ui-components-overview",
+      "fromNode": "n-web-ui-components-overview",
+      "toNode": "n-web-ui-ui-components-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e15-n-web-ui-components-overview-n-web-prototype-overview",
+      "fromNode": "n-web-ui-components-overview",
+      "toNode": "n-web-prototype-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e16-n-web-ui-components-overview-n-web-ui-components-tests",
+      "fromNode": "n-web-ui-components-overview",
+      "toNode": "n-web-ui-components-tests",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e17-n-web-ui-components-specification-n-state-machines",
+      "fromNode": "n-web-ui-components-specification",
+      "toNode": "n-state-machines",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e18-n-web-prototype-overview-n-web-overview",
+      "fromNode": "n-web-prototype-overview",
+      "toNode": "n-web-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e19-n-web-prototype-overview-n-web-ui-components-overview",
+      "fromNode": "n-web-prototype-overview",
+      "toNode": "n-web-ui-components-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e20-n-web-prototype-overview-n-web-ui-ui-components-overview",
+      "fromNode": "n-web-prototype-overview",
+      "toNode": "n-web-ui-ui-components-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e21-n-web-ui-ui-components-overview-n-web-overview",
+      "fromNode": "n-web-ui-ui-components-overview",
+      "toNode": "n-web-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e22-n-web-ui-ui-components-overview-n-web-ui-components-overview",
+      "fromNode": "n-web-ui-ui-components-overview",
+      "toNode": "n-web-ui-components-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e23-n-web-ui-ui-components-overview-n-web-prototype-overview",
+      "fromNode": "n-web-ui-ui-components-overview",
+      "toNode": "n-web-prototype-overview",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e24-n-localtokenomics-root-specification-n-state-machines",
+      "fromNode": "n-localtokenomics-root-specification",
+      "toNode": "n-state-machines",
+      "fromSide": "bottom",
+      "toSide": "top"
     }
   ]
->>>>>>> docs/chunk-ch-localtokenomics-src-ai-usage-cost
 }
