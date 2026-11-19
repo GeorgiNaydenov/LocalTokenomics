@@ -5,5 +5,33 @@
   "source": "docs/brain/architecture/bpmn/bpmn-scan-and-report.bpmn",
   "source_sha256": "eb4e97547c7d66ac592bb8b2ab66d734a0515b60069a8065490476eb148a0e0f",
   "tool": "product-brain BPMN renderer 1"
+ },
+ "drawio-render-c4.svg": {
+  "bytes": 471184,
+  "output_sha256": "2abb1c8e43bee7af203e8ad7f7183ae09698f25668dfbe459dad9b8b9d36f47e",
+  "source": "docs/brain/architecture/drawio/drawio-render-c4.drawio",
+  "source_sha256": "09f8e59017261ee43234aeb98e098eb81305a4cace9413e85a6720839f2a30a3",
+  "tool": "draw.io 28.1.2.0"
+ },
+ "drawio-src-sources-c4.svg": {
+  "bytes": 633843,
+  "output_sha256": "72efdf67aeb9310ca5c3e02b8eb7b94173c3ad190f637df1e85d1c618e71eeb4",
+  "source": "docs/brain/architecture/drawio/drawio-src-sources-c4.drawio",
+  "source_sha256": "1b119539cbb27bddcac85652e50b7967c433d549012b9f07faf3df59a8aaba99",
+  "tool": "draw.io 28.1.2.0"
+ },
+ "drawio-src-sources-dfd.svg": {
+  "bytes": 414660,
+  "output_sha256": "4f51f275e41da2f2eb9f3a84f5858b2c32f0e891b8189837589516fb4807d149",
+  "source": "docs/brain/architecture/drawio/drawio-src-sources-dfd.drawio",
+  "source_sha256": "7c4ddc76e515ae56afeacb0f25fd1a0c8618af9316011e96c547a1233493b01c",
+  "tool": "draw.io 28.1.2.0"
+ },
+ "drawio-usage-cost-http-routes.svg": {
+  "bytes": 463258,
+  "output_sha256": "3fdcf3f773dc48c778ffd04786a82498ef524f4283ecb6e4dbde0ef1c25d5536",
+  "source": "docs/brain/architecture/drawio/drawio-usage-cost-http-routes.drawio",
+  "source_sha256": "efc725768e01c6218be02afa82365dbfa3ac4810e319b35229441685ebd049f4",
+  "tool": "draw.io 28.1.2.0"
  }
 }

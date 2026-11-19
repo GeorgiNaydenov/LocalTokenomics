@@ -1,0 +1,20 @@
+timeline
+    title usage.db schema: migrations in the order open_store applies them
+    section Legend
+        A section is one schema version (user_version after the step) : An entry is what that migration adds, in run order
+    section Version 1
+        requests table : fingerprint key, tokens, tier, project, raw record
+        files table : path key, mtime, size, warnings
+    section Version 2
+        trace_events table : spans with provenance per value
+        outcomes table : one rating per source and session
+        session_exclusions table : forgotten sessions
+        files.parser_version : reparse when the parser changes
+    section Version 3
+        requests.title and title_source : session titles
+    section Version 4
+        files.ingested_offset, boundary_hash, title_seed : resume a file that only grew
+    section Version 5
+        requests.reported_cost : cost the tool logged itself
+    section Any version
+        samples table : created by collect, outside the migration list

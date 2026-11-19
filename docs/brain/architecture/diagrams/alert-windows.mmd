@@ -1,0 +1,10 @@
+gantt
+    title Alert windows for one example run: alert --rise-over 5 --days 3 on 2026-08-10
+    dateFormat YYYY-MM-DD
+    axisFormat %m-%d
+    section Legend
+    A bar is one window of local days, both ends included :l1, 2026-08-01, 1d
+    section rise-over only
+    previous window, since - days to since - 1 :p1, 2026-08-05, 3d
+    section Always
+    current window, since to until (today) :c1, 2026-08-08, 3d

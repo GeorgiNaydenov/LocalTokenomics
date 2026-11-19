@@ -38,6 +38,12 @@
    "findings": 0
   },
   {
+   "note": "docs/brain/Diagrams/Alert comparison windows.md",
+   "claims": 10,
+   "supported": 10,
+   "findings": 0
+  },
+  {
    "note": "docs/brain/Diagrams/Cost state of a request.md",
    "claims": 11,
    "supported": 11,
@@ -62,13 +68,73 @@
    "findings": 0
   },
   {
+   "note": "docs/brain/Diagrams/Spend alert run.md",
+   "claims": 12,
+   "supported": 12,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Store schema versions.md",
+   "claims": 13,
+   "supported": 13,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Usage cost concepts.md",
+   "claims": 13,
+   "supported": 13,
+   "findings": 0
+  },
+  {
    "note": "docs/brain/Diagrams/Usage cost conceptual model.md",
    "claims": 14,
    "supported": 14,
    "findings": 0
   },
   {
+   "note": "docs/brain/Diagrams/Usage cost folders.md",
+   "claims": 12,
+   "supported": 12,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Usage cost goals.md",
+   "claims": 9,
+   "supported": 9,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Usage cost HTTP routes.md",
+   "claims": 15,
+   "supported": 15,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Usage cost refusals.md",
+   "claims": 17,
+   "supported": 17,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Usage cost terms.md",
+   "claims": 13,
+   "supported": 13,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Usage cost types.md",
+   "claims": 17,
+   "supported": 17,
+   "findings": 0
+  },
+  {
    "note": "docs/brain/Diagrams/Usage data flow.md",
+   "claims": 15,
+   "supported": 15,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Where usage cost data comes from.md",
    "claims": 15,
    "supported": 15,
    "findings": 0
@@ -87,13 +153,13 @@
   },
   {
    "note": "docs/brain/Security/Ai usage cost Security.md",
-   "claims": 72,
-   "supported": 72,
+   "claims": 74,
+   "supported": 74,
    "findings": 0
   }
  ],
  "blocking": 0,
  "findings": [],
- "claims": 744,
- "supported": 744
+ "claims": 892,
+ "supported": 892
 }

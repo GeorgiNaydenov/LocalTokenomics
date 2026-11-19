@@ -4,6 +4,7 @@ aliases: []
 tags:
 - diagram
 - erd
+- erd-conceptual
 - mermaid
 area: diagrams
 status: draft
