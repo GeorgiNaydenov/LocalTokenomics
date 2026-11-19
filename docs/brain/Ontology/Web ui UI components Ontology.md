@@ -18,11 +18,11 @@ This is the part of the project's knowledge graph that the code in Web ui UI com
 
 ## What it contains
 
-0 terms, of which 0 belong to other chunks and appear only so that links have somewhere to land.
+1 terms, of which 0 belong to other chunks and appear only so that links have somewhere to land.
 
 | Kind | Count |
 |---|---|
-| none yet | 0 |
+| system | 1 |
 
 ## Relations
 
@@ -34,6 +34,9 @@ This is the part of the project's knowledge graph that the code in Web ui UI com
 
 ```mermaid
 flowchart LR
+    n0["Web ui UI components<br/>system"]
+    classDef k_system fill:#dae8fc,stroke:#222222,color:#222222
+    class n0 k_system
 ```
 
 The full slice is in `ch-localtokenomics-web-src-components-ui.jsonld` beside this note. Project terms are the primary labels; ArchiMate, DDD, schema.org and Dublin Core terms annotate them.
