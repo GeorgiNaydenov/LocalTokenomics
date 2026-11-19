@@ -34,7 +34,7 @@
    "Statement": "Every primitive merges its default Tailwind classes with the caller className through cn, so a caller override replaces a conflicting default instead of stacking with it.",
    "refs": [
     {
-     "confidence": "confirmed",
+     "confidence": "inferred",
      "loc": "web/src/design-system/cn.ts::cn",
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
@@ -53,7 +53,7 @@
    "Statement": "A toggle group passes its variant, size and spacing to its items through a context, and an item uses its own variant or size only when the group sets none.",
    "refs": [
     {
-     "confidence": "confirmed",
+     "confidence": "inferred",
      "loc": "web/src/components/ui/toggle-group.tsx::ToggleGroupItem",
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
@@ -72,7 +72,7 @@
    "Statement": "The chart tooltip and legend content read the chart config through a context, and using them outside a chart container throws an error.",
    "refs": [
     {
-     "confidence": "confirmed",
+     "confidence": "inferred",
      "loc": "web/src/components/ui/chart.tsx::useChart",
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
@@ -91,14 +91,14 @@
    "Statement": "A sheet slides in from the right unless a side of top, bottom or left is given, and both sheet and dialog show a close button unless showCloseButton is false.",
    "refs": [
     {
-     "confidence": "confirmed",
+     "confidence": "inferred",
      "loc": "web/src/components/ui/sheet.tsx::SheetContent",
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "quote": "side = \"right\","
     },
     {
-     "confidence": "confirmed",
+     "confidence": "inferred",
      "loc": "web/src/components/ui/dialog.tsx::DialogContent",
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
@@ -117,7 +117,7 @@
    "Statement": "The tooltip provider shows tooltips without a hover delay unless the app gives a delayDuration, and the dashboard roots give 200 milliseconds.",
    "refs": [
     {
-     "confidence": "confirmed",
+     "confidence": "inferred",
      "loc": "web/src/components/ui/tooltip.tsx::TooltipProvider",
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
@@ -137,7 +137,7 @@
    "Statement": "A chart writes one set of colour variables for the light theme and one scoped to the dark selector, so series colours change with the theme.",
    "refs": [
     {
-     "confidence": "confirmed",
+     "confidence": "inferred",
      "loc": "web/src/components/ui/chart.tsx::THEMES",
      "source": "Code of localtokenomics",
      "relation": "enforced-by",

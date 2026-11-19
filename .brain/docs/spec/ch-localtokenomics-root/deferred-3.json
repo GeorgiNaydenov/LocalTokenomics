@@ -12,14 +12,14 @@
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/privacy.py",
      "quote": "except (OSError, ValueError):",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/privacy.py",
      "quote": "except ValidationError:",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -40,14 +40,14 @@
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/privacy.py",
      "quote": "except ValidationError:",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/pipeline.py",
      "quote": "exclude_projects=config.exclude_projects,",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -68,14 +68,14 @@
      "relation": "declared-in",
      "loc": "pyproject.toml",
      "quote": "[tool.bandit]",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "declared-in",
      "loc": "pyproject.toml",
      "quote": "\"bandit>=1.7\",",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",

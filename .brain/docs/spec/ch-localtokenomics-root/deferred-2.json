@@ -31,7 +31,7 @@
      "relation": "declared-in",
      "loc": ".github/workflows/web.yml",
      "quote": "runs-on: ubuntu-latest",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -77,7 +77,7 @@
      "relation": "enforced-by",
      "loc": "web/package.json",
      "quote": "\"build\": \"tsc --noEmit && vite build\",",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -96,7 +96,7 @@
      "relation": "enforced-by",
      "loc": "web/vite.config.ts",
      "quote": "emptyOutDir: true,",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -115,7 +115,7 @@
      "relation": "enforced-by",
      "loc": "web/eslint.config.js",
      "quote": "{ ignores: ['dist', '../src/ai_usage_cost/web/dist'] },",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -134,14 +134,14 @@
      "relation": "enforced-by",
      "loc": "pyproject.toml",
      "quote": "fail-under = 9.0",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": ".github/workflows/python.yml",
      "quote": "run: uv run --no-sync pylint src tests --fail-under=9.0",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -160,7 +160,7 @@
      "relation": "enforced-by",
      "loc": ".github/workflows/web.yml",
      "quote": "run: npm ci",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -180,7 +180,7 @@
      "relation": "enforced-by",
      "loc": ".github/workflows/python.yml",
      "quote": "python-version: [\"3.11\", \"3.12\", \"3.13\"]",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -200,7 +200,7 @@
      "relation": "enforced-by",
      "loc": ".pre-commit-config.yaml",
      "quote": "stages: [manual]",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "name": "Mypy is a manual pre-commit stage, so type errors in the Pyt",
@@ -221,7 +221,7 @@
      "relation": "enforced-by",
      "loc": "pyproject.toml",
      "quote": "exclude_dirs = [\"tests\", \".venv\", \"web\"]",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "name": "Bandit security scanning skips the web folder, so dashboard ",

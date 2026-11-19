@@ -57,14 +57,14 @@
      "relation": "enforced-by",
      "loc": "web/vite.config.ts",
      "quote": "outDir: '../src/ai_usage_cost/web/dist',",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/design-system/MIGRATION.md",
      "quote": "inside the Python wheel. It must stay working. `prototype.html` is deliberately excluded",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -82,14 +82,14 @@
      "relation": "enforced-by",
      "loc": "web/src/prototype/Screens.tsx",
      "quote": "const [filters, setFilters] = useState<FilterState>(INITIAL_FILTERS)",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/prototype/Screens.tsx",
      "quote": "<SessionsScreen onOpen={setActive} />",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -107,14 +107,14 @@
      "relation": "enforced-by",
      "loc": "web/src/prototype/data.ts",
      "quote": "export const SESSION_LIMIT = 120",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/prototype/SessionsScreen.tsx",
      "quote": "const shown = sorted.slice(0, SESSION_LIMIT)",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -132,14 +132,14 @@
      "relation": "enforced-by",
      "loc": "web/src/prototype/Screens.tsx",
      "quote": "const BUCKET_WEIGHT: Record<string, number> = {",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/prototype/Screens.tsx",
      "quote": "total > 0 ? (weighted[index] / total) * session.cost! : 0,",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -157,7 +157,7 @@
      "relation": "enforced-by",
      "loc": "web/src/prototype/Prototype.tsx",
      "quote": "setTimeout(() => setScanning(false), 900)",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -175,14 +175,14 @@
      "relation": "enforced-by",
      "loc": "web/src/prototype/data.ts",
      "quote": "cost: 3_431.96,",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/prototype/data.ts",
      "quote": "for (let index = 0; generated.length + seeded.length < 184; index++) {",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -200,7 +200,7 @@
      "relation": "enforced-by",
      "loc": "web/src/design-system/MIGRATION.md",
      "quote": "from `prototype/` \u2014 it is mock data; copy the composition, not the module.",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"

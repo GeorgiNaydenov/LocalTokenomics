@@ -67,21 +67,21 @@
      "relation": "enforced-by",
      "loc": "web/src/components/status.tsx::Meter",
      "quote": "  if (value === null) {",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/components/status.tsx::BucketBar",
      "quote": "  if (total <= 0) {",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/components/session.tsx::TokenCell",
      "quote": "  if (label === null) {",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -100,14 +100,14 @@
      "relation": "enforced-by",
      "loc": "web/src/components/rank.ts::worstState",
      "quote": "  return [...states].sort((a, b) => STATE_RANK[b] - STATE_RANK[a])[0] ?? 'unavailable'",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/components/rank.ts::worstProvenance",
      "quote": "  return [...values].sort((a, b) => PROVENANCE_RANK[b] - PROVENANCE_RANK[a])[0] ?? 'unavailable'",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -126,7 +126,7 @@
      "relation": "enforced-by",
      "loc": "web/src/components/status.tsx::CostBadges",
      "quote": "      {isEstimatedPriced(state, cost) ? <EstimatedBadge className={className} /> : null}",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -145,14 +145,14 @@
      "relation": "enforced-by",
      "loc": "web/src/components/chart-time.tsx::TimeChart",
      "quote": "    const overflowKeys = keys.slice(LEGEND_LIMIT)",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/components/series.ts::SERIES_SLOTS",
      "quote": "export const SERIES_SLOTS = 12",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -171,7 +171,7 @@
      "relation": "enforced-by",
      "loc": "web/src/components/columns.tsx::visibleColumns",
      "quote": "  return shown.length > 0 ? shown : columns",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -190,14 +190,14 @@
      "relation": "enforced-by",
      "loc": "web/src/components/filters.tsx::DateRange",
      "quote": "        max={until ?? max}",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/components/filters.tsx::DateRange",
      "quote": "        min={since ?? min}",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -216,7 +216,7 @@
      "relation": "enforced-by",
      "loc": "web/src/components/workspace-panel.ts::clampWidth",
      "quote": "  return Math.min(bound, Math.max(MIN_WIDTH, width))",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -235,7 +235,7 @@
      "relation": "enforced-by",
      "loc": "web/src/components/metric-info.tsx::MetricInfo",
      "quote": "        onCloseAutoFocus={(event) => event.preventDefault()}",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"

@@ -12,7 +12,7 @@
      "relation": "enforced-by",
      "loc": "web/src/SessionWorkspace.tsx::useLazyResource",
      "quote": "    if (!enabled) return",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -31,7 +31,7 @@
      "relation": "enforced-by",
      "loc": "web/src/TraceTab.tsx::toggleContent",
      "quote": "    if (alreadyOpen || contents[span.span_id]) return",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -61,7 +61,7 @@
      "relation": "implemented-by",
      "loc": "web/src/SessionWorkspace.tsx::useLazyResource",
      "quote": "function useLazyResource<T>(enabled: boolean, load: (signal: AbortSignal) => Promise<T>): Loadable<T> {",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"

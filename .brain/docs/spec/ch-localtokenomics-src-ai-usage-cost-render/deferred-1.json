@@ -12,7 +12,7 @@
      "relation": "declared-in",
      "loc": "src/ai_usage_cost/cli.py::scan",
      "quote": "def scan(",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -30,7 +30,7 @@
      "relation": "declared-in",
      "loc": "src/ai_usage_cost/render/terminal.py::_headline",
      "quote": "API-equivalent cost",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -48,7 +48,7 @@
      "relation": "declared-in",
      "loc": "src/ai_usage_cost/aggregate.py::Report",
      "quote": "class Report(BaseModel):",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -66,7 +66,7 @@
      "relation": "declared-in",
      "loc": "src/ai_usage_cost/models.py::cache_savings",
      "quote": "return self.no_cache_equivalent - self.total",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -84,7 +84,7 @@
      "relation": "declared-in",
      "loc": "src/ai_usage_cost/render/terminal.py::render",
      "quote": "Unpriced models (excluded from totals)",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -114,7 +114,7 @@
      "relation": "implemented-by",
      "loc": "src/ai_usage_cost/render/terminal.py::render",
      "quote": "def render(",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -143,7 +143,7 @@
      "relation": "implemented-by",
      "loc": "src/ai_usage_cost/render/png.py::write_png",
      "quote": "def write_png(",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -161,7 +161,7 @@
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/render/terminal.py::_bucket_table",
      "quote": "for bucket in rows[:30]:",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -179,7 +179,7 @@
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/render/terminal.py::render",
      "quote": "ascending=group_by == \"day\"",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -197,7 +197,7 @@
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/render/terminal.py::render",
      "quote": "tables.get(group_by, tables[\"model\"])",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -215,7 +215,7 @@
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/render/terminal.py::render",
      "quote": "elif report.warnings:",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -233,7 +233,7 @@
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/render/terminal.py::render",
      "quote": "Unpriced models (excluded from totals)",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -251,14 +251,14 @@
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/render/png.py::_cost_by_model",
      "quote": "buckets = report.by_model[:10][::-1]",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/render/png.py::_token_mix",
      "quote": "buckets = report.by_model[:8][::-1]",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -276,7 +276,7 @@
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/render/png.py::_cost_by_project",
      "quote": "ax.set_axis_off()",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -294,7 +294,7 @@
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/cli.py::export",
      "quote": "raise typer.Exit(code=2)",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -313,7 +313,7 @@
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/render/png.py::write_png",
      "quote": "matplotlib.use(\"Agg\")",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"

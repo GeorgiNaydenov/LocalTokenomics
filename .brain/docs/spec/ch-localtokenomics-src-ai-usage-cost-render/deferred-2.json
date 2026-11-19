@@ -11,7 +11,7 @@
      "relation": "declared-in",
      "loc": "src/ai_usage_cost/models.py::Bucket",
      "quote": "class Bucket(BaseModel):",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -29,7 +29,7 @@
      "relation": "declared-in",
      "loc": "src/ai_usage_cost/render/terminal.py::render",
      "quote": "\"model\": (\"By model\", report.by_model),",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -47,21 +47,21 @@
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/render/png.py",
      "quote": "color=PALETTE[index % len(PALETTE)],",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/render/png.py",
      "quote": "color=[PALETTE[i % len(PALETTE)] for i in range(len(buckets))],",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/render/png.py",
      "quote": "ax.barh(labels, values, left=left, label=name, color=PALETTE[index % len(PALETTE)])",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -80,21 +80,21 @@
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/cli.py",
      "quote": "if not report.totals.events:",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/cli.py",
      "quote": "write_png(report, out)",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "src/ai_usage_cost/render/png.py",
      "quote": "fig.suptitle(",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"

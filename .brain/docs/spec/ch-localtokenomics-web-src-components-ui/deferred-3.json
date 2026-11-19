@@ -15,7 +15,7 @@
      "relation": "enforced-by",
      "loc": "web/src/components/ui/chart.tsx::ChartStyle",
      "quote": "    return color ? `  --color-${key}: ${color};` : null",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ]
   }

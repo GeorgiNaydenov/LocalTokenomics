@@ -13,14 +13,14 @@
      "relation": "implemented-by",
      "loc": "web/src/components/states.tsx::WarningsList",
      "quote": "  const shown = kinds.length === 0 ? groups : groups.filter((group) => kinds.includes(group.kind))",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "implemented-by",
      "loc": "web/src/components/states.tsx::WarningGroupRow",
      "quote": "      {(expanded || group.count === 1) && (",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -40,7 +40,7 @@
      "relation": "implemented-by",
      "loc": "web/src/components/metric-info.tsx::MetricInfo",
      "quote": "  const [open, setOpen] = useState(false)",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"

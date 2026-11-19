@@ -136,7 +136,7 @@
      "relation": "enforced-by",
      "loc": "web/src/pricing-notes.ts",
      "quote": "return Math.abs(computed - reported) > Math.max(0.05 * Math.abs(computed), 0.01)",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -154,14 +154,14 @@
      "relation": "enforced-by",
      "loc": "web/src/pricing-notes.ts",
      "quote": "if (days < STALE_INFO_DAYS) return null",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/pricing-notes.ts",
      "quote": "severity: days >= STALE_CAUTION_DAYS ? 'caution' : 'info',",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -179,7 +179,7 @@
      "relation": "enforced-by",
      "loc": "web/src/pricing-format.ts",
      "quote": "return rate.input * rules[field]",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -197,7 +197,7 @@
      "relation": "enforced-by",
      "loc": "web/src/Pricing.tsx",
      "quote": "const state: RateState = isFree ? 'free' : spendValue > 0 ? 'priced' : 'unused'",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -215,7 +215,7 @@
      "relation": "enforced-by",
      "loc": "web/src/format.ts",
      "quote": "return value !== 0 && Math.abs(value) < 0.01 ? moneyPrecise.format(value) : money.format(value)",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -233,7 +233,7 @@
      "relation": "enforced-by",
      "loc": "web/src/turn-insights.ts",
      "quote": "return rows.filter((row) => row.key !== UNATTRIBUTED_TURN_KEY)",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -251,7 +251,7 @@
      "relation": "enforced-by",
      "loc": "web/src/Sessions.tsx",
      "quote": "const SHOWN_LIMIT = 120",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -269,7 +269,7 @@
      "relation": "enforced-by",
      "loc": "web/src/SessionWorkspace.tsx",
      "quote": "if (current.notes === persisted.notes && current.tagsText === persisted.tagsText) return",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -287,14 +287,14 @@
      "relation": "enforced-by",
      "loc": "web/src/App.tsx",
      "quote": "const FIVE_MINUTES = 5 * 60 * 1000",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/App.tsx",
      "quote": "if (interval === null) interval = setInterval(doRefresh, FIVE_MINUTES)",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"

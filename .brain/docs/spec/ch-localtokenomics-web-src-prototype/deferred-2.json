@@ -86,14 +86,14 @@
      "relation": "enforced-by",
      "loc": "web/src/prototype/Screens.tsx",
      "quote": "spans={TRACE_SPANS.map((span) => ({",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/prototype/Screens.tsx",
      "quote": "points={CONTEXT_SNAPSHOTS}",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -111,14 +111,14 @@
      "relation": "enforced-by",
      "loc": "web/src/prototype/Prototype.tsx",
      "quote": "{tab === 'gallery' ? (",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/prototype/Screens.tsx",
      "quote": "const [filters, setFilters] = useState<FilterState>(INITIAL_FILTERS)",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -137,7 +137,7 @@
      "relation": "enforced-by",
      "loc": "web/src/prototype/SessionsScreen.tsx",
      "quote": "Narrow the filters to see the rest.",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -156,7 +156,7 @@
      "relation": "enforced-by",
      "loc": "web/src/prototype/SessionsScreen.tsx",
      "quote": "className=\"cursor-pointer\"",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -175,14 +175,14 @@
      "relation": "enforced-by",
      "loc": "web/src/prototype/PricingScreen.tsx",
      "quote": "const rules = PROVIDER_RULES[rate.provider]",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/prototype/data.ts",
      "quote": "export const PROVIDER_RULES: Record<string, ProviderRules> = {",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -201,14 +201,14 @@
      "relation": "enforced-by",
      "loc": "web/src/prototype/OverviewScreen.tsx",
      "quote": "const top = ranked[0]",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/prototype/OverviewScreen.tsx",
      "quote": "const averagePerSession = TOTALS.cost / TOTALS.sessions",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
@@ -227,14 +227,14 @@
      "relation": "enforced-by",
      "loc": "web/src/prototype/data.ts",
      "quote": "cost: 1489.22,",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     },
     {
      "source": "Code of localtokenomics",
      "relation": "enforced-by",
      "loc": "web/src/prototype/data.ts",
      "quote": "spend: 1489.22",
-     "confidence": "confirmed"
+     "confidence": "inferred"
     }
    ],
    "maturity": "draft"
