@@ -1,0 +1,20 @@
+stateDiagram-v2
+    direction LR
+    [*] --> Loading: workspace opens
+    Loading --> Stored: outcome loaded
+    Loading --> LoadError: outcome request fails
+    Stored --> Editing: notes or tags typed
+    LoadError --> Editing: notes or tags typed
+    Editing --> Editing: blur with no change
+    Editing --> Saving: blur with a change
+    Stored --> Saving: rating picked
+    LoadError --> Saving: rating picked
+    Saving --> Stored: server answers
+    Saving --> SaveError: save fails
+    SaveError --> Saving: rating picked or field edited
+    note right of Saving
+        Not handled: saves are not queued; a second save can start while the first runs.
+    end note
+    note left of Loading
+        Legend: the filled dot starts, a rounded box is a state of the outcome form, an arrow is labelled with the event in the code, a note marks a gap.
+    end note

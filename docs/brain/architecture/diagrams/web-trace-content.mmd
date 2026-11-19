@@ -1,0 +1,18 @@
+stateDiagram-v2
+    direction LR
+    [*] --> Closed: span row drawn
+    Closed --> Loading: Text pressed, nothing stored yet
+    Loading --> Shown: content arrives
+    Loading --> Off: server answers 404
+    Loading --> Failed: other error
+    Shown --> Hidden: Hide pressed
+    Hidden --> Shown: Text pressed, stored content reused
+    Off --> Hidden: Hide pressed
+    Failed --> Hidden: Hide pressed
+    Hidden --> Failed: Text pressed, stored error reused
+    note right of Failed
+        Not handled: a stored error is never fetched again.
+    end note
+    note left of Closed
+        Legend: the filled dot starts, a rounded box is the state of one span text, an arrow is labelled with its trigger, a note marks a gap.
+    end note

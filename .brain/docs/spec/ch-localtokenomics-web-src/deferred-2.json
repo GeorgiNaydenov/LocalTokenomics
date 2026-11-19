@@ -1,0 +1,182 @@
+[
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A workspace tab loads its data only when first opened",
+   "Statement": "The Trace, Economics and Context tabs of a session fetch from the server only after the reader has selected them once; the Summary tab needs no request. `web/src/SessionWorkspace.tsx:472`",
+   "category": "behaviour",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/SessionWorkspace.tsx::useLazyResource",
+     "quote": "    if (!enabled) return",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Span text is fetched once per span",
+   "Statement": "The text of a trace span is requested the first time the reader opens it and the stored result, content or error, is reused afterwards. `web/src/TraceTab.tsx:791`",
+   "category": "behaviour",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/TraceTab.tsx::toggleContent",
+     "quote": "    if (alreadyOpen || contents[span.span_id]) return",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "state-machine",
+  "data": {
+   "name": "Workspace tab data",
+   "entity": "Workspace tab",
+   "States": [
+    "idle",
+    "loading",
+    "ready",
+    "error"
+   ],
+   "Transitions": [
+    "idle to loading: the tab is selected for the first time `web/src/SessionWorkspace.tsx:453`",
+    "loading to ready: the endpoint answers `web/src/SessionWorkspace.tsx:101`",
+    "loading to error: the endpoint fails and the request was not aborted `web/src/SessionWorkspace.tsx:105`",
+    "error to loading: not found; only a new session or a remount runs the load again"
+   ],
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/SessionWorkspace.tsx::useLazyResource",
+     "quote": "function useLazyResource<T>(enabled: boolean, load: (signal: AbortSignal) => Promise<T>): Loadable<T> {",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Risk 5: Sessions are identified by session id alone in the table and when opened",
+   "Risk": "The sessions table keys its rows and opens the workspace by session id only, and the shell looks the row up by that id alone, so two sources that share a session id collide and the first match opens. `web/src/Sessions.tsx:354` `web/src/App.tsx:285`",
+   "Mitigation": "Pass the source with the session id, as the workspace key already does. `web/src/App.tsx:344`",
+   "impact": "medium",
+   "likelihood": "low",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Risk 6: One failed report refetch hides the whole dashboard",
+   "Risk": "A failed report request after the first load sets the shared error, and the shell then replaces every view with an error card that has no retry action. `web/src/App.tsx:193` `web/src/App.tsx:274`",
+   "Mitigation": "Keep the last report on screen with an inline error and a retry, or pass a retry handler to the error card.",
+   "impact": "medium",
+   "likelihood": "medium",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Risk 7: Outcome saves are not sequenced",
+   "Risk": "A rating pick and a notes or tags blur each start a save while another may still run, and the toggle stays enabled during a save, so answers can arrive out of order and the older one can win. `web/src/SessionWorkspace.tsx:274` `web/src/SessionWorkspace.tsx:312`",
+   "Mitigation": "Queue saves or ignore answers of superseded saves.",
+   "impact": "low",
+   "likelihood": "low",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Risk 8: A missing span text is recognised by message wording",
+   "Risk": "The trace tab treats an error as not found when its message contains 404, which depends on the wording of the API helper rather than on a status field. `web/src/TraceTab.tsx:60` `web/src/api.ts:497`",
+   "Mitigation": "Carry the HTTP status on the error object and test it.",
+   "impact": "low",
+   "likelihood": "low",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Risk 9: Rescan can be started twice",
+   "Risk": "The Rescan logs button stays enabled while a scan runs, only its label changes, so a second press sends a second refresh. `web/src/Header.tsx:128` `web/src/App.tsx:211`",
+   "Mitigation": "Disable the button while rescanning is true.",
+   "impact": "low",
+   "likelihood": "medium",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Risk 10: Session rows cannot be opened from the keyboard",
+   "Risk": "A sessions table row opens the workspace on click only, with no tab stop or key handler, while the turn rows of the trace tab do have both. `web/src/Sessions.tsx:355` `web/src/TraceTab.tsx:686`",
+   "Mitigation": "Give the row a tab stop and an Enter handler, or put a button in the session cell.",
+   "impact": "medium",
+   "likelihood": "high",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Question 11: Should filters stay reachable on a large screen while a session is open?",
+   "Question": "On a large screen the filter rail is hidden while a workspace is open and the Filters button is hidden at that breakpoint, so the filters cannot be reached until the workspace closes. Is that intended? See web/src/App.tsx (docked), web/src/FilterRail.tsx (aside) and web/src/Header.tsx (Filters button).",
+   "priority": "medium",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Question 12: Which warnings should the Flagged figure count?",
+   "Question": "The Flagged figure of the overview counts the warning summary of the last scan, while the Sources view lists the warning groups of the current report. Should both use the same set? See web/src/Overview.tsx (FlaggedStat) and web/src/Sources.tsx (Scan warnings panel).",
+   "priority": "low",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Question 13: Should failed tabs and span texts offer a retry?",
+   "Question": "A workspace tab whose endpoint failed and a span text that failed both keep the error with no retry until the session is reopened. Is a retry wanted? See web/src/SessionWorkspace.tsx (LoadableTab) and web/src/TraceTab.tsx (toggleContent).",
+   "priority": "medium",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Question 14: Should the heaviest sessions on the overview open their session?",
+   "Question": "The rows of the heaviest sessions panel show a session but have no click handler, unlike the sessions table. Is opening a session from the overview wanted? See web/src/Overview.tsx (HeavyRow).",
+   "priority": "low",
+   "maturity": "draft"
+  }
+ }
+]

@@ -1,0 +1,19 @@
+flowchart TD
+    web["web"]:::folder --> src["web/src"]:::folder
+    web --> idx(["index.html"]):::entry
+    src --> main(["main.tsx"]):::entry
+    src --> screens["screen components: App, Header, FilterRail, Overview, Sessions, Sources, Pricing, SessionWorkspace and three tabs"]:::folder
+    src --> helpers["helpers: api, format, pricing-format, pricing-notes, turn-insights, theme"]:::folder
+    src --> comps["web/src/components"]:::folder
+    comps --> ui["web/src/components/ui"]:::folder
+    src --> ds["web/src/design-system"]:::folder
+    src --> proto["web/src/prototype"]:::folder
+    proto --> pmain(["prototype main.tsx"]):::entry
+    subgraph Legend
+        direction LR
+        zl1["Box: a folder or a group of files"]:::folder
+        zl2(["Stadium: an entry point"]):::entry
+        zl3["Arrow reads: contains"]:::folder
+    end
+    classDef folder fill:#dae8fc,stroke:#222222,color:#142233
+    classDef entry fill:#fff2cc,stroke:#222222,color:#222222

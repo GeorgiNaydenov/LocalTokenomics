@@ -1,0 +1,25 @@
+flowchart TD
+    req["Request through getJson"]:::step --> net{"fetch throws?"}:::guard
+    net -->|network error or abort| unreach["ApiError: could not reach the server"]:::step
+    net -->|response| ok{"response ok?"}:::guard
+    ok -->|status not 2xx| status["ApiError: path responded status"]:::step
+    ok -->|2xx| json["JSON parsed"]:::step
+    unreach --> abort{"signal aborted?"}:::guard
+    status --> abort
+    abort -->|yes| drop["Ignored silently"]:::step
+    abort -->|no, shell request| shell{"text says could not reach?"}:::guard
+    shell -->|yes| offline(["Offline card with retry"]):::fail
+    shell -->|no| errcard(["Full page error card, no retry"]):::fail
+    abort -->|no, workspace tab| tab(["Tab placeholder with error text"]):::fail
+    abort -->|no, outcome save| save(["Status line shows save error"]):::fail
+    status -->|404 on span text| off(["Span text marked off"]):::fail
+    subgraph Legend
+        direction LR
+        zl1["Step"]:::step
+        zl2{"Guard or check"}:::guard
+        zl3(["Failure the reader sees"]):::fail
+        zl4["Arrow label: the error it carries"]:::step
+    end
+    classDef step fill:#dae8fc,stroke:#222222,color:#142233
+    classDef guard fill:#e1d5e7,stroke:#222222,color:#222222
+    classDef fail fill:#f8cecc,stroke:#222222,color:#222222

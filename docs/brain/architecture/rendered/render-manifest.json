@@ -5,5 +5,75 @@
   "source": "docs/brain/architecture/bpmn/bpmn-scan-and-report.bpmn",
   "source_sha256": "eb4e97547c7d66ac592bb8b2ab66d734a0515b60069a8065490476eb148a0e0f",
   "tool": "product-brain BPMN renderer 1"
+ },
+ "drawio-render-c4.svg": {
+  "bytes": 471184,
+  "output_sha256": "2abb1c8e43bee7af203e8ad7f7183ae09698f25668dfbe459dad9b8b9d36f47e",
+  "source": "docs/brain/architecture/drawio/drawio-render-c4.drawio",
+  "source_sha256": "09f8e59017261ee43234aeb98e098eb81305a4cace9413e85a6720839f2a30a3",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-screen-sources.svg": {
+  "bytes": 296814,
+  "output_sha256": "f1720c2e2cea1676592a7a848d0cc755e73025e1ea4a2a15dcad6e94b59c1910",
+  "source": "docs/brain/architecture/drawio/drawio-screen-sources.drawio",
+  "source_sha256": "76525e2e4a2546fd840443cf76a49bf37b90b11bee39607a0db4a0ed7e1a8700",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-screen-trace-tab.svg": {
+  "bytes": 411637,
+  "output_sha256": "92d1040f5db1ae1804545aaa7385345d18ef6fcd9b7d2e4ad8c995bbad2748a4",
+  "source": "docs/brain/architecture/drawio/drawio-screen-trace-tab.drawio",
+  "source_sha256": "dcb58792dcb88ec840d9f7152640d0999f7e8c9a760b1676296627a9a2ac85dd",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-src-sources-c4.svg": {
+  "bytes": 633843,
+  "output_sha256": "72efdf67aeb9310ca5c3e02b8eb7b94173c3ad190f637df1e85d1c618e71eeb4",
+  "source": "docs/brain/architecture/drawio/drawio-src-sources-c4.drawio",
+  "source_sha256": "1b119539cbb27bddcac85652e50b7967c433d549012b9f07faf3df59a8aaba99",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-src-sources-dfd.svg": {
+  "bytes": 414660,
+  "output_sha256": "4f51f275e41da2f2eb9f3a84f5858b2c32f0e891b8189837589516fb4807d149",
+  "source": "docs/brain/architecture/drawio/drawio-src-sources-dfd.drawio",
+  "source_sha256": "7c4ddc76e515ae56afeacb0f25fd1a0c8618af9316011e96c547a1233493b01c",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-web-filter-rail.svg": {
+  "bytes": 517746,
+  "output_sha256": "3102222b84d66ec06924faf5a4cfe7a67956c3c20ef9ee1046dc75160ab4513a",
+  "source": "docs/brain/architecture/drawio/drawio-web-filter-rail.drawio",
+  "source_sha256": "55f0d32e4050c9c16fa1198aaa72e89489254a8c33a31f330f1c5ca9a621fc93",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-web-outcome-form.svg": {
+  "bytes": 345342,
+  "output_sha256": "d7c11a1392896e57f7781c921fc68aa852b6106517fb7c1154f0a29adbfbab80",
+  "source": "docs/brain/architecture/drawio/drawio-web-outcome-form.drawio",
+  "source_sha256": "d4d7c82b0ba47d6a9ad55a817904362d719c163159754338cec08192d82e4c5a",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-web-rate-table.svg": {
+  "bytes": 378114,
+  "output_sha256": "4c181fd7065f40dab0359558e3168aa415219cbeb0c8dcf1baf7e5bc3d718ef9",
+  "source": "docs/brain/architecture/drawio/drawio-web-rate-table.drawio",
+  "source_sha256": "745f2e906b3f15246e0a3a0e92c3dca199c921a74d0173cc7a13690cd861b328",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-web-sessions-table.svg": {
+  "bytes": 391689,
+  "output_sha256": "7d0cee8404a0c00e87cb9ef8490bd50146121096de0cd69644129d729132afc7",
+  "source": "docs/brain/architecture/drawio/drawio-web-sessions-table.drawio",
+  "source_sha256": "87cfee81caa08117a216b31ad0608cb0ff88baf444ea15a2c790240912acc01b",
+  "tool": "draw.io 28.1.2"
+ },
+ "drawio-web-workspace-panel.svg": {
+  "bytes": 342491,
+  "output_sha256": "1c43b7a36669a2015533b527e05792efd90795d535c0ede6ed04fd914d119089",
+  "source": "docs/brain/architecture/drawio/drawio-web-workspace-panel.drawio",
+  "source_sha256": "00c464a0cc83f8eff78fbe6413939db1d071f4e5124de5cb3eee4077c4bdbeb9",
+  "tool": "draw.io 28.1.2"
  }
 }
