@@ -8,6 +8,192 @@
     "owl": "http://www.w3.org/2002/07/owl#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
-  "@graph": [],
+  "@graph": [
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-figures-are-invented",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Prototype figures are invented",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/prototype/data.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-filters-do-not-filter-the-screens",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Prototype filters do not filter the screens",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/prototype/Screens.tsx"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-rescan-is-staged",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Prototype rescan is staged",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/prototype/Prototype.tsx"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-session-table-shows-at-most-120-rows",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Prototype session table shows at most 120 rows",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/prototype/SessionsScreen.tsx",
+        "web/src/prototype/data.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:prototype-splits-session-cost-across-token-buckets-by-fixed-weights",
+      "@type": [
+        "pb:rule"
+      ],
+      "schema:name": "Prototype splits session cost across token buckets by fixed weights",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:Constraint",
+      "ddd:maps_to": "ddd:Policy",
+      "pb:definedAt": [
+        "web/src/prototype/Screens.tsx"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:state-machine/state-machine:coststate-lifecycle",
+      "@type": [
+        "pb:state-machine"
+      ],
+      "schema:name": "CostState lifecycle",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:Lifecycle",
+      "pb:definedAt": [
+        "web/src/api.ts::CostState",
+        "web/src/prototype/Gallery.tsx::Gallery",
+        "web/src/prototype/data.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:state-machine/state-machine:ratestate-lifecycle",
+      "@type": [
+        "pb:state-machine"
+      ],
+      "schema:name": "RateState lifecycle",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:Lifecycle",
+      "pb:definedAt": [
+        "web/src/Pricing.tsx::RateState",
+        "web/src/prototype/Gallery.tsx::Gallery",
+        "web/src/prototype/data.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:state-machine/state-machine:spankind-lifecycle",
+      "@type": [
+        "pb:state-machine"
+      ],
+      "schema:name": "SpanKind lifecycle",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:Lifecycle",
+      "pb:definedAt": [
+        "web/src/SessionWorkspace.tsx::useLazyResource",
+        "web/src/TraceTab.tsx::toggleContent",
+        "web/src/api.ts::SpanKind",
+        "web/src/prototype/data.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:state-machine/state-machine:spanstatus-lifecycle",
+      "@type": [
+        "pb:state-machine"
+      ],
+      "schema:name": "SpanStatus lifecycle",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:Lifecycle",
+      "pb:definedAt": [
+        "web/src/SessionWorkspace.tsx::useLazyResource",
+        "web/src/TraceTab.tsx::toggleContent",
+        "web/src/api.ts::SpanStatus",
+        "web/src/prototype/data.ts"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:system/system:web-prototype",
+      "@type": [
+        "pb:system"
+      ],
+      "schema:name": "Web prototype",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:ApplicationComponent",
+      "schema:maps_to": "schema:SoftwareApplication",
+      "pb:definedAt": [
+        "web/src/prototype/Gallery.tsx:1-5"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:use-case/use-case:compare-a-dashboard-screen-with-its-reference",
+      "@type": [
+        "pb:use-case"
+      ],
+      "schema:name": "Compare a dashboard screen with its reference",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:BusinessProcess",
+      "ddd:maps_to": "ddd:ApplicationService",
+      "schema:maps_to": "schema:Action",
+      "pb:definedAt": [
+        "web/src/prototype/Prototype.tsx"
+      ],
+      "pb:uses": [
+        {
+          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer"
+        },
+        {
+          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer"
+        }
+      ],
+      "pb:mentions": [
+        {
+          "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer"
+        },
+        {
+          "@id": "urn:product-brain:localtokenomics:glossary-term/glossary-term:prototype"
+        },
+        {
+          "@id": "urn:product-brain:localtokenomics:glossary-term/glossary-term:mock-data"
+        },
+        {
+          "@id": "urn:product-brain:localtokenomics:glossary-term/glossary-term:reference-screen"
+        }
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:actor/actor:dashboard-developer",
+      "@type": [
+        "pb:actor"
+      ],
+      "schema:name": "Dashboard developer",
+      "pb:outside": true
+    }
+  ],
   "unresolved": []
 }

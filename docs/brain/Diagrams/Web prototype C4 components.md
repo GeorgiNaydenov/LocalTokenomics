@@ -8,7 +8,7 @@ audience: internal
 maturity: approved
 confidence: inferred
 covers: [web/src/prototype/**]
-verified-against: b3afa144f2c4
+verified-against: f7104a42d355
 sources: [docs/brain/architecture/diagrams/web-prototype-c4.mmd]
 chunk: ch-localtokenomics-web-src-prototype
 authored: true
@@ -26,7 +26,7 @@ node_citations:
     shipped: ['web/src/main.tsx:3-13', 'web/index.html:26-26']
     api: ['web/src/App.tsx:168-169', 'web/src/App.tsx:186-186']
 approved-by: human
-approved-at: '2026-11-18T18:48:18+00:00'
+approved-at: '2026-11-19T06:43:08+00:00'
 ---
 
 # Web prototype C4 components

@@ -3,11 +3,12 @@ title: Web prototype module dependencies
 aliases: []
 tags: [diagram, mermaid, module-dependency]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/prototype/**]
+verified-against: f7104a42d355
 sources: [docs/brain/architecture/diagrams/prototype-imports.mmd]
 chunk: ch-localtokenomics-web-src-prototype
 authored: true
@@ -24,6 +25,8 @@ node_citations:
     ga: ['web/src/prototype/Gallery.tsx:82-90']
     data: ['web/src/prototype/data.ts:1-1']
     ext: ['web/src/prototype/Prototype.tsx:4-9']
+approved-by: human
+approved-at: '2026-11-19T06:43:08+00:00'
 ---
 
 # Web prototype module dependencies

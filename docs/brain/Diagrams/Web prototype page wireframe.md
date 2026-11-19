@@ -3,11 +3,12 @@ title: Web prototype page wireframe
 aliases: []
 tags: [diagram, drawio, wireframe]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/prototype/**]
+verified-against: f7104a42d355
 sources: [docs/brain/architecture/drawio/drawio-prototype-page-layout.drawio]
 chunk: ch-localtokenomics-web-src-prototype
 authored: true
@@ -50,6 +51,8 @@ node_citations:
     d-trace: ['web/src/prototype/Screens.tsx:194-210']
     d-meta: ['web/src/prototype/Screens.tsx:226-247']
     d-files: ['web/src/prototype/Screens.tsx:249-257']
+approved-by: human
+approved-at: '2026-11-19T06:43:08+00:00'
 ---
 
 # Web prototype page wireframe

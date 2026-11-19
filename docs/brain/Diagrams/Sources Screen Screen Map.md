@@ -3,11 +3,12 @@ title: Sources Screen Screen Map
 aliases: []
 tags: [diagram, drawio, screen-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/prototype/**]
+verified-against: f7104a42d355
 sources: [docs/brain/architecture/drawio/drawio-screen-sources-screen.drawio]
 chunk: ch-localtokenomics-web-src-prototype
 screen-note: Sources Screen Screen
@@ -29,6 +30,8 @@ node_citations:
     badge-6: ['web/src/prototype/SourcesScreen.tsx:82-92']
     badge-7: ['web/src/prototype/SourcesScreen.tsx:84-87']
     badge-8: ['web/src/prototype/SourcesScreen.tsx:89-89']
+approved-by: human
+approved-at: '2026-11-19T06:43:08+00:00'
 ---
 
 # Sources Screen Screen Map

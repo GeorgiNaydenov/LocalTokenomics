@@ -3,11 +3,12 @@ title: Sessions Screen Screen Map
 aliases: []
 tags: [diagram, drawio, screen-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/prototype/**]
+verified-against: f7104a42d355
 sources: [docs/brain/architecture/drawio/drawio-screen-sessions-screen.drawio]
 chunk: ch-localtokenomics-web-src-prototype
 screen-note: Sessions Screen Screen
@@ -65,6 +66,8 @@ node_citations:
     badge-24: ['web/src/prototype/Screens.tsx:227-246']
     badge-25: ['web/src/prototype/Screens.tsx:250-250']
     badge-26: ['web/src/prototype/Screens.tsx:254-256']
+approved-by: human
+approved-at: '2026-11-19T06:43:08+00:00'
 ---
 
 # Sessions Screen Screen Map

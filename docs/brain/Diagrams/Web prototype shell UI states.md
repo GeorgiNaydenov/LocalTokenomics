@@ -3,14 +3,17 @@ title: Web prototype shell UI states
 aliases: []
 tags: [diagram, mermaid, state-chart]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/prototype/**]
+verified-against: f7104a42d355
 sources: [docs/brain/architecture/diagrams/shell-ui-states.mmd]
 chunk: ch-localtokenomics-web-src-prototype
 authored: true
+approved-by: human
+approved-at: '2026-11-19T06:43:08+00:00'
 ---
 
 # Web prototype shell UI states

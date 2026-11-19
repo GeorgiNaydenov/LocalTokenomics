@@ -3,11 +3,12 @@ title: Web prototype glossary map
 aliases: []
 tags: [diagram, glossary-map, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/prototype/**]
+verified-against: f7104a42d355
 sources: [docs/brain/architecture/diagrams/prototype-terms.mmd]
 chunk: ch-localtokenomics-web-src-prototype
 authored: true
@@ -28,6 +29,8 @@ node_citations:
     snap: ['web/src/prototype/data.ts:765-772']
     cap: ['web/src/prototype/data.ts:757-763']
     filt: ['web/src/prototype/Rail.tsx:30-44']
+approved-by: human
+approved-at: '2026-11-19T06:43:08+00:00'
 ---
 
 # Web prototype glossary map

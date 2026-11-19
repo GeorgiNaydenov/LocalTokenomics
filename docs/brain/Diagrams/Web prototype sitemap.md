@@ -3,11 +3,12 @@ title: Web prototype sitemap
 aliases: []
 tags: [diagram, mermaid, sitemap]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/prototype/**]
+verified-against: f7104a42d355
 sources: [docs/brain/architecture/diagrams/prototype-pages.mmd]
 chunk: ch-localtokenomics-web-src-prototype
 authored: true
@@ -23,6 +24,8 @@ node_citations:
     sd: ['web/src/prototype/Screens.tsx:84-264']
     ga: ['web/src/prototype/Gallery.tsx:173-173', 'web/src/prototype/Gallery.tsx:621-621']
     rail: ['web/src/prototype/Screens.tsx:344-350']
+approved-by: human
+approved-at: '2026-11-19T06:43:08+00:00'
 ---
 
 # Web prototype sitemap

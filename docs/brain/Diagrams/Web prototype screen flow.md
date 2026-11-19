@@ -3,11 +3,12 @@ title: Web prototype screen flow
 aliases: []
 tags: [diagram, mermaid, screen-flow]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/prototype/**]
+verified-against: f7104a42d355
 sources: [docs/brain/architecture/diagrams/prototype-navigation.mmd]
 chunk: ch-localtokenomics-web-src-prototype
 authored: true
@@ -23,6 +24,8 @@ node_citations:
     railsheet: ['web/src/prototype/Rail.tsx:264-273']
     rescan: ['web/src/prototype/Prototype.tsx:26-29']
     theme: ['web/src/prototype/Prototype.tsx:87-94']
+approved-by: human
+approved-at: '2026-11-19T06:43:08+00:00'
 ---
 
 # Web prototype screen flow

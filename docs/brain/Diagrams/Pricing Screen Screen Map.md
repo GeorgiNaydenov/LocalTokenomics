@@ -3,11 +3,12 @@ title: Pricing Screen Screen Map
 aliases: []
 tags: [diagram, drawio, screen-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/prototype/**]
+verified-against: f7104a42d355
 sources: [docs/brain/architecture/drawio/drawio-screen-pricing-screen.drawio]
 chunk: ch-localtokenomics-web-src-prototype
 screen-note: Pricing Screen Screen
@@ -41,6 +42,8 @@ node_citations:
     badge-12: ['web/src/prototype/PricingScreen.tsx:173-173']
     badge-13: ['web/src/prototype/PricingScreen.tsx:185-193']
     badge-14: ['web/src/prototype/PricingScreen.tsx:200-202']
+approved-by: human
+approved-at: '2026-11-19T06:43:08+00:00'
 ---
 
 # Pricing Screen Screen Map

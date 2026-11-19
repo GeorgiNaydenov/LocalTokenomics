@@ -236,7 +236,7 @@ chunks:
   globs: [web/src/prototype/**]
   depends_on: [ch-localtokenomics-web-src, ch-localtokenomics-web-src-components,
     ch-localtokenomics-web-src-components-ui]
-  state: in-review
+  state: approved
   display_name: Web prototype
   files: 10
   lines: 3215
@@ -260,7 +260,7 @@ chunks:
       runs}
   existing_docs: stale
   approved_by: human
-  approved_at: '2026-11-18T18:48:19+00:00'
+  approved_at: '2026-11-19T06:43:13+00:00'
 plan_approved_by: human
 plan_approved_at: '2026-11-18T22:51:39+00:00'
 ---
@@ -279,5 +279,5 @@ The ordered plan for documenting this codebase one chunk at a time. Edit the `ch
 | ch-localtokenomics-web-src-components | web/src/components | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components-ui | 18 | 3024 | 142724 | c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow, module-dependency, error-flow | none |
 | ch-localtokenomics-web-src | web/src | approved | ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 20 | 7127 | 220381 | c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow, sitemap, user-journey, error-flow, glossary-map, package-tree | stale |
 | ch-localtokenomics-web-src-components-ui | web/src/components/ui | approved | ch-localtokenomics-web-src | 25 | 2083 | 105294 | c4, mind-map, module-dependency, error-flow | none |
-| ch-localtokenomics-web-src-prototype | web/src/prototype | in-review | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 10 | 3215 | 154804 | c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow, sitemap, user-journey, module-dependency, glossary-map | stale |
+| ch-localtokenomics-web-src-prototype | web/src/prototype | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 10 | 3215 | 154804 | c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow, sitemap, user-journey, module-dependency, glossary-map | stale |
 %% generated:plan-table end %%

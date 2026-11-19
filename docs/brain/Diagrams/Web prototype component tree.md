@@ -3,11 +3,12 @@ title: Web prototype component tree
 aliases: []
 tags: [component-tree, diagram, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/prototype/**]
+verified-against: f7104a42d355
 sources: [docs/brain/architecture/diagrams/prototype-render-tree.mmd]
 chunk: ch-localtokenomics-web-src-prototype
 authored: true
@@ -41,6 +42,8 @@ node_citations:
     sharedchart: ['web/src/prototype/OverviewScreen.tsx:4-8']
     prim: ['web/src/prototype/Prototype.tsx:4-7', 'web/src/prototype/Screens.tsx:3-10',
       'web/src/prototype/SessionsScreen.tsx:3-10']
+approved-by: human
+approved-at: '2026-11-19T06:43:08+00:00'
 ---
 
 # Web prototype component tree
