@@ -2,7 +2,7 @@
 system_type: internal
 tags:
   - arch/system
-maturity: draft
+maturity: approved
 ---
 # Web prototype
 
