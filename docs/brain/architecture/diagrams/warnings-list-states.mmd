@@ -1,0 +1,32 @@
+stateDiagram-v2
+    direction TB
+    state "Showing every group" as ShowingAll
+    state "Filtered to picked kinds" as Filtered
+    state "Nothing shown" as NothingShown
+    state "No groups at all" as NoGroups
+    state "Row collapsed" as Collapsed
+    state "Row expanded" as Expanded
+    state "Row always open" as AlwaysOpen
+    state "Row cannot open" as Stuck
+
+    [*] --> ShowingAll: mounted, no kind picked
+    ShowingAll --> Filtered: reader picks a kind
+    Filtered --> Filtered: reader toggles another kind
+    Filtered --> ShowingAll: reader clears the last kind
+    Filtered --> NothingShown: picked kinds match no group
+    NothingShown --> ShowingAll: reader clears every kind
+    [*] --> NoGroups: groups is an empty list
+
+    [*] --> Collapsed: row with more than one file
+    Collapsed --> Expanded: reader presses Show files
+    Expanded --> Collapsed: reader presses Hide files
+    [*] --> AlwaysOpen: row with exactly one file
+    [*] --> Stuck: row with a count of zero
+
+    note right of ShowingAll
+        Legend: a rounded box is a UI state. An arrow label is the trigger.
+        The filled dot is where a list or a row starts.
+    end note
+    note left of NothingShown
+        Not handled by the code: NothingShown, NoGroups and Stuck draw an empty area with no message.
+    end note

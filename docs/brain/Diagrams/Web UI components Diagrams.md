@@ -44,6 +44,10 @@ The diagram realises the shared display layer of the dashboard. The written expl
 > | `web/src/App.tsx:15-17` | Application imports of the components |
 > | `web/src/components/ui/button.tsx:3` | Primitive importing the shared helper |
 
+## More views of the shared components
+
+The shared dashboard components also have these views: [[Shared components C4]] for the groups and what they lean on, [[Shared components concepts]] for the vocabulary, [[Dashboard component composition]] for which component renders which, [[Shared components imports]] for the file level imports, [[Warnings list states]] and [[Metric info interaction flow]] for two behaviours, [[Offline and error handling flow]] for the failure paths, [[Offline card screen map]] with its screen note [[Offline card Screen]], and [[Session card wireframe]] for the compact session card.
+
 ## Components around Web UI components
 
 %% generated:diagram-module-ch-localtokenomics-web-src-components start (do not edit; run brain docs generate) %%

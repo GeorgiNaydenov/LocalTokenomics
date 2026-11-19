@@ -1,0 +1,54 @@
+flowchart TD
+    start(["Reader sees an info glyph or an explained badge"]):::startNode
+    d1{"How does the reader reach it?"}:::decision
+    s1["Pointer rests on the trigger or the box"]:::step
+    s2["Keyboard focus lands on the trigger"]:::step
+    s3["Reader clicks or taps the trigger"]:::step
+    s4["A 100 ms poll counts 400 ms of pointer time"]:::step
+    s5["Box opens at once"]:::step
+    s6["Box toggles open or closed"]:::step
+    open["Box is open on the right of the trigger"]:::step
+    d2{"Which content kind?"}:::decision
+    s7["One paragraph of text"]:::step
+    s8["Meaning, formula, computed value, provenance, caveats, each only when given"]:::step
+    d3{"How does it close?"}:::decision
+    s9["Pointer outside both for 250 ms and trigger not focused"]:::step
+    s10["Reader clicks the trigger again"]:::step
+    s11["The popover reports a close request"]:::step
+    done(["Box closed, focus is not handed back"]):::ok
+
+    start --> d1
+    d1 -->|hover| s1
+    d1 -->|keyboard| s2
+    d1 -->|click or tap| s3
+    s1 --> s4
+    s4 --> open
+    s2 --> s5
+    s5 --> open
+    s3 --> s6
+    s6 --> open
+    open --> d2
+    d2 -->|simple| s7
+    d2 -->|metric| s8
+    s7 --> d3
+    s8 --> d3
+    d3 -->|pointer leaves| s9
+    d3 -->|second click| s10
+    d3 -->|other| s11
+    s9 --> done
+    s10 --> done
+    s11 --> done
+
+    subgraph Legend
+        direction LR
+        zlegend_a(["Start"]):::startNode
+        zlegend_b["Step"]:::step
+        zlegend_c{"Decision, arrows are labelled"}:::decision
+        zlegend_d(["End"]):::ok
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d
+    end
+
+    classDef startNode fill:#fff2cc,stroke:#222222,color:#222222
+    classDef step fill:#dae8fc,stroke:#222222,color:#222222
+    classDef decision fill:#ffffff,stroke:#222222,color:#222222
+    classDef ok fill:#d5e8d4,stroke:#222222,color:#222222

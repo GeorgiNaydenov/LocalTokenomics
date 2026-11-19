@@ -1,0 +1,46 @@
+flowchart TD
+    fReq["A data request fails in a page"]:::step
+    oErr(["Reader sees: Something went wrong card, retry only when the page passes one"]):::fail
+    fOff["The local reader does not answer"]:::step
+    oOff(["Reader sees: card saying the dashboard lost the local reader"]):::fail
+    fCopy["Clipboard write is rejected"]:::step
+    gCatch["Rejection is swallowed"]:::guard
+    oSilent(["Reader sees no change on the Copy command button"]):::fail
+    fNull["A number or ratio is null"]:::step
+    gNull["Null checks in each display part"]:::guard
+    oUnav(["Reader sees the word unavailable, or a hatched bar for unknown occupancy"]):::fail
+    fEmpty["A series or list is empty"]:::step
+    gEmpty["Early return of nothing"]:::guard
+    oBlank(["Reader sees an empty area and no message"]):::fail
+    fStore["Browser storage is unreadable, corrupt or full"]:::step
+    gStore["try and catch around every read and write"]:::guard
+    oDef(["Reader gets the default width and all columns, a failed save is not reported"]):::fail
+    fCols["Every column is hidden"]:::step
+    gCols["visibleColumns guard"]:::guard
+    oAll(["Reader sees all columns while the chooser shows every box unchecked"]):::fail
+
+    fReq -->|"error message from the caller"| oErr
+    fOff -->|"offline card is shown instead of the page"| oOff
+    oOff -->|"Copy command pressed"| fCopy
+    fCopy -->|"promise rejection"| gCatch
+    gCatch -->|"nothing thrown, nothing shown"| oSilent
+    fNull -->|"null value"| gNull
+    gNull -->|"unavailable text"| oUnav
+    fEmpty -->|"no rows"| gEmpty
+    gEmpty -->|"null return"| oBlank
+    fStore -->|"exception"| gStore
+    gStore -->|"default value"| oDef
+    fCols -->|"empty visible list"| gCols
+    gCols -->|"full column list"| oAll
+
+    subgraph Legend
+        direction LR
+        zlegend_a["Step: where a failure starts"]:::step
+        zlegend_b["Guard or validator"]:::guard
+        zlegend_c(["Failure the reader sees, arrow label is the error carried"]):::fail
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c
+    end
+
+    classDef step fill:#dae8fc,stroke:#222222,color:#222222
+    classDef guard fill:#e1d5e7,stroke:#222222,color:#222222
+    classDef fail fill:#f8cecc,stroke:#222222,color:#222222
