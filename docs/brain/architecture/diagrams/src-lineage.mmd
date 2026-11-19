@@ -1,0 +1,41 @@
+flowchart LR
+    tools(["AI coding tools<br/>write logs on this machine"]):::external
+    roots_in(["Root paths<br/>per machine defaults or the root option"]):::external
+    logs[("JSONL session logs<br/>claude-code, codex, gemini-cli, jan")]:::store
+    tasks[("JSON task files<br/>cline, roo-code, kilo-code-legacy")]:::store
+    dbs[("SQLite stores<br/>opencode, cursor, dyad, ollama-app")]:::store
+    pick["Pick roots<br/>present_roots keeps roots that exist"]:::process
+    listing["List files<br/>files(root) per reader"]:::process
+    parse["Read and map<br/>parse(path, warnings)"]:::process
+    spans["Build spans<br/>spans(path, warnings), four readers"]:::process
+    reg["Registry<br/>registry(), client_labels()"]:::process
+    store(["Usage store and report<br/>store.py, pipeline.py, other chunks"]):::external
+    tools -->|records and rows| logs
+    tools -->|records and rows| tasks
+    tools -->|records and rows| dbs
+    roots_in -->|root paths| pick
+    pick -->|existing roots| listing
+    logs -->|file names| listing
+    tasks -->|file names| listing
+    dbs -->|file names| listing
+    listing -->|file paths| parse
+    logs -->|raw records| parse
+    tasks -->|raw records| parse
+    dbs -->|read only rows| parse
+    logs -->|raw records| spans
+    parse -->|usage events| store
+    parse -.->|warnings| store
+    spans -->|span records| store
+    reg -->|sources and client labels| store
+    subgraph Legend
+        direction LR
+        zlegend_a(["Outside source or sink"]):::external
+        zlegend_b[("Data store: a tool's files")]:::store
+        zlegend_c["Process: a step of a reader"]:::process
+        zlegend_d["Arrow is named after the data, not the action"]:::process
+        zlegend_e["Dashed arrow: a side output"]:::process
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d ~~~ zlegend_e
+    end
+    classDef external fill:#eeeeee,stroke:#222222,stroke-dasharray:5 3,color:#111111
+    classDef store fill:#d5e8d4,stroke:#222222,color:#111111
+    classDef process fill:#dae8fc,stroke:#222222,color:#111111

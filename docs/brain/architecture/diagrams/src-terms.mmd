@@ -1,0 +1,34 @@
+flowchart LR
+    source("Source<br/>one reader for one tool"):::term
+    root("Root<br/>a folder or file a reader scans"):::term
+    client("Client<br/>the tool name shown to people"):::term
+    tokendata("Token data<br/>full or session"):::term
+    event("Usage event<br/>one request or one turn"):::term
+    tokens("Token usage<br/>counts by bucket"):::term
+    span("Span<br/>one step inside a session"):::term
+    caps("Capabilities<br/>what a reader can see"):::term
+    prov("Provenance<br/>where a value came from"):::term
+    exp("Experimental<br/>not checked on a real session"):::term
+    resume("parse_resume<br/>re-read a grown log from an offset"):::term
+    session("Session id<br/>groups events of one chat"):::term
+    tsource("Title source<br/>tool, summary, prompt or folder"):::term
+    source -->|scans| root
+    source -->|names| client
+    source -->|declares| tokendata
+    source -->|yields many| event
+    source -->|may yield| span
+    source -->|declares| caps
+    source -->|may be flagged| exp
+    source -->|may declare| resume
+    caps -->|labels each value with| prov
+    event -->|has none when session only| tokens
+    span -->|has none when unknown| tokens
+    event -->|belongs to| session
+    event -->|has| tsource
+    subgraph Legend
+        direction LR
+        zlegend_a("Term: named as the code names it"):::term
+        zlegend_b["Arrow label: the relation, such as has, yields, belongs to"]:::term
+        zlegend_a ~~~ zlegend_b
+    end
+    classDef term fill:#dae8fc,stroke:#222222,color:#111111
