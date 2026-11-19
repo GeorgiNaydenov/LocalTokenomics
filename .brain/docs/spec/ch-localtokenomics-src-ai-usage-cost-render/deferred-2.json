@@ -1,0 +1,113 @@
+[
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Bucket",
+   "Definition": "One row of a breakdown: a key, a label, a cost, token counts and a request count. The terminal tables and the model and project charts are drawn from lists of buckets.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/models.py::Bucket",
+     "quote": "class Bucket(BaseModel):",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Group by",
+   "Definition": "The choice of breakdown for the terminal summary: model, client, provider, project or day. An unknown name falls back to model.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/render/terminal.py::render",
+     "quote": "\"model\": (\"By model\", report.by_model),",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Chart colours follow position, not meaning",
+   "Statement": "The picture writer takes colours from one seven colour list by position. In the cost per day chart a colour is a client, in the model chart a rank, and in the token mix chart a token bucket, so the same colour means a different thing in each panel.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/render/png.py",
+     "quote": "color=PALETTE[index % len(PALETTE)],",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/render/png.py",
+     "quote": "color=[PALETTE[i % len(PALETTE)] for i in range(len(buckets))],",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/render/png.py",
+     "quote": "ax.barh(labels, values, left=left, label=name, color=PALETTE[index % len(PALETTE)])",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Export writes a chart for a report with no events",
+   "Risk": "The scan command refuses an empty report with a hint and exit code 1, but the export command has no such check, so a png export of an empty report writes a figure with a zero cost title and empty axes and then prints that it wrote the file.",
+   "Mitigation": "Share the empty report check between the two commands, or print a warning before the picture is written.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/cli.py",
+     "quote": "if not report.totals.events:",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/cli.py",
+     "quote": "write_png(report, out)",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/render/png.py",
+     "quote": "fig.suptitle(",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Should the four chart colours keep one meaning across panels?",
+   "Question": "Colours are assigned by position in each chart, so a reader can take indigo for a client in one panel and for the top model in another. Checked src/ai_usage_cost/render/png.py. Is a fixed colour per client or per model wanted?",
+   "priority": "low",
+   "maturity": "draft"
+  }
+ }
+]

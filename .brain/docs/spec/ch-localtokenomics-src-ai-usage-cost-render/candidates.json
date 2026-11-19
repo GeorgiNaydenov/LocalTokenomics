@@ -8,6 +8,8 @@
  "external_calls": [],
  "entities": [],
  "existing": [
-  "candidates.json"
+  "candidates.json",
+  "deferred-1.json",
+  "ids.json"
  ]
 }
