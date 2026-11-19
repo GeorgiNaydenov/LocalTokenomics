@@ -1,0 +1,41 @@
+flowchart TD
+    subgraph cmd["Command line layer"]
+        cli["cli.py"]:::mod
+    end
+    subgraph render["Render layer"]
+        terminal["render/terminal.py"]:::mod
+        png["render/png.py"]:::mod
+    end
+    subgraph report["Report layer"]
+        aggregate["aggregate.py"]:::mod
+        models["models.py"]:::mod
+        pricing["pricing.py"]:::mod
+        sourcesbase["sources/base.py"]:::mod
+    end
+    rich["rich"]:::external
+    mpl["matplotlib"]:::external
+
+    cli --> terminal
+    cli -.-> png
+    cli --> aggregate
+    terminal --> aggregate
+    png --> aggregate
+    terminal --> rich
+    png --> mpl
+    aggregate --> models
+    aggregate --> pricing
+    aggregate --> sourcesbase
+
+    subgraph Legend
+        direction LR
+        zl1["Box: a module, an arrow from A to B means A imports B"]:::mod
+        zl2["Dashed arrow: an import inside a function, run only when that command runs"]:::mod
+        zl3["Grey dashed box: a third party package"]:::external
+        zl4["Red arrow: a cycle. None exists between these files"]:::mod
+        zl1 ~~~ zl2
+        zl2 ~~~ zl3
+        zl3 ~~~ zl4
+    end
+
+    classDef mod fill:#dae8fc,stroke:#222222,color:#111111
+    classDef external fill:#e6e6e6,stroke:#222222,stroke-dasharray:5 3,color:#111111
