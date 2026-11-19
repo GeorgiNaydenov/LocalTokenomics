@@ -7,4 +7,4 @@ maturity: approved
 
 ## Definition
 
-A request made by a subagent rather than the main conversation. `src/ai_usage_cost/models.py:58`
+A subagent thread of a session. The query can exclude it with a flag at `web/src/api.ts:373`.

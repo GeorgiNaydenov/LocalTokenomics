@@ -7,4 +7,4 @@ maturity: approved
 
 ## Definition
 
-How a value is known: measured, derived, estimated, inferred or unavailable. `src/ai_usage_cost/models.py:9`
+Where a shown number came from: measured, derived, estimated, inferred or unavailable. Defined at `web/src/api.ts:63`.

@@ -7,4 +7,4 @@ maturity: approved
 
 ## Definition
 
-One of priced, free, unpriced or unavailable. `src/ai_usage_cost/models.py:8`
+How a session or request was priced: priced, free, unpriced or unavailable. Only priced figures enter cost totals. Defined at `web/src/api.ts:61`.
