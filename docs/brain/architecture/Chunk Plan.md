@@ -117,7 +117,7 @@ chunks:
   components: ['localtokenomics:src-ai-usage-cost-render']
   globs: [src/ai_usage_cost/render/**]
   depends_on: [ch-localtokenomics-src-ai-usage-cost]
-  state: in-review
+  state: approved
   display_name: Ai usage cost render
   files: 3
   lines: 187
@@ -131,7 +131,7 @@ chunks:
       runs}
   existing_docs: none
   approved_by: human
-  approved_at: '2026-11-18T19:06:21+00:00'
+  approved_at: '2026-11-19T06:47:09+00:00'
 - id: ch-localtokenomics-web-src-components
   title: web/src/components
   repo: localtokenomics
@@ -274,13 +274,8 @@ The ordered plan for documenting this codebase one chunk at a time. Edit the `ch
 |---|---|---|---|---|---|---|---|---|
 | ch-localtokenomics-root | localtokenomics root | approved | - | 2 | 56 | 78223 | c4, mind-map, capability, config-map, package-tree | stale |
 | ch-localtokenomics-src-ai-usage-cost-sources | src/ai_usage_cost/sources | approved | ch-localtokenomics-src-ai-usage-cost | 22 | 4722 | 160113 | c4, mind-map, class, data-lineage, dfd, module-dependency, glossary-map | covered |
-<<<<<<< HEAD
 | ch-localtokenomics-src-ai-usage-cost | src/ai_usage_cost | approved | ch-localtokenomics-src-ai-usage-cost-render, ch-localtokenomics-src-ai-usage-cost-sources | 13 | 5069 | 220126 | c4, mind-map, api-map, sequence, use-case-diagram, flowchart, erd, erd-conceptual, class, data-lineage, state, dfd, activity, timeline, gantt, bpmn, error-flow, glossary-map, package-tree | stale |
 | ch-localtokenomics-src-ai-usage-cost-render | src/ai_usage_cost/render | approved | ch-localtokenomics-src-ai-usage-cost | 3 | 187 | 71167 | c4, mind-map, module-dependency | none |
-=======
-| ch-localtokenomics-src-ai-usage-cost | src/ai_usage_cost | in-review | ch-localtokenomics-src-ai-usage-cost-render, ch-localtokenomics-src-ai-usage-cost-sources | 13 | 5069 | 220126 | c4, mind-map, api-map, sequence, use-case-diagram, flowchart, erd, erd-conceptual, class, data-lineage, state, dfd, activity, timeline, gantt, bpmn, error-flow, glossary-map, package-tree | stale |
-| ch-localtokenomics-src-ai-usage-cost-render | src/ai_usage_cost/render | in-review | ch-localtokenomics-src-ai-usage-cost | 3 | 187 | 71167 | c4, mind-map, module-dependency | none |
->>>>>>> docs/top-render
 | ch-localtokenomics-web-src-components | web/src/components | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components-ui | 18 | 3024 | 142724 | c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow, module-dependency, error-flow | none |
 | ch-localtokenomics-web-src | web/src | approved | ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 20 | 7127 | 220381 | c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow, sitemap, user-journey, error-flow, glossary-map, package-tree | stale |
 | ch-localtokenomics-web-src-components-ui | web/src/components/ui | approved | ch-localtokenomics-web-src | 25 | 2083 | 105294 | c4, mind-map, module-dependency, error-flow | none |

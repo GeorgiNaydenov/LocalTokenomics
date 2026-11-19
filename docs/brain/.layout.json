@@ -53,6 +53,8 @@
  "Readers data flow": "Diagrams/Readers data flow.md",
  "Release Checklist": "Releases/Release Checklist.md",
  "Render layer components": "Diagrams/Render layer components.md",
+ "Render layer mind map": "Diagrams/Render layer mind map.md",
+ "Render layer module dependencies": "Diagrams/Render layer module dependencies.md",
  "Repository folder layout": "Diagrams/Repository folder layout.md",
  "Repository root capabilities": "Diagrams/Repository root capabilities.md",
  "Repository root concepts": "Diagrams/Repository root concepts.md",

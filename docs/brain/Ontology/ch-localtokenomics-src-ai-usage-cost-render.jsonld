@@ -8,6 +8,20 @@
     "owl": "http://www.w3.org/2002/07/owl#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
-  "@graph": [],
+  "@graph": [
+    {
+      "@id": "urn:product-brain:localtokenomics:system/system:ai-usage-cost-render",
+      "@type": [
+        "pb:system"
+      ],
+      "schema:name": "Ai usage cost render",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:ApplicationComponent",
+      "schema:maps_to": "schema:SoftwareApplication",
+      "pb:definedAt": [
+        "src/ai_usage_cost/render/__init__.py:1-1"
+      ]
+    }
+  ],
   "unresolved": []
 }

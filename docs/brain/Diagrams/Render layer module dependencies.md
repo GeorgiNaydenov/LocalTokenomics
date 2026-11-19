@@ -3,11 +3,12 @@ title: Render layer module dependencies
 aliases: []
 tags: [diagram, mermaid, module-dependency]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/render/**]
+verified-against: 15259010c74a
 sources: [docs/brain/architecture/diagrams/render-imports.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost-render
 authored: true
@@ -22,6 +23,8 @@ node_citations:
     sourcesbase: ['src/ai_usage_cost/aggregate.py:13-13']
     rich: ['src/ai_usage_cost/render/terminal.py:3-5']
     mpl: ['src/ai_usage_cost/render/png.py:7-11']
+approved-by: human
+approved-at: '2026-11-19T06:47:07+00:00'
 ---
 
 # Render layer module dependencies

@@ -3,14 +3,17 @@ title: Render layer mind map
 aliases: []
 tags: [diagram, mermaid, mind-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/render/**]
+verified-against: 15259010c74a
 sources: [docs/brain/architecture/diagrams/render-concepts.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost-render
 authored: true
+approved-by: human
+approved-at: '2026-11-19T06:47:07+00:00'
 ---
 
 # Render layer mind map

@@ -8,7 +8,7 @@ audience: internal
 maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/render/**]
-verified-against: ef290ff43851
+verified-against: 15259010c74a
 sources: [docs/brain/architecture/drawio/drawio-render-c4.drawio]
 chunk: ch-localtokenomics-src-ai-usage-cost-render
 authored: true
@@ -23,7 +23,7 @@ node_citations:
     mpl: ['src/ai_usage_cost/render/png.py:7-11']
     file: ['src/ai_usage_cost/render/png.py:31-33']
 approved-by: human
-approved-at: '2026-11-18T19:06:20+00:00'
+approved-at: '2026-11-19T06:47:07+00:00'
 ---
 
 # Render layer components
