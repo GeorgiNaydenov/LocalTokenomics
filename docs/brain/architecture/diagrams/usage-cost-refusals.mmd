@@ -1,0 +1,37 @@
+flowchart TD
+    subgraph http["HTTP routes"]
+        req["Route call"]:::step
+        g_store{{"Analysis has a store?"}}:::guard
+        g_sess{{"Session stored and not forgotten?"}}:::guard
+        g_span{{"Span in the session?"}}:::guard
+        g_text{{"Text released and readable?"}}:::guard
+        ok_http["Answer the route"]:::step
+        e503(["503 built without a store"]):::fail
+        e404s(["404 no session"]):::fail
+        e404p(["404 no span"]):::fail
+        e404c(["404 no readable content"]):::fail
+    end
+    req --> g_store
+    g_store -->|no| e503
+    g_store -->|yes| g_sess
+    g_sess -->|no| e404s
+    g_sess -->|yes, content route| g_span
+    g_sess -->|yes, other routes| ok_http
+    g_span -->|no| e404p
+    g_span -->|yes| g_text
+    g_text -->|ContentUnavailable| e404c
+    g_text -->|yes| ok_http
+
+    subgraph Legend
+        direction LR
+        zlegend_a["Step"]:::step
+        zlegend_b{{"Guard or validator"}}:::guard
+        zlegend_c(["Failure the caller sees"]):::fail
+        zlegend_e["An arrow is labelled with the error it carries"]:::step
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_e
+    end
+
+    classDef step fill:#dae8fc,stroke:#222222,color:#222222
+    classDef guard fill:#e1d5e7,stroke:#222222,color:#222222
+    classDef fail fill:#f8cecc,stroke:#222222,color:#222222
+    classDef hidden fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:4 3

@@ -1,0 +1,98 @@
+classDiagram
+    direction LR
+    class UsageEvent {
+        +str source
+        +str client
+        +str model
+        +datetime timestamp
+        +str session_id
+        +str tier
+        +bool is_sidechain
+        +float reported_cost
+    }
+    class TokenUsage {
+        +int uncached_input
+        +int cache_read
+        +int cache_write_5m
+        +int cache_write_1h
+        +int output
+        +int reasoning_output
+        +total() int
+    }
+    class PricedEvent {
+        +CostState state
+    }
+    class CostBreakdown {
+        +float uncached_input
+        +float cache_read
+        +float cache_write
+        +float output
+        +float no_cache_equivalent
+        +bool estimated
+        +total() float
+    }
+    class Bucket {
+        +str key
+        +int events
+        +int sessions
+    }
+    class Report {
+        +datetime generated_at
+        +str rates_as_of
+        +list warnings
+    }
+    class Totals {
+        +int events
+        +int sessions
+    }
+    class SessionRow {
+        +str session_id
+        +CostState cost_state
+        +OutcomeLabel outcome
+    }
+    class Analysis {
+        +int files
+        +list warnings
+        +Path db_path
+    }
+    class RateTable {
+        +str as_of
+        +str currency
+    }
+    class ModelRate {
+        +str match
+        +str provider
+        +str display
+    }
+    class Span {
+        +str span_id
+        +SpanKind kind
+        +SpanStatus status
+        +Provenance tokens_provenance
+    }
+    class OutcomeUpdate {
+        +OutcomeLabel outcome
+        +str notes
+        +list tags
+    }
+    class Outcome {
+        +str source
+        +str session_id
+    }
+    UsageEvent "1" *-- "0..1" TokenUsage : tokens
+    PricedEvent "1" *-- "1" UsageEvent : event
+    PricedEvent "1" *-- "0..1" CostBreakdown : cost
+    Analysis "1" o-- "*" PricedEvent : events
+    Analysis "1" --> "1" RateTable : table
+    RateTable "1" *-- "*" ModelRate : models
+    Report "1" *-- "1" Totals : totals
+    Report "1" *-- "*" Bucket : by_client, by_model, by_day
+    Report "1" *-- "*" SessionRow : sessions
+    Bucket "1" *-- "1" CostBreakdown : cost
+    Span "1" *-- "0..1" TokenUsage : tokens
+    OutcomeUpdate <|-- Outcome
+    class Legend {
+        <<legend>>
+        +field type
+    }
+    note for Legend "Legend: a box is a type with the fields that carry meaning. A line with a filled diamond is composition, an open diamond is aggregation, an open triangle is inheritance, a plain arrow is a reference. Numbers at each end are multiplicities: 1 one, 0..1 optional, * many."

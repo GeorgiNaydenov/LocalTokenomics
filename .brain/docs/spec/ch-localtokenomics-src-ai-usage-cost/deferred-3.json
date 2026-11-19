@@ -1,0 +1,298 @@
+[
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "The alert window ends today",
+   "category": "calculation",
+   "subdomain": "Spend reporting",
+   "Statement": "The alert reports the window of local days that ends today and starts the given number of days back, today included. `src/ai_usage_cost/cli.py:330`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/cli.py::alert",
+     "quote": "since = until - timedelta(days=days - 1)",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A rise is measured against the window just before",
+   "category": "calculation",
+   "subdomain": "Spend reporting",
+   "Statement": "With the rise threshold the earlier window has the same length and ends the day before the current window starts. `src/ai_usage_cost/cli.py:336`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/cli.py::alert",
+     "quote": "analysis, since=since - timedelta(days=days), until=since - timedelta(days=1)",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "An alert fires only above the threshold",
+   "category": "calculation",
+   "subdomain": "Spend reporting",
+   "Statement": "The alert fires when the compared amount is strictly greater than the threshold; an equal amount sends nothing. `src/ai_usage_cost/cli.py:282`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/cli.py::alert_decision",
+     "quote": "return AlertDecision(fire=amount > threshold, message=\"\\n\".join(lines))",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Schema migrations only run forward",
+   "category": "data",
+   "subdomain": "Usage collection",
+   "Statement": "Opening the store runs every migration after the stored schema version, in list order, and records the new version after each; there is no downgrade step. `src/ai_usage_cost/store.py:147`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/store.py::open_store",
+     "quote": "for index, migration in enumerate(MIGRATIONS[current:], start=current):",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "A route without a store answers 503",
+   "category": "interface",
+   "subdomain": "Spend reporting",
+   "Statement": "A route that must open the store answers 503 when the analysis was built without a store path. `src/ai_usage_cost/api.py:223`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/api.py::create_app.opened",
+     "quote": "raise HTTPException(503, \"this analysis was built without a store\")",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Unreadable span text answers 404",
+   "category": "interface",
+   "subdomain": "Privacy and retention",
+   "Statement": "The content route answers 404 when the span is not in the session, and also when its text is not released or cannot be read. `src/ai_usage_cost/api.py:382`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "src/ai_usage_cost/api.py::create_app.span_content",
+     "quote": "raise HTTPException(404, f\"no readable content for span {span_id!r}\") from exc",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "event",
+  "data": {
+   "name": "GPU sample recorded",
+   "Description": "Written once per successful reading of the GPU sampler, into the samples table. `src/ai_usage_cost/collect.py:275`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/collect.py::insert_sample",
+     "quote": "def insert_sample(conn: sqlite3.Connection, sample: Sample) -> None:",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "event",
+  "data": {
+   "name": "Analysis refreshed",
+   "Description": "Happens when the dashboard asks for a refresh: the analysis is rebuilt and the span cache is cleared. `src/ai_usage_cost/api.py:391`",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "declared-in",
+     "loc": "src/ai_usage_cost/api.py::create_app.refresh",
+     "quote": "state[\"analysis\"] = analyze(db_path=db_path, roots=roots, rates_path=rates_path)",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Warning severity",
+   "Definition": "How much a warning's discrepancy affects the totals: info has no effect, caution is partly affected and bounded, critical is materially wrong. `src/ai_usage_cost/aggregate.py:83`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "GPU sample",
+   "Definition": "One reading of GPU utilisation, memory and power on a machine at a moment, with the tool that produced it. `src/ai_usage_cost/collect.py:49`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Alert window",
+   "Definition": "The run of local days, ending today, whose spend the alert command compares with a threshold. `src/ai_usage_cost/cli.py:314`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Schema version",
+   "Definition": "The number SQLite keeps as user_version, telling which migrations the store has already run. `src/ai_usage_cost/store.py:146`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "nfr",
+  "data": {
+   "name": "GPU sampling interval",
+   "category": "performance",
+   "target": "One reading every 2 seconds by default, until stopped or a duration ends",
+   "applies_to": [
+    "Usage collection"
+   ],
+   "Statement": "The collect command samples at a default interval of two seconds and sleeps between readings. `src/ai_usage_cost/cli.py:201` `src/ai_usage_cost/collect.py:277`",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Forgetting a session keeps its cost",
+   "impact": "A forgotten session still counts in totals and its raw records stay in the store, while its routes answer 404",
+   "likelihood": "high whenever a session is forgotten",
+   "Risk": "Forgetting deletes only the session's spans and rating `src/ai_usage_cost/store.py:597`, and ingest checks exclusions only for spans `src/ai_usage_cost/store.py:273`, so its requests are kept and stored again.",
+   "Mitigation": "Not found in the code. See the open question on forgetting requests.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Project exclusion and retention skip requests",
+   "impact": "Requests of an excluded or expired project keep their project, working directory and raw record in the store and in reports",
+   "likelihood": "medium",
+   "Risk": "Requests are inserted without the exclusion test `src/ai_usage_cost/store.py:270` and retention deletes only trace rows `src/ai_usage_cost/store.py:302`.",
+   "Mitigation": "Not found in the code.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Truncation runs before redaction",
+   "impact": "A secret cut at the byte limit can fall below a pattern's minimum length and be returned unredacted",
+   "likelihood": "low, and only when metadata only is off",
+   "Risk": "Released text is truncated first and redacted after `src/ai_usage_cost/privacy.py:97` `src/ai_usage_cost/privacy.py:98`.",
+   "Mitigation": "Content is off by default `src/ai_usage_cost/privacy.py:53`.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "A bad date option ends in a raw error",
+   "impact": "A mistyped since or until value shows a Python error instead of a usage message",
+   "likelihood": "medium",
+   "Risk": "Dates are parsed with no guard `src/ai_usage_cost/cli.py:45`.",
+   "Mitigation": "Not found in the code.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "An invalid rate file stops every command",
+   "impact": "One malformed rates.json row stops scan, serve, export, alert and tui with a validation error",
+   "likelihood": "low for the bundled file, medium for a file passed with --rates",
+   "Risk": "Loading validates the whole file with no handler `src/ai_usage_cost/pricing.py:287`.",
+   "Mitigation": "The model validators reject duplicate keys and overlapping periods at load, so a bad file fails loudly rather than pricing quietly.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Should forgetting a session remove its requests",
+   "priority": "high",
+   "status": "open",
+   "linked": [
+    "Forget a session"
+   ],
+   "Question": "Forgetting removes spans and the rating but keeps requests `src/ai_usage_cost/store.py:595`. Should the session's cost and raw records also go, and should project exclusion apply to requests?",
+   "Raised by": "Reading store.py and api.py",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Sampler error message omits rocm-smi",
+   "priority": "low",
+   "status": "open",
+   "linked": [
+    "Sample GPU use for local models"
+   ],
+   "Question": "The sampler supports rocm-smi `src/ai_usage_cost/collect.py:88` but the error names only nvidia-smi and PowerShell `src/ai_usage_cost/cli.py:214`. Is the message stale?",
+   "Raised by": "Reading cli.py and collect.py",
+   "maturity": "draft"
+  }
+ }
+]

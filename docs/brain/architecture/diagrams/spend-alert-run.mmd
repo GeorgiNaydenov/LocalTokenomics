@@ -1,0 +1,59 @@
+flowchart TD
+    subgraph lane_person["Person"]
+        start(("Start: runs alert with --to, a threshold and --days")):::startNode
+    end
+    subgraph lane_cli["alert command"]
+        d_opts{"days at least 1 and exactly one of over, rise-over?"}:::decision
+        d_extra{"apprise installed?"}:::decision
+        win("Window: today and the days before it"):::action
+        d_rise{"rise-over given?"}:::decision
+        prev("Report the window of the same length before it"):::action
+        decide("alert_decision, then print its message"):::action
+        d_fire{"amount above the threshold?"}:::decision
+        add("Add every --to target"):::action
+        d_add{"every target accepted?"}:::decision
+        d_sent{"notify delivered?"}:::decision
+    end
+    subgraph lane_pipe["pipeline"]
+        analyse("analyze, then report_of for the window"):::action
+    end
+    subgraph lane_apprise["Apprise"]
+        send("Send title and message"):::action
+    end
+    bad(("Exit: bad parameter")):::fail
+    noextra(("Exit code 2: extra missing")):::fail
+    quiet(("End: nothing sent")):::endNode
+    failed(("Exit code 1: target rejected or not delivered")):::fail
+    done(("End: alert sent")):::endNode
+
+    start --> d_opts
+    d_opts -->|no| bad
+    d_opts -->|yes| d_extra
+    d_extra -->|no| noextra
+    d_extra -->|yes| win --> analyse --> d_rise
+    d_rise -->|yes| prev --> decide
+    d_rise -->|no| decide
+    decide --> d_fire
+    d_fire -->|no| quiet
+    d_fire -->|yes| add --> d_add
+    d_add -->|no| failed
+    d_add -->|yes| send --> d_sent
+    d_sent -->|no| failed
+    d_sent -->|yes| done
+
+    subgraph Legend
+        direction LR
+        zlegend_a(("Start or end")):::startNode
+        zlegend_b("Action"):::action
+        zlegend_c{"Decision, every arrow labelled"}:::decision
+        zlegend_d(("Exit that fails")):::fail
+        zlegend_e["Lane: a titled box names who does the step. No fork or join: the run has no parallel branch"]:::lanekey
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c ~~~ zlegend_d ~~~ zlegend_e
+    end
+
+    classDef startNode fill:#fff2cc,stroke:#222222,color:#222222
+    classDef endNode fill:#d5e8d4,stroke:#222222,color:#222222
+    classDef action fill:#dae8fc,stroke:#222222,color:#222222
+    classDef decision fill:#ffffff,stroke:#222222,color:#222222
+    classDef fail fill:#f8cecc,stroke:#222222,color:#222222
+    classDef lanekey fill:#f5f5f5,stroke:#222222,color:#222222
