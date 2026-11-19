@@ -1,0 +1,16 @@
+stateDiagram-v2
+    direction LR
+    [*] --> Idle: workspace opens on a tab
+    Idle --> Loading: tab selected the first time
+    Loading --> Ready: endpoint answers
+    Loading --> Failed: endpoint fails
+    Ready --> Ready: tab selected again, no refetch
+    Failed --> Failed: tab selected again, no retry
+    Ready --> [*]: workspace closed or another session opened
+    Failed --> [*]: workspace closed or another session opened
+    note right of Failed
+        Not handled: no retry action; the error text is shown under the endpoint note.
+    end note
+    note left of Idle
+        Legend: the filled dot starts, the ringed dot ends, a rounded box is a tab state, an arrow is labelled with its trigger. Summary needs no fetch; Trace, Economics and Context each run this chart.
+    end note

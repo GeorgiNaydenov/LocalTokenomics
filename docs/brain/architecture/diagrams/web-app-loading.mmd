@@ -1,0 +1,20 @@
+stateDiagram-v2
+    direction LR
+    [*] --> Loading: page opens
+    Loading --> Offline: meta or rates cannot reach the server
+    Loading --> ErrorCard: meta or rates fail otherwise
+    Loading --> Ready: first report settles
+    Ready --> Refetching: query changes
+    Refetching --> Ready: report settles
+    Refetching --> ErrorCard: report request fails
+    Ready --> Rescanning: Rescan logs or five minute timer
+    Rescanning --> Ready: refresh done, meta reloaded
+    Rescanning --> Offline: refresh cannot reach the server
+    Offline --> Ready: Retry and meta loads
+    ErrorCard --> Ready: next timed rescan succeeds
+    note right of ErrorCard
+        Not handled: the card has no retry button, and one failed refetch hides the whole dashboard.
+    end note
+    note left of Loading
+        Legend: the filled dot starts, a rounded box is a UI state, an arrow is labelled with the event or condition in the code, a note marks a gap.
+    end note

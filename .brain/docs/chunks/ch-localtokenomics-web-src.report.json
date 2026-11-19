@@ -2,6 +2,60 @@
  "chunk": "ch-localtokenomics-web-src",
  "notes": [
   {
+   "note": "docs/brain/Application/App Screen.md",
+   "claims": 42,
+   "supported": 42,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Context Tab Screen.md",
+   "claims": 18,
+   "supported": 18,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Economics Tab Screen.md",
+   "claims": 26,
+   "supported": 26,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Overview Screen.md",
+   "claims": 35,
+   "supported": 35,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Pricing Screen.md",
+   "claims": 19,
+   "supported": 19,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Session Workspace Screen.md",
+   "claims": 25,
+   "supported": 25,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Sessions Screen.md",
+   "claims": 14,
+   "supported": 14,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Sources Screen.md",
+   "claims": 13,
+   "supported": 13,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Application/Trace Tab Screen.md",
+   "claims": 24,
+   "supported": 24,
+   "findings": 0
+  },
+  {
    "note": "docs/brain/Application/Web API.md",
    "claims": 0,
    "supported": 0,
@@ -32,6 +86,78 @@
    "findings": 0
   },
   {
+   "note": "docs/brain/Diagrams/App Screen Map.md",
+   "claims": 35,
+   "supported": 35,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Context Tab Screen Map.md",
+   "claims": 13,
+   "supported": 13,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Economics Tab Screen Map.md",
+   "claims": 23,
+   "supported": 23,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Overview Screen Map.md",
+   "claims": 30,
+   "supported": 30,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Pricing Screen Map.md",
+   "claims": 16,
+   "supported": 16,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Session Workspace Screen Map.md",
+   "claims": 21,
+   "supported": 21,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Sessions Screen Map.md",
+   "claims": 12,
+   "supported": 12,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Sources Screen Map.md",
+   "claims": 10,
+   "supported": 10,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Trace Tab Screen Map.md",
+   "claims": 19,
+   "supported": 19,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web App Load State Chart.md",
+   "claims": 15,
+   "supported": 15,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Component Composition.md",
+   "claims": 19,
+   "supported": 19,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Concept Map.md",
+   "claims": 11,
+   "supported": 11,
+   "findings": 0
+  },
+  {
    "note": "docs/brain/Diagrams/Web Dashboard Components.md",
    "claims": 13,
    "supported": 13,
@@ -41,6 +167,96 @@
    "note": "docs/brain/Diagrams/Web Diagrams.md",
    "claims": 0,
    "supported": 0,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Error Flow.md",
+   "claims": 16,
+   "supported": 16,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Filter Rail Wireframe.md",
+   "claims": 14,
+   "supported": 14,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Glossary Map.md",
+   "claims": 13,
+   "supported": 13,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Outcome Form Wireframe.md",
+   "claims": 11,
+   "supported": 11,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Outcome Save State Chart.md",
+   "claims": 13,
+   "supported": 13,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Package Tree.md",
+   "claims": 8,
+   "supported": 8,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Rate Table Wireframe.md",
+   "claims": 10,
+   "supported": 10,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Screen Flow.md",
+   "claims": 18,
+   "supported": 18,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Sessions Table State Chart.md",
+   "claims": 10,
+   "supported": 10,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Sessions Table Wireframe.md",
+   "claims": 12,
+   "supported": 12,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Sitemap.md",
+   "claims": 9,
+   "supported": 9,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Trace State Chart.md",
+   "claims": 8,
+   "supported": 8,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web User Journey.md",
+   "claims": 18,
+   "supported": 18,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Workspace Panel Wireframe.md",
+   "claims": 10,
+   "supported": 10,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Web Workspace State Chart.md",
+   "claims": 9,
+   "supported": 9,
    "findings": 0
   },
   {
@@ -64,6 +280,6 @@
  ],
  "blocking": 0,
  "findings": [],
- "claims": 373,
- "supported": 373
+ "claims": 992,
+ "supported": 992
 }

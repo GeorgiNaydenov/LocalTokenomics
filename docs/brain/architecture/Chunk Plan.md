@@ -171,7 +171,7 @@ chunks:
   components: ['localtokenomics:web-src']
   globs: [web/src/*, web/src/design-system/*]
   depends_on: [ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui]
-  state: approved
+  state: in-review
   display_name: Web
   files: 20
   lines: 7127
@@ -277,7 +277,7 @@ The ordered plan for documenting this codebase one chunk at a time. Edit the `ch
 | ch-localtokenomics-src-ai-usage-cost | src/ai_usage_cost | approved | ch-localtokenomics-src-ai-usage-cost-render, ch-localtokenomics-src-ai-usage-cost-sources | 13 | 5069 | 220126 | c4, mind-map, api-map, sequence, use-case-diagram, flowchart, erd, erd-conceptual, class, data-lineage, state, dfd, activity, timeline, gantt, bpmn, error-flow, glossary-map, package-tree | stale |
 | ch-localtokenomics-src-ai-usage-cost-render | src/ai_usage_cost/render | approved | ch-localtokenomics-src-ai-usage-cost | 3 | 187 | 71167 | c4, mind-map, module-dependency | none |
 | ch-localtokenomics-web-src-components | web/src/components | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components-ui | 18 | 3024 | 142724 | c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow, module-dependency, error-flow | none |
-| ch-localtokenomics-web-src | web/src | approved | ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 20 | 7127 | 220381 | c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow, sitemap, user-journey, error-flow, glossary-map, package-tree | stale |
+| ch-localtokenomics-web-src | web/src | in-review | ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 20 | 7127 | 220381 | c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow, sitemap, user-journey, error-flow, glossary-map, package-tree | stale |
 | ch-localtokenomics-web-src-components-ui | web/src/components/ui | approved | ch-localtokenomics-web-src | 25 | 2083 | 105294 | c4, mind-map, module-dependency, error-flow | none |
 | ch-localtokenomics-web-src-prototype | web/src/prototype | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components, ch-localtokenomics-web-src-components-ui | 10 | 3215 | 154804 | c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow, sitemap, user-journey, module-dependency, glossary-map | stale |
 %% generated:plan-table end %%

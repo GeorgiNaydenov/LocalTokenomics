@@ -1,0 +1,38 @@
+flowchart TD
+    main(["main.tsx entry"]):::entry --> App
+    App["App"]:::page
+    App --> Header["Header"]:::shared
+    App --> FilterRail["FilterRail"]:::shared
+    App --> FilterChips["FilterChips"]:::lib
+    App --> OfflineCard["OfflineCard, ErrorState"]:::lib
+    App --> Overview["Overview"]:::page
+    App --> Sessions["Sessions"]:::page
+    App --> Sources["Sources"]:::page
+    App --> Pricing["Pricing"]:::page
+    App --> SessionWorkspace["SessionWorkspace"]:::page
+    FilterRail --> Sheet["Sheet"]:::third
+    SessionWorkspace --> Sheet
+    SessionWorkspace --> Tabs["Tabs"]:::third
+    SessionWorkspace --> OutcomeControl["OutcomeControl"]:::shared
+    SessionWorkspace --> SummaryTab["SummaryTab"]:::shared
+    SessionWorkspace --> LoadableTab["LoadableTab"]:::shared
+    LoadableTab --> TraceTab["TraceTab"]:::shared
+    LoadableTab --> EconomicsTab["EconomicsTab"]:::shared
+    LoadableTab --> ContextTab["ContextTab"]:::shared
+    Sessions --> EmptyState["EmptyState"]:::lib
+    TraceTab --> EmptyState
+    ContextTab --> EmptyState
+    subgraph Legend
+        direction LR
+        zl1["Page: thick border"]:::page
+        zl2["Component of this chunk"]:::shared
+        zl3["Shared component from web/src/components"]:::lib
+        zl4["Third party primitive, dashed"]:::third
+        zl5(["Entry point"]):::entry
+        zl6["Arrow reads: renders"]:::lib
+    end
+    classDef page fill:#dae8fc,stroke:#222222,stroke-width:3px,color:#142233
+    classDef shared fill:#dae8fc,stroke:#222222,color:#142233
+    classDef lib fill:#ffffff,stroke:#222222,color:#222222
+    classDef third fill:#eeeeee,stroke:#666666,stroke-dasharray:4 3,color:#222222
+    classDef entry fill:#fff2cc,stroke:#222222,color:#222222

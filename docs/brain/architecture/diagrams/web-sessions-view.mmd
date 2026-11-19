@@ -1,0 +1,17 @@
+stateDiagram-v2
+    direction LR
+    [*] --> Empty: no session in the slice
+    [*] --> Cards: sessions, phone width
+    [*] --> Table: sessions, wider screen
+    Table --> Table: header pressed, sort or flip direction
+    Table --> Capped: more than the row limit
+    Cards --> Capped: more than the row limit
+    Table --> WorkspaceOpen: row clicked
+    Cards --> WorkspaceOpen: card opened
+    Capped --> WorkspaceOpen: row clicked
+    note right of Capped
+        Not handled: rows past the limit are reachable only by narrowing the filters.
+    end note
+    note left of Empty
+        Legend: the filled dot starts, a rounded box is a state of the sessions list, an arrow is labelled with the condition or event in the code, a note marks a gap.
+    end note

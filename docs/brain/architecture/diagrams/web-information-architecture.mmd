@@ -1,0 +1,21 @@
+flowchart TD
+    app("LocalTokenomics dashboard"):::section --> views("Views in the header"):::section
+    app --> wsp("Session workspace"):::section
+    views --> ov["Overview"]:::page
+    views --> se["Sessions"]:::page
+    views --> so["Sources"]:::page
+    views --> pr["Models and pricing"]:::page
+    wsp --> su["Summary"]:::page
+    wsp --> tr["Trace"]:::page
+    wsp --> ec["Economics"]:::page
+    wsp --> cx["Context"]:::page
+    se -.->|opens| wsp
+    ov -.->|links to| so
+    subgraph Legend
+        direction LR
+        zl1("Rounded box: a section"):::section
+        zl2["Rectangle: a page or tab"]:::page
+        zl3["Dashed line: a cross link. No page needs sign in."]:::page
+    end
+    classDef section fill:#eeeeee,stroke:#222222,color:#222222
+    classDef page fill:#dae8fc,stroke:#222222,color:#142233

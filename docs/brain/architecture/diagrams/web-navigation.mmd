@@ -1,0 +1,21 @@
+flowchart TD
+    start(["Reader opens the dashboard"]):::person --> ov["Overview"]:::step
+    ov -->|tab| se["Sessions"]:::step
+    ov -->|tab| so["Sources"]:::step
+    ov -->|tab| pr["Models and pricing"]:::step
+    ov -->|more readers line or Flagged| so
+    hdr["Header rate age notice"]:::step -->|click| pr
+    se -->|row or card| ws["Session workspace, Summary tab"]:::step
+    ws -->|tab| tr["Trace tab"]:::step
+    ws -->|tab| ec["Economics tab"]:::step
+    ws -->|tab| cx["Context tab"]:::step
+    cx -->|added span| tr
+    ws -->|close or Escape| se
+    subgraph Legend
+        direction LR
+        zl1(["Start: the reader"]):::person
+        zl2["Screen or tab"]:::step
+        zl3["Solid arrow: a navigation, labelled with the control"]:::step
+    end
+    classDef person fill:#fff2cc,stroke:#222222,color:#222222
+    classDef step fill:#dae8fc,stroke:#222222,color:#142233

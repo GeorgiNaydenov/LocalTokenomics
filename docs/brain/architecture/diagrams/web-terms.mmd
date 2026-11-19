@@ -1,0 +1,21 @@
+flowchart LR
+    report("Report"):::term -->|has many| session("Session"):::term
+    session -->|has| state("Cost state"):::term
+    session -->|has| outcome("Session outcome"):::term
+    session -->|has| trace("Trace"):::term
+    trace -->|has many| span("Span"):::term
+    span -->|belongs to| turn("Turn"):::term
+    turn -.->|is a, when no turn id| unatt("Unattributed turn"):::term
+    session -->|has many| snap("Context snapshot"):::term
+    snap -->|has| prov("Provenance"):::term
+    span -->|has| prov
+    state -->|is a| priced("priced, free, unpriced, unavailable"):::term
+    rate("Rate table"):::term -->|prices| session
+    rate -->|is a, from a sibling row| est("Estimated rate"):::term
+    subgraph Legend
+        direction LR
+        zl1("Rounded box: a term as the code names it"):::term
+        zl2["Solid arrow: has, belongs to, prices or is a"]:::term
+        zl3["Dashed arrow: a special case"]:::term
+    end
+    classDef term fill:#dae8fc,stroke:#222222,color:#142233
