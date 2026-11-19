@@ -1,0 +1,129 @@
+[
+ {
+  "op": "add",
+  "kind": "state-machine",
+  "data": {
+   "name": "Warnings list view",
+   "entity": "WarningsList",
+   "States": "ShowingAll, Filtered, NothingShown, NoGroups. A separate machine per group row has Collapsed, Expanded, AlwaysOpen and Stuck.",
+   "Transitions": "Mount to ShowingAll while no kind is picked `web/src/components/states.tsx:248`. ShowingAll to Filtered when a kind toggle is picked `web/src/components/states.tsx:260`. Filtered to ShowingAll when the last kind is cleared `web/src/components/states.tsx:249`. A row goes from Collapsed to Expanded on the Show files button, which exists only when its count is above one `web/src/components/states.tsx:224`. A row with a count of exactly one is always open `web/src/components/states.tsx:230`.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/components/states.tsx::WarningsList",
+     "quote": "  const shown = kinds.length === 0 ? groups : groups.filter((group) => kinds.includes(group.kind))",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/components/states.tsx::WarningGroupRow",
+     "quote": "      {(expanded || group.count === 1) && (",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "state-machine",
+  "data": {
+   "name": "Info box open state",
+   "entity": "MetricInfo",
+   "States": "Closed, Open.",
+   "Transitions": "Closed to Open when the pointer has stayed on the trigger or the box for 400 ms `web/src/components/metric-info.tsx:92`, when the trigger gets keyboard focus `web/src/components/metric-info.tsx:134`, or on a click `web/src/components/metric-info.tsx:143`. Open to Closed when the pointer has been outside both for 250 ms and the trigger is not focused `web/src/components/metric-info.tsx:105`, on a second click, or on any close request of the popover `web/src/components/metric-info.tsx:116`.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/components/metric-info.tsx::MetricInfo",
+     "quote": "  const [open, setOpen] = useState(false)",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Hidden columns and shown columns can disagree",
+   "Risk": "When a reader unchecks every column, the table guard returns the full column list, so the table still shows every column while the chooser shows every box unchecked. `web/src/components/columns.tsx:59` `web/src/components/columns.tsx:85`",
+   "Mitigation": "Either keep the last column checked and disabled in the chooser, or show an explanation when the guard applies.",
+   "impact": "low",
+   "likelihood": "medium",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "A failed copy of the start command gives no feedback",
+   "Risk": "The offline card swallows a rejected clipboard write, so on a browser that blocks clipboard access the button stays at Copy command and the reader is not told that nothing was copied. `web/src/components/states.tsx:300`",
+   "Mitigation": "Show a short failure label or select the command text so the reader can copy it by hand.",
+   "impact": "low",
+   "likelihood": "medium",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Empty warnings and empty charts draw nothing",
+   "Risk": "The warnings list, the time chart, the sparkline and the context bars return an empty area or nothing when they have no data, and the component gives no message, so a page that forgets its own empty card shows a blank space. `web/src/components/chart-time.tsx:95` `web/src/components/states.tsx:272`",
+   "Mitigation": "Pages already pass an empty card in most places; add the same in every place that renders these parts, or give the parts an empty message prop.",
+   "impact": "low",
+   "likelihood": "medium",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Every info box keeps a timer and one global pointer listener",
+   "Risk": "Each info box starts its own 100 ms interval for its whole lifetime, and one pointer listener is added to the window at load and never removed, so a table with many badges runs many timers. `web/src/components/metric-info.tsx:79` `web/src/components/metric-info.tsx:37`",
+   "Mitigation": "Start the timer only while the pointer is near or the box is open.",
+   "impact": "low",
+   "likelihood": "medium",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "A test title says the opposite of what it checks",
+   "Risk": "The rank test named picks measured as the best expects the result derived, which is the worst of the two inputs, so the title misleads a reader of the test list. `web/src/components/rank.test.ts:28`",
+   "Mitigation": "Rename the test to say that the worse of measured and derived wins.",
+   "impact": "low",
+   "likelihood": "low",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Should a retry on the offline card show progress",
+   "Question": "The Retry connection button only bumps a counter in the page and the card shows no pending or failed state, so pressing it twice sends two reloads. Is that intended?",
+   "priority": "low",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Is the offline card matched by message text on purpose",
+   "Question": "The app decides that the reader is offline by looking for a fixed sentence in the error text before it draws the offline card, so a reworded message would show the plain error card instead. Should the failure carry a typed marker? `web/src/App.tsx:251`",
+   "priority": "medium",
+   "maturity": "draft"
+  }
+ }
+]

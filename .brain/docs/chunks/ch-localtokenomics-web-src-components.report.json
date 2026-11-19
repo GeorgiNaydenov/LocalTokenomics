@@ -2,6 +2,12 @@
  "chunk": "ch-localtokenomics-web-src-components",
  "notes": [
   {
+   "note": "docs/brain/Application/Offline card Screen.md",
+   "claims": 15,
+   "supported": 15,
+   "findings": 0
+  },
+  {
    "note": "docs/brain/Application/Web UI components API.md",
    "claims": 0,
    "supported": 0,
@@ -32,6 +38,60 @@
    "findings": 0
   },
   {
+   "note": "docs/brain/Diagrams/Dashboard component composition.md",
+   "claims": 16,
+   "supported": 16,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Metric info interaction flow.md",
+   "claims": 19,
+   "supported": 19,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Offline and error handling flow.md",
+   "claims": 20,
+   "supported": 20,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Offline card screen map.md",
+   "claims": 13,
+   "supported": 13,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Session card wireframe.md",
+   "claims": 11,
+   "supported": 11,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Shared components C4.md",
+   "claims": 27,
+   "supported": 27,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Shared components concepts.md",
+   "claims": 11,
+   "supported": 11,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Shared components imports.md",
+   "claims": 17,
+   "supported": 17,
+   "findings": 0
+  },
+  {
+   "note": "docs/brain/Diagrams/Warnings list states.md",
+   "claims": 12,
+   "supported": 12,
+   "findings": 0
+  },
+  {
    "note": "docs/brain/Diagrams/Web UI components Diagrams.md",
    "claims": 9,
    "supported": 9,
@@ -58,6 +118,6 @@
  ],
  "blocking": 0,
  "findings": [],
- "claims": 181,
- "supported": 181
+ "claims": 342,
+ "supported": 342
 }

@@ -1,0 +1,56 @@
+flowchart TD
+    pages["Dashboard pages"]:::page
+    stat["Stat"]:::shared
+    source["SourceCard"]:::shared
+    session["SessionCard"]:::shared
+    timechart["TimeChart"]:::shared
+    warnings["WarningsList"]:::shared
+    offline["OfflineCard"]:::shared
+    errorstate["ErrorState"]:::shared
+    occupancy["ContextOccupancy"]:::shared
+    info["MetricInfo"]:::shared
+    ticker["NumberTicker"]:::shared
+    spark["Sparkline"]:::shared
+    hover["HoverFrame"]:::shared
+    outcome["OutcomeBadge"]:::shared
+    keylist["Legend list"]:::shared
+    row["WarningGroupRow"]:::shared
+    code["CodeBlock"]:::shared
+    panel["Panel"]:::shared
+    chartbox["ChartContainer"]:::third
+    popover["Popover"]:::third
+
+    pages --> stat
+    pages --> source
+    pages --> session
+    pages --> timechart
+    pages --> warnings
+    pages --> offline
+    pages --> errorstate
+    pages --> occupancy
+    stat --> info
+    stat --> ticker
+    source --> spark
+    spark --> hover
+    occupancy --> hover
+    session --> outcome
+    outcome --> info
+    timechart --> keylist
+    timechart --> chartbox
+    warnings --> row
+    row --> info
+    offline --> code
+    offline --> panel
+    errorstate --> panel
+    info --> popover
+
+    subgraph Legend
+        direction LR
+        zlegend_a["Page: thick border"]:::page
+        zlegend_b["Shared component"]:::shared
+        zlegend_c["Primitive from components/ui"]:::third
+    end
+
+    classDef page fill:#dae8fc,stroke:#222222,color:#222222,stroke-width:4px
+    classDef shared fill:#dae8fc,stroke:#222222,color:#222222
+    classDef third fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:5 3

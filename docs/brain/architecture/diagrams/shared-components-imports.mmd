@@ -1,0 +1,61 @@
+flowchart TD
+    subgraph Top["Top layer: widgets that combine others"]
+        session["session.tsx"]:::module
+        source["source-card.tsx"]:::module
+        trace["trace.tsx"]:::module
+        chartTime["chart-time.tsx"]:::module
+        states["states.tsx"]:::module
+        filters["filters.tsx"]:::module
+        columns["columns.tsx"]:::module
+    end
+    subgraph Mid["Middle layer"]
+        detail["detail.tsx"]:::module
+        status["status.tsx"]:::module
+        sparkline["sparkline.tsx"]:::module
+        panel["panel.tsx"]:::module
+    end
+    subgraph Base["Base layer"]
+        stat["stat.tsx"]:::module
+        hover["chart-hover.tsx"]:::module
+        series["series.ts"]:::module
+        info["metric-info.tsx"]:::module
+    end
+    alone["rank.ts, use-media-query.ts, workspace-panel.ts"]:::module
+    ui["components/ui"]:::external
+    srcmods["design-system, api, format, pricing-notes"]:::external
+
+    status --> info
+    stat --> info
+    states --> info
+    states --> detail
+    states --> panel
+    detail --> stat
+    filters --> stat
+    source --> sparkline
+    source --> status
+    source --> stat
+    sparkline --> hover
+    session --> status
+    trace --> hover
+    trace --> status
+    trace --> stat
+    chartTime --> series
+    chartTime --> status
+    Top --> ui
+    Base --> ui
+    Top --> srcmods
+    Mid --> srcmods
+    Base --> srcmods
+    alone --> srcmods
+
+    subgraph Legend
+        direction LR
+        zlegend_a["Module: one file"]:::module
+        zlegend_b["Outside this chunk"]:::external
+        zlegend_c["Red arrow: import cycle, none found here"]:::cycle
+        zlegend_a ~~~ zlegend_b ~~~ zlegend_c
+    end
+
+    classDef module fill:#dae8fc,stroke:#222222,color:#222222
+    classDef external fill:#f5f5f5,stroke:#666666,color:#222222,stroke-dasharray:5 3
+    classDef cycle fill:#f8cecc,stroke:#b85450,color:#222222
