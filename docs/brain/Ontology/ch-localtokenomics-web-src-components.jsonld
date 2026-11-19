@@ -15,7 +15,7 @@
         "pb:nfr"
       ],
       "schema:name": "Keyboard and screen reader access to charts and timelines",
-      "pb:maturity": "draft",
+      "pb:maturity": "approved",
       "archimate:maps_to": "archimate:Requirement",
       "pb:definedAt": [
         "web/src/components/chart-hover.tsx:61"
@@ -27,7 +27,7 @@
         "pb:nfr"
       ],
       "schema:name": "Reduced motion is respected",
-      "pb:maturity": "draft",
+      "pb:maturity": "approved",
       "archimate:maps_to": "archimate:Requirement",
       "pb:definedAt": [
         "web/src/components/stat.tsx:10"
@@ -39,7 +39,7 @@
         "pb:open-question"
       ],
       "schema:name": "Why the Other series limit is twelve",
-      "pb:maturity": "draft",
+      "pb:maturity": "approved",
       "archimate:maps_to": "archimate:Assessment",
       "pb:definedAt": [
         "web/src/components/series.ts"
@@ -51,7 +51,7 @@
         "pb:risk"
       ],
       "schema:name": "Most shared components have no tests",
-      "pb:maturity": "draft",
+      "pb:maturity": "approved",
       "archimate:maps_to": "archimate:Assessment",
       "pb:definedAt": [
         "web/src/components/rank.test.ts:4"
@@ -63,11 +63,37 @@
         "pb:risk"
       ],
       "schema:name": "Popover timing depends on a polling interval",
-      "pb:maturity": "draft",
+      "pb:maturity": "approved",
       "archimate:maps_to": "archimate:Assessment",
       "pb:definedAt": [
         "web/src/components/metric-info.tsx:11",
         "web/src/components/metric-info.tsx:143"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:system/system:web-ui-components",
+      "@type": [
+        "pb:system"
+      ],
+      "schema:name": "Web UI components",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:ApplicationComponent",
+      "schema:maps_to": "schema:SoftwareApplication",
+      "pb:definedAt": [
+        "web/src/components/chart-hover.tsx:1-5"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:system/system:web-ui-ui-components",
+      "@type": [
+        "pb:system"
+      ],
+      "schema:name": "Web ui UI components",
+      "pb:maturity": "approved",
+      "archimate:maps_to": "archimate:ApplicationComponent",
+      "schema:maps_to": "schema:SoftwareApplication",
+      "pb:definedAt": [
+        "web/src/components/ui/accordion.tsx:1-5"
       ]
     }
   ],

@@ -2,13 +2,13 @@
 classification: human
 tags:
   - ba/actor
-maturity: approved
+maturity: draft
 ---
 # Dashboard reader
 
 ## Description
 
-The person who opens the local dashboard to read usage and list price cost. The code has no login or role check, so there is one human actor.
+The person who opens the local dashboard to see what logged AI usage would cost at list prices. The components check no role.
 
 ## Sources
 
