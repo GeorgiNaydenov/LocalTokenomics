@@ -1,5 +1,5 @@
 ---
-archetype: entity
+archetype: value object
 subdomain: Spend reporting
 fields:
   - 'key: str'
@@ -13,23 +13,17 @@ entity_keys: []
 relations_to: []
 tags:
   - ba/model
-maturity: approved
+maturity: draft
 ---
 # Bucket
 
 ## Description
 
-The entity Bucket, declared in src/ai_usage_cost/models.py lines 123-134. It has 7 fields and 0 relations.
+A group of priced events under one key such as a client, provider, model, project or day, with summed tokens and cost. `src/ai_usage_cost/models.py:123`
 
 ## Attributes
 
-- key: str
-- label: str
-- tokens: TokenUsage
-- cost: CostBreakdown
-- events: int
-- sessions: int
-- reported_cost: float | None
+- key, label, tokens, cost, events, sessions, reported_cost
 
 ## Lifecycle
 

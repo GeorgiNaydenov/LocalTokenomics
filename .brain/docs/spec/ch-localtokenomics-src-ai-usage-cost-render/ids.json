@@ -78,5 +78,25 @@
  [
   "open-question",
   "Does the PNG chart need a group by option"
+ ],
+ [
+  "glossary-term",
+  "Bucket"
+ ],
+ [
+  "glossary-term",
+  "Group by"
+ ],
+ [
+  "rule",
+  "Chart colours follow position, not meaning"
+ ],
+ [
+  "risk",
+  "Export writes a chart for a report with no events"
+ ],
+ [
+  "open-question",
+  "Should the four chart colours keep one meaning across panels?"
  ]
 ]

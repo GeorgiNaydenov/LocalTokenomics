@@ -66,5 +66,61 @@
  [
   "open-question",
   "Is the prototype still wanted once every screen is ported?"
+ ],
+ [
+  "glossary-term",
+  "Cost state"
+ ],
+ [
+  "glossary-term",
+  "Outcome"
+ ],
+ [
+  "glossary-term",
+  "Token bucket"
+ ],
+ [
+  "glossary-term",
+  "Session drawer"
+ ],
+ [
+  "use-case",
+  "Sort the session list and open one session in the prototype"
+ ],
+ [
+  "rule",
+  "Drawer trace blocks show the same sample data for every traced session"
+ ],
+ [
+  "rule",
+  "Screens stay mounted across the four screen tabs but not across the gallery"
+ ],
+ [
+  "risk",
+  "Sessions footer asks the user to narrow filters that do nothing"
+ ],
+ [
+  "risk",
+  "Session rows can be opened by mouse only"
+ ],
+ [
+  "risk",
+  "Cache prices of providers without rules are defaults, not published prices"
+ ],
+ [
+  "risk",
+  "Overview panels read the first item of a list without a guard"
+ ],
+ [
+  "risk",
+  "Sample figures are stored twice and can drift"
+ ],
+ [
+  "open-question",
+  "Does the shared token cell clamp a negative bar fraction?"
+ ],
+ [
+  "open-question",
+  "Which sort keys does the sort menu offer compared with the column headers?"
  ]
 ]

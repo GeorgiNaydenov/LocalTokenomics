@@ -1,7 +1,7 @@
 ---
 tags:
   - ba/event
-maturity: approved
+maturity: draft
 ---
 # Session rated
 

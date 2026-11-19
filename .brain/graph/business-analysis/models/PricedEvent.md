@@ -9,19 +9,19 @@ entity_keys: []
 relations_to: []
 tags:
   - ba/model
-maturity: approved
+maturity: draft
 ---
 # PricedEvent
 
 ## Description
 
-The entity PricedEvent, declared in src/ai_usage_cost/models.py lines 117-120. It has 3 fields and 0 relations.
+A usage event with its cost breakdown (absent when not priced) and its cost state. `src/ai_usage_cost/models.py:117`
 
 ## Attributes
 
-- event: UsageEvent
-- cost: CostBreakdown | None
-- state: CostState
+- event: the usage event
+- cost: breakdown or None
+- state: priced, free, unpriced or unavailable
 
 ## Lifecycle
 

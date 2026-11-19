@@ -2,7 +2,7 @@
 type: supporting
 tags:
   - ba/subdomain
-maturity: approved
+maturity: draft
 ---
 # Privacy and retention
 

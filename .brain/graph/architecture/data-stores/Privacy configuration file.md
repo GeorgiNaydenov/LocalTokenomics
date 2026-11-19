@@ -3,7 +3,7 @@ persists_models:
   - Config
 tags:
   - arch/data-store
-maturity: approved
+maturity: draft
 ---
 # Privacy configuration file
 

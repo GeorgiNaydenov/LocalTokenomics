@@ -17,13 +17,13 @@ entity_keys: []
 relations_to: []
 tags:
   - ba/model
-maturity: approved
+maturity: draft
 ---
 # Source
 
 ## Description
 
-The entity Source, declared in src/ai_usage_cost/sources/base.py lines 18-44. It has 12 fields and 0 relations.
+The frozen description of one reader: id, label, client names, default roots, file lister, parse function, token data flag, display path, optional spans, capabilities, experimental flag and resume hook.
 
 ## Attributes
 
@@ -46,5 +46,5 @@ No lifecycle field was found in the code.
 
 ## Sources
 
-- [[Code of localtokenomics]] @ manifests-as -> src/ai_usage_cost/sources/base.py::Source | inferred
+- [[Code of localtokenomics]] @ manifests-as -> src/ai_usage_cost/sources/base.py | inferred
   > class Source:

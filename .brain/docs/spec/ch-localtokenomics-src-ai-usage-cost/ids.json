@@ -758,5 +758,85 @@
  [
   "actor",
   "User of Ai usage cost"
+ ],
+ [
+  "rule",
+  "The alert window ends today"
+ ],
+ [
+  "rule",
+  "A rise is measured against the window just before"
+ ],
+ [
+  "rule",
+  "An alert fires only above the threshold"
+ ],
+ [
+  "rule",
+  "Schema migrations only run forward"
+ ],
+ [
+  "rule",
+  "A route without a store answers 503"
+ ],
+ [
+  "rule",
+  "Unreadable span text answers 404"
+ ],
+ [
+  "event",
+  "GPU sample recorded"
+ ],
+ [
+  "event",
+  "Analysis refreshed"
+ ],
+ [
+  "glossary-term",
+  "Warning severity"
+ ],
+ [
+  "glossary-term",
+  "GPU sample"
+ ],
+ [
+  "glossary-term",
+  "Alert window"
+ ],
+ [
+  "glossary-term",
+  "Schema version"
+ ],
+ [
+  "nfr",
+  "GPU sampling interval"
+ ],
+ [
+  "risk",
+  "Forgetting a session keeps its cost"
+ ],
+ [
+  "risk",
+  "Project exclusion and retention skip requests"
+ ],
+ [
+  "risk",
+  "Truncation runs before redaction"
+ ],
+ [
+  "risk",
+  "A bad date option ends in a raw error"
+ ],
+ [
+  "risk",
+  "An invalid rate file stops every command"
+ ],
+ [
+  "open-question",
+  "Should forgetting a session remove its requests"
+ ],
+ [
+  "open-question",
+  "Sampler error message omits rocm-smi"
  ]
 ]

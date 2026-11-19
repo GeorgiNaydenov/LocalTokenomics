@@ -7,4 +7,4 @@ maturity: draft
 
 ## Definition
 
-How a number was obtained: measured, derived, estimated, inferred or unavailable. See `web/src/components/status.tsx:31`.
+Where a shown number came from: measured, derived, estimated, inferred or unavailable. Defined at `web/src/api.ts:63`.

@@ -3,7 +3,7 @@ archetype: entity
 subdomain: Spend reporting
 tags:
   - ba/model
-maturity: approved
+maturity: draft
 ---
 # Outcome
 

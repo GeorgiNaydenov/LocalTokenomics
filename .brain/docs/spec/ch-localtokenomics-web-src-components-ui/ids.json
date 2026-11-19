@@ -46,5 +46,25 @@
  [
   "rule",
   "useChart refuses when !context"
+ ],
+ [
+  "risk",
+  "Chart style text is built from config keys without escaping"
+ ],
+ [
+  "risk",
+  "A chart part outside its container throws with no error boundary above it"
+ ],
+ [
+  "risk",
+  "A chart legend label is empty for a series with no config entry"
+ ],
+ [
+  "open-question",
+  "Should the toast host ship in the main app"
+ ],
+ [
+  "open-question",
+  "Are the chart legend parts still needed"
  ]
 ]

@@ -94,5 +94,41 @@
  [
   "rule",
   "useChart refuses when !context"
+ ],
+ [
+  "state-machine",
+  "Warnings list view"
+ ],
+ [
+  "state-machine",
+  "Info box open state"
+ ],
+ [
+  "risk",
+  "Hidden columns and shown columns can disagree"
+ ],
+ [
+  "risk",
+  "A failed copy of the start command gives no feedback"
+ ],
+ [
+  "risk",
+  "Empty warnings and empty charts draw nothing"
+ ],
+ [
+  "risk",
+  "Every info box keeps a timer and one global pointer listener"
+ ],
+ [
+  "risk",
+  "A test title says the opposite of what it checks"
+ ],
+ [
+  "open-question",
+  "Should a retry on the offline card show progress"
+ ],
+ [
+  "open-question",
+  "Is the offline card matched by message text on purpose"
  ]
 ]

@@ -78,5 +78,37 @@
  [
   "data-store",
   "Data of Ai usage cost sources"
+ ],
+ [
+  "glossary-term",
+  "Usage event"
+ ],
+ [
+  "glossary-term",
+  "Span"
+ ],
+ [
+  "glossary-term",
+  "Capabilities"
+ ],
+ [
+  "glossary-term",
+  "Resume hook"
+ ],
+ [
+  "risk",
+  "A missing timestamp is stamped with the scan time"
+ ],
+ [
+  "risk",
+  "One broken reader module stops the registry"
+ ],
+ [
+  "risk",
+  "Two readers import a private name from the Cline module"
+ ],
+ [
+  "open-question",
+  "Is the scan helper in the shared module still needed"
  ]
 ]

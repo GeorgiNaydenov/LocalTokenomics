@@ -1,5 +1,5 @@
 ---
-archetype: entity
+archetype: value object
 subdomain: Privacy and retention
 fields:
   - 'metadata_only: bool'
@@ -11,21 +11,19 @@ entity_keys: []
 relations_to: []
 tags:
   - ba/model
-maturity: approved
+maturity: draft
 ---
 # Config
 
 ## Description
 
-The entity Config, declared in src/ai_usage_cost/privacy.py lines 52-57. It has 5 fields and 0 relations.
+The privacy settings read from config.json in the store folder. `src/ai_usage_cost/privacy.py:52`
 
 ## Attributes
 
-- metadata_only: bool
-- exclude_projects: list[str]
-- max_content_bytes: int
-- metadata_retention_days: int | None
-- content_retention_days: int | None
+- metadata_only: default true
+- exclude_projects, max_content_bytes
+- metadata_retention_days, content_retention_days: default None
 
 ## Lifecycle
 

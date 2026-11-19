@@ -1,13 +1,13 @@
 ---
 tags:
   - ba/glossary-term
-maturity: approved
+maturity: draft
 ---
 # Unpriced model
 
 ## Definition
 
-A model with no rate in the rates table. Its tokens are listed but excluded from totals.
+A model with tokens but no rate row. Its tokens count and its cost is left out. `src/ai_usage_cost/pricing.py:425`
 
 ## Sources
 

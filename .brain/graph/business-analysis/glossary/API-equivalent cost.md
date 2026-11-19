@@ -1,7 +1,7 @@
 ---
 tags:
   - ba/glossary-term
-maturity: approved
+maturity: draft
 ---
 # API-equivalent cost
 

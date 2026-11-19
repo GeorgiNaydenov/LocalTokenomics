@@ -142,5 +142,57 @@
  [
   "rule",
   "useChart refuses when !context"
+ ],
+ [
+  "rule",
+  "A workspace tab loads its data only when first opened"
+ ],
+ [
+  "rule",
+  "Span text is fetched once per span"
+ ],
+ [
+  "state-machine",
+  "Workspace tab data"
+ ],
+ [
+  "risk",
+  "Risk 5: Sessions are identified by session id alone in the table and when opened"
+ ],
+ [
+  "risk",
+  "Risk 6: One failed report refetch hides the whole dashboard"
+ ],
+ [
+  "risk",
+  "Risk 7: Outcome saves are not sequenced"
+ ],
+ [
+  "risk",
+  "Risk 8: A missing span text is recognised by message wording"
+ ],
+ [
+  "risk",
+  "Risk 9: Rescan can be started twice"
+ ],
+ [
+  "risk",
+  "Risk 10: Session rows cannot be opened from the keyboard"
+ ],
+ [
+  "open-question",
+  "Question 11: Should filters stay reachable on a large screen while a session is open?"
+ ],
+ [
+  "open-question",
+  "Question 12: Which warnings should the Flagged figure count?"
+ ],
+ [
+  "open-question",
+  "Question 13: Should failed tabs and span texts offer a retry?"
+ ],
+ [
+  "open-question",
+  "Question 14: Should the heaviest sessions on the overview open their session?"
  ]
 ]

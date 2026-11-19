@@ -2,7 +2,7 @@
 type: core
 tags:
   - ba/subdomain
-maturity: approved
+maturity: draft
 ---
 # Spend reporting
 

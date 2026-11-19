@@ -10,13 +10,13 @@ entity_keys: []
 relations_to: []
 tags:
   - ba/model
-maturity: approved
+maturity: draft
 ---
 # Spec
 
 ## Description
 
-The entity Spec, declared in src/ai_usage_cost/sources/cline.py lines 82-87. It has 5 fields and 0 relations.
+Per tool settings shared by the Cline family readers: source id, client name, extension id, whether input tokens include cache buckets, and whether the SDK store is read.
 
 ## Attributes
 
@@ -32,5 +32,5 @@ No lifecycle field was found in the code.
 
 ## Sources
 
-- [[Code of localtokenomics]] @ manifests-as -> src/ai_usage_cost/sources/cline.py::Spec | inferred
+- [[Code of localtokenomics]] @ manifests-as -> src/ai_usage_cost/sources/cline.py | inferred
   > class Spec:

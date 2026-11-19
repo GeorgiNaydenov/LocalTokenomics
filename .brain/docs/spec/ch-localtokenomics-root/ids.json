@@ -106,5 +106,25 @@
  [
   "actor",
   "User of localtokenomics root"
+ ],
+ [
+  "rule",
+  "A settings file that cannot be loaded is ignored as a whole"
+ ],
+ [
+  "risk",
+  "A mistyped settings file silently drops the project exclusions"
+ ],
+ [
+  "risk",
+  "Bandit is configured but no workflow or hook runs it"
+ ],
+ [
+  "open-question",
+  "Should the README list content_retention_days"
+ ],
+ [
+  "open-question",
+  "Should local checks and the workflow lint the same folders"
  ]
 ]
