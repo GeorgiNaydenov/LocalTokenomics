@@ -83,7 +83,7 @@
       "height": 70
     },
     {
-      "id": "n-release-checklist",
+      "id": "n-release-checklist-2",
       "type": "file",
       "file": "docs/brain/Releases/Release Checklist.md",
       "x": 760,
@@ -119,7 +119,7 @@
       "height": 70
     },
     {
-      "id": "n-rollback-runbook",
+      "id": "n-rollback-runbook-2",
       "type": "file",
       "file": "docs/brain/Releases/Rollback Runbook.md",
       "x": 0,

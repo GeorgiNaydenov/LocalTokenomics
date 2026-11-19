@@ -93,19 +93,19 @@
  ],
  [
   "risk",
-  "Risk 1: The dashboard client can write to the"
+  "Risk 1\ua789 The dashboard client can write to the"
  ],
  [
   "risk",
-  "Risk 2: Most files in this chunk have no"
+  "Risk 2\ua789 Most files in this chunk have no"
  ],
  [
   "open-question",
-  "Question 3: Does the DELETE session endpoint remove the"
+  "Question 3\ua789 Does the DELETE session endpoint remove the"
  ],
  [
   "open-question",
-  "Question 4: Is deleteSession reachable from any screen in"
+  "Question 4\ua789 Is deleteSession reachable from any screen in"
  ],
  [
   "state-machine",
@@ -157,42 +157,42 @@
  ],
  [
   "risk",
-  "Risk 5: Sessions are identified by session id alone in the table and when opened"
+  "Risk 5\ua789 Sessions are identified by session id alone in the table and when opened"
  ],
  [
   "risk",
-  "Risk 6: One failed report refetch hides the whole dashboard"
+  "Risk 6\ua789 One failed report refetch hides the whole dashboard"
  ],
  [
   "risk",
-  "Risk 7: Outcome saves are not sequenced"
+  "Risk 7\ua789 Outcome saves are not sequenced"
  ],
  [
   "risk",
-  "Risk 8: A missing span text is recognised by message wording"
+  "Risk 8\ua789 A missing span text is recognised by message wording"
  ],
  [
   "risk",
-  "Risk 9: Rescan can be started twice"
+  "Risk 9\ua789 Rescan can be started twice"
  ],
  [
   "risk",
-  "Risk 10: Session rows cannot be opened from the keyboard"
+  "Risk 10\ua789 Session rows cannot be opened from the keyboard"
  ],
  [
   "open-question",
-  "Question 11: Should filters stay reachable on a large screen while a session is open?"
+  "Question 11\ua789 Should filters stay reachable on a large screen while a session is open\uff1f"
  ],
  [
   "open-question",
-  "Question 12: Which warnings should the Flagged figure count?"
+  "Question 12\ua789 Which warnings should the Flagged figure count\uff1f"
  ],
  [
   "open-question",
-  "Question 13: Should failed tabs and span texts offer a retry?"
+  "Question 13\ua789 Should failed tabs and span texts offer a retry\uff1f"
  ],
  [
   "open-question",
-  "Question 14: Should the heaviest sessions on the overview open their session?"
+  "Question 14\ua789 Should the heaviest sessions on the overview open their session\uff1f"
  ]
 ]

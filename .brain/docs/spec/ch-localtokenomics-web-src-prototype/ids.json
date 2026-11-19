@@ -65,7 +65,7 @@
  ],
  [
   "open-question",
-  "Is the prototype still wanted once every screen is ported?"
+  "Is the prototype still wanted once every screen is ported\uff1f"
  ],
  [
   "glossary-term",
@@ -117,10 +117,10 @@
  ],
  [
   "open-question",
-  "Does the shared token cell clamp a negative bar fraction?"
+  "Does the shared token cell clamp a negative bar fraction\uff1f"
  ],
  [
   "open-question",
-  "Which sort keys does the sort menu offer compared with the column headers?"
+  "Which sort keys does the sort menu offer compared with the column headers\uff1f"
  ]
 ]

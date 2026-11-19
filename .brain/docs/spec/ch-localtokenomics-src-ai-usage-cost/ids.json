@@ -685,7 +685,7 @@
  ],
  [
   "rule",
-  "alert refuses when days < 1"
+  "alert refuses when days \u2039 1"
  ],
  [
   "rule",
@@ -701,11 +701,11 @@
  ],
  [
   "rule",
-  "_valid_window refuses when any((not 0 <= day <= 6 for day in self.weekdays))"
+  "_valid_window refuses when any((not 0 \u2039= day \u2039= 6 for day in self.weekdays))"
  ],
  [
   "rule",
-  "_valid_window refuses when any((not 0 <= start < end <= 24 for start, end in self."
+  "_valid_window refuses when any((not 0 \u2039= start \u2039 end \u2039= 24 for start, end in self"
  ],
  [
   "rule",
@@ -725,7 +725,7 @@
  ],
  [
   "rule",
-  "_disjoint_periods refuses when earlier.until is None or (later.from_ or date.min) < ea"
+  "_disjoint_periods refuses when earlier.until is None or (later.from_ or date.min) \u2039 ea"
  ],
  [
   "rule",
@@ -745,7 +745,7 @@
  ],
  [
   "rule",
-  "resolve_path refuses when index >= len(current)"
+  "resolve_path refuses when index \u203a= len(current)"
  ],
  [
   "rule",

@@ -182,7 +182,7 @@
       "height": 70
     },
     {
-      "id": "n-invariants-catalogue",
+      "id": "n-invariants-catalogue-2",
       "type": "file",
       "file": "docs/brain/Operations/Invariants Catalogue.md",
       "x": 380,
@@ -326,7 +326,7 @@
       "height": 70
     },
     {
-      "id": "n-test-coverage-matrix",
+      "id": "n-test-coverage-matrix-2",
       "type": "file",
       "file": "docs/brain/Operations/Test Coverage Matrix.md",
       "x": 760,

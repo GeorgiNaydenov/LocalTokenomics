@@ -14,6 +14,13 @@ chunk: ch-localtokenomics-src-ai-usage-cost-sources
 authored: true
 approved-by: human
 approved-at: '2026-11-19T00:12:14+00:00'
+node_citations:
+  drawio-src-sources-c4:
+    Source contract and helpers Component, Python (base.py) Source dataclass, JSON and SQLite readers: [
+      'src/ai_usage_cost/sources/base.py:17-40', 'src/ai_usage_cost/sources/base.py:69-176',
+      'src/ai_usage_cost/sources/base.py:117-129', 'src/ai_usage_cost/sources/base.py:17-176']
+    Cline family readers Component, Python (cline.py) Cline, Roo Code, Kilo Code legacy task files: [
+      'src/ai_usage_cost/sources/cline.py:139-149', 'src/ai_usage_cost/sources/cline.py:81-149']
 ---
 
 # Readers component view

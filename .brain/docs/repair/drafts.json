@@ -1,0 +1,2832 @@
+{
+ "note": "Drafted by brain docs repair. Each op needs judgement: read it, edit or delete it, then run brain docs repair --apply-drafts with this file. Nothing here is applied before that.",
+ "ops": [
+  {
+   "op": "retire",
+   "defect": "duplicate-event",
+   "chunk": "ch-localtokenomics-src-ai-usage-cost",
+   "kind": "event",
+   "name": "Stale rates warning",
+   "survivor": "Estimated price warning",
+   "reason": "duplicate of event Estimated price warning: it cites the same file and symbol, and one emit site is one event",
+   "why": "event Stale rates warning and Estimated price warning are one thing; retiring keeps the note, tagged retired, and leaves it out of every count"
+  },
+  {
+   "op": "retire",
+   "defect": "duplicate-event",
+   "chunk": "ch-localtokenomics-src-ai-usage-cost",
+   "kind": "event",
+   "name": "Tier unpriced warning",
+   "survivor": "Estimated price warning",
+   "reason": "duplicate of event Estimated price warning: it cites the same file and symbol, and one emit site is one event",
+   "why": "event Tier unpriced warning and Estimated price warning are one thing; retiring keeps the note, tagged retired, and leaves it out of every count"
+  },
+  {
+   "op": "retire",
+   "defect": "duplicate-event",
+   "chunk": "ch-localtokenomics-src-ai-usage-cost",
+   "kind": "event",
+   "name": "Unpriced model warning",
+   "survivor": "Estimated price warning",
+   "reason": "duplicate of event Estimated price warning: it cites the same file and symbol, and one emit site is one event",
+   "why": "event Unpriced model warning and Estimated price warning are one thing; retiring keeps the note, tagged retired, and leaves it out of every count"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src",
+   "kind": "actor",
+   "name": "Dashboard reader",
+   "why": "ch-localtokenomics-web-src-components documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-src-ai-usage-cost-render",
+   "kind": "glossary-term",
+   "name": "API-equivalent cost",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-src-ai-usage-cost-render",
+   "kind": "glossary-term",
+   "name": "Bucket",
+   "why": "ch-localtokenomics-src-ai-usage-cost documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src-components",
+   "kind": "glossary-term",
+   "name": "Cost state",
+   "why": "ch-localtokenomics-src-ai-usage-cost documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src",
+   "kind": "glossary-term",
+   "name": "Cost state",
+   "why": "ch-localtokenomics-src-ai-usage-cost documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src-prototype",
+   "kind": "glossary-term",
+   "name": "Cost state",
+   "why": "ch-localtokenomics-src-ai-usage-cost documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src-prototype",
+   "kind": "glossary-term",
+   "name": "Outcome",
+   "why": "ch-localtokenomics-src-ai-usage-cost documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src-components",
+   "kind": "glossary-term",
+   "name": "Provenance",
+   "why": "ch-localtokenomics-src-ai-usage-cost documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src",
+   "kind": "glossary-term",
+   "name": "Provenance",
+   "why": "ch-localtokenomics-src-ai-usage-cost documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src",
+   "kind": "glossary-term",
+   "name": "Session outcome",
+   "why": "ch-localtokenomics-web-src-components documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src",
+   "kind": "glossary-term",
+   "name": "Sidechain",
+   "why": "ch-localtokenomics-src-ai-usage-cost documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-src-ai-usage-cost",
+   "kind": "glossary-term",
+   "name": "Span",
+   "why": "ch-localtokenomics-src-ai-usage-cost-sources documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-src-ai-usage-cost-render",
+   "kind": "glossary-term",
+   "name": "Unpriced model",
+   "why": "ch-localtokenomics-src-ai-usage-cost documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-src-ai-usage-cost",
+   "kind": "model",
+   "name": "Source",
+   "why": "ch-localtokenomics-src-ai-usage-cost-sources documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-src-ai-usage-cost",
+   "kind": "model",
+   "name": "Spec",
+   "why": "ch-localtokenomics-src-ai-usage-cost-sources documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src",
+   "kind": "rule",
+   "name": "getJson refuses when !response.ok",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src-components",
+   "kind": "rule",
+   "name": "useChart refuses when !context",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src",
+   "kind": "rule",
+   "name": "useChart refuses when !context",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src-components-ui",
+   "kind": "rule",
+   "name": "useChart refuses when !context",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-src-ai-usage-cost",
+   "kind": "state-machine",
+   "name": "CostState lifecycle",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src",
+   "kind": "state-machine",
+   "name": "CostState lifecycle",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-src-ai-usage-cost",
+   "kind": "state-machine",
+   "name": "MatchKind lifecycle",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src",
+   "kind": "state-machine",
+   "name": "MatchKind lifecycle",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src",
+   "kind": "state-machine",
+   "name": "RateState lifecycle",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src",
+   "kind": "state-machine",
+   "name": "RateStatus lifecycle",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-src-ai-usage-cost",
+   "kind": "state-machine",
+   "name": "SpanKind lifecycle",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src",
+   "kind": "state-machine",
+   "name": "SpanKind lifecycle",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-src-ai-usage-cost",
+   "kind": "state-machine",
+   "name": "SpanStatus lifecycle",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src",
+   "kind": "state-machine",
+   "name": "SpanStatus lifecycle",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "unrecord",
+   "defect": "double-recorded",
+   "chunk": "ch-localtokenomics-web-src",
+   "kind": "state-machine",
+   "name": "TokenDataKind lifecycle",
+   "why": "ch-localtokenomics-root documents it already"
+  },
+  {
+   "op": "update",
+   "defect": "event-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "events": {
+     "add": [
+      "Analysis refreshed"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of event Analysis refreshed"
+  },
+  {
+   "op": "update",
+   "defect": "event-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "events": {
+     "add": [
+      "Conflicting records warning"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of event Conflicting records warning"
+  },
+  {
+   "op": "update",
+   "defect": "event-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "events": {
+     "add": [
+      "Estimated price warning"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of event Estimated price warning"
+  },
+  {
+   "op": "update",
+   "defect": "event-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "events": {
+     "add": [
+      "GPU sample recorded"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of event GPU sample recorded"
+  },
+  {
+   "op": "update",
+   "defect": "event-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "events": {
+     "add": [
+      "Reported cost divergence warning"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of event Reported cost divergence warning"
+  },
+  {
+   "op": "update",
+   "defect": "event-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "events": {
+     "add": [
+      "Session forgotten"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of event Session forgotten"
+  },
+  {
+   "op": "update",
+   "defect": "event-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "events": {
+     "add": [
+      "Session rated"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of event Session rated"
+  },
+  {
+   "op": "update",
+   "defect": "event-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "events": {
+     "add": [
+      "Spend alert sent"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of event Spend alert sent"
+  },
+  {
+   "op": "update",
+   "defect": "event-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "events": {
+     "add": [
+      "Stale rates warning"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of event Stale rates warning"
+  },
+  {
+   "op": "update",
+   "defect": "event-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "events": {
+     "add": [
+      "Tier unpriced warning"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of event Tier unpriced warning"
+  },
+  {
+   "op": "update",
+   "defect": "event-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "events": {
+     "add": [
+      "Unpriced model warning"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of event Unpriced model warning"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "API-equivalent cost",
+   "data": {
+    "in_application": "What the recorded token usage would have cost at published list prices (`_headline` at `src/ai_usage_cost/render/terminal.py:56`). The code declares it at `src/ai_usage_cost/render/terminal.py:56`, where the line reads `API-equivalent cost`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Alert window",
+   "data": {
+    "in_application": "The run of local days, ending today, whose spend the alert command compares with a threshold (`days` at `src/ai_usage_cost/cli.py:314`). The code declares it at `src/ai_usage_cost/cli.py:314`, where the line reads `days: Annotated[int, typer.Option(help=\"Window length in days, ending today.\")] `."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Amplification",
+   "data": {
+    "in_application": "Total input tokens divided by output tokens over the model calls of a session (`amplification` at `src/ai_usage_cost/trace.py:208`). The code declares it at `src/ai_usage_cost/trace.py:208`, where the line reads `def amplification(spans: Iterable[Span]) -> float | None:`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Bucket",
+   "data": {
+    "in_application": "One row of a breakdown: a key, a label, a cost, token counts and a request count (`Bucket` at `src/ai_usage_cost/models.py:123`). The code declares it at `src/ai_usage_cost/models.py:123`, where the line reads `class Bucket(BaseModel):`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Cache read",
+   "data": {
+    "in_application": "Input tokens served from a prompt cache, priced at a lower rate (`cache_read` at `src/ai_usage_cost/models.py:14`). The code declares it at `src/ai_usage_cost/models.py:14`, where the line reads `cache_read: int = 0`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Cache write",
+   "data": {
+    "in_application": "Input tokens written to a prompt cache in a five minute or one hour bucket (`cache_write_5m` at `src/ai_usage_cost/models.py:15`). The code declares it at `src/ai_usage_cost/models.py:15`, where the line reads `cache_write_5m: int = 0`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Context occupancy",
+   "data": {
+    "in_application": "The share of a model's context window filled by one call (`HIGH_OCCUPANCY` at `web/src/components/trace.tsx:34`). The code declares it at `web/src/components/trace.tsx:34`, where the line reads `export const HIGH_OCCUPANCY = 0.85`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Cost state",
+   "data": {
+    "in_application": "How a session or request was priced: priced, free, unpriced or unavailable (`CostState` at `web/src/api.ts:61`). The code declares it at `web/src/api.ts:61`, where the line reads `export type CostState = 'priced' | 'free' | 'unpriced' | 'unavailable'`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Dashboard bundle",
+   "data": {
+    "in_application": "The built static files of the web dashboard, written into the Python package folder so the installed tool can serve them without Node.js (`outDir` at `web/vite.config.ts:15`). The code declares it at `web/vite.config.ts:15`, where the line reads `outDir: '../src/ai_usage_cost/web/dist',`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Dev proxy",
+   "data": {
+    "in_application": "The Vite development server setting that forwards requests starting with /api to the Python server on port 8420 (`api` at `web/vite.config.ts:21`). The code declares it at `web/vite.config.ts:21`, where the line reads `'/api': {`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Estimated price",
+   "data": {
+    "in_application": "A price taken from a shorter model id prefix, flagged so a guess is never silent (`estimated` at `src/ai_usage_cost/models.py:84`). The code declares it at `src/ai_usage_cost/models.py:84`, where the line reads `estimated: bool = Field(default=False, validation_alias=AliasChoices(\"estimated\"`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Estimated rate",
+   "data": {
+    "in_application": "A price taken from a sibling model's rate row because the model has no row of its own, shown with an estimated marker (`ESTIMATED_HELP` at `web/src/pricing-notes.ts:4`). The code declares it at `web/src/pricing-notes.ts:4`, where the line reads `export const ESTIMATED_HELP =`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Fingerprint",
+   "data": {
+    "in_application": "The short deterministic key that identifies a stored request, from the request id when there is one (`fingerprint_of` at `src/ai_usage_cost/store.py:154`). The code declares it at `src/ai_usage_cost/store.py:154`, where the line reads `def fingerprint_of(event: UsageEvent) -> str:`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "GPU sample",
+   "data": {
+    "in_application": "One reading of GPU utilisation, memory and power on a machine at a moment, with the tool that produced it (`Sample` at `src/ai_usage_cost/collect.py:49`). The code declares it at `src/ai_usage_cost/collect.py:49`, where the line reads `class Sample(BaseModel):`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Group by",
+   "data": {
+    "in_application": "The choice of breakdown for the terminal summary: model, client, provider, project or day (`render` at `src/ai_usage_cost/render/terminal.py:23`). The code declares it at `src/ai_usage_cost/render/terminal.py:23`, where the line reads `\"model\": (\"By model\", report.by_model),`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Metadata only",
+   "data": {
+    "in_application": "The privacy mode, on by default, in which no span text is released (`metadata_only` at `src/ai_usage_cost/privacy.py:53`). The code declares it at `src/ai_usage_cost/privacy.py:53`, where the line reads `metadata_only: bool = True`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Parser version",
+   "data": {
+    "in_application": "A number that, when raised, makes every file be parsed again (`PARSER_VERSION` at `src/ai_usage_cost/store.py:89`). The code declares it at `src/ai_usage_cost/store.py:89`, where the line reads `PARSER_VERSION = 6`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Peak window",
+   "data": {
+    "in_application": "A recurring UTC weekday and hour window with its own price (`Peak` at `src/ai_usage_cost/pricing.py:47`). The code declares it at `src/ai_usage_cost/pricing.py:47`, where the line reads `class Peak(PriceSet):`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Price band",
+   "data": {
+    "in_application": "A price that applies once a request's total input reaches a minimum size (`Band` at `src/ai_usage_cost/pricing.py:40`). The code declares it at `src/ai_usage_cost/pricing.py:40`, where the line reads `class Band(PriceSet):`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Price period",
+   "data": {
+    "in_application": "A date range in which a row's prices are replaced by others (`Period` at `src/ai_usage_cost/pricing.py:68`). The code declares it at `src/ai_usage_cost/pricing.py:68`, where the line reads `class Period(BaseModel):`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Prompt caching savings",
+   "data": {
+    "in_application": "The difference between the cost without caching and the cost with it, shown only when positive (`cache_savings` at `src/ai_usage_cost/models.py:103`). The code declares it at `src/ai_usage_cost/models.py:103`, where the line reads `return self.no_cache_equivalent - self.total`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Provenance",
+   "data": {
+    "in_application": "Where a shown number came from: measured, derived, estimated, inferred or unavailable (`Provenance` at `web/src/api.ts:63`). The code declares it at `web/src/api.ts:63`, where the line reads `export type Provenance = 'measured' | 'derived' | 'estimated' | 'inferred' | 'un`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Rate table",
+   "data": {
+    "in_application": "The rates.json data that prices models, with its as of date (`RateTable` at `src/ai_usage_cost/pricing.py:252`). The code declares it at `src/ai_usage_cost/pricing.py:252`, where the line reads `class RateTable(BaseModel):`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Redaction",
+   "data": {
+    "in_application": "Replacing secrets in released text with a marker that names the kind (`redact` at `src/ai_usage_cost/privacy.py:78`). The code declares it at `src/ai_usage_cost/privacy.py:78`, where the line reads `def redact(text: str) -> tuple[str, int]:`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Report",
+   "data": {
+    "in_application": "The computed usage and cost object that both renderers read: totals, buckets by model, client, provider, project and day, a daily series, unknown models and warnings (`Report` at `src/ai_usage_cost/aggregate.py:462`). The code declares it at `src/ai_usage_cost/aggregate.py:462`, where the line reads `class Report(BaseModel):`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Reported cost",
+   "data": {
+    "in_application": "The cost figure a coding tool wrote itself, shown beside the computed list price cost (`reportedNote` at `web/src/pricing-notes.ts:48`). The code declares it at `web/src/pricing-notes.ts:48`, where the line reads `export function reportedNote(computed: number | null, reported: number | null): `."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Request",
+   "data": {
+    "in_application": "One call to a model as logged by an AI coding tool, stored as a usage event (`UsageEvent` at `src/ai_usage_cost/models.py:49`). The code declares it at `src/ai_usage_cost/models.py:49`, where the line reads `class UsageEvent(BaseModel):`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Schema version",
+   "data": {
+    "in_application": "The number SQLite keeps as user_version, telling which migrations the store has already run (`current` at `src/ai_usage_cost/store.py:146`). The code declares it at `src/ai_usage_cost/store.py:146`, where the line reads `current = conn.execute(\"PRAGMA user_version\").fetchone()[0]`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Service tier",
+   "data": {
+    "in_application": "The speed or discount class a request ran on, standard unless the log says otherwise, such as fast or batch (`tier` at `src/ai_usage_cost/models.py:59`). The code declares it at `src/ai_usage_cost/models.py:59`, where the line reads `tier: str = \"standard\"`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Session",
+   "data": {
+    "in_application": "The requests that share a source and a session id (`key` at `src/ai_usage_cost/aggregate.py:582`). The code declares it at `src/ai_usage_cost/aggregate.py:582`, where the line reads `key = (event.source, event.session_id)`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Session outcome",
+   "data": {
+    "in_application": "A person's rating of a session: successful, partial, failed, abandoned or unrated (`OutcomeLabel` at `web/src/api.ts:82`). The code declares it at `web/src/api.ts:82`, where the line reads `export type OutcomeLabel = 'successful' | 'partial' | 'failed' | 'abandoned' | '`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Sidechain",
+   "data": {
+    "in_application": "A subagent thread of a session (`includeSidechains` at `web/src/api.ts:373`). The code declares it at `web/src/api.ts:373`, where the line reads `includeSidechains: boolean`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Source",
+   "data": {
+    "in_application": "A supported AI coding tool with its log locations and parser (`Source` at `src/ai_usage_cost/sources/base.py:18`). The code declares it at `src/ai_usage_cost/sources/base.py:18`, where the line reads `class Source:`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Span",
+   "data": {
+    "in_application": "One step of a session trace (`Span` at `src/ai_usage_cost/trace.py:55`). The code declares it at `src/ai_usage_cost/trace.py:55`, where the line reads `class Span(BaseModel):`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Unattributed turn",
+   "data": {
+    "in_application": "The row that holds spend outside any turn (`UNATTRIBUTED_TURN_KEY` at `web/src/turn-insights.ts:4`). The code declares it at `web/src/turn-insights.ts:4`, where the line reads `export const UNATTRIBUTED_TURN_KEY = 'unattributed'`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Unavailable marker",
+   "data": {
+    "in_application": "The word unavailable, shown in place of a number the logs do not carry (`Unavailable` at `web/src/components/status.tsx:77`). The code declares it at `web/src/components/status.tsx:77`, where the line reads `export function Unavailable({ hint, className }: { hint?: string; className?: st`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Unpriced model",
+   "data": {
+    "in_application": "A model with no rate in the rates table (`render` at `src/ai_usage_cost/render/terminal.py:34`). The code declares it at `src/ai_usage_cost/render/terminal.py:34`, where the line reads `Unpriced models (excluded from totals)`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Warning severity",
+   "data": {
+    "in_application": "How much a warning's discrepancy affects the totals: info has no effect, caution is partly affected and bounded, critical is materially wrong (`WarningSeverity` at `src/ai_usage_cost/aggregate.py:83`). The code declares it at `src/ai_usage_cost/aggregate.py:83`, where the line reads `class WarningSeverity(StrEnum):`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "A bad configuration file gives the defaults"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule A bad configuration file gives the defaults"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "A free provider costs zero"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule A free provider costs zero"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "A grown file resumes only when its earlier bytes are unchanged"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule A grown file resumes only when its earlier bytes are unchanged"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "A known unpriced model beats a guess"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule A known unpriced model beats a guess"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "A missing value is shown as unavailable, never as zero"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule A missing value is shown as unavailable, never as zero"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "A prefix match is an estimate"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule A prefix match is an estimate"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "A reader is found by its SOURCE value"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule A reader is found by its SOURCE value"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "A reported cost that differs is flagged"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule A reported cost that differs is flagged"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "A request is stored once per fingerprint"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule A request is stored once per fingerprint"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "A rise is measured against the window just before"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule A rise is measured against the window just before"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Read usage and cost for a period",
+   "data": {
+    "rules": {
+     "add": [
+      "A rollup shows its least trustworthy cost state and provenance"
+     ]
+    }
+   },
+   "why": "the cited files of Read usage and cost for a period reach the code of rule A rollup shows its least trustworthy cost state and provenance"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "A route without a store answers 503"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule A route without a store answers 503"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "A row must name a defined provider"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule A row must name a defined provider"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "A session shows its worst cost state"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule A session shows its worst cost state"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "A session title prefers the tool, then the latest"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule A session title prefers the tool, then the latest"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "A settings file that cannot be loaded is ignored as a whole"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule A settings file that cannot be loaded is ignored as a whole"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Narrow a list and choose its columns",
+   "data": {
+    "rules": {
+     "add": [
+      "A table always keeps at least one column"
+     ]
+    }
+   },
+   "why": "the cited files of Narrow a list and choose its columns reach the code of rule A table always keeps at least one column"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Read usage and cost for a period",
+   "data": {
+    "rules": {
+     "add": [
+      "A workspace tab loads its data only when first opened"
+     ]
+    }
+   },
+   "why": "the cited files of Read usage and cost for a period reach the code of rule A workspace tab loads its data only when first opened"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "An alert fires only above the threshold"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule An alert fires only above the threshold"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "An estimated price is marked next to the cost state"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule An estimated price is marked next to the cost state"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "An excluded project drops its spans"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule An excluded project drops its spans"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Inspect one session",
+   "data": {
+    "rules": {
+     "add": [
+      "An explanation popover does not take focus back on close"
+     ]
+    }
+   },
+   "why": "the cited files of Inspect one session reach the code of rule An explanation popover does not take focus back on close"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "An unpriced tier is billed standard and flagged"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule An unpriced tier is billed standard and flagged"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Read usage and cost for a period",
+   "data": {
+    "rules": {
+     "add": [
+      "Automatic rescan every five minutes"
+     ]
+    }
+   },
+   "why": "the cited files of Read usage and cost for a period reach the code of rule Automatic rescan every five minutes"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Read usage and cost for a period",
+   "data": {
+    "rules": {
+     "add": [
+      "Cache price derivation"
+     ]
+    }
+   },
+   "why": "the cited files of Read usage and cost for a period reach the code of rule Cache price derivation"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "Cache prices fall back in a fixed order"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule Cache prices fall back in a fixed order"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "Caller class names override primitive defaults"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule Caller class names override primitive defaults"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "Chart colours follow position, not meaning"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule Chart colours follow position, not meaning"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "Content retention is inert"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule Content retention is inert"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "Day breakdown is listed oldest first"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule Day breakdown is listed oldest first"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "Drawer trace blocks show the same sample data for every traced session"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule Drawer trace blocks show the same sample data for every traced session"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "Duplicate rate keys are rejected"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule Duplicate rate keys are rejected"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "Empty project panel is left blank"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule Empty project panel is left blank"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "Experimental readers carry a flag"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule Experimental readers carry a flag"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "Export accepts only json and png"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule Export accepts only json and png"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "Missing token counts mean unavailable"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule Missing token counts mean unavailable"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "Muse Code control folders are skipped"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule Muse Code control folders are skipped"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "Old rates raise a warning"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule Old rates raise a warning"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "Only listed suffixes count as the same model"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule Only listed suffixes count as the same model"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Read usage and cost for a period",
+   "data": {
+    "rules": {
+     "add": [
+      "Outcome notes are saved only when changed"
+     ]
+    }
+   },
+   "why": "the cited files of Read usage and cost for a period reach the code of rule Outcome notes are saved only when changed"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "PNG charts are limited to the top buckets"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule PNG charts are limited to the top buckets"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "Peak windows must not wrap midnight"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule Peak windows must not wrap midnight"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "Price periods must not overlap"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule Price periods must not overlap"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "Prototype figures are invented"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule Prototype figures are invented"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "Prototype filters do not filter the screens"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule Prototype filters do not filter the screens"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "Prototype rescan is staged"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule Prototype rescan is staged"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "Prototype session table shows at most 120 rows"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule Prototype session table shows at most 120 rows"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "Prototype splits session cost across token buckets by fixed weights"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule Prototype splits session cost across token buckets by fixed weights"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Read usage and cost for a period",
+   "data": {
+    "rules": {
+     "add": [
+      "Rate age notice thresholds"
+     ]
+    }
+   },
+   "why": "the cited files of Read usage and cost for a period reach the code of rule Rate age notice thresholds"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Read usage and cost for a period",
+   "data": {
+    "rules": {
+     "add": [
+      "Rate row state"
+     ]
+    }
+   },
+   "why": "the cited files of Read usage and cost for a period reach the code of rule Rate row state"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "Readers only read"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule Readers only read"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "Records that disagree on input tokens keep the first"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule Records that disagree on input tokens keep the first"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "Repeated Codex token totals are not counted twice"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule Repeated Codex token totals are not counted twice"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Read usage and cost for a period",
+   "data": {
+    "rules": {
+     "add": [
+      "Reported cost divergence threshold"
+     ]
+    }
+   },
+   "why": "the cited files of Read usage and cost for a period reach the code of rule Reported cost divergence threshold"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "Schema migrations only run forward"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule Schema migrations only run forward"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "Screens stay mounted across the four screen tabs but not across the gallery"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule Screens stay mounted across the four screen tabs but not across the gallery"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Read usage and cost for a period",
+   "data": {
+    "rules": {
+     "add": [
+      "Session table row limit"
+     ]
+    }
+   },
+   "why": "the cited files of Read usage and cost for a period reach the code of rule Session table row limit"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "Sheet opens from the right by default"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule Sheet opens from the right by default"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "Source databases are opened read only"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule Source databases are opened read only"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Read usage and cost for a period",
+   "data": {
+    "rules": {
+     "add": [
+      "Span text is fetched once per span"
+     ]
+    }
+   },
+   "why": "the cited files of Read usage and cost for a period reach the code of rule Span text is fetched once per span"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "Sub cent money keeps four decimals"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule Sub cent money keeps four decimals"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "Synthetic Claude Code records are not usage"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule Synthetic Claude Code records are not usage"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "Terminal table shows at most 30 rows"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule Terminal table shows at most 30 rows"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "The alert window ends today"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule The alert window ends today"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "The daily chart names at most twelve series"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule The daily chart names at most twelve series"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "The date range cannot cross itself"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule The date range cannot cross itself"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "The first covering period replaces the row prices"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule The first covering period replaces the row prices"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "The largest band at or under the request size applies"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule The largest band at or under the request size applies"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "The longest matching row wins"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule The longest matching row wins"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Rebuild the dashboard bundle",
+   "data": {
+    "rules": {
+     "add": [
+      "The prototype is excluded from the production build"
+     ]
+    }
+   },
+   "why": "the cited files of Rebuild the dashboard bundle reach the code of rule The prototype is excluded from the production build"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Inspect one session",
+   "data": {
+    "rules": {
+     "add": [
+      "The side panel width is bounded"
+     ]
+    }
+   },
+   "why": "the cited files of Inspect one session reach the code of rule The side panel width is bounded"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Inspect one session",
+   "data": {
+    "rules": {
+     "add": [
+      "Toggle group settings win over item settings"
+     ]
+    }
+   },
+   "why": "the cited files of Inspect one session reach the code of rule Toggle group settings win over item settings"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Compare a dashboard screen with its reference",
+   "data": {
+    "rules": {
+     "add": [
+      "Tooltip provider default delay is zero"
+     ]
+    }
+   },
+   "why": "the cited files of Compare a dashboard screen with its reference reach the code of rule Tooltip provider default delay is zero"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Read usage and cost for a period",
+   "data": {
+    "rules": {
+     "add": [
+      "Unattributed turn is excluded from rankings"
+     ]
+    }
+   },
+   "why": "the cited files of Read usage and cost for a period reach the code of rule Unattributed turn is excluded from rankings"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Read usage and cost for a period",
+   "data": {
+    "rules": {
+     "add": [
+      "Unavailable is never shown as zero"
+     ]
+    }
+   },
+   "why": "the cited files of Read usage and cost for a period reach the code of rule Unavailable is never shown as zero"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "Unknown grouping falls back to model"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule Unknown grouping falls back to model"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "Unparsable lines are skipped and counted"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule Unparsable lines are skipped and counted"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Read usage and cost for a period",
+   "data": {
+    "rules": {
+     "add": [
+      "Unpriced cost stays out of totals"
+     ]
+    }
+   },
+   "why": "the cited files of Read usage and cost for a period reach the code of rule Unpriced cost stays out of totals"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "Unpriced models are shown but not totalled"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule Unpriced models are shown but not totalled"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "Unreadable span text answers 404"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule Unreadable span text answers 404"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "Warnings are summarised unless verbose"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule Warnings are summarised unless verbose"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "_consistent refuses when duplicates"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule _consistent refuses when duplicates"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "_consistent refuses when missing"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule _consistent refuses when missing"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "_consistent validates the model"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule _consistent validates the model"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "_disjoint_periods refuses when earlier.until is None or (later.from_ or date.min) ‹ ea"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule _disjoint_periods refuses when earlier.until is None or (later.from_ or date.min) ‹ ea"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "_disjoint_periods validates the model"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule _disjoint_periods validates the model"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "_ordered refuses when self.from_ is not None and self.until is not None and ("
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule _ordered refuses when self.from_ is not None and self.until is not None and ("
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "_ordered validates the model"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule _ordered validates the model"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "_roots refuses when not path"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule _roots refuses when not path"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "_sorted_bands validates bands"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule _sorted_bands validates bands"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "_valid_window refuses when any((not 0 ‹= day ‹= 6 for day in self.weekdays))"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule _valid_window refuses when any((not 0 ‹= day ‹= 6 for day in self.weekdays))"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "_valid_window refuses when any((not 0 ‹= start ‹ end ‹= 24 for start, end in self"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule _valid_window refuses when any((not 0 ‹= start ‹ end ‹= 24 for start, end in self"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "_valid_window validates the model"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule _valid_window validates the model"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "_values_match_provenance refuses when (value is None) != (provenance == 'unavailable')"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule _values_match_provenance refuses when (value is None) != (provenance == 'unavailable')"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "_values_match_provenance validates the model"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule _values_match_provenance validates the model"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "alert refuses when days ‹ 1"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule alert refuses when days ‹ 1"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "alert refuses when over is not None and rise_over is not None"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule alert refuses when over is not None and rise_over is not None"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Print a usage and cost summary in the terminal",
+   "data": {
+    "rules": {
+     "add": [
+      "alert refuses when threshold is None"
+     ]
+    }
+   },
+   "why": "the cited files of Print a usage and cost summary in the terminal reach the code of rule alert refuses when threshold is None"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "create_app refuses when not store.session_exists(conn, source, session_id)"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule create_app refuses when not store.session_exists(conn, source, session_id)"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "create_app refuses when not store.session_exists(conn, source, session_id) (line 364)"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule create_app refuses when not store.session_exists(conn, source, session_id) (line 364)"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "create_app refuses when path is None"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule create_app refuses when path is None"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "create_app refuses when span is None"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule create_app refuses when span is None"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "forget_session refuses when not store.session_exists(conn, source, session_id)"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule forget_session refuses when not store.session_exists(conn, source, session_id)"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Read usage and cost for a period",
+   "data": {
+    "rules": {
+     "add": [
+      "getJson refuses when !response.ok"
+     ]
+    }
+   },
+   "why": "the cited files of Read usage and cost for a period reach the code of rule getJson refuses when !response.ok"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "opened refuses when path is None"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule opened refuses when path is None"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "read_content refuses when config.metadata_only or span.content_path is None"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule read_content refuses when config.metadata_only or span.content_path is None"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "See what my AI usage would cost",
+   "data": {
+    "rules": {
+     "add": [
+      "resolve_path refuses when index ›= len(current)"
+     ]
+    }
+   },
+   "why": "the cited files of See what my AI usage would cost reach the code of rule resolve_path refuses when index ›= len(current)"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "session_spans refuses when not store.session_exists(conn, source, session_id)"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule session_spans refuses when not store.session_exists(conn, source, session_id)"
+  },
+  {
+   "op": "update",
+   "defect": "rule-no-use-case",
+   "kind": "use-case",
+   "name": "Discover AI tool usage from local files",
+   "data": {
+    "rules": {
+     "add": [
+      "span_content refuses when span is None"
+     ]
+    }
+   },
+   "why": "the cited files of Discover AI tool usage from local files reach the code of rule span_content refuses when span is None"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-20",
+   "name": "Be alerted when spend rises",
+   "stem": "use-case-uc-20",
+   "title": "UC-20 Be alerted when spend rises Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Person using the tool\"]:::person\n    a2[\"Notification target\"]:::person\n    uc_20([\"UC-20 Be alerted when spend rises\"]):::system\n    a1 --> uc_20\n    a2 --> uc_20\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-20 Be alerted when spend rises": [
+     "src/ai_usage_cost/cli.py:299",
+     "src/ai_usage_cost/cli.py:323",
+     "src/ai_usage_cost/cli.py:335"
+    ]
+   },
+   "why": "UC-20 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-27",
+   "name": "Browse sessions in the terminal",
+   "stem": "use-case-uc-27",
+   "title": "UC-27 Browse sessions in the terminal Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Person using the tool\"]:::person\n    uc_27([\"UC-27 Browse sessions in the terminal\"]):::system\n    a1 --> uc_27\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-27 Browse sessions in the terminal": [
+     "src/ai_usage_cost/cli.py:358",
+     "src/ai_usage_cost/cli.py:371",
+     "src/ai_usage_cost/tui.py:119"
+    ]
+   },
+   "why": "UC-27 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-04",
+   "name": "Check a change before merge",
+   "stem": "use-case-uc-04",
+   "title": "UC-04 Check a change before merge Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"GitHub workflow runner\"]:::person\n    uc_04([\"UC-04 Check a change before merge\"]):::system\n    a1 --> uc_04\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-04 Check a change before merge": [
+     ".github/workflows/python.yml:6",
+     ".github/workflows/python.yml:54",
+     ".github/workflows/web.yml:46"
+    ]
+   },
+   "why": "UC-04 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-08",
+   "name": "Check list prices",
+   "stem": "use-case-uc-08",
+   "title": "UC-08 Check list prices Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Dashboard reader\"]:::person\n    uc_08([\"UC-08 Check list prices\"]):::system\n    a1 --> uc_08\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-08 Check list prices": [
+     "web/src/App.tsx:337",
+     "web/src/Pricing.tsx:128",
+     "web/src/Pricing.tsx:106"
+    ]
+   },
+   "why": "UC-08 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-01",
+   "name": "Compare a dashboard screen with its reference",
+   "stem": "use-case-uc-01",
+   "title": "UC-01 Compare a dashboard screen with its reference Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Dashboard developer\"]:::person\n    uc_01([\"UC-01 Compare a dashboard screen with its reference\"]):::system\n    a1 --> uc_01\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-01 Compare a dashboard screen with its reference": [
+     "web/prototype.html:25",
+     "web/src/prototype/main.tsx:9",
+     "web/src/prototype/Prototype.tsx:16"
+    ]
+   },
+   "why": "UC-01 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-03",
+   "name": "Develop the dashboard against live data",
+   "stem": "use-case-uc-03",
+   "title": "UC-03 Develop the dashboard against live data Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Maintainer\"]:::person\n    uc_03([\"UC-03 Develop the dashboard against live data\"]):::system\n    a1 --> uc_03\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-03 Develop the dashboard against live data": [
+     "web/package.json:7",
+     "web/vite.config.ts:19",
+     "web/vite.config.ts:22"
+    ]
+   },
+   "why": "UC-03 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-18",
+   "name": "Explore spend in the dashboard",
+   "stem": "use-case-uc-18",
+   "title": "UC-18 Explore spend in the dashboard Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Person using the tool\"]:::person\n    uc_18([\"UC-18 Explore spend in the dashboard\"]):::system\n    a1 --> uc_18\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-18 Explore spend in the dashboard": [
+     "src/ai_usage_cost/cli.py:109",
+     "src/ai_usage_cost/cli.py:133",
+     "src/ai_usage_cost/api.py:255"
+    ]
+   },
+   "why": "UC-18 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-19",
+   "name": "Export a report as a file",
+   "stem": "use-case-uc-19",
+   "title": "UC-19 Export a report as a file Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Person using the tool\"]:::person\n    uc_19([\"UC-19 Export a report as a file\"]):::system\n    a1 --> uc_19\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-19 Export a report as a file": [
+     "src/ai_usage_cost/cli.py:176",
+     "src/ai_usage_cost/cli.py:185",
+     "src/ai_usage_cost/cli.py:188"
+    ]
+   },
+   "why": "UC-19 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-16",
+   "name": "Export a usage and cost chart as a PNG image",
+   "stem": "use-case-uc-16",
+   "title": "UC-16 Export a usage and cost chart as a PNG image Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"CLI user\"]:::person\n    uc_16([\"UC-16 Export a usage and cost chart as a PNG image\"]):::system\n    a1 --> uc_16\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-16 Export a usage and cost chart as a PNG image": [
+     "src/ai_usage_cost/cli.py:186",
+     "src/ai_usage_cost/cli.py:192",
+     "src/ai_usage_cost/render/png.py:26"
+    ]
+   },
+   "why": "UC-16 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-22",
+   "name": "Forget a session",
+   "stem": "use-case-uc-22",
+   "title": "UC-22 Forget a session Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Person using the tool\"]:::person\n    uc_22([\"UC-22 Forget a session\"]):::system\n    a1 --> uc_22\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-22 Forget a session": [
+     "src/ai_usage_cost/api.py:362",
+     "src/ai_usage_cost/store.py:597",
+     "src/ai_usage_cost/store.py:601"
+    ]
+   },
+   "why": "UC-22 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-11",
+   "name": "Inspect a chart point",
+   "stem": "use-case-uc-11",
+   "title": "UC-11 Inspect a chart point Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Dashboard reader\"]:::person\n    uc_11([\"UC-11 Inspect a chart point\"]):::system\n    a1 --> uc_11\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-11 Inspect a chart point": [
+     "web/src/components/chart-hover.tsx:43",
+     "web/src/components/chart-hover.tsx:63",
+     "web/src/components/chart-hover.tsx:91"
+    ]
+   },
+   "why": "UC-11 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-21",
+   "name": "Inspect and rate one session",
+   "stem": "use-case-uc-21",
+   "title": "UC-21 Inspect and rate one session Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Person using the tool\"]:::person\n    uc_21([\"UC-21 Inspect and rate one session\"]):::system\n    a1 --> uc_21\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-21 Inspect and rate one session": [
+     "src/ai_usage_cost/api.py:321",
+     "src/ai_usage_cost/api.py:240",
+     "src/ai_usage_cost/api.py:336"
+    ]
+   },
+   "why": "UC-21 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-06",
+   "name": "Inspect one session",
+   "stem": "use-case-uc-06",
+   "title": "UC-06 Inspect one session Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Dashboard reader\"]:::person\n    uc_06([\"UC-06 Inspect one session\"]):::system\n    a1 --> uc_06\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-06 Inspect one session": [
+     "web/src/App.tsx:287",
+     "web/src/SessionWorkspace.tsx:471",
+     "web/src/SessionWorkspace.tsx:472"
+    ]
+   },
+   "why": "UC-06 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-10",
+   "name": "Narrow a list and choose its columns",
+   "stem": "use-case-uc-10",
+   "title": "UC-10 Narrow a list and choose its columns Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Dashboard reader\"]:::person\n    uc_10([\"UC-10 Narrow a list and choose its columns\"]):::system\n    a1 --> uc_10\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-10 Narrow a list and choose its columns": [
+     "web/src/components/filters.tsx:18",
+     "web/src/components/filters.tsx:195",
+     "web/src/components/filters.tsx:156"
+    ]
+   },
+   "why": "UC-10 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-15",
+   "name": "Print a usage and cost summary in the terminal",
+   "stem": "use-case-uc-15",
+   "title": "UC-15 Print a usage and cost summary in the terminal Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"CLI user\"]:::person\n    uc_15([\"UC-15 Print a usage and cost summary in the terminal\"]):::system\n    a1 --> uc_15\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-15 Print a usage and cost summary in the terminal": [
+     "src/ai_usage_cost/cli.py:105",
+     "src/ai_usage_cost/render/terminal.py:20",
+     "src/ai_usage_cost/render/terminal.py:29"
+    ]
+   },
+   "why": "UC-15 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-26",
+   "name": "Query the store with SQL",
+   "stem": "use-case-uc-26",
+   "title": "UC-26 Query the store with SQL Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Person using the tool\"]:::person\n    uc_26([\"UC-26 Query the store with SQL\"]):::system\n    a1 --> uc_26\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-26 Query the store with SQL": [
+     "src/ai_usage_cost/cli.py:229",
+     "src/ai_usage_cost/cli.py:235",
+     "src/ai_usage_cost/cli.py:239"
+    ]
+   },
+   "why": "UC-26 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-07",
+   "name": "Rate a session outcome",
+   "stem": "use-case-uc-07",
+   "title": "UC-07 Rate a session outcome Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Dashboard reader\"]:::person\n    uc_07([\"UC-07 Rate a session outcome\"]):::system\n    a1 --> uc_07\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-07 Rate a session outcome": [
+     "web/src/SessionWorkspace.tsx:312",
+     "web/src/api.ts:577",
+     "web/src/SessionWorkspace.tsx:287"
+    ]
+   },
+   "why": "UC-07 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-09",
+   "name": "Read a figure and see how far to trust it",
+   "stem": "use-case-uc-09",
+   "title": "UC-09 Read a figure and see how far to trust it Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Dashboard reader\"]:::person\n    uc_09([\"UC-09 Read a figure and see how far to trust it\"]):::system\n    a1 --> uc_09\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-09 Read a figure and see how far to trust it": [
+     "web/src/components/stat.tsx:61",
+     "web/src/components/status.tsx:149",
+     "web/src/components/status.tsx:180"
+    ]
+   },
+   "why": "UC-09 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-14",
+   "name": "Read a tool's SQLite store without a token count",
+   "stem": "use-case-uc-14",
+   "title": "UC-14 Read a tool's SQLite store without a token count Use Case Diagram",
+   "mermaid": "flowchart LR\n    uc_14([\"UC-14 Read a tool's SQLite store without a token count\"]):::system\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-14 Read a tool's SQLite store without a token count": [
+     "src/ai_usage_cost/sources/cursor.py:32",
+     "src/ai_usage_cost/sources/cursor.py:55",
+     "src/ai_usage_cost/sources/cursor.py:59"
+    ]
+   },
+   "why": "UC-14 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-23",
+   "name": "Read the text of one span",
+   "stem": "use-case-uc-23",
+   "title": "UC-23 Read the text of one span Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Person using the tool\"]:::person\n    uc_23([\"UC-23 Read the text of one span\"]):::system\n    a1 --> uc_23\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-23 Read the text of one span": [
+     "src/ai_usage_cost/api.py:374",
+     "src/ai_usage_cost/api.py:376",
+     "src/ai_usage_cost/privacy.py:91"
+    ]
+   },
+   "why": "UC-23 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-05",
+   "name": "Read usage and cost for a period",
+   "stem": "use-case-uc-05",
+   "title": "UC-05 Read usage and cost for a period Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Dashboard reader\"]:::person\n    uc_05([\"UC-05 Read usage and cost for a period\"]):::system\n    a1 --> uc_05\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-05 Read usage and cost for a period": [
+     "web/src/App.tsx:168",
+     "web/src/App.tsx:186",
+     "web/src/App.tsx:333"
+    ]
+   },
+   "why": "UC-05 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-02",
+   "name": "Rebuild the dashboard bundle",
+   "stem": "use-case-uc-02",
+   "title": "UC-02 Rebuild the dashboard bundle Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Maintainer\"]:::person\n    uc_02([\"UC-02 Rebuild the dashboard bundle\"]):::system\n    a1 --> uc_02\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-02 Rebuild the dashboard bundle": [
+     "web/package.json:8",
+     "web/vite.config.ts:16",
+     "web/vite.config.ts:7"
+    ]
+   },
+   "why": "UC-02 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-12",
+   "name": "Review a session's spans and context use",
+   "stem": "use-case-uc-12",
+   "title": "UC-12 Review a session's spans and context use Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Dashboard reader\"]:::person\n    uc_12([\"UC-12 Review a session's spans and context use\"]):::system\n    a1 --> uc_12\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-12 Review a session's spans and context use": [
+     "web/src/components/trace.tsx:227",
+     "web/src/components/trace.tsx:247",
+     "web/src/components/trace.tsx:389"
+    ]
+   },
+   "why": "UC-12 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-25",
+   "name": "Sample GPU use for local models",
+   "stem": "use-case-uc-25",
+   "title": "UC-25 Sample GPU use for local models Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Person using the tool\"]:::person\n    uc_25([\"UC-25 Sample GPU use for local models\"]):::system\n    a1 --> uc_25\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-25 Sample GPU use for local models": [
+     "src/ai_usage_cost/cli.py:200",
+     "src/ai_usage_cost/collect.py:85",
+     "src/ai_usage_cost/collect.py:275"
+    ]
+   },
+   "why": "UC-25 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-17",
+   "name": "See what my AI usage would cost",
+   "stem": "use-case-uc-17",
+   "title": "UC-17 See what my AI usage would cost Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Person using the tool\"]:::person\n    a2[\"AI coding tool logs\"]:::person\n    uc_17([\"UC-17 See what my AI usage would cost\"]):::system\n    a1 --> uc_17\n    a2 --> uc_17\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-17 See what my AI usage would cost": [
+     "src/ai_usage_cost/cli.py:72",
+     "src/ai_usage_cost/cli.py:87",
+     "src/ai_usage_cost/pipeline.py:175"
+    ]
+   },
+   "why": "UC-17 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-28",
+   "name": "Sort the session list and open one session in the prototype",
+   "stem": "use-case-uc-28",
+   "title": "UC-28 Sort the session list and open one session in the prototype Use Case Diagram",
+   "mermaid": "flowchart LR\n    uc_28([\"UC-28 Sort the session list and open one session in the prototype\"]):::system\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-28 Sort the session list and open one session in the prototype": [
+     "web/src/prototype/Prototype.tsx:54",
+     "web/src/prototype/SessionsScreen.tsx:83",
+     "web/src/prototype/SessionsScreen.tsx:99"
+    ]
+   },
+   "why": "UC-28 has no linked diagram (D24); this one is drawn from the spec graph"
+  },
+  {
+   "op": "diagram",
+   "defect": "use-case-no-diagram",
+   "use_case": "UC-24",
+   "name": "Try the tool with demo data",
+   "stem": "use-case-uc-24",
+   "title": "UC-24 Try the tool with demo data Use Case Diagram",
+   "mermaid": "flowchart LR\n    a1[\"Person using the tool\"]:::person\n    uc_24([\"UC-24 Try the tool with demo data\"]):::system\n    a1 --> uc_24\n    subgraph Legend\n        direction LR\n        zlegend_a[\"Actor: a person or system that takes part\"]:::person\n        zlegend_b([\"Use case: a goal the application serves\"]):::system\n        zlegend_a ~~~ zlegend_b\n    end\n    classDef person fill:#fff2cc,stroke:#d6b656,color:#142233\n    classDef system fill:#dae8fc,stroke:#6c8ebf,color:#142233\n",
+   "node_citations": {
+    "UC-24 Try the tool with demo data": [
+     "src/ai_usage_cost/cli.py:141",
+     "src/ai_usage_cost/cli.py:161",
+     "src/ai_usage_cost/cli.py:163"
+    ]
+   },
+   "why": "UC-24 has no linked diagram (D24); this one is drawn from the spec graph"
+  }
+ ]
+}
