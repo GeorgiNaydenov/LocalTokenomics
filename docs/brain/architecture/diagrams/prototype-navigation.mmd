@@ -1,0 +1,48 @@
+flowchart TD
+    start(["Developer opens prototype.html"]):::person
+    overview["Overview tab: default screen"]:::screen
+    sessions["Sessions tab"]:::screen
+    sources["Sources tab"]:::screen
+    pricing["Models and pricing tab"]:::screen
+    gallery["Design system tab: Gallery"]:::screen
+    drawer["Session drawer: sheet over Sessions"]:::overlay
+    railsheet["Filters sheet: narrow windows, any dashboard screen"]:::overlay
+    rescan["Rescan logs: any screen, button disabled for 900 ms"]:::action
+    theme["Theme toggle: any screen, light or dark"]:::action
+
+    start --> overview
+    overview -->|"header tab click"| sessions
+    overview -->|"header tab click"| sources
+    overview -->|"header tab click"| pricing
+    overview -->|"header tab click"| gallery
+    sessions -->|"header tab click"| overview
+    sources -->|"header tab click"| overview
+    pricing -->|"header tab click"| overview
+    gallery -->|"header tab click"| overview
+    overview -.->|"more readers button"| sources
+    sessions -->|"row or card click"| drawer
+    drawer -->|"close"| sessions
+    overview -->|"Filters button below lg"| railsheet
+    railsheet -->|"close"| overview
+    overview -->|"Rescan logs"| rescan
+    rescan -->|"after 900 ms"| overview
+    overview -->|"theme button"| theme
+    theme -->|"mode switches"| overview
+
+    subgraph Legend
+        direction LR
+        zl1(["Yellow pill: the person who starts"]):::person
+        zl2["Blue box: a screen reached from the header tabs"]:::screen
+        zl3["Purple box: an overlay that opens above a screen"]:::overlay
+        zl4["Orange box: a header action that stays on the same screen"]:::action
+        zl5["Solid arrow: user action. Dashed arrow: a shortcut inside a screen"]:::screen
+        zl1 ~~~ zl2
+        zl2 ~~~ zl3
+        zl3 ~~~ zl4
+        zl4 ~~~ zl5
+    end
+
+    classDef person fill:#fff2cc,stroke:#222222,color:#111111
+    classDef screen fill:#dae8fc,stroke:#222222,color:#111111
+    classDef overlay fill:#e1d5e7,stroke:#222222,color:#111111
+    classDef action fill:#ffe6cc,stroke:#222222,color:#111111

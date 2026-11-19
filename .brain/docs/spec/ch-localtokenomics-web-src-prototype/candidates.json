@@ -7,5 +7,9 @@
  "state_enums": [],
  "external_calls": [],
  "entities": [],
- "existing": []
+ "existing": [
+  "candidates.json",
+  "deferred-1.json",
+  "ids.json"
+ ]
 }

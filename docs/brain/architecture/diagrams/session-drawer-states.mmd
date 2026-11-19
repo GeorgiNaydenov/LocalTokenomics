@@ -1,0 +1,30 @@
+stateDiagram-v2
+    direction TB
+    [*] --> Closed: active is null
+    Closed --> Open: row or card click calls onOpen
+    Open --> Closed: sheet close calls onClose
+    state Open {
+        [*] --> Cost
+        Cost --> Tokens
+        Tokens --> NoTokens: tokens is null
+        Tokens --> TokenBuckets: tokens present
+        NoTokens --> Trace
+        TokenBuckets --> Trace
+        Trace --> Traced: traced is true
+        Trace --> Untraced: traced is false
+        Traced --> Provenance
+        Untraced --> Provenance
+        Provenance --> [*]
+    }
+    note right of NoTokens
+        Empty state: the client logs no token counts, so cost shows not available and no bucket split is drawn.
+    end note
+    note right of Untraced
+        Shows a text that the session predates span capture. The code has no error state for a failed trace.
+    end note
+    note right of Traced
+        Context window, trace, insights and capabilities come from fixed sample data, the same for every traced session.
+    end note
+    note left of Closed
+        Legend, a rounded box is a state of the drawer, an arrow label is the trigger or the data condition, the filled dot is the start and the ringed dot is the end, a note records a rule that holds in that state.
+    end note

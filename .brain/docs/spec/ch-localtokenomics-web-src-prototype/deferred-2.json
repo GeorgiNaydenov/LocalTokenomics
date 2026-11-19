@@ -1,0 +1,263 @@
+[
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Cost state",
+   "Definition": "How the cost of a session was derived: priced from a rate, free because the provider is a local runtime, unpriced because no rate matches, or unavailable because the client logs no token counts. The prototype drawer words each one in its own sentence.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Outcome",
+   "Definition": "How a session ended: successful, partial, failed, abandoned or unrated. A session without token counts is always unrated in the sample data.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Token bucket",
+   "Definition": "One of the four counted kinds of tokens in a session: uncached input, cache read, cache write and output. The drawer splits a session cost across them with fixed weights.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "glossary-term",
+  "data": {
+   "name": "Session drawer",
+   "Definition": "The side sheet that opens over the Sessions screen for one chosen session and shows its cost, token buckets, context window, trace, origin facts and raw log files.",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "use-case",
+  "data": {
+   "name": "Sort the session list and open one session in the prototype",
+   "Description": "A developer who ports the Sessions screen sorts the sample session table, opens one session and reads the drawer, to see the target layout and the states the screen has to cover.",
+   "Preconditions": "The prototype page is open on the Sessions tab.",
+   "Postconditions": "Nothing is stored; the chosen session is only kept as component state until the drawer is closed.",
+   "Main flow": [
+    "1. The developer picks the Sessions tab. `web/src/prototype/Prototype.tsx:54`",
+    "2. The screen sorts a copy of all sample sessions, by cost high to low at first. `web/src/prototype/SessionsScreen.tsx:83`",
+    "3. A header press sorts by that column, and a second press flips the direction. `web/src/prototype/SessionsScreen.tsx:99`",
+    "4. The first rows up to the row limit are shown. `web/src/prototype/SessionsScreen.tsx:96`",
+    "5. A click on a row calls the open callback with the session. `web/src/prototype/SessionsScreen.tsx:170`",
+    "6. The Screens component keeps it as the active session and the drawer opens. `web/src/prototype/Screens.tsx:363`",
+    "7. The drawer shows the cost, then token buckets or an empty state, then trace blocks or an explanation. `web/src/prototype/Screens.tsx:94`"
+   ],
+   "Alternative flows": "2a. On a phone width the table is replaced by cards. `web/src/prototype/SessionsScreen.tsx:127` 7a. A session without token counts shows an empty state in place of the buckets. `web/src/prototype/Screens.tsx:166` 7b. A session that is not traced shows a text that it was recorded before span capture. `web/src/prototype/Screens.tsx:219`",
+   "Acceptance criteria": "No test covers the prototype. From the code: the table is sorted by cost high to low at first, at most the row limit of sessions are shown, a row click opens the drawer, and the drawer closes through its close control.",
+   "Special requirements": "The row limit is 120 sessions. The drawer reads fixed sample arrays for its trace blocks.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/prototype/SessionsScreen.tsx::SessionsScreen",
+     "quote": "export function SessionsScreen({ onOpen }: { onOpen: (session: PrototypeSession) => void }) {",
+     "confidence": "inferred"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "implemented-by",
+     "loc": "web/src/prototype/Screens.tsx::SessionDrawer",
+     "quote": "function SessionDrawer({",
+     "confidence": "inferred"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Drawer trace blocks show the same sample data for every traced session",
+   "Statement": "The context window, trace, insights and capability blocks of the session drawer are read from fixed sample arrays and are not derived from the chosen session, so they are identical for every session whose traced flag is true.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/Screens.tsx",
+     "quote": "spans={TRACE_SPANS.map((span) => ({",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/Screens.tsx",
+     "quote": "points={CONTEXT_SNAPSHOTS}",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "rule",
+  "data": {
+   "name": "Screens stay mounted across the four screen tabs but not across the gallery",
+   "Statement": "The Screens component owns the filter state and the active session. It stays mounted while the tab moves between the four screens, and it is replaced by the gallery for the design system tab, so a visit to the gallery resets the filters.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/Prototype.tsx",
+     "quote": "{tab === 'gallery' ? (",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/Screens.tsx",
+     "quote": "const [filters, setFilters] = useState<FilterState>(INITIAL_FILTERS)",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Sessions footer asks the user to narrow filters that do nothing",
+   "Risk": "The footer note says to narrow the filters to see the rest of the sessions, but the screen receives no filter value, so the advice cannot work. A port that copies the text would promise a control the data layer does not apply.",
+   "Mitigation": "Pass the filter state into the screen when porting, or drop the sentence from the reference.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/SessionsScreen.tsx",
+     "quote": "Narrow the filters to see the rest.",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Session rows can be opened by mouse only",
+   "Risk": "The table row has a click handler and a pointer cursor but no key handler and no tab stop, so a keyboard user cannot open a session. Only the error count has a tab stop. A screen meant as the reference for the real one should not carry this gap.",
+   "Mitigation": "Make the row focusable and open it on Enter, or put a button in the id cell, in the shipped screen.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/SessionsScreen.tsx",
+     "quote": "className=\"cursor-pointer\"",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Cache prices of providers without rules are defaults, not published prices",
+   "Risk": "The pricing screen derives cache prices from the provider rules and falls back to 0.1 for reads and 1.25 for writes when the provider has none. The rule table lists three providers while the rate table also has deepseek, moonshot and mistral rows, so their cache columns show the default. The note beside the multipliers says discounts differ by provider.",
+   "Mitigation": "Show a dash, or mark the figure as a default, for providers without a rule.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/PricingScreen.tsx",
+     "quote": "const rules = PROVIDER_RULES[rate.provider]",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/data.ts",
+     "quote": "export const PROVIDER_RULES: Record<string, ProviderRules> = {",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Overview panels read the first item of a list without a guard",
+   "Risk": "The cost by model panel reads the first ranked model and the project panel reads the first project to write its title. With real data and an empty list both would fail. Averages and shares also divide by totals without a zero check.",
+   "Mitigation": "Add an empty state for each panel before the layout is ported.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/OverviewScreen.tsx",
+     "quote": "const top = ranked[0]",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/OverviewScreen.tsx",
+     "quote": "const averagePerSession = TOTALS.cost / TOTALS.sessions",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "risk",
+  "data": {
+   "name": "Sample figures are stored twice and can drift",
+   "Risk": "The spend of each model is written once in the model list and once in the rate table, for example the figure of the top model, with no link between them. An edit to one copy leaves the other stale, and the overview and pricing screens would disagree.",
+   "Mitigation": "Derive one list from the other, or add a test that compares them.",
+   "refs": [
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/data.ts",
+     "quote": "cost: 1489.22,",
+     "confidence": "confirmed"
+    },
+    {
+     "source": "Code of localtokenomics",
+     "relation": "enforced-by",
+     "loc": "web/src/prototype/data.ts",
+     "quote": "spend: 1489.22",
+     "confidence": "confirmed"
+    }
+   ],
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Does the shared token cell clamp a negative bar fraction?",
+   "Question": "A session without token counts has a token total of minus one, and the table divides it by the largest total to get the bar fraction, which is then negative. The prototype does not clamp it. Checked web/src/prototype/SessionsScreen.tsx; the answer is in the shared session component, which belongs to another chunk.",
+   "priority": "low",
+   "maturity": "draft"
+  }
+ },
+ {
+  "op": "add",
+  "kind": "open-question",
+  "data": {
+   "name": "Which sort keys does the sort menu offer compared with the column headers?",
+   "Question": "The column headers can sort by client, model, id and outcome, but the option list of the sort menu has no entry for them, so the menu value after a header press has no matching option. Checked web/src/prototype/SessionsScreen.tsx and web/src/prototype/data.ts; how the menu shows an unknown value is decided in the shared component.",
+   "priority": "low",
+   "maturity": "draft"
+  }
+ }
+]

@@ -1,0 +1,33 @@
+stateDiagram-v2
+    direction LR
+    [*] --> Overview: first render, tab starts as overview
+    Overview --> Sessions: tab click
+    Overview --> Sources: tab click or readers button
+    Overview --> Pricing: tab click
+    Sessions --> Overview: tab click
+    Sessions --> Sources: tab click
+    Sessions --> Pricing: tab click
+    Sources --> Overview: tab click
+    Sources --> Sessions: tab click
+    Sources --> Pricing: tab click
+    Pricing --> Overview: tab click
+    Pricing --> Sessions: tab click
+    Pricing --> Sources: tab click
+    Overview --> Gallery: Design system tab
+    Sessions --> Gallery: Design system tab
+    Sources --> Gallery: Design system tab
+    Pricing --> Gallery: Design system tab
+    Gallery --> Overview: screen tab
+    Gallery --> Sessions: screen tab
+    Gallery --> Sources: screen tab
+    Gallery --> Pricing: screen tab
+    Gallery --> [*]
+    note right of Gallery
+        Screens is unmounted here, so filter state and any open drawer are lost. The Filters button is hidden.
+    end note
+    note right of Overview
+        The four screens share one mounted Screens component, so filters stay while the tab changes. No loading, empty or error state exists because all data is literal.
+    end note
+    note left of Overview
+        Legend, a rounded box is the active tab, an arrow label is the trigger, the filled dot is the start and the ringed dot is the end, a note records a rule that holds in that state.
+    end note
