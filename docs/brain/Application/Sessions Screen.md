@@ -3,13 +3,15 @@ title: Sessions Screen
 aliases: []
 tags: [ui, reference, screen-map]
 area: application
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
-verified-against: 5796e68c0471
+verified-against: 02d21a1926f6
 chunk: ch-localtokenomics-web-src
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Sessions Screen

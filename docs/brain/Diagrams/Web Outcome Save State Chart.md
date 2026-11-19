@@ -3,22 +3,25 @@ title: Web Outcome Save State Chart
 aliases: []
 tags: [diagram, mermaid, state-chart]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/diagrams/web-outcome-save.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   web-outcome-save:
-    'Loading': ['web/src/SessionWorkspace.tsx:471-471']
-    'Stored': ['web/src/SessionWorkspace.tsx:284-284']
-    'LoadError': ['web/src/SessionWorkspace.tsx:299-299']
-    'Editing': ['web/src/SessionWorkspace.tsx:345-345']
-    'Saving': ['web/src/SessionWorkspace.tsx:276-276']
-    'SaveError': ['web/src/SessionWorkspace.tsx:287-287']
+    Loading: ['web/src/SessionWorkspace.tsx:471-471']
+    Stored: ['web/src/SessionWorkspace.tsx:284-284']
+    LoadError: ['web/src/SessionWorkspace.tsx:299-299']
+    Editing: ['web/src/SessionWorkspace.tsx:345-345']
+    Saving: ['web/src/SessionWorkspace.tsx:276-276']
+    SaveError: ['web/src/SessionWorkspace.tsx:287-287']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Outcome Save State Chart

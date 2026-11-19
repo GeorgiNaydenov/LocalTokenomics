@@ -3,36 +3,39 @@ title: Web Component Composition
 aliases: []
 tags: [diagram, mermaid, component-tree]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/diagrams/web-ui-composition.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   web-ui-composition:
-    'main': ['web/src/main.tsx:7-12']
-    'App': ['web/src/App.tsx:129-129']
-    'Header': ['web/src/App.tsx:292-304']
-    'FilterRail': ['web/src/App.tsx:307-318']
-    'FilterChips': ['web/src/App.tsx:327-327']
-    'OfflineCard': ['web/src/App.tsx:255-259']
-    'Overview': ['web/src/App.tsx:331-331']
-    'Sessions': ['web/src/App.tsx:334-334']
-    'Sources': ['web/src/App.tsx:336-336']
-    'Pricing': ['web/src/App.tsx:338-338']
-    'SessionWorkspace': ['web/src/App.tsx:343-352']
-    'Sheet': ['web/src/FilterRail.tsx:486-486', 'web/src/SessionWorkspace.tsx:620-620']
-    'Tabs': ['web/src/SessionWorkspace.tsx:536-551']
-    'OutcomeControl': ['web/src/SessionWorkspace.tsx:533-533']
-    'SummaryTab': ['web/src/SessionWorkspace.tsx:555-555']
-    'LoadableTab': ['web/src/SessionWorkspace.tsx:379-379']
-    'TraceTab': ['web/src/SessionWorkspace.tsx:564-564']
-    'EconomicsTab': ['web/src/SessionWorkspace.tsx:575-580']
-    'ContextTab': ['web/src/SessionWorkspace.tsx:591-591']
-    'EmptyState': ['web/src/Sessions.tsx:299-299', 'web/src/TraceTab.tsx:980-980', 'web/src/ContextTab.tsx:166-166']
+    main: ['web/src/main.tsx:7-12']
+    App: ['web/src/App.tsx:129-129']
+    Header: ['web/src/App.tsx:292-304']
+    FilterRail: ['web/src/App.tsx:307-318']
+    FilterChips: ['web/src/App.tsx:327-327']
+    OfflineCard: ['web/src/App.tsx:255-259']
+    Overview: ['web/src/App.tsx:331-331']
+    Sessions: ['web/src/App.tsx:334-334']
+    Sources: ['web/src/App.tsx:336-336']
+    Pricing: ['web/src/App.tsx:338-338']
+    SessionWorkspace: ['web/src/App.tsx:343-352']
+    Sheet: ['web/src/FilterRail.tsx:486-486', 'web/src/SessionWorkspace.tsx:620-620']
+    Tabs: ['web/src/SessionWorkspace.tsx:536-551']
+    OutcomeControl: ['web/src/SessionWorkspace.tsx:533-533']
+    SummaryTab: ['web/src/SessionWorkspace.tsx:555-555']
+    LoadableTab: ['web/src/SessionWorkspace.tsx:379-379']
+    TraceTab: ['web/src/SessionWorkspace.tsx:564-564']
+    EconomicsTab: ['web/src/SessionWorkspace.tsx:575-580']
+    ContextTab: ['web/src/SessionWorkspace.tsx:591-591']
+    EmptyState: ['web/src/Sessions.tsx:299-299', 'web/src/TraceTab.tsx:980-980', 'web/src/ContextTab.tsx:166-166']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Component Composition

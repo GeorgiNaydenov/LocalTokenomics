@@ -3,22 +3,25 @@ title: Web Trace State Chart
 aliases: []
 tags: [diagram, mermaid, state-chart]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/diagrams/web-trace-content.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   web-trace-content:
-    'Closed': ['web/src/TraceTab.tsx:827-827']
-    'Loading': ['web/src/TraceTab.tsx:46-46']
-    'Shown': ['web/src/TraceTab.tsx:794-794']
+    Closed: ['web/src/TraceTab.tsx:827-827']
+    Loading: ['web/src/TraceTab.tsx:46-46']
+    Shown: ['web/src/TraceTab.tsx:794-794']
     'Off': ['web/src/TraceTab.tsx:796-796']
-    'Failed': ['web/src/TraceTab.tsx:796-796']
-    'Hidden': ['web/src/TraceTab.tsx:789-789']
+    Failed: ['web/src/TraceTab.tsx:796-796']
+    Hidden: ['web/src/TraceTab.tsx:789-789']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Trace State Chart

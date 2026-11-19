@@ -3,29 +3,32 @@ title: Web Glossary Map
 aliases: []
 tags: [diagram, mermaid, glossary-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/diagrams/web-terms.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   web-terms:
-    'report': ['web/src/api.ts:264-287']
-    'session': ['web/src/api.ts:215-240']
-    'state': ['web/src/api.ts:61-61']
-    'outcome': ['web/src/api.ts:82-82']
-    'trace': ['web/src/api.ts:195-202']
-    'span': ['web/src/api.ts:84-114']
-    'turn': ['web/src/TraceTab.tsx:566-566']
-    'unatt': ['web/src/EconomicsTab.tsx:8-8']
-    'snap': ['web/src/api.ts:124-137']
-    'prov': ['web/src/api.ts:63-63']
-    'priced': ['web/src/api.ts:61-61']
-    'rate': ['web/src/api.ts:471-480']
-    'est': ['web/src/Pricing.tsx:62-68']
+    report: ['web/src/api.ts:264-287']
+    session: ['web/src/api.ts:215-240']
+    state: ['web/src/api.ts:61-61']
+    outcome: ['web/src/api.ts:82-82']
+    trace: ['web/src/api.ts:195-202']
+    span: ['web/src/api.ts:84-114']
+    turn: ['web/src/TraceTab.tsx:566-566']
+    unatt: ['web/src/EconomicsTab.tsx:8-8']
+    snap: ['web/src/api.ts:124-137']
+    prov: ['web/src/api.ts:63-63']
+    priced: ['web/src/api.ts:61-61']
+    rate: ['web/src/api.ts:471-480']
+    est: ['web/src/Pricing.tsx:62-68']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Glossary Map

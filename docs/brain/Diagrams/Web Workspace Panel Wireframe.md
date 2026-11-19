@@ -3,28 +3,31 @@ title: Web Workspace Panel Wireframe
 aliases: []
 tags: [diagram, drawio, wireframe]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/drawio/drawio-web-workspace-panel.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   drawio-web-workspace-panel:
-    'ws': ['web/src/SessionWorkspace.tsx:433-445']
-    'w-handle': ['web/src/SessionWorkspace.tsx:433-445']
-    'w-eyebrow': ['web/src/SessionWorkspace.tsx:433-445']
-    'w-full': ['web/src/SessionWorkspace.tsx:433-445']
-    'w-close': ['web/src/SessionWorkspace.tsx:433-445']
-    'w-name': ['web/src/SessionWorkspace.tsx:433-445']
-    'w-outcome': ['web/src/SessionWorkspace.tsx:433-445']
-    'w-t1': ['web/src/SessionWorkspace.tsx:433-445']
-    'w-t2': ['web/src/SessionWorkspace.tsx:433-445']
-    'w-t3': ['web/src/SessionWorkspace.tsx:433-445']
-    'w-t4': ['web/src/SessionWorkspace.tsx:433-445']
-    'w-body': ['web/src/SessionWorkspace.tsx:433-445']
+    ws: ['web/src/SessionWorkspace.tsx:433-445']
+    w-handle: ['web/src/SessionWorkspace.tsx:433-445']
+    w-eyebrow: ['web/src/SessionWorkspace.tsx:433-445']
+    w-full: ['web/src/SessionWorkspace.tsx:433-445']
+    w-close: ['web/src/SessionWorkspace.tsx:433-445']
+    w-name: ['web/src/SessionWorkspace.tsx:433-445']
+    w-outcome: ['web/src/SessionWorkspace.tsx:433-445']
+    w-t1: ['web/src/SessionWorkspace.tsx:433-445']
+    w-t2: ['web/src/SessionWorkspace.tsx:433-445']
+    w-t3: ['web/src/SessionWorkspace.tsx:433-445']
+    w-t4: ['web/src/SessionWorkspace.tsx:433-445']
+    w-body: ['web/src/SessionWorkspace.tsx:433-445']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Workspace Panel Wireframe

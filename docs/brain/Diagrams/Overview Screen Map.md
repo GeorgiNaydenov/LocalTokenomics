@@ -3,11 +3,12 @@ title: Overview Screen Map
 aliases: []
 tags: [diagram, drawio, screen-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/drawio/drawio-screen-overview.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
@@ -67,14 +68,19 @@ node_citations:
     badge-25: ['web/src/Overview.tsx:848-848']
     badge-26: ['web/src/Overview.tsx:877-880']
     region-1: ['web/src/Overview.tsx:117-117', 'web/src/Overview.tsx:151-153']
-    region-2: ['web/src/Overview.tsx:193-193', 'web/src/Overview.tsx:223-223', 'web/src/Overview.tsx:246-246', 'web/src/Overview.tsx:265-265', 'web/src/Overview.tsx:284-284', 'web/src/Overview.tsx:325-329']
+    region-2: ['web/src/Overview.tsx:193-193', 'web/src/Overview.tsx:223-223', 'web/src/Overview.tsx:246-246',
+      'web/src/Overview.tsx:265-265', 'web/src/Overview.tsx:284-284', 'web/src/Overview.tsx:325-329']
     region-3: ['web/src/Overview.tsx:362-362', 'web/src/Overview.tsx:377-377', 'web/src/Overview.tsx:392-392']
-    region-4: ['web/src/Overview.tsx:472-472', 'web/src/Overview.tsx:479-479', 'web/src/Overview.tsx:492-492', 'web/src/Overview.tsx:499-499']
-    region-5: ['web/src/Overview.tsx:554-559', 'web/src/Overview.tsx:565-570', 'web/src/Overview.tsx:579-579', 'web/src/Overview.tsx:585-585']
+    region-4: ['web/src/Overview.tsx:472-472', 'web/src/Overview.tsx:479-479', 'web/src/Overview.tsx:492-492',
+      'web/src/Overview.tsx:499-499']
+    region-5: ['web/src/Overview.tsx:554-559', 'web/src/Overview.tsx:565-570', 'web/src/Overview.tsx:579-579',
+      'web/src/Overview.tsx:585-585']
     region-6: ['web/src/Overview.tsx:667-667', 'web/src/Overview.tsx:708-711']
     region-7: ['web/src/Overview.tsx:751-751']
     region-8: ['web/src/Overview.tsx:790-790', 'web/src/Overview.tsx:803-803']
     region-9: ['web/src/Overview.tsx:848-848', 'web/src/Overview.tsx:877-880']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Overview Screen Map

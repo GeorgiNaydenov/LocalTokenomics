@@ -3,27 +3,30 @@ title: Web Sitemap
 aliases: []
 tags: [diagram, mermaid, sitemap]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/diagrams/web-information-architecture.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   web-information-architecture:
-    'app': ['web/src/main.tsx:7-12']
-    'views': ['web/src/Header.tsx:24-24']
-    'wsp': ['web/src/SessionWorkspace.tsx:72-72']
-    'ov': ['web/src/Header.tsx:25-25']
-    'se': ['web/src/Header.tsx:26-26']
-    'so': ['web/src/Header.tsx:27-27']
-    'pr': ['web/src/Header.tsx:28-28']
-    'su': ['web/src/SessionWorkspace.tsx:73-73']
-    'tr': ['web/src/SessionWorkspace.tsx:74-74']
-    'ec': ['web/src/SessionWorkspace.tsx:75-75']
-    'cx': ['web/src/SessionWorkspace.tsx:76-76']
+    app: ['web/src/main.tsx:7-12']
+    views: ['web/src/Header.tsx:24-24']
+    wsp: ['web/src/SessionWorkspace.tsx:72-72']
+    ov: ['web/src/Header.tsx:25-25']
+    se: ['web/src/Header.tsx:26-26']
+    so: ['web/src/Header.tsx:27-27']
+    pr: ['web/src/Header.tsx:28-28']
+    su: ['web/src/SessionWorkspace.tsx:73-73']
+    tr: ['web/src/SessionWorkspace.tsx:74-74']
+    ec: ['web/src/SessionWorkspace.tsx:75-75']
+    cx: ['web/src/SessionWorkspace.tsx:76-76']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Sitemap

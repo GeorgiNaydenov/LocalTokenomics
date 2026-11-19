@@ -3,20 +3,23 @@ title: Web Workspace State Chart
 aliases: []
 tags: [diagram, mermaid, state-chart]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/diagrams/web-workspace-loading.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   web-workspace-loading:
-    'Idle': ['web/src/SessionWorkspace.tsx:109-109']
-    'Loading': ['web/src/SessionWorkspace.tsx:387-387']
-    'Ready': ['web/src/SessionWorkspace.tsx:391-392']
-    'Failed': ['web/src/SessionWorkspace.tsx:389-390']
+    Idle: ['web/src/SessionWorkspace.tsx:109-109']
+    Loading: ['web/src/SessionWorkspace.tsx:387-387']
+    Ready: ['web/src/SessionWorkspace.tsx:391-392']
+    Failed: ['web/src/SessionWorkspace.tsx:389-390']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Workspace State Chart

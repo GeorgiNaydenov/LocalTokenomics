@@ -3,36 +3,39 @@ title: Web Sessions Table Wireframe
 aliases: []
 tags: [diagram, drawio, wireframe]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/drawio/drawio-web-sessions-table.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   drawio-web-sessions-table:
-    'panel': ['web/src/Sessions.tsx:235-239']
-    's-title': ['web/src/Sessions.tsx:235-239']
-    's-sort': ['web/src/Sessions.tsx:235-239']
-    's-cols': ['web/src/Sessions.tsx:235-239']
-    's-table': ['web/src/Sessions.tsx:235-239']
-    'h1': ['web/src/Sessions.tsx:235-239']
-    'h2': ['web/src/Sessions.tsx:235-239']
-    'h3': ['web/src/Sessions.tsx:235-239']
-    'h4': ['web/src/Sessions.tsx:235-239']
-    'h5': ['web/src/Sessions.tsx:235-239']
-    'h6': ['web/src/Sessions.tsx:235-239']
-    'h7': ['web/src/Sessions.tsx:235-239']
-    'h8': ['web/src/Sessions.tsx:235-239']
-    'h9': ['web/src/Sessions.tsx:235-239']
-    'h10': ['web/src/Sessions.tsx:235-239']
-    'h11': ['web/src/Sessions.tsx:235-239']
-    's-row1': ['web/src/Sessions.tsx:235-239']
-    's-row2': ['web/src/Sessions.tsx:235-239']
-    's-note': ['web/src/Sessions.tsx:235-239']
-    's-empty': ['web/src/Sessions.tsx:235-239']
+    panel: ['web/src/Sessions.tsx:235-239']
+    s-title: ['web/src/Sessions.tsx:235-239']
+    s-sort: ['web/src/Sessions.tsx:235-239']
+    s-cols: ['web/src/Sessions.tsx:235-239']
+    s-table: ['web/src/Sessions.tsx:235-239']
+    h1: ['web/src/Sessions.tsx:235-239']
+    h2: ['web/src/Sessions.tsx:235-239']
+    h3: ['web/src/Sessions.tsx:235-239']
+    h4: ['web/src/Sessions.tsx:235-239']
+    h5: ['web/src/Sessions.tsx:235-239']
+    h6: ['web/src/Sessions.tsx:235-239']
+    h7: ['web/src/Sessions.tsx:235-239']
+    h8: ['web/src/Sessions.tsx:235-239']
+    h9: ['web/src/Sessions.tsx:235-239']
+    h10: ['web/src/Sessions.tsx:235-239']
+    h11: ['web/src/Sessions.tsx:235-239']
+    s-row1: ['web/src/Sessions.tsx:235-239']
+    s-row2: ['web/src/Sessions.tsx:235-239']
+    s-note: ['web/src/Sessions.tsx:235-239']
+    s-empty: ['web/src/Sessions.tsx:235-239']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Sessions Table Wireframe

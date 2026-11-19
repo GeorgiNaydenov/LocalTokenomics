@@ -3,28 +3,31 @@ title: Web Outcome Form Wireframe
 aliases: []
 tags: [diagram, drawio, wireframe]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/drawio/drawio-web-outcome-form.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   drawio-web-outcome-form:
-    'form': ['web/src/SessionWorkspace.tsx:262-268']
-    'o-successful': ['web/src/SessionWorkspace.tsx:262-268']
-    'o-partial': ['web/src/SessionWorkspace.tsx:262-268']
-    'o-failed': ['web/src/SessionWorkspace.tsx:262-268']
-    'o-abandoned': ['web/src/SessionWorkspace.tsx:262-268']
-    'o-unrated': ['web/src/SessionWorkspace.tsx:262-268']
-    'o-info': ['web/src/SessionWorkspace.tsx:262-268']
-    'o-notes-btn': ['web/src/SessionWorkspace.tsx:262-268']
-    'o-status': ['web/src/SessionWorkspace.tsx:262-268']
-    'o-open': ['web/src/SessionWorkspace.tsx:262-268']
-    'o-notes': ['web/src/SessionWorkspace.tsx:262-268']
-    'o-tags': ['web/src/SessionWorkspace.tsx:262-268']
+    form: ['web/src/SessionWorkspace.tsx:262-268']
+    o-successful: ['web/src/SessionWorkspace.tsx:262-268']
+    o-partial: ['web/src/SessionWorkspace.tsx:262-268']
+    o-failed: ['web/src/SessionWorkspace.tsx:262-268']
+    o-abandoned: ['web/src/SessionWorkspace.tsx:262-268']
+    o-unrated: ['web/src/SessionWorkspace.tsx:262-268']
+    o-info: ['web/src/SessionWorkspace.tsx:262-268']
+    o-notes-btn: ['web/src/SessionWorkspace.tsx:262-268']
+    o-status: ['web/src/SessionWorkspace.tsx:262-268']
+    o-open: ['web/src/SessionWorkspace.tsx:262-268']
+    o-notes: ['web/src/SessionWorkspace.tsx:262-268']
+    o-tags: ['web/src/SessionWorkspace.tsx:262-268']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Outcome Form Wireframe

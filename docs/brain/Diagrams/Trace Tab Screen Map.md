@@ -3,11 +3,12 @@ title: Trace Tab Screen Map
 aliases: []
 tags: [diagram, drawio, screen-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/drawio/drawio-screen-trace-tab.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
@@ -47,8 +48,12 @@ node_citations:
     region-1: ['web/src/TraceTab.tsx:908-913']
     region-2: ['web/src/TraceTab.tsx:924-924', 'web/src/TraceTab.tsx:933-939', 'web/src/TraceTab.tsx:951-956']
     region-3: ['web/src/TraceTab.tsx:266-266', 'web/src/TraceTab.tsx:278-290']
-    region-4: ['web/src/TraceTab.tsx:665-665', 'web/src/TraceTab.tsx:683-689', 'web/src/TraceTab.tsx:742-742', 'web/src/TraceTab.tsx:978-978']
-    region-5: ['web/src/TraceTab.tsx:1007-1011', 'web/src/TraceTab.tsx:1017-1017', 'web/src/TraceTab.tsx:829-829', 'web/src/TraceTab.tsx:876-881', 'web/src/TraceTab.tsx:998-998']
+    region-4: ['web/src/TraceTab.tsx:665-665', 'web/src/TraceTab.tsx:683-689', 'web/src/TraceTab.tsx:742-742',
+      'web/src/TraceTab.tsx:978-978']
+    region-5: ['web/src/TraceTab.tsx:1007-1011', 'web/src/TraceTab.tsx:1017-1017',
+      'web/src/TraceTab.tsx:829-829', 'web/src/TraceTab.tsx:876-881', 'web/src/TraceTab.tsx:998-998']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Trace Tab Screen Map

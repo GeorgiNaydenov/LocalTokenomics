@@ -3,21 +3,24 @@ title: Web Sessions Table State Chart
 aliases: []
 tags: [diagram, mermaid, state-chart]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/diagrams/web-sessions-view.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   web-sessions-view:
-    'Empty': ['web/src/Sessions.tsx:298-298']
-    'Cards': ['web/src/Sessions.tsx:306-306']
-    'Table': ['web/src/Sessions.tsx:329-329']
-    'Capped': ['web/src/Sessions.tsx:253-253']
-    'WorkspaceOpen': ['web/src/Sessions.tsx:354-354']
+    Empty: ['web/src/Sessions.tsx:298-298']
+    Cards: ['web/src/Sessions.tsx:306-306']
+    Table: ['web/src/Sessions.tsx:329-329']
+    Capped: ['web/src/Sessions.tsx:253-253']
+    WorkspaceOpen: ['web/src/Sessions.tsx:354-354']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Sessions Table State Chart

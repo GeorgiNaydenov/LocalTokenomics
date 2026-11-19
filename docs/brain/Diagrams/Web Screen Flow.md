@@ -3,26 +3,29 @@ title: Web Screen Flow
 aliases: []
 tags: [diagram, mermaid, screen-flow]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/diagrams/web-navigation.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   web-navigation:
-    'start': ['web/src/App.tsx:136-136']
-    'ov': ['web/src/App.tsx:330-330']
-    'se': ['web/src/App.tsx:333-333']
-    'so': ['web/src/App.tsx:336-336']
-    'pr': ['web/src/App.tsx:337-337']
-    'hdr': ['web/src/Header.tsx:107-107']
-    'ws': ['web/src/App.tsx:284-287']
-    'tr': ['web/src/SessionWorkspace.tsx:74-74']
-    'ec': ['web/src/SessionWorkspace.tsx:75-75']
-    'cx': ['web/src/SessionWorkspace.tsx:76-76']
+    start: ['web/src/App.tsx:136-136']
+    ov: ['web/src/App.tsx:330-330']
+    se: ['web/src/App.tsx:333-333']
+    so: ['web/src/App.tsx:336-336']
+    pr: ['web/src/App.tsx:337-337']
+    hdr: ['web/src/Header.tsx:107-107']
+    ws: ['web/src/App.tsx:284-287']
+    tr: ['web/src/SessionWorkspace.tsx:74-74']
+    ec: ['web/src/SessionWorkspace.tsx:75-75']
+    cx: ['web/src/SessionWorkspace.tsx:76-76']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Screen Flow

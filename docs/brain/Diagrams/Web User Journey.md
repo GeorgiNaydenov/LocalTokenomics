@@ -3,14 +3,17 @@ title: Web User Journey
 aliases: []
 tags: [diagram, mermaid, user-journey]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/diagrams/web-review-session.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web User Journey

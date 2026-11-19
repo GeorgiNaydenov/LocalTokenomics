@@ -3,11 +3,12 @@ title: Context Tab Screen Map
 aliases: []
 tags: [diagram, drawio, screen-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/drawio/drawio-screen-context-tab.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
@@ -34,8 +35,11 @@ node_citations:
     badge-9: ['web/src/ContextTab.tsx:216-220']
     region-1: ['web/src/ContextTab.tsx:164-164']
     region-2: ['web/src/ContextTab.tsx:192-192', 'web/src/ContextTab.tsx:199-199']
-    region-3: ['web/src/ContextTab.tsx:115-115', 'web/src/ContextTab.tsx:135-139', 'web/src/ContextTab.tsx:149-149', 'web/src/ContextTab.tsx:42-42', 'web/src/ContextTab.tsx:74-74']
+    region-3: ['web/src/ContextTab.tsx:115-115', 'web/src/ContextTab.tsx:135-139',
+      'web/src/ContextTab.tsx:149-149', 'web/src/ContextTab.tsx:42-42', 'web/src/ContextTab.tsx:74-74']
     region-4: ['web/src/ContextTab.tsx:216-220']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Context Tab Screen Map

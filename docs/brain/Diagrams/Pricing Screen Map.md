@@ -3,11 +3,12 @@ title: Pricing Screen Map
 aliases: []
 tags: [diagram, drawio, screen-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/drawio/drawio-screen-pricing.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
@@ -39,9 +40,12 @@ node_citations:
     badge-11: ['web/src/Pricing.tsx:569-569']
     badge-12: ['web/src/Pricing.tsx:597-597']
     region-1: ['web/src/Pricing.tsx:428-428']
-    region-2: ['web/src/Pricing.tsx:277-279', 'web/src/Pricing.tsx:289-289', 'web/src/Pricing.tsx:342-342', 'web/src/Pricing.tsx:352-366', 'web/src/Pricing.tsx:401-401', 'web/src/Pricing.tsx:413-416']
+    region-2: ['web/src/Pricing.tsx:277-279', 'web/src/Pricing.tsx:289-289', 'web/src/Pricing.tsx:342-342',
+      'web/src/Pricing.tsx:352-366', 'web/src/Pricing.tsx:401-401', 'web/src/Pricing.tsx:413-416']
     region-3: ['web/src/Pricing.tsx:492-492', 'web/src/Pricing.tsx:497-497']
     region-4: ['web/src/Pricing.tsx:543-543', 'web/src/Pricing.tsx:569-569', 'web/src/Pricing.tsx:597-597']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Pricing Screen Map

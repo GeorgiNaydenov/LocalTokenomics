@@ -8,7 +8,7 @@ audience: internal
 maturity: approved
 confidence: inferred
 covers: [web/src/*]
-verified-against: 75f17de5a942
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/diagrams/web-src-dashboard-c4.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
@@ -25,7 +25,7 @@ node_citations:
     theme.ts: ['web/src/theme.ts:56-69']
     Browser local storage: ['web/src/theme.ts:12-33']
 approved-by: human
-approved-at: '2026-11-18T19:02:12+00:00'
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Dashboard Components

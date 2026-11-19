@@ -3,11 +3,12 @@ title: Economics Tab Screen Map
 aliases: []
 tags: [diagram, drawio, screen-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/drawio/drawio-screen-economics-tab.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
@@ -52,12 +53,17 @@ node_citations:
     badge-17: ['web/src/EconomicsTab.tsx:758-758']
     badge-18: ['web/src/EconomicsTab.tsx:402-402']
     badge-19: ['web/src/EconomicsTab.tsx:415-415']
-    region-1: ['web/src/EconomicsTab.tsx:615-615', 'web/src/EconomicsTab.tsx:635-635', 'web/src/EconomicsTab.tsx:663-663', 'web/src/EconomicsTab.tsx:674-674', 'web/src/EconomicsTab.tsx:683-683', 'web/src/EconomicsTab.tsx:694-694', 'web/src/EconomicsTab.tsx:705-705', 'web/src/EconomicsTab.tsx:715-715']
+    region-1: ['web/src/EconomicsTab.tsx:615-615', 'web/src/EconomicsTab.tsx:635-635',
+      'web/src/EconomicsTab.tsx:663-663', 'web/src/EconomicsTab.tsx:674-674', 'web/src/EconomicsTab.tsx:683-683',
+      'web/src/EconomicsTab.tsx:694-694', 'web/src/EconomicsTab.tsx:705-705', 'web/src/EconomicsTab.tsx:715-715']
     region-2: ['web/src/EconomicsTab.tsx:439-444', 'web/src/EconomicsTab.tsx:508-508']
-    region-3: ['web/src/EconomicsTab.tsx:555-561', 'web/src/EconomicsTab.tsx:568-568', 'web/src/EconomicsTab.tsx:573-573', 'web/src/EconomicsTab.tsx:578-583', 'web/src/EconomicsTab.tsx:588-588']
+    region-3: ['web/src/EconomicsTab.tsx:555-561', 'web/src/EconomicsTab.tsx:568-568',
+      'web/src/EconomicsTab.tsx:573-573', 'web/src/EconomicsTab.tsx:578-583', 'web/src/EconomicsTab.tsx:588-588']
     region-4: ['web/src/EconomicsTab.tsx:747-747']
     region-5: ['web/src/EconomicsTab.tsx:758-758']
     region-6: ['web/src/EconomicsTab.tsx:402-402', 'web/src/EconomicsTab.tsx:415-415']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Economics Tab Screen Map

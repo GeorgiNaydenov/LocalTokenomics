@@ -3,30 +3,33 @@ title: Web Error Flow
 aliases: []
 tags: [diagram, mermaid, error-flow]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/diagrams/web-failures.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   web-failures:
-    'req': ['web/src/api.ts:489-489']
-    'net': ['web/src/api.ts:491-493']
-    'unreach': ['web/src/api.ts:494-494']
-    'ok': ['web/src/api.ts:496-496']
-    'status': ['web/src/api.ts:497-497']
-    'json': ['web/src/api.ts:499-499']
-    'abort': ['web/src/App.tsx:176-176']
-    'drop': ['web/src/App.tsx:176-176']
-    'shell': ['web/src/App.tsx:251-251']
-    'offline': ['web/src/App.tsx:255-259']
-    'errcard': ['web/src/App.tsx:274-274']
-    'tab': ['web/src/SessionWorkspace.tsx:389-390']
-    'save': ['web/src/SessionWorkspace.tsx:298-298']
+    req: ['web/src/api.ts:489-489']
+    net: ['web/src/api.ts:491-493']
+    unreach: ['web/src/api.ts:494-494']
+    ok: ['web/src/api.ts:496-496']
+    status: ['web/src/api.ts:497-497']
+    json: ['web/src/api.ts:499-499']
+    abort: ['web/src/App.tsx:176-176']
+    drop: ['web/src/App.tsx:176-176']
+    shell: ['web/src/App.tsx:251-251']
+    offline: ['web/src/App.tsx:255-259']
+    errcard: ['web/src/App.tsx:274-274']
+    tab: ['web/src/SessionWorkspace.tsx:389-390']
+    save: ['web/src/SessionWorkspace.tsx:298-298']
     'off': ['web/src/TraceTab.tsx:796-796']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Error Flow

@@ -3,35 +3,38 @@ title: Web Rate Table Wireframe
 aliases: []
 tags: [diagram, drawio, wireframe]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/drawio/drawio-web-rate-table.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   drawio-web-rate-table:
-    'panel': ['web/src/Pricing.tsx:308-332']
-    'r-title': ['web/src/Pricing.tsx:308-332']
-    'r-age': ['web/src/Pricing.tsx:308-332']
-    'r-table': ['web/src/Pricing.tsx:308-332']
-    'c1': ['web/src/Pricing.tsx:308-332']
-    'c2': ['web/src/Pricing.tsx:308-332']
-    'c3': ['web/src/Pricing.tsx:308-332']
-    'c4': ['web/src/Pricing.tsx:308-332']
-    'c5': ['web/src/Pricing.tsx:308-332']
-    'c6': ['web/src/Pricing.tsx:308-332']
-    'c7': ['web/src/Pricing.tsx:308-332']
-    'c8': ['web/src/Pricing.tsx:308-332']
-    'c9': ['web/src/Pricing.tsx:308-332']
-    'c10': ['web/src/Pricing.tsx:308-332']
-    'r-chev': ['web/src/Pricing.tsx:308-332']
-    'r-model': ['web/src/Pricing.tsx:308-332']
-    'r-est': ['web/src/Pricing.tsx:308-332']
-    'r-detail': ['web/src/Pricing.tsx:308-332']
-    'r-more': ['web/src/Pricing.tsx:308-332']
+    panel: ['web/src/Pricing.tsx:308-332']
+    r-title: ['web/src/Pricing.tsx:308-332']
+    r-age: ['web/src/Pricing.tsx:308-332']
+    r-table: ['web/src/Pricing.tsx:308-332']
+    c1: ['web/src/Pricing.tsx:308-332']
+    c2: ['web/src/Pricing.tsx:308-332']
+    c3: ['web/src/Pricing.tsx:308-332']
+    c4: ['web/src/Pricing.tsx:308-332']
+    c5: ['web/src/Pricing.tsx:308-332']
+    c6: ['web/src/Pricing.tsx:308-332']
+    c7: ['web/src/Pricing.tsx:308-332']
+    c8: ['web/src/Pricing.tsx:308-332']
+    c9: ['web/src/Pricing.tsx:308-332']
+    c10: ['web/src/Pricing.tsx:308-332']
+    r-chev: ['web/src/Pricing.tsx:308-332']
+    r-model: ['web/src/Pricing.tsx:308-332']
+    r-est: ['web/src/Pricing.tsx:308-332']
+    r-detail: ['web/src/Pricing.tsx:308-332']
+    r-more: ['web/src/Pricing.tsx:308-332']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Rate Table Wireframe

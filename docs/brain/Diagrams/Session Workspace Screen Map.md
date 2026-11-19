@@ -3,11 +3,12 @@ title: Session Workspace Screen Map
 aliases: []
 tags: [diagram, drawio, screen-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/drawio/drawio-screen-session-workspace.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
@@ -46,10 +47,17 @@ node_citations:
     badge-14: ['web/src/SessionWorkspace.tsx:389-389']
     badge-15: ['web/src/SessionWorkspace.tsx:613-613']
     badge-16: ['web/src/SessionWorkspace.tsx:620-620']
-    region-1: ['web/src/SessionWorkspace.tsx:502-502', 'web/src/SessionWorkspace.tsx:518-523', 'web/src/SessionWorkspace.tsx:527-527']
-    region-2: ['web/src/SessionWorkspace.tsx:306-312', 'web/src/SessionWorkspace.tsx:321-321', 'web/src/SessionWorkspace.tsx:330-330', 'web/src/SessionWorkspace.tsx:333-333', 'web/src/SessionWorkspace.tsx:342-346', 'web/src/SessionWorkspace.tsx:352-356']
-    region-3: ['web/src/SessionWorkspace.tsx:134-134', 'web/src/SessionWorkspace.tsx:387-387', 'web/src/SessionWorkspace.tsx:389-389', 'web/src/SessionWorkspace.tsx:547-547', 'web/src/SessionWorkspace.tsx:555-555']
+    region-1: ['web/src/SessionWorkspace.tsx:502-502', 'web/src/SessionWorkspace.tsx:518-523',
+      'web/src/SessionWorkspace.tsx:527-527']
+    region-2: ['web/src/SessionWorkspace.tsx:306-312', 'web/src/SessionWorkspace.tsx:321-321',
+      'web/src/SessionWorkspace.tsx:330-330', 'web/src/SessionWorkspace.tsx:333-333',
+      'web/src/SessionWorkspace.tsx:342-346', 'web/src/SessionWorkspace.tsx:352-356']
+    region-3: ['web/src/SessionWorkspace.tsx:134-134', 'web/src/SessionWorkspace.tsx:387-387',
+      'web/src/SessionWorkspace.tsx:389-389', 'web/src/SessionWorkspace.tsx:547-547',
+      'web/src/SessionWorkspace.tsx:555-555']
     region-4: ['web/src/SessionWorkspace.tsx:613-613', 'web/src/SessionWorkspace.tsx:620-620']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Session Workspace Screen Map

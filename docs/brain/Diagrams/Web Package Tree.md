@@ -3,27 +3,30 @@ title: Web Package Tree
 aliases: []
 tags: [diagram, mermaid, package-tree]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/diagrams/web-folders.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   web-folders:
-    'web': ['web/index.html:7-7']
-    'idx': ['web/index.html:7-7']
-    'src': ['web/src/main.tsx:3-3']
-    'main': ['web/src/main.tsx:7-12']
-    'screens': ['web/src/App.tsx:4-11']
-    'helpers': ['web/src/App.tsx:3-3', 'web/src/App.tsx:12-12']
-    'comps': ['web/src/App.tsx:15-15']
-    'ui': ['web/src/Header.tsx:6-6']
-    'ds': ['web/src/main.tsx:5-5']
-    'proto': ['web/src/prototype/main.tsx:1-1']
-    'pmain': ['web/src/prototype/main.tsx:1-1']
+    web: ['web/index.html:7-7']
+    idx: ['web/index.html:7-7']
+    src: ['web/src/main.tsx:3-3']
+    main: ['web/src/main.tsx:7-12']
+    screens: ['web/src/App.tsx:4-11']
+    helpers: ['web/src/App.tsx:3-3', 'web/src/App.tsx:12-12']
+    comps: ['web/src/App.tsx:15-15']
+    ui: ['web/src/Header.tsx:6-6']
+    ds: ['web/src/main.tsx:5-5']
+    proto: ['web/src/prototype/main.tsx:1-1']
+    pmain: ['web/src/prototype/main.tsx:1-1']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Package Tree

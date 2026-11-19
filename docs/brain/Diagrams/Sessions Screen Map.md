@@ -3,11 +3,12 @@ title: Sessions Screen Map
 aliases: []
 tags: [diagram, drawio, screen-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/drawio/drawio-screen-sessions.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
@@ -34,6 +35,8 @@ node_citations:
     region-2: ['web/src/Sessions.tsx:298-298', 'web/src/Sessions.tsx:306-323', 'web/src/Sessions.tsx:329-332']
     region-3: ['web/src/Sessions.tsx:338-343', 'web/src/Sessions.tsx:352-354']
     region-4: ['web/src/Sessions.tsx:374-374']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Sessions Screen Map

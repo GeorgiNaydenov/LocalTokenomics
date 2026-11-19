@@ -3,36 +3,39 @@ title: Web Concept Map
 aliases: []
 tags: [diagram, mermaid, mind-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/diagrams/web-concepts.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   web-concepts:
-    'Screens': ['web/src/Header.tsx:24-24']
-    'Overview': ['web/src/Header.tsx:24-24']
-    'Sessions': ['web/src/Header.tsx:24-24']
-    'Sources': ['web/src/Header.tsx:24-24']
-    'Models and pricing': ['web/src/Header.tsx:24-24']
-    'Session workspace': ['web/src/SessionWorkspace.tsx:72-72']
-    'Data from the server': ['web/src/api.ts:502-511']
-    'Meta': ['web/src/api.ts:502-502']
-    'Report': ['web/src/api.ts:535-535']
-    'Rate table': ['web/src/api.ts:510-510']
-    'Trace, economics, context': ['web/src/api.ts:543-555']
-    'Filters and query': ['web/src/App.tsx:23-35']
-    'Saved views': ['web/src/FilterRail.tsx:145-173']
-    'Facets': ['web/src/App.tsx:151-164']
-    'Date range': ['web/src/FilterRail.tsx:320-329']
-    'Switches': ['web/src/FilterRail.tsx:431-435']
-    'Session judgement': ['web/src/SessionWorkspace.tsx:262-262']
-    'Outcome rating': ['web/src/SessionWorkspace.tsx:79-79']
-    'Notes and tags': ['web/src/SessionWorkspace.tsx:244-248']
-    'Web dashboard': ['web/src/main.tsx:7-12']
+    Screens: ['web/src/Header.tsx:24-24']
+    Overview: ['web/src/Header.tsx:24-24']
+    Sessions: ['web/src/Header.tsx:24-24']
+    Sources: ['web/src/Header.tsx:24-24']
+    Models and pricing: ['web/src/Header.tsx:24-24']
+    Session workspace: ['web/src/SessionWorkspace.tsx:72-72']
+    Data from the server: ['web/src/api.ts:502-511']
+    Meta: ['web/src/api.ts:502-502']
+    Report: ['web/src/api.ts:535-535']
+    Rate table: ['web/src/api.ts:510-510']
+    Trace, economics, context: ['web/src/api.ts:543-555']
+    Filters and query: ['web/src/App.tsx:23-35']
+    Saved views: ['web/src/FilterRail.tsx:145-173']
+    Facets: ['web/src/App.tsx:151-164']
+    Date range: ['web/src/FilterRail.tsx:320-329']
+    Switches: ['web/src/FilterRail.tsx:431-435']
+    Session judgement: ['web/src/SessionWorkspace.tsx:262-262']
+    Outcome rating: ['web/src/SessionWorkspace.tsx:79-79']
+    Notes and tags: ['web/src/SessionWorkspace.tsx:244-248']
+    Web dashboard: ['web/src/main.tsx:7-12']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web Concept Map

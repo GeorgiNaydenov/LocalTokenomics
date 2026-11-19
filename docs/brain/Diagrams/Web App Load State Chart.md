@@ -3,22 +3,25 @@ title: Web App Load State Chart
 aliases: []
 tags: [diagram, mermaid, state-chart]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
+verified-against: 02d21a1926f6
 sources: [docs/brain/architecture/diagrams/web-app-loading.mmd]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
   web-app-loading:
-    'Loading': ['web/src/App.tsx:263-269']
-    'Offline': ['web/src/App.tsx:253-256']
-    'ErrorCard': ['web/src/App.tsx:271-274']
-    'Ready': ['web/src/App.tsx:290-328']
-    'Refetching': ['web/src/App.tsx:203-203']
-    'Rescanning': ['web/src/App.tsx:211-222']
+    Loading: ['web/src/App.tsx:263-269']
+    Offline: ['web/src/App.tsx:253-256']
+    ErrorCard: ['web/src/App.tsx:271-274']
+    Ready: ['web/src/App.tsx:290-328']
+    Refetching: ['web/src/App.tsx:203-203']
+    Rescanning: ['web/src/App.tsx:211-222']
+approved-by: human
+approved-at: '2026-11-19T07:31:30+00:00'
 ---
 
 # Web App Load State Chart
