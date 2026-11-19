@@ -3,11 +3,12 @@ title: Reader module imports
 aliases: []
 tags: [diagram, mermaid, module-dependency]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/sources/**]
+verified-against: 4d81cedd5403
 sources: [docs/brain/architecture/diagrams/src-imports.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost-sources
 authored: true
@@ -23,8 +24,16 @@ node_citations:
     kilol: ['src/ai_usage_cost/sources/kilo_legacy.py:12']
     opencode: ['src/ai_usage_cost/sources/opencode.py:30-32', 'src/ai_usage_cost/sources/opencode.py:324-343']
     kilo: ['src/ai_usage_cost/sources/kilo_code.py:9']
-    logs: ['src/ai_usage_cost/sources/claude_code.py:8-10', 'src/ai_usage_cost/sources/codex.py:9-11', 'src/ai_usage_cost/sources/copilot_cli.py:43-45', 'src/ai_usage_cost/sources/gemini_cli.py:24-26', 'src/ai_usage_cost/sources/grok_build.py:9-11', 'src/ai_usage_cost/sources/jan.py:9-11', 'src/ai_usage_cost/sources/muse_code.py:43-45', 'src/ai_usage_cost/sources/openai_compat.py:6-8', 'src/ai_usage_cost/sources/qwen_code.py:23-25', 'src/ai_usage_cost/sources/antigravity.py:9-11']
-    dbs: ['src/ai_usage_cost/sources/copilot_chat.py:9-11', 'src/ai_usage_cost/sources/cursor.py:10-12', 'src/ai_usage_cost/sources/dyad.py:8-10', 'src/ai_usage_cost/sources/ollama_app.py:8-10', 'src/ai_usage_cost/sources/windsurf.py:10-12']
+    logs: ['src/ai_usage_cost/sources/claude_code.py:8-10', 'src/ai_usage_cost/sources/codex.py:9-11',
+      'src/ai_usage_cost/sources/copilot_cli.py:43-45', 'src/ai_usage_cost/sources/gemini_cli.py:24-26',
+      'src/ai_usage_cost/sources/grok_build.py:9-11', 'src/ai_usage_cost/sources/jan.py:9-11',
+      'src/ai_usage_cost/sources/muse_code.py:43-45', 'src/ai_usage_cost/sources/openai_compat.py:6-8',
+      'src/ai_usage_cost/sources/qwen_code.py:23-25', 'src/ai_usage_cost/sources/antigravity.py:9-11']
+    dbs: ['src/ai_usage_cost/sources/copilot_chat.py:9-11', 'src/ai_usage_cost/sources/cursor.py:10-12',
+      'src/ai_usage_cost/sources/dyad.py:8-10', 'src/ai_usage_cost/sources/ollama_app.py:8-10',
+      'src/ai_usage_cost/sources/windsurf.py:10-12']
+approved-by: human
+approved-at: '2026-11-19T00:12:14+00:00'
 ---
 
 # Reader module imports

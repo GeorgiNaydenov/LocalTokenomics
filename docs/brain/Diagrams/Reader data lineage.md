@@ -3,11 +3,12 @@ title: Reader data lineage
 aliases: []
 tags: [data-lineage, diagram, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/sources/**]
+verified-against: 4d81cedd5403
 sources: [docs/brain/architecture/diagrams/src-lineage.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost-sources
 authored: true
@@ -15,16 +16,21 @@ use-cases: [UC-13]
 node_citations:
   src-lineage:
     tools: ['src/ai_usage_cost/sources/base.py:26', 'src/ai_usage_cost/sources/claude_code.py:34-37']
-    roots_in: ['src/ai_usage_cost/sources/base.py:22', 'src/ai_usage_cost/sources/base.py:43-44', 'src/ai_usage_cost/sources/base.py:47-49']
+    roots_in: ['src/ai_usage_cost/sources/base.py:22', 'src/ai_usage_cost/sources/base.py:43-44',
+      'src/ai_usage_cost/sources/base.py:47-49']
     logs: ['src/ai_usage_cost/sources/claude_code.py:672-678', 'src/ai_usage_cost/sources/base.py:132-133']
     tasks: ['src/ai_usage_cost/sources/cline.py:139-149', 'src/ai_usage_cost/sources/cline.py:409-431']
     dbs: ['src/ai_usage_cost/sources/base.py:117-129', 'src/ai_usage_cost/sources/opencode.py:337']
     pick: ['src/ai_usage_cost/sources/base.py:47-49', 'src/ai_usage_cost/store.py:219']
     listing: ['src/ai_usage_cost/sources/base.py:23', 'src/ai_usage_cost/store.py:219-220']
     parse: ['src/ai_usage_cost/sources/base.py:24', 'src/ai_usage_cost/store.py:255']
-    spans: ['src/ai_usage_cost/sources/base.py:27', 'src/ai_usage_cost/sources/claude_code.py:681', 'src/ai_usage_cost/sources/codex.py:954', 'src/ai_usage_cost/sources/qwen_code.py:172', 'src/ai_usage_cost/sources/antigravity.py:306', 'src/ai_usage_cost/store.py:261-263']
+    spans: ['src/ai_usage_cost/sources/base.py:27', 'src/ai_usage_cost/sources/claude_code.py:681',
+      'src/ai_usage_cost/sources/codex.py:954', 'src/ai_usage_cost/sources/qwen_code.py:172',
+      'src/ai_usage_cost/sources/antigravity.py:306', 'src/ai_usage_cost/store.py:261-263']
     reg: ['src/ai_usage_cost/sources/__init__.py:11-27']
     store: ['src/ai_usage_cost/store.py:219-262', 'src/ai_usage_cost/pipeline.py:178-186']
+approved-by: human
+approved-at: '2026-11-19T00:12:14+00:00'
 ---
 
 # Reader data lineage

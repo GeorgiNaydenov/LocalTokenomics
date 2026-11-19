@@ -3,11 +3,12 @@ title: Reader glossary map
 aliases: []
 tags: [diagram, glossary-map, mermaid]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/sources/**]
+verified-against: 4d81cedd5403
 sources: [docs/brain/architecture/diagrams/src-terms.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost-sources
 authored: true
@@ -27,6 +28,8 @@ node_citations:
     resume: ['src/ai_usage_cost/sources/base.py:32-40']
     session: ['src/ai_usage_cost/models.py:55']
     tsource: ['src/ai_usage_cost/models.py:65']
+approved-by: human
+approved-at: '2026-11-19T00:12:14+00:00'
 ---
 
 # Reader glossary map

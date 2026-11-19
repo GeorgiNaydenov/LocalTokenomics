@@ -3,15 +3,18 @@ title: Readers concepts
 aliases: []
 tags: [diagram, mermaid, mind-map]
 area: diagrams
-status: draft
+status: active
 audience: internal
-maturity: draft
+maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/sources/**]
+verified-against: 4d81cedd5403
 sources: [docs/brain/architecture/diagrams/src-concepts.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost-sources
 authored: true
 use-cases: [UC-13]
+approved-by: human
+approved-at: '2026-11-19T00:12:14+00:00'
 ---
 
 # Readers concepts

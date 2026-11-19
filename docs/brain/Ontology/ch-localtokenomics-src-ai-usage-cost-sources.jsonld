@@ -10,7 +10,7 @@
   },
   "@graph": [
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Source",
+      "@id": "urn:product-brain:localtokenomics:class/Source",
       "@type": [
         "owl:Class",
         "ddd:ValueObject"
@@ -21,127 +21,127 @@
       "ddd:maps_to": "ddd:ValueObject"
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Source/id",
+      "@id": "urn:product-brain:localtokenomics:class/Source/id",
       "@type": "owl:DatatypeProperty",
       "schema:name": "id",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Source"
+        "@id": "urn:product-brain:localtokenomics:class/Source"
       },
       "pb:datatype": "str",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Source/label",
+      "@id": "urn:product-brain:localtokenomics:class/Source/label",
       "@type": "owl:DatatypeProperty",
       "schema:name": "label",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Source"
+        "@id": "urn:product-brain:localtokenomics:class/Source"
       },
       "pb:datatype": "str",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Source/clients",
+      "@id": "urn:product-brain:localtokenomics:class/Source/clients",
       "@type": "owl:DatatypeProperty",
       "schema:name": "clients",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Source"
+        "@id": "urn:product-brain:localtokenomics:class/Source"
       },
       "pb:datatype": "dict[str, str]",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Source/default_roots",
+      "@id": "urn:product-brain:localtokenomics:class/Source/default_roots",
       "@type": "owl:DatatypeProperty",
       "schema:name": "default_roots",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Source"
+        "@id": "urn:product-brain:localtokenomics:class/Source"
       },
       "pb:datatype": "Callable[[], list[Path]]",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Source/files",
+      "@id": "urn:product-brain:localtokenomics:class/Source/files",
       "@type": "owl:DatatypeProperty",
       "schema:name": "files",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Source"
+        "@id": "urn:product-brain:localtokenomics:class/Source"
       },
       "pb:datatype": "Callable[[Path], list[Path]]",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Source/parse",
+      "@id": "urn:product-brain:localtokenomics:class/Source/parse",
       "@type": "owl:DatatypeProperty",
       "schema:name": "parse",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Source"
+        "@id": "urn:product-brain:localtokenomics:class/Source"
       },
       "pb:datatype": "Callable[[Path, list[str]], Iterator[UsageEvent]]",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Source/token_data",
+      "@id": "urn:product-brain:localtokenomics:class/Source/token_data",
       "@type": "owl:DatatypeProperty",
       "schema:name": "token_data",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Source"
+        "@id": "urn:product-brain:localtokenomics:class/Source"
       },
       "pb:datatype": "TokenData",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Source/display_path",
+      "@id": "urn:product-brain:localtokenomics:class/Source/display_path",
       "@type": "owl:DatatypeProperty",
       "schema:name": "display_path",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Source"
+        "@id": "urn:product-brain:localtokenomics:class/Source"
       },
       "pb:datatype": "str",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Source/spans",
+      "@id": "urn:product-brain:localtokenomics:class/Source/spans",
       "@type": "owl:DatatypeProperty",
       "schema:name": "spans",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Source"
+        "@id": "urn:product-brain:localtokenomics:class/Source"
       },
       "pb:datatype": "Callable[[Path, list[str]], Iterator[Span]] | None",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Source/capabilities",
+      "@id": "urn:product-brain:localtokenomics:class/Source/capabilities",
       "@type": "owl:DatatypeProperty",
       "schema:name": "capabilities",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Source"
+        "@id": "urn:product-brain:localtokenomics:class/Source"
       },
       "pb:datatype": "Capabilities",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Source/experimental",
+      "@id": "urn:product-brain:localtokenomics:class/Source/experimental",
       "@type": "owl:DatatypeProperty",
       "schema:name": "experimental",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Source"
+        "@id": "urn:product-brain:localtokenomics:class/Source"
       },
       "pb:datatype": "bool",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Source/parse_resume",
+      "@id": "urn:product-brain:localtokenomics:class/Source/parse_resume",
       "@type": "owl:DatatypeProperty",
       "schema:name": "parse_resume",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Source"
+        "@id": "urn:product-brain:localtokenomics:class/Source"
       },
       "pb:datatype": "Callable[[Path, list[str], int, str | None], Iterator[UsageEvent]] | None",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Spec",
+      "@id": "urn:product-brain:localtokenomics:class/Spec",
       "@type": [
         "owl:Class",
         "ddd:ValueObject"
@@ -152,57 +152,83 @@
       "ddd:maps_to": "ddd:ValueObject"
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Spec/source_id",
+      "@id": "urn:product-brain:localtokenomics:class/Spec/source_id",
       "@type": "owl:DatatypeProperty",
       "schema:name": "source_id",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Spec"
+        "@id": "urn:product-brain:localtokenomics:class/Spec"
       },
       "pb:datatype": "str",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Spec/client",
+      "@id": "urn:product-brain:localtokenomics:class/Spec/client",
       "@type": "owl:DatatypeProperty",
       "schema:name": "client",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Spec"
+        "@id": "urn:product-brain:localtokenomics:class/Spec"
       },
       "pb:datatype": "str",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Spec/ext_id",
+      "@id": "urn:product-brain:localtokenomics:class/Spec/ext_id",
       "@type": "owl:DatatypeProperty",
       "schema:name": "ext_id",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Spec"
+        "@id": "urn:product-brain:localtokenomics:class/Spec"
       },
       "pb:datatype": "str",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Spec/tokens_in_inclusive",
+      "@id": "urn:product-brain:localtokenomics:class/Spec/tokens_in_inclusive",
       "@type": "owl:DatatypeProperty",
       "schema:name": "tokens_in_inclusive",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Spec"
+        "@id": "urn:product-brain:localtokenomics:class/Spec"
       },
       "pb:datatype": "bool",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:class/Spec/sdk",
+      "@id": "urn:product-brain:localtokenomics:class/Spec/sdk",
       "@type": "owl:DatatypeProperty",
       "schema:name": "sdk",
       "rdfs:domain": {
-        "@id": "urn:product-brain:lt-top-sources:class/Spec"
+        "@id": "urn:product-brain:localtokenomics:class/Spec"
       },
       "pb:datatype": "bool",
       "pb:required": false
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:rule/rule:a-reader-is-found-by-its-source-value",
+      "@id": "urn:product-brain:localtokenomics:model/model:source",
+      "@type": [
+        "pb:model"
+      ],
+      "schema:name": "Source",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:DataObject",
+      "ddd:maps_to": "ddd:Entity",
+      "pb:definedAt": [
+        "src/ai_usage_cost/sources/base.py"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:model/model:spec",
+      "@type": [
+        "pb:model"
+      ],
+      "schema:name": "Spec",
+      "pb:maturity": "draft",
+      "archimate:maps_to": "archimate:DataObject",
+      "ddd:maps_to": "ddd:Entity",
+      "pb:definedAt": [
+        "src/ai_usage_cost/sources/cline.py"
+      ]
+    },
+    {
+      "@id": "urn:product-brain:localtokenomics:rule/rule:a-reader-is-found-by-its-source-value",
       "@type": [
         "pb:rule"
       ],
@@ -215,7 +241,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:rule/rule:experimental-readers-carry-a-flag",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:experimental-readers-carry-a-flag",
       "@type": [
         "pb:rule"
       ],
@@ -228,7 +254,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:rule/rule:muse-code-control-folders-are-skipped",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:muse-code-control-folders-are-skipped",
       "@type": [
         "pb:rule"
       ],
@@ -241,7 +267,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:rule/rule:readers-only-read",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:readers-only-read",
       "@type": [
         "pb:rule"
       ],
@@ -254,7 +280,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:rule/rule:repeated-codex-token-totals-are-not-counted-twice",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:repeated-codex-token-totals-are-not-counted-twice",
       "@type": [
         "pb:rule"
       ],
@@ -267,7 +293,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:rule/rule:synthetic-claude-code-records-are-not-usage",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:synthetic-claude-code-records-are-not-usage",
       "@type": [
         "pb:rule"
       ],
@@ -280,7 +306,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:rule/rule:unparsable-lines-are-skipped-and-counted",
+      "@id": "urn:product-brain:localtokenomics:rule/rule:unparsable-lines-are-skipped-and-counted",
       "@type": [
         "pb:rule"
       ],
@@ -293,7 +319,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:system/system:ai-usage-cost-sources",
+      "@id": "urn:product-brain:localtokenomics:system/system:ai-usage-cost-sources",
       "@type": [
         "pb:system"
       ],
@@ -306,7 +332,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:use-case/use-case:discover-ai-tool-usage-from-local-files",
+      "@id": "urn:product-brain:localtokenomics:use-case/use-case:discover-ai-tool-usage-from-local-files",
       "@type": [
         "pb:use-case"
       ],
@@ -320,7 +346,7 @@
       ]
     },
     {
-      "@id": "urn:product-brain:lt-top-sources:use-case/use-case:read-a-tool-s-sqlite-store-without-a-token-count",
+      "@id": "urn:product-brain:localtokenomics:use-case/use-case:read-a-tool-s-sqlite-store-without-a-token-count",
       "@type": [
         "pb:use-case"
       ],

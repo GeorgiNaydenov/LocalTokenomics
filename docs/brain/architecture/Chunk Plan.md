@@ -43,7 +43,7 @@ chunks:
   components: ['localtokenomics:src-ai-usage-cost-sources']
   globs: [src/ai_usage_cost/sources/**]
   depends_on: [ch-localtokenomics-src-ai-usage-cost]
-  state: in-review
+  state: approved
   display_name: Ai usage cost sources
   files: 22
   lines: 4722
@@ -69,7 +69,7 @@ chunks:
       runs}
   existing_docs: covered
   approved_by: human
-  approved_at: '2026-11-18T19:05:23+00:00'
+  approved_at: '2026-11-19T00:12:16+00:00'
 - id: ch-localtokenomics-src-ai-usage-cost
   title: src/ai_usage_cost
   repo: localtokenomics
@@ -271,7 +271,7 @@ The ordered plan for documenting this codebase one chunk at a time. Edit the `ch
 | Chunk | Title | State | Depends on | Files | Lines | Est. tokens | Diagrams | Existing docs |
 |---|---|---|---|---|---|---|---|---|
 | ch-localtokenomics-root | localtokenomics root | approved | - | 2 | 56 | 78223 | c4, mind-map, capability, config-map, package-tree | stale |
-| ch-localtokenomics-src-ai-usage-cost-sources | src/ai_usage_cost/sources | in-review | ch-localtokenomics-src-ai-usage-cost | 22 | 4722 | 160113 | c4, mind-map, class, data-lineage, dfd, module-dependency, glossary-map | covered |
+| ch-localtokenomics-src-ai-usage-cost-sources | src/ai_usage_cost/sources | approved | ch-localtokenomics-src-ai-usage-cost | 22 | 4722 | 160113 | c4, mind-map, class, data-lineage, dfd, module-dependency, glossary-map | covered |
 | ch-localtokenomics-src-ai-usage-cost | src/ai_usage_cost | in-review | ch-localtokenomics-src-ai-usage-cost-render, ch-localtokenomics-src-ai-usage-cost-sources | 13 | 5069 | 220126 | c4, mind-map, api-map, sequence, use-case-diagram, flowchart, erd, erd-conceptual, class, data-lineage, state, dfd, activity, timeline, gantt, bpmn, error-flow, glossary-map, package-tree | stale |
 | ch-localtokenomics-src-ai-usage-cost-render | src/ai_usage_cost/render | approved | ch-localtokenomics-src-ai-usage-cost | 3 | 187 | 71167 | c4, mind-map, module-dependency | none |
 | ch-localtokenomics-web-src-components | web/src/components | approved | ch-localtokenomics-web-src, ch-localtokenomics-web-src-components-ui | 18 | 3024 | 142724 | c4, mind-map, component-tree, screen-map, wireframe, state-chart, screen-flow, module-dependency, error-flow | none |

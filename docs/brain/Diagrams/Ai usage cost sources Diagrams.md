@@ -8,11 +8,11 @@ audience: internal
 maturity: approved
 confidence: inferred
 covers: [src/ai_usage_cost/sources/**]
-verified-against: 8a1d896ab1c8
+verified-against: 4d81cedd5403
 sources: [docs/brain/architecture/diagrams/module-ch-localtokenomics-src-ai-usage-cost-sources.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost-sources
 approved-by: human
-approved-at: '2026-11-18T19:05:23+00:00'
+approved-at: '2026-11-19T00:12:14+00:00'
 ---
 
 # Ai usage cost sources Diagrams

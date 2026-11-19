@@ -18,11 +18,12 @@ This is the part of the project's knowledge graph that the code in Ai usage cost
 
 ## What it contains
 
-29 terms, of which 0 belong to other chunks and appear only so that links have somewhere to land.
+31 terms, of which 0 belong to other chunks and appear only so that links have somewhere to land.
 
 | Kind | Count |
 |---|---|
 | class | 2 |
+| model | 2 |
 | rule | 7 |
 | system | 1 |
 | use-case | 2 |
@@ -46,13 +47,17 @@ flowchart LR
     n6["Readers only read<br/>rule"]
     n7["Repeated Codex token totals are no<br/>rule"]
     n8["Source<br/>class"]
-    n9["Spec<br/>class"]
-    n10["Synthetic Claude Code records are <br/>rule"]
-    n11["Unparsable lines are skipped and c<br/>rule"]
+    n9["Source<br/>model"]
+    n10["Spec<br/>class"]
+    n11["Spec<br/>model"]
+    n12["Synthetic Claude Code records are <br/>rule"]
+    n13["Unparsable lines are skipped and c<br/>rule"]
     classDef k_class fill:#dae8fc,stroke:#222222,color:#222222
-    class n8,n9 k_class
+    class n8,n10 k_class
+    classDef k_model fill:#dae8fc,stroke:#222222,color:#222222
+    class n9,n11 k_model
     classDef k_rule fill:#e1d5e7,stroke:#222222,color:#222222
-    class n0,n3,n4,n6,n7,n10,n11 k_rule
+    class n0,n3,n4,n6,n7,n12,n13 k_rule
     classDef k_system fill:#dae8fc,stroke:#222222,color:#222222
     class n1 k_system
     classDef k_usecase fill:#fff2cc,stroke:#222222,color:#222222
