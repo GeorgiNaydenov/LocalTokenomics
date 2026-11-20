@@ -1,0 +1,27 @@
+{
+  "apps": [
+    {
+      "dir": "web",
+      "framework": "static",
+      "script": "dev",
+      "screens": [
+        {
+          "route": "/",
+          "file": "web/index.html",
+          "desktop": "docs/brain/screenshots/web/home-desktop.png",
+          "landed": "/",
+          "gated": false,
+          "phone": "docs/brain/screenshots/web/home-phone.png"
+        },
+        {
+          "route": "/prototype.html",
+          "file": "web/prototype.html",
+          "desktop": "docs/brain/screenshots/web/prototype-html-desktop.png",
+          "landed": "/prototype.html",
+          "gated": false,
+          "phone": "docs/brain/screenshots/web/prototype-html-phone.png"
+        }
+      ]
+    }
+  ]
+}
