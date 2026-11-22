@@ -12,6 +12,9 @@ verified-against: 1445ea834ab7
 sources: [docs/brain/architecture/diagrams/module-ch-localtokenomics-src-ai-usage-cost.mmd,
   docs/brain/architecture/diagrams/er-ch-localtokenomics-src-ai-usage-cost.mmd]
 chunk: ch-localtokenomics-src-ai-usage-cost
+actors: [Person using the tool]
+use-cases: [UC-05]
+models: [PricedEvent, CostBreakdown, Report]
 approved-by: human
 approved-at: '2026-11-19T06:39:06+00:00'
 ---

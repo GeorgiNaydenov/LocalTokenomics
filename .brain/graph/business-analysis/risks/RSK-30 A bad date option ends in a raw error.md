@@ -15,3 +15,7 @@ Dates are parsed with no guard `src/ai_usage_cost/cli.py:45`.
 ## Mitigation
 
 Not found in the code.
+
+## Sources
+
+- [[Code of localtokenomics]] @ src/ai_usage_cost/cli.py:45 | confirmed

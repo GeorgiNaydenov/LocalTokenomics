@@ -10,3 +10,8 @@ maturity: draft
 ## Question
 
 The wrapper exports a legend and a legend content part, but the time chart draws its own key list instead. Does any screen plan to use these two, or can they go? `web/src/components/ui/chart.tsx:270` `web/src/components/chart-time.tsx:174`
+
+## Sources
+
+- [[Code of localtokenomics]] @ web/src/components/ui/chart.tsx:270 | confirmed
+- [[Code of localtokenomics]] @ web/src/components/chart-time.tsx:174 | confirmed
