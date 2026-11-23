@@ -10,6 +10,11 @@ maturity: approved
 
 The production build writes to the Python package folder from a single page, and the repository guide states the prototype page is deliberately left out of it.
 
+## Enforced in
+
+- [[UC-02 Rebuild the dashboard bundle]]
+- [[UC-03 Develop the dashboard against live data]]
+
 ## Sources
 
 - [[Code of localtokenomics]] @ enforced-by -> web/vite.config.ts | confirmed

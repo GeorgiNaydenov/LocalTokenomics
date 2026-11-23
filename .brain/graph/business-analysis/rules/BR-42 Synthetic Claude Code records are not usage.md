@@ -10,6 +10,10 @@ maturity: approved
 
 A Claude Code assistant record with no model or a synthetic model is skipped.
 
+## Enforced in
+
+- [[UC-13 Discover AI tool usage from local files]]
+
 ## Sources
 
 - [[Code of localtokenomics]] @ enforced-by -> src/ai_usage_cost/sources/claude_code.py | inferred

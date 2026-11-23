@@ -11,6 +11,11 @@ maturity: approved
 
 When several rows are combined, the worst cost state (unavailable over unpriced over free over priced) and the worst provenance are shown. An empty list gives unavailable.
 
+## Enforced in
+
+- [[UC-05 Read usage and cost for a period]]
+- [[UC-07 Rate a session outcome]]
+
 ## Sources
 
 - [[Code of localtokenomics]] @ enforced-by -> web/src/components/rank.ts::worstState | confirmed

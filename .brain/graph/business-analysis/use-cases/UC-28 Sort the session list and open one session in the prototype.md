@@ -1,5 +1,24 @@
 ---
 code: UC-28
+primary_actor: User of Web prototype
+subdomain: Web prototype area
+no_models_reason: No model of the specification is declared in the code this use case cites or in a file that code imports directly.
+rules:
+  - A missing value is shown as unavailable, never as zero
+  - An estimated price is marked next to the cost state
+  - Caller class names override primitive defaults
+  - Drawer trace blocks show the same sample data for every traced session
+  - Prototype figures are invented
+  - Prototype filters do not filter the screens
+  - Prototype rescan is staged
+  - Prototype session table shows at most 120 rows
+  - Prototype splits session cost across token buckets by fixed weights
+  - Screens stay mounted across the four screen tabs but not across the gallery
+  - Sheet opens from the right by default
+  - Sub cent money keeps four decimals
+  - The daily chart names at most twelve series
+  - The date range cannot cross itself
+  - Tooltip provider default delay is zero
 tags:
   - ba/use-case
 maturity: draft
@@ -12,11 +31,11 @@ A developer who ports the Sessions screen sorts the sample session table, opens 
 
 ## Preconditions
 
-The prototype page is open on the Sessions tab.
+- The prototype page is open on the Sessions tab.
 
 ## Postconditions
 
-Nothing is stored; the chosen session is only kept as component state until the drawer is closed.
+- Nothing is stored; the chosen session is only kept as component state until the drawer is closed.
 
 ## Main flow
 
@@ -30,7 +49,7 @@ Nothing is stored; the chosen session is only kept as component state until the 
 
 ## Alternative flows
 
-2a. On a phone width the table is replaced by cards. `web/src/prototype/SessionsScreen.tsx:127` 7a. A session without token counts shows an empty state in place of the buckets. `web/src/prototype/Screens.tsx:166` 7b. A session that is not traced shows a text that it was recorded before span capture. `web/src/prototype/Screens.tsx:219`
+- 2a. On a phone width the table is replaced by cards. `web/src/prototype/SessionsScreen.tsx:127` 7a. A session without token counts shows an empty state in place of the buckets. `web/src/prototype/Screens.tsx:166` 7b. A session that is not traced shows a text that it was recorded before span capture. `web/src/prototype/Screens.tsx:219`
 
 ## Special requirements
 
@@ -38,7 +57,14 @@ The row limit is 120 sessions. The drawer reads fixed sample arrays for its trac
 
 ## Acceptance criteria
 
-No test covers the prototype. From the code: the table is sorted by cost high to low at first, at most the row limit of sessions are shown, a row click opens the drawer, and the drawer closes through its close control.
+- No test covers the prototype. From the code: the table is sorted by cost high to low at first, at most the row limit of sessions are shown, a row click opens the drawer, and the drawer closes through its close control.
+- 2a: On a phone width the table is replaced by cards. `web/src/prototype/SessionsScreen.tsx:127` 7a. A session without token counts shows an empty state in place of the buckets. `web/src/prototype/Screens.tsx:166` 7b. A session that is not traced shows a text that it was recorded before span capture. `web/src/prototype/Screens.tsx:219`
+
+## Glossary
+
+- [[Prototype]]
+- [[Session]]
+- Span
 
 ## Sources
 

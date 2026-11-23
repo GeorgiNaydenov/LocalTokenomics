@@ -11,6 +11,11 @@ maturity: approved
 
 The workspace side panel is at least 360 pixels wide and at most 900 pixels or 90 percent of the window, whichever is smaller.
 
+## Enforced in
+
+- [[UC-06 Inspect one session]]
+- [[UC-07 Rate a session outcome]]
+
 ## Sources
 
 - [[Code of localtokenomics]] @ enforced-by -> web/src/components/workspace-panel.ts::clampWidth | confirmed

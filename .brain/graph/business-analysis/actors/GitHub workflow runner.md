@@ -10,7 +10,11 @@ maturity: draft
 
 The hosted runner that executes the Python, web and CodeQL workflows on pull requests, pushes to main and a weekly schedule.
 
+## Participates in
+
+- [[UC-04 Check a change before merge]]
+
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> .github/workflows/web.yml | confirmed
+- [[Code of localtokenomics]] | confirmed
   > runs-on: ubuntu-latest

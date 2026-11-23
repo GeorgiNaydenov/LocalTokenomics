@@ -1,6 +1,7 @@
 ---
 code: BR-10
 category: quality
+unlinked_reason: No use case cites the file this is declared in, a file it imports directly or a file that imports it.
 tags:
   - ba/rule
 maturity: approved

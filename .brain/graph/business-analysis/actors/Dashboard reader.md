@@ -12,5 +12,5 @@ The person who opens the local dashboard to read usage and list price cost. The 
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> web/src/main.tsx | inferred
+- [[Code of localtokenomics]] | inferred
   > createRoot(document.getElementById('root') as HTMLElement).render(

@@ -10,6 +10,14 @@ maturity: approved
 
 When a log does not carry a value, the dashboard shows it as unavailable instead of a zero or a guess.
 
+## Enforced in
+
+- [[UC-05 Read usage and cost for a period]]
+- [[UC-06 Inspect one session]]
+- [[UC-07 Rate a session outcome]]
+- [[UC-08 Check list prices]]
+- [[UC-09 Read a figure and see how far to trust it]]
+
 ## Sources
 
 - [[Code of localtokenomics]] @ enforced-by -> web/src/Sources.tsx | inferred

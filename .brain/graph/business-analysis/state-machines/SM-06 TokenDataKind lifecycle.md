@@ -9,14 +9,18 @@ maturity: approved
 
 ## States
 
-full
-session
+| Name |
+| --- |
+| full |
+| session |
 
 ## Transitions
 
-No assignment of these values was found in the code of this module.
+| Name |
+| --- |
+| No assignment of these values was found in the code of this module. |
 
 ## Sources
 
-- [[Code of localtokenomics]] @ implemented-by -> web/src/api.ts::TokenDataKind | inferred
+- [[Code of localtokenomics]] | inferred
   > export type TokenDataKind = 'full' | 'session'

@@ -1,8 +1,10 @@
 ---
 code: UC-01
 primary_actor: Dashboard developer
+subdomain: Web prototype area
 actors:
   - Dashboard developer
+no_models_reason: No model of the specification is declared in the code this use case cites or in a file that code imports directly.
 rules:
   - A missing value is shown as unavailable, never as zero
   - An estimated price is marked next to the cost state
@@ -31,11 +33,11 @@ A [[Dashboard developer]] opens the [[Prototype]] page to see how one of the fou
 
 ## Preconditions
 
-The Vite development server is running.
+- The Vite development server is running.
 
 ## Postconditions
 
-Nothing is stored; the developer knows the target layout.
+- Nothing is stored; the developer knows the target layout.
 
 ## Main flow
 
@@ -48,7 +50,7 @@ Nothing is stored; the developer knows the target layout.
 
 ## Alternative flows
 
-4a. For the gallery tab the Filters button is hidden. `web/src/prototype/Prototype.tsx:70-79`
+- 4a. For the gallery tab the Filters button is hidden. `web/src/prototype/Prototype.tsx:70-79`
 
 ## Special requirements
 
@@ -56,7 +58,17 @@ The prototype is served only by the development server and is not in the product
 
 ## Acceptance criteria
 
-No test covers the prototype. Criteria come from the code: the page offers five tabs, the Rescan logs button reads no logs, and filters do not change the screens.
+- No test covers the prototype. Criteria come from the code: the page offers five tabs, the Rescan logs button reads no logs, and filters do not change the screens.
+- 4a: For the gallery tab the Filters button is hidden. `web/src/prototype/Prototype.tsx:70-79`
+
+## Glossary
+
+- [[Design system page]]
+- [[Mock data]]
+- [[Prototype]]
+- [[Reference screen]]
+- [[Session]]
+- [[Session drawer]]
 
 ## Sources
 

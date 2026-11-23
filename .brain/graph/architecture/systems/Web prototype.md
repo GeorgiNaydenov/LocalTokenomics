@@ -12,5 +12,5 @@ The typescript component web/src/prototype with 10 files and 3215 lines. Its doc
 
 ## Sources
 
-- [[Code of localtokenomics]] @  -> web/src/prototype/Gallery.tsx:1-5 | inferred
+- [[Code of localtokenomics]] @ implemented-by -> web/src/prototype/Gallery.tsx:1-5 | inferred
   > import { useState } from 'react'

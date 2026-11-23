@@ -13,7 +13,7 @@ The shared module has a scan function that loops over roots, files and parse, bu
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/sources/base.py | inferred
+- [[Code of localtokenomics]] | inferred
   > def scan(
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/store.py | inferred
+- [[Code of localtokenomics]] | inferred
   > for path in source.files(root):

@@ -1,5 +1,50 @@
 ---
 code: UC-13
+primary_actor: User of Ai usage cost sources
+subdomain: Ai usage cost sources area
+models:
+  - Analysis
+  - Bucket
+  - Capabilities
+  - ClientInfo
+  - ContextSnapshot
+  - CostBreakdown
+  - EconRow
+  - Economics
+  - Facets
+  - IngestSummary
+  - Insight
+  - Meta
+  - Outcome
+  - OutcomeSignals
+  - OutcomeUpdate
+  - PricedEvent
+  - Report
+  - Sample
+  - SeriesPoint
+  - SessionRow
+  - Source
+  - SourceInfo
+  - Span
+  - SpanContent
+  - Spec
+  - TokenUsage
+  - Totals
+  - Trace
+  - UnknownModel
+  - UsageEvent
+  - WarningGroup
+  - WarningInstance
+  - WarningSummary
+  - apps
+  - chats
+  - files
+  - messages
+  - outcomes
+  - requests
+  - samples
+  - session_exclusions
+  - trace_events
 rules:
   - A grown file resumes only when its earlier bytes are unchanged
   - A reader is found by its SOURCE value
@@ -31,6 +76,10 @@ rules:
   - opened refuses when path is None
   - session_spans refuses when not store.session_exists(conn, source, session_id)
   - span_content refuses when span is None
+  - A forgotten session is not stored again
+  - An unchanged file is not parsed again
+  - An unknown session answers 404
+  - The local calendar day decides the day of an event
 events:
   - Analysis refreshed
   - Conflicting records warning
@@ -54,11 +103,11 @@ The tool finds the logs and data stores of the supported AI coding tools on this
 
 ## Preconditions
 
-At least one supported tool has written data in a default root, or the user passes a root.
+- At least one supported tool has written data in a default root, or the user passes a root.
 
 ## Postconditions
 
-Usage events and a file record exist in the usage store for every readable file.
+- Usage events and a file record exist in the usage store for every readable file.
 
 ## Main flow
 
@@ -71,11 +120,17 @@ Usage events and a file record exist in the usage store for every readable file.
 
 ## Alternative flows
 
-A file that cannot be read adds a warning and is skipped. `src/ai_usage_cost/store.py:225`
+- A file that cannot be read adds a warning and is skipped. `src/ai_usage_cost/store.py:225`
 
 ## Acceptance criteria
 
-The Claude Code reader skips synthetic and zero token records. `tests/test_claude_code.py:102`
+- The Claude Code reader skips synthetic and zero token records. `tests/test_claude_code.py:102`
+
+## Glossary
+
+- [[Reader]]
+- [[Root]]
+- Source
 
 ## Sources
 

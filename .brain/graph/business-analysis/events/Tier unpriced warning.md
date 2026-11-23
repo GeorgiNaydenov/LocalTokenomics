@@ -10,7 +10,11 @@ maturity: draft
 
 Raised when requests ran on a tier the row has no price for and were billed at the standard rate. `src/ai_usage_cost/pipeline.py:231`
 
+## Used by
+
+- [[UC-13 Discover AI tool usage from local files]]
+
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/pipeline.py::analyze | inferred
+- [[Code of localtokenomics]] | inferred
   > billed at the standard rate instead

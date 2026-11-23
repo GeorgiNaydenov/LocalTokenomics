@@ -13,7 +13,3 @@ maturity: draft
 ## Question
 
 The sampler supports rocm-smi `src/ai_usage_cost/collect.py:88` but the error names only nvidia-smi and PowerShell `src/ai_usage_cost/cli.py:214`. Is the message stale?
-
-## Raised by
-
-Reading cli.py and collect.py

@@ -18,5 +18,5 @@ Map keys to safe indexed names such as series-1 before they enter the style text
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> web/src/components/ui/chart.tsx::ChartStyle | confirmed
-  >     return color ? `  --color-${key}: ${color};` : null
+- [[Code of localtokenomics]] | confirmed
+  > return color ? `  --color-${key}: ${color};` : null

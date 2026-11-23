@@ -10,6 +10,55 @@ models:
   - UsageEvent
   - PricedEvent
   - Report
+  - AlertDecision
+  - Analysis
+  - Bucket
+  - Capabilities
+  - ClientInfo
+  - Config
+  - ContextSnapshot
+  - CostBreakdown
+  - EconRow
+  - Economics
+  - Facets
+  - IngestSummary
+  - Insight
+  - Meta
+  - ModelMatch
+  - ModelRate
+  - Outcome
+  - OutcomeSignals
+  - OutcomeUpdate
+  - PartialRules
+  - Period
+  - Prefix
+  - PriceSet
+  - ProviderRules
+  - RateTable
+  - Sample
+  - SeriesPoint
+  - SessionRow
+  - Source
+  - SourceInfo
+  - Span
+  - SpanContent
+  - TokenUsage
+  - Totals
+  - Trace
+  - UnknownModel
+  - UnpricedModel
+  - WarningGroup
+  - WarningInstance
+  - WarningSummary
+  - apps
+  - chats
+  - files
+  - messages
+  - outcomes
+  - requests
+  - samples
+  - session_exclusions
+  - trace_events
 rules:
   - An unchanged file is not parsed again
   - A model without a rate row is unpriced
@@ -43,6 +92,54 @@ rules:
   - _valid_window validates the model
   - read_content refuses when config.metadata_only or span.content_path is None
   - resolve_path refuses when index ›= len(current)
+  - A forgotten session is not stored again
+  - A grown file resumes only when its earlier bytes are unchanged
+  - A reader is found by its SOURCE value
+  - A reported cost that differs is flagged
+  - A request is stored once per fingerprint
+  - A rise is measured against the window just before
+  - A route without a store answers 503
+  - A session shows its worst cost state
+  - A session title prefers the tool, then the latest
+  - An alert fires only above the threshold
+  - An alert needs exactly one threshold
+  - An excluded project drops its spans
+  - An unknown session answers 404
+  - Chart colours follow position, not meaning
+  - Content retention is inert
+  - Day breakdown is listed oldest first
+  - Empty project panel is left blank
+  - Experimental readers carry a flag
+  - Export accepts only json and png
+  - Old rates raise a warning
+  - PNG charts are limited to the top buckets
+  - Readers only read
+  - Records that disagree on input tokens keep the first
+  - Released text is cut and then redacted
+  - Schema migrations only run forward
+  - Source databases are opened read only
+  - Span text is refused in metadata only mode
+  - Terminal table shows at most 30 rows
+  - The alert window ends today
+  - Unknown grouping falls back to model
+  - Unparsable lines are skipped and counted
+  - Unpriced models are shown but not totalled
+  - Unreadable span text answers 404
+  - Warnings are summarised unless verbose
+  - _roots refuses when not path
+  - _values_match_provenance refuses when (value is None) != (provenance == 'unavailable')
+  - _values_match_provenance validates the model
+  - alert refuses when days ‹ 1
+  - alert refuses when over is not None and rise_over is not None
+  - alert refuses when threshold is None
+  - create_app refuses when not store.session_exists(conn, source, session_id)
+  - create_app refuses when not store.session_exists(conn, source, session_id) (line 364)
+  - create_app refuses when path is None
+  - create_app refuses when span is None
+  - forget_session refuses when not store.session_exists(conn, source, session_id)
+  - opened refuses when path is None
+  - session_spans refuses when not store.session_exists(conn, source, session_id)
+  - span_content refuses when span is None
 tags:
   - ba/use-case
 maturity: approved
@@ -55,11 +152,11 @@ The person runs one command and sees what the usage of all their AI coding tools
 
 ## Preconditions
 
-At least one supported tool has written logs on the machine, or the person points to them with a root option.
+- At least one supported tool has written logs on the machine, or the person points to them with a root option.
 
 ## Postconditions
 
-A report is printed or returned as JSON. The store holds the parsed requests for the next run.
+- A report is printed or returned as JSON. The store holds the parsed requests for the next run.
 
 ## Main flow
 
@@ -83,6 +180,13 @@ A report is printed or returned as JSON. The store holds the parsed requests for
 - Every breakdown sums to the grand total. `tests/test_pipeline.py:203`
 - Unavailable and unpriced requests count but do not add cost. `tests/test_pipeline.py:486`
 - Scanning twice changes nothing. `tests/test_store.py:158`
+
+## Glossary
+
+- [[Rate table]]
+- Report
+- [[Root]]
+- Source
 
 ## Sources
 

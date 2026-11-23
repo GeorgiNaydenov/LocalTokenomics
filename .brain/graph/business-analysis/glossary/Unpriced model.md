@@ -12,5 +12,5 @@ A model with no rate in the rates table. Its tokens are listed but excluded from
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/render/terminal.py::render | inferred
+- [[Code of localtokenomics]] | inferred
   > Unpriced models (excluded from totals)

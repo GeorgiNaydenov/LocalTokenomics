@@ -30,6 +30,10 @@ Per tool settings shared by the Cline family readers: source id, client name, ex
 
 No lifecycle field was found in the code.
 
+## Used by
+
+- [[UC-13 Discover AI tool usage from local files]]
+
 ## Sources
 
 - [[Code of localtokenomics]] @ manifests-as -> src/ai_usage_cost/sources/cline.py | inferred

@@ -18,5 +18,5 @@ The CodeQL workflow scans JavaScript and TypeScript on every pull request and we
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> pyproject.toml | confirmed
+- [[Code of localtokenomics]] | confirmed
   > exclude_dirs = ["tests", ".venv", "web"]

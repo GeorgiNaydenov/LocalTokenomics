@@ -12,5 +12,5 @@ What the recorded token usage would have cost at published list prices. Both ren
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/render/terminal.py::_headline | inferred
+- [[Code of localtokenomics]] | inferred
   > API-equivalent cost

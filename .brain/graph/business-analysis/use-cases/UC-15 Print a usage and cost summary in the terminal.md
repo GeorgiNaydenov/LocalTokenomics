@@ -1,6 +1,27 @@
 ---
 code: UC-15
 primary_actor: CLI user
+subdomain: Ai usage cost render area
+models:
+  - AlertDecision
+  - Analysis
+  - ClientInfo
+  - Facets
+  - Meta
+  - Report
+  - Sample
+  - SeriesPoint
+  - SessionRow
+  - SourceInfo
+  - Totals
+  - UnknownModel
+  - WarningGroup
+  - WarningInstance
+  - WarningSummary
+  - apps
+  - chats
+  - messages
+  - samples
 rules:
   - A rise is measured against the window just before
   - An alert fires only above the threshold
@@ -18,6 +39,23 @@ rules:
   - alert refuses when days ‹ 1
   - alert refuses when over is not None and rise_over is not None
   - alert refuses when threshold is None
+  - A reported cost that differs is flagged
+  - A route without a store answers 503
+  - A session shows its worst cost state
+  - A session title prefers the tool, then the latest
+  - An alert needs exactly one threshold
+  - An unknown session answers 404
+  - Content retention is inert
+  - Old rates raise a warning
+  - Unreadable span text answers 404
+  - create_app refuses when not store.session_exists(conn, source, session_id)
+  - create_app refuses when not store.session_exists(conn, source, session_id) (line 364)
+  - create_app refuses when path is None
+  - create_app refuses when span is None
+  - forget_session refuses when not store.session_exists(conn, source, session_id)
+  - opened refuses when path is None
+  - session_spans refuses when not store.session_exists(conn, source, session_id)
+  - span_content refuses when span is None
 events:
   - Spend alert sent
 tags:
@@ -32,11 +70,11 @@ A user runs the scan command and reads the headline cost and one breakdown table
 
 ## Preconditions
 
-Usage was found: the scan command exits with code 1 and a hint when the report has no events.
+- Usage was found: the scan command exits with code 1 and a hint when the report has no events.
 
 ## Postconditions
 
-The terminal shows a Total panel, one table for the chosen grouping, and the unpriced and warning notices when they apply.
+- The terminal shows a Total panel, one table for the chosen grouping, and the unpriced and warning notices when they apply.
 
 ## Main flow
 
@@ -48,12 +86,18 @@ The terminal shows a Total panel, one table for the chosen grouping, and the unp
 
 ## Alternative flows
 
-Step 3 alt: an unknown grouping name falls back to the model table. `src/ai_usage_cost/render/terminal.py:29`
-Start alt: no events found, the command prints a notice and exits with code 1. `src/ai_usage_cost/cli.py:104`
+- Step 3 alt: an unknown grouping name falls back to the model table. `src/ai_usage_cost/render/terminal.py:29`
+- Start alt: no events found, the command prints a notice and exits with code 1. `src/ai_usage_cost/cli.py:104`
 
 ## Acceptance criteria
 
-The headline shows a prompt caching saving line only when the saving is above zero. `src/ai_usage_cost/render/terminal.py:62`
+- The headline shows a prompt caching saving line only when the saving is above zero. `src/ai_usage_cost/render/terminal.py:62`
+
+## Glossary
+
+- Bucket
+- Report
+- Span
 
 ## Sources
 

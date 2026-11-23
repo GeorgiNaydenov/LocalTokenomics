@@ -14,5 +14,5 @@ A chart writes one set of colour variables for the light theme and one scoped to
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> web/src/components/ui/chart.tsx::THEMES | confirmed
+- [[Code of localtokenomics]] | confirmed
   > const THEMES = { light: "", dark: ".dark" } as const

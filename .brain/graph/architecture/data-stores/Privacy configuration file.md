@@ -13,5 +13,5 @@ An optional config.json in the store folder. When it is missing or invalid the d
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/privacy.py::DEFAULT_CONFIG_PATH | inferred
+- [[Code of localtokenomics]] | inferred
   > DEFAULT_CONFIG_PATH = Path.home()

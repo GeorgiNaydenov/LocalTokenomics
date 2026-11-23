@@ -9,7 +9,11 @@ maturity: draft
 
 Written once per successful reading of the GPU sampler, into the samples table. `src/ai_usage_cost/collect.py:275`
 
+## Used by
+
+- [[UC-13 Discover AI tool usage from local files]]
+
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/collect.py::insert_sample | inferred
+- [[Code of localtokenomics]] | inferred
   > def insert_sample(conn: sqlite3.Connection, sample: Sample) -> None:

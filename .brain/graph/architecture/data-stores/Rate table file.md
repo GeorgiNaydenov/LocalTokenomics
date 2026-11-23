@@ -14,5 +14,5 @@ The shipped rates.json beside the pricing code, replaceable with the rates optio
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/pricing.py::DEFAULT_RATES_PATH | inferred
+- [[Code of localtokenomics]] | inferred
   > DEFAULT_RATES_PATH = Path(__file__)

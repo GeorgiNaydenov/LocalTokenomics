@@ -18,9 +18,9 @@ Add a bandit step to the Python workflow, or remove the unused section and extra
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> pyproject.toml | confirmed
+- [[Code of localtokenomics]] | confirmed
   > [tool.bandit]
-- [[Code of localtokenomics]] @ declared-in -> pyproject.toml | confirmed
+- [[Code of localtokenomics]] | confirmed
   > "bandit>=1.7",
-- [[Code of localtokenomics]] @ enforced-by -> .github/workflows/python.yml | inferred
+- [[Code of localtokenomics]] | inferred
   > run: uv run --no-sync pytest -q

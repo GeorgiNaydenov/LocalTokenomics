@@ -1,5 +1,33 @@
 ---
 code: UC-14
+primary_actor: User of Ai usage cost sources
+subdomain: Ai usage cost sources area
+models:
+  - Bucket
+  - Capabilities
+  - ContextSnapshot
+  - CostBreakdown
+  - EconRow
+  - Economics
+  - Insight
+  - Outcome
+  - OutcomeSignals
+  - OutcomeUpdate
+  - PricedEvent
+  - Source
+  - Span
+  - SpanContent
+  - TokenUsage
+  - Trace
+  - UsageEvent
+rules:
+  - Experimental readers carry a flag
+  - Readers only read
+  - Source databases are opened read only
+  - The local calendar day decides the day of an event
+  - Unparsable lines are skipped and counted
+  - _values_match_provenance refuses when (value is None) != (provenance == 'unavailable')
+  - _values_match_provenance validates the model
 tags:
   - ba/use-case
 maturity: approved
@@ -12,11 +40,11 @@ For tools that keep conversations in a database and record no tokens, the reader
 
 ## Preconditions
 
-The tool's database file exists in a default root.
+- The tool's database file exists in a default root.
 
 ## Postconditions
 
-One event per composer exists with tokens set to none.
+- One event per composer exists with tokens set to none.
 
 ## Main flow
 
@@ -27,11 +55,16 @@ One event per composer exists with tokens set to none.
 
 ## Alternative flows
 
-A value that is not JSON is skipped. `src/ai_usage_cost/sources/cursor.py:66`
+- A value that is not JSON is skipped. `src/ai_usage_cost/sources/cursor.py:66`
 
 ## Acceptance criteria
 
-The Cursor reader has its own test module. `tests/test_cursor.py:28`
+- The Cursor reader has its own test module. `tests/test_cursor.py:28`
+
+## Glossary
+
+- [[Reader]]
+- [[Root]]
 
 ## Sources
 

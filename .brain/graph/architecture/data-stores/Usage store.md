@@ -15,5 +15,5 @@ A SQLite file in the home folder that holds requests, files, trace events, outco
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/pipeline.py::DEFAULT_DB_PATH | inferred
+- [[Code of localtokenomics]] | inferred
   > DEFAULT_DB_PATH = Path.home()

@@ -12,5 +12,5 @@ The python component src/ai_usage_cost with 13 files and 5069 lines. Its documen
 
 ## Sources
 
-- [[Code of localtokenomics]] @  -> src/ai_usage_cost/__init__.py:1-1 | inferred
+- [[Code of localtokenomics]] @ implemented-by -> src/ai_usage_cost/__init__.py:1-1 | inferred
   > __version__ = "0.2.0"

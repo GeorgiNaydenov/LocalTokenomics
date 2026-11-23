@@ -1,8 +1,10 @@
 ---
 code: UC-02
 primary_actor: Maintainer
+subdomain: localtokenomics root area
 actors:
   - Maintainer
+no_models_reason: No model of the specification is declared in the code this use case cites or in a file that code imports directly.
 rules:
   - A type error stops the dashboard build
   - A production build replaces the committed bundle
@@ -19,11 +21,11 @@ A maintainer changes the dashboard source and rebuilds the bundle that the Pytho
 
 ## Preconditions
 
-Node.js and npm are installed and dependencies are installed in the web folder.
+- Node.js and npm are installed and dependencies are installed in the web folder.
 
 ## Postconditions
 
-The output folder inside the Python package holds the new bundle.
+- The output folder inside the Python package holds the new bundle.
 
 ## Main flow
 
@@ -33,7 +35,7 @@ The output folder inside the Python package holds the new bundle.
 
 ## Alternative flows
 
-2a. A type error stops the build and no bundle is written. `web/package.json:8`
+- 2a. A type error stops the build and no bundle is written. `web/package.json:8`
 
 ## Special requirements
 
@@ -41,7 +43,12 @@ Asset paths are relative so the bundle loads from whatever URL the server mounts
 
 ## Acceptance criteria
 
-The bundle is written to the folder the package ships. `web/vite.config.ts:15`
+- The bundle is written to the folder the package ships. `web/vite.config.ts:15`
+- 2a: A type error stops the build and no bundle is written. `web/package.json:8`
+
+## Glossary
+
+- Source
 
 ## Sources
 

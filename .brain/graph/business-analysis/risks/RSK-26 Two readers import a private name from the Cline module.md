@@ -18,7 +18,7 @@ Expose the table under a public name or pass the flag through Spec.
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/sources/roo_code.py | confirmed
+- [[Code of localtokenomics]] | confirmed
   > from .cline import _TOKENS_IN_INCLUSIVE, Spec, make_source, task_roots
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/sources/kilo_legacy.py | confirmed
+- [[Code of localtokenomics]] | confirmed
   > from .cline import _TOKENS_IN_INCLUSIVE, Spec, make_source, task_roots

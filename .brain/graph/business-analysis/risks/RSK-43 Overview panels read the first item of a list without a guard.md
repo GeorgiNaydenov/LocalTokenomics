@@ -16,7 +16,7 @@ Add an empty state for each panel before the layout is ported.
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> web/src/prototype/OverviewScreen.tsx | confirmed
+- [[Code of localtokenomics]] | confirmed
   > const top = ranked[0]
-- [[Code of localtokenomics]] @ enforced-by -> web/src/prototype/OverviewScreen.tsx | confirmed
+- [[Code of localtokenomics]] | confirmed
   > const averagePerSession = TOTALS.cost / TOTALS.sessions

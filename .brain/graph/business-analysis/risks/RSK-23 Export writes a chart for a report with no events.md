@@ -16,9 +16,9 @@ Share the empty report check between the two commands, or print a warning before
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> src/ai_usage_cost/cli.py | confirmed
+- [[Code of localtokenomics]] | confirmed
   > if not report.totals.events:
-- [[Code of localtokenomics]] @ enforced-by -> src/ai_usage_cost/cli.py | confirmed
+- [[Code of localtokenomics]] | confirmed
   > write_png(report, out)
-- [[Code of localtokenomics]] @ enforced-by -> src/ai_usage_cost/render/png.py | confirmed
+- [[Code of localtokenomics]] | confirmed
   > fig.suptitle(

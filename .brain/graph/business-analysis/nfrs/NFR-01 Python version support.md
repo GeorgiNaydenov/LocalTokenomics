@@ -14,5 +14,5 @@ The package supports Python 3.11 or newer and the workflow tests 3.11, 3.12 and 
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> .github/workflows/python.yml | confirmed
+- [[Code of localtokenomics]] | confirmed
   > python-version: ["3.11", "3.12", "3.13"]

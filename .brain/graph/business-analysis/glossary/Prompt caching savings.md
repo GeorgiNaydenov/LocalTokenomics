@@ -12,5 +12,5 @@ The difference between the cost without caching and the cost with it, shown only
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/models.py::cache_savings | inferred
+- [[Code of localtokenomics]] | inferred
   > return self.no_cache_equivalent - self.total

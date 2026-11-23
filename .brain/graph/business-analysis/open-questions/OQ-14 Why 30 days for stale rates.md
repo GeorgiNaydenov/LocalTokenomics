@@ -13,7 +13,3 @@ maturity: approved
 ## Question
 
 The stale rate threshold is a constant `src/ai_usage_cost/aggregate.py:179`. What is the reason for the value?
-
-## Raised by
-
-Reading aggregate.py

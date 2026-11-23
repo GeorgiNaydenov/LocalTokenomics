@@ -12,5 +12,5 @@ One row of a breakdown: a key, a label, a cost, token counts and a request count
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/models.py::Bucket | inferred
+- [[Code of localtokenomics]] | inferred
   > class Bucket(BaseModel):

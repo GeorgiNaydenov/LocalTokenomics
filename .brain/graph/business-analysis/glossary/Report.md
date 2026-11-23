@@ -12,5 +12,5 @@ The computed usage and cost object that both renderers read: totals, buckets by 
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/aggregate.py::Report | inferred
+- [[Code of localtokenomics]] | inferred
   > class Report(BaseModel):

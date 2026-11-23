@@ -10,7 +10,11 @@ maturity: draft
 
 A service reached through an Apprise address the person passes to the alert command: `src/ai_usage_cost/cli.py:344`.
 
+## Participates in
+
+- [[UC-20 Be alerted when spend rises]]
+
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/cli.py::alert | inferred
+- [[Code of localtokenomics]] | inferred
   > notifier = apprise.Apprise()

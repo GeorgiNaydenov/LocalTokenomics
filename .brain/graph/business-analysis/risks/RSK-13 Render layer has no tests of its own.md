@@ -18,5 +18,5 @@ Add tests for the headline text, the 30 row cut and the empty project panel.
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/render/terminal.py::render | open
+- [[Code of localtokenomics]] | open
   > def render(

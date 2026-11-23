@@ -12,5 +12,5 @@ A person who calls the 12 routes or opens the 0 screens of the Ai usage cost mod
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/api.py | inferred
+- [[Code of localtokenomics]] | inferred
   > def meta() -> Meta:

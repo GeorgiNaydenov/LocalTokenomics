@@ -12,5 +12,5 @@ The choice of breakdown for the terminal summary: model, client, provider, proje
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/render/terminal.py::render | inferred
+- [[Code of localtokenomics]] | inferred
   > "model": ("By model", report.by_model),

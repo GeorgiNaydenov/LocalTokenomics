@@ -1,6 +1,24 @@
 ---
 code: UC-08
 primary_actor: Dashboard reader
+subdomain: Web area
+no_models_reason: No model of the specification is declared in the code this use case cites or in a file that code imports directly.
+rules:
+  - A missing value is shown as unavailable, never as zero
+  - A workspace tab loads its data only when first opened
+  - An estimated price is marked next to the cost state
+  - An explanation popover does not take focus back on close
+  - Automatic rescan every five minutes
+  - Cache price derivation
+  - Caller class names override primitive defaults
+  - Outcome notes are saved only when changed
+  - Rate row state
+  - Session table row limit
+  - Sub cent money keeps four decimals
+  - The date range cannot cross itself
+  - Unavailable is never shown as zero
+  - Unpriced cost stays out of totals
+  - getJson refuses when !response.ok
 tags:
   - ba/use-case
 maturity: approved
@@ -13,11 +31,11 @@ The Dashboard reader reviews the rate table, which rates are used, and which mod
 
 ## Preconditions
 
-The rate table and report are loaded.
+- The rate table and report are loaded.
 
 ## Postconditions
 
-The pricing view shows one row per rate with its state and spend.
+- The pricing view shows one row per rate with its state and spend.
 
 ## Main flow
 
@@ -31,6 +49,13 @@ The pricing view shows one row per rate with its state and spend.
 ## Acceptance criteria
 
 - An estimated bucket is not credited to the parent. `web/src/Pricing.test.ts:127`
+
+## Glossary
+
+- Bucket
+- [[Rate table]]
+- [[Reader]]
+- Report
 
 ## Sources
 

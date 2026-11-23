@@ -16,5 +16,5 @@ Make the row focusable and open it on Enter, or put a button in the id cell, in 
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> web/src/prototype/SessionsScreen.tsx | confirmed
+- [[Code of localtokenomics]] | confirmed
   > className="cursor-pointer"

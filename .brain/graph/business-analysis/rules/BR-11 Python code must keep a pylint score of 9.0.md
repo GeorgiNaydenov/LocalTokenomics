@@ -11,6 +11,10 @@ maturity: approved
 
 Both the Python workflow and the pre-commit hook fail when pylint scores below 9.0.
 
+## Enforced in
+
+- [[UC-04 Check a change before merge]]
+
 ## Sources
 
 - [[Code of localtokenomics]] @ enforced-by -> pyproject.toml | confirmed

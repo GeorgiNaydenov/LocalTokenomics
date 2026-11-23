@@ -29,6 +29,14 @@ The privacy settings read from config.json in the store folder. `src/ai_usage_co
 
 No lifecycle field was found in the code.
 
+## Used by
+
+- [[UC-17 See what my AI usage would cost]]
+- [[UC-18 Explore spend in the dashboard]]
+- [[UC-21 Inspect and rate one session]]
+- [[UC-22 Forget a session]]
+- [[UC-23 Read the text of one span]]
+
 ## Sources
 
 - [[Code of localtokenomics]] @ manifests-as -> src/ai_usage_cost/privacy.py::Config | inferred

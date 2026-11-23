@@ -10,7 +10,11 @@ maturity: draft
 
 Raised once per model that has tokens and no rate. `src/ai_usage_cost/pipeline.py:215`
 
+## Used by
+
+- [[UC-13 Discover AI tool usage from local files]]
+
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/pipeline.py::analyze | inferred
+- [[Code of localtokenomics]] | inferred
   > no rate for model {unknown.model!r}

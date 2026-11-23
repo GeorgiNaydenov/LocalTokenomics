@@ -16,5 +16,5 @@ Pass the filter state into the screen when porting, or drop the sentence from th
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> web/src/prototype/SessionsScreen.tsx | confirmed
+- [[Code of localtokenomics]] | confirmed
   > Narrow the filters to see the rest.

@@ -12,5 +12,5 @@ A person who calls the 0 routes or opens the 1 screens of the localtokenomics ro
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> web/index.html | inferred
+- [[Code of localtokenomics]] | inferred
   > <!doctype html>

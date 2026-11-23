@@ -9,19 +9,23 @@ maturity: draft
 
 ## States
 
-idle
-loading
-ready
-error
+| Name |
+| --- |
+| idle |
+| loading |
+| ready |
+| error |
 
 ## Transitions
 
-idle to loading: the tab is selected for the first time `web/src/SessionWorkspace.tsx:453`
-loading to ready: the endpoint answers `web/src/SessionWorkspace.tsx:101`
-loading to error: the endpoint fails and the request was not aborted `web/src/SessionWorkspace.tsx:105`
-error to loading: not found; only a new session or a remount runs the load again
+| Name |
+| --- |
+| idle to loading: the tab is selected for the first time `web/src/SessionWorkspace.tsx:453` |
+| loading to ready: the endpoint answers `web/src/SessionWorkspace.tsx:101` |
+| loading to error: the endpoint fails and the request was not aborted `web/src/SessionWorkspace.tsx:105` |
+| error to loading: not found; only a new session or a remount runs the load again |
 
 ## Sources
 
-- [[Code of localtokenomics]] @ implemented-by -> web/src/SessionWorkspace.tsx::useLazyResource | confirmed
+- [[Code of localtokenomics]] | confirmed
   > function useLazyResource<T>(enabled: boolean, load: (signal: AbortSignal) => Promise<T>): Loadable<T> {

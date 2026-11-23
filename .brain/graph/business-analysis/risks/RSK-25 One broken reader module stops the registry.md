@@ -18,5 +18,5 @@ Catch the import error per module, skip that reader and report a warning naming 
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> src/ai_usage_cost/sources/__init__.py | confirmed
+- [[Code of localtokenomics]] | confirmed
   > module = importlib.import_module(f"{__name__}.{info.name}")

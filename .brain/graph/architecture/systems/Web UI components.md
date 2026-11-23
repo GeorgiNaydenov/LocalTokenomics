@@ -12,5 +12,5 @@ The typescript component web/src/components with 18 files and 3024 lines. Its do
 
 ## Sources
 
-- [[Code of localtokenomics]] @  -> web/src/components/chart-hover.tsx:1-5 | inferred
+- [[Code of localtokenomics]] @ implemented-by -> web/src/components/chart-hover.tsx:1-5 | inferred
   > import * as React from 'react'

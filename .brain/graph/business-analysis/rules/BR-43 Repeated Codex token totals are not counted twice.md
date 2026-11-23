@@ -10,6 +10,10 @@ maturity: approved
 
 A Codex token_count record whose total is unchanged is skipped, because Codex repeats it on rate limit updates.
 
+## Enforced in
+
+- [[UC-13 Discover AI tool usage from local files]]
+
 ## Sources
 
 - [[Code of localtokenomics]] @ enforced-by -> src/ai_usage_cost/sources/codex.py | inferred

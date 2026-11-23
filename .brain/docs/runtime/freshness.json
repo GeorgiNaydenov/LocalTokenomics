@@ -1,0 +1,34 @@
+{
+ "ch-localtokenomics-root": {
+  "key": "e19542f97dbd8845033c6ac695f7be1cd345cc97",
+  "outdated": []
+ },
+ "ch-localtokenomics-src-ai-usage-cost": {
+  "key": "92f48faf974c66dab79911101381cf660cdc5f51",
+  "outdated": []
+ },
+ "ch-localtokenomics-src-ai-usage-cost-render": {
+  "key": "5bdcb87970c08dd1ecd04fc70afcd185a48ce9af",
+  "outdated": []
+ },
+ "ch-localtokenomics-src-ai-usage-cost-sources": {
+  "key": "a5cebe373507b97f50219cf45345480a68e3d9f3",
+  "outdated": []
+ },
+ "ch-localtokenomics-web-src": {
+  "key": "a83746b7ddaa74a531882a9cbbca0d6af7bc9e01",
+  "outdated": []
+ },
+ "ch-localtokenomics-web-src-components": {
+  "key": "7109dc7060b55f3b6d11a31eb866ebee8c30dea7",
+  "outdated": []
+ },
+ "ch-localtokenomics-web-src-components-ui": {
+  "key": "3e815c9e74bceb6aabd5dd160c475e790e7fffe8",
+  "outdated": []
+ },
+ "ch-localtokenomics-web-src-prototype": {
+  "key": "b7ec5c465d946eaa6f8ef90aa9bc8aeb119d2726",
+  "outdated": []
+ }
+}

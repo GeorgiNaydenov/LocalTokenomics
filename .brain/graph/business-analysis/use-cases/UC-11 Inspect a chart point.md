@@ -1,6 +1,10 @@
 ---
 code: UC-11
 primary_actor: Dashboard reader
+subdomain: Web UI components area
+no_models_reason: No model of the specification is declared in the code this use case cites or in a file that code imports directly.
+rules:
+  - Caller class names override primitive defaults
 tags:
   - ba/use-case
 maturity: approved
@@ -13,11 +17,11 @@ The reader moves the pointer or uses the keyboard over a chart to read the value
 
 ## Preconditions
 
-A sparkline with labels and a formatter, or a context occupancy chart, is on screen.
+- A sparkline with labels and a formatter, or a context occupancy chart, is on screen.
 
 ## Postconditions
 
-A detail box shows the title and values of the chosen point, and a live region announces it.
+- A detail box shows the title and values of the chosen point, and a live region announces it.
 
 ## Main flow
 
@@ -33,6 +37,11 @@ A detail box shows the title and values of the chosen point, and a live region a
 ## Acceptance criteria
 
 - A sparkline keeps every y coordinate inside the box height, even for a series with negative dips. `web/src/components/sparkline.test.ts:10`
+
+## Glossary
+
+- [[Context occupancy]]
+- [[Reader]]
 
 ## Sources
 

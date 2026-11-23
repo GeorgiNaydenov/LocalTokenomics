@@ -11,6 +11,10 @@ maturity: approved
 
 If the reader hides every column, all columns are shown again.
 
+## Enforced in
+
+- [[UC-10 Narrow a list and choose its columns]]
+
 ## Sources
 
 - [[Code of localtokenomics]] @ enforced-by -> web/src/components/columns.tsx::visibleColumns | confirmed

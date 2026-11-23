@@ -12,5 +12,5 @@ The python component localtokenomics root with 2 files and 1668 lines. Its docum
 
 ## Sources
 
-- [[Code of localtokenomics]] @  -> scripts/demo_logs.py:1-5 | inferred
+- [[Code of localtokenomics]] @ implemented-by -> scripts/demo_logs.py:1-5 | inferred
   > """Generate synthetic Claude Code, Codex, Jan and Dyad logs for developing the dashboard.

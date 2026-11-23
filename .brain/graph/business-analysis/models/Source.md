@@ -44,6 +44,13 @@ The frozen description of one reader: id, label, client names, default roots, fi
 
 No lifecycle field was found in the code.
 
+## Used by
+
+- [[UC-13 Discover AI tool usage from local files]]
+- [[UC-14 Read a tool's SQLite store without a token count]]
+- [[UC-17 See what my AI usage would cost]]
+- [[UC-22 Forget a session]]
+
 ## Sources
 
 - [[Code of localtokenomics]] @ manifests-as -> src/ai_usage_cost/sources/base.py | inferred

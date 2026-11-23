@@ -1,6 +1,33 @@
 ---
 code: UC-09
 primary_actor: Dashboard reader
+subdomain: Web UI components area
+no_models_reason: No model of the specification is declared in the code this use case cites or in a file that code imports directly.
+rules:
+  - A missing value is shown as unavailable, never as zero
+  - A workspace tab loads its data only when first opened
+  - An estimated price is marked next to the cost state
+  - An explanation popover does not take focus back on close
+  - Automatic rescan every five minutes
+  - Caller class names override primitive defaults
+  - Drawer trace blocks show the same sample data for every traced session
+  - Outcome notes are saved only when changed
+  - Prototype filters do not filter the screens
+  - Prototype session table shows at most 120 rows
+  - Prototype splits session cost across token buckets by fixed weights
+  - Rate age notice thresholds
+  - Rate row state
+  - Reported cost divergence threshold
+  - Screens stay mounted across the four screen tabs but not across the gallery
+  - Session table row limit
+  - Span text is fetched once per span
+  - Sub cent money keeps four decimals
+  - The daily chart names at most twelve series
+  - The date range cannot cross itself
+  - Tooltip provider default delay is zero
+  - Unavailable is never shown as zero
+  - Unpriced cost stays out of totals
+  - getJson refuses when !response.ok
 tags:
   - ba/use-case
 maturity: approved
@@ -13,11 +40,11 @@ The reader looks at a headline number, a session row or a source card and wants 
 
 ## Preconditions
 
-The dashboard has received values and labels for the view.
+- The dashboard has received values and labels for the view.
 
 ## Postconditions
 
-Each figure is shown with its cost state or provenance, or as unavailable. Nothing is invented.
+- Each figure is shown with its cost state or provenance, or as unavailable. Nothing is invented.
 
 ## Main flow
 
@@ -34,6 +61,16 @@ Each figure is shown with its cost state or provenance, or as unavailable. Nothi
 
 - The explanation opens on click and shows the plain text. `web/src/components/metric-info.test.tsx:7`
 - The worst state of a mixed set is unavailable over unpriced, free and priced. `web/src/components/rank.test.ts:5`
+
+## Glossary
+
+- [[Cost state]]
+- Outcome
+- [[Provenance]]
+- [[Reader]]
+- [[Session]]
+- Source
+- [[Unavailable marker]]
 
 ## Sources
 

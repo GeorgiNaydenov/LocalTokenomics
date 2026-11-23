@@ -11,6 +11,11 @@ maturity: approved
 
 Every production build empties the output folder inside the Python package before writing the new bundle.
 
+## Enforced in
+
+- [[UC-02 Rebuild the dashboard bundle]]
+- [[UC-03 Develop the dashboard against live data]]
+
 ## Sources
 
 - [[Code of localtokenomics]] @ enforced-by -> web/vite.config.ts | confirmed

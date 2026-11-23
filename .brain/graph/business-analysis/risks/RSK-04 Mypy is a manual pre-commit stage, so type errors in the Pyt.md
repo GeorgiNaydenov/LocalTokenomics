@@ -18,5 +18,5 @@ The Python workflow runs mypy on src for every pull request.
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> .pre-commit-config.yaml | confirmed
+- [[Code of localtokenomics]] | confirmed
   > stages: [manual]

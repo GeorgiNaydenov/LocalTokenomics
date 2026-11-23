@@ -10,6 +10,13 @@ maturity: approved
 
 A notice about old prices appears from 30 days and becomes a caution from 90 days. Unknown age shows nothing.
 
+## Enforced in
+
+- [[UC-05 Read usage and cost for a period]]
+- [[UC-06 Inspect one session]]
+- [[UC-07 Rate a session outcome]]
+- [[UC-09 Read a figure and see how far to trust it]]
+
 ## Sources
 
 - [[Code of localtokenomics]] @ enforced-by -> web/src/pricing-notes.ts | confirmed

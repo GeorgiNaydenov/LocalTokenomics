@@ -12,5 +12,5 @@ The typescript component web/src with 20 files and 7127 lines. Its documentation
 
 ## Sources
 
-- [[Code of localtokenomics]] @  -> web/src/App.tsx:1-5 | inferred
+- [[Code of localtokenomics]] @ implemented-by -> web/src/App.tsx:1-5 | inferred
   > import { useCallback, useEffect, useState } from 'react'

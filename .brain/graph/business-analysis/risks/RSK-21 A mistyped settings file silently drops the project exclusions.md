@@ -18,7 +18,7 @@ Raise a warning when the file exists but fails to load or validate, or validate 
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> src/ai_usage_cost/privacy.py | confirmed
+- [[Code of localtokenomics]] | confirmed
   > except ValidationError:
-- [[Code of localtokenomics]] @ enforced-by -> src/ai_usage_cost/pipeline.py | confirmed
+- [[Code of localtokenomics]] | confirmed
   > exclude_projects=config.exclude_projects,

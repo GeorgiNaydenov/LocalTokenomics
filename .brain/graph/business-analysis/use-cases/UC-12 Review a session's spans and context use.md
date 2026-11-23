@@ -1,6 +1,19 @@
 ---
 code: UC-12
 primary_actor: Dashboard reader
+subdomain: Web UI components area
+no_models_reason: No model of the specification is declared in the code this use case cites or in a file that code imports directly.
+rules:
+  - A missing value is shown as unavailable, never as zero
+  - An estimated price is marked next to the cost state
+  - Caller class names override primitive defaults
+  - Drawer trace blocks show the same sample data for every traced session
+  - Prototype filters do not filter the screens
+  - Prototype splits session cost across token buckets by fixed weights
+  - Screens stay mounted across the four screen tabs but not across the gallery
+  - Span text is fetched once per span
+  - Tooltip provider default delay is zero
+  - getJson refuses when !response.ok
 tags:
   - ba/use-case
 maturity: approved
@@ -13,11 +26,11 @@ The reader opens a session and steps through its trace spans, insights and conte
 
 ## Preconditions
 
-Trace spans or occupancy points were supplied for the session.
+- Trace spans or occupancy points were supplied for the session.
 
 ## Postconditions
 
-The reader has seen each span with its kind and status, and which calls came close to a full context window.
+- The reader has seen each span with its kind and status, and which calls came close to a full context window.
 
 ## Main flow
 
@@ -33,6 +46,12 @@ The reader has seen each span with its kind and status, and which calls came clo
 ## Acceptance criteria
 
 - No automated test covers this flow. Criterion from the code: unknown occupancy is shown as unknown, never as zero. `web/src/components/trace.tsx:206`
+
+## Glossary
+
+- [[Reader]]
+- [[Session]]
+- Span
 
 ## Sources
 

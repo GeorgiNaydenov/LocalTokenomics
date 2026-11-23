@@ -9,16 +9,20 @@ maturity: approved
 
 ## States
 
-exact
-suffix
-estimated
-none
+| Name |
+| --- |
+| exact |
+| suffix |
+| estimated |
+| none |
 
 ## Transitions
 
-No assignment of these values was found in the code of this module.
+| Name |
+| --- |
+| No assignment of these values was found in the code of this module. |
 
 ## Sources
 
-- [[Code of localtokenomics]] @ implemented-by -> web/src/api.ts::MatchKind | inferred
+- [[Code of localtokenomics]] | inferred
   > export type MatchKind = 'exact' | 'suffix' | 'estimated' | 'none'

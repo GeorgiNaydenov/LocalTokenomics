@@ -9,7 +9,11 @@ maturity: draft
 
 Raised for a session whose tool reported cost and computed cost disagree. `src/ai_usage_cost/pipeline.py:135`
 
+## Used by
+
+- [[UC-13 Discover AI tool usage from local files]]
+
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/pipeline.py::reported_cost_divergences | inferred
-  > differs from 
+- [[Code of localtokenomics]] | inferred
+  > differs from

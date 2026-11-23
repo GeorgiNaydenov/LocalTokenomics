@@ -18,5 +18,5 @@ Print a note when buckets are cut.
 
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/render/terminal.py::_bucket_table | inferred
+- [[Code of localtokenomics]] | inferred
   > for bucket in rows[:30]:

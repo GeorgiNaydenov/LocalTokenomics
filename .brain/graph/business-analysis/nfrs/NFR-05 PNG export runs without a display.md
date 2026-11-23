@@ -13,5 +13,5 @@ The picture writer selects the non interactive Agg backend before importing pypl
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> src/ai_usage_cost/render/png.py::write_png | confirmed
+- [[Code of localtokenomics]] | confirmed
   > matplotlib.use("Agg")

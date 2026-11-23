@@ -1,8 +1,14 @@
 ---
 code: UC-03
 primary_actor: Maintainer
+subdomain: localtokenomics root area
 actors:
   - Maintainer
+no_models_reason: No model of the specification is declared in the code this use case cites or in a file that code imports directly.
+rules:
+  - A production build replaces the committed bundle
+  - A type error stops the dashboard build
+  - The prototype is excluded from the production build
 tags:
   - ba/use-case
 maturity: approved
@@ -15,11 +21,11 @@ A maintainer runs the dashboard dev server, which forwards API requests to the P
 
 ## Preconditions
 
-The Python server is running on port 8420.
+- The Python server is running on port 8420.
 
 ## Postconditions
 
-The dev server shows the dashboard with live data.
+- The dev server shows the dashboard with live data.
 
 ## Main flow
 
@@ -29,11 +35,12 @@ The dev server shows the dashboard with live data.
 
 ## Alternative flows
 
-3a. The proxy target is the local server only, so with no Python server running the API requests get no answer. `web/vite.config.ts:22`
+- 3a. The proxy target is the local server only, so with no Python server running the API requests get no answer. `web/vite.config.ts:22`
 
 ## Acceptance criteria
 
-The dev server answers on its own port and proxies the API path. `web/vite.config.ts:23`
+- The dev server answers on its own port and proxies the API path. `web/vite.config.ts:23`
+- 3a: The proxy target is the local server only, so with no Python server running the API requests get no answer. `web/vite.config.ts:22`
 
 ## Sources
 

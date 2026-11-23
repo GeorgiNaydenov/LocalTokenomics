@@ -18,11 +18,11 @@ Pass the file path as the fallback, as the other readers do, or skip the row and
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> src/ai_usage_cost/sources/base.py | confirmed
+- [[Code of localtokenomics]] | confirmed
   > return datetime.now(tz=UTC)
-- [[Code of localtokenomics]] @ enforced-by -> src/ai_usage_cost/sources/copilot_chat.py | confirmed
+- [[Code of localtokenomics]] | confirmed
   > timestamp=parse_timestamp(timestamp),
-- [[Code of localtokenomics]] @ enforced-by -> src/ai_usage_cost/sources/dyad.py | confirmed
+- [[Code of localtokenomics]] | confirmed
   > timestamp=parse_timestamp(created_at),
-- [[Code of localtokenomics]] @ enforced-by -> src/ai_usage_cost/sources/ollama_app.py | confirmed
+- [[Code of localtokenomics]] | confirmed
   > timestamp=parse_timestamp(created_at),

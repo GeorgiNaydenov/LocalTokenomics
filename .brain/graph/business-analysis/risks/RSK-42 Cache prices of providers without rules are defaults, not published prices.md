@@ -16,7 +16,7 @@ Show a dash, or mark the figure as a default, for providers without a rule.
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> web/src/prototype/PricingScreen.tsx | confirmed
+- [[Code of localtokenomics]] | confirmed
   > const rules = PROVIDER_RULES[rate.provider]
-- [[Code of localtokenomics]] @ enforced-by -> web/src/prototype/data.ts | confirmed
+- [[Code of localtokenomics]] | confirmed
   > export const PROVIDER_RULES: Record<string, ProviderRules> = {

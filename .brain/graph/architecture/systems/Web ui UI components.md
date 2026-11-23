@@ -12,5 +12,5 @@ The typescript component web/src/components/ui with 25 files and 2083 lines. Its
 
 ## Sources
 
-- [[Code of localtokenomics]] @  -> web/src/components/ui/accordion.tsx:1-5 | inferred
+- [[Code of localtokenomics]] @ implemented-by -> web/src/components/ui/accordion.tsx:1-5 | inferred
   > "use client"

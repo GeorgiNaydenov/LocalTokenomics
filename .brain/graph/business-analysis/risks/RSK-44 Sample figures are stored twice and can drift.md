@@ -16,7 +16,7 @@ Derive one list from the other, or add a test that compares them.
 
 ## Sources
 
-- [[Code of localtokenomics]] @ enforced-by -> web/src/prototype/data.ts | confirmed
+- [[Code of localtokenomics]] | confirmed
   > cost: 1489.22,
-- [[Code of localtokenomics]] @ enforced-by -> web/src/prototype/data.ts | confirmed
+- [[Code of localtokenomics]] | confirmed
   > spend: 1489.22

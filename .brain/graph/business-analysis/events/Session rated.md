@@ -9,7 +9,11 @@ maturity: draft
 
 Recorded when a person stores an outcome for a session. `src/ai_usage_cost/store.py:568`
 
+## Used by
+
+- [[UC-13 Discover AI tool usage from local files]]
+
 ## Sources
 
-- [[Code of localtokenomics]] @ declared-in -> src/ai_usage_cost/store.py::put_outcome | inferred
+- [[Code of localtokenomics]] | inferred
   > def put_outcome(

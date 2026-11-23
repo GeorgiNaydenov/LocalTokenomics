@@ -7,7 +7,58 @@ actors:
   - Person using the tool
 models:
   - SessionRow
-rules: []
+  - AlertDecision
+  - Analysis
+  - ClientInfo
+  - Facets
+  - Meta
+  - Report
+  - Sample
+  - SeriesPoint
+  - SourceInfo
+  - Totals
+  - UnknownModel
+  - WarningGroup
+  - WarningInstance
+  - WarningSummary
+  - apps
+  - chats
+  - messages
+  - samples
+rules:
+  - A reported cost that differs is flagged
+  - A rise is measured against the window just before
+  - A route without a store answers 503
+  - A session shows its worst cost state
+  - A session title prefers the tool, then the latest
+  - An alert fires only above the threshold
+  - An alert needs exactly one threshold
+  - An unknown session answers 404
+  - Chart colours follow position, not meaning
+  - Content retention is inert
+  - Day breakdown is listed oldest first
+  - Empty project panel is left blank
+  - Export accepts only json and png
+  - Old rates raise a warning
+  - PNG charts are limited to the top buckets
+  - Terminal table shows at most 30 rows
+  - The alert window ends today
+  - Unknown grouping falls back to model
+  - Unpriced models are shown but not totalled
+  - Unreadable span text answers 404
+  - Warnings are summarised unless verbose
+  - _roots refuses when not path
+  - alert refuses when days ‹ 1
+  - alert refuses when over is not None and rise_over is not None
+  - alert refuses when threshold is None
+  - create_app refuses when not store.session_exists(conn, source, session_id)
+  - create_app refuses when not store.session_exists(conn, source, session_id) (line 364)
+  - create_app refuses when path is None
+  - create_app refuses when span is None
+  - forget_session refuses when not store.session_exists(conn, source, session_id)
+  - opened refuses when path is None
+  - session_spans refuses when not store.session_exists(conn, source, session_id)
+  - span_content refuses when span is None
 tags:
   - ba/use-case
 maturity: approved
@@ -20,11 +71,11 @@ The person lists and sorts sessions in a terminal table and filters them as they
 
 ## Preconditions
 
-The tui extra is installed and the report has sessions.
+- The tui extra is installed and the report has sessions.
 
 ## Postconditions
 
-A full screen table is shown.
+- A full screen table is shown.
 
 ## Main flow
 
@@ -40,6 +91,11 @@ A full screen table is shown.
 ## Acceptance criteria
 
 - The filter matches any visible session field. `tests/test_cli.py:197`
+
+## Glossary
+
+- Report
+- [[Session]]
 
 ## Sources
 

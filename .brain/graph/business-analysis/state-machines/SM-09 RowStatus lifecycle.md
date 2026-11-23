@@ -9,15 +9,19 @@ maturity: approved
 
 ## States
 
-ga
-preview
-retired
+| Name |
+| --- |
+| ga |
+| preview |
+| retired |
 
 ## Transitions
 
-No assignment of these values was found in the code of this module.
+| Name |
+| --- |
+| No assignment of these values was found in the code of this module. |
 
 ## Sources
 
-- [[Code of localtokenomics]] @ implemented-by -> src/ai_usage_cost/pricing.py::RowStatus | inferred
+- [[Code of localtokenomics]] | inferred
   > RowStatus = Literal["ga", "preview", "retired"]
