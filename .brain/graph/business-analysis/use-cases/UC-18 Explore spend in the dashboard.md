@@ -57,6 +57,8 @@ models:
   - samples
   - session_exclusions
   - trace_events
+  - CostState
+  - RowStatus
 rules:
   - An unknown session answers 404
   - A bad configuration file gives the defaults

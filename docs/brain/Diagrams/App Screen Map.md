@@ -88,6 +88,16 @@ node_citations:
     region-4: ['web/src/App.tsx:327-327', 'web/src/App.tsx:330-330', 'web/src/App.tsx:333-333',
       'web/src/App.tsx:336-336', 'web/src/App.tsx:337-337']
     region-5: ['web/src/App.tsx:343-351']
+  drawio-screen-app-header:
+    header: ['web/src/Header.tsx:74-134', 'web/src/Header.tsx:79-84', 'web/src/Header.tsx:98',
+      'web/src/Header.tsx:105-107', 'web/src/Header.tsx:128', 'web/src/Header.tsx:131']
+  drawio-screen-app-filter-rail:
+    filter rail: ['web/src/FilterRail.tsx:296-452', 'web/src/FilterRail.tsx:486-503',
+      'web/src/FilterRail.tsx:298-300', 'web/src/FilterRail.tsx:190-194', 'web/src/FilterRail.tsx:311-317',
+      'web/src/FilterRail.tsx:320-325', 'web/src/FilterRail.tsx:334-338', 'web/src/FilterRail.tsx:342-346',
+      'web/src/FilterRail.tsx:354-358', 'web/src/FilterRail.tsx:380-384', 'web/src/FilterRail.tsx:406-410',
+      'web/src/FilterRail.tsx:431-434', 'web/src/FilterRail.tsx:436-439', 'web/src/FilterRail.tsx:441-444',
+      'web/src/FilterRail.tsx:449', 'web/src/FilterRail.tsx:486-489']
 approved-by: human
 approved-at: '2026-11-19T07:31:30+00:00'
 ---

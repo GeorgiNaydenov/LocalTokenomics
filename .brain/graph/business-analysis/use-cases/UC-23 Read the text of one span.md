@@ -52,6 +52,8 @@ models:
   - requests
   - session_exclusions
   - trace_events
+  - CostState
+  - RowStatus
 rules:
   - Span text is refused in metadata only mode
   - Released text is cut and then redacted

@@ -20,6 +20,7 @@ models:
   - TokenUsage
   - Trace
   - UsageEvent
+  - CostState
 rules:
   - Experimental readers carry a flag
   - Readers only read

@@ -45,6 +45,7 @@ models:
   - samples
   - session_exclusions
   - trace_events
+  - CostState
 rules:
   - A grown file resumes only when its earlier bytes are unchanged
   - A reader is found by its SOURCE value

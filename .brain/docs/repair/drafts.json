@@ -1,0 +1,60 @@
+{
+ "note": "Drafted by brain docs repair. Each op needs judgement: read it, edit or delete it, then run brain docs repair --apply-drafts with this file. Nothing here is applied before that.",
+ "ops": [
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Prototype",
+   "data": {
+    "in_application": "The second browser app under web/src/prototype that mirrors the four dashboard screens and a design system page against invented data (`export` at `web/src/prototype/Prototype.tsx:20`). The code declares it at `web/src/prototype/Prototype.tsx:20`, where the line reads `export default function Prototype() {`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Root",
+   "data": {
+    "in_application": "A folder or file where a reader looks for a tool's data (`for` at `web/src/TraceTab.tsx:434`). The code declares it at `web/src/TraceTab.tsx:434`, where the line reads `for (const root of roots) walk(root)`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Session drawer",
+   "data": {
+    "in_application": "The side sheet that opens over the Sessions screen for one chosen session and shows its cost, token buckets, context window, trace, origin facts and raw log files (`function` at `web/src/prototype/Screens.tsx:84`). The code declares it at `web/src/prototype/Screens.tsx:84`, where the line reads `function SessionDrawer({`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Token bucket",
+   "data": {
+    "in_application": "One of the four counted kinds of tokens in a session: uncached input, cache read, cache write and output (`export` at `web/src/components/series.ts:7`). The code declares it at `web/src/components/series.ts:7`, where the line reads `export interface TokenBucket {`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  },
+  {
+   "op": "update",
+   "defect": "term-no-context",
+   "kind": "glossary-term",
+   "name": "Usage event",
+   "data": {
+    "in_application": "The record a reader yields for one request or one conversation turn: model, timestamp, session id, request id, project, title and, when the reader can see them, token counts (`class` at `src/ai_usage_cost/models.py:49`). The code declares it at `src/ai_usage_cost/models.py:49`, where the line reads `class UsageEvent(BaseModel):`."
+   },
+   "confidence": "inferred",
+   "why": "drafted from the term's definition and its first code reference; confirm or rewrite it"
+  }
+ ]
+}

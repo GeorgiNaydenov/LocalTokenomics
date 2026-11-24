@@ -59,6 +59,8 @@ models:
   - samples
   - session_exclusions
   - trace_events
+  - CostState
+  - RowStatus
 rules:
   - An unchanged file is not parsed again
   - A model without a rate row is unpriced

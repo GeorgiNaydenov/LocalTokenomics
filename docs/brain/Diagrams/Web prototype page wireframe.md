@@ -54,6 +54,9 @@ node_citations:
     d-trace: ['web/src/prototype/Screens.tsx:194-210']
     d-meta: ['web/src/prototype/Screens.tsx:226-247']
     d-files: ['web/src/prototype/Screens.tsx:249-257']
+  drawio-prototype-page-layout-filter-rail-aside-276-px:
+    filter rail (aside, 276 px): ['web/src/prototype/Rail.tsx:260-262', 'web/src/prototype/Rail.tsx:93-240',
+      'web/src/prototype/Rail.tsx:214-218', 'web/src/prototype/Rail.tsx:245-276']
 approved-by: human
 approved-at: '2026-11-19T06:43:08+00:00'
 ---

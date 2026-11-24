@@ -55,6 +55,8 @@ models:
   - samples
   - session_exclusions
   - trace_events
+  - CostState
+  - RowStatus
 rules:
   - A forgotten session is not stored again
   - A bad configuration file gives the defaults
