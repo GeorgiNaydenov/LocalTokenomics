@@ -118,5 +118,13 @@
  [
   "open-question",
   "Is the offline card matched by message text on purpose"
+ ],
+ [
+  "model",
+  "MetricInfo"
+ ],
+ [
+  "model",
+  "WarningsList"
  ]
 ]

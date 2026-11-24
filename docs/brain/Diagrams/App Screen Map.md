@@ -9,7 +9,10 @@ maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
 verified-against: 02d21a1926f6
-sources: [docs/brain/architecture/drawio/drawio-screen-app.drawio]
+sources: [docs/brain/architecture/drawio/drawio-screen-app.drawio, docs/brain/architecture/drawio/drawio-screen-app-full-page-states.drawio,
+  docs/brain/architecture/drawio/drawio-screen-app-header.drawio, docs/brain/architecture/drawio/drawio-screen-app-filter-rail.drawio,
+  docs/brain/architecture/drawio/drawio-screen-app-main.drawio, docs/brain/architecture/drawio/drawio-screen-app-workspace.drawio,
+  docs/brain/architecture/drawio/drawio-screen-app-other.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
 screen-note: App Screen
@@ -142,3 +145,33 @@ The shell hosts [[Overview Screen]], [[Sessions Screen]], [[Sources Screen]], [[
 > | 27 | `view === 'sources' && report && meta` view section | `web/src/App.tsx:336-336` |
 > | 28 | `view === 'pricing' && report && rates` view section | `web/src/App.tsx:337-337` |
 > | 29 | `<SessionWorkspace` open session | `web/src/App.tsx:343-351` |
+
+
+## full page states
+
+![[docs/brain/architecture/rendered/drawio-screen-app-full-page-states.svg]]
+
+
+## header
+
+![[docs/brain/architecture/rendered/drawio-screen-app-header.svg]]
+
+
+## filter rail
+
+![[docs/brain/architecture/rendered/drawio-screen-app-filter-rail.svg]]
+
+
+## main
+
+![[docs/brain/architecture/rendered/drawio-screen-app-main.svg]]
+
+
+## workspace
+
+![[docs/brain/architecture/rendered/drawio-screen-app-workspace.svg]]
+
+
+## Other
+
+![[docs/brain/architecture/rendered/drawio-screen-app-other.svg]]

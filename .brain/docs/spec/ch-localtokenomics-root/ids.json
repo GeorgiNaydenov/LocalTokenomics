@@ -126,5 +126,29 @@
  [
   "open-question",
   "Should local checks and the workflow lint the same folders"
+ ],
+ [
+  "model",
+  "MatchKind"
+ ],
+ [
+  "model",
+  "RateState"
+ ],
+ [
+  "model",
+  "RateStatus"
+ ],
+ [
+  "model",
+  "SpanKind"
+ ],
+ [
+  "model",
+  "SpanStatus"
+ ],
+ [
+  "model",
+  "TokenDataKind"
  ]
 ]

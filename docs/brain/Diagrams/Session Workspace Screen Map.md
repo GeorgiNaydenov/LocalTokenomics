@@ -9,7 +9,9 @@ maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
 verified-against: 02d21a1926f6
-sources: [docs/brain/architecture/drawio/drawio-screen-session-workspace.drawio]
+sources: [docs/brain/architecture/drawio/drawio-screen-session-workspace.drawio, docs/brain/architecture/drawio/drawio-screen-session-workspace-header.drawio,
+  docs/brain/architecture/drawio/drawio-screen-session-workspace-outcome.drawio, docs/brain/architecture/drawio/drawio-screen-session-workspace-tabs.drawio,
+  docs/brain/architecture/drawio/drawio-screen-session-workspace-panel.drawio, docs/brain/architecture/drawio/drawio-screen-session-workspace-other.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
 screen-note: Session Workspace Screen
@@ -99,3 +101,28 @@ The workspace is opened from [[Sessions Screen]] and hosts [[Trace Tab Screen]],
 > | 14 | `case 'error':` error section | `web/src/SessionWorkspace.tsx:389-389` |
 > | 15 | `<ResizeHandle` resize | `web/src/SessionWorkspace.tsx:613-613` |
 > | 16 | `<Sheet` workspace sheet | `web/src/SessionWorkspace.tsx:620-620` |
+
+
+## header
+
+![[docs/brain/architecture/rendered/drawio-screen-session-workspace-header.svg]]
+
+
+## outcome
+
+![[docs/brain/architecture/rendered/drawio-screen-session-workspace-outcome.svg]]
+
+
+## tabs
+
+![[docs/brain/architecture/rendered/drawio-screen-session-workspace-tabs.svg]]
+
+
+## panel
+
+![[docs/brain/architecture/rendered/drawio-screen-session-workspace-panel.svg]]
+
+
+## Other
+
+![[docs/brain/architecture/rendered/drawio-screen-session-workspace-other.svg]]

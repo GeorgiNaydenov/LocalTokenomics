@@ -9,7 +9,12 @@ maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
 verified-against: 02d21a1926f6
-sources: [docs/brain/architecture/drawio/drawio-screen-overview.drawio]
+sources: [docs/brain/architecture/drawio/drawio-screen-overview.drawio, docs/brain/architecture/drawio/drawio-screen-overview-detected-sources.drawio,
+  docs/brain/architecture/drawio/drawio-screen-overview-headline-figures.drawio, docs/brain/architecture/drawio/drawio-screen-overview-outcomes.drawio,
+  docs/brain/architecture/drawio/drawio-screen-overview-heaviest-sessions.drawio,
+  docs/brain/architecture/drawio/drawio-screen-overview-time-chart.drawio, docs/brain/architecture/drawio/drawio-screen-overview-cost-by-model.drawio,
+  docs/brain/architecture/drawio/drawio-screen-overview-token-mix.drawio, docs/brain/architecture/drawio/drawio-screen-overview-cache-savings.drawio,
+  docs/brain/architecture/drawio/drawio-screen-overview-by-project.drawio, docs/brain/architecture/drawio/drawio-screen-overview-other.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
 screen-note: Overview Screen
@@ -131,3 +136,53 @@ The view is selected from [[App Screen]]. The figures come from the report descr
 > | 24 | `{priced ? (` empty section | `web/src/Overview.tsx:803-803` |
 > | 25 | `<MeterRow` project rows | `web/src/Overview.tsx:848-848` |
 > | 26 | `<button` Show more | `web/src/Overview.tsx:877-880` |
+
+
+## detected sources
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-detected-sources.svg]]
+
+
+## headline figures
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-headline-figures.svg]]
+
+
+## outcomes
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-outcomes.svg]]
+
+
+## heaviest sessions
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-heaviest-sessions.svg]]
+
+
+## time chart
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-time-chart.svg]]
+
+
+## cost by model
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-cost-by-model.svg]]
+
+
+## token mix
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-token-mix.svg]]
+
+
+## cache savings
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-cache-savings.svg]]
+
+
+## by project
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-by-project.svg]]
+
+
+## Other
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-other.svg]]

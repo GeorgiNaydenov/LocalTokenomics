@@ -9,7 +9,12 @@ maturity: approved
 confidence: inferred
 covers: [web/src/prototype/**]
 verified-against: f7104a42d355
-sources: [docs/brain/architecture/drawio/drawio-screen-sessions-screen.drawio]
+sources: [docs/brain/architecture/drawio/drawio-screen-sessions-screen.drawio, docs/brain/architecture/drawio/drawio-screen-sessions-screen-header-and-sort.drawio,
+  docs/brain/architecture/drawio/drawio-screen-sessions-screen-phone-layout.drawio,
+  docs/brain/architecture/drawio/drawio-screen-sessions-screen-desktop-table.drawio,
+  docs/brain/architecture/drawio/drawio-screen-sessions-screen-footer-note.drawio,
+  docs/brain/architecture/drawio/drawio-screen-sessions-screen-session-drawer.drawio,
+  docs/brain/architecture/drawio/drawio-screen-sessions-screen-other.drawio]
 chunk: ch-localtokenomics-web-src-prototype
 screen-note: Sessions Screen Screen
 node_citations:
@@ -134,3 +139,33 @@ The Sessions Screen screen drawn from its code: every element highlighted and nu
 - badge-25: `web/src/prototype/Screens.tsx:250-250`
 - badge-26: `web/src/prototype/Screens.tsx:254-256`
 %% generated:node-citations-drawio-screen-sessions-screen end %%
+
+
+## header and sort
+
+![[docs/brain/architecture/rendered/drawio-screen-sessions-screen-header-and-sort.svg]]
+
+
+## phone layout
+
+![[docs/brain/architecture/rendered/drawio-screen-sessions-screen-phone-layout.svg]]
+
+
+## desktop table
+
+![[docs/brain/architecture/rendered/drawio-screen-sessions-screen-desktop-table.svg]]
+
+
+## footer note
+
+![[docs/brain/architecture/rendered/drawio-screen-sessions-screen-footer-note.svg]]
+
+
+## session drawer
+
+![[docs/brain/architecture/rendered/drawio-screen-sessions-screen-session-drawer.svg]]
+
+
+## Other
+
+![[docs/brain/architecture/rendered/drawio-screen-sessions-screen-other.svg]]

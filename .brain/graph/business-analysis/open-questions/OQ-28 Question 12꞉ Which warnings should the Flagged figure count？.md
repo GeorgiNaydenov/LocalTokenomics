@@ -10,3 +10,8 @@ maturity: draft
 ## Question
 
 The Flagged figure of the overview counts the warning summary of the last scan, while the Sources view lists the warning groups of the current report. Should both use the same set? See web/src/Overview.tsx (FlaggedStat) and web/src/Sources.tsx (Scan warnings panel).
+
+## Sources
+
+- [[Code of localtokenomics]] @ web/src/Overview.tsx:321-321 | inferred
+  > function FlaggedStat({ meta, onSelectView }: { meta: Meta; onSelectView: (view: View) => void }) {

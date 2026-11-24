@@ -2,7 +2,16 @@
 code: UC-06
 primary_actor: Dashboard reader
 subdomain: Web area
-no_models_reason: No model of the specification is declared in the code this use case cites or in a file that code imports directly.
+models:
+  - MatchKind
+  - MetricInfo
+  - RateState
+  - RateStatus
+  - SpanKind
+  - SpanStatus
+  - TokenDataKind
+  - WarningsList
+  - Workspace tab
 rules:
   - An explanation popover does not take focus back on close
   - The side panel width is bounded

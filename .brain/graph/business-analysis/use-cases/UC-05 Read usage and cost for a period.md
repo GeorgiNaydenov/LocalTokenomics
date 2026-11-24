@@ -2,7 +2,15 @@
 code: UC-05
 primary_actor: Dashboard reader
 subdomain: Web area
-no_models_reason: No model of the specification is declared in the code this use case cites or in a file that code imports directly.
+models:
+  - MatchKind
+  - RateState
+  - RateStatus
+  - SpanKind
+  - SpanStatus
+  - TokenDataKind
+  - WarningsList
+  - Workspace tab
 rules:
   - A rollup shows its least trustworthy cost state and provenance
   - A workspace tab loads its data only when first opened

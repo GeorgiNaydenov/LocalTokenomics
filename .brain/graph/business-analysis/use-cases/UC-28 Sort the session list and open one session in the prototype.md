@@ -2,7 +2,8 @@
 code: UC-28
 primary_actor: User of Web prototype
 subdomain: Web prototype area
-no_models_reason: No model of the specification is declared in the code this use case cites or in a file that code imports directly.
+models:
+  - WarningsList
 rules:
   - A missing value is shown as unavailable, never as zero
   - An estimated price is marked next to the cost state

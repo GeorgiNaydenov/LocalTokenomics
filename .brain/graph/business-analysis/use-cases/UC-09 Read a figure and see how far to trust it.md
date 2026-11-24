@@ -2,7 +2,16 @@
 code: UC-09
 primary_actor: Dashboard reader
 subdomain: Web UI components area
-no_models_reason: No model of the specification is declared in the code this use case cites or in a file that code imports directly.
+models:
+  - MatchKind
+  - MetricInfo
+  - RateState
+  - RateStatus
+  - SpanKind
+  - SpanStatus
+  - TokenDataKind
+  - WarningsList
+  - Workspace tab
 rules:
   - A missing value is shown as unavailable, never as zero
   - A workspace tab loads its data only when first opened

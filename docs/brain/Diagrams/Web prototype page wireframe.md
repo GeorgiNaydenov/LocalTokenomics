@@ -9,7 +9,10 @@ maturity: approved
 confidence: inferred
 covers: [web/src/prototype/**]
 verified-against: f7104a42d355
-sources: [docs/brain/architecture/drawio/drawio-prototype-page-layout.drawio]
+sources: [docs/brain/architecture/drawio/drawio-prototype-page-layout.drawio, docs/brain/architecture/drawio/drawio-prototype-page-layout-header-sticky.drawio,
+  docs/brain/architecture/drawio/drawio-prototype-page-layout-filter-rail-aside-276-px.drawio,
+  docs/brain/architecture/drawio/drawio-prototype-page-layout-main.drawio, docs/brain/architecture/drawio/drawio-prototype-page-layout-session-drawer-sheet-opens-from-a-row.drawio,
+  docs/brain/architecture/drawio/drawio-prototype-page-layout-other.drawio]
 chunk: ch-localtokenomics-web-src-prototype
 authored: true
 node_citations:
@@ -126,3 +129,28 @@ The capability is the page frame that every screen sits in. The detailed screens
 > | `web/src/prototype/Rail.tsx:245-276` | Filter rail |
 > | `web/src/prototype/Screens.tsx:342-377` | Main area and drawer |
 > | `web/src/prototype/SessionsScreen.tsx:127-240` | Cards and table |
+
+
+## header (sticky)
+
+![[docs/brain/architecture/rendered/drawio-prototype-page-layout-header-sticky.svg]]
+
+
+## filter rail (aside, 276 px)
+
+![[docs/brain/architecture/rendered/drawio-prototype-page-layout-filter-rail-aside-276-px.svg]]
+
+
+## main
+
+![[docs/brain/architecture/rendered/drawio-prototype-page-layout-main.svg]]
+
+
+## session drawer (sheet, opens from a row)
+
+![[docs/brain/architecture/rendered/drawio-prototype-page-layout-session-drawer-sheet-opens-from-a-row.svg]]
+
+
+## Other
+
+![[docs/brain/architecture/rendered/drawio-prototype-page-layout-other.svg]]

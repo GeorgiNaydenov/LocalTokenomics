@@ -9,7 +9,10 @@ maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
 verified-against: 02d21a1926f6
-sources: [docs/brain/architecture/drawio/drawio-screen-trace-tab.drawio]
+sources: [docs/brain/architecture/drawio/drawio-screen-trace-tab.drawio, docs/brain/architecture/drawio/drawio-screen-trace-tab-header.drawio,
+  docs/brain/architecture/drawio/drawio-screen-trace-tab-filters.drawio, docs/brain/architecture/drawio/drawio-screen-trace-tab-insights.drawio,
+  docs/brain/architecture/drawio/drawio-screen-trace-tab-turns.drawio, docs/brain/architecture/drawio/drawio-screen-trace-tab-spans.drawio,
+  docs/brain/architecture/drawio/drawio-screen-trace-tab-other.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
 screen-note: Trace Tab Screen
@@ -93,3 +96,33 @@ The tab lives inside [[Session Workspace Screen]] and is focused from [[Context 
 > | 13 | `if (span.error) {` error section | `web/src/TraceTab.tsx:829-829` |
 > | 14 | `<Button` Text, Hide | `web/src/TraceTab.tsx:876-881` |
 > | 15 | `<Button` Show more spans | `web/src/TraceTab.tsx:1017-1017` |
+
+
+## header
+
+![[docs/brain/architecture/rendered/drawio-screen-trace-tab-header.svg]]
+
+
+## filters
+
+![[docs/brain/architecture/rendered/drawio-screen-trace-tab-filters.svg]]
+
+
+## insights
+
+![[docs/brain/architecture/rendered/drawio-screen-trace-tab-insights.svg]]
+
+
+## turns
+
+![[docs/brain/architecture/rendered/drawio-screen-trace-tab-turns.svg]]
+
+
+## spans
+
+![[docs/brain/architecture/rendered/drawio-screen-trace-tab-spans.svg]]
+
+
+## Other
+
+![[docs/brain/architecture/rendered/drawio-screen-trace-tab-other.svg]]

@@ -10,3 +10,8 @@ maturity: draft
 ## Question
 
 The column headers can sort by client, model, id and outcome, but the option list of the sort menu has no entry for them, so the menu value after a header press has no matching option. Checked web/src/prototype/SessionsScreen.tsx and web/src/prototype/data.ts; how the menu shows an unknown value is decided in the shared component.
+
+## Sources
+
+- [[Code of localtokenomics]] @ web/src/prototype/SessionsScreen.tsx:82-82 | inferred
+  > export function SessionsScreen({ onOpen }: { onOpen: (session: PrototypeSession) => void }) {

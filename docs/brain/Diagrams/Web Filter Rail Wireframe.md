@@ -9,7 +9,8 @@ maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
 verified-against: 02d21a1926f6
-sources: [docs/brain/architecture/drawio/drawio-web-filter-rail.drawio]
+sources: [docs/brain/architecture/drawio/drawio-web-filter-rail.drawio, docs/brain/architecture/drawio/drawio-web-filter-rail-filter-rail-docked-aside-or-filters-sheet-on-narrow-screens.drawio,
+  docs/brain/architecture/drawio/drawio-web-filter-rail-other.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
 node_citations:
@@ -78,3 +79,13 @@ The rail is part of [[App Screen]]. The query it edits is drawn in [[Web Concept
 > | `web/src/FilterRail.tsx:432-450` | Three switches, the reset button and the list of undetected sources close the rail |
 > | `web/src/FilterRail.tsx:454-454` | Three switches, the reset button and the list of undetected sources close the rail |
 > | `web/src/FilterRail.tsx:486-503` | The same content renders in a sheet from the left with its own title |
+
+
+## Filter rail: docked aside, or Filters sheet on narrow screens
+
+![[docs/brain/architecture/rendered/drawio-web-filter-rail-filter-rail-docked-aside-or-filters-sheet-on-narrow-screens.svg]]
+
+
+## Other
+
+![[docs/brain/architecture/rendered/drawio-web-filter-rail-other.svg]]

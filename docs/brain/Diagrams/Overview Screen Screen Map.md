@@ -9,7 +9,13 @@ maturity: approved
 confidence: inferred
 covers: [web/src/prototype/**]
 verified-against: f7104a42d355
-sources: [docs/brain/architecture/drawio/drawio-screen-overview-screen.drawio]
+sources: [docs/brain/architecture/drawio/drawio-screen-overview-screen.drawio, docs/brain/architecture/drawio/drawio-screen-overview-screen-detected-sources-panel.drawio,
+  docs/brain/architecture/drawio/drawio-screen-overview-screen-kpi-row.drawio, docs/brain/architecture/drawio/drawio-screen-overview-screen-cost-over-time-panel.drawio,
+  docs/brain/architecture/drawio/drawio-screen-overview-screen-cost-by-model-panel.drawio,
+  docs/brain/architecture/drawio/drawio-screen-overview-screen-token-mix-panel.drawio,
+  docs/brain/architecture/drawio/drawio-screen-overview-screen-cache-savings-panel.drawio,
+  docs/brain/architecture/drawio/drawio-screen-overview-screen-by-project-panel.drawio,
+  docs/brain/architecture/drawio/drawio-screen-overview-screen-other.drawio]
 chunk: ch-localtokenomics-web-src-prototype
 screen-note: Overview Screen Screen
 node_citations:
@@ -110,3 +116,43 @@ This view shows the overview screen of the prototype: the panels a person sees f
 - badge-19: `web/src/prototype/OverviewScreen.tsx:325-329`
 - badge-20: `web/src/prototype/OverviewScreen.tsx:352-359`
 %% generated:node-citations-drawio-screen-overview-screen end %%
+
+
+## detected sources panel
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-screen-detected-sources-panel.svg]]
+
+
+## KPI row
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-screen-kpi-row.svg]]
+
+
+## cost over time panel
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-screen-cost-over-time-panel.svg]]
+
+
+## cost by model panel
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-screen-cost-by-model-panel.svg]]
+
+
+## token mix panel
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-screen-token-mix-panel.svg]]
+
+
+## cache savings panel
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-screen-cache-savings-panel.svg]]
+
+
+## by project panel
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-screen-by-project-panel.svg]]
+
+
+## Other
+
+![[docs/brain/architecture/rendered/drawio-screen-overview-screen-other.svg]]

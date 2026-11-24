@@ -9,7 +9,11 @@ maturity: approved
 confidence: inferred
 covers: [web/src/*, web/src/design-system/*]
 verified-against: 02d21a1926f6
-sources: [docs/brain/architecture/drawio/drawio-screen-economics-tab.drawio]
+sources: [docs/brain/architecture/drawio/drawio-screen-economics-tab.drawio, docs/brain/architecture/drawio/drawio-screen-economics-tab-totals.drawio,
+  docs/brain/architecture/drawio/drawio-screen-economics-tab-turn-insights.drawio,
+  docs/brain/architecture/drawio/drawio-screen-economics-tab-per-turn.drawio, docs/brain/architecture/drawio/drawio-screen-economics-tab-per-model.drawio,
+  docs/brain/architecture/drawio/drawio-screen-economics-tab-per-tool.drawio, docs/brain/architecture/drawio/drawio-screen-economics-tab-per-model-and-tool.drawio,
+  docs/brain/architecture/drawio/drawio-screen-economics-tab-other.drawio]
 chunk: ch-localtokenomics-web-src
 authored: true
 screen-note: Economics Tab Screen
@@ -107,3 +111,38 @@ The tab lives inside [[Session Workspace Screen]]. The turn insights come from t
 > | 17 | `<EconPanel` Per tool | `web/src/EconomicsTab.tsx:758-758` |
 > | 18 | `props.rows.length === 0` empty section | `web/src/EconomicsTab.tsx:402-402` |
 > | 19 | `<Button` Show more | `web/src/EconomicsTab.tsx:415-415` |
+
+
+## totals
+
+![[docs/brain/architecture/rendered/drawio-screen-economics-tab-totals.svg]]
+
+
+## turn insights
+
+![[docs/brain/architecture/rendered/drawio-screen-economics-tab-turn-insights.svg]]
+
+
+## per turn
+
+![[docs/brain/architecture/rendered/drawio-screen-economics-tab-per-turn.svg]]
+
+
+## per model
+
+![[docs/brain/architecture/rendered/drawio-screen-economics-tab-per-model.svg]]
+
+
+## per tool
+
+![[docs/brain/architecture/rendered/drawio-screen-economics-tab-per-tool.svg]]
+
+
+## per model and tool
+
+![[docs/brain/architecture/rendered/drawio-screen-economics-tab-per-model-and-tool.svg]]
+
+
+## Other
+
+![[docs/brain/architecture/rendered/drawio-screen-economics-tab-other.svg]]
